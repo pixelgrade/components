@@ -3,8 +3,8 @@
  * This file provides the functions needed to load each used component and loads it.
  * It also loads the general component files.
  *
- * @package Boilerplate
- * @since Boilerplate 1.0
+ * @package Julia
+ * @since Julia 1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
