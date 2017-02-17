@@ -1,0 +1,76 @@
+$dropdown-width:        15em        !default;
+
+.c-navbar--dropdown {
+
+    [class*="children"] {
+        position: relative;
+
+        // Dropdown arrow
+        &:after {
+            content: "";
+
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+
+            width: 0;
+            height: 0;
+            display: block;
+
+            border: 4px solid transparent;
+            border-top: 5px solid currentColor;
+
+            color: inherit;
+        }
+
+        &:hover > .sub-menu,
+        &:hover > .children {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    .sub-menu,
+    .children {
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        width: $dropdown-width;
+
+        border-style: solid;
+        border-color: transparent;
+
+        background-clip: padding-box;
+
+        text-align: left;
+
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .sub-menu,
+    .children {
+        .menu-item {
+            width: 100%;
+            margin: 0;
+        }
+
+        [class*="has-children"]:after {
+            right: 10px;
+
+            border-top-color: inherit;
+            transform: translateY(-50%) translateZ(0.1px) rotate(-90deg);
+        }
+    }
+
+    .sub-menu .sub-menu,
+    .children .children {
+        top: 0;
+        left: 100%;
+        margin-left: 0;
+    }
+}
+
+//Theme UX requirements: changed menu labels, menu IDs and added arrows for submenus

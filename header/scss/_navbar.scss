@@ -1,0 +1,25 @@
+.c-navbar a {
+    color: inherit;
+}
+
+.c-navbar__checkbox,
+.c-navbar__label {
+    display: none;
+}
+
+.c-navbar__label {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+@import "navbar/burger";
+
+@include below(lap) {
+    @import "navbar/mobile";
+}
+
+@include above(lap) {
+    @import "navbar/desktop";
+    @import "navbar/dropdown";
+}

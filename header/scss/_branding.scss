@@ -1,0 +1,21 @@
+.c-branding {
+    .c-navbar__zone--middle & {
+        text-align: center;
+    }
+
+    a, img {
+        display: block;
+    }
+
+    img {
+        width: auto;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.site-title,
+.site-description {
+    color: inherit;
+}

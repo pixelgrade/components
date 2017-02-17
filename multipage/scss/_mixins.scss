@@ -1,0 +1,19 @@
+// shorthand media queries for defined breakpoints
+@mixin above($bpname) {
+    @media only screen and ( min-width: map-get($breakpoints, $bpname) ) {
+        @content;
+    }
+}
+
+@mixin below($bpname) {
+    @media not screen and ( min-width: map-get($breakpoints, $bpname) ) {
+        @content;
+    }
+}
+
+@mixin placeholder() {
+    &::-webkit-input-placeholder { @content; }
+    &::-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &:-moz-placeholder { @content; }
+}
