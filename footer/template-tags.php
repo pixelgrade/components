@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Display the classes for the footer element.
+ * Display the classes of the footer element.
  *
  * @param string|array $class One or more classes to add to the class list.
  * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
