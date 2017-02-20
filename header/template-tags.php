@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.0.2
+ * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -85,33 +85,32 @@ function pixelgrade_the_header( $location = '' ) {
 }
 
 /**
- * Get the markup for the left menu.
+ * Get the markup for a certain nav menu location.
+ *
+ * @param array $config An array with options for the wp_nav_menu() function.
+ * @param string $menu_location Optional. The menu location id (slug) to process.
  *
  * @return false|object
  */
-function pixelgrade_header_get_the_left_menu() {
-	return wp_nav_menu( apply_filters( 'pixelgrade_header_primary_left_nav_args', array(
-		'theme_location'  => 'primary-left',
-		'menu_id'         => 'menu-1',
-		'container'       => 'nav',
-		'container_class' => '',
-		'fallback_cb'     => false,
-		'echo'            => false,
-	) ) );
-}
+function pixelgrade_header_get_nav_menu( $args, $menu_location = '' ) {
+	$defaults = array( 'container' => 'nav', 'echo' => false, );
 
-/**
- * Get the markup for the right menu.
- *
- * @return false|object
- */
-function pixelgrade_header_get_the_right_menu() {
-	return wp_nav_menu( apply_filters( 'pixelgrade_header_primary_right_nav_args', array(
-		'theme_location'  => 'primary-right',
-		'menu_id'         => 'menu-2',
-		'container'       => 'nav',
-		'container_class' => '',
-		'fallback_cb'     => false,
-		'echo'            => false,
-	) ) );
+	if ( ! empty( $menu_location ) ) {
+		// Make sure we overwrite whatever is there
+		$args['theme_location'] = $menu_location;
+	}
+
+	// We really don't want others to say to echo - You shall not echo!!! (for LOTR fans)
+	if ( isset( $args['echo'] ) ) {
+		unset( $args['echo'] );
+	}
+
+	// Parse the sent arguments
+	$args = wp_parse_args( $args, $defaults );
+
+	// Allow others to have a say
+	$args = apply_filters( 'pixelgrade_header_nav_menu_args', $args, $menu_location );
+
+	// Return the nav menu
+	return wp_nav_menu( $args );
 }

@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.0.5
+ * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,10 @@ pxg_load_component_file( 'header', 'template-tags' );
 class Pixelgrade_Header {
 
 	public $component = 'header';
-	public $_version  = '1.0.5';
+	public $_version  = '1.1.0';
 	public $_assets_version = '1.0.3';
+
+	private $config = array();
 
 	private static $_instance = null;
 
@@ -44,6 +46,15 @@ class Pixelgrade_Header {
 		 * as indicating support for post thumbnails.
 		 */
 		add_action( 'after_setup_theme', array( $this, 'header_setup' ) );
+		/*
+		 * All the filters bellow follow the logic outlined in the component's guides
+		 * @link http://pixelgrade.github.io/guides/components/header
+		 * They try to automatically adapt to the existence or non-existence of navbar components: the menus and the logo.
+		 */
+		add_filter( 'pixelgrade_header_primary-right_nav_menu_display_zone', array( $this, 'primary_right_nav_menu_zone' ), 10, 1 );
+		add_filter( 'pixelgrade_header_header-branding_nav_menu_display_zone', array( $this, 'header_branding_zone' ), 10, 1 );
+		// Now for conditional zone classes
+		add_filter( 'pixelgrade_css_class', array( $this, 'nav_menu_zone_classes' ), 10, 3 );
 
 		// Setup our header Customify options
 		add_filter( 'customify_filter_fields', array( $this, 'add_customify_options' ), 20, 1 );
@@ -61,16 +72,76 @@ class Pixelgrade_Header {
 	 * Setup the navigation menus
 	 */
 	public function header_setup() {
-		$menus = array(
-			'primary-left'  => esc_html__( 'Header Left', 'components' ),
-			'primary-right' => esc_html__( 'Header Right', 'components' ),
+		// Initialize the $config
+		$this->config = array(
+			'zones' => array(
+				'left' => array(
+					'order' => 10, // We will use this to establish the display order of the zones
+					'classes' => array(), //by default we will add the classes 'c-navbar__zone' and 'c-navbar__zone--%zone_id%' to each zone
+					'display_blank' => true, // determines if we output markup for an empty zone
+				),
+				'middle' => array(
+					'order' => 20, // We will use this to establish the display order of the zones
+					'classes' => array(), //by default we will add the classes 'c-navbar__zone' and 'c-navbar__zone--%zone_id%' to each zone
+					'display_blank' => true, // determines if we output markup for an empty zone
+				),
+				'right' => array(
+					'order' => 30, // We will use this to establish the display order of the zones
+					'classes' => array(), //by default we will add the classes 'c-navbar__zone' and 'c-navbar__zone--%zone_id%' to each zone
+					'display_blank' => true, // determines if we output markup for an empty zone
+				),
+			),
+			'menu_locations' => array(
+				'primary-left' => array(
+					'title' => esc_html__( 'Header Left', 'components' ),
+					'default_zone' => 'left',
+					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
+						'menu_id'         => 'menu-1',
+						'container'       => 'nav',
+						'container_class' => '',
+						'fallback_cb'     => false,
+					),
+				),
+				'header-branding' => array(
+					'default_zone' => 'middle',
+					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				),
+				'primary-right' => array(
+					'title' => esc_html__( 'Header Right', 'components' ),
+					'default_zone' => 'right',
+					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
+						'menu_id'         => 'menu-2',
+						'container'       => 'nav',
+						'container_class' => '',
+						'fallback_cb'     => false,
+					),
+				),
+			),
 		);
 
-		//allow others to make changes to the menus that we register
-		$menus = apply_filters( 'pixelgrade_header_menus', $menus );
+		// Add theme support for Jetpack Social Menu, if we are allowed to
+		if ( apply_filters( 'pixelgrade_header_use_jetpack_social_menu', true ) ) {
+			// Add it to the config
+			$this->config['menu_locations']['jetpack-social-menu'] = array(
+					'default_zone' => 'right',
+					'order' => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				);
 
-		// Register the navigation menus
-		register_nav_menus( $menus );
+			// Add support for it
+			add_theme_support( 'jetpack-social-menu' );
+		}
+
+
+		// Allow others to make changes to the config
+		$this->config = apply_filters( 'pixelgrade_header_config', $this->config );
+
+		// We are done with the config. Lets ge to it
+		// Register the config menu locations
+		$this->register_nav_menus();
 
 		/**
 		 * Add theme support for site logo, if we are allowed to
@@ -90,11 +161,101 @@ class Pixelgrade_Header {
 				)
 			) ) );
 		}
+	}
 
-		// Add theme support for Jetpack Social Menu, if we are allowed to
-		if ( apply_filters( 'pixelgrade_header_use_jetpack_social_menu', true ) ) {
-			add_theme_support( 'jetpack-social-menu' );
+	/**
+	 * Change the primary-right nav menu's zone depending on the other nav menus.
+	 *
+	 * @param string $zone
+	 *
+	 * @return string
+	 */
+	public function primary_right_nav_menu_zone( $zone ) {
+		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
+		if ( ! has_nav_menu( 'primary-left' ) ) {
+			$zone = 'middle';
 		}
+
+		return $zone;
+	}
+
+	/**
+	 * Change the branding's zone depending on the other nav menus.
+	 *
+	 * @param string $zone
+	 *
+	 * @return string
+	 */
+	public function header_branding_zone( $zone ) {
+		// the branding goes to the left zone when there is no left menu, but there is a right menu
+		if ( ! has_nav_menu( 'primary-left' ) && has_nav_menu( 'primary-right' ) ) {
+			$zone = 'left';
+		}
+
+		return $zone;
+	}
+
+	/**
+	 * Change the zone classes depending on the other nav menus.
+	 *
+	 * @param array $classes An array of header classes.
+	 * @param array $class   An array of additional classes added to the header.
+	 * @param string|array $location   The place (template) where the classes are displayed.
+	 *
+	 * @return array
+	 */
+	public function nav_menu_zone_classes( $classes, $class, $location ) {
+		$has_left_menu   = has_nav_menu( 'primary-left' );
+		$has_right_menu  = has_nav_menu( 'primary-right' );
+
+		if ( pixelgrade_in_location( 'left', $location ) ) {
+			if ( $has_left_menu && $has_right_menu ) {
+				$classes[] = 'c-navbar__zone--push-right';
+			}
+		}
+
+		if ( pixelgrade_in_location( 'right', $location ) ) {
+			if ( ! $has_right_menu || ( ! $has_left_menu && $has_right_menu ) ) {
+				$classes[] = 'c-navbar__zone--push-right';
+			}
+		}
+
+		return $classes;
+	}
+
+	public function get_config() {
+		return $this->config;
+	}
+
+	/**
+	 * Register the needed menu locations based on the current configuration.
+	 *
+	 * @return bool
+	 */
+	private function register_nav_menus() {
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			$menus = array();
+			foreach ( $this->config['menu_locations'] as $id => $settings ) {
+				// Make sure that we ignore bogus menu locations
+				if ( empty( $settings['bogus'] ) ) {
+					if ( ! empty( $settings['title'] ) ) {
+						$menus[ $id ] = $settings['title'];
+					} else {
+						$menus[ $id ] = $id;
+					}
+				}
+			}
+
+			if ( ! empty( $menus ) ) {
+				register_nav_menus( $menus );
+
+				// We registered some menu locations. Life is good. Share it.
+				return true;
+			}
+		}
+
+		// It seems that we didn't do anything. Let others know
+		return false;
 	}
 
 	public function add_customify_options( $options ) {

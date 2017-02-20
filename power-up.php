@@ -3,8 +3,8 @@
  * This file provides the functions needed to load each used component and loads it.
  * It also loads the general component files.
  *
- * @package Boilerplate
- * @since Boilerplate 1.0
+ * @package Components
+ * @since Components 1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -144,54 +144,6 @@ function Pixelgrade_Gallery_Settings() {
 
 // Load The Gallery
 $gallery_settings_instance = Pixelgrade_Gallery_Settings();
-/*------------------------*/
-
-/*++++++++++++++++++++++++*/
-/**
- * Load the Pixelgrade Multipage component.
- * https://pixelgrade.com/
- */
-
-/**
- * Returns the main instance of Pixelgrade_Multipage to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Multipage
- */
-function Pixelgrade_Multipage() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Multipage') ) {
-		pxg_load_component_file( 'multipage', 'class-multipage' );
-	}
-	return Pixelgrade_Multipage::instance();
-}
-
-// Load The Multipage
-$multipage_instance = Pixelgrade_Multipage();
-/*------------------------*/
-
-/*++++++++++++++++++++++++*/
-/**
- * Load the Pixelgrade Nova Menu component.
- * https://pixelgrade.com/
- */
-
-/**
- * Returns the main instance of Pixelgrade_Nova_Menu to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Nova_Menu
- */
-function Pixelgrade_Nova_Menu() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Nova_Menu') ) {
-		pxg_load_component_file( 'nova-menu', 'class-nova-menu' );
-	}
-	return Pixelgrade_Nova_Menu::instance();
-}
-
-// Load The Nova Menu
-$nova_menu_instance = Pixelgrade_Nova_Menu();
 /*------------------------*/
 
 /*=============================
