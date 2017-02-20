@@ -4,10 +4,10 @@
  *
  * Everything gets hooked up and bolted in here.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Featured-Image
- * @version     1.0.0
+ * @see        https://pixelgrade.com
+ * @author     Pixelgrade
+ * @package    Components/Featured-Image
+ * @version    1.0.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 pxg_load_component_file( 'featured-image', 'template-tags' );
 
 class Pixelgrade_Feature_Image {
-	public $_version  = '1.0.0';
+	public $_version  = '1.0.2';
 	public $_assets_version = '1.0.0';
-
-	protected $post_types = array();
 
 	private static $_instance = null;
 
@@ -66,36 +64,36 @@ class Pixelgrade_Feature_Image {
 		// These are the PixTypes configs for the metaboxes for each post type
 		$featured_image_metaboxes = array(
 			//The Hero Background controls - For pages
-			'enhanced_featured_image'       => array(
+			'enhanced_featured_image' => array(
 				'id'         => 'enhanced_featured_image',
-				'title'      => esc_html__( 'Thumbnail', 'components' )
+				'title'      => esc_html__( 'Thumbnail', 'noah' )
 				                . ' <span class="tooltip" title="<' . 'title>'
-				                . __( 'Thumbnail (Featured Image)', 'components' )
+				                . __( 'Thumbnail (Featured Image)', 'noah' )
 				                . '</title><p>'
-				                . __( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', 'components' )
+				                . __( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', 'noah' )
 				                . '</p><p>'
-				                . __( '<strong>Thumbnail Hover</strong>', 'components')
-								. '</p><p>'
-				                . __( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', 'components')
+				                . __( '<strong>Thumbnail Hover</strong>', 'noah' )
+				                . '</p><p>'
+				                . __( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', 'noah' )
 				                . '</p>"></span>',
-				'pages'      => $this->post_types, // Post types to display this metabox on
+				'pages'      => apply_filters( 'pixelgrade_featured_image_post_types', array( 'jetpack-portfolio' ) ), // Post types to display this metabox on
 				'context'    => 'side',
 				'priority'   => 'low',
 				'show_names' => false, // Show field names on the left
 				'fields'     => array(
 					array(
-						'name' => esc_html__( 'Thumbnail Image', 'components' ),
-						'id'   => '_thumbnail_id', //this is the same id of the featured image we are replacing
-						'type' => 'image',
-						'button_text' => esc_html__( 'Add Thumbnail Image', 'components' ),
-						'class' => '',
+						'name'        => esc_html__( 'Thumbnail Image', 'noah' ),
+						'id'          => '_thumbnail_id', //this is the same id of the featured image we are replacing
+						'type'        => 'image',
+						'button_text' => esc_html__( 'Add Thumbnail Image', 'noah' ),
+						'class'       => '',
 					),
 					array(
-						'name' => esc_html__( 'Thumbnail Hover Image', 'components' ),
-						'id'   => '_thumbnail_hover_image',
-						'type' => 'image',
-						'button_text' => esc_html__( 'Add Thumbnail Hover', 'components' ),
-						'class' => 'thumbnail-hover',
+						'name'        => esc_html__( 'Thumbnail Hover Image', 'noah' ),
+						'id'          => '_thumbnail_hover_image',
+						'type'        => 'image',
+						'button_text' => esc_html__( 'Add Thumbnail Hover', 'noah' ),
+						'class'       => 'thumbnail-hover',
 					),
 				)
 			),
@@ -120,13 +118,12 @@ class Pixelgrade_Feature_Image {
 	 * Get post type
 	 *
 	 * @return string Post type
-	 *
-	 * @since 0.9.5
 	 */
 	public function get_post_type() {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			if ( isset( $_REQUEST['post_id'] ) ) {
-				$post = get_post( $_REQUEST['post_id'] );
+				$post = get_post( absint( $_REQUEST['post_id'] ) );
+
 				return $post->post_type;
 			}
 		}
@@ -140,7 +137,7 @@ class Pixelgrade_Feature_Image {
 	public function remove_featured_image_metabox() {
 		$post_type = $this->get_post_type();
 
-		if ( in_array( $post_type, $this->post_types ) ) {
+		if ( in_array( $post_type, apply_filters( 'pixelgrade_featured_image_post_types', array( 'jetpack-portfolio' ) ) ) ) {
 			//remove original featured image metabox
 			remove_meta_box( 'postimagediv', $post_type, 'side' );
 		}
@@ -150,9 +147,6 @@ class Pixelgrade_Feature_Image {
 	 * Load on when the admin is initialized
 	 */
 	public function admin_init() {
-		// Initialize the post types we tackle
-		$this->post_types = apply_filters( 'pixelgrade_featured_image_post_types', array( 'jetpack-portfolio' ) );
-
 		/* register the styles and scripts specific to this component */
 		wp_register_style( 'pixelgrade_featured_image-admin-style', trailingslashit( get_template_directory_uri() ) . 'components/featured-image/css/admin.css', array(), $this->_assets_version );
 
@@ -185,6 +179,7 @@ class Pixelgrade_Feature_Image {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
+
 		return self::$_instance;
 	} // End instance ()
 

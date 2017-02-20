@@ -1,0 +1,14 @@
+.c-counter {
+    margin-left: auto;
+}
+
+.c-counter__total:before {
+    content: " \2014 ";
+
+    position: relative;
+    top: -.09em;
+
+    display: inline-block;
+    margin-left: .5em;
+    margin-right: .5em;
+}

@@ -7,7 +7,7 @@
  * @see      https://pixelgrade.com
  * @author   Pixelgrade
  * @package  Components/Gallery
- * @version  1.1.2
+ * @version  1.1.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,8 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Pixelgrade_Gallery_Settings {
 	public $component = 'gallery';
-	public $_version = '1.1.2';
-	public $_assets_version = '1.1.2';
+	public $_version = '1.1.3';
+	public $_assets_version = '1.1.3';
 
 	private static $_instance = null;
 
@@ -35,11 +35,11 @@ class Pixelgrade_Gallery_Settings {
 	function __construct() {
 		// Define the spacing select options
 		$this->gallery_spacing_options = array(
-			'none'   => __( 'None', 'components' ),
-			'small'  => __( 'Small', 'components' ),
-			'medium' => __( 'Medium', 'components' ),
-			'large'  => __( 'Large', 'components' ),
-			'xlarge' => __( 'X-Large', 'components' ),
+			'none'   => esc_html__( 'None', 'components' ),
+			'small'  => esc_html__( 'Small', 'components' ),
+			'medium' => esc_html__( 'Medium', 'components' ),
+			'large'  => esc_html__( 'Large', 'components' ),
+			'xlarge' => esc_html__( 'X-Large', 'components' ),
 		);
 
 		// Register our actions and filters
@@ -219,7 +219,7 @@ class Pixelgrade_Gallery_Settings {
 		// We may also need to add the slideshow class since we are using our Jetpack fallback
 		if ( class_exists( 'Jetpack_Gallery_Settings_Fallback' ) ) {
 			if ( ! empty( self::$atts[ self::$gallery_instance ]['type'] ) && 'slideshow' == self::$atts[ self::$gallery_instance ]['type'] ) {
-				$out = str_replace( "class='gallery", "class='gallery  u-gallery-type--" . self::$atts[ self::$gallery_instance ]['type'], $out );
+				$out = str_replace( "class='gallery", "class='gallery  gallery--type-" . self::$atts[ self::$gallery_instance ]['type'], $out );
 			}
 		}
 
@@ -278,7 +278,7 @@ class Pixelgrade_Gallery_Settings {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -287,6 +287,6 @@ class Pixelgrade_Gallery_Settings {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __wakeup ()
 }

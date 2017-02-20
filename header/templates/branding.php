@@ -19,6 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		the_custom_logo();
 	} ?>
 
+	<?php if ( function_exists( 'pixelgrade_the_custom_logo_transparent' ) ) {
+		pixelgrade_the_custom_logo_transparent();
+	} ?>
+
     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 		<?php if ( is_front_page() && is_home() ) : ?>
             <h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>

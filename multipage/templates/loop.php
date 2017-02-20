@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $args = array(
 	'post_type'     => 'page', // set the post type to page
 	'post_parent'   => get_the_ID(),
-	'orderby'       => 'menu_order ID',
+	'orderby'       => 'menu_order title',
 	'order'         => 'ASC',
 	'no_found_rows' => true, // no pagination necessary so improve efficiency of loop
 );

@@ -8,7 +8,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Hero
- * @version     1.0.5
+ * @version     1.0.10
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,8 +21,8 @@ pxg_load_component_file( 'hero', 'template-tags' );
 class Pixelgrade_Hero {
 
 	public $component = 'hero';
-	public $_version  = '1.0.5';
-	public $_assets_version = '1.0.0';
+	public $_version  = '1.0.10';
+	public $_assets_version = '1.0.1';
 
 	private static $_instance = null;
 
@@ -37,6 +37,9 @@ class Pixelgrade_Hero {
 	 * @return null
 	 */
 	public function register_hooks() {
+		// Enqueue the frontend assets
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
 		// Setup how things will behave in the WP admin area
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
@@ -261,7 +264,7 @@ class Pixelgrade_Hero {
 					array(
 						'name'    => '&#x1F307; &nbsp; ' . esc_html__( 'Slideshow Options', 'components' ),
 						'id'      => '_hero_slideshow_options__title',
-						'value' => __( 'Add more than one image to the <strong>Hero Area » Background</strong> to enable this section. ', 'components' ),
+						'value'   => esc_attr__( 'Add more than one image to the <strong>Hero Area » Background</strong> to enable this section. ', 'components' ),
 						'type'    => 'title',
 					),
 					array(
@@ -320,23 +323,23 @@ class Pixelgrade_Hero {
 						'type'    => 'select',
 						'options' => array(
 							array(
-								'name'  => '&nbsp; &#9673;&#9711; ' . esc_html__( '&nbsp;Half', 'components' ),
-								'value' => 'half-height',
+								'name'  => '&#9673;&#9673;&#9673; ' . esc_html__( 'Full Height', 'components' ),
+								'value' => 'c-hero--full',
 							),
 							array(
 								'name'  => '&#9673;&#9673;&#9711; ' . esc_html__( 'Two Thirds', 'components' ),
-								'value' => 'two-thirds-height',
+								'value' => 'c-hero--two-thirds',
 							),
 							array(
-								'name'  => '&#9673;&#9673;&#9673; ' . esc_html__( 'Full Height', 'components' ),
-								'value' => 'full-height',
-							)
+								'name'  => '&nbsp; &#9673;&#9711; ' . esc_html__( '&nbsp;Half', 'components' ),
+								'value' => 'c-hero--half',
+							),
 						),
-						'std'     => 'full-height',
+						'std'     => 'c-hero--two-thirds',
 					),
 					array(
 						'name' => esc_html__( 'Google Maps URL', 'components' ),
-						'desc' => __( 'Paste here the Share URL you have copied from <a href="http://www.google.com/maps" target="_blank">Google Maps</a>.', 'components' ),
+						'desc' => __( 'Paste here the <strong>Share Link</strong>URL you have copied from <a href="https://www.google.com/maps" target="_blank">Google Maps</a>. Do not use the embed code or a short URL.', 'components' ),
 						'id'   => '_hero_map_url',
 						'type' => 'textarea_small',
 						'std'  => '',
@@ -436,6 +439,16 @@ class Pixelgrade_Hero {
 	}
 
 	/**
+	 * Enqueue styles and scripts on the frontend
+	 */
+	public function enqueue_scripts() {
+		// Register the frontend styles and scripts specific to hero
+		wp_register_script( 'rellax', trailingslashit( get_template_directory_uri() ) . 'components/hero/js/jquery.rellax.js', array( 'jquery' ), $this->_assets_version, true );
+
+		wp_enqueue_script( 'rellax' );
+	}
+
+	/**
 	 * Load on when the admin is initialized
 	 */
 	public function admin_init() {
@@ -511,7 +524,9 @@ class Pixelgrade_Hero {
 			return $classes;
 		}
 
-		if ( pixelgrade_hero_is_hero_needed() ) {
+		// Get the location since the `body_class` filter will not send it to us
+		$location = pixelgrade_get_location();
+		if ( pixelgrade_hero_is_hero_needed( $location ) ) {
 			$classes[] = 'has-hero';
 		}
 
@@ -575,7 +590,7 @@ class Pixelgrade_Hero {
 				"label" => esc_html__( "Custom Video URL", 'components' ),
 				"input" => "text", // this is default if "input" is omitted
 				"value" => esc_url( get_post_meta( $post->ID, "_video_url", true ) ),
-				"helps" => __( "<p class='desc'>Attach a video to this image <span class='small'>(YouTube or Vimeo)</span>.</p>", 'components' ),
+				"helps" => esc_attr__( "<p class='desc'>Attach a video to this image <span class='small'>(YouTube or Vimeo)</span>.</p>", 'components' ),
 			);
 		}
 
@@ -584,7 +599,7 @@ class Pixelgrade_Hero {
 				"label" => esc_html__( "Custom Image URL", 'components' ),
 				"input" => "text", // this is default if "input" is omitted
 				"value" => esc_url( get_post_meta( $post->ID, "_custom_image_url", true ) ),
-				"helps" => __( "<p class='desc'>Link this image to a custom url.</p>", 'components' ),
+				"helps" => esc_attr__( "<p class='desc'>Link this image to a custom url.</p>", 'components' ),
 			);
 		}
 
@@ -601,7 +616,7 @@ class Pixelgrade_Hero {
 			$form_fields["video_autoplay"] = array(
 				"label" => esc_html__( "Video Autoplay", 'components' ),
 				"input" => "html",
-				"html"  => '<input' . $checked . ' type="checkbox" name="attachments[' . $post->ID . '][video_autoplay]" id="attachments[' . $post->ID . '][video_autoplay]" /><label for="attachments[' . $post->ID . '][video_autoplay]">' . __( 'Enable Video Autoplay?', 'components' ) . '</label>'
+				"html"  => '<input' . $checked . ' type="checkbox" name="attachments[' . $post->ID . '][video_autoplay]" id="attachments[' . $post->ID . '][video_autoplay]" /><label for="attachments[' . $post->ID . '][video_autoplay]">' . esc_html__( 'Enable Video Autoplay?', 'components' ) . '</label>'
 			);
 		}
 
@@ -610,7 +625,7 @@ class Pixelgrade_Hero {
 				"label" => esc_html__( "External URL", 'components' ),
 				"input" => "text",
 				"value" => esc_url( get_post_meta( $post->ID, "_external_url", true ) ),
-				"helps" => __( "<p class='desc'>Set this image to link to an external website.</p>", 'components' ),
+				"helps" => esc_attr__( "<p class='desc'>Set this image to link to an external website.</p>", 'components' ),
 			);
 		}
 
@@ -679,7 +694,7 @@ class Pixelgrade_Hero {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__,esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -688,6 +703,6 @@ class Pixelgrade_Hero {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ),  esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ),  esc_html( $this->_version ) );
 	} // End __wakeup ()
 }

@@ -14,7 +14,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Hero
- * @version     1.0.6
+ * @version     1.0.7
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,9 +36,9 @@ if ( empty( $post_id ) ) {
 	$post_id = get_the_ID();
 } ?>
 
-<?php if ( pixelgrade_hero_is_hero_needed( $location ) ) : ?>
+<?php if ( pixelgrade_hero_is_hero_needed( $location, $post_id ) ) : ?>
 
-	<div <?php pixelgrade_hero_class( '', $location ); pixelgrade_hero_background_color_style( $post_id ); ?>>
+	<div <?php pixelgrade_hero_class( '', $location, $post_id ); ?>>
 
 		<div class="c-hero__slider"	<?php pixelgrade_hero_slider_attributes( '', $post_id ); ?>>
 
@@ -53,9 +53,9 @@ if ( empty( $post_id ) ) {
 			// Loop through each slide ( the first one is kinda special )
 			foreach ( $slides as $key => $attachment_id ) : ?>
 
-			<div class="c-hero__slide" <?php pixelgrade_hero_background_color_style( $post_id ); ?>>
+			<div class="c-hero__slide">
 
-				<div class="c-hero__background  c-hero__layer" data-rellax data-rellax-scale="1.2">
+				<div class="c-hero__background  c-hero__layer" <?php pixelgrade_hero_background_color_style( $post_id ); ?>>
 
 					<?php
 					$hero_image_opacity = get_post_meta( $post_id, '_hero_image_opacity', true );

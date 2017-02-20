@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.0.0
+ * @version     1.0.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,8 @@ pxg_load_component_file( 'footer', 'template-tags' );
 class Pixelgrade_Footer {
 
 	public $component = 'footer';
-	public $_version  = '1.0.0';
-	public $_assets_version = '1.0.0';
+	public $_version  = '1.0.3';
+	public $_assets_version = '1.0.1';
 
 	private static $_instance = null;
 
@@ -231,7 +231,7 @@ class Pixelgrade_Footer {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__,esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -240,6 +240,6 @@ class Pixelgrade_Footer {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ),  esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ),  esc_html( $this->_version ) );
 	} // End __wakeup ()
 }

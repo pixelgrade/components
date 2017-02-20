@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.0.1
+ * @version     1.0.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,8 @@ pxg_load_component_file( 'header', 'template-tags' );
 class Pixelgrade_Header {
 
 	public $component = 'header';
-	public $_version  = '1.0.1';
-	public $_assets_version = '1.0.1';
+	public $_version  = '1.0.5';
+	public $_assets_version = '1.0.3';
 
 	private static $_instance = null;
 
@@ -73,24 +73,28 @@ class Pixelgrade_Header {
 		register_nav_menus( $menus );
 
 		/**
-		 * Add theme support for site logo
+		 * Add theme support for site logo, if we are allowed to
 		 *
 		 * First, it's the image size we want to use for the logo thumbnails
 		 * Second, the 2 classes we want to use for the "Display Header Text" Customizer logic
 		 */
-		add_theme_support( 'custom-logo', apply_filters( 'pixelgrade_header_site_logo', array(
-			'height'      => 600,
-			'width'       => 1360,
-			'flex-height' => true,
-			'flex-width'  => true,
-			'header-text' => array(
-				'site-title',
-				'site-description-text',
-			)
-		) ) );
+		if ( apply_filters( 'pixelgrade_header_use_custom_logo', true ) ) {
+			add_theme_support( 'custom-logo', apply_filters( 'pixelgrade_header_site_logo', array(
+				'height'      => 600,
+				'width'       => 1360,
+				'flex-height' => true,
+				'flex-width'  => true,
+				'header-text' => array(
+					'site-title',
+					'site-description-text',
+				)
+			) ) );
+		}
 
-		// Add theme support for Jetpack Social Menu
-		add_theme_support( 'jetpack-social-menu' );
+		// Add theme support for Jetpack Social Menu, if we are allowed to
+		if ( apply_filters( 'pixelgrade_header_use_jetpack_social_menu', true ) ) {
+			add_theme_support( 'jetpack-social-menu' );
+		}
 	}
 
 	public function add_customify_options( $options ) {
@@ -122,7 +126,7 @@ class Pixelgrade_Header {
 		$header_section = array(
 			// Header
 			'header_section' => array(
-				'title'   => __( 'Header', 'components' ),
+				'title'   => esc_html__( 'Header', 'components' ),
 				'options' => array(
 					'header_options_customizer_tabs'        => array(
 						'type' => 'html',
@@ -277,7 +281,7 @@ class Pixelgrade_Header {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-navbar li',
+								'selector' => '.c-navbar',
 							),
 						),
 					),
@@ -289,9 +293,9 @@ class Pixelgrade_Header {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-navbar .current-menu-ancestor > a,
-								.c-navbar .current-menu-item > a,
-								.c-navbar li:hover, .c-navbar li:hover > a, .c-navbar a:hover',
+								'selector' => '
+								.c-navbar [class*="current-menu"],
+								.c-navbar li:hover',
 							),
 							array(
 								'property' => 'border-top-color',
@@ -392,7 +396,6 @@ class Pixelgrade_Header {
 	 * @return Pixelgrade_Header
 	 */
 	public static function instance() {
-
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -405,8 +408,7 @@ class Pixelgrade_Header {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-
-		_doing_it_wrong( __FUNCTION__,esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -415,7 +417,6 @@ class Pixelgrade_Header {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ),  esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ),  esc_html( $this->_version ) );
 	} // End __wakeup ()
 }

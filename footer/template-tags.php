@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.0.0
+ * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,14 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Display the classes of the footer element.
+ * Display the classes for the footer element.
  *
  * @param string|array $class One or more classes to add to the class list.
  * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  */
-function pixelgrade_footer_class( $class = '', $location = '' ) {
+function pixelgrade_footer_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for footer element
-	echo 'class="' . join( ' ', pixelgrade_get_footer_class( $class, $location ) ) . '"';
+	echo 'class="' . join( ' ', pixelgrade_get_footer_class( $class, $location, $post ) ) . '"';
 }
 
 /**
@@ -30,10 +31,21 @@ function pixelgrade_footer_class( $class = '', $location = '' ) {
  *
  * @param string|array $class One or more classes to add to the class list.
  * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return array Array of classes.
  */
-function pixelgrade_get_footer_class( $class = '', $location = '' ) {
+function pixelgrade_get_footer_class( $class = '', $location = '', $post = null ) {
+	// We might be on a page set as a page for posts and the $post will be the first post in the loop
+	// So we check first
+	if ( empty( $post ) && is_home() ) {
+		// find the id of the page for posts
+		$post = get_option( 'page_for_posts' );
+	}
+
+	// First make sure we have a post
+	$post = get_post( $post );
+
 	$classes = array();
 
 	$classes[] = 'c-footer';
@@ -57,8 +69,10 @@ function pixelgrade_get_footer_class( $class = '', $location = '' ) {
 	 *
 	 * @param array $classes An array of footer classes.
 	 * @param array $class   An array of additional classes added to the footer.
+	 * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
+	 * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
 	 */
-	$classes = apply_filters( 'pixelgrade_footer_class', $classes, $class, $location );
+	$classes = apply_filters( 'pixelgrade_footer_class', $classes, $class, $location, $post );
 
 	return array_unique( $classes );
 }

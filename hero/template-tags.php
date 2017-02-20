@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.0.5
+ * @version     1.0.8
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,10 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param string|array $class Optional. One or more classes to add to the class list.
  * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  */
-function pixelgrade_hero_class( $class = '', $location = '' ) {
+function pixelgrade_hero_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for hero element
-	echo 'class="' . join( ' ', pixelgrade_get_hero_class( $class, $location ) ) . '"';
+	echo 'class="' . join( ' ', pixelgrade_get_hero_class( $class, $location, $post ) ) . '"';
 }
 
 /**
@@ -30,16 +31,29 @@ function pixelgrade_hero_class( $class = '', $location = '' ) {
  *
  * @param string|array $class Optional. One or more classes to add to the class list.
  * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return array Array of classes.
  */
-function pixelgrade_get_hero_class( $class = '', $location = '' ) {
+function pixelgrade_get_hero_class( $class = '', $location = '', $post = null ) {
+	// We might be on a page set as a page for posts and the $post will be the first post in the loop
+	// So we check first
+	if ( empty( $post ) && is_home() ) {
+		// find the id of the page for posts
+		$post = get_option( 'page_for_posts' );
+	}
+
+	// First make sure we have a post
+	$post = get_post( $post );
+
 	$classes = array();
 
 	$classes[] = 'c-hero';
 
-	//add the hero height class
-	$classes[] = pixelgrade_hero_get_height( $location );
+	if ( ! empty( $post ) ) {
+		//add the hero height class
+		$classes[] = pixelgrade_hero_get_height( $location, $post );
+	}
 
 	if ( ! empty( $class ) ) {
 		if ( ! is_array( $class ) ) {
@@ -59,8 +73,9 @@ function pixelgrade_get_hero_class( $class = '', $location = '' ) {
 	 * @param array $classes An array of hero classes.
 	 * @param array $class   An array of additional classes added to the hero.
 	 * @param string|array $location   The place (template) where the classes are displayed.
+	 * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
 	 */
-	$classes = apply_filters( 'pixelgrade_hero_class', $classes, $class, $location );
+	$classes = apply_filters( 'pixelgrade_hero_class', $classes, $class, $location, $post );
 
 	return array_unique( $classes );
 }
@@ -163,8 +178,9 @@ function pixelgrade_hero_get_slider_attributes( $attribute = array(), $post = nu
 	 *
 	 * @param array $attributes An array of attributes.
 	 * @param array $attribute  An array of additional attributes added to the element.
+	 * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
 	 */
-	$attributes = apply_filters( 'pixelgrade_hero_slider_attributes', $attributes, $attribute );
+	$attributes = apply_filters( 'pixelgrade_hero_slider_attributes', $attributes, $attribute, $post );
 
 	return array_unique( $attributes );
 }
@@ -344,22 +360,38 @@ function pixelgrade_the_hero( $location = '' ) {
  * Determine if we actually have data that can make up a hero. Prevent empty markup from being shown.
  *
  * @param string|array $location Optional. The place (template) where this is needed.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return bool
  */
-function pixelgrade_hero_is_hero_needed( $location = '' ) {
+function pixelgrade_hero_is_hero_needed( $location = '', $post = null ) {
+	// We might be on a page set as a page for posts and the $post will be the first post in the loop
+	// So we check first
+	if ( empty( $post ) && is_home() ) {
+		// find the id of the page for posts
+		$post = get_option( 'page_for_posts' );
+	}
+
+	// First make sure we have a post
+	$post = get_post( $post );
+
+	//bail if we don't have a post to work with
+	if ( empty( $post ) ) {
+		return false;
+	}
+
 	$is_needed = true;
 
 	//handle the map hero separately
 	if ( pixelgrade_in_location( 'map', $location ) ) {
 		//get the Google Maps URL
-		$map_url = get_post_meta( get_the_ID(), '_hero_map_url', true );
+		$map_url = get_post_meta( $post->ID, '_hero_map_url', true );
 		if ( empty( $map_url ) ) {
 			$is_needed = false;
 		}
 	} else {
 		// get all the images/videos/featured projects ids that we will use as slides (we also cover for when there are none)
-		$slides = pixelgrade_hero_get_slides_ids();
+		$slides = pixelgrade_hero_get_slides_ids( $post );
 
 		if ( empty( $slides ) ) {
 			$is_needed = false;
@@ -367,7 +399,7 @@ function pixelgrade_hero_is_hero_needed( $location = '' ) {
 	}
 
 	// Allow others to short-circuit us on this one
-	return apply_filters( 'pixelgrade_hero_is_hero_needed', $is_needed, $location );
+	return apply_filters( 'pixelgrade_hero_is_hero_needed', $is_needed, $location, $post );
 }
 
 /**
@@ -455,6 +487,11 @@ function pixelgrade_hero_get_slides_ids( $post = null ){
 		if ( ! empty( $videos_ids ) ) {
 			$videos_ids = explode( ',', $videos_ids );
 			$to_return  = array_merge( $to_return, $videos_ids );
+		}
+
+		// If we have nothing but have a featured image, use that as it's still better than nothing
+		if ( empty( $to_return ) && has_post_thumbnail( $post ) ) {
+			$to_return[] = get_post_thumbnail_id( $post );
 		}
 
 		// if we have made it thus far and still haven't found some images or videos, but there is some hero content, add the 0 id to the list

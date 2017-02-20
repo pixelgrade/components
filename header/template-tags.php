@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.0.1
+ * @version     1.0.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,10 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param string|array $class One or more classes to add to the class list.
  * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  */
-function pixelgrade_header_class( $class = '', $location = '' ) {
+function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for header element
-	echo 'class="' . join( ' ', pixelgrade_get_header_class( $class, $location ) ) . '"';
+	echo 'class="' . join( ' ', pixelgrade_get_header_class( $class, $location, $post ) ) . '"';
 }
 
 /**
@@ -30,10 +31,21 @@ function pixelgrade_header_class( $class = '', $location = '' ) {
  *
  * @param string|array $class One or more classes to add to the class list.
  * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return array Array of classes.
  */
-function pixelgrade_get_header_class( $class = '', $location = '' ) {
+function pixelgrade_get_header_class( $class = '', $location = '', $post = null ) {
+	// We might be on a page set as a page for posts and the $post will be the first post in the loop
+	// So we check first
+	if ( empty( $post ) && is_home() ) {
+		// find the id of the page for posts
+		$post = get_option( 'page_for_posts' );
+	}
+
+	// First make sure we have a post
+	$post = get_post( $post );
+
 	$classes = array();
 
 	$classes[] = 'site-header';
@@ -55,8 +67,10 @@ function pixelgrade_get_header_class( $class = '', $location = '' ) {
 	 *
 	 * @param array $classes An array of header classes.
 	 * @param array $class   An array of additional classes added to the header.
+	 * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
+	 * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
 	 */
-	$classes = apply_filters( 'pixelgrade_header_class', $classes, $class, $location );
+	$classes = apply_filters( 'pixelgrade_header_class', $classes, $class, $location, $post );
 
 	return array_unique( $classes );
 }

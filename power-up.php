@@ -3,8 +3,8 @@
  * This file provides the functions needed to load each used component and loads it.
  * It also loads the general component files.
  *
- * @package Julia
- * @since Julia 1.0
+ * @package Boilerplate
+ * @since Boilerplate 1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -168,6 +168,30 @@ function Pixelgrade_Multipage() {
 
 // Load The Multipage
 $multipage_instance = Pixelgrade_Multipage();
+/*------------------------*/
+
+/*++++++++++++++++++++++++*/
+/**
+ * Load the Pixelgrade Nova Menu component.
+ * https://pixelgrade.com/
+ */
+
+/**
+ * Returns the main instance of Pixelgrade_Nova_Menu to prevent the need to use globals.
+ *
+ * @since  1.0.0
+ * @return Pixelgrade_Nova_Menu
+ */
+function Pixelgrade_Nova_Menu() {
+	//only load if we have to
+	if ( ! class_exists( 'Pixelgrade_Nova_Menu') ) {
+		pxg_load_component_file( 'nova-menu', 'class-nova-menu' );
+	}
+	return Pixelgrade_Nova_Menu::instance();
+}
+
+// Load The Nova Menu
+$nova_menu_instance = Pixelgrade_Nova_Menu();
 /*------------------------*/
 
 /*=============================

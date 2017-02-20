@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Multipage
- * @version     1.0.1
+ * @version     1.0.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,8 @@ pxg_load_component_file( 'multipage', 'template-tags' );
 class Pixelgrade_Multipage {
 
 	public $component = 'multipage';
-	public $_version  = '1.0.0';
-	public $_assets_version = '1.0.0';
+	public $_version  = '1.0.4';
+	public $_assets_version = '1.0.1';
 
 	private static $_instance = null;
 
@@ -78,9 +78,7 @@ class Pixelgrade_Multipage {
 	 */
 	public function enqueue_scripts() {
 		// Register the frontend styles and scripts specific to multipages
-		wp_register_script( 'tween-max', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js', array( 'jquery' ) );
-		wp_register_script( 'ease-pack', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js', array( 'jquery' ) );
-		wp_register_script( 'pixelgrade_multipage-scripts', trailingslashit( get_template_directory_uri() ) . 'components/multipage/js/front.js', array( 'jquery', 'tween-max', 'ease-pack' ), $this->_assets_version, true );
+		wp_register_script( 'pixelgrade_multipage-scripts', trailingslashit( get_template_directory_uri() ) . 'components/multipage/js/jquery.bully.js', array( 'jquery' ), $this->_assets_version, true );
 
 		// See if we need to enqueue something for multipages
 		if ( is_page() && pixelgrade_multipage_has_children() ) {
@@ -144,6 +142,10 @@ class Pixelgrade_Multipage {
 	 */
 	public function redirect_subpages() {
 		$object = get_queried_object();
+
+		if ( is_wp_error( $object ) || empty( $object ) ) {
+			return;
+		}
 
 		// Allow others to short-circuit us and prevent us from entering the multipage logic
 		if ( ! apply_filters( 'pixelgrade_multipage_allow', true, $object ) ) {
@@ -233,7 +235,7 @@ class Pixelgrade_Multipage {
 	}
 
 	/**
-	 * Subpages edit links in the admin bar in the backend (edit/new page)
+	 * Subpages edit links in the admin bar
 	 *
 	 * @TODO move this inside a plugin
 	 *
@@ -242,19 +244,28 @@ class Pixelgrade_Multipage {
 	function subpages_admin_bar_edit_links_backend( $wp_admin_bar ) {
 		global $post, $pagenow;
 
-		$is_edit_page = in_array( $pagenow, array( 'post.php',  ) );
+		$is_edit_page = false;
 
-		if ( ! $is_edit_page ) //check for new post page
+		// First let's test if we are on the front end (only there will we get a valid queried object)
+		$current_object = get_queried_object();
+		if ( ! empty( $current_object ) && ! empty( $current_object->post_type ) && 'page' == $current_object->post_type ) {
+			$is_edit_page = true;
+		}
+
+		// Now lets test for backend relevant pages
+		if ( ! $is_edit_page ) {
+			$is_edit_page = in_array( $pagenow, array( 'post.php', ) );
+		} elseif ( ! $is_edit_page ) {//check for new post page
 			$is_edit_page = in_array( $pagenow, array( 'post-new.php' ) );
-		elseif ( ! $is_edit_page )  //check for either new or edit
+		} elseif ( ! $is_edit_page ) { //check for either new or edit
 			$is_edit_page = in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
-
+		}
 
 		if ( $is_edit_page && isset( $post->post_parent ) && ! empty( $post->post_parent ) ) {
 
 			$wp_admin_bar->add_node( array(
 				'id'    => 'edit_parent',
-				'title' => __( 'Edit Parent', 'components' ),
+				'title' => esc_html__( 'Edit Parent', 'components' ),
 				'href'  => get_edit_post_link( $post->post_parent ),
 				'meta'  => array( 'class' => 'edit_parent_button' )
 			) );
@@ -283,7 +294,7 @@ class Pixelgrade_Multipage {
 
 				$wp_admin_bar->add_node( array(
 					'id'    => 'edit_prev_child',
-					'title' => __( 'Edit Prev Child', 'components' ),
+					'title' => esc_html__( 'Edit Prev Child', 'components' ),
 					'href'  => get_edit_post_link( $prev_post->ID ),
 					'meta'  => array( 'class' => 'edit_prev_child_button' )
 				) );
@@ -295,12 +306,11 @@ class Pixelgrade_Multipage {
 
 				$wp_admin_bar->add_node( array(
 					'id'    => 'edit_next_child',
-					'title' => __( 'Edit Next Child', 'components' ),
+					'title' => esc_html__( 'Edit Next Child', 'components' ),
 					'href'  => get_edit_post_link( $next_post->ID ),
 					'meta'  => array( 'class' => 'edit_next_child_button' )
 				) );
 			}
-
 		}
 
 		//this way we allow for pages that have both a parent and children
@@ -319,7 +329,7 @@ class Pixelgrade_Multipage {
 
 				$args = array(
 					'id'    => 'edit_children',
-					'title' => __( 'Edit Children', 'components' ),
+					'title' => esc_html__( 'Edit Children', 'components' ),
 					'href'  => '#',
 					'meta'  => array( 'class' => 'edit_children_button' )
 				);
@@ -330,7 +340,7 @@ class Pixelgrade_Multipage {
 					$kid_args = array(
 						'parent' => 'edit_children',
 						'id'    => 'edit_child_' . $kid->post_name,
-						'title' => __( 'Edit', 'components' ) . ': ' . $kid->post_title,
+						'title' => esc_html__( 'Edit', 'components' ) . ': ' . $kid->post_title,
 						'href'  => get_edit_post_link( $kid->ID ),
 						'meta'  => array( 'class' => 'edit_child_button' )
 					);
@@ -364,7 +374,7 @@ class Pixelgrade_Multipage {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__,esc_html( __( 'Cheatin&#8217; huh?' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -373,6 +383,6 @@ class Pixelgrade_Multipage {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?' ) ),  esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ),  esc_html( $this->_version ) );
 	} // End __wakeup ()
 }

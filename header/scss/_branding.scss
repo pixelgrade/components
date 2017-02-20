@@ -1,4 +1,8 @@
 .c-branding {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     .c-navbar__zone--middle & {
         text-align: center;
     }
@@ -12,10 +16,15 @@
         height: auto;
         margin-left: auto;
         margin-right: auto;
+        transition: filter $transition--macro ease-in-out;
     }
 }
 
 .site-title,
 .site-description {
     color: inherit;
+}
+
+.site-description:empty {
+    display: none !important;
 }
