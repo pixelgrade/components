@@ -94,7 +94,7 @@ if ( empty( $config['zones'] ) || empty( $config['menu_locations'] ) ) {
 
 		<div <?php pixelgrade_css_class( $zone['classes'], array( 'header', 'navbar', 'zone', $zone_id ) ); ?>>
 			<?php
-			// Order the menu_locations
+			// Order the menu_locations in the current zone
 			$menu_locations = $zone['menu_locations'];
 			uasort( $menu_locations, 'order_cmp' );
 
