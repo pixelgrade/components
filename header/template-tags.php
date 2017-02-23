@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.2.0
+ * @version     1.2.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -219,6 +219,20 @@ function pixelgrade_header_get_zone_nav_menu_locations( $zone_id, $zone ) {
  * @return int
  */
 function pixelgrade_header_order_cmp( array $a, array $b ) {
+	// If the order is missing, default to 0, else sanitize
+	if ( ! isset( $a['order'] ) ) {
+		$a['order'] = 0;
+	} else {
+		$a['order'] = (int) $a['order'];
+	}
+
+	if ( ! isset( $b['order'] ) ) {
+		$b['order'] = 0;
+	} else {
+		$b['order'] = (int) $b['order'];
+	}
+
+	// Do the comparison
 	if ( $a['order'] < $b['order'] ) {
 		return -1;
 	} else if ( $a['order'] > $b['order'] ) {
