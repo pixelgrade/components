@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.1.0
+ * @version     1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +20,7 @@ pxg_load_component_file( 'header', 'template-tags' );
 class Pixelgrade_Header {
 
 	public $component = 'header';
-	public $_version  = '1.1.0';
+	public $_version  = '1.2.0';
 	public $_assets_version = '1.0.3';
 
 	private $config = array();
@@ -34,8 +34,6 @@ class Pixelgrade_Header {
 
 	/**
 	 * Register our actions and filters
-	 *
-	 * @return null
 	 */
 	public function register_hooks() {
 		/**
@@ -47,13 +45,11 @@ class Pixelgrade_Header {
 		 */
 		add_action( 'after_setup_theme', array( $this, 'header_setup' ) );
 		/*
-		 * All the filters bellow follow the logic outlined in the component's guides
+		 * All the filters bellow and the ones as 'zone_callback' follow the logic outlined in the component's guides as default behaviour.
 		 * @link http://pixelgrade.github.io/guides/components/header
 		 * They try to automatically adapt to the existence or non-existence of navbar components: the menus and the logo.
 		 */
-		add_filter( 'pixelgrade_header_primary-right_nav_menu_display_zone', array( $this, 'primary_right_nav_menu_zone' ), 10, 1 );
-		add_filter( 'pixelgrade_header_header-branding_nav_menu_display_zone', array( $this, 'header_branding_zone' ), 10, 1 );
-		// Now for conditional zone classes
+		//Conditional zone classes
 		add_filter( 'pixelgrade_css_class', array( $this, 'nav_menu_zone_classes' ), 10, 3 );
 
 		// Setup our header Customify options
@@ -75,17 +71,17 @@ class Pixelgrade_Header {
 		// Initialize the $config
 		$this->config = array(
 			'zones' => array(
-				'left' => array(
+				'left' => array( // the zone's id
 					'order' => 10, // We will use this to establish the display order of the zones
 					'classes' => array(), //by default we will add the classes 'c-navbar__zone' and 'c-navbar__zone--%zone_id%' to each zone
 					'display_blank' => true, // determines if we output markup for an empty zone
 				),
-				'middle' => array(
+				'middle' => array( // the zone's id
 					'order' => 20, // We will use this to establish the display order of the zones
 					'classes' => array(), //by default we will add the classes 'c-navbar__zone' and 'c-navbar__zone--%zone_id%' to each zone
 					'display_blank' => true, // determines if we output markup for an empty zone
 				),
-				'right' => array(
+				'right' => array( // the zone's id
 					'order' => 30, // We will use this to establish the display order of the zones
 					'classes' => array(), //by default we will add the classes 'c-navbar__zone' and 'c-navbar__zone--%zone_id%' to each zone
 					'display_blank' => true, // determines if we output markup for an empty zone
@@ -95,6 +91,8 @@ class Pixelgrade_Header {
 				'primary-left' => array(
 					'title' => esc_html__( 'Header Left', 'components' ),
 					'default_zone' => 'left',
+					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
+					'zone_callback' => false,
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
 						'menu_id'         => 'menu-1',
@@ -105,12 +103,16 @@ class Pixelgrade_Header {
 				),
 				'header-branding' => array(
 					'default_zone' => 'middle',
+					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
+					'zone_callback' => array( $this, 'header_branding_zone' ),
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
 				),
 				'primary-right' => array(
 					'title' => esc_html__( 'Header Right', 'components' ),
 					'default_zone' => 'right',
+					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
+					'zone_callback' => array( $this, 'primary_right_nav_menu_zone' ),
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
 						'menu_id'         => 'menu-2',
@@ -127,6 +129,8 @@ class Pixelgrade_Header {
 			// Add it to the config
 			$this->config['menu_locations']['jetpack-social-menu'] = array(
 					'default_zone' => 'right',
+					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
+					'zone_callback' => false,
 					'order' => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
 				);
@@ -140,8 +144,12 @@ class Pixelgrade_Header {
 		$this->config = apply_filters( 'pixelgrade_header_config', $this->config );
 
 		// We are done with the config. Lets ge to it
+
 		// Register the config menu locations
 		$this->register_nav_menus();
+
+		// Register the config zone callbacks
+		$this->register_zone_callbacks();
 
 		/**
 		 * Add theme support for site logo, if we are allowed to
@@ -161,66 +169,6 @@ class Pixelgrade_Header {
 				)
 			) ) );
 		}
-	}
-
-	/**
-	 * Change the primary-right nav menu's zone depending on the other nav menus.
-	 *
-	 * @param string $zone
-	 *
-	 * @return string
-	 */
-	public function primary_right_nav_menu_zone( $zone ) {
-		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
-		if ( ! has_nav_menu( 'primary-left' ) ) {
-			$zone = 'middle';
-		}
-
-		return $zone;
-	}
-
-	/**
-	 * Change the branding's zone depending on the other nav menus.
-	 *
-	 * @param string $zone
-	 *
-	 * @return string
-	 */
-	public function header_branding_zone( $zone ) {
-		// the branding goes to the left zone when there is no left menu, but there is a right menu
-		if ( ! has_nav_menu( 'primary-left' ) && has_nav_menu( 'primary-right' ) ) {
-			$zone = 'left';
-		}
-
-		return $zone;
-	}
-
-	/**
-	 * Change the zone classes depending on the other nav menus.
-	 *
-	 * @param array $classes An array of header classes.
-	 * @param array $class   An array of additional classes added to the header.
-	 * @param string|array $location   The place (template) where the classes are displayed.
-	 *
-	 * @return array
-	 */
-	public function nav_menu_zone_classes( $classes, $class, $location ) {
-		$has_left_menu   = has_nav_menu( 'primary-left' );
-		$has_right_menu  = has_nav_menu( 'primary-right' );
-
-		if ( pixelgrade_in_location( 'left', $location ) ) {
-			if ( $has_left_menu && $has_right_menu ) {
-				$classes[] = 'c-navbar__zone--push-right';
-			}
-		}
-
-		if ( pixelgrade_in_location( 'right', $location ) ) {
-			if ( ! $has_right_menu || ( ! $has_left_menu && $has_right_menu ) ) {
-				$classes[] = 'c-navbar__zone--push-right';
-			}
-		}
-
-		return $classes;
 	}
 
 	public function get_config() {
@@ -256,6 +204,84 @@ class Pixelgrade_Header {
 
 		// It seems that we didn't do anything. Let others know
 		return false;
+	}
+
+	/**
+	 * Register the needed zone callbacks for each nav menu location based on the current configuration.
+	 */
+	private function register_zone_callbacks() {
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			foreach ( $this->config['menu_locations'] as $menu_id => $settings ) {
+				if ( ! empty( $settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_header_{$menu_id}_nav_menu_display_zone", $settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Change the primary-right nav menu's zone depending on the other nav menus.
+	 *
+	 * @param string $default_zone
+	 * @param array $menu_location_config
+	 * @param array $menu_locations_config
+	 *
+	 * @return string
+	 */
+	public function primary_right_nav_menu_zone( $default_zone, $menu_location_config, $menu_locations_config ) {
+		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
+		if ( ! has_nav_menu( 'primary-left' ) ) {
+			$default_zone = 'middle';
+		}
+
+		return $default_zone;
+	}
+
+	/**
+	 * Change the branding's zone depending on the other nav menus.
+	 *
+	 * @param string $default_zone
+	 * @param array $menu_location_config
+	 * @param array $menu_locations_config
+	 *
+	 * @return string
+	 */
+	public function header_branding_zone( $default_zone, $menu_location_config, $menu_locations_config ) {
+		// the branding goes to the left zone when there is no left menu, but there is a right menu
+		if ( ! has_nav_menu( 'primary-left' ) && has_nav_menu( 'primary-right' ) ) {
+			$default_zone = 'left';
+		}
+
+		return $default_zone;
+	}
+
+	/**
+	 * Change the zone classes depending on the other nav menus.
+	 *
+	 * @param array $classes An array of header classes.
+	 * @param array $class   An array of additional classes added to the header.
+	 * @param string|array $location   The place (template) where the classes are displayed.
+	 *
+	 * @return array
+	 */
+	public function nav_menu_zone_classes( $classes, $class, $location ) {
+		$has_left_menu   = has_nav_menu( 'primary-left' );
+		$has_right_menu  = has_nav_menu( 'primary-right' );
+
+		if ( pixelgrade_in_location( 'left', $location ) ) {
+			if ( $has_left_menu && $has_right_menu ) {
+				$classes[] = 'c-navbar__zone--push-right';
+			}
+		}
+
+		if ( pixelgrade_in_location( 'right', $location ) ) {
+			if ( ! $has_right_menu || ( ! $has_left_menu && $has_right_menu ) ) {
+				$classes[] = 'c-navbar__zone--push-right';
+			}
+		}
+
+		return $classes;
 	}
 
 	public function add_customify_options( $options ) {
