@@ -7,7 +7,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Featured-Image
- * @version    1.0.2
+ * @version    1.0.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 pxg_load_component_file( 'featured-image', 'template-tags' );
 
 class Pixelgrade_Feature_Image {
-	public $_version  = '1.0.2';
+	public $_version  = '1.0.3';
 	public $_assets_version = '1.0.0';
 
 	private static $_instance = null;
@@ -45,12 +45,13 @@ class Pixelgrade_Feature_Image {
 			//Enqueue assets for the admin
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
-			// Setup our heroish PixTypes configuration
-			add_filter( 'pixtypes_theme_activation_config', array( $this, 'pixtypes_config' ), 10, 1 );
-
 			// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 			do_action( 'pixelgrade_featured_image_registered_hooks' );
 		}
+
+		// Setup our featured image PixTypes configuration
+		// We need to do this regardless of the presence of PixTypes so we avoid the chicken and egg problem of the theme activating the plugin via PixCare
+		add_filter( 'pixtypes_theme_activation_config', array( $this, 'pixtypes_config' ), 10, 1 );
 	}
 
 	/**
