@@ -51,30 +51,6 @@ $header_instance = Pixelgrade_Header();
 
 /*++++++++++++++++++++++++*/
 /**
- * Load the Pixelgrade Hero component.
- * https://pixelgrade.com/
- */
-
-/**
- * Returns the main instance of Pixelgrade_Hero to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Hero
- */
-function Pixelgrade_Hero() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Hero') ) {
-		pxg_load_component_file( 'hero', 'class-hero' );
-	}
-	return Pixelgrade_Hero::instance();
-}
-
-// Load The Heroes
-$hero_instance = Pixelgrade_Hero();
-/*------------------------*/
-
-/*++++++++++++++++++++++++*/
-/**
  * Load the Pixelgrade Footer component.
  * https://pixelgrade.com/
  */
