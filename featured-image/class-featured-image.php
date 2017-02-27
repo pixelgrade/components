@@ -149,7 +149,7 @@ class Pixelgrade_Feature_Image {
 	 */
 	public function admin_init() {
 		/* register the styles and scripts specific to this component */
-		wp_register_style( 'pixelgrade_featured_image-admin-style', get_theme_file_uri( 'components/featured-image/css/admin.css' ), array(), $this->_assets_version );
+		wp_register_style( 'pixelgrade_featured_image-admin-style', pixelgrade_get_theme_file_uri( 'components/featured-image/css/admin.css' ), array(), $this->_assets_version );
 
 	}
 
