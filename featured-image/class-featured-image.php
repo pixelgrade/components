@@ -7,7 +7,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Featured-Image
- * @version    1.0.3
+ * @version    1.0.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 pxg_load_component_file( 'featured-image', 'template-tags' );
 
 class Pixelgrade_Feature_Image {
-	public $_version  = '1.0.3';
+	public $_version  = '1.0.4';
 	public $_assets_version = '1.0.0';
 
 	private static $_instance = null;
@@ -67,15 +67,15 @@ class Pixelgrade_Feature_Image {
 			//The Hero Background controls - For pages
 			'enhanced_featured_image' => array(
 				'id'         => 'enhanced_featured_image',
-				'title'      => esc_html__( 'Thumbnail', 'noah' )
+				'title'      => esc_html__( 'Thumbnail', 'components' )
 				                . ' <span class="tooltip" title="<' . 'title>'
-				                . __( 'Thumbnail (Featured Image)', 'noah' )
+				                . __( 'Thumbnail (Featured Image)', 'components' )
 				                . '</title><p>'
-				                . __( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', 'noah' )
+				                . __( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', 'components' )
 				                . '</p><p>'
-				                . __( '<strong>Thumbnail Hover</strong>', 'noah' )
+				                . __( '<strong>Thumbnail Hover</strong>', 'components' )
 				                . '</p><p>'
-				                . __( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', 'noah' )
+				                . __( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', 'components' )
 				                . '</p>"></span>',
 				'pages'      => apply_filters( 'pixelgrade_featured_image_post_types', array( 'jetpack-portfolio' ) ), // Post types to display this metabox on
 				'context'    => 'side',
@@ -83,17 +83,17 @@ class Pixelgrade_Feature_Image {
 				'show_names' => false, // Show field names on the left
 				'fields'     => array(
 					array(
-						'name'        => esc_html__( 'Thumbnail Image', 'noah' ),
+						'name'        => esc_html__( 'Thumbnail Image', 'components' ),
 						'id'          => '_thumbnail_id', //this is the same id of the featured image we are replacing
 						'type'        => 'image',
-						'button_text' => esc_html__( 'Add Thumbnail Image', 'noah' ),
+						'button_text' => esc_html__( 'Add Thumbnail Image', 'components' ),
 						'class'       => '',
 					),
 					array(
-						'name'        => esc_html__( 'Thumbnail Hover Image', 'noah' ),
+						'name'        => esc_html__( 'Thumbnail Hover Image', 'components' ),
 						'id'          => '_thumbnail_hover_image',
 						'type'        => 'image',
-						'button_text' => esc_html__( 'Add Thumbnail Hover', 'noah' ),
+						'button_text' => esc_html__( 'Add Thumbnail Hover', 'components' ),
 						'class'       => 'thumbnail-hover',
 					),
 				)
@@ -149,7 +149,7 @@ class Pixelgrade_Feature_Image {
 	 */
 	public function admin_init() {
 		/* register the styles and scripts specific to this component */
-		wp_register_style( 'pixelgrade_featured_image-admin-style', trailingslashit( get_template_directory_uri() ) . 'components/featured-image/css/admin.css', array(), $this->_assets_version );
+		wp_register_style( 'pixelgrade_featured_image-admin-style', get_theme_file_uri( 'components/featured-image/css/admin.css' ), array(), $this->_assets_version );
 
 	}
 
