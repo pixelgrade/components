@@ -5,7 +5,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package     Components
- * @version     1.1.1
+ * @version     1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -364,4 +364,142 @@ function pixelgrade_array_insert_after( $array, $key, $insert ) {
 	$index = array_search( $key, $keys );
 	$pos = false === $index ? count( $array ) : $index + 1;
 	return array_merge( array_slice( $array, 0, $pos ), $insert, array_slice( $array, $pos ) );
+}
+
+/**
+ * Retrieves the path of a file in the theme.
+ *
+ * Searches in the stylesheet directory before the template directory so themes
+ * which inherit from a parent theme can just override one file.
+ *
+ * It will use the new function in WP 4.7, but will fallback to the old way of doing things otherwise.
+ *
+ * @param string $file Optional. File to search for in the stylesheet directory.
+ * @return string The path of the file.
+ */
+function pixelgrade_get_theme_file_path( $file = '' ) {
+	if ( function_exists( 'get_theme_file_path' ) ) {
+		return get_theme_file_path( $file );
+	} else {
+		$file = ltrim( $file, '/' );
+
+		if ( empty( $file ) ) {
+			$path = get_stylesheet_directory();
+		} elseif ( file_exists( get_stylesheet_directory() . '/' . $file ) ) {
+			$path = get_stylesheet_directory() . '/' . $file;
+		} else {
+			$path = get_template_directory() . '/' . $file;
+		}
+
+		/**
+		 * Filters the path to a file in the theme.
+		 *
+		 * @since WP 4.7.0
+		 *
+		 * @param string $path The file path.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'theme_file_path', $path, $file );
+	}
+}
+
+/**
+ * Retrieves the URL of a file in the theme.
+ *
+ * Searches in the stylesheet directory before the template directory so themes
+ * which inherit from a parent theme can just override one file.
+ *
+ * It will use the new function in WP 4.7, but will fallback to the old way of doing things otherwise.
+ *
+ * @param string $file Optional. File to search for in the stylesheet directory.
+ * @return string The URL of the file.
+ */
+function pixelgrade_get_theme_file_uri( $file = '' ) {
+	if ( function_exists( 'get_theme_file_uri' ) ) {
+		return get_theme_file_uri( $file );
+	} else {
+		$file = ltrim( $file, '/' );
+
+		if ( empty( $file ) ) {
+			$url = get_stylesheet_directory_uri();
+		} elseif ( file_exists( get_stylesheet_directory() . '/' . $file ) ) {
+			$url = get_stylesheet_directory_uri() . '/' . $file;
+		} else {
+			$url = get_template_directory_uri() . '/' . $file;
+		}
+
+		/**
+		 * Filters the URL to a file in the theme.
+		 *
+		 * @since WP 4.7.0
+		 *
+		 * @param string $url  The file URL.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'theme_file_uri', $url, $file );
+	}
+}
+
+/**
+ * Retrieves the path of a file in the parent theme.
+ *
+ * It will use the new function in WP 4.7, but will fallback to the old way of doing things otherwise.
+ *
+ * @param string $file Optional. File to return the path for in the template directory.
+ * @return string The path of the file.
+ */
+function pixelgrade_get_parent_theme_file_path( $file = '' ) {
+	if ( function_exists( 'get_parent_theme_file_path' ) ) {
+		return get_parent_theme_file_path( $file );
+	} else {
+		$file = ltrim( $file, '/' );
+
+		if ( empty( $file ) ) {
+			$path = get_template_directory();
+		} else {
+			$path = get_template_directory() . '/' . $file;
+		}
+
+		/**
+		 * Filters the path to a file in the parent theme.
+		 *
+		 * @since WP 4.7.0
+		 *
+		 * @param string $path The file path.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'parent_theme_file_path', $path, $file );
+	}
+}
+
+/**
+ * Retrieves the URL of a file in the parent theme.
+ *
+ * It will use the new function in WP 4.7, but will fallback to the old way of doing things otherwise.
+ *
+ * @param string $file Optional. File to return the URL for in the template directory.
+ * @return string The URL of the file.
+ */
+function pixelgrade_get_parent_theme_file_uri( $file = '' ) {
+	if ( function_exists( 'get_parent_theme_file_uri' ) ) {
+		return get_parent_theme_file_uri( $file );
+	} else {
+		$file = ltrim( $file, '/' );
+
+		if ( empty( $file ) ) {
+			$url = get_template_directory_uri();
+		} else {
+			$url = get_template_directory_uri() . '/' . $file;
+		}
+
+		/**
+		 * Filters the URL to a file in the parent theme.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param string $url The file URL.
+		 * @param string $file The requested file to search for.
+		 */
+		return apply_filters( 'parent_theme_file_uri', $url, $file );
+	}
 }

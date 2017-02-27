@@ -19,7 +19,7 @@
 function typeline_get_theme_config( $path = '' ) {
 	if ( empty( $path ) ) {
 		// We default to the expected location of the file
-		$path = apply_filters( 'typeline_theme_config_default_path', get_theme_file_path( '/inc/integrations/typeline-config.json' ) );
+		$path = apply_filters( 'typeline_theme_config_default_path', pixelgrade_get_theme_file_path( '/inc/integrations/typeline-config.json' ) );
 	}
 
 	// Allow others to change the used path
