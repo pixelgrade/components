@@ -56,7 +56,7 @@ class Pixelgrade_Footer {
 			'name'          => esc_html__( 'Footer Area', 'components' ),
 			'id'            => 'sidebar-footer',
 			'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components' ),
-			'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  %2$s"><div class="o-wrapper u-container__width">',
+			'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  %2$s"><div class="o-wrapper u-container-width">',
 			'after_widget'  => '</div></div>',
 			'before_title'  => '<h3 class="c-widget__title h3">',
 			'after_title'   => '</h3>',

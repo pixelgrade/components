@@ -25,7 +25,7 @@ $copyright_text = pixelgrade_option( 'copyright_text', __( '%year% &copy; Handcr
 if ( is_active_sidebar( 'sidebar-footer' ) || ! empty( $copyright_text ) ) { ?>
 
 	<footer <?php pixelgrade_footer_class(); ?>>
-		<div class="o-wrapper u-container__width content-area">
+		<div class="o-wrapper u-container-width content-area">
 
 			<?php
 			/**
@@ -69,7 +69,7 @@ if ( is_active_sidebar( 'sidebar-footer' ) || ! empty( $copyright_text ) ) { ?>
 			 */
 			do_action( 'pixelgrade_footer_after_content', 'footer' );
 			?>
-		</div><!-- .o-wrapper.u-container__width.content-area -->
+		</div><!-- .o-wrapper.u-container-width.content-area -->
 	</footer>
 
 <?php } ?>

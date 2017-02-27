@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <header id="masthead" <?php pixelgrade_header_class(); ?> role="banner">
 	<div class="u-header_sides_spacing">
-		<div class="o-wrapper  u-container__width  c-navbar__wrapper">
+		<div class="o-wrapper  u-container-width  c-navbar__wrapper">
 
 			<?php
 			/**
@@ -50,6 +50,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			do_action( 'pixelgrade_header_after_navbar', 'header' );
 			?>
 
-		</div><!-- .o-wrapper  .u-container__width -->
+		</div><!-- .o-wrapper  .u-container-width -->
 	</div><!-- .u-header_sides_spacing -->
 </header><!-- #masthead .site-header -->
