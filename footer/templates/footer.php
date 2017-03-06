@@ -51,9 +51,9 @@ if ( is_active_sidebar( 'sidebar-footer' ) || ! empty( $copyright_text ) ) { ?>
 				<?php
 
 				if ( false === pixelgrade_option( 'footer_hide_back_to_top_link' ) &&
-				     NULL !== pixelgrade_option( 'footer_hide_back_to_top_link' ) ) { ?>
-					<a class="back-to-top" href="#"><?php esc_html_e( 'Back to Top', 'components' ); ?></a>
-				<?php }
+                     NULL !== pixelgrade_option( 'footer_hide_back_to_top_link' ) ) { ?>
+                        <a class="back-to-top" href="#"><?php esc_html_e( 'Back to Top', 'components' ); ?></a>
+                    <?php }
 
 				if ( ! empty( $copyright_text ) ) {
 					// We need to parse some tags
