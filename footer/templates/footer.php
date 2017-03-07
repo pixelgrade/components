@@ -50,8 +50,7 @@ if ( is_active_sidebar( 'sidebar-footer' ) || ! empty( $copyright_text ) ) { ?>
 			<div class="c-footer__content">
 				<?php
 
-				if ( false === pixelgrade_option( 'footer_hide_back_to_top_link' ) &&
-                     NULL !== pixelgrade_option( 'footer_hide_back_to_top_link' ) ) { ?>
+				if ( empty( pixelgrade_option( 'footer_hide_back_to_top_link' ) ) ) { ?>
                         <a class="back-to-top" href="#"><?php esc_html_e( 'Back to Top', 'components' ); ?></a>
                     <?php }
 
