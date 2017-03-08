@@ -13,62 +13,31 @@
  * @see        https://pixelgrade.com
  * @author        Pixelgrade
  * @package    Components/Footer
- * @version     1.0.1
+ * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+?>
 
-$copyright_text = pixelgrade_option( 'copyright_text', __( '%year% &copy; Handcrafted with love by <a href="#">Pixelgrade</a> Team', 'components' ) );
+<footer <?php pixelgrade_footer_class(); ?>>
+	<div class="o-wrapper u-container-width content-area">
 
-if ( is_active_sidebar( 'sidebar-footer' ) || ! empty( $copyright_text ) ) { ?>
+		<?php
+		/**
+		 * pixelgrade_footer_before_content hook.
+		 */
+		do_action( 'pixelgrade_footer_before_content', 'footer' );
+		?>
 
-	<footer <?php pixelgrade_footer_class(); ?>>
-		<div class="o-wrapper u-container-width content-area">
+        <?php pxg_load_component_file( 'footer', 'templates/content-footer', '', false ); ?>
 
-			<?php
-			/**
-			 * pixelgrade_footer_before_widgets hook.
-			 */
-			do_action( 'pixelgrade_footer_before_widgets', 'footer' );
-			?>
-
-			<?php if ( is_active_sidebar( 'sidebar-footer' ) ): ?>
-				<div class="c-gallery c-gallery--footer o-grid o-grid--4col-@lap">
-					<?php dynamic_sidebar( 'sidebar-footer' ); ?>
-				</div><!-- .c-gallery--footer -->
-			<?php endif; ?>
-
-			<?php
-			/**
-			 * pixelgrade_footer_before_widgets hook.
-			 */
-			do_action( 'pixelgrade_footer_before_widgets', 'footer' );
-			?>
-
-			<div class="c-footer__content">
-				<?php
-
-				if ( empty( pixelgrade_option( 'footer_hide_back_to_top_link' ) ) ) { ?>
-                        <a class="back-to-top" href="#"><?php esc_html_e( 'Back to Top', 'components' ); ?></a>
-                    <?php }
-
-				if ( ! empty( $copyright_text ) ) {
-					// We need to parse some tags
-					// like %year%
-					$copyright_text = str_replace( '%year%', date( 'Y' ), $copyright_text );
-					echo '<div class="c-footer__copyright-text">' . do_shortcode( $copyright_text ) . '</div>';
-				} ?>
-			</div><!-- .c-footer__content -->
-
-			<?php
-			/**
-			 * pixelgrade_footer_before_widgets hook.
-			 */
-			do_action( 'pixelgrade_footer_after_content', 'footer' );
-			?>
-		</div><!-- .o-wrapper.u-container-width.content-area -->
-	</footer>
-
-<?php } ?>
+		<?php
+		/**
+		 * pixelgrade_footer_after_content hook.
+		 */
+		do_action( 'pixelgrade_footer_after_content', 'footer' );
+		?>
+	</div><!-- .o-wrapper.u-container-width.content-area -->
+</footer>

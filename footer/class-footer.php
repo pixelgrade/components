@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.0.3
+ * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,8 +20,10 @@ pxg_load_component_file( 'footer', 'template-tags' );
 class Pixelgrade_Footer {
 
 	public $component = 'footer';
-	public $_version  = '1.0.3';
+	public $_version  = '1.1.0';
 	public $_assets_version = '1.0.1';
+
+	private $config = array();
 
 	private static $_instance = null;
 
@@ -36,8 +38,18 @@ class Pixelgrade_Footer {
 	 * @return null
 	 */
 	public function register_hooks(){
+		/**
+		 * Setup the menus
+		 *
+		 * Note that this function is hooked into the after_setup_theme hook, which
+		 * runs before the init hook. The init hook is too late for some features, such
+		 * as indicating support for post thumbnails.
+		 */
+		add_action( 'after_setup_theme', array( $this, 'footer_setup' ) );
+
 		// Register the widget areas
-		add_action( 'widgets_init', array( $this, 'register_widget_areas' ) );
+		// We use a priority of 20 to make sure that this sidebar will appear at the end in Appearance > Widgets
+		add_action( 'widgets_init', array( $this, 'register_sidebars' ), 20 );
 
 		// Setup our header Customify options
 		add_filter( 'customify_filter_fields', array( $this, 'add_customify_options' ), 40, 1 );
@@ -51,16 +63,194 @@ class Pixelgrade_Footer {
 		do_action( 'pixelgrade_footer_registered_hooks' );
 	}
 
-	public function register_widget_areas() {
-		register_sidebar( array(
-			'name'          => esc_html__( 'Footer Area', 'components' ),
-			'id'            => 'sidebar-footer',
-			'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components' ),
-			'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  %2$s"><div class="o-wrapper u-container-width">',
-			'after_widget'  => '</div></div>',
-			'before_title'  => '<h3 class="c-widget__title h3">',
-			'after_title'   => '</h3>',
-		) );
+	/**
+	 * Setup the navigation menus
+	 */
+	public function footer_setup() {
+		// Initialize the $config
+		$this->config = array(
+			'zones' => array(
+				'top' => array( // the zone's id
+					'order' => 10, // We will use this to establish the display order of the zones
+					'classes' => array(), //by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'display_blank' => false, // determines if we output markup for an empty zone
+				),
+				'middle' => array( // the zone's id
+					'order' => 20, // We will use this to establish the display order of the zones
+					'classes' => array(), //by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'display_blank' => true, // determines if we output markup for an empty zone
+				),
+				'bottom' => array( // the zone's id
+					'order' => 30, // We will use this to establish the display order of the zones
+					'classes' => array(), //by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'display_blank' => true, // determines if we output markup for an empty zone
+				),
+			),
+			// The bogus items can sit in either sidebars or menu_locations.
+			// It doesn't matter as long as you set their zone and order properly
+			'sidebars' => array(
+				'sidebar-footer' => array(
+					'default_zone' => 'middle',
+					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
+					'zone_callback' => false,
+					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'container_class' => array( 'c-gallery', 'c-gallery--footer', 'o-grid', 'o-grid--4col-@lap' ), // classes to be added to the sidebar <aside> wrapper
+					'sidebar_args' => array( // skip 'id' arg as we will force that
+						'name' => esc_html__( 'Footer', 'components' ),
+						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components' ),
+						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap', // in case you need some classes added to the sidebar - in the WP Admin only!!!
+						'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
+						'after_widget'  => '</div></div>',
+						'before_title'  => '<h3 class="c-widget__title h3">',
+						'after_title'   => '</h3>',
+					),
+				),
+			),
+			'menu_locations' => array(
+				'footer-back-to-top-link' => array(
+					'default_zone' => 'bottom',
+					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
+					'zone_callback' => false,
+					'order' => 5, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				),
+				'footer' => array(
+					'title' => esc_html__( 'Footer', 'components' ),
+					'default_zone' => 'bottom',
+					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
+					'zone_callback' => false,
+					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
+						'menu_id'         => 'menu-footer',
+						'container'       => 'nav',
+						'container_class' => '',
+						'depth'           => -1, //by default we will flatten the menu hierarchy, if there is one
+						'fallback_cb'     => false,
+					),
+				),
+				'footer-copyright' => array(
+					'default_zone' => 'bottom',
+					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
+					'zone_callback' => false,
+					'order' => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				),
+			),
+		);
+
+		// Add theme support for Jetpack Social Menu, if we are allowed to
+		if ( apply_filters( 'pixelgrade_footer_use_jetpack_social_menu', false ) ) {
+			// Add it to the config
+			$this->config['menu_locations']['jetpack-social-menu'] = array(
+				'default_zone' => 'bottom',
+				// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
+				'zone_callback' => false,
+				'order' => 15, // We will use this to establish the display order of nav menu locations, inside a certain zone
+				'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+			);
+
+			// Add support for it
+			add_theme_support( 'jetpack-social-menu' );
+		}
+
+
+		// Allow others to make changes to the config
+		$this->config = apply_filters( 'pixelgrade_footer_config', $this->config );
+
+		// We are done with the config. Lets ge to it
+
+		// Register the config nav menu locations, if we have any
+		$this->register_nav_menus();
+
+		// The sidebars are registered via the 'widgets_init' hook in $this->register_hooks()
+
+		// Register the config zone callbacks
+		$this->register_zone_callbacks();
+	}
+
+	public function get_config() {
+		return $this->config;
+	}
+
+	/**
+	 * Register the needed menu locations based on the current configuration.
+	 *
+	 * @return bool
+	 */
+	private function register_nav_menus() {
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			$menus = array();
+			foreach ( $this->config['menu_locations'] as $id => $settings ) {
+				// Make sure that we ignore bogus menu locations
+				if ( empty( $settings['bogus'] ) ) {
+					if ( ! empty( $settings['title'] ) ) {
+						$menus[ $id ] = $settings['title'];
+					} else {
+						$menus[ $id ] = $id;
+					}
+				}
+			}
+
+			if ( ! empty( $menus ) ) {
+				register_nav_menus( $menus );
+
+				// We registered some menu locations. Life is good. Share it.
+				return true;
+			}
+		}
+
+		// It seems that we didn't do anything. Let others know
+		return false;
+	}
+
+	public function register_sidebars() {
+		$registered_some_sidebars = false;
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			$menus = array();
+			foreach ( $this->config['sidebars'] as $id => $settings ) {
+				// Make sure that we ignore bogus sidebars
+				if ( empty( $settings['bogus'] ) ) {
+					if ( empty( $settings['sidebar_args']['id'] ) ) {
+						$settings['sidebar_args']['id'] = $id;
+					}
+
+//					var_dump($settings['sidebar_args']);
+//					die();
+
+					// Register a new widget area
+					register_sidebar( $settings['sidebar_args'] );
+
+					// Remember what we've done last summer :)
+					$registered_some_sidebars = true;
+				}
+			}
+		}
+
+		// Let others know what we did.
+		return $registered_some_sidebars;
+	}
+
+	/**
+	 * Register the needed zone callbacks for each widget area and nav menu location based on the current configuration.
+	 */
+	private function register_zone_callbacks() {
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			foreach ( $this->config['sidebars'] as $id => $settings ) {
+				if ( ! empty( $settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_footer_{$id}_widget_area_display_zone", $settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
+
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			foreach ( $this->config['menu_locations'] as $menu_id => $settings ) {
+				if ( ! empty( $settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_footer_{$menu_id}_nav_menu_display_zone", $settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
 	}
 
 	public function add_customify_options( $options ) {
@@ -185,7 +375,7 @@ class Pixelgrade_Footer {
 						'css'     => array(
 							array(
 								'property' => 'background',
-								'selector' => '.c-footer',
+								'selector' => '.u-footer__background',
 							),
 						),
 					),

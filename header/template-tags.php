@@ -155,6 +155,10 @@ function pixelgrade_header_get_zones() {
 				$menu_location['default_zone'] = '';
 			}
 
+			if ( empty( $menu_location['order'] ) ) {
+				$menu_location['order'] = 0;
+			}
+
 			/**
 			 * Allow others to filter the default zone this nav menu location should be shown.
 			 *
