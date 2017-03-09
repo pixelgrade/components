@@ -94,7 +94,7 @@ class Pixelgrade_Footer {
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'container_class' => array( 'c-gallery', 'c-gallery--footer', 'o-grid', 'o-grid--4col-@lap' ), // classes to be added to the sidebar <aside> wrapper
+					'container_class' => array( 'c-gallery', 'c-footer__gallery', 'o-grid', 'o-grid--4col-@lap' ), // classes to be added to the sidebar <aside> wrapper
 					'sidebar_args' => array( // skip 'id' arg as we will force that
 						'name' => esc_html__( 'Footer', 'components' ),
 						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components' ),
