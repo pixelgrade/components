@@ -50,7 +50,7 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 				 * This only happens if we're not in Jetpack, but on WPCOM instead.
 				 * This is the correct path for WPCOM.
 				 */
-				wp_register_script( 'jetpack-gallery-settings', trailingslashit( get_template_directory_uri() ) . 'components/gallery/jetpack-fallback/gallery-settings.js', array( 'media-views' ), '20121225' );
+				wp_register_script( 'jetpack-gallery-settings', pixelgrade_get_theme_file_uri( 'components/gallery/jetpack-fallback/gallery-settings.js' ), array( 'media-views' ), '20121225' );
 			}
 
 			wp_enqueue_script( 'jetpack-gallery-settings' );

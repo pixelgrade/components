@@ -7,7 +7,7 @@
  * @see      https://pixelgrade.com
  * @author   Pixelgrade
  * @package  Components/Gallery
- * @version  1.1.3
+ * @version  1.1.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Pixelgrade_Gallery_Settings {
 	public $component = 'gallery';
-	public $_version = '1.1.3';
+	public $_version = '1.1.4';
 	public $_assets_version = '1.1.3';
 
 	private static $_instance = null;
@@ -48,6 +48,8 @@ class Pixelgrade_Gallery_Settings {
 
 	/**
 	 * Register our actions and filters
+	 *
+	 * @return null
 	 */
 	public function register_hooks() {
 		// Load the Jetpack fallback functionality
@@ -94,7 +96,7 @@ class Pixelgrade_Gallery_Settings {
 		}
 
 		// Register the styles and scripts specific to this component
-		wp_register_style( 'pixelgrade_gallery-admin-style', trailingslashit( get_template_directory_uri() ) . 'components/gallery/css/admin.css', array(), $this->_assets_version );
+		wp_register_style( 'pixelgrade_gallery-admin-style', pixelgrade_get_theme_file_uri( 'components/gallery/css/admin.css' ), array(), $this->_assets_version );
 	}
 
 	/**
@@ -110,7 +112,7 @@ class Pixelgrade_Gallery_Settings {
 		}
 
 		if ( ! wp_script_is( 'pixelgrade-gallery-settings', 'registered' ) ) {
-			wp_register_script( 'pixelgrade-gallery-settings', trailingslashit( get_template_directory_uri() ) . 'components/gallery/js/gallery-settings.js', $dependecies, $this->_assets_version );
+			wp_register_script( 'pixelgrade-gallery-settings', pixelgrade_get_theme_file_uri( 'components/gallery/js/gallery-settings.js' ), $dependecies, $this->_assets_version );
 		}
 
 		// Enqueue our script
