@@ -48,8 +48,6 @@ class Pixelgrade_Gallery_Settings {
 
 	/**
 	 * Register our actions and filters
-	 *
-	 * @return null
 	 */
 	public function register_hooks() {
 		// Load the Jetpack fallback functionality

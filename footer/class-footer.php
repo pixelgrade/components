@@ -34,8 +34,6 @@ class Pixelgrade_Footer {
 
 	/**
 	 * Register our actions and filters
-	 *
-	 * @return null
 	 */
 	public function register_hooks(){
 		/**

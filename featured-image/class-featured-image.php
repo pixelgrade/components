@@ -29,8 +29,6 @@ class Pixelgrade_Feature_Image {
 
 	/**
 	 * Register our actions and filters
-	 *
-	 * @return null
 	 */
 	public function register_hooks() {
 		// We only do anything if the PixTypes plugin is active
