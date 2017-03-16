@@ -7,7 +7,7 @@
  * @see      https://pixelgrade.com
  * @author   Pixelgrade
  * @package  Components/Gallery
- * @version  1.1.4
+ * @version  1.1.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Pixelgrade_Gallery_Settings {
 	public $component = 'gallery';
-	public $_version = '1.1.4';
+	public $_version = '1.1.5';
 	public $_assets_version = '1.1.3';
 
 	private static $_instance = null;
@@ -77,7 +77,7 @@ class Pixelgrade_Gallery_Settings {
 
 	function jetpack_fallback() {
 		//Make sure that the Jetpack fallback functionality is loaded
-		require_once( 'jetpack-fallback/functions.gallery.php' );
+		require_once( get_template_directory() . '/components/gallery/jetpack-fallback/functions.gallery.php' );
 	}
 
 	function admin_init() {
