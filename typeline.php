@@ -19,7 +19,7 @@
 function typeline_get_theme_config( $path = '' ) {
 	if ( empty( $path ) ) {
 		// We default to the expected location of the file
-		$path = apply_filters( 'typeline_theme_config_default_path', pixelgrade_get_theme_file_path( '/inc/integrations/typeline-config.json' ) );
+		$path = apply_filters( 'typeline_theme_config_default_path', get_theme_file_path( '/inc/integrations/typeline-config.json' )  );
 	}
 
 	// Allow others to change the used path
@@ -94,43 +94,41 @@ function typeline_negative_value_cb( $value, $selector, $property, $unit ) {
 }
 
 /**
- * Outputs the inline JS code used in the Customizer for negative value live preview.
+ * Inline enqueues the JS code used in the Customizer for negative value live preview.
  */
-function typeline_negative_value_cb_customizer_preview() { ?>
+function typeline_negative_value_cb_customizer_preview() {
 
-	<script type="text/javascript">
+    $js = "function typeline_negative_value_cb( value, selector, property, unit ) {
 
-        function typeline_negative_value_cb( value, selector, property, unit ) {
+    var css = '',
+        style = document.getElementById('typeline_negative_value_style_tag'),
+        head = document.head || document.getElementsByTagName('head')[0];
 
-            var css = '',
-                style = document.getElementById('typeline_negative_value_style_tag'),
-                head = document.head || document.getElementsByTagName('head')[0];
+    css += selector + ' {' +
+        property + ': ' + (-1 * value) + unit + ';' +
+        '}';
 
-            css += selector + ' {' +
-                property + ': ' + (-1 * value) + unit + ';' +
-                '}';
+    if ( style !== null ) {
+        style.innerHTML = css;
+    } else {
+        style = document.createElement('style');
+        style.setAttribute('id', 'typeline_negative_value_style_tag');
 
-            if ( style !== null ) {
-                style.innerHTML = css;
-            } else {
-                style = document.createElement('style');
-                style.setAttribute('id', 'typeline_negative_value_style_tag');
-
-                style.type = 'text/css';
-                if ( style.styleSheet ) {
-                    style.styleSheet.cssText = css;
-                } else {
-                    style.appendChild(document.createTextNode(css));
-                }
-
-                head.appendChild(style);
-            }
+        style.type = 'text/css';
+        if ( style.styleSheet ) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
         }
 
-	</script>
+        head.appendChild(style);
+    }
+}" . PHP_EOL;
 
-<?php }
-add_action( 'customize_preview_init', 'typeline_negative_value_cb_customizer_preview' );
+	wp_add_inline_script( 'customify-previewer-scripts', $js );
+
+ }
+add_action( 'customize_preview_init', 'typeline_negative_value_cb_customizer_preview', 20 );
 
 /**
  * Returns the custom CSS rules for the spacing depending on the Customizer settings.
@@ -172,83 +170,80 @@ function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 }
 
 /**
- * Outputs the inline JS code used in the Customizer for the spacing live preview.
+ * Inline enqueues the JS code used in the Customizer for the spacing live preview.
  */
 function typeline_spacing_cb_customizer_preview() {
+	$js = '';
+
 	// Get the Typeline configuration for this theme
-	$typeline_config = typeline_get_theme_config(); ?>
+	$typeline_config = typeline_get_theme_config();
 
-	<script type="text/javascript">
-
-		<?php
-		// Some sanity check before processing the config
-		// There is no need for this code since we have nothing to work with
-		if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+	// Some sanity check before processing the config
+	// There is no need for this code since we have nothing to work with
+	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 		$points      = $typeline_config['spacings']['points'];
 		$breakpoints = $typeline_config['spacings']['breakpoints'];
-		?>
 
-        var points = <?php echo '[[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']]' ?>,
-            breakpoints = <?php echo '["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"]'; ?>;
+	    $js .= 'var points = [[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']],
+breakpoints = ["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"];
 
-        function getY( x ) {
-            if ( x < points[1][0] ) {
-                var a = points[0][1],
-                    b = (points[1][1] - points[0][1]) / Math.pow(points[1][0], 3);
-                return a + b * Math.pow(x, 3);
-            } else {
-                return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
-            }
+function getY( x ) {
+    if ( x < points[1][0] ) {
+        var a = points[0][1],
+            b = (points[1][1] - points[0][1]) / Math.pow(points[1][0], 3);
+        return a + b * Math.pow(x, 3);
+    } else {
+        return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
+    }
+}' . PHP_EOL;
+	}
+
+    $js .= "
+function typeline_spacing_cb( value, selector, property, unit ) {
+    var css = '',
+        style = document.getElementById('typeline_range_negative_style_tag'),
+        head = document.head || document.getElementsByTagName('head')[0];
+
+    css += selector + ' {' +
+        property + ': ' + value + unit + ';' +
+        '}';" . PHP_EOL;
+
+	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+
+        $js .= "
+	for ( var i = 0; i <= breakpoints.length - 1; i++ ) {
+	    var ratio = (getY(value) - 1) * (i + 1) / breakpoints.length + 1,
+	        newValue = Math.round(value / ratio);
+	
+	    css += '@media only screen and (max-width: ' + parseInt(breakpoints[i], 10) + 'px) {' +
+	        selector + ' {' +
+	        property + ': ' + newValue + unit + ';' +
+	        '}' +
+	        '}';
+	}" . PHP_EOL;
+	}
+
+    $js .= "
+    if ( style !== null ) {
+	        style.innerHTML = css;
+    } else {
+        style = document.createElement('style');
+        style.setAttribute('id', 'typeline_range_negative_style_tag');
+
+        style.type = 'text/css';
+        if ( style.styleSheet ) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
         }
 
-		<?php } ?>
+        head.appendChild(style);
+    }
+}" . PHP_EOL;
 
-        function typeline_spacing_cb( value, selector, property, unit ) {
-
-            var css = '',
-                style = document.getElementById('typeline_range_negative_style_tag'),
-                head = document.head || document.getElementsByTagName('head')[0];
-
-            css += selector + ' {' +
-                property + ': ' + value + unit + ';' +
-                '}';
-
-			<?php if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) { ?>
-
-            for ( var i = 0; i <= breakpoints.length - 1; i++ ) {
-                var ratio = (getY(value) - 1) * (i + 1) / breakpoints.length + 1,
-                    newValue = Math.round(value / ratio);
-
-                css += '@media only screen and (max-width: ' + parseInt(breakpoints[i], 10) + 'px) {' +
-                    selector + ' {' +
-                    property + ': ' + newValue + unit + ';' +
-                    '}' +
-                    '}';
-            }
-
-			<?php } ?>
-
-            if ( style !== null ) {
-                style.innerHTML = css;
-            } else {
-                style = document.createElement("style");
-                style.setAttribute('id', 'typeline_range_negative_style_tag');
-
-                style.type = 'text/css';
-                if ( style.styleSheet ) {
-                    style.styleSheet.cssText = css;
-                } else {
-                    style.appendChild(document.createTextNode(css));
-                }
-
-                head.appendChild(style);
-            }
-        }
-
-	</script>
-
-<?php }
-add_action( 'customize_preview_init', 'typeline_spacing_cb_customizer_preview' );
+	wp_add_inline_script( 'customify-previewer-scripts', $js );
+}
+add_action( 'customize_preview_init', 'typeline_spacing_cb_customizer_preview', 20 );
 
 /**
  * Returns the custom CSS rules for the spacing depending on the Customizer settings.
@@ -290,83 +285,83 @@ function typeline_negative_spacing_cb( $value, $selector, $property, $unit ) {
 }
 
 /**
- * Outputs the inline JS code used in the Customizer for the spacing live preview.
+ * Inline enqueues the JS code used in the Customizer for the spacing live preview.
  */
 function typeline_negative_spacing_cb_customizer_preview() {
+	$js = '';
+
 	// Get the Typeline configuration for this theme
-	$typeline_config = typeline_get_theme_config(); ?>
+	$typeline_config = typeline_get_theme_config();
 
-    <script type="text/javascript">
-
-		<?php
-		// Some sanity check before processing the config
-		// There is no need for this code since we have nothing to work with
-		if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+	// Some sanity check before processing the config
+	// There is no need for this code since we have nothing to work with
+	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 		$points      = $typeline_config['spacings']['points'];
 		$breakpoints = $typeline_config['spacings']['breakpoints'];
-		?>
 
-		var points = <?php echo '[[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']]' ?>,
-			breakpoints = <?php echo '["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"]'; ?>;
+		$js .= 'var points = [[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']],
+breakpoints = ["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"];
 
-		function getY( x ) {
-			if ( x < points[1][0] ) {
-				var a = points[0][1],
-					b = (points[1][1] - points[0][1]) / Math.pow(points[1][0], 3);
-				return a + b * Math.pow(x, 3);
-			} else {
-				return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
-			}
+function getY( x ) {
+	if ( x < points[1][0] ) {
+		var a = points[0][1],
+			b = (points[1][1] - points[0][1]) / Math.pow(points[1][0], 3);
+		return a + b * Math.pow(x, 3);
+	} else {
+		return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
+	}
+}' . PHP_EOL;
+
+	}
+
+	$js .= "
+function typeline_negative_spacing_cb( value, selector, property, unit ) {
+
+	var css = '',
+		style = document.getElementById('typeline_range_negative_style_tag'),
+		head = document.head || document.getElementsByTagName('head')[0];
+
+	css += selector + ' {' +
+	       property + ': ' + -1 * value + unit + ';' +
+	       '}';" . PHP_EOL;
+
+	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+
+		$js .= "
+	for ( var i = 0; i <= breakpoints.length - 1; i++ ) {
+		var ratio = (getY(value) - 1) * (i + 1) / breakpoints.length + 1,
+			newValue = Math.round(value / ratio);
+
+		css += '@media only screen and (max-width: ' + parseInt(breakpoints[i], 10) + 'px) {' +
+		       selector + ' {' +
+		       property + ': ' + -1 * newValue + unit + ';' +
+		       '}' +
+		       '}';
+	}" . PHP_EOL;
+
+	}
+
+	$js .= "
+	if ( style !== null ) {
+			style.innerHTML = css;
+	} else {
+		style = document.createElement('style');
+		style.setAttribute('id', 'typeline_range_negative_style_tag');
+
+		style.type = 'text/css';
+		if ( style.styleSheet ) {
+			style.styleSheet.cssText = css;
+		} else {
+			style.appendChild(document.createTextNode(css));
 		}
 
-		<?php } ?>
+		head.appendChild(style);
+	}
+}" . PHP_EOL;
 
-		function typeline_negative_spacing_cb( value, selector, property, unit ) {
-
-			var css = '',
-				style = document.getElementById('typeline_range_negative_style_tag'),
-				head = document.head || document.getElementsByTagName('head')[0];
-
-			css += selector + ' {' +
-			       property + ': ' + -1 * value + unit + ';' +
-			       '}';
-
-			<?php if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) { ?>
-
-			for ( var i = 0; i <= breakpoints.length - 1; i++ ) {
-				var ratio = (getY(value) - 1) * (i + 1) / breakpoints.length + 1,
-					newValue = Math.round(value / ratio);
-
-				css += '@media only screen and (max-width: ' + parseInt(breakpoints[i], 10) + 'px) {' +
-				       selector + ' {' +
-				       property + ': ' + -1 * newValue + unit + ';' +
-				       '}' +
-				       '}';
-			}
-
-			<?php } ?>
-
-			if ( style !== null ) {
-				style.innerHTML = css;
-			} else {
-				style = document.createElement("style");
-				style.setAttribute('id', 'typeline_range_negative_style_tag');
-
-				style.type = 'text/css';
-				if ( style.styleSheet ) {
-					style.styleSheet.cssText = css;
-				} else {
-					style.appendChild(document.createTextNode(css));
-				}
-
-				head.appendChild(style);
-			}
-		}
-
-    </script>
-
-<?php }
-add_action( 'customize_preview_init', 'typeline_negative_spacing_cb_customizer_preview' );
+	wp_add_inline_script( 'customify-previewer-scripts', $js );
+}
+add_action( 'customize_preview_init', 'typeline_negative_spacing_cb_customizer_preview', 20 );
 
 /**
  * Returns the custom CSS rules for the fonts depending on the Customizer settings.
@@ -428,7 +423,7 @@ function typeline_font_cb( $value, $font ) {
 	if ( ! empty( $value['letter_spacing'] ) ) {
 		$letter_spacing_unit = 'em';
 		if ( ! empty(  $font['fields']['letter-spacing']['unit'] ) ) {
-			$size_unit = $font['fields']['letter-spacing']['unit'];
+			$letter_spacing_unit = $font['fields']['letter-spacing']['unit'];
 		}
 		$output .= 'letter-spacing: ' . $value['letter_spacing'] . $letter_spacing_unit . '; ';
 	}
@@ -459,63 +454,64 @@ function typeline_font_cb( $value, $font ) {
 }
 
 /**
- * Outputs the inline JS code used in the Customizer for the font live preview.
+ * Inline enqueues the JS code used in the Customizer for the font live preview.
  */
 function typeline_font_cb_customizer_preview() {
+	$js = '';
+
 	// Get the Typeline configuration for this theme
-	$typeline_config = typeline_get_theme_config(); ?>
+	$typeline_config = typeline_get_theme_config();
 
-	<script type="text/javascript">
-		<?php
-		// Some sanity check before processing the config
-		// There is no need for this code since we have nothing to work with
-		if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+	// Some sanity check before processing the config
+	// There is no need for this code since we have nothing to work with
+	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 		$points = $typeline_config['spacings']['points'];
-		$breakpoints = $typeline_config['spacings']['breakpoints']; ?>
+		$breakpoints = $typeline_config['spacings']['breakpoints'];
 
-		var points = <?php echo '[[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']]' ?>,
-			breakpoints = <?php echo '["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"]'; ?>;
+		$js .= 'var points = [[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']],
+	breakpoints = ["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"];
 
-		function getY(x) {
-			if (x < points[1][0]) {
-				var a = points[0][1],
-					b = (points[1][1] - points[0][1]) / Math.pow(points[1][0], 3);
-				return a + b * Math.pow(x, 3);
-			} else {
-				return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
-			}
+	function getY(x) {
+		if (x < points[1][0]) {
+			var a = points[0][1],
+				b = (points[1][1] - points[0][1]) / Math.pow(points[1][0], 3);
+			return a + b * Math.pow(x, 3);
+		} else {
+			return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
 		}
-		<?php } ?>
+	}' . PHP_EOL;
+	}
 
-		function typeline_font_cb(values, font) {
+	$js .= "
+function typeline_font_cb(values, font) {
+	var css = font['selector'] + ' {';
 
-			var css = font['selector'] + ' {';
+	// Customify is already checking values for us
+	Object.keys(values).map(function(property, index) {
+		var value = values[property];
+		css += property + ': ' + value + ';';
+	});
 
-			// Customify is already checking values for us
-			Object.keys(values).map(function(property, index) {
-				var value = values[property];
-				css += property + ': ' + value + ";";
-			});
+	css += '}';" . PHP_EOL;
 
-			css += '}';
+	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 
-			<?php if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) { ?>
+		$js .= "
+	for (var i = 0; i <= breakpoints.length - 1; i++) {
+		var oldValue = parseInt(values['font-size'], 10),
+			newRatio = (getY(oldValue) - 1) * (i + 1) / breakpoints.length + 1,
+			newValue = Math.round(oldValue / newRatio);
 
-			for (var i = 0; i <= breakpoints.length - 1; i++) {
-				var oldValue = parseInt(values['font-size'], 10),
-					newRatio = (getY(oldValue) - 1) * (i + 1) / breakpoints.length + 1,
-					newValue = Math.round(oldValue / newRatio);
+		css += '@media only screen and (max-width: ' + parseInt(breakpoints[i], 10) + 'px) {' +
+				font['selector'] + ' {' + 'font-size: ' + newValue + font['fields']['font-size']['unit'] + ';' + '}' +
+			'}\\n';
+	}" . PHP_EOL;
+	}
 
-				css += '@media only screen and (max-width: ' + parseInt(breakpoints[i], 10) + 'px) {' +
-						font['selector'] + ' {' + 'font-size: ' + newValue + font['fields']['font-size']['unit'] + ';' + '}' +
-					'}\n';
-			}
-			<?php } ?>
+		$js .= "
+	return css;
+}" . PHP_EOL;
 
-			return css;
-		}
-
-	</script>
-
-<?php }
-add_action( 'customize_preview_init', 'typeline_font_cb_customizer_preview' );
+	wp_add_inline_script( 'customify-previewer-scripts', $js );
+}
+add_action( 'customize_preview_init', 'typeline_font_cb_customizer_preview', 20 );
