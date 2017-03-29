@@ -371,6 +371,7 @@ add_action( 'customize_preview_init', 'typeline_negative_spacing_cb_customizer_p
  *
  * @return string
  */
+
 function typeline_font_cb( $value, $font ) {
 	// Account for fonts with multiple variants
 	if ( empty( $value['font_weight'] ) && ! empty( $value['selected_variants'] ) ) {
