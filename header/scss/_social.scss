@@ -12,7 +12,7 @@
         margin: 0;
 
         + li {
-            @include typeline(margin-left, $gutter-xxs);
+            @include spacing(margin-left, $gutter-xxs);
         }
     }
 
