@@ -12,7 +12,7 @@
         margin: 0;
 
         + li {
-            @extend %ml-xxs;
+            @include typeline(margin-left, $gutter-xxs);
         }
     }
 
