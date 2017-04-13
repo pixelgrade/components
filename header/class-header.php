@@ -486,7 +486,7 @@ class Pixelgrade_Header {
 							),
 							array(
 								'property' => 'border-top-color',
-								'selector' => '.c-navbar [class*="children"]:hover:after',
+								'selector' => '.c-navbar [class*="children"].hover:after',
 							),
 						),
 					),
