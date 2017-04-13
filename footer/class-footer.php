@@ -20,7 +20,9 @@ pxg_load_component_file( 'footer', 'template-tags' );
 class Pixelgrade_Footer {
 
 	public $component = 'footer';
+
 	public $_version  = '1.1.0';
+
 	public $_assets_version = '1.0.1';
 
 	private $config = array();
@@ -273,14 +275,14 @@ class Pixelgrade_Footer {
 						'type'              => 'textarea',
 						'label'             => esc_html__( 'Copyright Text', 'components' ),
 						'desc'              => esc_html__( 'Set the text that will appear in the footer area. Use %year% to display the current year.', 'components' ),
-						'default'           => __( '%year% &copy; Handcrafted with love by <a href="#">Pixelgrade</a> Team', 'components' ),
+						'default'           => __( '%year% &copy; Handcrafted with love by <a href="https://pixelgrade.com" target="_blank">Pixelgrade</a> Team', 'components' ),
 						'sanitize_callback' => 'wp_kses_post',
 						'live'              => array( '.copyright-text' ),
 					),
 					'footer_top_spacing'           => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Top Spacing', 'components' ),
-						'desc'        => esc_html__( '', 'components' ),
+						'desc'        => '',
 						'live'        => true,
 						'default'     => 0,
 						'input_attrs' => array(
@@ -301,7 +303,7 @@ class Pixelgrade_Footer {
 					'footer_bottom_spacing'        => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Bottom Spacing', 'components' ),
-						'desc'        => esc_html__( '', 'components' ),
+						'desc'        => '',
 						'live'        => true,
 						'default'     => 90,
 						'input_attrs' => array(
@@ -345,7 +347,7 @@ class Pixelgrade_Footer {
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Text Color', 'components' ),
 						'live'    => true,
-						'default' => '#252525',
+						'default' => '#757575',
 						'css'     => array(
 							array(
 								'property' => 'color',

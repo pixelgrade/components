@@ -6,48 +6,57 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package     Components
- * @version     1.0.1
+ * @version     1.0.3
  */
 
 /**
  * Read the Typeline config and return the configuration as array. Returns false on failure.
  *
- * @param string $path Optional.
+ * @param string $url Optional.
  *
  * @return array|bool
  */
-function typeline_get_theme_config( $path = '' ) {
-	if ( empty( $path ) ) {
+function typeline_get_theme_config( $url = '' ) {
+	if ( empty( $url ) ) {
 		// We default to the expected location of the file
-		$path = apply_filters( 'typeline_theme_config_default_path', get_theme_file_path( '/inc/integrations/typeline-config.json' )  );
+		$url = apply_filters( 'typeline_theme_config_default_path', pixelgrade_get_theme_file_uri( '/inc/integrations/typeline-config.json' )  );
 	}
 
 	// Allow others to change the used path
-	$path = apply_filters( 'typeline_theme_config_path', $path );
+	$url = apply_filters( 'typeline_theme_config_url', $url );
 
 	//bail if we don't have a path
-	if ( empty( $path ) ) {
+	if ( empty( $url ) ) {
 		return false;
 	}
 
 	// Read the theme's config file
-	// There is no need for the WP_Filesystem as that would be way overkill since we are only reading the file - there is no need to security or credentials
-	// @link http://wordpress.stackexchange.com/a/166172/52726
-	$file_contents = @file_get_contents( $path );
-	// bail on failure or no content
-	if ( empty( $file_contents ) ) {
+	// Get remote file
+	$response = wp_remote_get( $url );
+
+	// Check for error
+	if ( is_wp_error( $response ) ) {
+		return false;
+	}
+
+	// Parse remote file
+	$data = wp_remote_retrieve_body( $response );
+
+	// Check for error
+	if ( is_wp_error( $data ) ) {
 		return false;
 	}
 
 	// Decode the json config
-	$config = json_decode( $file_contents, true );
+	$config = json_decode( $data, true );
+
 	// bail on failure to decode
 	if ( empty( $config ) ) {
 		return false;
 	}
 
 	// Now we need to do some sanitizing
-	// If there is a 'typeline-config' entry than we will return that. Else we will treat the whole array as being the configuration
+	// If there is a 'typeline-config' entry then we will return that. Else we will treat the whole array as being the configuration
 	if ( isset( $config['typeline-config'] ) ) {
 		return $config['typeline-config'];
 	} else {
@@ -371,7 +380,6 @@ add_action( 'customize_preview_init', 'typeline_negative_spacing_cb_customizer_p
  *
  * @return string
  */
-
 function typeline_font_cb( $value, $font ) {
 	// Account for fonts with multiple variants
 	if ( empty( $value['font_weight'] ) && ! empty( $value['selected_variants'] ) ) {
@@ -438,10 +446,11 @@ function typeline_font_cb( $value, $font ) {
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
+
 	// Some sanity check before processing the config
-	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
-		$points      = $typeline_config['spacings']['points'];
-		$breakpoints = $typeline_config['spacings']['breakpoints'];
+	if ( ! empty( $typeline_config['typography']['points'] ) && ! empty( $typeline_config['typography']['breakpoints'] ) ) {
+		$points      = $typeline_config['typography']['points'];
+		$breakpoints = $typeline_config['typography']['breakpoints'];
 
 		for ( $i = 0; $i < count( $breakpoints ); $i ++ ) {
 			$ratio    = ( typeline_get_y( $value['font_size'], $points ) - 1 ) * ( $i + 1 ) / count( $breakpoints ) + 1;
@@ -465,9 +474,9 @@ function typeline_font_cb_customizer_preview() {
 
 	// Some sanity check before processing the config
 	// There is no need for this code since we have nothing to work with
-	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
-		$points = $typeline_config['spacings']['points'];
-		$breakpoints = $typeline_config['spacings']['breakpoints'];
+	if ( ! empty( $typeline_config['typography']['points'] ) && ! empty( $typeline_config['typography']['breakpoints'] ) ) {
+		$points = $typeline_config['typography']['points'];
+		$breakpoints = $typeline_config['typography']['breakpoints'];
 
 		$js .= 'var points = [[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']],
 	breakpoints = ["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"];
@@ -495,7 +504,7 @@ function typeline_font_cb(values, font) {
 
 	css += '}';" . PHP_EOL;
 
-	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+	if ( ! empty( $typeline_config['typography']['points'] ) && ! empty( $typeline_config['typography']['breakpoints'] ) ) {
 
 		$js .= "
 	for (var i = 0; i <= breakpoints.length - 1; i++) {

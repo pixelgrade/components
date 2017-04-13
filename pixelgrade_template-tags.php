@@ -5,7 +5,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package     Components
- * @version     1.2.0
+ * @version     1.2.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -87,12 +87,7 @@ if ( ! function_exists( 'pixelgrade_option') ) {
 		/** @var PixCustomifyPlugin $pixcustomify_plugin */
 		global $pixcustomify_plugin;
 
-		// if there is set an key in url force that value
-		if ( isset( $_GET[ $option ] ) && ! empty( $option ) ) {
-
-			return wp_unslash( sanitize_text_field( $_GET[ $option ] ) );
-
-		} elseif ( $pixcustomify_plugin !== null ) {
+		if ( $pixcustomify_plugin !== null ) {
 			// if there is a customify value get it here
 
 			// First we see if we are not supposed to force over the option's default value

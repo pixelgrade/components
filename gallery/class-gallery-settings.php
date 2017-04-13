@@ -213,7 +213,7 @@ class Pixelgrade_Gallery_Settings {
 
 		//add also the type when it is a masonry gallery
 		if ( ! empty( self::$atts[ self::$gallery_instance ]['type'] ) && 'masonry' == self::$atts[ self::$gallery_instance ]['type'] ) {
-			$out = str_replace( "class='gallery", "class='gallery  js-masonry", $out );
+			$out = str_replace( "class='gallery", "class='gallery  u-gallery-type--" . self::$atts[ self::$gallery_instance ]['type'], $out );
 		}
 
 		// We may also need to add the slideshow class since we are using our Jetpack fallback

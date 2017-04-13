@@ -7,7 +7,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Featured-Image
- * @version    1.0.4
+ * @version    1.0.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 pxg_load_component_file( 'featured-image', 'template-tags' );
 
 class Pixelgrade_Feature_Image {
-	public $_version  = '1.0.4';
+	public $_version  = '1.0.5';
 	public $_assets_version = '1.0.0';
 
 	private static $_instance = null;
@@ -37,10 +37,13 @@ class Pixelgrade_Feature_Image {
 			// Setup how things will behave in the WP admin area
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-			//Remove the Featured image metabox
+			// Remove the Featured image metabox
 			add_action( 'add_meta_boxes', array( $this, 'remove_featured_image_metabox' ) );
 
-			//Enqueue assets for the admin
+			// Make sure that we save the featured image in the same way the core does - a value of -1 means delete the meta data, not saving it
+			add_filter( 'cmb_validate_image', array( $this, 'save_featured_image_meta' ), 10, 3 );
+
+			// Enqueue assets for the admin
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
 			// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
@@ -142,13 +145,22 @@ class Pixelgrade_Feature_Image {
 		}
 	}
 
+	public function save_featured_image_meta( $new, $post_id, $field ) {
+		if ( isset( $field['id'] ) && '_thumbnail_id' == $field['id'] ) {
+			if ( '-1' == $new ) {
+				// Our CMB deletes the meta data when it is an empty string, not on -1
+				$new = '';
+			}
+		}
+		return $new;
+	}
+
 	/**
 	 * Load on when the admin is initialized
 	 */
 	public function admin_init() {
 		/* register the styles and scripts specific to this component */
 		wp_register_style( 'pixelgrade_featured_image-admin-style', pixelgrade_get_theme_file_uri( 'components/featured-image/css/admin.css' ), array(), $this->_assets_version );
-
 	}
 
 	/**
@@ -188,7 +200,7 @@ class Pixelgrade_Feature_Image {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__,esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ), esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ), esc_html( $this->_version ) );
 	} // End __clone ()
 
 	/**
@@ -197,6 +209,6 @@ class Pixelgrade_Feature_Image {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cheatin&#8217; huh?', 'components' ) ),  esc_html( $this->_version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components' ),  esc_html( $this->_version ) );
 	} // End __wakeup ()
 }
