@@ -6,7 +6,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package     Components
- * @version     1.0.3
+ * @version     1.0.4
  */
 
 /**
@@ -17,6 +17,12 @@
  * @return array|bool
  */
 function typeline_get_theme_config( $url = '' ) {
+	global $typeline_config;
+
+	if ( ! empty( $typeline_config ) ) {
+		return $typeline_config;
+	}
+
 	if ( empty( $url ) ) {
 		// We default to the expected location of the file
 		$url = apply_filters( 'typeline_theme_config_default_path', pixelgrade_get_theme_file_uri( '/inc/integrations/typeline-config.json' )  );
@@ -58,10 +64,12 @@ function typeline_get_theme_config( $url = '' ) {
 	// Now we need to do some sanitizing
 	// If there is a 'typeline-config' entry then we will return that. Else we will treat the whole array as being the configuration
 	if ( isset( $config['typeline-config'] ) ) {
-		return $config['typeline-config'];
+		$typeline_config = $config['typeline-config'];
 	} else {
-		return $config;
+		$typeline_config = $config;
 	}
+
+	return $typeline_config;
 }
 
 /**
