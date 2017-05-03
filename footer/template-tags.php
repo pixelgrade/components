@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.0
+ * @version     1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -146,7 +146,7 @@ function pixelgrade_footer_get_nav_menu( $args, $menu_location = '' ) {
 }
 
 function footer_the_back_to_top_link() {
-	if ( ! empty( pixelgrade_option( 'footer_hide_back_to_top_link' ) ) ) { ?>
+	if ( empty( pixelgrade_option( 'footer_hide_back_to_top_link', false ) ) ) { ?>
 		<a class="back-to-top" href="#"><?php esc_html_e( 'Back to Top', 'components' ); ?></a>
 	<?php }
 }
