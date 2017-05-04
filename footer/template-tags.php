@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.1
+ * @version     1.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -93,7 +93,8 @@ function pixelgrade_the_footer( $location = '' ) {
  * @param array $sidebar_settings The sidebar settings.
  */
 function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
-	if ( ! is_active_sidebar( $sidebar_id ) ) {
+	// We let others hijack this and prevent the sidebar from showing
+	if ( ! is_active_sidebar( $sidebar_id ) || ! apply_filters( 'pixelgrade_footer_display_sidebar', true, $sidebar_id, $sidebar_settings ) ) {
 		return;
 	}
 

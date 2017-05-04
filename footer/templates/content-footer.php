@@ -70,20 +70,20 @@ foreach ( $zones as $zone_id => $zone ) {
             $current_menu_location = reset( $menu_locations );
             $current_menu_location_id = key( $menu_locations );
 
-				if ( empty( $current_menu_location['order'] ) || ( ! empty( $current_sidebar['order'] ) && $current_sidebar['order'] >= $current_menu_location['order'] ) ) {
-					if ( ! empty( $current_sidebar['bogus'] ) ) {
-						// We have something special to show
-						if ( 'footer-back-to-top-link' == $current_sidebar_id ) {
-							footer_the_back_to_top_link();
-						} elseif( 'footer-copyright' == $current_sidebar_id ) {
-							footer_the_copyright();
-						} elseif ( 'jetpack-social-menu' == $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
-							jetpack_social_menu();
-						}
-					} else {
-						// We will display the current sidebar
-						pixelgrade_footer_the_sidebar( $current_sidebar_id, $current_sidebar );
+			if ( empty( $current_menu_location['order'] ) || ( ! empty( $current_sidebar['order'] ) && $current_sidebar['order'] >= $current_menu_location['order'] ) ) {
+				if ( ! empty( $current_sidebar['bogus'] ) ) {
+					// We have something special to show
+					if ( 'footer-back-to-top-link' == $current_sidebar_id ) {
+						footer_the_back_to_top_link();
+					} elseif( 'footer-copyright' == $current_sidebar_id ) {
+						footer_the_copyright();
+					} elseif ( 'jetpack-social-menu' == $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
+						jetpack_social_menu();
 					}
+				} else {
+					// We will display the current sidebar
+					pixelgrade_footer_the_sidebar( $current_sidebar_id, $current_sidebar );
+				}
 
                 // Remove it from the sidebars stack
                 array_shift( $sidebars );
