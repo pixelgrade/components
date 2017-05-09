@@ -30,114 +30,114 @@ $zones = pixelgrade_footer_get_zones();
 
 <div class="c-footer">
 
-<?php
+	<?php
 
-// Cycle through each zone and display the nav menus, sidebars or other "bogus" things
-foreach ( $zones as $zone_id => $zone ) {
+	// Cycle through each zone and display the nav menus, sidebars or other "bogus" things
+	foreach ( $zones as $zone_id => $zone ) {
 
-    if ( empty( $zone['menu_locations'] ) && empty( $zone['sidebars'] ) && empty( $zone['display_blank'] ) ) {
-        continue;
-    }
-
-    /**
-     * Do note that you can make use of the fact that we've used the pixelgrade_css_class() function to
-     * output the classes for each zone. You can use the `pixelgrade_css_class` filter and depending on
-     * the location received act accordingly.
-     */
-
-    // Get the sidebars in the current zone
-    $sidebars = pixelgrade_footer_get_zone_sidebars( $zone_id, $zone );
-    if ( empty( $sidebars ) ) {
-        $sidebars = array();
-    }
-    // Get the menu_locations in the current zone
-    $menu_locations = pixelgrade_footer_get_zone_nav_menu_locations( $zone_id, $zone );
-    if ( empty( $menu_locations ) ) {
-        $menu_locations = array();
-    }
-
-    $is_empty = true;
-
-    foreach ( $menu_locations as $id => $settings ) {
-		if ( ! empty( $settings['bogus'] ) || has_nav_menu( $id ) ) {
-			$is_empty = false;
+		if ( empty( $zone['menu_locations'] ) && empty( $zone['sidebars'] ) && empty( $zone['display_blank'] ) ) {
+			continue;
 		}
-    }
 
-    foreach ( $sidebars as $id => $settings ) {
-        if ( ! empty( $settings['bogus'] ) || is_active_sidebar( $id ) ) {
-	        $is_empty = false;
-        }
-    }
+		/**
+		 * Do note that you can make use of the fact that we've used the pixelgrade_css_class() function to
+		 * output the classes for each zone. You can use the `pixelgrade_css_class` filter and depending on
+		 * the location received act accordingly.
+		 */
 
-    if ( $is_empty ) {
-        continue;
-    }
-    ?>
+		// Get the sidebars in the current zone
+		$sidebars = pixelgrade_footer_get_zone_sidebars( $zone_id, $zone );
+		if ( empty( $sidebars ) ) {
+			$sidebars = array();
+		}
+		// Get the menu_locations in the current zone
+		$menu_locations = pixelgrade_footer_get_zone_nav_menu_locations( $zone_id, $zone );
+		if ( empty( $menu_locations ) ) {
+			$menu_locations = array();
+		}
 
-	<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>>
+		$is_empty = true;
 
-		<?php
-		// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
-	    // We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
-	    // And we will stop when both are empty
+		foreach ( $menu_locations as $id => $settings ) {
+			if ( ! empty( $settings['bogus'] ) || has_nav_menu( $id ) ) {
+				$is_empty = false;
+			}
+		}
 
-	    while ( ! empty( $sidebars ) || ! empty( $menu_locations ) ) {
-	        // Compare the first sidebar and the first menu location and pick the one with the smallest order
-	        // On equal orders we will favor the sidebar
+		foreach ( $sidebars as $id => $settings ) {
+			if ( ! empty( $settings['bogus'] ) || is_active_sidebar( $id ) ) {
+				$is_empty = false;
+			}
+		}
 
-	        $current_sidebar = reset( $sidebars );
-	        $current_sidebar_id = key( $sidebars );
-	        $current_menu_location = reset( $menu_locations );
-	        $current_menu_location_id = key( $menu_locations );
+		if ( $is_empty ) {
+			continue;
+		}
+		?>
 
-			if ( empty( $current_menu_location['order'] ) || ( ! empty( $current_sidebar['order'] ) && $current_sidebar['order'] >= $current_menu_location['order'] ) ) {
-				if ( ! empty( $current_sidebar['bogus'] ) ) {
-					// We have something special to show
-					if ( 'footer-back-to-top-link' == $current_sidebar_id ) {
-						footer_the_back_to_top_link();
-					} elseif( 'footer-copyright' == $current_sidebar_id ) {
-						footer_the_copyright();
-					} elseif ( 'jetpack-social-menu' == $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
-						jetpack_social_menu();
+		<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>>
+
+			<?php
+			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
+			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
+			// And we will stop when both are empty
+
+			while ( ! empty( $sidebars ) || ! empty( $menu_locations ) ) {
+				// Compare the first sidebar and the first menu location and pick the one with the smallest order
+				// On equal orders we will favor the sidebar
+
+				$current_sidebar          = reset( $sidebars );
+				$current_sidebar_id       = key( $sidebars );
+				$current_menu_location    = reset( $menu_locations );
+				$current_menu_location_id = key( $menu_locations );
+
+				if ( empty( $current_menu_location['order'] ) || ( ! empty( $current_sidebar['order'] ) && $current_sidebar['order'] >= $current_menu_location['order'] ) ) {
+					if ( ! empty( $current_sidebar['bogus'] ) ) {
+						// We have something special to show
+						if ( 'footer-back-to-top-link' == $current_sidebar_id ) {
+							footer_the_back_to_top_link();
+						} elseif ( 'footer-copyright' == $current_sidebar_id ) {
+							footer_the_copyright();
+						} elseif ( 'jetpack-social-menu' == $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
+							jetpack_social_menu();
+						}
+					} else {
+						// We will display the current sidebar
+						pixelgrade_footer_the_sidebar( $current_sidebar_id, $current_sidebar );
 					}
+
+					// Remove it from the sidebars stack
+					array_shift( $sidebars );
 				} else {
-					// We will display the current sidebar
-					pixelgrade_footer_the_sidebar( $current_sidebar_id, $current_sidebar );
+					if ( ! empty( $current_menu_location['bogus'] ) ) {
+						// We have something special to show
+						if ( 'footer-back-to-top-link' == $current_menu_location_id ) {
+							footer_the_back_to_top_link();
+						} elseif ( 'footer-copyright' == $current_menu_location_id ) {
+							footer_the_copyright();
+						} elseif ( 'jetpack-social-menu' == $current_menu_location_id && function_exists( 'jetpack_social_menu' ) ) {
+							jetpack_social_menu();
+						}
+					} else {
+						// We will display the current menu
+						// Make sure we have some nav_menu args
+						if ( empty( $current_menu_location['nav_menu_args'] ) ) {
+							$current_menu_location['nav_menu_args'] = array();
+						}
+						$nav_menu = pixelgrade_footer_get_nav_menu( $current_menu_location['nav_menu_args'], $current_menu_location_id );
+
+						if ( ! empty( $nav_menu ) ) {
+							echo $nav_menu;
+						}
+					}
+
+					// Remove it from the menu_locations stack
+					array_shift( $menu_locations );
 				}
+			} ?>
 
-	            // Remove it from the sidebars stack
-	            array_shift( $sidebars );
-	        } else {
-	            if ( ! empty( $current_menu_location['bogus'] ) ) {
-	                // We have something special to show
-	                if ( 'footer-back-to-top-link' == $current_menu_location_id ) {
-	                    footer_the_back_to_top_link();
-	                } elseif( 'footer-copyright' == $current_menu_location_id ) {
-	                    footer_the_copyright();
-	                } elseif ( 'jetpack-social-menu' == $current_menu_location_id && function_exists( 'jetpack_social_menu' ) ) {
-	                    jetpack_social_menu();
-	                }
-	            } else {
-	                // We will display the current menu
-	                // Make sure we have some nav_menu args
-	                if ( empty( $current_menu_location['nav_menu_args'] ) ) {
-	                    $current_menu_location['nav_menu_args'] = array();
-	                }
-	                $nav_menu = pixelgrade_footer_get_nav_menu( $current_menu_location['nav_menu_args'], $current_menu_location_id );
+		</div><!-- .c-footer__zone -->
 
-	                if ( ! empty( $nav_menu ) ) {
-	                    echo $nav_menu;
-	                }
-	            }
-
-	            // Remove it from the menu_locations stack
-	            array_shift( $menu_locations );
-	        }
-	    } ?>
-
-    </div><!-- .c-footer__zone -->
-
-<?php } ?>
+	<?php } ?>
 
 </div>
