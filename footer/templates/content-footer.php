@@ -70,7 +70,7 @@ $zones = pixelgrade_footer_get_zones();
 			}
 		}
 
-		if ( $is_empty ) {
+		if ( $is_empty && empty( $zone['display_blank'] ) ) {
 			continue;
 		}
 		?>
