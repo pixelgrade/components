@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.1
+ * @version     1.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ class Pixelgrade_Footer {
 
 	public $component = 'footer';
 
-	public $_version  = '1.1.1';
+	public $_version  = '1.1.2';
 
 	public $_assets_version = '1.0.1';
 
@@ -99,7 +99,7 @@ class Pixelgrade_Footer {
 						'name' => esc_html__( 'Footer', 'components' ),
 						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components' ),
 						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap', // in case you need some classes added to the sidebar - in the WP Admin only!!!
-						'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
+						'before_widget' => '<div id="%1$s" class="c-gallery__item  widget  c-widget  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
 						'after_widget'  => '</div></div>',
 						'before_title'  => '<h3 class="c-widget__title h3">',
 						'after_title'   => '</h3>',
