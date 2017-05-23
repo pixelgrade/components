@@ -6,55 +6,40 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package     Components
- * @version     1.0.4
+ * @version     1.0.5
  */
 
 /**
  * Read the Typeline config and return the configuration as array. Returns false on failure.
  *
- * @param string $url Optional.
+ * @param string $path Optional.
  *
  * @return array|bool
  */
-function typeline_get_theme_config( $url = '' ) {
-	global $typeline_config;
+function typeline_get_theme_config( $path = '' ) {
 
-	if ( ! empty( $typeline_config ) ) {
-		return $typeline_config;
-	}
-
-	if ( empty( $url ) ) {
+	if ( empty( $path ) ) {
 		// We default to the expected location of the file
-		$url = apply_filters( 'typeline_theme_config_default_path', pixelgrade_get_theme_file_uri( '/inc/integrations/typeline-config.json' )  );
+		$path = apply_filters( 'typeline_theme_config_default_path', pixelgrade_get_theme_file_path( '/inc/integrations/typeline-config.php' )  );
 	}
 
 	// Allow others to change the used path
-	$url = apply_filters( 'typeline_theme_config_url', $url );
+	$path = apply_filters( 'typeline_theme_config_path', $path );
 
 	//bail if we don't have a path
-	if ( empty( $url ) ) {
+	if ( empty( $path ) ) {
 		return false;
 	}
 
-	// Read the theme's config file
-	// Get remote file
-	$response = wp_remote_get( $url );
-
-	// Check for error
-	if ( is_wp_error( $response ) ) {
-		return false;
-	}
-
-	// Parse remote file
-	$data = wp_remote_retrieve_body( $response );
-
-	// Check for error
-	if ( is_wp_error( $data ) ) {
+	// Read the theme's config file - it contains a variable $typeline_config
+	include( $path );
+	// If for some reason the file doens't contain the variable, bail
+	if ( ! isset( $typeline_config ) ) {
 		return false;
 	}
 
 	// Decode the json config
-	$config = json_decode( $data, true );
+	$config = json_decode( $typeline_config, true );
 
 	// bail on failure to decode
 	if ( empty( $config ) ) {
@@ -64,12 +49,10 @@ function typeline_get_theme_config( $url = '' ) {
 	// Now we need to do some sanitizing
 	// If there is a 'typeline-config' entry then we will return that. Else we will treat the whole array as being the configuration
 	if ( isset( $config['typeline-config'] ) ) {
-		$typeline_config = $config['typeline-config'];
-	} else {
-		$typeline_config = $config;
+		$config = $config['typeline-config'];
 	}
 
-	return $typeline_config;
+	return $config;
 }
 
 /**
