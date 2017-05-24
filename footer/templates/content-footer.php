@@ -75,9 +75,7 @@ $zones = pixelgrade_footer_get_zones();
 		}
 		?>
 
-		<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>>
-
-			<?php
+		<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>><?php
 			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
 			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
 			// And we will stop when both are empty
@@ -134,9 +132,7 @@ $zones = pixelgrade_footer_get_zones();
 					// Remove it from the menu_locations stack
 					array_shift( $menu_locations );
 				}
-			} ?>
-
-		</div><!-- .c-footer__zone -->
+			} ?></div><!-- .c-footer__zone -->
 
 	<?php } ?>
 
