@@ -75,31 +75,6 @@ $footer_instance = Pixelgrade_Footer();
 
 /*++++++++++++++++++++++++*/
 /**
- * Load the Pixelgrade Featured Image component.
- * https://pixelgrade.com/
- */
-
-/**
- * Returns the main instance of Pixelgrade_Feature_Image to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Feature_Image
- */
-function Pixelgrade_Feature_Image() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Feature_Image') ) {
-		pxg_load_component_file( 'featured-image', 'class-featured-image' );
-	}
-	return Pixelgrade_Feature_Image::instance();
-}
-
-// Load The Feature Image
-$featured_image_instance = Pixelgrade_Feature_Image();
-/*------------------------*/
-
-
-/*++++++++++++++++++++++++*/
-/**
  * Load the Pixelgrade Gallery component.
  * https://pixelgrade.com/
  */
