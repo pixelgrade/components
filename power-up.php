@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Load our global Typeline helper functions
  */
-require_once 'typeline.php';
+require_once( get_template_directory() . '/components/typeline.php' );
 
 /**
  * Load our global Pixelgrade template tags
  */
-require_once 'pixelgrade_template-tags.php';
+require_once( get_template_directory() . '/components/pixelgrade_template-tags.php' );
 
 /*==========================
 	LOAD THE COMPONENTS
