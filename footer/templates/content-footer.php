@@ -13,7 +13,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Footer
- * @version    1.0.1
+ * @version    1.0.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -56,26 +56,62 @@ $zones = pixelgrade_footer_get_zones();
 			$menu_locations = array();
 		}
 
+		// We want to make sure that we know for real if a certain footer is empty or not
 		$is_empty = true;
 
+		// Check the menu locations for emptiness
 		foreach ( $menu_locations as $id => $settings ) {
-			if ( ! empty( $settings['bogus'] ) || has_nav_menu( $id ) ) {
+			if ( ! empty( $settings['bogus'] ) ) {
+				// We have something special to show - bogus things
+				// Better check if they output anything
+				$output = '';
+				if ( 'footer-back-to-top-link' == $id ) {
+					$output = pixelgrade_footer_get_back_to_top_link();
+				} elseif ( 'footer-copyright' == $id ) {
+					$output = pixelgrade_footer_get_copyright_content();
+				} elseif ( 'jetpack-social-menu' == $id && has_nav_menu( 'jetpack-social-menu' ) ) {
+					$is_empty = false;
+				}
+
+				if ( ! empty( $output ) ) {
+					$is_empty = false;
+				}
+			} elseif ( has_nav_menu( $id ) ) {
 				$is_empty = false;
 			}
 		}
 
+		// Check the sidebars for emptiness
 		foreach ( $sidebars as $id => $settings ) {
-			if ( ! empty( $settings['bogus'] ) || is_active_sidebar( $id ) ) {
+			if ( ! empty( $settings['bogus'] ) ) {
+				// We have something special to show - bogus things
+				// Better check if they output anything
+				$output = '';
+				if ( 'footer-back-to-top-link' == $id ) {
+					$output = pixelgrade_footer_get_back_to_top_link();
+				} elseif ( 'footer-copyright' == $id ) {
+					$output = pixelgrade_footer_get_copyright_content();
+				} elseif ( 'jetpack-social-menu' == $id && has_nav_menu( 'jetpack-social-menu' ) ) {
+					$is_empty = false;
+				}
+
+				if ( ! empty( $output ) ) {
+					$is_empty = false;
+				}
+			} elseif ( is_active_sidebar( $id ) ) {
 				$is_empty = false;
 			}
 		}
 
+		// If this footer zone is empty and we were told not to display anything when this is the case, oblige
 		if ( $is_empty && empty( $zone['display_blank'] ) ) {
 			continue;
 		}
 		?>
 
-		<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>><?php
+		<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>>
+
+			<?php
 			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
 			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
 			// And we will stop when both are empty
@@ -93,9 +129,9 @@ $zones = pixelgrade_footer_get_zones();
 					if ( ! empty( $current_sidebar['bogus'] ) ) {
 						// We have something special to show
 						if ( 'footer-back-to-top-link' == $current_sidebar_id ) {
-							footer_the_back_to_top_link();
+							pixelgrade_footer_the_back_to_top_link();
 						} elseif ( 'footer-copyright' == $current_sidebar_id ) {
-							footer_the_copyright();
+							pixelgrade_footer_the_copyright();
 						} elseif ( 'jetpack-social-menu' == $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
 							jetpack_social_menu();
 						}
@@ -110,9 +146,9 @@ $zones = pixelgrade_footer_get_zones();
 					if ( ! empty( $current_menu_location['bogus'] ) ) {
 						// We have something special to show
 						if ( 'footer-back-to-top-link' == $current_menu_location_id ) {
-							footer_the_back_to_top_link();
+							pixelgrade_footer_the_back_to_top_link();
 						} elseif ( 'footer-copyright' == $current_menu_location_id ) {
-							footer_the_copyright();
+							pixelgrade_footer_the_copyright();
 						} elseif ( 'jetpack-social-menu' == $current_menu_location_id && function_exists( 'jetpack_social_menu' ) ) {
 							jetpack_social_menu();
 						}
@@ -132,8 +168,10 @@ $zones = pixelgrade_footer_get_zones();
 					// Remove it from the menu_locations stack
 					array_shift( $menu_locations );
 				}
-			} ?></div><!-- .c-footer__zone -->
+			} ?>
+
+		</div><!-- .c-footer__zone -->
 
 	<?php } ?>
 
-</div>
+</div><!-- .c-footer -->

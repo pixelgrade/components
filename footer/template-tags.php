@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.2
+ * @version     1.1.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -80,7 +80,7 @@ function pixelgrade_get_footer_class( $class = '', $location = '', $post = null 
 /**
  * Displays the footer.
  *
- * @param string $location Optional. This is a hint regarding the place/template where this header is being displayed
+ * @param string $location Optional. This is a hint regarding the place/template where this footer is being displayed
  */
 function pixelgrade_the_footer( $location = '' ) {
 	pxg_load_component_file( 'footer', 'templates/footer', '', false );
@@ -146,21 +146,60 @@ function pixelgrade_footer_get_nav_menu( $args, $menu_location = '' ) {
 	return wp_nav_menu( $args );
 }
 
-function footer_the_back_to_top_link() {
-	if ( empty( pixelgrade_option( 'footer_hide_back_to_top_link', false ) ) ) { ?>
-		<a class="back-to-top" href="#"><?php esc_html_e( 'Back to Top', 'components' ); ?></a>
-	<?php }
+/**
+ * Display the footer back to top link
+ */
+function pixelgrade_footer_the_back_to_top_link() {
+	echo pixelgrade_footer_get_back_to_top_link();
 }
 
-function footer_the_copyright() {
-	$copyright_text = pixelgrade_option( 'copyright_text', __( '%year% &copy; Handcrafted with love by <a href="#">Pixelgrade</a> Team', 'components' ) );
+/**
+ * Get the footer back to top link
+ */
+function pixelgrade_footer_get_back_to_top_link() {
+	// We want to use the same default as the component's Customify config
+	$config = Pixelgrade_Footer()->get_customify_config();
+	$default = false;
+	if ( ! empty( $config['footer_section']['options']['footer_hide_back_to_top_link']['default'] ) ) {
+		$default = $config['footer_section']['options']['footer_hide_back_to_top_link']['default'];
+	}
+
+	$option = pixelgrade_option( 'footer_hide_back_to_top_link', $default );
+	if ( empty( $option ) ) {
+		return '<a class="back-to-top" href="#">' . esc_html__( 'Back to Top', 'components' ) . '</a>';
+	}
+
+	return '';
+}
+
+/**
+ * Display the footer copyright.
+ */
+function pixelgrade_footer_the_copyright() {
+	$copyright_text = pixelgrade_footer_get_copyright_content();
+
+	if ( ! empty( $copyright_text ) ) {
+		echo '<div class="c-footer__copyright-text">' . $copyright_text . '</div>';
+	}
+}
+
+/**
+ * Get the footer copyright content (HTML or simple text).
+ * It already has do_shortcode applied.
+ *
+ * @return bool|string
+ */
+function pixelgrade_footer_get_copyright_content() {
+	$copyright_text = pixelgrade_option( 'copyright_text', sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ) );
 
 	if ( ! empty( $copyright_text ) ) {
 		// We need to parse some tags
 		// like %year%
 		$copyright_text = str_replace( '%year%', date( 'Y' ), $copyright_text );
-		echo '<div class="c-footer__copyright-text">' . do_shortcode( $copyright_text ) . '</div>';
+		return do_shortcode( $copyright_text );
 	}
+
+	return '';
 }
 
 /**
@@ -181,7 +220,7 @@ function pixelgrade_footer_is_valid_config() {
 }
 
 /**
- * We will take the Header component config, process it and then we want to end up with a series of nav menu locations to display.
+ * We will take the Footer component config, process it and then we want to end up with a series of nav menu locations to display.
  * This includes the config bogus menu locations - this is actually their purpose: knowing where and when to display a certain special thing.
  *
  * @return array

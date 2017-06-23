@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.2
+ * @version     1.1.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,9 +21,11 @@ class Pixelgrade_Footer {
 
 	public $component = 'footer';
 
-	public $_version  = '1.1.2';
+	public $_version  = '1.1.4';
 
 	public $_assets_version = '1.0.1';
+
+	private $customify_config = array();
 
 	private $config = array();
 
@@ -51,7 +53,7 @@ class Pixelgrade_Footer {
 		// We use a priority of 20 to make sure that this sidebar will appear at the end in Appearance > Widgets
 		add_action( 'widgets_init', array( $this, 'register_sidebars' ), 20 );
 
-		// Setup our header Customify options
+		// Setup our footer Customify options
 		add_filter( 'customify_filter_fields', array( $this, 'add_customify_options' ), 40, 1 );
 
 		/* Hook-up to various places where we need to output things */
@@ -99,7 +101,7 @@ class Pixelgrade_Footer {
 						'name' => esc_html__( 'Footer', 'components' ),
 						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components' ),
 						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap', // in case you need some classes added to the sidebar - in the WP Admin only!!!
-						'before_widget' => '<div id="%1$s" class="c-gallery__item  widget  c-widget  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
+						'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
 						'after_widget'  => '</div></div>',
 						'before_title'  => '<h3 class="c-widget__title h3">',
 						'after_title'   => '</h3>',
@@ -168,8 +170,22 @@ class Pixelgrade_Footer {
 		$this->register_zone_callbacks();
 	}
 
+	/**
+	 * Get the component's configuration
+	 *
+	 * @return array
+	 */
 	public function get_config() {
 		return $this->config;
+	}
+
+	/**
+	 * Get the component's Customify configuration
+	 *
+	 * @return array
+	 */
+	public function get_customify_config() {
+		return $this->customify_config;
 	}
 
 	/**
@@ -275,9 +291,9 @@ class Pixelgrade_Footer {
 						'type'              => 'textarea',
 						'label'             => esc_html__( 'Copyright Text', 'components' ),
 						'desc'              => esc_html__( 'Set the text that will appear in the footer area. Use %year% to display the current year.', 'components' ),
-						'default'           => __( '%year% &copy; Handcrafted with love by <a href="https://pixelgrade.com" target="_blank">Pixelgrade</a> Team', 'components' ),
+						'default'           => sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ),
 						'sanitize_callback' => 'wp_kses_post',
-						'live'              => array( '.copyright-text' ),
+						'live'              => array( '.c-footer__copyright-text' ),
 					),
 					'footer_top_spacing'           => array(
 						'type'        => 'range',
@@ -386,12 +402,14 @@ class Pixelgrade_Footer {
 		//Allow others to make changes
 		$footer_section = apply_filters( 'pixelgrade_footer_customify_section_options', $footer_section, $options );
 
+		$this->customify_config = $footer_section;
+
 		//make sure we are in good working order
 		if ( empty( $options['sections'] ) ) {
 			$options['sections'] = array();
 		}
 
-		//append the header section
+		//append the footer section
 		$options['sections'] = $options['sections'] + $footer_section;
 
 		return $options;
