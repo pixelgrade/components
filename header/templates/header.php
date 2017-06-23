@@ -13,7 +13,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Header
- * @version    1.1.0
+ * @version    1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?>
 
 			<div class="c-navbar  c-navbar--dropdown">
-				<input class="c-navbar__checkbox" id="menu-toggle" type="checkbox" aria-controls="primary-menu" aria-expanded="false">
+				<input class="c-navbar__checkbox" id="menu-toggle" type="checkbox">
 				<label class="c-navbar__label" for="menu-toggle">
 					<span class="c-navbar__label-icon"><?php pxg_load_component_file( 'header', 'templates/burger', '', false ); ?></span>
 					<span class="c-navbar__label-text screen-reader-text"><?php esc_html_e( 'Primary Menu', 'components' ); ?></span>

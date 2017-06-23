@@ -12,7 +12,7 @@
         margin: 0;
 
         + li {
-            @include spacing(margin-left, $gutter-xxs);
+            @extend %ml-xxs;
         }
     }
 

@@ -5,7 +5,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package     Components
- * @version     1.2.1
+ * @version     1.2.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -161,9 +161,7 @@ function pixelgrade_get_body_attributes( $attribute = array() ) {
 	 * @param array $attributes An array of body attributes.
 	 * @param array $attribute  An array of additional attributes added to the body.
 	 */
-	$attributes = apply_filters( 'pixelgrade_body_attributes', $attributes, $attribute );
-
-	return array_unique( $attributes );
+	return apply_filters( 'pixelgrade_body_attributes', $attributes, $attribute );
 }
 
 /**

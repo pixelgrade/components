@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.2.0
+ * @version     1.2.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +20,7 @@ pxg_load_component_file( 'header', 'template-tags' );
 class Pixelgrade_Header {
 
 	public $component = 'header';
-	public $_version  = '1.2.0';
+	public $_version  = '1.2.1';
 	public $_assets_version = '1.0.3';
 
 	private $config = array();
@@ -486,7 +486,7 @@ class Pixelgrade_Header {
 							),
 							array(
 								'property' => 'border-top-color',
-								'selector' => '.c-navbar [class*="children"].hover:after',
+								'selector' => '.c-navbar [class*="children"]:hover:after',
 							),
 						),
 					),

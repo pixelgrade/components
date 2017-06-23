@@ -24,8 +24,8 @@ $dropdown-width:        15em        !default;
             color: inherit;
         }
 
-        &.hover > .sub-menu,
-        &.hover > .children {
+        &:hover > .sub-menu,
+        &:hover > .children {
             opacity: 1;
             pointer-events: auto;
         }
