@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.4
+ * @version     1.1.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ class Pixelgrade_Footer {
 
 	public $component = 'footer';
 
-	public $_version  = '1.1.4';
+	public $_version  = '1.1.5';
 
 	public $_assets_version = '1.0.1';
 

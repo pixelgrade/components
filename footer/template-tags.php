@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.4
+ * @version     1.1.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -108,7 +108,7 @@ function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
 		$classes = array_merge( $classes, $extra_class );
 	} ?>
 
-<aside <?php pixelgrade_css_class( $classes, array( 'footer', 'sidebar', $sidebar_id ) ); ?> role="complementary">
+<aside <?php pixelgrade_css_class( $classes, array( 'footer', 'sidebar', $sidebar_id ) ); ?>>
 	<?php dynamic_sidebar( $sidebar_id ); ?>
 </aside>
 
