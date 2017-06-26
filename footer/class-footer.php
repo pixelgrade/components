@@ -126,7 +126,7 @@ class Pixelgrade_Footer {
 						'menu_id'         => 'menu-footer',
 						'container'       => 'nav',
 						'container_class' => '',
-						'depth'           => -1, //by default we will flatten the menu hierarchy, if there is one
+						'depth'           => 1, //by default we will flatten the menu hierarchy, if there is one
 						'fallback_cb'     => false,
 					),
 				),

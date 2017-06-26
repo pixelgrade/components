@@ -190,7 +190,7 @@ function pixelgrade_footer_the_copyright() {
  * @return bool|string
  */
 function pixelgrade_footer_get_copyright_content() {
-	$copyright_text = pixelgrade_option( 'copyright_text', sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ) );
+	$copyright_text = pixelgrade_option( 'copyright_text', sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components' ), '<a href="https://pixelgrade.com/" rel="nofollow">Pixelgrade</a>' ) );
 
 	if ( ! empty( $copyright_text ) ) {
 		// We need to parse some tags
