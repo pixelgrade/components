@@ -13,7 +13,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Header
- * @version    1.1.1
+ * @version    1.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<header id="masthead" <?php pixelgrade_header_class(); ?> role="banner">
+<header id="masthead" <?php pixelgrade_header_class(); ?>>
 	<div class="u-header_sides_spacing">
 		<div class="o-wrapper  u-container-width  c-navbar__wrapper">
 

@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Header
- * @version     1.2.1
+ * @version     1.2.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +20,7 @@ pxg_load_component_file( 'header', 'template-tags' );
 class Pixelgrade_Header {
 
 	public $component = 'header';
-	public $_version  = '1.2.1';
+	public $_version  = '1.2.2';
 	public $_assets_version = '1.0.3';
 
 	private $config = array();

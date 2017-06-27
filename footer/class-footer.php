@@ -7,7 +7,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Footer
- * @version     1.1.5
+ * @version     1.1.6
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,7 +21,7 @@ class Pixelgrade_Footer {
 
 	public $component = 'footer';
 
-	public $_version  = '1.1.5';
+	public $_version  = '1.1.6';
 
 	public $_assets_version = '1.0.1';
 
@@ -126,7 +126,7 @@ class Pixelgrade_Footer {
 						'menu_id'         => 'menu-footer',
 						'container'       => 'nav',
 						'container_class' => '',
-						'depth'           => 1, //by default we will flatten the menu hierarchy, if there is one
+						'depth'           => 1, //by default we will show only the first level of the menu
 						'fallback_cb'     => false,
 					),
 				),
@@ -291,7 +291,7 @@ class Pixelgrade_Footer {
 						'type'              => 'textarea',
 						'label'             => esc_html__( 'Copyright Text', 'components' ),
 						'desc'              => esc_html__( 'Set the text that will appear in the footer area. Use %year% to display the current year.', 'components' ),
-						'default'           => sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components' ), '<a href="https://pixelgrade.com/">Pixelgrade</a>' ),
+						'default'           => sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components' ), '<a href="https://pixelgrade.com/" rel="nofollow">Pixelgrade</a>' ),
 						'sanitize_callback' => 'wp_kses_post',
 						'live'              => array( '.c-footer__copyright-text' ),
 					),
