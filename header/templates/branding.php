@@ -5,7 +5,7 @@
  * @see        https://pixelgrade.com
  * @author        Pixelgrade
  * @package    Components/Header
- * @version     1.0.1
+ * @version     1.0.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,13 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 			pixelgrade_the_custom_logo_transparent();
 		} ?>
 
-	    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-			<?php if ( is_front_page() && is_home() ) : ?>
-	            <h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
-			<?php else : ?>
-	            <p class="site-title h1"><?php bloginfo( 'name' ); ?></p>
-			<?php endif; ?>
-	    </a>
+		<?php if ( is_front_page() && is_home() ) : ?>
+            <h1 class="site-title">
+	            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+            </h1>
+		<?php else : ?>
+            <p class="site-title h1">
+	            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+            </p>
+		<?php endif; ?>
+
 	    <p class="site-description site-description-text"><?php bloginfo( 'description' ) /* WPCS: xss ok. */ ?></p>
+
 	</div><!-- .c-branding -->
 </div>
