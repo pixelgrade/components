@@ -10,7 +10,8 @@
   background: #FFFFFF;
   border: 1px solid #DDDDDD;
   border-radius: 4px;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   font-size: 14px;
   line-height: 1.5;
   color: #484848;
@@ -21,7 +22,8 @@
   .media-sidebar .gallery-settings select:hover,
   .media-sidebar .gallery-settings textarea:hover {
     border-color: #CBCBCB;
-    box-shadow: none; }
+    -webkit-box-shadow: none;
+            box-shadow: none; }
 
 .media-sidebar .gallery-settings select {
   width: 100%;
