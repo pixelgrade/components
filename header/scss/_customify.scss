@@ -59,11 +59,11 @@ $transition--default: all .3s ease-in-out !default;
 }
 
 .c-navbar ul {
-	@include spacing(margin-left, $header-links-spacing);
+	@include spacing(margin-left, -$header-links-spacing);
 }
 
 .c-navbar li {
-	@include spacing(margin-right, $header-links-spacing);
+	@include spacing(margin-left, $header-links-spacing);
 }
 
 .c-navbar {

@@ -210,7 +210,7 @@ class Pixelgrade_Header_Customizer {
 							'step'         => 1,
 							'data-preview' => true,
 						),
-						'css'         => array(
+						'css' => array(
 							array(
 								'property'        => 'margin-left',
 								'selector'        => '.c-navbar ul',
@@ -218,7 +218,7 @@ class Pixelgrade_Header_Customizer {
 								'callback_filter' => 'typeline_negative_spacing_cb',
 							),
 							array(
-								'property'        => 'margin-right',
+								'property'        => 'margin-left',
 								'selector'        => '.c-navbar li',
 								'unit'            => 'px',
 								'callback_filter' => 'typeline_spacing_cb',
