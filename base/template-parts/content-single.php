@@ -133,7 +133,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 							?>
 						</div><!-- .entry-content.u-content-width -->
 
-						<footer class="entry-footer  u-content-width  u-content-top-spacing">
+						<footer class="entry-footer  u-content-width">
 							<?php pixelgrade_the_author_info_box(); ?>
 							<?php pixelgrade_the_post_navigation(); ?>
 							<?php pixelgrade_entry_footer(); ?>
@@ -141,11 +141,9 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 						<?php
 						// If comments are open or we have at least one comment, load up the comment template.
-						if ( comments_open() || get_comments_number() ) : ?>
-							<div class="u-content-top-spacing">
-								<?php pixelgrade_comments_template(); ?>
-							</div>
-						<?php endif; ?>
+						if ( comments_open() || get_comments_number() ) :
+							pixelgrade_comments_template();
+						endif; ?>
 
 						<?php
 						/**

@@ -1,0 +1,16 @@
+.c-navbar__checkbox,
+.c-navbar__label {
+    display: none;
+}
+
+.c-navbar__label {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.c-navbar__container {
+	border: 0 solid transparent;
+}
+
+@import "navbar/mobile";
