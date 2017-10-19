@@ -293,7 +293,12 @@ function pixelgrade_add_configured_templates( $stack, $args ) {
 					// in get_query_template(), we need to give a path relative to the theme root
 					$new_template = pixelgrade_make_relative_path( $new_template );
 
-					array_unshift( $stack, $new_template );
+					// We need to make sure that this template hasn't been added to the stack already
+					// It could be detrimental and break things if we add it to the top
+					// Like in the case for page templates defined the old fashion way
+					if ( false === array_search( $new_template, $stack ) ) {
+						array_unshift( $stack, $new_template );
+					}
 				}
 			}
 		}
