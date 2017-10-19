@@ -131,14 +131,14 @@ class Pixelgrade_Base extends Pixelgrade_Component_Main {
 					),
 					'template' => 'single',
 				),
-//				'page' => array(
-//					'type' => 'page',
-//					'check' => array(
-//						'function' => 'is_page',
-//						'args' => array(),
-//					),
-//					'template' => 'page',
-//				),
+				'page' => array(
+					'type' => 'page',
+					'check' => array(
+						'function' => 'is_page',
+						'args' => array(),
+					),
+					'template' => 'page',
+				),
 				'archive' => array(
 					'type' => 'archive',
 					'check' => array(
