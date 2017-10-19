@@ -256,11 +256,13 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 
 				if ( true === $checked ) {
 					$new_template = '';
+					$template_filename = '';
 
 					// Handle the various formats we could be receiving the template info in
 					if ( is_string( $template['template'] ) ) {
 						// This is directly the slug of a template - locate it
 						$new_template = pixelgrade_locate_component_template( $component_slug, $template['template'] );
+						$template_filename = $template['template'];
 					} elseif ( is_array( $template['template'] ) ) {
 						// We have an array but it may be a simple array, or an array of arrays - standardize it
 						if ( ! empty( $template['template']['slug'] ) ) {
@@ -281,6 +283,10 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 
 								// If we found a template, we stop since upper templates get precedence over lower ones
 								if ( ! empty( $new_template ) ) {
+									$template_filename = $item['slug'];
+									if ( ! empty( $item['name'] ) && false !== strrpos( $new_template, '-' . $item['name'] . '.php' ) ) {
+										$template_filename .= '-' . $item['name'];
+									}
 									break;
 								}
 							}
@@ -294,10 +300,19 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 						$new_template = pixelgrade_make_relative_path( $new_template );
 
 						// We need to make sure that this template hasn't been added to the stack already
-						// It could be detrimental and break things if we add it to the top
-						// Like in the case for page templates defined the old fashion way
 						if ( false === array_search( $new_template, $stack ) ) {
-							array_unshift( $stack, $new_template );
+							// Now we want to add the template to the stack as low as possible
+							// This way we allow for other templates specified by core to take precedence
+							// To do this we will search for $slug-$name.php
+							$template_filename .= '.php';
+							$key = Pixelgrade_Array::strr_array_search( $template_filename, $stack );
+							if ( false !== $key ) {
+								// We will insert it above the found entry
+								$stack = Pixelgrade_Array::insert_before_key( $stack, $key, $new_template );
+							} else {
+								// We will simply put it at the top if nothing was found
+								array_unshift( $stack, $new_template );
+							}
 						}
 					}
 				}

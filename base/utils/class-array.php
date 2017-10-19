@@ -21,7 +21,7 @@ class Pixelgrade_Array {
 	 *
 	 * @param array $array
 	 * @param string $key
-	 * @param array $insert
+	 * @param mixed $insert
 	 *
 	 * @return array
 	 */
@@ -29,6 +29,9 @@ class Pixelgrade_Array {
 		$keys = array_keys( $array );
 		$index = array_search( $key, $keys );
 		$pos = ( ( false === $index ) ? 0 : $index );
+		if ( ! is_array( $insert ) ) {
+			$insert = array( $insert );
+		}
 		return array_merge( array_slice( $array, 0, $pos ), $insert, array_slice( $array, $pos ) );
 	}
 
@@ -38,7 +41,7 @@ class Pixelgrade_Array {
 	 *
 	 * @param array $array
 	 * @param string $key
-	 * @param array $insert
+	 * @param mixed $insert
 	 *
 	 * @return array
 	 */
@@ -46,6 +49,9 @@ class Pixelgrade_Array {
 		$keys = array_keys( $array );
 		$index = array_search( $key, $keys );
 		$pos = ( ( false === $index ) ? count( $array ) : $index + 1 );
+		if ( ! is_array( $insert ) ) {
+			$insert = array( $insert );
+		}
 		return array_merge( array_slice( $array, 0, $pos ), $insert, array_slice( $array, $pos ) );
 	}
 
@@ -106,6 +112,68 @@ class Pixelgrade_Array {
 		}
 
 		return ! isset( $difference ) ? false : $difference;
+	}
+
+	/**
+	 * Searches for an array entry that partially matches the needle and returns the first found key
+	 *
+	 * @param string $needle
+	 * @param array $haystack
+	 *
+	 * @return bool|int|string The first key whose value matched the partial needle. False on failure or invalid input.
+	 */
+	public static function str_array_search( $needle, $haystack ) {
+		if ( empty( $haystack ) ) {
+			return false;
+		}
+
+		if ( ! is_array( $haystack ) ) {
+			return false;
+		}
+
+		foreach ( $haystack as $key => $value ) {
+			if ( ! is_string( $value ) ) {
+				return false;
+			}
+
+			if ( false !== strpos( $value, $needle ) ) {
+				return $key;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Searches in reverse order for an array entry that partially matches the needle and returns the first found key
+	 *
+	 * @param string $needle
+	 * @param array $haystack
+	 *
+	 * @return bool|int|string The first key whose value matched the partial needle. False on failure or invalid input.
+	 */
+	public static function strr_array_search( $needle, $haystack ) {
+		if ( empty( $haystack ) ) {
+			return false;
+		}
+
+		if ( ! is_array( $haystack ) ) {
+			return false;
+		}
+
+		$haystack = array_reverse( $haystack, true );
+
+		foreach ( $haystack as $key => $value ) {
+			if ( ! is_string( $value ) ) {
+				return false;
+			}
+
+			if ( false !== strpos( $value, $needle ) ) {
+				return $key;
+			}
+		}
+
+		return false;
 	}
 }
 
