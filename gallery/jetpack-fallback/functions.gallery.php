@@ -3,8 +3,12 @@
  *  This file is taken from Jetpack and it's here for the case in which Jetpack is not active
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 // Get the current request action
-$action = pxg_current_action();
+$action = pixelgrade_get_current_action();
 
 // Don't try and load the fallback class if we are activating a plugin
 // This way Jetpack doesn't burn us down with it's lack of checking if the class exists
@@ -32,7 +36,7 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 			 * @param array $value Array of the default thumbnail grid gallery type. Default array contains one key, 'default'.
 			 *
 			 */
-			$this->gallery_types = apply_filters( 'jetpack_gallery_types', array( 'default' => esc_html__( 'Thumbnail Grid', 'components' ) ) );
+			$this->gallery_types = apply_filters( 'jetpack_gallery_types', array( 'default' => esc_html__( 'Thumbnail Grid', 'components_txtd' ) ) );
 
 			// Enqueue the media UI only if needed.
 			if ( count( $this->gallery_types ) > 1 ) {
@@ -50,7 +54,7 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 				 * This only happens if we're not in Jetpack, but on WPCOM instead.
 				 * This is the correct path for WPCOM.
 				 */
-				wp_register_script( 'jetpack-gallery-settings', pixelgrade_get_theme_file_uri( 'components/gallery/jetpack-fallback/gallery-settings.js' ), array( 'media-views' ), '20121225' );
+				wp_register_script( 'jetpack-gallery-settings', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Gallery_Settings::COMPONENT_SLUG ) . 'jetpack-fallback/gallery-settings.js' ), array( 'media-views' ), '20121225' );
 			}
 
 			wp_enqueue_script( 'jetpack-gallery-settings' );
@@ -75,7 +79,7 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 			?>
             <script type="text/html" id="tmpl-jetpack-gallery-settings">
                 <label class="setting">
-                    <span><?php esc_html_e( 'Type', 'components' ); ?></span>
+                    <span><?php esc_html_e( 'Type', 'components_txtd' ); ?></span>
                     <select class="type" name="type" data-setting="type">
 						<?php foreach ( $this->gallery_types as $value => $caption ) : ?>
                             <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $value, $default_gallery_type ); ?>><?php echo esc_html( $caption ); ?></option>

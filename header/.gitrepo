@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/pixelgrade/components-header.git
+	branch = master
+	commit = 9b85a85aa5247f96719f3ad514fcd30fbc09409c
+	parent = 81f8b294344bfc2138d02d255ba2a0cb6914262f
+	cmdver = 0.3.1

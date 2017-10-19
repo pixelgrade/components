@@ -1,0 +1,167 @@
+// Blog Grid
+// =========================================================
+
+$valid-grid-layouts: regular mosaic packed masonry !default;
+
+$blog-grid-width: 1300px !default;
+$blog-sides-spacing: 70px !default;
+
+$blog-card-title-font-size: 24px !default;
+$blog-card-title-line-height: 1.25 !default;
+$blog-card-title-letter-spacing: 0 !default;
+$blog-card-title-color: #252525 !default;
+
+.u-blog-grid-width {
+	max-width: $blog-grid-width;
+}
+
+.u-blog-sides-spacing {
+	@include spacing(padding-left, $blog-sides-spacing);
+	@include spacing(padding-right, $blog-sides-spacing);
+}
+
+$blog-grid-layout: packed !default;
+$blog-items-aspect-ratio: 3/4 !default;
+$blog-grid-vertical-spacing: 150px !default;
+$blog-grid-horizontal-spacing: 40px !default;
+
+$blog-grid-columns: 4 !default;
+$blog-grid-columns-at-lap: if($blog-grid-columns >= 5, $blog-grid-columns - 1, $blog-grid-columns);
+$blog-grid-columns-at-small: if($blog-grid-columns-at-lap >= 4, $blog-grid-columns-at-lap - 1, $blog-grid-columns-at-lap);
+
+$blog-primary-meta-color: #3B3B3B !default;
+$blog-secondary-meta-color: #828282 !default;
+$blog-thumbnail-background: #EEEEEE !default;
+
+$blog-thumbnail-background-opacity: 0.5 !default;
+$blog-content-position: below;
+$blog-content-alignment: top left;
+
+$blog-title-visibility: true !default;
+$blog-excerpt-visibility: true !default;
+
+$blog-packed-ratio: 2.275 !default;
+
+@if ( null == index( $valid-grid-layouts, $blog-grid-layout ) ) {
+	@warn "$blog-grid-layout should be one of #{$valid-grid-layouts}";
+	$blog-grid-layout: regular;
+}
+
+.c-gallery--blog {
+	@include spacing(margin-top, -$blog-grid-vertical-spacing);
+	@include spacing(margin-left, -$blog-grid-horizontal-spacing);
+
+	> * {
+		@include spacing(margin-top, $blog-grid-vertical-spacing);
+		@include spacing(padding-left, $blog-grid-horizontal-spacing);
+	}
+
+	.c-card__title {
+		color: $blog-card-title-color;
+
+		@include leading-map((
+			font-size: $blog-card-title-font-size,
+			line-height: $blog-card-title-line-height,
+			letter-spacing: $blog-card-title-letter-spacing
+		));
+	}
+
+	.c-card__meta-primary {
+		color: $blog-primary-meta-color;
+	}
+
+	.c-card__meta-secondary {
+		color: $blog-secondary-meta-color;
+	}
+
+	.c-card__frame {
+		background-color: $blog-thumbnail-background;
+	}
+}
+
+.no-customify {
+
+	@if ($blog-title-visibility != true) {
+		.c-card__title {
+			display: none;
+		}
+	}
+
+	@if ($blog-excerpt-visibility != true) {
+		.c-card__excerpt {
+			display: none;
+		}
+	}
+
+	@if ($blog-content-position == above) {
+		@include gallery-title-above;
+	}
+
+	@if ($blog-content-position == overlay) {
+		@include gallery-title-overlay;
+	}
+
+	@if ( packed == $blog-grid-layout ) {
+		$typeline-points: map-get(map-get($typeline-config, spacings), points);
+		$normal: calc( #{percentage($blog-packed-ratio / $blog-grid-columns)} - #{$blog-grid-vertical-spacing * $blog-packed-ratio} );
+		$featured: calc( #{percentage(2 * $blog-packed-ratio / $blog-grid-columns)} - #{$blog-grid-vertical-spacing * (2 * $blog-packed-ratio - 1)} );
+
+		$factor-at-lap: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $blog-grid-vertical-spacing ) - 1 ) * 1 / 3 + 1;
+		$value-at-lap: round( $blog-grid-vertical-spacing / $factor-at-lap);
+		$normal-at-lap: calc( #{percentage($blog-packed-ratio / $blog-grid-columns-at-lap)} - #{$value-at-lap * $blog-packed-ratio} );
+		$featured-at-lap: calc( #{percentage(2 * $blog-packed-ratio / $blog-grid-columns-at-lap)} - #{$value-at-lap * (2 * $blog-packed-ratio - 1)} );
+
+		$factor-at-small: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $blog-grid-vertical-spacing ) - 1 ) * 2 / 3 + 1;
+		$value-at-small: round( $blog-grid-vertical-spacing / $factor-at-small );
+		$normal-at-small: calc( #{percentage($blog-packed-ratio / $blog-grid-columns-at-small)} - #{$value-at-small * $blog-packed-ratio} );
+		$featured-at-small: calc( #{percentage(2 * $blog-packed-ratio / $blog-grid-columns-at-small)} - #{$value-at-small * (2 * $blog-packed-ratio - 1)} );
+
+		.c-gallery--portfolio {
+			@include gallery-cropped;
+			@include gallery-packed;
+
+			.c-gallery__item {
+
+				@include above(small) {
+					padding-top: $normal-at-small;
+				}
+
+				@include above(lap) {
+					padding-top: $normal-at-lap;
+				}
+
+				@include above(desk) {
+					padding-top: $normal;
+				}
+			}
+
+			.c-card {
+				@include spacing(left, $blog-grid-horizontal-spacing);
+			}
+		}
+	}
+
+	@if ( regular == $blog-grid-layout ) {
+
+		.c-gallery--blog {
+			@include gallery-cropped;
+
+			.c-card__frame {
+				padding-top: percentage(1/$blog-items-aspect-ratio);
+			}
+		}
+	}
+
+	@if ( mosaic == $blog-grid-layout ) {
+
+		.c-gallery--blog {
+			@include gallery-cropped;
+			@include gallery-mosaic;
+
+			.c-card__frame {
+				padding-top: percentage(1/$blog-items-aspect-ratio);
+			}
+		}
+	}
+
+}

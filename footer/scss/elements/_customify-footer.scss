@@ -1,0 +1,23 @@
+// Footer
+// =========================================================
+
+$footer-top-spacing: 0 !default;
+$footer-bottom-spacing: 0 !default;
+
+$footer-text-color: #757575 !default;
+$footer-links-color: #000000 !default;
+$footer-background-color: #FFFFFF !default;
+
+.u-footer__background {
+	background-color: $footer-background-color;
+}
+
+.c-footer {
+	@include spacing(padding-top, $footer-top-spacing);
+	@include spacing(padding-bottom, $footer-bottom-spacing);
+	color: $footer-text-color;
+
+	a {
+		color: $footer-links-color;
+	}
+}
