@@ -62,3 +62,83 @@
 		clear: both;
 	}
 }
+
+@mixin leading($font-size, $line-height: false, $font-family: false, $font-weight: false, $letter-spacing: false, $text-transform: false, $spacing-top: 0, $spacing-bottom: 0, $cap-height: false) {
+
+	@if $font-family != false {
+		font-family: $font-family;
+	}
+
+	@if $font-size != false {
+		@if $font-size != inherit and ( unitless($font-size/1px) or unitless($font-size/1rem) ) {
+			@include fontsize($font-size);
+		} @else {
+			font-size: $font-size;
+		}
+	}
+
+	@if $line-height != false {
+		line-height: $line-height;
+	}
+
+	@if $font-weight != false {
+		font-weight: $font-weight;
+	}
+
+	@if $letter-spacing != false {
+		letter-spacing: $letter-spacing;
+	}
+
+	@if $text-transform != false {
+		text-transform: $text-transform;
+	}
+
+	@if $spacing-top != false {
+		@if $spacing-top == 0 {
+			padding-top: 0;
+		} @else {
+			@include spacing(padding-top, $spacing-top);
+		}
+	}
+
+	@if $spacing-bottom != false {
+		@if $spacing-bottom == 0 {
+			padding-bottom: 0;
+		} @else {
+			@include spacing(padding-bottom, $spacing-bottom);
+		}
+	}
+
+	@if $cap-height != false {
+		@include baseline($line-height, $cap-height);
+	}
+}
+
+@mixin leading-map( $options ) {
+
+	$defaults: (
+		font-family: sans-serif,
+		font-size: inherit,
+		line-height: inherit,
+		font-weight: normal,
+		letter-spacing: normal,
+		text-transform: none,
+		spacing-top: false,
+		spacing-bottom: false,
+		cap-height: false
+	);
+
+	$config: map-merge($defaults, $options);
+
+	$font-family: map_get($config, font-family);
+	$font-size: map_get($config, font-size);
+	$line-height: map_get($config, line-height);
+	$font-weight: map_get($config, font-weight);
+	$letter-spacing: map_get($config, letter-spacing);
+	$text-transform: map_get($config, text-transform);
+	$spacing-top: map_get($config, spacing-top);
+	$spacing-bottom: map_get($config, spacing-bottom);
+	$cap-height: map_get($config, cap-height);
+
+	@include leading($font-size, $line-height, $font-family, $font-weight, $letter-spacing, $text-transform, $spacing-top, $spacing-bottom, $cap-height);
+}

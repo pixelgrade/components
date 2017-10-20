@@ -10,12 +10,14 @@
 	@include wp-offset(top, 0);
 
 	@include above(lap) {
+
 		body:not(.u-site-header-sticky) & {
 			position: absolute;
 		}
 	}
 
 	@media screen and (max-width: 600px) {
+
 		.admin-bar & {
 			position: absolute;
 		}

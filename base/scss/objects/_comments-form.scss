@@ -17,7 +17,7 @@
 
 	label {
 		display: block;
-		@include h6;
+		@extend .h6 !optional;
 		@include spacing(padding-bottom, 1rem);
 	}
 }

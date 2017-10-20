@@ -1,0 +1,63 @@
+// Mobile first means we need min-width media queries
+$breakpoints: (
+	xsmall:         30em,   	// ~ 480px
+	small:          42.5em, 	// ~ 680px
+	pad:            50em,   	// ~ 800px
+	lap:            62.5em, 	// ~ 1000px
+	desk:           80em    	// ~ 1280px
+) !default;
+
+// https://css-tricks.com/handling-z-index/
+$zindex: (
+	modal:          9000,
+	dropdown:       8000,
+	header:         7000,
+	overlay:        6000,
+	footer:         5000
+) !default;
+
+// Variables
+$transition--default: 				all 0.3s ease-in-out 	!default;
+$transition--micro: 				0.15s					!default;
+$transition--macro: 				0.3s					!default;
+
+$content-selector: '.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote)' !default;
+
+// HEADER
+// ========================================
+// Layout
+// ----------------------------------------
+// Colors
+// ----------------------------------------
+// Fonts
+// ----------------------------------------
+
+
+// MAIN CONTENT
+// ========================================
+// Layout
+// ----------------------------------------
+// Colors
+// ----------------------------------------
+// Fonts
+// ----------------------------------------
+
+
+// FOOTER
+// ========================================
+// Layout
+// ----------------------------------------
+// Colors
+// ----------------------------------------
+// Fonts
+// ----------------------------------------
+
+
+// BLOG GRID ITEMS
+// ========================================
+// Layout
+// ----------------------------------------
+// Colors
+// ----------------------------------------
+// Fonts
+// ----------------------------------------

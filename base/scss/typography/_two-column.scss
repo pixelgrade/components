@@ -1,0 +1,6 @@
+@include above(small) {
+	.two-column {
+		@include spacing(column-gap, 2rem);
+		column-count: 2;
+	}
+}

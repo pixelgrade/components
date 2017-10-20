@@ -32,8 +32,6 @@ $button-color:						#FFFFFF					!default;
 $input-spacing-bottom: 				12px 					!default;
 $input-spacing-right: 				14px 					!default; // Checkboxes and Radios
 
-$transition--default: 				all .3s ease-in-out 	!default;
-
 @mixin field {
     padding: 13px 19px 15px;
     border: 1px solid $input-border-color;
@@ -134,12 +132,6 @@ $transition--default: 				all .3s ease-in-out 	!default;
     cursor: pointer;
 }
 
-@mixin submit_button {
-	@include btn;
-    -webkit-font-smoothing: auto;
-    @include spacing(margin-bottom, 2rem);
-}
-
 @include placeholder() {
     color: $placeholder-color;
     opacity: .7;
@@ -191,7 +183,9 @@ input[type="button"],
 button[type="submit"],
 button[type="button"],
 button[type="reset"] {
-   @include submit_button;
+	@include btn;
+	-webkit-font-smoothing: auto;
+	@include spacing(margin-bottom, 2rem);
 }
 
 input[type="file"] {

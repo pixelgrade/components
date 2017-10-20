@@ -33,8 +33,7 @@ $share-button-border-color: #DBDBDB !default;
 		align-items: center;
 		justify-content: center;
 
-		// H6 Style without baseline()
-		@include h6;
+		@extend .h6 !optional;
 		padding: 9px 14px;
 
 		border-radius: 0;

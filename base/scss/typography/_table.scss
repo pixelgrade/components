@@ -2,6 +2,7 @@ table {
 	width: 100%;
 	table-layout: fixed;
 	border-collapse: collapse;
+	@include spacing(margin-bottom, 2rem);
 
 	th {
 		text-align: left;
@@ -11,10 +12,7 @@ table {
 	td {
 		vertical-align: middle;
 	}
-}
 
-@mixin table {
-	@include spacing(margin-bottom, 2rem);
 
 	tr,
 	thead,

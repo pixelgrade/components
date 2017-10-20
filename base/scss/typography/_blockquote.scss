@@ -1,18 +1,4 @@
-$blockquote-font-family: "Roboto", sans-serif !default;
-$blockquote-font-size: 30px !default;
-$blockquote-font-weight: 300 !default;
-$blockquote-line-height: 1.5 !default;
-$blockquote-text-transform: none !default;
-
 @mixin blockquote {
-	font-family: $blockquote-font-family;
-	@include fontsize($blockquote-font-size);
-	font-weight: $blockquote-font-weight;
-	line-height: $blockquote-line-height;
-	text-transform: $blockquote-text-transform;
-
-	&:not(:last-child) { @include spacing(margin-bottom, 3rem); }
-	&:not(:first-child) { @include spacing(margin-top, 2rem); }
 
 	p {
 		font: inherit;
@@ -30,11 +16,11 @@ $blockquote-text-transform: none !default;
 		cite:before {
 			display: none;
 		}
-		
+
 	}
 
 	&.centered {
-		text-align: center;  
+		text-align: center;
 	}
 }
 
@@ -42,7 +28,7 @@ $blockquote-text-transform: none !default;
 	display: block;
 
 	@include spacing(margin-top, 3rem);
-	
+
 	font-size: 18px;
 	font-style: normal;
 	font-weight: 400;
@@ -81,4 +67,12 @@ $blockquote-text-transform: none !default;
 	margin-right: 12px;
 
 	background-color: currentColor;
+}
+
+blockquote {
+	@include blockquote;
+}
+
+cite {
+	@include cite;
 }

@@ -1,28 +1,43 @@
-// Header
-// =========================================================
+// HEADER
+// ========================================
 
-$logo-height: 23px !default;
+// Layout
+// ----------------------------------------
+$logo-height: 					23px 			!default;
+$header-height: 				100px 			!default;
+$header-links-spacing: 			40px 			!default;
+// @todo $header-position
+// @todo $header-width
+$header-sides-spacing: 			50px 			!default;
 
-$branding-font-size: 17px !default;
-$branding-line-height: 1.29 !default;
-$branding-letter-spacing: 0 !default;
+// Colors
+// ----------------------------------------
+$header-links-color: 			#000000 		!default;
+$header-links-active-color: 	#000000 		!default;
+// @todo $header-links-active-style
+$header-background-color: 		#FFFFFF 		!default;
 
-$header-height: 100px !default;
-$header-links-spacing: 40px !default;
-$header-sides-spacing: 50px !default;
+// Fonts
+// ----------------------------------------
+$logo-font-family: 				sans-serif 		!default;
+$logo-font-size: 				72px 			!default;
+$logo-line-height: 				(80/72) 		!default;
+$logo-font-weight: 				300 			!default;
+$logo-letter-spacing: 			normal 			!default;
+$logo-text-transform: 			none 			!default;
+$logo-spacing-top: 				0 				!default;
+$logo-spacing-bottom: 			2rem 			!default;
+$logo-cap-height: 				0.74 			!default;
 
-$header-font-family: "Roboto", sans-serif !default;
-$header-font-weight: normal !default;
-$header-font-size: 15px !default;
-$header-line-height: 1.33 !default;
-$header-letter-spacing: initial !default;
-$header-text-transform: none !default;
-
-$header-background-color: #FFFFFF !default;
-$header-links-color: #000000 !default;
-$header-links-active-color: #000000 !default;
-
-$transition--default: all .3s ease-in-out !default;
+$header-font-family: 			sans-serif 		!default;
+$header-font-size: 				72px 			!default;
+$header-line-height: 			(80/72) 		!default;
+$header-font-weight: 			300 			!default;
+$header-letter-spacing: 		normal 			!default;
+$header-text-transform: 		none 			!default;
+$header-spacing-top: 			0 				!default;
+$header-spacing-bottom: 		2rem 			!default;
+$header-cap-height: 			0.74 			!default;
 
 .site-logo img,
 .custom-logo-link img {
@@ -30,9 +45,17 @@ $transition--default: all .3s ease-in-out !default;
 }
 
 .site-title {
-	font-size: $branding-font-size;
-	line-height: $branding-line-height;
-	letter-spacing: $branding-letter-spacing;
+	@include leading-map((
+		font-family: $logo-font-family,
+		font-size: $logo-font-size,
+		line-height: $logo-line-height,
+		font-weight: $logo-font-weight,
+		letter-spacing: $logo-letter-spacing,
+		text-transform: $logo-text-transform,
+		spacing-top: $logo-spacing-top,
+		spacing-bottom: $logo-spacing-bottom,
+		cap-height: $logo-cap-height
+	));
 }
 
 .site-header {
@@ -58,6 +81,7 @@ $transition--default: all .3s ease-in-out !default;
 	transition-property: color;
 }
 
+
 .c-navbar ul {
 	@include spacing(margin-left, -$header-links-spacing);
 }
@@ -82,24 +106,20 @@ $transition--default: all .3s ease-in-out !default;
 	}
 }
 
-.c-navbar .jetpack-social-navigation li {
-	margin-right: 0;
-}
-
 .u-header-sides-spacing {
 	@include spacing(padding-left, $header-sides-spacing);
 	@include spacing(padding-right, $header-sides-spacing);
 }
 
 
-.u-site-header-full-width .site-header .u-container-width {
-	max-width: none;
+.u-site-header-full-width {
+	.site-header .u-container-width {
+		max-width: none;
+	}
 }
 
-@include above(lap) {
-
-	.u-site-header-sticky--top {
-
+.u-site-header-sticky--top {
+	@include above(lap) {
 		.site-header {
 			background: transparent;
 		}

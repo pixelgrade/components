@@ -1,9 +1,27 @@
-@import "btn";
-@import "forms";
+@import "p";
 @import "blockquote";
+
+@import "table";
+
 @import "lists";
-@import "links";
 @import "pre";
 @import "table";
-@import "titles";
-@import "typography";
+
+@import "hr";
+
+@import "intro";
+@import "dropcap";
+@import "two-column";
+
+em,
+i,
+small {
+	font-style: italic;
+}
+
+hr,
+address,
+.two-column,
+.mejs-container {
+	@include spacing(margin-bottom, 2rem);
+}

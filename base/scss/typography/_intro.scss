@@ -1,0 +1,9 @@
+.intro {
+	@include fontsize(30px);
+	line-height: 1.5;
+
+	&.large {
+		@include fontsize(36px);
+		line-height: 1.38;
+	}
+}

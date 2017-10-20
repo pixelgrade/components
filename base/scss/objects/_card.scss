@@ -9,8 +9,6 @@ $card-letter-color: 				#000000 				!default;
 $card-letter-hover-color: 			#FFFFFF					!default;
 $card-letter-hover-opacity: 		0.7						!default;
 
-$transition--default:				all .3s ease-in-out 	!default;
-
 // Cards
 // ------------------------------------------------------------
 
@@ -66,11 +64,11 @@ $transition--default:				all .3s ease-in-out 	!default;
 	flex-direction: column;
 
 	.c-card__aside + & {
-		@include spacing(padding-top, 2.5rem);
+		@include spacing(margin-top, 2.5rem);
 	}
 
 	> * + * {
-		@include spacing(padding-top, 1.5rem);
+		@include spacing(margin-top, 1.5rem);
 	}
 }
 
@@ -161,27 +159,6 @@ $transition--default:				all .3s ease-in-out 	!default;
 	max-width: 100%;
 }
 
-.c-card__action {
-	margin-top: 0;
-	transition: all 0.3s ease;
-	opacity: 0;
-	font-weight: bolder;
-
-	&:before {
-		content: "";
-		@include cite-dash;
-		width: 30px;
-		transition: all 0.3s ease;
-	}
-
-	.c-card:hover & {
-		opacity: 1;
-
-		&:before {
-			width: 60px;
-		}
-	}
-}
 
 // ugly overwrites
 // probably shouldn't be reused

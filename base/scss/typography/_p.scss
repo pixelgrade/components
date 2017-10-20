@@ -1,0 +1,10 @@
+p {
+
+	&:not(:last-child) {
+		@include spacing(padding-bottom, 2rem);
+	}
+
+	a img {
+		margin-top: 0; // ??
+	}
+}

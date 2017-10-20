@@ -1,6 +1,6 @@
 @import "elements/burger";
 @import "elements/branding";
-@import "customify";
+@import "elements/site-header";
 
 @include below(lap) {
 	@import "elements/navbar-mobile";
@@ -10,3 +10,5 @@
 	@import "elements/navbar-desktop";
 	@import "elements/navbar-dropdown";
 }
+
+@import "customify";
