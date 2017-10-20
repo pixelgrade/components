@@ -56,9 +56,7 @@ function pixelgrade_get_hero_class( $class = '', $location = '', $post = null ) 
 	}
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -117,9 +115,7 @@ function pixelgrade_get_hero_slider_class( $class = '', $location = '', $post = 
 	$classes[] = 'c-hero__slider';
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -348,18 +344,16 @@ function pixelgrade_get_hero_background_class( $class = '', $location = '', $pre
 	$classes[] = 'c-hero__layer';
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 
-		//if we have a prefix then we need to add it to every class
+		// If we have a prefix then we need to add it to every class
 		if ( ! empty( $prefix ) && is_string( $prefix ) ) {
 			foreach ( $class as $key => $value ) {
 				$class[ $key ] = $prefix . $value;
 			}
 		}
 
-		//Finally merge the classes into the main array
+		// Finally merge the classes into the main array
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -408,18 +402,16 @@ function pixelgrade_get_hero_wrapper_class( $class = '', $location = '', $prefix
 	$classes[] = 'c-hero__layer';
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 
-		//if we have a prefix then we need to add it to every class
+		// If we have a prefix then we need to add it to every class
 		if ( ! empty( $prefix ) && is_string( $prefix ) ) {
 			foreach ( $class as $key => $value ) {
 				$class[ $key ] = $prefix . $value;
 			}
 		}
 
-		//Finally merge the classes into the main array
+		// Finally merge the classes into the main array
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.

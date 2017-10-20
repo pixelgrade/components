@@ -263,9 +263,23 @@ class Pixelgrade_WrapperListUtil {
 		return 0;
 	}
 
+	/**
+	 * Return the callback response, if that is the case.
+	 *
+	 * Given some array, determine if it has the necessary callback information and return the call response.
+	 * Otherwise just return what we have received.
+	 *
+	 * @param string|array $value
+	 *
+	 * @return mixed
+	 */
 	protected static function maybeProcessCallback( $value ) {
 		if ( is_array( $value ) && ! empty( $value['callback'] ) && is_callable( $value['callback'] ) ) {
-			return call_user_func( $value['callback'] );
+			$args = array();
+			if ( ! empty( $value['args'] ) ) {
+				$args = $value['args'];
+			}
+			return Pixelgrade_Helper::ob_function( $value['callback'], $args );
 		}
 
 		return $value;

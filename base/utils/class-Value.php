@@ -45,6 +45,22 @@ class Pixelgrade_Value {
 	}
 
 	/**
+	 * Attempt to split a string by whitespaces and return the parts array.
+	 * If not string or no whitespaces present, just returns the value.
+	 *
+	 * @param $value
+	 *
+	 * @return array|false|string[]
+	 */
+	public static function maybeSplitByWhitespace( $value ) {
+		if ( ! is_string( $value ) ) {
+			return $value;
+		}
+
+		return preg_split('#[\s][\s]*#',  $value, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE );
+	}
+
+	/**
 	 * Given a string, treat it as a (comma separated by default) list and return the array with the items
 	 *
 	 * @param string $str

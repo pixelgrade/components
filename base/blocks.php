@@ -13,11 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define the path to the blocks root directory
-defined( 'PIXELGRADE_BLOCKS_PATH' ) or define( 'PIXELGRADE_BLOCKS_PATH', trailingslashit( __DIR__ ) . 'blocks/' );
+defined('PIXELGRADE_BLOCKS_PATH') or define( 'PIXELGRADE_BLOCKS_PATH', trailingslashit( __DIR__ ) . 'blocks/' );
 
 // Define the block ID separator used to maintain uniqueness among blocks, when the need arises
 // We will use a namespace style with forward slashes, like  'single\content\hero'
-defined( 'PIXELGRADE_BLOCK_ID_SEPARATOR' ) or define( 'PIXELGRADE_BLOCK_ID_SEPARATOR', '\\' );
+defined('PIXELGRADE_BLOCK_ID_SEPARATOR') or define( 'PIXELGRADE_BLOCK_ID_SEPARATOR', '/' );
+
+defined('PIXELGRADE_BLOCK_DEBUG') or define( 'PIXELGRADE_BLOCK_DEBUG', false);
 
 // Include our abstract class for blocks - all blocks should extend this!!!
 require_once PIXELGRADE_BLOCKS_PATH . 'abstracts/class-Block.php';
@@ -47,10 +49,38 @@ function Pixelgrade_BlocksManager( $args = array() ) {
 require_once PIXELGRADE_BLOCKS_PATH . 'class-Wrapper.php';
 require_once PIXELGRADE_BLOCKS_PATH . 'class-WrapperListUtil.php';
 
-function pixelgrade_the_block( $block ) {
-	if ( $block instanceof Pixelgrade_Block ) {
-		$block->maybeRender();
-	} elseif ( is_string( $block ) && Pixelgrade_BlocksManager()->isRegisteredBlock( $block ) ) {
-		Pixelgrade_BlocksManager()->getRegisteredBlock( $block )->maybeRender();
+function pixelgrade_render_block( $block ) {
+	if ( pixelgrade_is_block_debug() ) {
+		echo PHP_EOL . PHP_EOL . '<!-- ################################################## -->';
+		echo PHP_EOL . sprintf( '<!-- ### Starting requested render for block \'%s\' ### -->', $block );
+		echo PHP_EOL . '<!-- ################################################## -->' . PHP_EOL;
 	}
+
+	echo pixelgrade_get_rendered_block( $block );
+
+	if ( pixelgrade_is_block_debug() ) {
+		echo PHP_EOL . '<!-- ################################################## -->';
+		echo PHP_EOL . sprintf( '<!-- ### Ending requested render for block \'%s\' ### -->', $block );
+		echo PHP_EOL . '<!-- ################################################ -->' . PHP_EOL . PHP_EOL;
+	}
+}
+
+function pixelgrade_get_rendered_block( $block ) {
+	if ( $block instanceof Pixelgrade_Block ) {
+		return $block->getRendered();
+	} elseif ( is_string( $block ) && Pixelgrade_BlocksManager()->isRegisteredBlock( $block ) ) {
+		return Pixelgrade_BlocksManager()->getRegisteredBlock( $block )->getRendered();
+	} else {
+		_doing_it_wrong( __FUNCTION__, sprintf( 'Tried to render an unknown block (%s)!', $block ), '1.0.0' );
+	}
+
+	return '';
+}
+
+function pixelgrade_is_block_debug() {
+	if ( true === PIXELGRADE_BLOCK_DEBUG ) {
+		return true;
+	}
+
+	return false;
 }

@@ -263,7 +263,7 @@ function pixelgrade_standardize_location( $location ) {
 		// Some may use commas to separate
 		$location = str_replace( ',', ' ', $location );
 		// Make sure we collapse multiple whitespaces into one space
-		$location = preg_replace( '!\s+!', ' ', $location );
+		$location = preg_replace( '#[\s]+#', ' ', $location );
 		// Explode by space
 		$location = explode( ' ', $location );
 	}

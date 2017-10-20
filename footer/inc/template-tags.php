@@ -53,9 +53,7 @@ function pixelgrade_get_footer_class( $class = '', $location = '', $post = null 
 	$classes[] = 'u-container-sides-spacing';
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -102,7 +100,7 @@ function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
 	if ( ! empty( $sidebar_settings['container_class'] ) ) {
 		$extra_class = $sidebar_settings['container_class'];
 		if ( ! is_array( $extra_class ) ) {
-			$extra_class = preg_split( '#\s+#', $extra_class );
+			$extra_class = Pixelgrade_Value::maybeSplitByWhitespace( $extra_class );
 		}
 
 		$classes = array_merge( $classes, $extra_class );

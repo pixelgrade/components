@@ -51,9 +51,7 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
 	$classes[] = 'site-header';
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.

@@ -67,8 +67,9 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	 *     @type string|array         $callback       The callable function definition.
 	 *     @type array                $args            The args to pass to the callable function.
 	 * }
+	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
 	 */
-	public function __construct( $manager, $id, $args = array() ) {
+	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive a function, something is wrong
 		if ( empty( $args['callback'] ) ) {
 			_doing_it_wrong( __METHOD__, 'Can\'t register a CALLBACK type block without a callback function!', '1.0.0' );
@@ -90,10 +91,81 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	 * @param array $blocks_trail The current trail of parent blocks (aka the anti-looping machine).
 	 */
 	protected function renderContent( $blocks_trail = array() ) {
+		/**
+		 * Fires before a callback block's content is rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_before_render_callback_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires before a specific callback block's content is rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_before_render_callback_block_{$this->id}_content", $this, $blocks_trail );
+
 		// Pass along the blocks trail, just in case someone is interested.
 		// Need to make a copy of the args to avoid side effects.
 		$args = $this->args;
 		$args['blocks_trail'] = $blocks_trail;
 		echo call_user_func_array( $this->callback, $args );
+
+		/**
+		 * Fires after a callback block's content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_callback_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires after a specific callback block's content has been rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_render_callback_block_{$this->id}_content", $this, $blocks_trail );
+	}
+
+	/**
+	 * Given a set of block args and a extended block instance, merge the args.
+	 *
+	 * @param array $args
+	 * @param Pixelgrade_Block $extended_block
+	 *
+	 * @return array The merged args
+	 */
+	public static function mergeExtendedBlock( $args, $extended_block ) {
+		// First do the parent's merge
+		$args = parent::mergeExtendedBlock( $args, $extended_block );
+
+		// Extract the extended block properties
+		$extended_block_props = get_object_vars( $extended_block );
+
+		// We only handle the properties specific to this child class, not those of the parent
+		if ( ! empty( $extended_block_props ) && is_array( $extended_block_props ) ) {
+			if ( ! empty( $extended_block_props['callback'] ) ) {
+				if ( empty( $args['callback'] ) ) {
+					// Just copy it
+					$args['callback'] = $extended_block_props['callback'];
+				}
+
+				if ( empty( $args['args'] ) && ! empty( $extended_block_props['args'] ) ) {
+					// Just copy it
+					$args['args'] = $extended_block_props['args'];
+				}
+			}
+		}
+
+		return $args;
 	}
 }

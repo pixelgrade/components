@@ -431,12 +431,12 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) :
  * This is the load order:
  *
  *		yourtheme	/	template-parts	/	$component_slug /   $slug-$name.php
- *		yourtheme	/	components  	/	$component_slug /   template-parts  /   $slug-$name.php
  *    [ yourtheme	/	template-parts	/	$slug-$name.php ] - only if $lookup_parts_root is true
+ *		yourtheme	/	components  	/	$component_slug /   template-parts  /   $slug-$name.php
  *
  *      yourtheme	/	template-parts	/	$component_slug /   $slug.php
- *		yourtheme	/	components      /	$component_slug /   template-parts       /   $slug.php
  *    [ yourtheme	/	template-parts	/	$slug.php ] - only if $lookup_parts_root is true
+ *		yourtheme	/	components      /	$component_slug /   template-parts       /   $slug.php
  *
  *    [ If nothing is found it will try and locate the template part for the BLOG component - if it's not already a blog template part ]
  *

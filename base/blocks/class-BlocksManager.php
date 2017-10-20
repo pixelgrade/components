@@ -21,6 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 
 	/**
+	 * The default block type.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public static $default_block_type = 'layout';
+
+	/**
 	 * Registered instances of Pixelgrade_Block.
 	 *
 	 * @access protected
@@ -84,21 +92,27 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 *
 	 * @param Pixelgrade_Block|string $id Block object, or ID.
 	 * @param array $args The arguments to pass to the block instance to override the default class properties.
+	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
+	 *
 	 * @return Pixelgrade_Block|false The instance of the block that was added. False on failure.
 	 */
-	public function registerBlock( $id, $args = array() ) {
+	public function registerBlock( $id, $args = array(), $parent = null ) {
 		if ( $id instanceof Pixelgrade_Block ) {
 			$block = $id;
 		} else {
 			// We need to instantiate a new block
 
 			// We really need a valid, registered block type to be able to do our job
-			if ( ! empty( $args['type'] ) && is_string( $args['type'] ) && $this->isRegisteredBlockType( $args['type'] ) ) {
+			if ( empty( $args['type'] ) ) {
+				$args['type'] = self::$default_block_type;
+			}
+			if ( is_string( $args['type'] ) && $this->isRegisteredBlockType( $args['type'] ) ) {
 				$block_type_class = $this->getRegisteredBlockTypeClass( $args['type'] );
 				if ( class_exists( $block_type_class ) ) {
 					// Before adding the block we need to evaluate any dependencies it has
 					if ( true === Pixelgrade_Config::evaluateDependencies( $args ) ) {
-						$block = new $block_type_class( $this, $id, $args );
+						$args = $this->maybeExtendBlock( $args );
+						$block = new $block_type_class( $this, $id, $args, $parent );
 					} else {
 						return false;
 					}
@@ -219,6 +233,42 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	}
 
 	/**
+	 * Merges (smartly) the arguments of a new block based on it's extend entry, if any.
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public function maybeExtendBlock( $args ) {
+		// Bail if no extend
+		if ( empty( $args['extend'] ) ) {
+			return $args;
+		}
+
+		// We expect the extend entry to be a previously registered block ID.
+		// We only allow a block to extend a previously registered block.
+		// This way we avoid complicated circular inheritance management.
+		if ( ! $this->isRegisteredBlock( $args['extend'] ) ) {
+			return $args;
+		}
+
+		// Get the extended block instance
+		$extended_block = $this->getRegisteredBlock( $args['extend'] );
+		// Cleanup
+		unset( $args['extend'] );
+
+		// Let the block specific block type class handle the details
+		if ( ! empty( $args['type'] ) && $this->isRegisteredBlockType( $args['type'] ) ) {
+			$block_type_class = $this->getRegisteredBlockTypeClass( $args['type'] );
+			if ( class_exists( $block_type_class ) && method_exists( $block_type_class, 'mergeExtendedBlock' ) ) {
+				$args = call_user_func( $block_type_class . '::mergeExtendedBlock', $args, $extended_block );
+			}
+		}
+
+		return $args;
+	}
+
+	/**
 	 * Render JS templates for all registered block types.
 	 *
 	 * @access public
@@ -294,6 +344,47 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return bool|int
 	 */
 	public static function isBlockInTrail( $block, $block_trail ) {
-		return array_search( $block, $block_trail );
+		// If given a block instance, we will search for its registered block ID
+		if ( $block instanceof Pixelgrade_Block ) {
+			return Pixelgrade_Array::objArraySearch( $block_trail, 'id', $block->id );
+		}
+
+		// We assume this is the registered block ID we are after
+		if ( is_string( $block ) ) {
+			return Pixelgrade_Array::objArraySearch( $block_trail, 'id', $block );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Determine if a block ID is namespaced (aka prefixed).
+	 *
+	 * @param mixed $block_id
+	 *
+	 * @return bool
+	 */
+	public static function isBlockIdNamespaced( $block_id ) {
+		if ( is_string( $block_id ) && false !== strpos( $block_id, PIXELGRADE_BLOCK_ID_SEPARATOR ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Add a namespace to a block ID.
+	 *
+	 * @param mixed $block_id
+	 * @param string $namespace
+	 *
+	 * @return string
+	 */
+	public static function namespaceBlockId( $block_id, $namespace = '' ) {
+		if ( is_string( $block_id ) ) {
+			$block_id = $namespace . PIXELGRADE_BLOCK_ID_SEPARATOR . $block_id;
+		}
+
+		return $block_id;
 	}
 }

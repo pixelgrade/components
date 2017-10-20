@@ -38,6 +38,7 @@ defined( 'PIXELGRADE_BASE_PATH' ) or define( 'PIXELGRADE_BASE_PATH', trailingsla
  * Load our core component functions (like pixelgrade_load_component_file()) and utility classes
  */
 require_once PIXELGRADE_BASE_PATH . '_core-functions.php';
+require_once PIXELGRADE_BASE_PATH . 'utils/class-Helper.php';
 require_once PIXELGRADE_BASE_PATH . 'utils/class-Array.php';
 require_once PIXELGRADE_BASE_PATH . 'utils/class-Value.php';
 require_once PIXELGRADE_BASE_PATH . 'utils/class-Config.php';

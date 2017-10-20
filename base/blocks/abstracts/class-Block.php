@@ -70,7 +70,7 @@ abstract class Pixelgrade_Block {
 	/**
 	 * Block's wrappers.
 	 *
-	 * It can either be a string in which case $end_wrappers needs to be provided, or an array of wrapper(s) config
+	 * It can either be a string in which case $end_wrappers needs to be provided, or an array of wrapper(s) instances.
 	 *
 	 * @access public
 	 * @var string|array
@@ -115,8 +115,9 @@ abstract class Pixelgrade_Block {
 	 *     @type array                $checks          The checks config to determine at render time if this block should be rendered.
 	 *     @type string               $type            Block type. Core blocks include 'layout', 'template', 'callback'.
 	 * }
+	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
 	 */
-	public function __construct( $manager, $id, $args = array() ) {
+	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		$keys = array_keys( get_object_vars( $this ) );
 		foreach ( $keys as $key ) {
 			if ( isset( $args[ $key ] ) ) {
@@ -213,13 +214,71 @@ abstract class Pixelgrade_Block {
 	 * @return string The entire markup produced by the block.
 	 */
 	final public function getRendered( $blocks_trail = array() ) {
+		// Initialize blocks trail if empty
+		if ( empty( $blocks_trail ) ) {
+			$blocks_trail[] = $this;
+		}
+
+		// Start the output buffering
 		ob_start();
+
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before maybeRender() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
+
+		/**
+		 * Fires before the current block is maybe rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_before_block', $this, $blocks_trail );
+
+		/**
+		 * Fires before a specific block is maybe rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_before_block_{$this->id}", $this, $blocks_trail );
+
+		/* ======================
+		 * Maybe do the rendering
+		 */
 		$this->maybeRender( $blocks_trail );
+
+		/**
+		 * Fires after the current block has been maybe rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_block', $this, $blocks_trail );
+
+		/**
+		 * Fires after a specific block has been maybe rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_block_{$this->id}", $this, $blocks_trail );
+
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After maybeRender() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
+
+		// Get the output buffer and end it
 		return ob_get_clean();
 	}
 
 	/**
-	 * Evaluate checks and render the block.
+	 * Evaluate checks and render the block, including wrappers.
 	 *
 	 * @uses Pixelgrade_Block::render()
 	 *
@@ -230,13 +289,17 @@ abstract class Pixelgrade_Block {
 			return;
 		}
 
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before render() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
+
 		/**
 		 * Fires just before the current block is rendered.
 		 *
 		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
-		do_action( 'pixelgrade_render_block', $this, $blocks_trail );
+		do_action( 'pixelgrade_before_render_block', $this, $blocks_trail );
 
 		/**
 		 * Fires just before a specific block is rendered.
@@ -247,9 +310,35 @@ abstract class Pixelgrade_Block {
 		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
-		do_action( "pixelgrade_render_block_{$this->id}", $this, $blocks_trail );
+		do_action( "pixelgrade_before_render_block_{$this->id}", $this, $blocks_trail );
 
+		/* ======================
+		 * Do the rendering
+		 */
 		$this->render( $blocks_trail );
+
+		/**
+		 * Fires just after the current block is rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_block', $this, $blocks_trail );
+
+		/**
+		 * Fires just after a specific block is rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_render_block_{$this->id}", $this, $blocks_trail );
+
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After render() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
 	}
 
 	/**
@@ -258,6 +347,11 @@ abstract class Pixelgrade_Block {
 	 * @param array $blocks_trail The current trail of parent blocks.
 	 */
 	protected function render( $blocks_trail = array() ) {
+		// Initialize blocks trail if empty
+		if ( empty( $blocks_trail ) ) {
+			$blocks_trail[] = $this;
+		}
+
 		// Since there might be wrappers that shouldn't be shown when there is no content
 		// we first need to get the content, process the wrappers and then output everything.
 		$content = $this->getRenderedContent( $blocks_trail );
@@ -271,11 +365,32 @@ abstract class Pixelgrade_Block {
 
 		// Order the wrappers according to their priority,
 		// highest priority first (DESC by priority) because we want to start wrapping from the most inner wrappers
-		$this->wrappers = Pixelgrade_Block::orderWrappers( $this->wrappers );
+		$wrappers = Pixelgrade_Block::orderWrappers( $this->wrappers );
+
+		/**
+		 * Filter the wrappers just before the current block is wrapped.
+		 *
+		 * @param array $wrappers The wrappers array of Pixelgrade_Wrapper instances.
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		$wrappers = apply_filters( 'pixelgrade_render_block_wrappers', $wrappers, $this, $blocks_trail );
+
+		/**
+		 * Filter the wrappers just before the current block is wrapped.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param array $wrappers The wrappers array of Pixelgrade_Wrapper instances.
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		$wrappers = apply_filters( "pixelgrade_render_block_{$this->id}_wrappers", $wrappers, $this, $blocks_trail );
 
 		// Now render the wrappers
 		/** @var Pixelgrade_Wrapper $wrapper */
-		foreach ( $this->wrappers as $wrapper ) {
+		foreach ( $wrappers as $wrapper ) {
 			// Wrappers that have $display_on_empty_content false, do not output anything if there is no content
 			if ( false === $wrapper->display_on_empty_content && $empty_content ) {
 				// We need to skip this wrapper
@@ -296,8 +411,61 @@ abstract class Pixelgrade_Block {
 	 * @return string Contents of the block.
 	 */
 	final public function getRenderedContent( $blocks_trail = array() ) {
+		// Start the output buffering
 		ob_start();
+
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before maybeRenderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
+
+		/**
+		 * Fires before the current block content is maybe rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_before_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires before a specific block content is maybe rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_before_block_{$this->id}_content", $this, $blocks_trail );
+
+		/* =============================
+		 * Maybe do the content rendering
+		 */
 		$this->maybeRenderContent( $blocks_trail );
+
+		/**
+		 * Fires after the current block content has been maybe rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires after a specific block content has been maybe rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_block_{$this->id}_content", $this, $blocks_trail );
+
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After maybeRenderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
+
+		// Get the output buffer and end it
 		return ob_get_clean();
 	}
 
@@ -313,16 +481,20 @@ abstract class Pixelgrade_Block {
 			return;
 		}
 
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before renderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
+
 		/**
-		 * Fires just before the current block is rendered.
+		 * Fires just before the current block content is rendered.
 		 *
 		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
-		do_action( 'pixelgrade_render_block_content', $this, $blocks_trail );
+		do_action( 'pixelgrade_before_render_block_content', $this, $blocks_trail );
 
 		/**
-		 * Fires just before a specific block is rendered.
+		 * Fires just before a specific block content is rendered.
 		 *
 		 * The dynamic portion of the hook name, `$this->id`, refers to
 		 * the block ID.
@@ -330,9 +502,35 @@ abstract class Pixelgrade_Block {
 		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
-		do_action( "pixelgrade_render_block_{$this->id}_content", $this, $blocks_trail );
+		do_action( "pixelgrade_before_render_block_{$this->id}_content", $this, $blocks_trail );
 
+		/* ==============================
+		 * Do the block content rendering
+		 */
 		$this->renderContent( $blocks_trail );
+
+		/**
+		 * Fires just after the current block content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires just after a specific block content has been rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_render_block_{$this->id}_content", $this, $blocks_trail );
+
+		if ( pixelgrade_is_block_debug() ) {
+			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After renderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+		}
 	}
 
 	/**
@@ -389,5 +587,61 @@ abstract class Pixelgrade_Block {
 
 		$util = new Pixelgrade_WrapperListUtil( $list );
 		return $util->sort( $orderby, $order, $preserve_keys );
+	}
+
+	/**
+	 * Given a set of block args and a extended block instance, merge the args.
+	 *
+	 * @param array $args
+	 * @param Pixelgrade_Block $extended_block
+	 *
+	 * @return array The merged args
+	 */
+	public static function mergeExtendedBlock( $args, $extended_block ) {
+		// Work on a copy
+		$new_args = $args;
+
+		// Extract the extended block properties
+		$extended_block_props = get_object_vars( $extended_block );
+
+		if ( ! empty( $extended_block_props ) && is_array( $extended_block_props ) ) {
+			foreach ( $extended_block_props as $key => $prop ) {
+				// If the $args don't specify a certain property present in the extended block, simply copy it over
+				if ( ! isset( $args[ $key ] ) && property_exists( __CLASS__, $key ) ) {
+					$new_args[ $key ] = $prop;
+				} else {
+					// The entry is present in both the supplied $args and the extended block
+					switch( $key ) {
+						case 'wrappers':
+							$new_args['wrappers'] = array_merge( $prop, $args['wrappers'] );
+							break;
+						case 'checks':
+							// When it comes to checks they can be in three different forms
+							// @see Pixelgrade_Config::evaluateChecks()
+
+							// First, we handle the shorthand version: just a function name
+							if ( is_string( $args['checks'] ) ) {
+								// We have gotten a single shorthand check - no merging
+								$new_args['checks'] = $args['checks'];
+								break;
+							}
+
+							if ( is_array( $args['checks'] ) && ( isset( $args['checks']['function'] ) || isset( $args['checks']['callback'] ) ) ) {
+								// We have gotten a single complex check - no merging
+								$new_args['checks'] = $args['checks'];
+								break;
+							}
+
+							// If we have got an array, merge the two
+							$new_args['checks'] = array_merge( Pixelgrade_Config::sanitizeChecks( $prop ), Pixelgrade_Config::sanitizeChecks( $args['checks'] ) );
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+
+		return $new_args;
 	}
 }

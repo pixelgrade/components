@@ -25,74 +25,219 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	public function setupConfig() {
 		// Initialize the $config
 		$this->config = array(
-//			'blocks' => array(
-//				'page' => array(
-//					'type' => 'template_part',
-//					'templates' => array(
-//						array(
-//							'component_slug' => self::COMPONENT_SLUG,
-//							'slug' => 'loop',
-//							'name' => 'page',
-//						),
-//					),
-//					'wrappers' => array(
-//						'primary' => array(
-//							'tag' => 'div',
-//							'id' => 'primary',
-//							'classes' => 'content-area',
-//							'priority' => array( 'callback' => 'get_the_id', ),
-//						),
-//						'main' => array(
-//							'id' => 'main',
-//							'classes' => 'site-main',
-//							'attributes' => array( 'role' => 'main', ),
-//							'priority' => 20,
-//						),
-//					),
-//				),
-//				'content_page' => array(
-//					'type' => 'layout',
-//					'wrappers' => array(
-//						'article' => array(
-//							'tag' => 'article',
-//							'id' => array( 'prefix' => 'post-', 'callback' => 'get_the_id', ),
-//							'classes' => array( 'prefix' => 'post-', 'callback' => 'get_post_class' ),
-//						),
-//						array( 'classes' => 'u-container-sides-spacing', ),
-//						array( 'classes' => array(
-//							'prefix' => 'boom-',
-//							'o-wrapper', 'u-container-width',
-//							),
-//						),
-//						array( 'classes' => 'o-layout', ),
-//					),
-//					'blocks' => array(
-//						'asdas' => array(
-//							'type' => 'layout',
-//							'blocks' => array(
-//								'content_page_small' => array(
-//									'type' => 'template_part',
-//									'templates' => array(
-//										array(
-//											'component_slug' => self::COMPONENT_SLUG,
-//											'slug' => 'content',
-//											'name' => 'page_small',
-//										),
-//									),
-//									'wrappers' => array(
-//										array( 'classes' => 'o-layout__main' ),
-//									),
-//								),
-//								'content_page_small234' => array(
-//									'extend' => 'asdasd',
-//									'templates' => 'contentasdasdas',
-//									),
-//								'content_page_sidebar',
-//							),
-//						),
-//					),
-//				),
-//			),
+			'blocks' => array(
+				'abstract' => array(
+					'type' => 'template_part',
+					'wrappers' => array(
+						'primary' => array(
+							'tag' => 'div',
+							'id' => 'primary',
+							'classes' => 'content-area',
+							'priority' => array( 'callback' => 'get_the_id', ),
+						),
+						'main' => array(
+							'id' => 'main',
+							'classes' => 'site-main',
+							'attributes' => array( 'role' => 'main', ),
+							'priority' => 20,
+						),
+						array( 'classes' => 'o-layout', ),
+					),
+					'templates' => array(
+						'none' => array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug' => 'content',
+							'name' => 'none',
+						),
+						'secondnone' => array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug' => 'content',
+							'name' => 'none',
+						),
+						array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug' => 'content',
+							'name' => 'none',
+						),
+					),
+					'blocks' => array(
+						'content_page_small' => array(
+							'type' => 'template_part',
+							'templates' => array(
+								array(
+									'component_slug' => self::COMPONENT_SLUG,
+									'slug' => 'content',
+									'name' => 'page_small',
+								),
+							),
+							'wrappers' => array(
+								array( 'classes' => 'o-layout__main' ),
+							),
+						),
+						'content_page_small234' => array(
+							'extend' => 'asdasd',
+							'templates' => 'contentasdasdas',
+						),
+						'content_page_sidebar',
+					),
+					'checks' => array(
+						array(
+							'callback' => 'is_single',
+							'args' => array(),
+						),
+						array(
+							'callback' => 'is_home',
+							'args' => array(),
+						),
+						'is_archive',
+					),
+				),
+				'page' => array(
+					'extend' => 'abstract',
+					'type' => 'template_part',
+					'wrappers' => array(
+						'primary' => array(
+							'tag' => 'div',
+							'id' => 'primary',
+							'classes' => 'content-area',
+							'priority' => array( 'callback' => 'get_the_id', ),
+						),
+						'main' => array(
+							'id' => 'main',
+							'classes' => 'site-main',
+							'attributes' => array( 'role' => 'main', ),
+							'priority' => 20,
+						),
+						array( 'classes' => 'u-container-sides-spacing', ),
+						array( 'classes' => array(
+								'prefix' => 'boom-',
+								'o-wrapper', 'u-container-width',
+							),
+						),
+					),
+					'templates' => array(
+						'secondnone' => array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug' => 'content',
+							'name' => 'none',
+						),
+						array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug' => 'loop',
+							'name' => 'page',
+						),
+					),
+					'checks' => 'is_archive',
+				),
+				'page22' => array(
+					'extend' => 'abstract',
+					'type' => 'layout',
+					'wrappers' => array(
+						'primary' => array(
+							'tag' => 'div',
+							'id' => 'primary',
+							'classes' => 'content-area',
+							'priority' => array( 'callback' => 'the_ID', ),
+						),
+						'main' => array(
+							'id' => 'main',
+							'classes' => 'site-main',
+							'attributes' => array( 'role' => 'main', ),
+							'priority' => 20,
+						),
+						array( 'classes' => 'u-container-sides-spacing', ),
+						array( 'classes' => array(
+							'prefix' => 'boom-',
+							'o-wrapper', 'u-container-width',
+						),
+						),
+					),
+					'blocks' => array(
+						'content_page_small' => array(
+							'type' => 'template_part',
+							'templates' => array(
+								array(
+									'component_slug' => self::COMPONENT_SLUG,
+									'slug' => 'content',
+									'name' => 'page_small',
+								),
+							),
+							'wrappers' => array(
+								array( 'classes' => 'o-layout__mainnnn' ),
+							),
+						),
+						'content_page_small235' => array(
+							'type' => 'layout',
+							'blocks' => array(
+								'content_page_small' => array(
+									'type' => 'layout',
+									'blocks' => array(
+										'blog/page22/content_page_small235',
+										'content_page_small235' => array(
+											'extend' => 'booom',
+											'templates' => 'contentasdasdas',
+										),
+										'blog/page22/content_page_small235',
+									),
+									'wrappers' => array(
+										array( 'classes' => 'o-layout__mainnnn' ),
+									),
+								),
+								'content_page_small',
+								'content_page_small235' => array(
+									'extend' => 'booom',
+									'templates' => 'contentasdasdas',
+								),
+								'content_page_small',
+							),
+						),
+						'content_page_sidebar',
+					),
+					'checks' => '',
+				),
+				'content_page' => array(
+					'type' => 'layout',
+					'wrappers' => array(
+						'article' => array(
+							'tag' => 'article',
+							'id' => array( 'prefix' => 'post-', 'callback' => 'the_ID', ),
+							'classes' => array( 'prefix' => 'post-', 'callback' => 'post_class' ),
+						),
+						array( 'classes' => 'u-container-sides-spacing', ),
+						array( 'classes' => array(
+								'prefix' => 'boom-',
+								'o-wrapper', 'u-container-width',
+							),
+						),
+						array( 'classes' => 'o-layout', ),
+					),
+					'blocks' => array(
+						'asdas' => array(
+							'type' => 'layout',
+							'blocks' => array(
+								'content_page_small' => array(
+									'type' => 'template_part',
+									'templates' => array(
+										array(
+											'component_slug' => self::COMPONENT_SLUG,
+											'slug' => 'content',
+											'name' => 'page_small',
+										),
+									),
+									'wrappers' => array(
+										array( 'classes' => 'o-layout__main' ),
+									),
+								),
+								'content_page_small234' => array(
+									'extend' => 'asdasd',
+									'templates' => 'contentasdasdas',
+									),
+								'content_page_sidebar',
+							),
+						),
+					),
+				),
+			),
 			// For custom page templates, we can handle two formats:
 			// - a simple one, where the key is the page_template partial path and the value is the template name as shown in the WP Admin dropdown; like so:
 			// 'portfolio/page-templates/portfolio-page.php' => 'Portfolio Template'

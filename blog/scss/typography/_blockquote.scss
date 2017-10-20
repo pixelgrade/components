@@ -1,0 +1,84 @@
+$blockquote-font-family: "Roboto", sans-serif !default;
+$blockquote-font-size: 30px !default;
+$blockquote-font-weight: 300 !default;
+$blockquote-line-height: 1.5 !default;
+$blockquote-text-transform: none !default;
+
+@mixin blockquote {
+	font-family: $blockquote-font-family;
+	@include fontsize($blockquote-font-size);
+	font-weight: $blockquote-font-weight;
+	line-height: $blockquote-line-height;
+	text-transform: $blockquote-text-transform;
+
+	&:not(:last-child) { @include spacing(margin-bottom, 3rem); }
+	&:not(:first-child) { @include spacing(margin-top, 2rem); }
+
+	p {
+		font: inherit;
+		text-transform: inherit;
+	}
+
+	&.inner {
+		margin-left: auto;
+		margin-right: auto;
+
+		p {
+			font-size: 70%;
+		}
+
+		cite:before {
+			display: none;
+		}
+		
+	}
+
+	&.centered {
+		text-align: center;  
+	}
+}
+
+@mixin cite {
+	display: block;
+
+	@include spacing(margin-top, 3rem);
+	
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+
+	&:before {
+		content: "";
+		@include cite-dash;
+	}
+
+	// Use it for Role after Author
+	// Ex: Massimo Vignelli, *Designer*
+	br + em,
+	br + i {
+		display: block;
+		@include spacing(margin-top, 1rem);
+
+		font-size: 14px;
+		font-style: normal;
+		letter-spacing: 1px;
+		font-weight: 500;
+
+	}
+
+}
+
+@mixin cite-dash {
+	position: relative;
+	top: -6px;
+	left: 0;
+
+	display: inline-block;
+	width: 60px;
+	height: 1px;
+	margin-right: 12px;
+
+	background-color: currentColor;
+}

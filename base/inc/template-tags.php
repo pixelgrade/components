@@ -146,9 +146,7 @@ function pixelgrade_get_css_class( $class = '', $location = '', $prefix = '', $s
 	$classes = array();
 
 	if ( ! empty( $class ) ) {
-		if ( ! is_array( $class ) ) {
-			$class = preg_split( '#\s+#', $class );
-		}
+		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 
 		// If we have a prefix then we need to add it to every class
 		if ( ! empty( $prefix ) && is_string( $prefix ) ) {
@@ -178,6 +176,8 @@ function pixelgrade_get_css_class( $class = '', $location = '', $prefix = '', $s
 	 * @param array $classes An array of classes.
 	 * @param array $class   An array of additional classes to be added.
 	 * @param string|array $location   The place (template) where the classes are needed.
+	 * @param string $prefix The prefix applied to all the classes.
+	 * @param string $suffix The suffix applied to all the classes.
 	 */
 	$classes = apply_filters( 'pixelgrade_css_class', $classes, $class, $location, $prefix, $suffix );
 
@@ -463,19 +463,6 @@ if ( ! function_exists( 'pixelgrade_get_sidebar' ) ) {
 		if ( ! empty( $template ) ) {
 			load_template( $template, true );
 		}
-	}
-}
-
-if ( ! function_exists( 'pixelgrade_comments_template' ) ) {
-	/**
-	 * Output the comments template
-	 *
-	 * This is just a wrapper to comments_template() called with the template path determined according to our components logic.
-	 */
-	function pixelgrade_comments_template() {
-		// We need to pass the template path retrieved by our locate function so the component template is accounted for
-		// If present in the root of the theme or child theme, `/comments.php` will take precedence.
-		comments_template( '/' . pixelgrade_make_relative_path( pixelgrade_locate_component_template( Pixelgrade_Blog::COMPONENT_SLUG, 'comments' ) ) );
 	}
 }
 

@@ -76,9 +76,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_class' ) ) {
 		$classes[] = $columns_class;
 
 		if ( ! empty( $class ) ) {
-			if ( ! is_array( $class ) ) {
-				$class = preg_split( '#\s+#', $class );
-			}
+			$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 			$classes = array_merge( $classes, $class );
 		} else {
 			// Ensure that we always coerce class to being an array.
@@ -679,5 +677,18 @@ if ( ! function_exists( 'pixelgrade_get_posts_container_id' ) ) {
 	 */
 	function pixelgrade_get_posts_container_id( $location = array() ) {
 		return apply_filters( 'pixelgrade_posts_container_id', 'posts-container', $location );
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_comments_template' ) ) {
+	/**
+	 * Output the comments template
+	 *
+	 * This is just a wrapper to comments_template() called with the template path determined according to our components logic.
+	 */
+	function pixelgrade_comments_template() {
+		// We need to pass the template path retrieved by our locate function so the component template is accounted for
+		// If present in the root of the theme or child theme, `/comments.php` will take precedence.
+		comments_template( '/' . pixelgrade_make_relative_path( pixelgrade_locate_component_template( Pixelgrade_Blog::COMPONENT_SLUG, 'comments' ) ) );
 	}
 }

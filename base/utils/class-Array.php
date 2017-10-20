@@ -84,6 +84,24 @@ class Pixelgrade_Array {
 	}
 
 	/**
+	 * Search an array of objects for a certain property value and return the index where it was found.
+	 *
+	 * @param array $array
+	 * @param string $property
+	 * @param mixed $value
+	 *
+	 * @return int|string|false
+	 */
+	public static function objArraySearch( $array, $property, $value ) {
+		foreach ( $array as $key => $arrayInf ) {
+			if ( property_exists( $arrayInf, $property ) && $arrayInf->{$property} == $value ) {
+				return $key;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Get the difference between two associative arrays, recursively.
 	 *
 	 * @link http://be2.php.net/manual/en/function.array-diff-assoc.php#114297

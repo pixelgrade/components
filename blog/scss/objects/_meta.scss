@@ -1,0 +1,25 @@
+.c-meta {
+	@include spacing(margin-left, -0.5rem);
+
+	&:empty {
+		display: none;
+	}
+
+	> * {
+		display: inline-block;
+		@include spacing(padding-left, 0.5rem);
+	}
+
+	li {
+		display: inline-block;
+
+		&:not(:last-child):after {
+			content: ", ";
+		}
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+}

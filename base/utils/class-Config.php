@@ -211,24 +211,15 @@ class Pixelgrade_Config {
 			return true;
 		}
 
-		// First, a little standardization
-		if ( is_string( $checks ) ) {
-			// We have gotten a single shorthand check
-			$checks = array( $checks );
-		}
-		if ( is_array( $checks ) && ( isset( $checks['function'] ) || isset( $checks['callback'] ) ) ) {
-			// We have gotten a single complex check
-			$checks = array( $checks );
-		}
+		// First, a little standardization and sanitization
+		$checks = self::sanitizeChecks( $checks );
 
-		// Next, we test for a single check given as array
-		if ( is_array( $checks ) ) {
-			foreach ( $checks as $check ) {
-				$response = self::evaluateCheck( $check );
-				if ( ! $response ) {
-					// One check function returned false, bail
-					return false;
-				}
+		// Process the checks, top to bottom and stop at the first that fails (returns something resembling false)
+		foreach ( $checks as $check ) {
+			$response = self::evaluateCheck( $check );
+			if ( empty( $response ) ) {
+				// One check function returned false, bail
+				return false;
 			}
 		}
 
@@ -250,7 +241,8 @@ class Pixelgrade_Config {
 			return true;
 		}
 
-		// Standardize it a bit to make use of the new 'callback' entry, instead of 'function'
+		// Standardize it a bit to make use of the new 'callback' entry, instead of the old 'function'
+		// @todo Maybe use the same logic for checks and Pixelgrade_Wrapper callbacks
 		if ( is_array( $check ) && ! empty( $check['function'] ) && empty( $check['callback'] ) ) {
 			$check['callback'] = $check['function'];
 		}
@@ -275,6 +267,20 @@ class Pixelgrade_Config {
 
 		// On invalid data, we allow things to proceed
 		return true;
+	}
+
+	public static function sanitizeChecks( $checks ) {
+		if ( is_string( $checks ) ) {
+			// We have gotten a single shorthand check
+			$checks = array( $checks );
+		}
+
+		if ( is_array( $checks ) && ( isset( $checks['function'] ) || isset( $checks['callback'] ) ) ) {
+			// We have gotten a single complex check
+			$checks = array( $checks );
+		}
+
+		return $checks;
 	}
 
 	/**

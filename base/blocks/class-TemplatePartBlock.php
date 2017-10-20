@@ -56,8 +56,9 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 *     @type string               $type            Block type. Core blocks include 'layout', 'template', 'callback'.
 	 *     @type string|array         $templates       The templates configuration.
 	 * }
+	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
 	 */
-	public function __construct( $manager, $id, $args = array() ) {
+	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive any templates, something is wrong
 		if ( empty( $args['templates'] ) ) {
 			_doing_it_wrong( __METHOD__, 'Can\'t register a TEMPLATE type block without any templates!', '1.0.0' );
@@ -75,6 +76,25 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	protected function renderContent( $blocks_trail = array() ) {
 		// Pass along the blocks trail, just in case someone is interested.
 		// @todo ^
+
+		/**
+		 * Fires before a template-part block's content is rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_before_render_templatepart_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires before a specific template-part block's content is rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_before_render_templatepart_block_{$this->id}_content", $this, $blocks_trail );
 
 		// Handle the various formats we could be receiving the template info in
 		if ( is_string( $this->templates ) ) {
@@ -107,10 +127,69 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 					// If we found a template, we load it and stop since upper templates get precedence over lower ones
 					if ( ! empty( $found_template ) ) {
 						load_template( $found_template, true );
-						return;
+						break;
 					}
 				}
 			}
 		}
+
+		/**
+		 * Fires after a template-part block's content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_templatepart_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires after a specific template-part block's content has been rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_render_templatepart_block_{$this->id}_content", $this, $blocks_trail );
+	}
+
+	/**
+	 * Given a set of block args and a extended block instance, merge the args.
+	 *
+	 * @param array $args
+	 * @param Pixelgrade_Block $extended_block
+	 *
+	 * @return array The merged args
+	 */
+	public static function mergeExtendedBlock( $args, $extended_block ) {
+		// First do the parent's merge
+		$args = parent::mergeExtendedBlock( $args, $extended_block );
+
+		// Extract the extended block properties
+		$extended_block_props = get_object_vars( $extended_block );
+
+		// We only handle the properties specific to this child class, not those of the parent
+		if ( ! empty( $extended_block_props ) && is_array( $extended_block_props ) ) {
+			if ( ! empty( $extended_block_props['templates'] ) ) {
+				if ( empty( $args['templates'] ) ) {
+					// Just copy it
+					$args['templates'] = $extended_block_props['templates'];
+				} elseif ( is_array( $args['templates'] ) && is_array( $extended_block_props['templates'] ) ) {
+					// First we handle templates with defined key (named templates)
+					foreach ( $extended_block_props['templates'] as $key => $template ) {
+						if ( ! is_numeric( $key ) && isset( $args['templates'][ $key ] ) ) {
+							// We overwrite the templates in the extended props and remove named template from the $args
+							// so it retains the order established by the extended block
+							$extended_block_props['templates'][ $key ] = $args['templates'][ $key ];
+							unset( $args['templates'][ $key ] );
+						}
+					}
+					// We want the child block anonymous templates to come before the ones in the extended block
+					$args['templates'] = array_merge( $args['templates'], $extended_block_props['templates'] );
+				}
+			}
+		}
+
+		return $args;
 	}
 }

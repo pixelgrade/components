@@ -57,15 +57,21 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 *                                                 Default 'layout'.
 	 *     @type array                $blocks          Child blocks definition.
 	 * }
+	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
-	public function __construct( $manager, $id, $args = array() ) {
+	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		parent::__construct( $manager, $id, $args );
 
 		// We need to check the child blocks and replace them with Pixelgrade_Block instances (if they are not already)
-		$this->maybeRegisterBlocks();
+		$this->maybeRegisterBlocks( $parent );
 	}
 
-	protected function maybeRegisterBlocks() {
+	/**
+	 * Process any defined child blocks and register them where needed.
+	 *
+	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
+	 */
+	protected function maybeRegisterBlocks( $parent = null ) {
 		// $blocks should be an array
 		if ( ! empty( $this->blocks ) && ! is_array( $this->blocks ) ) {
 			$this->blocks = array( $this->blocks );
@@ -81,29 +87,43 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 		// we will recreate the array.
 		$new_blocks = array();
 
-		foreach ( $this->blocks as $block_id => $block ) {
+		foreach ( $this->blocks as $key => $block ) {
 			// We can receive blocks in 3 different ways:
 			// - a Pixelgrade_Blocks instance
 			// - a registered block ID
 			// - an inline block definition
 			if ( $block instanceof Pixelgrade_Block ) {
 				// We are good
-				$new_blocks[ $block_id ] = $block;
+				$new_blocks[] = $block;
 				continue;
 			} elseif ( is_string( $block ) ) {
 				// We need to search for the registered block ID and save it's instance
+				// We need to handle namespaced and non-namespaced block IDs differently
+				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block ) ) {
+					// For non-namespaced block IDs references, we will consider that it is a reference to a sibling block
+					// It still needs to be previously registered (ie. previously in the config array)
+					if ( $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id ) ) ) {
+						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id );
+					} elseif ( $parent instanceof Pixelgrade_Block
+					           && $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
+
+						// We see if there is a block in the parent that matches
+						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id );
+					}
+				}
+
 				if ( $this->manager->isRegisteredBlock( $block ) ) {
-					$new_blocks[ $block ] = $this->manager->getRegisteredBlock( $block );
+					$new_blocks[] = $this->manager->getRegisteredBlock( $block );
 				} else {
 					continue;
 				}
 			} elseif ( is_array( $block ) ) {
 				// We have an inline block definition
 				// Get the block instance, if all is well
-				$block_instance = $this->addBlock( $block_id, $block, true );
+				$block_instance = $this->addBlock( $key, $block, true );
 
 				if ( false !== $block_instance ) {
-					$new_blocks[ $block_instance->id ] = $block_instance;
+					$new_blocks[] = $block_instance;
 				}
 			}
 		}
@@ -133,7 +153,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 			if ( ! empty( $args ) ) {
 				// Inline blocks have their $id prefixed with the parent id, if it has one
 				// Thus we maintain uniqueness among directly defined blocks and inline defined blocks
-				$id = $this->id . PIXELGRADE_BLOCK_ID_SEPARATOR . $id;
+				$id = Pixelgrade_BlocksManager::namespaceBlockId( $id, $this->id );
 
 				// If the type is not set, we will default to 'layout' (if registered)
 				if ( ! isset( $args['type'] ) && $this->manager->isRegisteredBlockType( 'layout' ) ) {
@@ -141,7 +161,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				}
 
 				// Register the new block (and instantiate it)
-				$block = $this->manager->registerBlock( $id, $args );
+				$block = $this->manager->registerBlock( $id, $args, $this );
 			} else {
 				// This means we have received the ID of a previously registered block
 				// We need to search it among the registered blocks and save it
@@ -166,8 +186,9 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 * @return Pixelgrade_Block|false The block object, if set. False otherwise.
 	 */
 	public function getBlock( $id ) {
-		if ( isset( $this->blocks[ $id ] ) ) {
-			return $this->blocks[ $id ];
+		$key = Pixelgrade_Array::objArraySearch( $this->blocks, 'id', $id );
+		if ( false !== $key ) {
+			return $this->blocks[ $key ];
 		}
 
 		return false;
@@ -177,9 +198,17 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 * Remove a child block.
 	 *
 	 * @param string $id ID of the block.
+	 *
+	 * @return bool True if the block was found and removed, false otherwise.
 	 */
 	public function removeBlock( $id ) {
-		unset( $this->blocks[ $id ] );
+		$key = Pixelgrade_Array::objArraySearch( $this->blocks, 'id', $id );
+		if ( false !== $key ) {
+			unset( $this->blocks[ $key ] );
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -192,15 +221,145 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 * @param array $blocks_trail The current trail of parent blocks (aka the anti-looping machine).
 	 */
 	protected function renderContent( $blocks_trail = array() ) {
+		// Initialize blocks trail if empty
+		if ( empty( $blocks_trail ) ) {
+			$blocks_trail[] = $this;
+		}
+
+		/**
+		 * Fires before a layout block's content is rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_before_render_layout_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires before a specific layout block's content is rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_before_render_layout_block_{$this->id}_content", $this, $blocks_trail );
+
 		/** @var Pixelgrade_Block $block */
-		foreach ( $this->blocks as $id => $block ) {
+		foreach ( $this->blocks as $block ) {
 			// Render each child block (pass the new blocks trail).
 
 			// First we need to make sure that we don't render an instance already in the blocks trail
 			// thus avoiding infinite loops.
 			if ( false === Pixelgrade_BlocksManager::isBlockInTrail( $block, $blocks_trail ) ) {
-				$block->maybeRenderContent( $blocks_trail + array( $id => $block ) );
+
+				/**
+				 * Fires before a child block from a layout block is maybe rendered.
+				 *
+				 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+				 * @param array $blocks_trail The current trail of parent blocks.
+				 */
+				do_action( 'pixelgrade_before_layout_child_block', $this, $blocks_trail );
+
+				/**
+				 * Fires before a child block from a specific layout block is maybe rendered.
+				 *
+				 * The dynamic portion of the hook name, `$this->id`, refers to
+				 * the block ID.
+				 *
+				 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+				 * @param array $blocks_trail The current trail of parent blocks.
+				 */
+				do_action( "pixelgrade_before_layout_{$this->id}_child_block", $this, $blocks_trail );
+
+				/* ==================================
+				 * Maybe do the child block rendering
+				 */
+				$block->maybeRender( array_merge( $blocks_trail, array( $block ) ) );
+
+				/**
+				 * Fires after a child block from a layout block is maybe rendered.
+				 *
+				 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+				 * @param array $blocks_trail The current trail of parent blocks.
+				 */
+				do_action( 'pixelgrade_after_layout_child_block', $this, $blocks_trail );
+
+				/**
+				 * Fires after a child block from a specific layout block is maybe rendered.
+				 *
+				 * The dynamic portion of the hook name, `$this->id`, refers to
+				 * the block ID.
+				 *
+				 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+				 * @param array $blocks_trail The current trail of parent blocks.
+				 */
+				do_action( "pixelgrade_after_layout_{$this->id}_child_block", $this, $blocks_trail );
 			}
 		}
+
+		/**
+		 * Fires after a layout block's content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_layout_block_content', $this, $blocks_trail );
+
+		/**
+		 * Fires after a specific layout block's content has been rendered.
+		 *
+		 * The dynamic portion of the hook name, `$this->id`, refers to
+		 * the block ID.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( "pixelgrade_after_render_layout_block_{$this->id}_content", $this, $blocks_trail );
+	}
+
+	/**
+	 * Given a set of block args and a extended block instance, merge the args.
+	 *
+	 * @param array $args
+	 * @param Pixelgrade_Block $extended_block
+	 *
+	 * @return array The merged args
+	 */
+	public static function mergeExtendedBlock( $args, $extended_block ) {
+		// First do the parent's merge
+		$args = parent::mergeExtendedBlock( $args, $extended_block );
+
+		// Extract the extended block properties
+		$extended_block_props = get_object_vars( $extended_block );
+
+		// We only handle the properties specific to this child class, not those of the parent
+		if ( ! empty( $extended_block_props ) && is_array( $extended_block_props ) ) {
+			if ( ! empty( $extended_block_props['blocks'] ) ) {
+				if ( empty( $args['blocks'] ) ) {
+					$args['blocks'] = array();
+				}
+
+				if ( is_array( $args['blocks'] ) ) {
+					// We need to make sure that for any $args blocks that don't have a namespaced ID,
+					// we search for the best places where that ID might be referring to, like sibling blocks or parent blocks.
+					foreach ( $args['blocks'] as $block_id => $block ) {
+						if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
+							$namespaced_block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, $extended_block->id );
+							// We need to check if this block ID is actually part of the extended block's childs
+							if ( method_exists( $extended_block, 'getBlock' ) && false !== $extended_block->getBlock( $namespaced_block_id ) ) {
+								// We assume we are overwriting the block in the extended block
+								// Thus we need to register a different block, not reregistering a block with the same ID (others might be using the original)
+								// So we remove the block from the extended blocks list, leaving our current one to live
+								unset( $extended_block_props['blocks'][ $namespaced_block_id ] );
+							}
+						}
+					}
+				}
+				$args['blocks'] = array_merge( $extended_block_props['blocks'], $args['blocks'] );
+			}
+		}
+
+		return $args;
 	}
 }

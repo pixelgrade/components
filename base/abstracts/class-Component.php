@@ -281,6 +281,10 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// Now process the config and register any blocks we find
 		if ( ! empty( $config ) && is_array( $config ) ) {
 			foreach ( $config as $block_id => $block_config ) {
+				// If the block ID is not namespaced, we will namespace it with the component's slug
+				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
+					$block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+				}
 				Pixelgrade_BlocksManager()->registerBlock( $block_id, $block_config );
 			}
 		}

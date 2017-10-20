@@ -18,6 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Pixelgrade_Wrapper {
 
 	/**
+	 * The default tag to use.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public static $default_tag = 'div';
+
+	/**
 	 * Incremented with each new class instantiation, then stored in $instance_number.
 	 *
 	 * Used when sorting two instances whose priorities are equal.
@@ -173,7 +181,8 @@ class Pixelgrade_Wrapper {
 			return $tag;
 		}
 
-		return '<' . $tag . ' ' . self::getIdMarkup( $this->id ) . ' ' . self::getClassMarkup( $this->classes ) . ' ' . self::getAttributesMarkup( $this->attributes ) . '>';
+		// We will filter the markup parts to avoid gluing empty entries
+		return '<' . implode( ' ', array_filter( array( $tag, self::getIdMarkup( $this->id ), self::getClassMarkup( $this->classes, $this ), self::getAttributesMarkup( $this->attributes, $this ) ) ) ) . '>';
 	}
 
 	protected function getClosingMarkup() {
@@ -183,7 +192,7 @@ class Pixelgrade_Wrapper {
 			return $this->getEndTag();
 		}
 
-		return '</' . $tag . '>';
+		return "</{$tag}>";
 	}
 
 	public static function isInlineTag( $tag ) {
@@ -204,9 +213,9 @@ class Pixelgrade_Wrapper {
 			$tag = tag_escape( $tag );
 		}
 
-		// For now, we will default to using <div>s
+		// Use the default tag
 		if ( empty( $tag ) ) {
-			$tag = 'div';
+			$tag = self::$default_tag;
 		}
 
 		return $tag;
@@ -219,15 +228,23 @@ class Pixelgrade_Wrapper {
 			$tag = call_user_func( $tag );
 		}
 
-		// For now, we will default to using <div>s
+		// Use the default tag
 		if ( empty( $tag ) ) {
-			$tag = '</div>';
+			$tag = '</' . self::$default_tag . '>';
 		}
 
 		return $tag;
 	}
 
-	public static function getIdMarkup( $id = '' ) {
+	/**
+	 * Given an HTML id definition, return the full id attribute (ie. 'id="..."').
+	 *
+	 * @param string $id
+	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the id belongs to.
+	 *
+	 * @return string
+	 */
+	public static function getIdMarkup( $id = '', $wrapper = null ) {
 		$prefix = '';
 		$suffix = '';
 
@@ -246,6 +263,16 @@ class Pixelgrade_Wrapper {
 		// Maybe process the defined callback
 		$id = self::maybeProcessCallback( $id );
 
+		/**
+		 * Filters the HTML id
+		 *
+		 * @param string $id The HTML id.
+		 * @param string $prefix The prefix applied to the id.
+		 * @param string $suffix The sufix applied to the id.
+		 * @param Pixelgrade_Wrapper|null $wrapper The wrapper instance the id belongs to.
+		 */
+		$id = apply_filters( 'pixelgrade_wrapper_html_id', $id, $prefix, $suffix, $wrapper );
+
 		if ( ! empty( $id ) ) {
 			return 'id="' . esc_attr( Pixelgrade_Value::maybePrefixSuffix( $id, $prefix, $suffix ) ) . '"';
 		}
@@ -253,8 +280,16 @@ class Pixelgrade_Wrapper {
 		return '';
 	}
 
-	public static function getClassMarkup( $classes = array() ) {
-		$classes = self::getProcessedClasses( $classes );
+	/**
+	 * Given an array of class definitions, return the full class attribute (ie. 'class="..."' ).
+	 *
+	 * @param array $classes
+	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the classes belong to.
+	 *
+	 * @return string
+	 */
+	public static function getClassMarkup( $classes = array(), $wrapper = null ) {
+		$classes = self::getProcessedClasses( $classes, $wrapper );
 
 		// Glue the attributes
 		if ( ! empty( $classes ) ) {
@@ -264,7 +299,15 @@ class Pixelgrade_Wrapper {
 		return '';
 	}
 
-	protected static function getProcessedClasses( $classes = array() ) {
+	/**
+	 * Process an array of classes definition and return the final classes as an array of strings.
+	 *
+	 * @param array $classes
+	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the classes belong to.
+	 *
+	 * @return array
+	 */
+	protected static function getProcessedClasses( $classes = array(), $wrapper = null ) {
 		$prefix = '';
 		$suffix = '';
 
@@ -284,7 +327,7 @@ class Pixelgrade_Wrapper {
 		$classes = self::maybeProcessCallback( $classes );
 
 		if ( is_string( $classes ) ) {
-			$classes = preg_split( '#\s+#', $classes );
+			$classes = Pixelgrade_Value::maybeSplitByWhitespace( $classes );
 		} elseif ( is_array( $classes ) ) {
 			$classes = array_map( 'Pixelgrade_Wrapper::maybeProcessCallback', $classes );
 		}
@@ -303,63 +346,90 @@ class Pixelgrade_Wrapper {
 		 * Filters the list of CSS classes
 		 *
 		 * @param array $classes An array of classes.
+		 * @param string $prefix The prefix applied to all the classes.
+		 * @param string $suffix The sufix applied to all the classes.
+		 * @param Pixelgrade_Wrapper|null $wrapper The wrapper instance the classes belong to.
 		 */
-		$classes = apply_filters( 'pixelgrade_wrapper_css_class', $classes, $prefix, $suffix );
+		$classes = apply_filters( 'pixelgrade_wrapper_css_class', $classes, $prefix, $suffix, $wrapper );
 
-		return array_unique( $classes );
+		return array_unique( array_filter( $classes ) );
 	}
 
-	public static function getAttributesMarkup( $attributes = array() ) {
+	/**
+	 * Process an array of attributes definition and return the final attributes as an array of strings.
+	 *
+	 * @param array $attributes
+	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the attributes belong to.
+	 *
+	 * @return string
+	 */
+	public static function getAttributesMarkup( $attributes = array(), $wrapper = null ) {
+		$attributes = self::maybeProcessCallback( $attributes );
+
 		// Bail early
 		if ( empty( $attributes ) ) {
 			return '';
 		}
 
-		$attributes = self::maybeProcessCallback( $attributes );
-
 		// First, generate a string attributes array, like array( 'rel="test"', 'href="boom"' )
 		$full_attributes = array();
 
-		foreach ( $attributes as $name => $value ) {
-			// We really don't want numeric keys as attributes names
-			if ( ! empty( $name ) && ! is_numeric( $name ) ) {
-				// If we get an array as value for this attributes
-				// we will first test it for is_callable - it may be a callback.
-				// If not, we will add them comma separated
-				if ( ! empty( $value ) ) {
-					$value = self::maybeProcessCallback( $value );
+		if ( is_array( $attributes ) || is_object( $attributes ) ) {
+			foreach ( $attributes as $name => $value ) {
+				// We really don't want numeric keys as attributes names
+				if ( ! empty( $name ) && ! is_numeric( $name ) ) {
+					// If we get an array as value for this attributes
+					// we will first test it for is_callable - it may be a callback.
+					// If not, we will add them comma separated
+					if ( ! empty( $value ) ) {
+						$value = self::maybeProcessCallback( $value );
 
-					if ( is_array( $value ) ) {
-						$value = join( ', ', $value );
-					} else {
-						$value = (string) $value;
+						if ( is_array( $value ) ) {
+							$value = join( ', ', $value );
+						} else {
+							$value = (string) $value;
+						}
 					}
-				}
 
-				// If we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
-				if ( empty( $value ) ) {
-					$full_attributes[] = $name;
-				} else {
-					$full_attributes[] = $name . '="' . esc_attr( $value ) . '"';
+					// If we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
+					if ( empty( $value ) ) {
+						$full_attributes[] = $name;
+					} else {
+						$full_attributes[] = $name . '="' . esc_attr( $value ) . '"';
+					}
 				}
 			}
 		}
 
-		// Glue the attributes
-		if ( ! empty( $full_attributes ) ) {
-			return join( ' ', $full_attributes );
-		}
+		/**
+		 * Filters the list of HTML attributes for a wrapper
+		 *
+		 * @param array $attributes An array of attributes in the form of 'name=value'.
+		 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the attributes belong to.
+		 */
+		$full_attributes = apply_filters( 'pixelgrade_wrapper_html_attributes', $full_attributes, $wrapper );
 
-		return '';
+		// Glue the attributes - it will work for empty attributes
+		return join( ' ', $full_attributes );
 	}
 
+	/**
+	 * Return the callback response, if that is the case.
+	 *
+	 * Given some array, determine if it has the necessary callback information and return the call response.
+	 * Otherwise just return what we have received.
+	 *
+	 * @param string|array $value
+	 *
+	 * @return mixed
+	 */
 	protected static function maybeProcessCallback( $value ) {
 		if ( is_array( $value ) && ! empty( $value['callback'] ) && is_callable( $value['callback'] ) ) {
 			$args = array();
 			if ( ! empty( $value['args'] ) ) {
 				$args = $value['args'];
 			}
-			return call_user_func_array( $value['callback'], $args );
+			return Pixelgrade_Helper::ob_function( $value['callback'], $args );
 		}
 
 		return $value;
