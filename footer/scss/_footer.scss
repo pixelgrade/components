@@ -1,0 +1,28 @@
+.c-footer__widget {
+    &:first-child:nth-last-child(3) {
+        &, & ~ .c-widget {
+            flex-basis: percentage(1/3);
+        }
+    }
+
+    &:first-child:nth-last-child(2) {
+        &, & ~ .c-widget {
+            flex-basis: 50%;
+        }
+    }
+}
+
+.u-footer-layout-stacked {
+
+    .c-footer__gallery {
+        flex-direction: column;
+        align-items: center;
+        margin-right: 0;
+        text-align: center;
+
+        .c-gallery__item {
+            width: auto;
+            padding-right: 0;
+        }
+    }
+}

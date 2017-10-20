@@ -286,7 +286,7 @@ class Pixelgrade_Config {
 		foreach ( $original_config as $section_key => $section ) {
 			if ( ! empty( $section['options'] ) && is_array( $section['options'] ) ) {
 				foreach ( $section['options'] as $option_key => $option ) {
-					if ( is_array( $option ) && array_key_exists( 'default', $option ) && null === $option['default'] ) {
+					if ( is_array( $option ) && array_key_exists( 'default', $option ) && null === $option['default'] && isset( $modified_config[ $section_key ]['options'][ $option_key ] ) ) {
 						// This means we should receive a value in the modified config
 						if ( ! isset( $modified_config[ $section_key ]['options'][ $option_key ]['default'] ) ) {
 							_doing_it_wrong( __FUNCTION__,
