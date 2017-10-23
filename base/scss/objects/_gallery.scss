@@ -249,9 +249,8 @@
 		opacity: 0;
 
 		transition: opacity $transition--macro $easeInOutCirc;
-
-
 	}
+
 	& .c-card:hover .c-card__content {
 		opacity: 1;
 	}

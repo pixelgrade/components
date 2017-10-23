@@ -14,9 +14,11 @@
 @mixin font-face($name, $filename, $weight: null) {
     @font-face {
         font-family: $name;
+
         @if $weight != null {
-            font-wight: $weight;
+            font-weight: $weight;
         }
+
         src: url(unquote($filename) + '.woff2') format('woff2'), /* Super Modern Browsers */
             url(unquote($filename) + '.woff') format('woff'); /* Pretty Modern Browsers */
     }
@@ -117,12 +119,12 @@
 @mixin leading-map( $options ) {
 
 	$defaults: (
-		font-family: sans-serif,
+		font-family: false,
 		font-size: inherit,
-		line-height: inherit,
-		font-weight: normal,
-		letter-spacing: normal,
-		text-transform: none,
+		line-height: false,
+		font-weight: false,
+		letter-spacing: false,
+		text-transform: false,
 		spacing-top: false,
 		spacing-bottom: false,
 		cap-height: false

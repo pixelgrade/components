@@ -31,6 +31,7 @@ $card-letter-hover-opacity: 		0.7						!default;
 
 	img {
 		display: block;
+		@include image-fill;
 	}
 }
 
@@ -44,10 +45,6 @@ $card-letter-hover-opacity: 		0.7						!default;
 	opacity: 0;
 	transition: $transition--default;
 	transition-property: opacity;
-
-	img {
-		@include image-fill;
-	}
 
 	.c-card:hover & {
 		opacity: 1;
@@ -139,6 +136,8 @@ $card-letter-hover-opacity: 		0.7						!default;
 	right: 0;
 	bottom: 0;
 	left: 0;
+
+	display: block;
 }
 
 .c-card__content a {
