@@ -298,13 +298,7 @@ class Pixelgrade_Header_Customizer {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '
-								.c-navbar [class*="current-menu"],
-								.c-navbar li:hover',
-							),
-							array(
-								'property' => 'border-top-color',
-								'selector' => '.c-navbar [class*="children"]:hover:after',
+								'selector' => '.c-navbar [class*="current-menu"], .c-navbar li:hover',
 							),
 						),
 					),

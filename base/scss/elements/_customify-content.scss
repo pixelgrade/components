@@ -3,27 +3,27 @@
 
 // Layout
 // ----------------------------------------
-$content-width: 				1300px 		!default;
-$content-sides-spacing:			70px 		!default;
-$content-vertical-spacing: 		60px 		!default;
-$content-width: 				720px 		!default;
-$content-border-width: 			0 			!default;
-$content-border-color: 			transparent !default;
+$content-width: 1300px !default;
+$content-sides-spacing: 70px !default;
+$content-vertical-spacing: 60px !default;
+$content-width: 720px !default;
+$content-border-width: 0 !default;
+$content-border-color: transparent !default;
 
 // Colors
 // ----------------------------------------
-$page-title-color: 				#000000		!default;
-$body-text-color:				#000000		!default;
-$body-link-color:				#000000		!default;
-$body-link-active-color:		#000000		!default;
-$body-underlined-links:			false		!default;
-$h1-color:						#000000		!default;
-$h2-color:						#000000		!default;
-$h3-color:						#000000		!default;
-$h4-color:						#000000		!default;
-$h5-color:						#000000		!default;
-$h6-color:						#000000		!default;
-$content-background-color: 		#FFFFFF 	!default;
+$page-title-color: #000000 !default;
+$body-text-color: #000000 !default;
+$body-link-color: #000000 !default;
+$body-link-active-color: #000000 !default;
+$body-underlined-links: false !default;
+$h1-color: #000000 !default;
+$h2-color: #000000 !default;
+$h3-color: #000000 !default;
+$h4-color: #000000 !default;
+$h5-color: #000000 !default;
+$h6-color: #000000 !default;
+$content-background-color: #FFFFFF !default;
 
 // Fonts
 // ----------------------------------------
@@ -48,47 +48,12 @@ $blockquote-font: (
 	spacing-bottom: 2rem
 ) !default;
 
-$h1: (
-	font-size: 40px,
-	line-height: (50/40),
-	spacing-top: 0.5rem,
-	spacing-bottom: 2rem
-) !default;
-
-$h2: (
-	font-size: 30px,
-	line-height: (40/30),
-	spacing-top: 0.5rem,
-	spacing-bottom: 2rem
-) !default;
-
-$h3: (
-	font-size: 24px,
-	line-height: (34/24),
-	spacing-top: 0.5rem,
-	spacing-bottom: 2rem
-) !default;
-
-$h4: (
-	font-size: 20px,
-	line-height: (30/20),
-	spacing-top: 0.5rem,
-	spacing-bottom: 2rem
-) !default;
-
-$h5: (
-	font-size: 15px,
-	line-height: (17/15),
-	spacing-top: 0.5rem,
-	spacing-bottom: 1rem
-) !default;
-
-$h6: (
-	font-size: 14px,
-	line-height: (15/14),
-	spacing-top: 0.5rem,
-	spacing-bottom: 0.5rem
-) !default;
+$h1: () !default;
+$h2: () !default;
+$h3: () !default;
+$h4: () !default;
+$h5: () !default;
+$h6: () !default;
 
 // Extras
 // ----------------------------------------
