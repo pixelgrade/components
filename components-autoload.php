@@ -34,26 +34,25 @@ class Pixelgrade_Components_Autoloader {
 	 * @param string $path Optional. The starting path to search for components. Defaults to the directory of the autoloader class.
 	 * @return bool True when everything went smoothly. False on error.
 	 */
-	public static function load_components( $path = __DIR__ ) {
+	public static function loadComponents( $path = __DIR__ ) {
 		// First the base component
-		if ( false === self::load_component( 'base', $path ) ) {
+		if ( false === self::loadComponent( 'base', $path ) ) {
 			// We need to stop if we couldn't load the base component
 			return false;
 		}
 
 		$iterator = new DirectoryIterator( $path );
 		foreach ( $iterator as $file_info ) {
-			$boom = $file_info->getFilename();
 			if ( $file_info->isDir() && ! $file_info->isDot() && $file_info->getFilename() != 'base' ) {
 				// We have found a directory, try to load the component in it
-				self::load_component( $file_info->getFilename(), $path );
+				self::loadComponent( $file_info->getFilename(), $path );
 			}
 		}
 
 		return true;
 	}
 
-	protected static function load_component( $slug, $path ) {
+	protected static function loadComponent( $slug, $path ) {
 		// Some cleanup and sanity check
 		$slug = untrailingslashit( trim( $slug ) );
 		if ( empty( $path ) ) {
@@ -70,7 +69,7 @@ class Pixelgrade_Components_Autoloader {
 				require_once $file;
 
 				// Get the instantiation function name of the component
-				$function = self::get_component_main_class( $slug );
+				$function = self::getComponentMainClass( $slug );
 
 				if ( ! empty( $function ) ) {
 					// Test for function existence and call it
@@ -119,12 +118,12 @@ class Pixelgrade_Components_Autoloader {
 	 *
 	 * @return string|bool The component main class/function name. False on failure.
 	 */
-	public static function get_component_main_class( $slug, $prefix = '' ) {
+	public static function getComponentMainClass( $slug, $prefix = '' ) {
 		if ( empty( $slug ) ) {
 			return false;
 		}
 		// Construct the class/function name
-		// Split the slug by - and reconstruct the name with _
+		// Split the slug by - and reconstruct the name without _
 		$class = ucfirst( $slug );
 		if ( false !== strpos( $slug, '-' ) ) {
 			str_replace( '--', '-', $slug );
@@ -132,8 +131,8 @@ class Pixelgrade_Components_Autoloader {
 			$parts = explode( '-', $slug );
 			// Uppercase the first letter of each part
 			$parts = array_map( 'ucfirst', $parts );
-			// Recombine the parts with underscores
-			$class = implode( '_', $parts );
+			// Recombine the parts
+			$class = implode( '', $parts );
 		}
 
 		if ( ! empty( $class ) ) {
@@ -160,5 +159,11 @@ class Pixelgrade_Components_Autoloader {
     }
 }
 
-Pixelgrade_Components_Autoloader::load_components();
-
+if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ):
+	/**
+	 * Just a wrapper for our components auto-loading
+	 */
+	function Pixelgrade_Components_Autoload() {
+	Pixelgrade_Components_Autoloader::loadComponents();
+}
+endif;

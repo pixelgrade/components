@@ -22,19 +22,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'Pixelgrade_Multipage' ) ) :
 /**
  * Returns the main instance of Pixelgrade_Multipage to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object
+ * @return Pixelgrade_Multipage|object
  */
 function Pixelgrade_Multipage() {
 	//only load if we have to
 	if ( ! class_exists( 'Pixelgrade_Multipage') ) {
-		pixelgrade_load_component_file( 'multipage', 'class-multipage' );
+		pixelgrade_load_component_file( 'multipage', 'class-Multipage' );
 	}
 	return Pixelgrade_Multipage::instance( '1.1.2' );
 }
+endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation

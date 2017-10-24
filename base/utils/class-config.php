@@ -27,13 +27,13 @@ class Pixelgrade_Config {
 	 *
 	 * @return bool
 	 */
-	public static function has_page_template( $page_template, $config ) {
+	public static function hasPageTemplate( $page_template, $config ) {
 		// Some sanity check
-		if ( empty( $config ) || empty( $config['page-templates'] ) ) {
+		if ( empty( $config ) || empty( $config['page_templates'] ) ) {
 			return false;
 		}
 
-		$found_key = Pixelgrade_Array::find_subarray_by_key_value( $config['page-templates'], 'page_template', $page_template );
+		$found_key = Pixelgrade_Array::findSubarrayByKeyValue( $config['page_templates'], 'page_template', $page_template );
 		if ( false !== $found_key ) {
 			return true;
 		}
@@ -54,7 +54,7 @@ class Pixelgrade_Config {
 	 *
 	 * @return mixed|false The determined value or false on failure.
 	 */
-	public static function get_config_value( $config, $post_id = 0 ) {
+	public static function getConfigValue( $config, $post_id = 0 ) {
 		// If the config is empty or not an array, return it - that might be the value
 		if ( empty( $config ) || ! is_array( $config ) ) {
 			return $config;
@@ -107,18 +107,23 @@ class Pixelgrade_Config {
 	 *
 	 * We currently handle dependencies like these:
 	 *  'components' => array(
-	 *      // put here the main class of the component and we will test for existence and if the component is_active
+	 *      // put here the main class of the component and we will test for existence and if the component isActive
 	 *      'Pixelgrade_Hero',
 	 *  ),
 	 *  'class_exists' => array( 'Some_Class', 'Another_Class' ),
 	 *  'function_exists' => array( 'some_function', 'another_function' ),
 	 *
-	 * @param array $dependencies The dependencies config array.
+	 * @param array $dependencies The dependencies config array or a config that has dependencies (on the first level)
 	 * @param array $data Optional. Extra data to use
 	 *
 	 * @return bool Returns true in case all dependencies are met, false otherwise. If there are no dependencies or the format is invalid, it returns true.
 	 */
-	public static function evaluate_dependencies( $dependencies, $data = array() ) {
+	public static function evaluateDependencies( $dependencies, $data = array() ) {
+		// We might have been given a config that has dependencies (only look on level deep)
+		if ( is_array( $dependencies ) && ! empty( $dependencies['dependencies'] ) ) {
+			$dependencies = $dependencies['dependencies'];
+		}
+
 		// Let's get some obvious things off the table
 		// On invalid data, we allow things to proceed
 		if ( empty( $dependencies ) || ! is_array( $dependencies ) ) {
@@ -130,12 +135,12 @@ class Pixelgrade_Config {
 				case 'components' :
 					if ( is_string( $checks ) ) {
 						// we have a direct component main class name
-						if ( ! class_exists( $checks ) || ! call_user_func( $checks . '::is_active' ) ) {
+						if ( ! class_exists( $checks ) || ! call_user_func( $checks . '::isActive' ) ) {
 							return false;
 						}
 					} elseif ( is_array( $checks ) ) {
 						foreach ( $checks as $component ) {
-							if ( ! class_exists( $component ) || ! call_user_func( $component .'::is_active' ) ) {
+							if ( ! class_exists( $component ) || ! call_user_func( $component .'::isActive' ) ) {
 								return false;
 							}
 						}
@@ -183,7 +188,7 @@ class Pixelgrade_Config {
 	 * We currently handle checks like these:
 	 *  // Elaborate check description
 	 *  array(
-	 *		'function' => 'is_post_type_archive',
+	 *		'function' or 'callback' => 'is_post_type_archive',
 	 *		// The arguments we should pass to the check function.
 	 *		// Think post types, taxonomies, or nothing if that is the case.
 	 *		// It can be an array of values or a single value.
@@ -199,7 +204,7 @@ class Pixelgrade_Config {
 	 *
 	 * @return bool Returns true in case all dependencies are met, false otherwise. If there are no dependencies or the format is invalid, it returns true.
 	 */
-	public static function evaluate_checks( $checks, $data = array() ) {
+	public static function evaluateChecks( $checks, $data = array() ) {
 		// Let's get some obvious things off the table
 		// On invalid data, we allow things to proceed
 		if ( empty( $checks ) ) {
@@ -211,7 +216,7 @@ class Pixelgrade_Config {
 			// We have gotten a single shorthand check
 			$checks = array( $checks );
 		}
-		if ( is_array( $checks ) && isset( $checks['function'] ) ) {
+		if ( is_array( $checks ) && ( isset( $checks['function'] ) || isset( $checks['callback'] ) ) ) {
 			// We have gotten a single complex check
 			$checks = array( $checks );
 		}
@@ -219,7 +224,7 @@ class Pixelgrade_Config {
 		// Next, we test for a single check given as array
 		if ( is_array( $checks ) ) {
 			foreach ( $checks as $check ) {
-				$response = self::evaluate_check( $check );
+				$response = self::evaluateCheck( $check );
 				if ( ! $response ) {
 					// One check function returned false, bail
 					return false;
@@ -238,11 +243,16 @@ class Pixelgrade_Config {
 	 *
 	 * @return bool
 	 */
-	public static function evaluate_check( $check ) {
+	public static function evaluateCheck( $check ) {
 		// Let's get some obvious things off the table
 		// On invalid data, we allow things to proceed
 		if ( empty( $check ) ) {
 			return true;
+		}
+
+		// Standardize it a bit to make use of the new 'callback' entry, instead of 'function'
+		if ( is_array( $check ) && ! empty( $check['function'] ) && empty( $check['callback'] ) ) {
+			$check['callback'] = $check['function'];
 		}
 
 		// First, we handle the shorthand version: just a function name
@@ -252,11 +262,11 @@ class Pixelgrade_Config {
 				// One check function returned false, bail
 				return false;
 			}
-		} elseif ( is_array( $check ) && ! empty( $check['function'] ) && is_callable( $check['function'] ) ) {
+		} elseif ( is_array( $check ) && ! empty( $check['callback'] ) && is_callable( $check['callback'] ) ) {
 			if ( empty( $check['args'] ) ) {
 				$check['args'] = array();
 			}
-			$response = call_user_func( $check['function'], $check['args'] );
+			$response = call_user_func_array( $check['callback'], $check['args'] );
 			// Standardize the response
 			if ( ! $response ) {
 				return false;
@@ -276,7 +286,7 @@ class Pixelgrade_Config {
 	 *
 	 * @return bool
 	 */
-	public static function validate_customizer_section_config_defaults( $modified_config, $original_config, $filter_to_use = '' ) {
+	public static function validateCustomizerSectionConfigDefaults( $modified_config, $original_config, $filter_to_use = '' ) {
 		if ( ! is_array( $modified_config ) || ! is_array( $original_config ) ) {
 			return false;
 		}

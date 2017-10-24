@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
+class Pixelgrade_Multipage extends Pixelgrade_Component {
 
 	const COMPONENT_SLUG = 'multipage';
 
@@ -27,19 +27,19 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	public function __construct( $version = '1.0.0' ) {
 		parent::__construct( $version );
 
-		$this->_assets_version = '1.0.1';
+		$this->assets_version = '1.0.1';
 	}
 
 	/**
 	 * Setup the multipage config
 	 */
-	public function setup_config() {
+	public function setupConfig() {
 		// No configuration for now
 		$this->config = array();
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepare_string_for_hooks( self::COMPONENT_SLUG );
+		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -53,52 +53,42 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	}
 
 	/**
-	 * Load, instantiate and hook up.
-	 */
-	public function fire_up() {
-		/**
-		 * Register our actions and filters
-		 */
-		$this->register_hooks();
-	}
-
-	/**
 	 * Register our actions and filters
 	 */
-	public function register_hooks() {
+	public function registerHooks() {
 		// Enqueue the frontend assets
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 
 		// Output the subpages markup, but allow others to short-circuit this
 		if ( true === apply_filters( 'pixelgrade_multipages_auto_output_subpages', true ) ) {
-			add_action( 'pixelgrade_after_loop', array( $this, 'the_subpages' ), 10, 1 );
+			add_action( 'pixelgrade_after_loop', array( $this, 'theSubpages' ), 10, 1 );
 		}
 
 		// Add some classes to the <article> for pages
-		add_filter( 'post_class', array( $this, 'post_classes' ) );
+		add_filter( 'post_class', array( $this, 'postClasses' ) );
 
 		// Customize the hero scroll down arrow logic
 		// Prevent the arrow from appearing on the subpage heroes
 		// Do note that this only works if the theme adds the scroll down arrow with this filter applied
-		add_filter( 'pixelgrade_hero_show_scroll_down_arrow', array( $this, 'prevent_hero_scroll_down_arrow' ), 10, 3 );
+		add_filter( 'pixelgrade_hero_show_scroll_down_arrow', array( $this, 'preventHeroScrollDownArrow' ), 10, 3 );
 
 		// We will only play with redirects and permalinks if the permalinks are active
 		if ( get_option('permalink_structure') ) {
 			// Redirect subpages to the main page with hashtag at the end (blog.com/main-page/child-page -> blog.com/main-page/#child-page
-			add_action( 'template_redirect', array( $this, 'redirect_subpages' ) );
+			add_action( 'template_redirect', array( $this, 'redirectSubpages' ) );
 
 			//modify page permalinks
 			// Change the sample permalink in the WP Admin to match the one used in the redirect
-			add_filter( 'page_link', array( $this, 'modify_page_permalink' ), 10, 3 );
+			add_filter( 'page_link', array( $this, 'modifyPagePermalink' ), 10, 3 );
 
 			// Change the sample permalink in the WP Admin to match the one used in the redirect
-			add_filter( 'get_sample_permalink', array( $this, 'modify_sample_permalink' ), 10, 5 );
+			add_filter( 'get_sample_permalink', array( $this, 'modifySamplePermalink' ), 10, 5 );
 		}
 
 		// Prevent comments on multipages
-		add_filter( 'comments_open', array( $this, 'prevent_comments' ), 10, 2 );
+		add_filter( 'comments_open', array( $this, 'preventComments' ), 10, 2 );
 		// Even if there are comments, do not display them
-		add_filter( 'get_comments_number', array( $this, 'prevent_comments' ), 10, 2 );
+		add_filter( 'get_comments_number', array( $this, 'preventComments' ), 10, 2 );
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_multipage_registered_hooks' );
@@ -107,9 +97,9 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	/**
 	 * Enqueue styles and scripts on the frontend
 	 */
-	public function enqueue_scripts() {
+	public function enqueueScripts() {
 		// Register the frontend styles and scripts specific to multipages
-		wp_register_script( 'pixelgrade_multipage-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Multipage::COMPONENT_SLUG ) . 'js/jquery.bully.js' ), array( 'jquery' ), $this->_assets_version, true );
+		wp_register_script( 'pixelgrade_multipage-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Multipage::COMPONENT_SLUG ) . 'js/jquery.bully.js' ), array( 'jquery' ), $this->assets_version, true );
 
 		// See if we need to enqueue something for multipages
 		if ( is_page() && pixelgrade_multipage_has_children() ) {
@@ -122,7 +112,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	 *
 	 * @param string|array $location Optional. This is a hint regarding the place/template where this is being displayed
 	 */
-	public function the_subpages( $location = '' ) {
+	public function theSubpages( $location = '' ) {
 		if ( is_page() && pixelgrade_multipage_has_children() ) {
 			//so far we are interested only in pages
 			if ( pixelgrade_in_location( 'page', $location ) ) {
@@ -140,7 +130,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	 *
 	 * @return array
 	 */
-	function post_classes( $classes ) {
+	function postClasses( $classes ) {
 		//we first need to know the bigger picture - the location this template part was loaded from
 		$location = pixelgrade_get_location();
 
@@ -160,7 +150,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	 *
 	 * @return bool
 	 */
-	function prevent_hero_scroll_down_arrow( $show, $location, $post_id ) {
+	function preventHeroScrollDownArrow( $show, $location, $post_id ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			$show = false;
 		}
@@ -171,7 +161,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	/**
 	 * Redirect subpages to the main page with hashtag at the end (blog.com/main-page/child-page -> blog.com/main-page/#child-page)
 	 */
-	public function redirect_subpages() {
+	public function redirectSubpages() {
 		$object = get_queried_object();
 
 		if ( is_wp_error( $object ) || empty( $object ) ) {
@@ -211,7 +201,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	 *
 	 * @return string
 	 */
-	public function modify_page_permalink( $permalink, $post_id, $sample ) {
+	public function modifyPagePermalink( $permalink, $post_id, $sample ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			$post = get_post( $post_id );
 
@@ -236,7 +226,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	 *
 	 * @return array
 	 */
-	public function modify_sample_permalink( $permalink, $post_id, $title, $name, $post ) {
+	public function modifySamplePermalink( $permalink, $post_id, $title, $name, $post ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			// Remove the trailing slash
 			$permalink[0] = untrailingslashit( $permalink[0]);
@@ -256,7 +246,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component_Main {
 	 *
 	 * @return bool
 	 */
-	public function prevent_comments( $open, $post_id ) {
+	public function preventComments( $open, $post_id ) {
 		// If the current page has subpages, prevent comments from being displayed
 		if ( is_page( $post_id ) && pixelgrade_multipage_has_children( $post_id ) ) {
 			return false;

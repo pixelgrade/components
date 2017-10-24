@@ -25,7 +25,7 @@ class Pixelgrade_Array {
 	 *
 	 * @return array
 	 */
-	public static function insert_before_key( $array, $key, $insert ) {
+	public static function insertBeforeKey( $array, $key, $insert ) {
 		$keys = array_keys( $array );
 		$index = array_search( $key, $keys );
 		$pos = ( ( false === $index ) ? 0 : $index );
@@ -45,7 +45,7 @@ class Pixelgrade_Array {
 	 *
 	 * @return array
 	 */
-	public static function insert_after_key( $array, $key, $insert ) {
+	public static function insertAfterKey( $array, $key, $insert ) {
 		$keys = array_keys( $array );
 		$index = array_search( $key, $keys );
 		$pos = ( ( false === $index ) ? count( $array ) : $index + 1 );
@@ -68,7 +68,7 @@ class Pixelgrade_Array {
 	 *
 	 * @return mixed|false
 	 */
-	public static function find_subarray_by_key_value( $array, $key, $value ) {
+	public static function findSubarrayByKeyValue( $array, $key, $value ) {
 		// Bail if it's not array
 		if ( ! is_array( $array ) ) {
 			return false;
@@ -93,7 +93,7 @@ class Pixelgrade_Array {
 	 *
 	 * @return bool|array
 	 */
-	public static function array_diff_assoc_recursive( $array1, $array2 ) {
+	public static function arrayDiffAssocRecursive( $array1, $array2 ) {
 		foreach ( $array1 as $key => $value ) {
 			if ( is_array( $value ) ) {
 				if ( ! isset( $array2[ $key ] ) ) {
@@ -101,7 +101,7 @@ class Pixelgrade_Array {
 				} elseif ( ! is_array( $array2[ $key ] ) ) {
 					$difference[ $key ] = $value;
 				} else {
-					$new_diff = self::array_diff_assoc_recursive( $value, $array2[ $key ] );
+					$new_diff = self::arrayDiffAssocRecursive( $value, $array2[ $key ] );
 					if ( false !== $new_diff ) {
 						$difference[ $key ] = $new_diff;
 					}
@@ -122,7 +122,7 @@ class Pixelgrade_Array {
 	 *
 	 * @return bool|int|string The first key whose value matched the partial needle. False on failure or invalid input.
 	 */
-	public static function str_array_search( $needle, $haystack ) {
+	public static function strArraySearch( $needle, $haystack ) {
 		if ( empty( $haystack ) ) {
 			return false;
 		}
@@ -152,7 +152,7 @@ class Pixelgrade_Array {
 	 *
 	 * @return bool|int|string The first key whose value matched the partial needle. False on failure or invalid input.
 	 */
-	public static function strr_array_search( $needle, $haystack ) {
+	public static function strrArraySearch( $needle, $haystack ) {
 		if ( empty( $haystack ) ) {
 			return false;
 		}
@@ -174,6 +174,60 @@ class Pixelgrade_Array {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Detaches a specified item from an array and returns that item.
+	 *
+	 * @param array $array The array from which you want to detach an item (by reference).
+	 * @param mixed $key   The key to detach and return.
+	 *
+	 * @return mixed|false Returns the key that was detached, or false if no key was found.
+	 */
+	public static function detach( array &$array, $key ) {
+		if ( ! array_key_exists( $key, $array ) ) {
+			return false;
+		}
+		$value = $array[$key];
+		unset( $array[$key] );
+		return $value;
+	}
+
+	/**
+	 * Detaches a specified item from an array by value and returns that item.
+	 *
+	 * @param array $array The array from which you want to detach an item (by reference).
+	 * @param mixed $value The value to find, detach, and return.
+	 *
+	 * @return mixed|false
+	 */
+	public static function detach_by_value( array &$array, $value ) {
+		if ( ! $key = array_search( $value, $array ) ) {
+			return false;
+		}
+		return self::detach( $array, $key );
+	}
+
+	/**
+	 * Moves an item from one position in an array to another position in the array.
+	 *
+	 * @param $array
+	 * @param $old_index
+	 * @param $new_index
+	 *
+	 * @return mixed
+	 */
+	function reorder( $array, $old_index, $new_index ) {
+		array_splice(
+			$array,
+			$new_index,
+			count( $array ),
+			array_merge(
+				array_splice( $array, $old_index, 1 ),
+				array_slice( $array, $new_index, count( $array ) )
+			)
+		);
+		return $array;
 	}
 }
 

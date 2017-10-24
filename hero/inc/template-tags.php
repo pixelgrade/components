@@ -513,7 +513,7 @@ function pixelgrade_hero_is_hero_needed( $location = '', $post = null ) {
 
 	// First test if the post type is in the Hero component's config list of allowed post types
 	$hero_component = Pixelgrade_Hero();
-	$hero_component_config = $hero_component->get_config();
+	$hero_component_config = $hero_component->getConfig();
 	if ( ! empty( $hero_component_config['post_types'] ) && is_array( $hero_component_config['post_types'] ) &&  ! in_array( get_post_type( $post ), $hero_component_config['post_types'] ) ) {
 		$is_needed = false;
 	}
@@ -619,7 +619,7 @@ function pixelgrade_hero_get_slides_ids( $post = null ){
 		// First get the Hero Images attachment ids
 		$attachment_ids = get_post_meta( $post->ID, '_hero_background_gallery', true );
 		if ( ! empty( $attachment_ids ) ) {
-			$attachment_ids = Pixelgrade_Value::maybe_explode_list( $attachment_ids );
+			$attachment_ids = Pixelgrade_Value::maybeExplodeList( $attachment_ids );
 
 			// We will augment each with extra information so we can identify precisely what it is and where it came from
 			foreach ( $attachment_ids as $key => $attachment_id ) {
@@ -640,7 +640,7 @@ function pixelgrade_hero_get_slides_ids( $post = null ){
 		// Secondly, the Hero Videos attachment ids
 		$videos_ids = get_post_meta( $post->ID, '_hero_background_videos', true );
 		if ( ! empty( $videos_ids ) ) {
-			$videos_ids = Pixelgrade_Value::maybe_explode_list( $videos_ids );
+			$videos_ids = Pixelgrade_Value::maybeExplodeList( $videos_ids );
 
 			// We will augment each with extra information so we can identify precisely what it is and where it came from
 			foreach ( $videos_ids as $key => $attachment_id ) {
@@ -731,7 +731,7 @@ function pixelgrade_hero_get_featured_projects_ids( $post = null ) {
 	}
 
 	if ( ! empty( $featured_projects ) ) {
-		return Pixelgrade_Value::maybe_explode_list( $featured_projects );
+		return Pixelgrade_Value::maybeExplodeList( $featured_projects );
 	}
 
 	return false;

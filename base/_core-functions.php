@@ -3,7 +3,7 @@
  * Core Pixelgrade components functions.
  *
  * !!!IMPORTANT NOTICE!!! :
- * Keep here ONLY the file loading functions. The rest goes in the Base component.
+ * Keep here ONLY the file loading functions. The rest goes in the Blog component.
  *
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'pixelgrade_load_component_file' ) ) :
 /**
  * Loads a component file allowing themes and child themes to overwrite component files.
  *
@@ -30,6 +31,7 @@ function pixelgrade_load_component_file( $component_slug, $slug, $name = '', $re
 		load_template( $template, $require_once );
 	}
 }
+endif;
 
 /**
  * Loads a component file allowing themes and child themes to overwrite component files.
@@ -44,6 +46,7 @@ function pxg_load_component_file( $component_slug, $slug, $name = '', $require_o
 	pixelgrade_load_component_file( $component_slug, $slug, $name, $require_once );
 }
 
+if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) :
 /**
  * Locates a component file allowing themes and child themes to overwrite component files. Return the full path for inclusion.
  *
@@ -172,6 +175,7 @@ function pixelgrade_locate_component_file( $component_slug, $slug, $name = '', $
 	// Allow others to filter this
 	return apply_filters( 'pixelgrade_locate_component_file', $template, $component_slug, $slug, $name, $lookup_theme_root );
 }
+endif;
 
 /**
  * Locates a component file allowing themes and child themes to overwrite component files.
@@ -187,6 +191,7 @@ function pxg_locate_component_file( $component_slug, $slug, $name = '' ) {
 	return pixelgrade_locate_component_file( $component_slug, $slug, $name );
 }
 
+if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) :
 /**
  * Locates a component template file allowing themes and child themes to overwrite component files. Return the path for inclusion.
  *
@@ -315,7 +320,9 @@ function pixelgrade_locate_component_template( $component_slug, $slug, $name = '
 	// Allow others to filter this
 	return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name, $lookup_theme_root );
 }
+endif;
 
+if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) :
 /**
  * Locates a component page template file allowing themes and child themes to overwrite component files. Return the path of the file.
  *
@@ -397,7 +404,9 @@ function pixelgrade_locate_component_page_template( $component_slug, $slug, $nam
 	// Allow others to filter this
 	return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name );
 }
+endif;
 
+if ( ! function_exists( 'pixelgrade_get_component_template_part' ) ) :
 /**
  * Loads a component template part into a template allowing themes and child themes to overwrite component files.
  *
@@ -413,7 +422,9 @@ function pixelgrade_get_component_template_part( $component_slug, $slug, $name =
 		load_template( $template, false );
 	}
 }
+endif;
 
+if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) :
 /**
  * Locates a component template part allowing themes and child themes to overwrite component files. Return the path for inclusion.
  *
@@ -427,13 +438,13 @@ function pixelgrade_get_component_template_part( $component_slug, $slug, $name =
  *		yourtheme	/	components      /	$component_slug /   template-parts       /   $slug.php
  *    [ yourtheme	/	template-parts	/	$slug.php ] - only if $lookup_parts_root is true
  *
- *    [ If nothing is found it will try and locate the template part for the BASE component - if it's not already a base template part ]
+ *    [ If nothing is found it will try and locate the template part for the BLOG component - if it's not already a blog template part ]
  *
  * @param string $component_slug
  * @param string $slug
  * @param string $name (default: '')
  * @param bool $lookup_parts_root Optional. (default: false) Whether to try and find the template in the `/template-parts/` root also.
- *                                  This is mainly used by the Base component that wants to be more flexible.
+ *                                  This is mainly used by the Blog component that wants to be more flexible.
  * @return string
  */
 function pixelgrade_locate_component_template_part( $component_slug, $slug, $name = '', $lookup_parts_root = false ) {
@@ -504,14 +515,110 @@ function pixelgrade_locate_component_template_part( $component_slug, $slug, $nam
 		$template = locate_template( $template_names, false );
 	}
 
-	// If we haven't found a template part and $component_slug is not 'base' we will try and locate the template in the base.
-	if ( empty( $template ) && class_exists( 'Pixelgrade_Base' ) && Pixelgrade_Base::COMPONENT_SLUG !== $component_slug ) {
-		$template = pixelgrade_locate_component_template_part( Pixelgrade_Base::COMPONENT_SLUG, $slug, $name );
+	// If we haven't found a template part and $component_slug is not 'blog' we will try and locate the template in the blog.
+	if ( empty( $template ) && class_exists( 'Pixelgrade_Blog' ) && Pixelgrade_Blog::COMPONENT_SLUG !== $component_slug ) {
+		$template = pixelgrade_locate_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, $slug, $name );
 	}
 
 	// Allow others to filter this
 	return apply_filters( 'pixelgrade_locate_component_template_part', $template, $component_slug, $slug, $name );
 }
+endif;
+
+if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) :
+/**
+ * Locate a template part and return the path for inclusion.
+ *
+ * This is the load order:
+ *
+ *		yourtheme		/	$template_path	/	$slug-$name.php
+ *		yourtheme		/	template-parts  /   $template_path  /	$slug-$name.php
+ *		yourtheme		/	template-parts  /  	$slug-$name.php
+ *		yourtheme		/	$slug-$name.php
+ *
+ * We will also consider the $template_path as being a component name
+ *      yourtheme		/	components      /   $template_path  /	template-parts   /   $slug-$name.php
+ *
+ *      yourtheme		/	$template_path	/	$slug.php
+ *		yourtheme		/	template-parts  /   $template_path	/	$slug.php
+ *		yourtheme		/	template-parts  /  	$slug.php
+ *		yourtheme		/	$slug.php
+ *
+ * We will also consider the $template_path as being a component name
+ *      yourtheme		/	components      /   $template_path  /	template-parts   /   $slug.php
+ *
+ *		$default_path	/	$slug-$name.php
+ *		$default_path	/	$slug.php
+ *
+ * @access public
+ * @param string $slug
+ * @param string $template_path
+ * @param string $name Optional. Default: ''
+ * @param string $default_path (default: '')
+ * @return string
+ */
+function pixelgrade_locate_template_part( $slug, $template_path, $name = '', $default_path = '' ) {
+	$template = '';
+
+	// Setup our partial path (mainly trailingslashit)
+	// Make sure we only trailingslashit non-empty strings
+	$components_path = 'components/';
+	if ( defined( 'PIXELGRADE_COMPONENTS_PATH' ) && '' != PIXELGRADE_COMPONENTS_PATH ) {
+		$components_path = trailingslashit( PIXELGRADE_COMPONENTS_PATH );
+	}
+
+	$template_parts_path = 'template-parts/';
+	if ( defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' ) && '' != PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH ) {
+		$template_parts_path = trailingslashit( PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH );
+	}
+
+	$template_path_temp = '';
+	if ( ! empty( $template_path ) ) {
+		$template_path_temp = trailingslashit( $template_path );
+	}
+
+	if ( ! empty( $name ) ) {
+		// Look within passed path within the theme
+		$template = locate_template(
+			array(
+				$template_path_temp . "{$slug}-{$name}.php",
+				$template_parts_path . $template_path_temp . "{$slug}-{$name}.php",
+				$template_parts_path . "{$slug}-{$name}.php",
+				"{$slug}-{$name}.php",
+				$components_path . $template_path_temp . $template_parts_path . "{$slug}-{$name}.php",
+			)
+		);
+	}
+
+	if ( empty( $template ) ) {
+		// Look within passed path within the theme
+		$template = locate_template(
+			array(
+				$template_path_temp . "{$slug}.php",
+				$template_parts_path . $template_path_temp . "{$slug}.php",
+				$template_parts_path . "{$slug}.php",
+				"{$slug}.php",
+				$components_path . $template_path_temp . $template_parts_path . "{$slug}.php",
+			)
+		);
+	}
+
+	// Get default template
+	if ( empty( $template ) && ! empty( $default_path ) ) {
+		if ( ! empty( $name ) && file_exists( trailingslashit( $default_path ) . "{$slug}-{$name}.php" ) ) {
+			$template = trailingslashit( $default_path ) . "{$slug}-{$name}.php";
+		} elseif ( file_exists( trailingslashit( $default_path ) . "{$slug}.php" ) ) {
+			$template = trailingslashit( $default_path ) . "{$slug}.php";
+		} elseif ( file_exists( $default_path ) ) {
+			// We might have been given a direct file path through the default - we are fine with that
+			$template = $default_path;
+		}
+	}
+
+	// Return what we found.
+	return apply_filters( 'pixelgrade_locate_template_part', $template, $slug, $template_path, $name );
+}
+endif;
 
 /**
  * Given a path, attempt to make relative to the theme root

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Pixelgrade_Footer extends Pixelgrade_Component_Main {
+class Pixelgrade_Footer extends Pixelgrade_Component {
 
 	const COMPONENT_SLUG = 'footer';
 
@@ -27,13 +27,13 @@ class Pixelgrade_Footer extends Pixelgrade_Component_Main {
 	public function __construct( $version = '1.0.0' ) {
 		parent::__construct( $version );
 
-		$this->_assets_version = '1.0.1';
+		$this->assets_version = '1.0.1';
 	}
 
 	/**
 	 * Setup the footer area config
 	 */
-	public function setup_config() {
+	public function setupConfig() {
 		// Initialize the $config
 		$this->config = array(
 			'zones' => array(
@@ -123,7 +123,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component_Main {
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepare_string_for_hooks( self::COMPONENT_SLUG );
+		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -141,40 +141,38 @@ class Pixelgrade_Footer extends Pixelgrade_Component_Main {
 	 *
 	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
 	 */
-	public function pre_init_setup() {
+	public function preInitSetup() {
 		// Register the widget areas
 		// We use a priority of 20 to make sure that this sidebar will appear at the end in Appearance > Widgets
-		add_action( 'widgets_init', array( $this, 'register_sidebars' ), 20 );
+		add_action( 'widgets_init', array( $this, 'registerSidebars' ), 20 );
 
 		// Register the config nav menu locations, if we have any
-		$this->register_nav_menus();
+		$this->registerNavMenus();
 
 		// Register the config zone callbacks
-		$this->register_zone_callbacks();
+		$this->registerZoneCallbacks();
 	}
 
 	/**
 	 * Load, instantiate and hook up.
 	 */
-	public function fire_up() {
+	public function fireUp() {
 		/**
 		 * Load and instantiate various classes
 		 */
 
 		// The class that handles the Customizer experience
-		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-customizer' );
+		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-Footer-Customizer' );
 		Pixelgrade_Footer_Customizer::instance( $this );
 
-		/**
-		 * Register our actions and filters
-		 */
-		$this->register_hooks();
+		// Let parent's fire up as well - One big happy family!
+		parent::fireUp();
 	}
 
 	/**
 	 * Register our actions and filters
 	 */
-	public function register_hooks() {
+	public function registerHooks() {
 
 		/*
 		 * ================================
@@ -195,7 +193,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component_Main {
 	 *
 	 * @return bool
 	 */
-	private function register_nav_menus() {
+	private function registerNavMenus() {
 		if ( ! empty( $this->config['menu_locations'] ) ) {
 			$menus = array();
 			foreach ( $this->config['menu_locations'] as $id => $settings ) {
@@ -221,7 +219,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component_Main {
 		return false;
 	}
 
-	public function register_sidebars() {
+	public function registerSidebars() {
 		$registered_some_sidebars = false;
 		if ( ! empty( $this->config['sidebars'] ) ) {
 			$menus = array();
@@ -248,7 +246,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component_Main {
 	/**
 	 * Register the needed zone callbacks for each widget area and nav menu location based on the current configuration.
 	 */
-	private function register_zone_callbacks() {
+	private function registerZoneCallbacks() {
 		if ( ! empty( $this->config['sidebars'] ) ) {
 			foreach ( $this->config['sidebars'] as $id => $settings ) {
 				if ( ! empty( $settings['zone_callback'] ) ) {

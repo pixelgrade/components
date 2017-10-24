@@ -30,44 +30,56 @@ defined( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH' )       or define( 'PIXELGRADE_C
 defined( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH' )  or define( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH', 'page-templates' );
 defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' )  or define( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH', 'template-parts' );
 
+// Define the path to the root of this component
+defined( 'PIXELGRADE_BASE_PATH' ) or define( 'PIXELGRADE_BASE_PATH', trailingslashit( __DIR__ ) );
+
 /**
  * FIRST (REALLY FIRST)
  * Load our core component functions (like pixelgrade_load_component_file()) and utility classes
  */
-require_once trailingslashit( __DIR__ ) . '_core-functions.php';
-require_once trailingslashit( __DIR__ ) . 'utils/class-array.php';
-require_once trailingslashit( __DIR__ ) . 'utils/class-value.php';
-require_once trailingslashit( __DIR__ ) . 'utils/class-config.php';
+require_once PIXELGRADE_BASE_PATH . '_core-functions.php';
+require_once PIXELGRADE_BASE_PATH . 'utils/class-Array.php';
+require_once PIXELGRADE_BASE_PATH . 'utils/class-Value.php';
+require_once PIXELGRADE_BASE_PATH . 'utils/class-Config.php';
 
 /**
  * SECOND (REALLY SECOND)
  * Load our abstract classes needed by all components
  */
-require_once trailingslashit( __DIR__ ) . 'abstracts/component-main.php';
+require_once PIXELGRADE_BASE_PATH . 'abstracts/class-Singleton.php';
+require_once PIXELGRADE_BASE_PATH . 'abstracts/class-Component.php';
 
+/**
+ * THIRD (REALLY THIRD)
+ * Load our blocks
+ */
+require_once PIXELGRADE_BASE_PATH . 'blocks.php';
+
+if ( ! function_exists( 'Pixelgrade_Base' ) ) :
 /**
  * Returns the main instance of Pixelgrade_Base to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object
+ * @return Pixelgrade_Base|object
  */
 function Pixelgrade_Base() {
 	//only load if we have to
 	if ( ! class_exists( 'Pixelgrade_Base') ) {
-		pixelgrade_load_component_file( 'base', 'class-base' );
+		pixelgrade_load_component_file( 'base', 'class-Base' );
 	}
 	return Pixelgrade_Base::instance( '1.0.0' );
 }
+endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation
  */
 
 // Load our Typeline helper functions
-pixelgrade_load_component_file( 'base', 'inc/typeline.php' );
+require_once PIXELGRADE_BASE_PATH . 'inc/typeline.php';
 
-//Load our component's template tags
-pixelgrade_load_component_file( 'base', 'inc/template-tags' );
+// Load our component's template tags
+require_once PIXELGRADE_BASE_PATH . 'inc/template-tags.php';
 
-//Load our component's extra functionality
-pixelgrade_load_component_file( 'base', 'inc/extras' );
+// Load our component's extra functionality
+require_once PIXELGRADE_BASE_PATH . 'inc/extras.php';

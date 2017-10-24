@@ -202,7 +202,7 @@ function pixelgrade_footer_get_copyright_content() {
  */
 function pixelgrade_footer_is_valid_config() {
 	// Get the component's configuration
-	$config = Pixelgrade_Footer()->get_config();
+	$config = Pixelgrade_Footer()->getConfig();
 
 	// Test if we have no zones or no sidebars and menu locations to show, even bogus ones
 	if ( empty( $config['zones'] ) || ( empty( $config['menu_locations'] ) && empty( $config['sidebars'] ) ) ) {
@@ -220,7 +220,7 @@ function pixelgrade_footer_is_valid_config() {
  */
 function pixelgrade_footer_get_zones() {
 	// Get the component's configuration
-	$config = Pixelgrade_Footer()->get_config();
+	$config = Pixelgrade_Footer()->getConfig();
 
 	// Initialize the zones array with the configuration - we will build on it
 	$zones = $config['zones'];
