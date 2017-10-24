@@ -1,4 +1,4 @@
-$dropdown-width: 15em !default;
+$navbar-dropdown-width: 15em !default;
 
 .c-navbar--dropdown {
 
@@ -28,7 +28,7 @@ $dropdown-width: 15em !default;
     top: 100%;
     left: 0;
 
-    width: $dropdown-width;
+    width: $navbar-dropdown-width;
     margin: 0;
     border: 0 solid transparent;
 

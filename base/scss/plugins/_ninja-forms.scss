@@ -74,7 +74,7 @@
 
             border: 0;
 
-            background-color: $color-gray;
+            background-color: $color-gray-90;
             color: #666;
 
             overflow: hidden;
@@ -86,7 +86,7 @@
         }
 
         .pika-button:hover {
-            background: $color-dark;
+            background: $color-gray-10;
             color: $color-white;
         }
     }

@@ -38,7 +38,8 @@ $blog-thumbnail-background-opacity: 0.5 !default;
 // Fonts
 // ----------------------------------------
 $blog-card-title-font: () !default;
-$blog-card-meta-font: () !default;
+$blog-card-meta-primary-font: () !default;
+$blog-card-meta-secondary-font: () !default;
 
 // ========================================
 
@@ -71,20 +72,17 @@ $blog-card-meta-font: () !default;
 
 .c-card__title {
 	color: $blog-card-title-color;
-
 	@include leading-map($blog-card-title-font);
-}
-
-.c-card__meta {
-	@include leading-map($blog-card-meta-font);
 }
 
 .c-card__meta-primary {
 	color: $blog-primary-meta-color;
+	@include leading-map($blog-card-meta-primary-font);
 }
 
 .c-card__meta-secondary {
 	color: $blog-secondary-meta-color;
+	@include leading-map($blog-card-meta-secondary-font);
 }
 
 .c-card__frame {

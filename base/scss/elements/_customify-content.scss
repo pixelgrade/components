@@ -3,7 +3,7 @@
 
 // Layout
 // ----------------------------------------
-$content-width: 1300px !default;
+$content-container-width: 1300px !default;
 $content-sides-spacing: 70px !default;
 $content-vertical-spacing: 60px !default;
 $content-width: 720px !default;
@@ -14,8 +14,6 @@ $content-border-color: transparent !default;
 // ----------------------------------------
 $page-title-color: #000000 !default;
 $body-text-color: #000000 !default;
-$body-link-color: #000000 !default;
-$body-link-active-color: #000000 !default;
 // @todo $body-underlined-links
 $h1-color: #000000 !default;
 $h2-color: #000000 !default;
@@ -44,7 +42,7 @@ $text-selection-color: #FFFFFF !default;
 $text-selection-background-color: #000000 !default;
 
 .u-container-width {
-	max-width: $content-width;
+	max-width: $content-container-width;
 }
 
 .u-container-sides-spacing {
