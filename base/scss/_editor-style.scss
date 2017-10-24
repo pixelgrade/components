@@ -1,39 +1,39 @@
-//@import "defaults";
-//
-//@import "tools/all";
-//
-//@import "generic/normalize";
-//@import "generic/reset";
-//
-//@import "typography/default";
-//
-//@import "objects/row";
-//
-//html {
-//	@include spacing(padding, 40px);
-//}
-//
-//#{$content-selector} {
-//	margin: 0 auto;
-//	padding: 0;
-//
-//	.gallery {
-//		padding: 10px;
-//		margin: 0;
-//	}
-//
-//	> * {
-//		margin-left: auto;
-//		margin-right: auto;
-//	}
-//
-//	p {
-//		margin-top: 0;
-//		margin-bottom: 0;
-//	}
-//
-//	dl {
-//		display: block;
-//	}
-//}
-//
+@import "defaults";
+
+@import "tools/all";
+
+@import "generic/normalize";
+@import "generic/reset";
+
+@import "typography/default";
+
+@import "plugins/gridable";
+
+html {
+	@include spacing(padding, 40px);
+}
+
+#{$content-selector} {
+	margin: 0 auto;
+	padding: 0;
+
+	.gallery {
+		padding: 10px;
+		margin: 0;
+	}
+
+	> * {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	p {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	dl {
+		display: block;
+	}
+}
+

@@ -12,16 +12,10 @@
 @import "intro";
 @import "dropcap";
 @import "two-column";
+@import "wp-align";
 
 em,
 i,
 small {
 	font-style: italic;
-}
-
-hr,
-address,
-.two-column,
-.mejs-container {
-	@include spacing(margin-bottom, 2rem);
 }

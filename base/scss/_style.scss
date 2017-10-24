@@ -19,24 +19,7 @@ $editor-style: false;
 
 @import "objects/all";
 
-// style blog component based on variables defined in theme _settings.scss
-@import "elements/customify-content";
-@import "elements/customify-blog";
-
-// single
-@import "objects/author";
-@import "objects/entry-content";
-@import "objects/post-navigation";
-@import "objects/sharedaddy";
-@import "objects/comments";
-@import "objects/comments-form";
-@import "objects/comments-toggle";
-
-// todo
-// @import "utility/debug";
-// @import "utility/widths";
-
-
+@import "plugins/gridable";
 @import "plugins/cf7";
 @import "plugins/jetpack-forms";
 @import "plugins/ninja-forms";
