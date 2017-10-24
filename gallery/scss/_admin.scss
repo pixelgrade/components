@@ -1,11 +1,27 @@
 //------------------------------------*\
 //    VARIABLES (via Customify)
 //------------------------------------*/
-$fields-color: #484848;
+$accent 				: #3677bd;
+$dark 					: #484848;
+$gray 					: #303235;
+$light 					: #cbcfd4;
+$lighter 				: #3b3f45; //borders
+$descriptions			: #4d7b90;
 
-$fields-height: 44px;
-$fields-spacing: 24px;
-$fields-border-color: #DDDDDD;
+$borders                :#e0e8ef;
+
+$unit 					: 24px;
+$popup 					: 275px;
+$container-spacing		: 17px;
+
+$blue-dark				: #484848;
+
+$fields_height 			: 44px;
+$fields_spacing 		: 24px;
+$fields_border-radius	: 4px;
+$fields_border-color	: #DDDDDD;
+
+$background-hover 	: #f5fcff;
 
 
 //------------------------------------*\
@@ -17,18 +33,18 @@ $fields-border-color: #DDDDDD;
 
 	width: 100%;
 	max-width: 100%;
-	height: $fields-height;
+	height: $fields_height;
 	padding: 10px 14px;
 	margin-left: 0;
 
 	background: #FFFFFF;
-	border: 1px solid $fields-border-color;
+	border: 1px solid $fields_border-color;
 	border-radius: 4px;
 	box-shadow: none;
 
 	font-size: 14px;
 	line-height: 1.5;
-	color: $fields-color;
+	color: $dark;
 	outline: 0;
 
 	&:focus, &:hover {
@@ -78,8 +94,8 @@ $fields-border-color: #DDDDDD;
 	// Checkbox
 	input[type=checkbox],
 	input[type=radio] {
-		width: $fields-height / 2;
-		height: $fields-height / 2;
+		width: $fields_height/2;
+		height: $fields_height/2;
 		margin-top: 0;
 
 		&:checked {
@@ -111,7 +127,7 @@ $fields-border-color: #DDDDDD;
 		}
 
 		label {
-			color: $fields-color;
+			color: $blue-dark;
 
 		}
 
@@ -120,10 +136,10 @@ $fields-border-color: #DDDDDD;
 			margin-top: -24px;
 		}
 
-			// Except de dividers titles
-			[id*="divider"] + & {
-				margin-top: 0;
-			}
+		// Except de dividers titles
+		[id*="divider"] + & {
+			margin-top: 0;
+		}
 	}
 
 	// Radios
@@ -163,6 +179,10 @@ $fields-border-color: #DDDDDD;
 //    $GALLERY MODAL
 //------------------------------------*/
 
+.media-sidebar {
+
+}
+
 .gallery-settings {
 	display: flex;
 	flex-direction: column;
@@ -172,6 +192,7 @@ $fields-border-color: #DDDDDD;
 
 		span {
 			float: none;
+			// margin-bottom: 4px;
 			width: 100%;
 
 			color: #23282D;
@@ -181,7 +202,7 @@ $fields-border-color: #DDDDDD;
 		}
 
 
-		// Reordering items @todo better
+		// Reordering items
 
 		// Link to
 		&:nth-of-type(1) {
@@ -213,5 +234,4 @@ $fields-border-color: #DDDDDD;
 			order: 3;
 		}
 	}
-
 }

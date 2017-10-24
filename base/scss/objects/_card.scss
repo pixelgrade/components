@@ -1,14 +1,10 @@
-$card-letter-font: (
-  font-size: 250px,
-  line-height: 1.735,
-  font-family: sans-serif,
-  font-weight: 300,
-  text-transform: uppercase,
-) !default;
 
 $card-letter-color: #000000 !default;
 $card-letter-hover-color: #FFFFFF !default;
 $card-letter-hover-opacity: 0.7 !default;
+
+$card-letter-font: () !default;
+$card-title-font: () !default;
 
 // Cards
 // ------------------------------------------------------------
@@ -139,12 +135,6 @@ $card-letter-hover-opacity: 0.7 !default;
 
 .c-card__excerpt {
   max-width: 100%;
-}
-
-// ugly overwrites
-// probably shouldn't be reused
-.c-card__title[class] {
-  padding-bottom: 0;
 }
 
 .c-card__meta {

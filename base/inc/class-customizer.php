@@ -1337,7 +1337,7 @@ class Pixelgrade_Base_Customizer {
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Title Font', 'components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-gallery--blog .c-card__title',
+						'selector' => '.c-card__title',
 						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -1375,7 +1375,7 @@ class Pixelgrade_Base_Customizer {
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Meta Font', 'components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-gallery--blog .c-card__meta-primary, .c-gallery--blog .c-card__meta-secondary',
+						'selector' => '.c-card__meta',
 						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme

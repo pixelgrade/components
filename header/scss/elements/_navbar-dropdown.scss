@@ -1,60 +1,60 @@
-$dropdown-width:        15em        !default;
+$dropdown-width: 15em !default;
 
 .c-navbar--dropdown {
 
-    li[class*="children"] {
-        position: relative;
+  li[class*="children"] {
+    position: relative;
 
-        > a:after {
-            content: "";
-			display: inline-block;
+    > a:after {
+      content: "";
+      display: inline-block;
 
-			margin-left: .5em;
-            border: 4px solid transparent;
-            border-top-width: 5px;
-			border-top-color: currentColor;
-        }
-
-        &:hover > .sub-menu,
-        &:hover > .children {
-            opacity: 1;
-            pointer-events: auto;
-        }
+      margin-left: .5em;
+      border: 4px solid transparent;
+      border-top-width: 5px;
+      border-top-color: currentColor;
     }
 
-    .sub-menu,
-    .children {
-        position: absolute;
-        top: 100%;
-        left: 0;
+    &:hover > .sub-menu,
+    &:hover > .children {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 
-        width: $dropdown-width;
-		margin: 0;
-        border: 0 solid transparent;
+  .sub-menu,
+  .children {
+    position: absolute;
+    top: 100%;
+    left: 0;
 
-        background-clip: padding-box;
+    width: $dropdown-width;
+    margin: 0;
+    border: 0 solid transparent;
 
-        text-align: left;
+    background-clip: padding-box;
 
-        opacity: 0;
-        pointer-events: none;
+    text-align: left;
 
-        .menu-item {
-            width: 100%;
-            margin: 0;
-        }
+    opacity: 0;
+    pointer-events: none;
 
-        [class*="has-children"] > a:after {
-            transform: rotate(-90deg);
-        }
+    .menu-item {
+      width: 100%;
+      margin: 0;
     }
 
-    .sub-menu .sub-menu,
-    .children .children {
-        top: 0;
-        left: 100%;
-        margin-left: 0;
+    [class*="has-children"] > a:after {
+      transform: rotate(-90deg);
     }
+  }
+
+  .sub-menu .sub-menu,
+  .children .children {
+    top: 0;
+    left: 100%;
+    margin-left: 0;
+  }
 }
 
 //Theme UX requirements: changed menu labels, menu IDs and added arrows for submenus

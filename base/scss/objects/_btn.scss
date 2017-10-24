@@ -8,16 +8,16 @@
 
 // Predefine the variables below in order to alter and enable specific features.
 $btn-padding:         		8px                 !default;
-$btn-background:      		$color-dark         !default;
-$btn-hover-background:      $color-black        !default;
+$btn-background:      		#222222             !default;
+$btn-hover-background:    #000000             !default;
 $btn-color:           		#111                !default;
 
-$btn-border-width:    		0 					!default;
+$btn-border-width:    		0 					        !default;
 $btn-border-style:    		solid               !default;
-$btn-border-color:    		$btn-background     !default;
+$btn-border-color:    		#222222             !default;
 $btn-radius:          		0                   !default;
 
-$btn-transition: 			all .3s cubic-bezier(.18, .61, .43, .99) !default;
+$btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 
 /**
  * 1. Allow us to style box model properties.

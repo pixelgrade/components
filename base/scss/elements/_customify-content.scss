@@ -16,7 +16,7 @@ $page-title-color: #000000 !default;
 $body-text-color: #000000 !default;
 $body-link-color: #000000 !default;
 $body-link-active-color: #000000 !default;
-$body-underlined-links: false !default;
+// @todo $body-underlined-links
 $h1-color: #000000 !default;
 $h2-color: #000000 !default;
 $h3-color: #000000 !default;
@@ -27,26 +27,9 @@ $content-background-color: #FFFFFF !default;
 
 // Fonts
 // ----------------------------------------
-$page-title-font: (
-	font-size: 72px,
-	line-height: (80/72),
-	spacing-top: 0,
-	spacing-bottom: 2rem
-) !default;
-
-$body-font: (
-	font-size: 72px,
-	line-height: (80/72),
-	spacing-top: 0,
-	spacing-bottom: 2rem
-) !default;
-
-$blockquote-font: (
-	font-size: 72px,
-	line-height: (80/72),
-	spacing-top: 0,
-	spacing-bottom: 2rem
-) !default;
+$body-font: () !default;
+$page-title-font: () !default;
+$blockquote-font: () !default;
 
 $h1: () !default;
 $h2: () !default;
@@ -57,8 +40,8 @@ $h6: () !default;
 
 // Extras
 // ----------------------------------------
-$text-selection-color: 				#FFFFFF		!default;
-$text-selection-background-color: 	#000000		!default;
+$text-selection-color: #FFFFFF !default;
+$text-selection-background-color: #000000 !default;
 
 .u-container-width {
 	max-width: $content-width;
