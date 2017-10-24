@@ -22,19 +22,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'Pixelgrade_FeaturedImage' ) ) :
 /**
- * Returns the main instance of Pixelgrade_Featured_Image to prevent the need to use globals.
+ * Returns the main instance of Pixelgrade_FeaturedImage to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object
+ * @return Pixelgrade_FeaturedImage|object
  */
-function Pixelgrade_Featured_Image() {
+function Pixelgrade_FeaturedImage() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Featured_Image') ) {
-		pixelgrade_load_component_file( 'featured-image', 'class-featured-image' );
+	if ( ! class_exists( 'Pixelgrade_FeaturedImage') ) {
+		pixelgrade_load_component_file( 'featured-image', 'class-FeaturedImage' );
 	}
-	return Pixelgrade_Featured_Image::instance( '1.2.0');
+	return Pixelgrade_FeaturedImage::instance( '1.2.0');
 }
+endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation

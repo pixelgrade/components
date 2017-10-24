@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Pixelgrade_Hero extends Pixelgrade_Component_Main {
+class Pixelgrade_Hero extends Pixelgrade_Component {
 
 	const COMPONENT_SLUG = 'hero';
 
@@ -27,20 +27,20 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 	public function __construct( $version = '1.0.0' ) {
 		parent::__construct( $version );
 
-		$this->_assets_version = '1.0.5';
+		$this->assets_version = '1.0.5';
 	}
 
 	/**
 	 * Setup the hero area config
 	 */
-	public function setup_config() {
+	public function setupConfig() {
 		$this->config = array(
 			'post_types' => array( 'page' ), // By default we will only use heroes for pages
 		);
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepare_string_for_hooks( self::COMPONENT_SLUG );
+		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -56,32 +56,30 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 	/**
 	 * Load, instantiate and hook up.
 	 */
-	public function fire_up() {
+	public function fireUp() {
 		/**
 		 * Load and instantiate various classes
 		 */
 
 		// The class that handles the metaboxes
-		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-metaboxes' );
+		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-Hero-Metaboxes' );
 		Pixelgrade_Hero_Metaboxes::instance( $this );
 
-		/**
-		 * Register our actions and filters
-		 */
-		$this->register_hooks();
+		// Let parent's fire up as well - One big happy family!
+		parent::fireUp();
 	}
 
 	/**
 	 * Register our actions and filters
 	 */
-	public function register_hooks() {
+	public function registerHooks() {
 		// Enqueue the frontend assets
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 
 		/* Hook-up to various places where we need to output things */
 
 		// Add a class to the <body> to let the whole world know if there is a hero on not
-		add_filter( 'body_class', array( $this, 'body_classes' ) );
+		add_filter( 'body_class', array( $this, 'bodyClasses' ) );
 
 		// Output the primary hero markup
 		// We use a component template tag
@@ -91,10 +89,10 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 		}
 
 		//Prevent the entry header from appearing in certain places
-		add_filter( 'pixelgrade_display_entry_header', array( $this, 'prevent_entry_header' ), 10, 2 );
+		add_filter( 'pixelgrade_display_entry_header', array( $this, 'preventEntryHeader' ), 10, 2 );
 
 		// Add a data attribute to the menu items depending on the background color
-		add_filter('nav_menu_link_attributes', array( $this, 'menu_item_color' ), 10, 4);
+		add_filter('nav_menu_link_attributes', array( $this, 'menuItemColor' ), 10, 4);
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_hero_registered_hooks' );
@@ -103,9 +101,9 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 	/**
 	 * Enqueue styles and scripts on the frontend
 	 */
-	public function enqueue_scripts() {
+	public function enqueueScripts() {
 		// Register the frontend styles and scripts specific to hero
-		wp_register_script( 'rellax', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Hero::COMPONENT_SLUG ) . 'js/jquery.rellax.js' ), array( 'jquery' ), $this->_assets_version, true );
+		wp_register_script( 'rellax', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Hero::COMPONENT_SLUG ) . 'js/jquery.rellax.js' ), array( 'jquery' ), $this->assets_version, true );
 		wp_enqueue_script( 'rellax' );
 	}
 
@@ -117,7 +115,7 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 	 *
 	 * @return bool
 	 */
-	public function prevent_entry_header( $display, $location = '' ) {
+	public function preventEntryHeader( $display, $location = '' ) {
 		//if we actually have a valid hero, don't show the entry header
 		if ( pixelgrade_hero_is_hero_needed( $location ) ) {
 			return false;
@@ -143,7 +141,7 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 	 *
 	 * @return array
 	 */
-	public function menu_item_color($atts, $item, $args, $depth) {
+	public function menuItemColor($atts, $item, $args, $depth) {
 		$atts['data-color'] = trim( pixelgrade_hero_get_background_color( $item->object_id ) );
 
 		return $atts;
@@ -156,7 +154,7 @@ class Pixelgrade_Hero extends Pixelgrade_Component_Main {
 	 *
 	 * @return array
 	 */
-	public function body_classes( $classes ) {
+	public function bodyClasses( $classes ) {
 		//bail if we are in the admin area
 		if ( is_admin() ) {
 			return $classes;

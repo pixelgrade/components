@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Pixelgrade_Header extends Pixelgrade_Component_Main {
+class Pixelgrade_Header extends Pixelgrade_Component {
 
 	const COMPONENT_SLUG = 'header';
 
@@ -27,13 +27,13 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	public function __construct( $version = '1.0.0' ) {
 		parent::__construct( $version );
 
-		$this->_assets_version = '1.0.3';
+		$this->assets_version = '1.0.3';
 	}
 
 	/**
 	 * Setup the header area config
 	 */
-	public function setup_config() {
+	public function setupConfig() {
 		// Initialize the $config
 		$this->config = array(
 			'zones' => array(
@@ -70,7 +70,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 				'header-branding' => array(
 					'default_zone' => 'middle',
 					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
-					'zone_callback' => array( $this, 'header_branding_zone' ),
+					'zone_callback' => array( $this, 'headerBrandingZone' ),
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
 				),
@@ -78,7 +78,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 					'title' => esc_html__( 'Header Right', 'components_txtd' ),
 					'default_zone' => 'right',
 					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
-					'zone_callback' => array( $this, 'primary_right_nav_menu_zone' ),
+					'zone_callback' => array( $this, 'primaryRightNavMenuZone' ),
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
 						'menu_id'         => 'menu-2',
@@ -105,7 +105,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepare_string_for_hooks( self::COMPONENT_SLUG );
+		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -124,12 +124,12 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	 * This is automatically hooked to 'after_setup_theme' priority 80, by default.
 	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
 	 */
-	public function pre_init_setup() {
+	public function preInitSetup() {
 		// Register the config menu locations
-		$this->register_nav_menus();
+		$this->registerNavMenus();
 
 		// Register the config zone callbacks
-		$this->register_zone_callbacks();
+		$this->registerZoneCallbacks();
 
 		/**
 		 * Add theme support for site logo, if we are allowed to
@@ -159,25 +159,23 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	/**
 	 * Load, instantiate and hook up.
 	 */
-	public function fire_up() {
+	public function fireUp() {
 		/*
 		 * Load and instantiate various classes
 		 */
 
 		// The class that handles the Customizer experience
-		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-customizer' );
+		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-Header-Customizer' );
 		Pixelgrade_Header_Customizer::instance( $this );
 
-		/**
-		 * Register our actions and filters
-		 */
-		$this->register_hooks();
+		// Let parent's fire up as well - One big happy family!
+		parent::fireUp();
 	}
 
 	/**
 	 * Register our actions and filters
 	 */
-	public function register_hooks() {
+	public function registerHooks() {
 
 		/*
 		 * ================================
@@ -187,7 +185,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 		 */
 
 		// Conditional zone classes
-		add_filter( 'pixelgrade_css_class', array( $this, 'nav_menu_zone_classes' ), 10, 3 );
+		add_filter( 'pixelgrade_css_class', array( $this, 'navMenuZoneClasses' ), 10, 3 );
 
 		/*
 		 * ================================
@@ -208,7 +206,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	 *
 	 * @return bool
 	 */
-	private function register_nav_menus() {
+	private function registerNavMenus() {
 		if ( ! empty( $this->config['menu_locations'] ) ) {
 			$menus = array();
 			foreach ( $this->config['menu_locations'] as $id => $settings ) {
@@ -237,7 +235,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	/**
 	 * Register the needed zone callbacks for each nav menu location based on the current configuration.
 	 */
-	private function register_zone_callbacks() {
+	private function registerZoneCallbacks() {
 		if ( ! empty( $this->config['menu_locations'] ) ) {
 			foreach ( $this->config['menu_locations'] as $menu_id => $settings ) {
 				if ( ! empty( $settings['zone_callback'] ) ) {
@@ -257,7 +255,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	 *
 	 * @return string
 	 */
-	public function primary_right_nav_menu_zone( $default_zone, $menu_location_config, $menu_locations_config ) {
+	public function primaryRightNavMenuZone( $default_zone, $menu_location_config, $menu_locations_config ) {
 		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
 		if ( ! has_nav_menu( 'primary-left' ) ) {
 			$default_zone = 'middle';
@@ -275,7 +273,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	 *
 	 * @return string
 	 */
-	public function header_branding_zone( $default_zone, $menu_location_config, $menu_locations_config ) {
+	public function headerBrandingZone( $default_zone, $menu_location_config, $menu_locations_config ) {
 		// the branding goes to the left zone when there is no left menu, but there is a right menu
 		if ( ! has_nav_menu( 'primary-left' ) && has_nav_menu( 'primary-right' ) ) {
 			$default_zone = 'left';
@@ -293,7 +291,7 @@ class Pixelgrade_Header extends Pixelgrade_Component_Main {
 	 *
 	 * @return array
 	 */
-	public function nav_menu_zone_classes( $classes, $class, $location ) {
+	public function navMenuZoneClasses( $classes, $class, $location ) {
 		$has_left_menu   = has_nav_menu( 'primary-left' );
 		$has_right_menu  = has_nav_menu( 'primary-right' );
 

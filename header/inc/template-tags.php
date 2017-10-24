@@ -122,7 +122,7 @@ function pixelgrade_header_get_nav_menu( $args, $menu_location = '' ) {
  */
 function pixelgrade_header_is_valid_config() {
 	// Get the component's configuration
-	$config = Pixelgrade_Header()->get_config();
+	$config = Pixelgrade_Header()->getConfig();
 
 	// Test if we have no zones or no menu locations to show, even bogus ones
 	if ( empty( $config['zones'] ) || empty( $config['menu_locations'] ) ) {
@@ -140,7 +140,7 @@ function pixelgrade_header_is_valid_config() {
  */
 function pixelgrade_header_get_zones() {
 	// Get the component's configuration
-	$config = Pixelgrade_Header()->get_config();
+	$config = Pixelgrade_Header()->getConfig();
 
 	// Initialize the zones array with the configuration - we will build on it
 	$zones = $config['zones'];

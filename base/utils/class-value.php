@@ -27,7 +27,7 @@ class Pixelgrade_Value {
 	 *
 	 * @return bool
 	 */
-	public static function to_bool( $var ) {
+	public static function toBool( $var ) {
 		if ( ! is_string( $var ) ) {
 			return (bool) $var;
 		}
@@ -52,7 +52,7 @@ class Pixelgrade_Value {
 	 *
 	 * @return array
 	 */
-	public static function maybe_explode_list( $str, $delimiter = ',' ) {
+	public static function maybeExplodeList( $str, $delimiter = ',' ) {
 		// If by any chance we are given an array, just return it
 		if ( is_array( $str ) ) {
 			return $str;
@@ -81,13 +81,105 @@ class Pixelgrade_Value {
 	}
 
 	/**
+	 * Given a string or an array, add prefix to each non-empty entry.
+	 *
+	 * It will convert to string, so the type casting rules apply.
+	 *
+	 * @param string|array|object $value
+	 * @param string $prefix Optional. Defaults to empty string.
+	 *
+	 * @return string|array|object
+	 */
+	public static function maybePrefix( $value, $prefix = '' ) {
+		// Bail early in case $prefix is empty
+		if ( empty( $prefix ) ) {
+			return $value;
+		}
+
+		if ( is_array( $value ) || is_object( $value ) ) {
+			foreach ( $value as &$item ) {
+				$item = self::maybePrefix( $item, $prefix );
+			}
+			unset( $item );
+		} elseif ( ! empty( $value ) ) {
+			// Coerce the $value to a string
+			$value = $prefix . (string) $value;
+		}
+
+		return $value;
+	}
+
+	public static function maybePrefixWalk( &$item, $key, $prefix ) {
+		$item = self::maybePrefix( $item, $prefix );
+	}
+
+	/**
+	 * Given a string or an array, add suffix to each non-empty entry.
+	 *
+	 * It will convert to string, so the type casting rules apply.
+	 *
+	 * @param string|array|object $value
+	 * @param string $suffix Optional. Defaults to empty string.
+	 *
+	 * @return string|array|object
+	 */
+	public static function maybeSuffix( $value, $suffix = '' ) {
+		// Bail early in case $suffix is empty
+		if ( empty( $suffix ) ) {
+			return $value;
+		}
+
+		if ( is_array( $value ) || is_object( $value ) ) {
+			foreach ( $value as &$item ) {
+				$item = self::maybePrefix( $item, $suffix );
+			}
+			unset( $item );
+		} elseif ( ! empty( $value ) ) {
+			// Coerce the $value to a string
+			$value = (string) $value . $suffix;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Given a string or an array, add prefix and suffix to each non-empty entry.
+	 *
+	 * It will convert to string, so the type casting rules apply.
+	 *
+	 * @param string|array|object $value
+	 * @param string $prefix Optional. Defaults to empty string.
+	 * @param string $suffix Optional. Defaults to empty string.
+	 *
+	 * @return string|array|object
+	 */
+	public static function maybePrefixSuffix( $value, $prefix = '', $suffix = '' ) {
+		// Bail early in case both $prefix and $suffix are empty
+		if ( empty( $prefix ) && empty( $suffix ) ) {
+			return $value;
+		}
+
+		if ( is_array( $value ) || is_object( $value ) ) {
+			foreach ( $value as &$item ) {
+				$item = self::maybePrefixSuffix( $item, $prefix, $suffix );
+			}
+			unset( $item );
+		} elseif ( ! empty( $value ) ) {
+			// Coerce the $value to a string
+			$value = $prefix . (string) $value . $suffix;
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Given a string, remove all non-ASCII characters (not a-z\d_.-), and force lowercase.
 	 *
 	 * @param string $str
 	 *
 	 * @return string
 	 */
-	function to_lower_ascii( $str ) {
+	function toLowerAscii( $str ) {
 		$str   = strtolower( $str );
 		$regex = array(
 			'pattern'     => '~([^a-z\d_.-])~',
@@ -101,7 +193,7 @@ class Pixelgrade_Value {
 	/**
 	 * Reduces repeated meta characters (-=+.) to one.
 	 */
-	function remove_doubles( $str ) {
+	function removeDoubles( $str ) {
 		$regex = apply_filters( 'germanix_remove_doubles_regex', array(
 			'pattern'     => '~([=+.-])\\1+~',
 			'replacement' => "\\1"

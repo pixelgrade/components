@@ -22,19 +22,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'Pixelgrade_Footer' ) ) :
 /**
  * Returns the main instance of Pixelgrade_Footer to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object
+ * @return Pixelgrade_Footer|object
  */
 function Pixelgrade_Footer() {
 	//only load if we have to
 	if ( ! class_exists( 'Pixelgrade_Footer') ) {
-		pixelgrade_load_component_file( 'footer', 'class-footer' );
+		pixelgrade_load_component_file( 'footer', 'class-Footer' );
 	}
 	return Pixelgrade_Footer::instance( '1.4.0' );
 }
+endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation

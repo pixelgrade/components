@@ -22,19 +22,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'Pixelgrade_Hero' ) ) :
 /**
  * Returns the main instance of Pixelgrade_Hero to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object
+ * @return Pixelgrade_Hero|object
  */
 function Pixelgrade_Hero() {
 	//only load if we have to
 	if ( ! class_exists( 'Pixelgrade_Hero') ) {
-		pixelgrade_load_component_file( 'hero', 'class-hero' );
+		pixelgrade_load_component_file( 'hero', 'class-Hero' );
 	}
 	return Pixelgrade_Hero::instance( '1.2.2');
 }
+endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation

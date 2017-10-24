@@ -22,19 +22,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+if ( ! function_exists( 'Pixelgrade_Header' ) ) :
 /**
  * Returns the main instance of Pixelgrade_Header to prevent the need to use globals.
  *
  * @since  1.0.0
- * @return object
+ * @return Pixelgrade_Header|object
  */
 function Pixelgrade_Header() {
 	//only load if we have to
 	if ( ! class_exists( 'Pixelgrade_Header') ) {
-		pixelgrade_load_component_file( 'header', 'class-header' );
+		pixelgrade_load_component_file( 'header', 'class-Header' );
 	}
 	return Pixelgrade_Header::instance( '1.4.0' );
 }
+endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation
