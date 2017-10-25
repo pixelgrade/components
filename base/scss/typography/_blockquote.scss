@@ -1,10 +1,5 @@
 @mixin blockquote {
 
-	p {
-		font: inherit;
-		text-transform: inherit;
-	}
-
 	&.inner {
 		margin-left: auto;
 		margin-right: auto;

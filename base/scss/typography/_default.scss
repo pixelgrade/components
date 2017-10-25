@@ -1,17 +1,37 @@
 $typography-spacing: 2rem !default;
 
-p, ul, ol, dl,
-
-// PARAGRAPHS
-p {
+p, blockquote,
+ul, ol, dl,
+hr,
+table,
+pre {
 
   &:not(:last-child) {
-    @include spacing(padding-bottom, $typography-spacing);
+    @include spacing(margin-bottom, $typography-spacing);
   }
 
 }
 
-@import "blockquote";
+blockquote {
+  @include leading-map($blockquote-font);
+}
+
+blockquote footer, cite {
+  @include leading-map($cite-font);
+  font-style: normal;
+
+  a {
+    border-bottom: 0 !important;
+    text-decoration: none !important;
+  }
+}
+
+h1 { @include leading-map($h1) }
+h2 { @include leading-map($h2) }
+h3 { @include leading-map($h3) }
+h4 { @include leading-map($h4) }
+h5 { @include leading-map($h5) }
+h6 { @include leading-map($h6) }
 
 // LISTS
 $typography-unordered-list-style: disc !default;
@@ -19,13 +39,8 @@ $typography-ordered-list-style: decimal !default;
 $typography-list-padding: 2rem !default;
 $typography-list-item-spacing: 0.5rem !default;
 
-ul, ol, dl {
-
-  &:not(:last-child) {
-    @include spacing(margin-bottom, $typography-spacing);
-  }
-
-  li > & {
+li {
+  ul, ol, dl {
     @include spacing(padding-top, $typography-list-item-spacing);
   }
 }
@@ -42,23 +57,30 @@ ol {
   list-style: $typography-ordered-list-style;
 }
 
-li:not(:last-child) {
+li:not(:last-child),
+dl > dl:not(:last-of-type),
+dl > dd:not(:last-of-type) {
   @include spacing(margin-bottom, $typography-list-item-spacing);
 }
 
 // DEFINITION LISTS
-dl {
-  display: flex;
-  flex-wrap: wrap;
+dl:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 dt {
+  width: 33%;
+  float: left;
+  clear: both;
   font-weight: bold;
-  flex-basis: 33%;
 }
 
 dd {
-  flex-basis: 66%;
+  width: 66%;
+  float: right;
+  clear: right;
 }
 
 
@@ -78,13 +100,13 @@ pre {
 
 
 // TABLES
-$typography-table-cell-padding: .5rem !default;
+$typography-table-cell-padding: 0.5rem !default;
+$typography-table-border-color: $color-gray-90 !default;
 
 table {
   width: 100%;
-  table-layout: fixed;
+  //table-layout: fixed;
   border-collapse: collapse;
-  @include spacing(margin-bottom, 2rem);
 
   th {
     text-align: left;
@@ -99,16 +121,17 @@ table {
   thead,
   tbody,
   tfoot {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid $typography-table-border-color;
+  }
 
-    &:last-child {
-      border-bottom: 0;
-    }
+  caption,
+  th,
+  td {
+    @include spacing(padding, $typography-table-cell-padding);
   }
 
   th,
   td {
-    @include spacing(padding, $typography-table-cell-padding);
 
     &:first-child {
       padding-left: 0;
