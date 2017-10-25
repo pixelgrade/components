@@ -43,7 +43,18 @@ $header-font: () !default;
 }
 
 .site-header-sticky {
+  background-color: $header-sticky-background-color;
 
+  &,
+  .c-navbar,
+  .c-navbar li {
+    color: $header-sticky-links-color;
+  }
+
+  .c-navbar li:hover,
+  .c-navbar [class*="current-menu"] {
+    color: $header-sticky-links-active-color;
+  }
 }
 
 .c-navbar {
@@ -65,6 +76,10 @@ $header-font: () !default;
 }
 
 .c-navbar {
+
+  a {
+    color: inherit;
+  }
 
 	&, li {
 		color: $header-links-color;

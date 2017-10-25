@@ -1,3 +1,144 @@
+// MAIN CONTENT
+// ========================================
+
+// Layout
+// ----------------------------------------
+$content-container-width: 1300px !default;
+$content-sides-spacing: 70px !default;
+$content-vertical-spacing: 60px !default;
+$content-width: 720px !default;
+$content-border-width: 0 !default;
+$content-border-color: transparent !default;
+
+// Colors
+// ----------------------------------------
+$page-title-color: #000000 !default;
+$body-text-color: #000000 !default;
+// @todo $body-underlined-links
+$h1-color: #000000 !default;
+$h2-color: #000000 !default;
+$h3-color: #000000 !default;
+$h4-color: #000000 !default;
+$h5-color: #000000 !default;
+$h6-color: #000000 !default;
+$content-background-color: #FFFFFF !default;
+
+// Fonts
+// ----------------------------------------
+$body-font: () !default;
+$page-title-font: () !default;
+$blockquote-font: () !default;
+
+$h1: () !default;
+$h2: () !default;
+$h3: () !default;
+$h4: () !default;
+$h5: () !default;
+$h6: () !default;
+
+
+
+.u-container-width {
+  max-width: $content-container-width;
+}
+
+.u-container-sides-spacing {
+  @include spacing(padding-left, $content-sides-spacing);
+  @include spacing(padding-right, $content-sides-spacing);
+}
+
+.mce-content-body {
+  @include spacing(margin-left, $content-sides-spacing);
+  @include spacing(margin-right, $content-sides-spacing);
+}
+
+.u-content-top-spacing {
+  @include spacing(padding-top, $content-vertical-spacing);
+}
+
+.u-content-bottom-spacing {
+  @include spacing(padding-bottom, $content-vertical-spacing);
+}
+
+.u-content-bottom-spacing + .u-content-top-spacing {
+  padding-top: 0;
+}
+
+.u-content-background {
+  background-color: $content-background-color;
+}
+
+#{$content-selector} {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: $content-width;
+
+  .full-width & {
+    max-width: none;
+  }
+}
+
+@if ( $content-border-width != 0 ) {
+
+  body {
+    @include spacing(margin, $content-border-width);
+  }
+
+  .c-border {
+    @include spacing(border-width, $content-border-width);
+    border-color: $content-border-color;
+  }
+
+  .has-border:not(.u-static-header) .c-navbar {
+    @include spacing(margin-top, $content-border-width);
+  }
+
+  .c-navbar__label {
+    @include spacing(margin-top, $content-border-width);
+    @include spacing(margin-left, $content-border-width);
+  }
+
+  .c-navbar__container {
+    border: 0 solid transparent;
+    @include spacing(border-width, $content-border-width);
+  }
+
+  .c-overlay__close {
+    @include spacing(margin-top, $content-border-width);
+    @include spacing(margin-right, $content-border-width);
+  }
+
+  .site-header-sticky {
+    left: $content-border-width;
+    right: $content-border-width;
+  }
+}
+
+// just set the desired baseline unit here
+// so we can use rem units to multiply it
+html {
+  font-size: percentage($baseline-unit/16px);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @include leading-map($body-font);
+  color: $body-text-color;
+}
+
+.h0 { @include leading-map($page-title-font) }
+.h1 { @include leading-map($h1) }
+.h2 { @include leading-map($h2) }
+.h3 { @include leading-map($h3) }
+.h4 { @include leading-map($h4) }
+.h5 { @include leading-map($h5) }
+.h6 { @include leading-map($h6) }
+
+.blockquote { @include leading-map($blockquote-font) }
+
+
+
 // BLOG GRID
 // ========================================
 
@@ -168,4 +309,21 @@ $blog-card-meta-secondary-font: () !default;
 			padding-top: percentage(1/$blog-grid-aspect-ratio);
 		}
 	}
+}
+
+
+
+// Extras
+// ----------------------------------------
+$text-selection-color: #FFFFFF !default;
+$text-selection-background-color: #000000 !default;
+
+::selection {
+  background: $text-selection-background-color;
+  color: $text-selection-color;
+}
+
+::-moz-selection {
+  background: $text-selection-background-color;
+  color: $text-selection-color;
 }

@@ -1,0 +1,67 @@
+// ------------------------------------------------------------
+// Wordpress Galleries
+// ------------------------------------------------------------
+
+[class*="gallery-columns-"] {
+  @include grid;
+}
+
+@include above(small) {
+  @for $i from 2 through 9 {
+    .gallery-columns-#{$i} > * {
+      width: percentage( 1 / ($i - 1) );
+    }
+  }
+}
+
+@include above(desk) {
+  @for $i from 1 through 9 {
+    .gallery-columns-#{$i} > * {
+      width: percentage( 1 / $i );
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Gallery Spacing Option
+// ------------------------------------------------------------
+
+.u-gallery-spacing--none {
+
+  &, & > * {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+.u-gallery-spacing--small {
+  @include grid-spacing(1rem);
+}
+
+.u-gallery-spacing--medium {
+  @include grid-spacing(3rem);
+}
+
+.u-gallery-spacing--large {
+  @include grid-spacing(4rem);
+}
+
+.u-gallery-spacing--xlarge {
+  @include grid-spacing(8rem);
+}
+
+.gallery {
+  @include spacing(padding-bottom, 3rem);
+}
+
+.gallery-item {
+  a, img {
+    display: block;
+  }
+}
+
+// Extras
+
+.tiled-gallery img {
+  object-fit: cover;
+}

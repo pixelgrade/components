@@ -76,16 +76,13 @@
 .c-author__links {
 	margin-top: 0;
 	margin-right: 0;
-	letter-spacing: 0.1em;
 
 	&:after {
 		padding-bottom: 0;
 	}
 
-	a {
-		&:hover {
-			text-decoration: none;
-		}
+	a:hover {
+    text-decoration: none;
 	}
 }
 
