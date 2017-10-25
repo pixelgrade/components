@@ -1,18 +1,141 @@
-@import "p";
+$typography-spacing: 2rem !default;
+
+p, ul, ol, dl,
+
+// PARAGRAPHS
+p {
+
+  &:not(:last-child) {
+    @include spacing(padding-bottom, $typography-spacing);
+  }
+
+}
+
 @import "blockquote";
 
-@import "table";
+// LISTS
+$typography-unordered-list-style: disc !default;
+$typography-ordered-list-style: decimal !default;
+$typography-list-padding: 2rem !default;
+$typography-list-item-spacing: 0.5rem !default;
 
-@import "lists";
-@import "pre";
-@import "table";
+ul, ol, dl {
 
-@import "hr";
+  &:not(:last-child) {
+    @include spacing(margin-bottom, $typography-spacing);
+  }
 
-@import "intro";
-@import "dropcap";
-@import "two-column";
-@import "wp-align";
+  li > & {
+    @include spacing(padding-top, $typography-list-item-spacing);
+  }
+}
+
+// UNORDERED LISTS
+ul {
+  @include spacing(padding-left, $typography-list-padding);
+  list-style: $typography-unordered-list-style;
+}
+
+// ORDERED LISTS
+ol {
+  @include spacing(padding-left, $typography-list-padding);
+  list-style: $typography-ordered-list-style;
+}
+
+li:not(:last-child) {
+  @include spacing(margin-bottom, $typography-list-item-spacing);
+}
+
+// DEFINITION LISTS
+dl {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+dt {
+  font-weight: bold;
+  flex-basis: 33%;
+}
+
+dd {
+  flex-basis: 66%;
+}
+
+
+// PREFORMATTED CODE
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+
+  @include spacing(padding, 1rem);
+  @include spacing(margin-bottom, 2rem);
+
+  border: 1px solid;
+}
+
+
+
+// TABLES
+$typography-table-cell-padding: .5rem !default;
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  @include spacing(margin-bottom, 2rem);
+
+  th {
+    text-align: left;
+  }
+
+  th,
+  td {
+    vertical-align: middle;
+  }
+
+  tr,
+  thead,
+  tbody,
+  tfoot {
+    border-bottom: 1px solid;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  th,
+  td {
+    @include spacing(padding, $typography-table-cell-padding);
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+
+
+// HR
+$typography-hr-width: 100% !default;
+
+hr {
+  width: $typography-hr-width;
+  border: 0;
+  border-top: 1px solid;
+  margin: 0 auto;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
 
 em,
 i,

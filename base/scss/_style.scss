@@ -9,15 +9,18 @@
 @import "utility/wrap-text";
 @import "utility/misc";
 
-$editor-style: false;
-
 @import "typography/links";
 
-#{$content-selector} {
+.entry-content {
 	@import "typography/default";
 }
 
 @import "objects/all";
+
+@import "elements/dropcap";
+@import "elements/intro";
+@import "elements/two-column";
+@import "elements/wp-align";
 
 @import "plugins/gridable";
 @import "plugins/cf7";

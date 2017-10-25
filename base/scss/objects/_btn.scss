@@ -29,9 +29,10 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
  */
 
 @mixin btn-reset {
-	-webkit-appearance: none;
-	background-color: transparent;
 	border: 0;
+  padding: 0;
+	background: none;
+	appearance: none;
 }
 
 @mixin button {
@@ -189,12 +190,11 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 	}
 }
 
-[class*="c-btn"] {
+.c-btn {
 	@include btn;
 }
 
-// Single Posts Navigation
-[class*="c-btn-directional"] {
+.c-btn-directional {
 	@include btn-directional;
 }
 
@@ -226,4 +226,8 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 			@include btn-directional--right;
 		}
 	}
+}
+
+.c-btn--reset {
+  @include btn-reset;
 }
