@@ -38,7 +38,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 @mixin button {
 	display: inline-block; /* [1] */
 	vertical-align: middle; /* [2] */
-	font: inherit; /* [3] */
+	//font: inherit; /* [3] */
 	text-align: center; /* [4] */
 	margin: 0; /* [4] */
 	cursor: pointer; /* [5] */
@@ -59,7 +59,6 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 
 	box-shadow: none;
 	-webkit-font-smoothing: initial;
-	font-size: 15px;
 
 	transition: $btn-transition;
 	transition-property: color, background-color, opacity;

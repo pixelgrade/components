@@ -1,5 +1,9 @@
+$post-meta-item-spacing: 0.5rem !default;
+$meta-title-font: () !default;
+$meta-category-items-font: () !default;
+$meta-tags-items-font: () !default;
+
 .entry-content {
-  position: relative;
 
   .cats,
   .tags {
@@ -7,55 +11,38 @@
     flex-wrap: wrap;
     align-items: baseline;
 
+    // cleanup up possible properties inherited by headings
     &__title {
       margin: 0;
       padding: 0;
+      @include leading-map($meta-title-font);
     }
 
+    // cleanup possible properties inherited by the anchor tag
+    > a {
+        border-bottom: 0;
+    }
+
+    // add separator after the meta title
     &__title:after {
       content: ": ";
     }
 
-    * + & {
-      @include spacing(margin-top, 2.5rem);
-    }
-
     > * {
-      @include spacing(margin-right, 0.5rem);
-    }
-
-    > a {
-        border-bottom: 0;
+      @include spacing(margin-right, $post-meta-item-spacing);
     }
   }
 
+  .cats > a {
+    @include leading-map($meta-category-items-font);
+  }
+
+  .tags > a {
+    @include leading-map($meta-tags-items-font);
+  }
+
+  // add separator between items
   .tags a:not(:last-child):after {
     content: ",";
   }
-}
-
-.edit-link {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 0;
-
-  @include above(lap) {
-    display: block;
-  }
-
-  a {
-    font-size: 90%;
-    text-decoration: none;
-    border-bottom: 1px solid;
-  }
-}
-
-.entry-date + .entry-title {
-  @include spacing(padding-top, 3rem);
-}
-
-.entry-title:last-child {
-  padding-bottom: 0;
 }
