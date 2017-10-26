@@ -37,9 +37,9 @@ body #infinite-handle span {
 	padding: 0 20px;
 
 	background-color: $color-white;
-	border-top: 1px solid $julia-border-color;
+	border-top: 1px solid $theme-border-color;
 
-	font-family: $julia-body-font-family;
+	font-family: $theme-body-font-family;
 
 	.container {
 		padding: 5px 0;
@@ -57,7 +57,7 @@ body #infinite-handle span {
 	.blog-credits {
 		color: #c1c1c7;
 
-		a { color: $julia-text-color; }
+		a { color: $theme-text-color; }
 	}
 }
 
