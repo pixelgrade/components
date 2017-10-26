@@ -1,6 +1,5 @@
 $layout-spacing: 4rem !default;
 $layout-side-width: percentage(1/3) !default;
-$layout-side-width: 300px !default;
 
 @include above(lap) {
 
@@ -53,6 +52,8 @@ $layout-side-width: 300px !default;
 }
 
 .single-post.has-sidebar {
-	margin-left: auto;
-	margin-right: 0;
+  #{$content-selector} {
+    margin-left: auto;
+    margin-right: 0;
+  }
 }
