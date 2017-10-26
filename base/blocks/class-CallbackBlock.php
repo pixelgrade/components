@@ -82,7 +82,7 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 			return;
 		}
 
-		parent::__construct( $manager, $id, $args );
+		parent::__construct( $manager, $id, $args, $parent );
 	}
 
 	/**

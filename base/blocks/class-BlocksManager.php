@@ -308,6 +308,8 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	public function registerDefaultBlockTypes() {
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-LayoutBlock.php';
 		$this->registerBlockType( 'layout', 'Pixelgrade_LayoutBlock' );
+		require_once PIXELGRADE_BLOCKS_PATH . 'class-LoopBlock.php';
+		$this->registerBlockType( 'loop', 'Pixelgrade_LoopBlock' );
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-TemplatePartBlock.php';
 		$this->registerBlockType( 'template_part', 'Pixelgrade_TemplatePartBlock' );
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-CallbackBlock.php';

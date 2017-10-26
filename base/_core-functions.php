@@ -485,11 +485,11 @@ function pixelgrade_locate_component_template_part( $component_slug, $slug, $nam
 		$template_names = array();
 
 		$template_names[] = $template_parts_path . $component_slug_path . "{$slug}-{$name}.php";
-
 		if ( true === $lookup_parts_root ) {
 			// We need to look in the /template-parts/ root also
 			$template_names[] = $template_parts_path . "{$slug}-{$name}.php";
 		}
+		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
 
 		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
 
@@ -506,11 +506,11 @@ function pixelgrade_locate_component_template_part( $component_slug, $slug, $nam
 		$template_names = array();
 
 		$template_names[] = $template_parts_path . $component_slug_path . "{$slug}.php";
-
 		if ( true === $lookup_parts_root ) {
 			// We need to look in the /template-parts/ root also
 			$template_names[] = $template_parts_path . "{$slug}.php";
 		}
+		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
 
 		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
 

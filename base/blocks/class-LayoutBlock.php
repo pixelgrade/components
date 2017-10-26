@@ -60,7 +60,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
-		parent::__construct( $manager, $id, $args );
+		parent::__construct( $manager, $id, $args, $parent );
 
 		// We need to check the child blocks and replace them with Pixelgrade_Block instances (if they are not already)
 		$this->maybeRegisterBlocks( $parent );
