@@ -301,7 +301,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	public function fireUp() {
 		// We need to make sure that the portfolio CPT is all good
 		// There is no point in continuing if it is not
-		if ( ! self::siteSupportsPortfolio() ) {
+		if ( ! self::siteSupportsPortfolio() || ! current_theme_supports( 'jetpack-portfolio' ) ) {
 			return;
 		}
 
