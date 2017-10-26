@@ -475,7 +475,7 @@ if ( ! function_exists( 'pixelgrade_comments_template' ) ) {
 	function pixelgrade_comments_template() {
 		// We need to pass the template path retrieved by our locate function so the component template is accounted for
 		// If present in the root of the theme or child theme, `/comments.php` will take precedence.
-		comments_template( '/' . pixelgrade_make_relative_path( pixelgrade_locate_component_template( Pixelgrade_Base::COMPONENT_SLUG, 'comments' ) ) );
+		comments_template( '/' . pixelgrade_make_relative_path( pixelgrade_locate_component_template( Pixelgrade_Blog::COMPONENT_SLUG, 'comments' ) ) );
 	}
 }
 
