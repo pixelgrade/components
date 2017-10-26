@@ -56,7 +56,7 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 	}
 
 	/**
-	 * Render the each child block's content.
+	 * Render the loop with each child blocks group.
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
 	 *
