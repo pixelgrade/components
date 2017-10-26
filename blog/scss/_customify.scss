@@ -127,7 +127,7 @@ body {
   color: $body-text-color;
 }
 
-.h0 { @include leading-map($page-title-font) }
+.entry-title, .h0 { @include leading-map($page-title-font) }
 .h1 { @include leading-map($h1) }
 .h2 { @include leading-map($h2) }
 .h3 { @include leading-map($h3) }

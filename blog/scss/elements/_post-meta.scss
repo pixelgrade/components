@@ -1,65 +1,61 @@
 .entry-content {
-    position: relative;
+  position: relative;
 
-    .cats > a {
-        @include btn;
-        font-size: 15px;
-        font-weight: bolder;
-        padding: 9px 19px 10px 20px;
-        margin-top: 3px;
+  .cats,
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+
+    &__title {
+      margin: 0;
+      padding: 0;
     }
 
-    .cats__title {
-        display: none;
+    &__title:after {
+      content: ": ";
     }
 
-    * + .cats {
-        @include spacing(margin-top, 4rem);
+    * + & {
+      @include spacing(margin-top, 2.5rem);
     }
 
-    * + .tags {
-        @include spacing(margin-top, 3rem);
+    > * {
+      @include spacing(margin-right, 0.5rem);
     }
 
-    .tags__title {
-        display: inline-block;
-
-        &:after {
-            content: ": ";
-        }
+    > a {
+        border-bottom: 0;
     }
+  }
 
-    .tags a {
-        @include spacing(margin-left, 1rem);
+  .tags a:not(:last-child):after {
+    content: ",";
+  }
+}
 
-        &:not(:last-child):after {
-            content: ",";
-        }
-    }
+.edit-link {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
 
-    .edit-link {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 0;
+  @include above(lap) {
+    display: block;
+  }
 
-        @include above(lap) {
-            display: block;
-        }
-
-        a {
-            font-size: 90%;
-            text-decoration: none;
-            border-bottom: 1px solid;
-        }
-    }
+  a {
+    font-size: 90%;
+    text-decoration: none;
+    border-bottom: 1px solid;
+  }
 }
 
 .entry-date + .entry-title {
-    @include spacing(padding-top, 3rem);
+  @include spacing(padding-top, 3rem);
 }
 
 .entry-title:last-child {
-	padding-bottom: 0;
+  padding-bottom: 0;
 }
