@@ -1336,7 +1336,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Title Font', 'components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-card__title',
+						'selector' => '.c-gallery--blog .c-card__title',
 						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -1370,49 +1370,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_item_meta_primary_font' => array(
+					'blog_item_meta_font' => array(
 						'type'     => 'font',
-						'label'    => esc_html__( 'Item Meta Primary Font', 'components_txtd' ),
+						'label'    => esc_html__( 'Item Meta Font', 'components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-card__meta-primary',
-						'callback' => 'typeline_font_cb',
-
-						// This should be set by the theme
-						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 15,
-						//		'line-height'    => 1.5,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
-						'default'  => null,
-
-						// List of recommended fonts defined by theme
-						'recommended' => $recommended_body_fonts,
-
-						// Sub Fields Configuration (optional)
-						'fields'   => array(
-							'font-size'       => array(                           // Set custom values for a range slider
-								'min'  => 8,
-								'max'  => 90,
-								'step' => 1,
-								'unit' => 'px',
-							),
-							'line-height'     => array( 0, 2, 0.1, '' ),           // Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
-							'text-align'      => false,                           // Disable sub-field (False by default)
-							'text-transform'  => true,
-							'text-decoration' => false,
-						),
-					),
-
-					'blog_item_meta_secondary_font' => array(
-						'type'     => 'font',
-						'label'    => esc_html__( 'Item Meta Secondary Font', 'components_txtd' ),
-						'desc'     => '',
-						'selector' => '.c-card__meta-secondary',
+						'selector' => '.c-gallery--blog .c-card__meta-primary, .c-gallery--blog .c-card__meta-secondary',
 						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme

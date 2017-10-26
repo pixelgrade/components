@@ -43,7 +43,13 @@ pixelgrade_get_header(); ?>
  * pixelgrade_before_primary_wrapper hook.
  */
 do_action( 'pixelgrade_before_primary_wrapper', $location );
-?>
+
+echo '<h1>Astract Block</h1>';
+//pixelgrade_render_block( 'blog/abstract' ); ?>
+
+<?php echo '<h1>Page Block</h1>'; ?>
+<?php pixelgrade_render_block( 'blog/page22' ); ?>
+<?php echo '<h1>The rest</h1>'; ?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
