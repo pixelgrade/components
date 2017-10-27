@@ -48,9 +48,6 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * If `$args['settings']` is not defined, use the $id as the setting ID.
-	 *
-	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
 	 * @param string               $id      Block ID.
 	 * @param array                $args    {
@@ -72,13 +69,13 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive a function, something is wrong
 		if ( empty( $args['callback'] ) ) {
-			_doing_it_wrong( __METHOD__, 'Can\'t register a CALLBACK type block without a callback function!', '1.0.0' );
+			_doing_it_wrong( __METHOD__, 'Can\'t register a CALLBACK type block without a callback function!', null );
 			return;
 		}
 
 		// If the function is not callable, something is wrong, again
 		if ( ! is_callable( $args['callback'], true ) ) {
-			_doing_it_wrong( __METHOD__, 'Can\'t register a CALLBACK type block without a valid callback function!', '1.0.0' );
+			_doing_it_wrong( __METHOD__, 'Can\'t register a CALLBACK type block without a valid callback function!', null );
 			return;
 		}
 

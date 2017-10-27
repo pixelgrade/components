@@ -31,9 +31,6 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * If `$args['settings']` is not defined, use the $id as the setting ID.
-	 *
-	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
 	 * @param string               $id      Block ID.
 	 * @param array                $args    {

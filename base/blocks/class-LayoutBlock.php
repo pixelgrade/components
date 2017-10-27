@@ -38,9 +38,6 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * If `$args['settings']` is not defined, use the $id as the setting ID.
-	 *
-	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
 	 * @param string               $id      Block ID.
 	 * @param array                $args    {
@@ -168,7 +165,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				$block = $this->manager->getRegisteredBlock( $id );
 			}
 		} else {
-			_doing_it_wrong( __METHOD__, 'You tried to add or define a block using a strange (e.g. not supported) way!', '1.0.0' );
+			_doing_it_wrong( __METHOD__, 'You tried to add or define a block using a strange (e.g. not supported) way!', null );
 		}
 
 		// Add the block instance to the child blocks list

@@ -100,9 +100,6 @@ abstract class Pixelgrade_Block {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * If `$args['settings']` is not defined, use the $id as the setting ID.
-	 *
-	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
 	 * @param string               $id      Block ID.
 	 * @param array                $args    {
@@ -134,6 +131,9 @@ abstract class Pixelgrade_Block {
 		$this->maybeConvertWrappers();
 	}
 
+	/**
+	 * Take the wrappers config and make sure that we are only dealing with Pixelgrade_Wrapper instances.
+	 */
 	protected function maybeConvertWrappers() {
 		// Bail if there are no wrappers
 		if ( empty( $this->wrappers ) ) {
@@ -144,68 +144,93 @@ abstract class Pixelgrade_Block {
 
 		// $wrappers should usually be an array
 		// But we also offer support for two short hand versions
-		// - a callback
+		// - a callback that we will use as the entire wrapper callback (master_callback) at the time of render
 		// - inline wrapper markup (in this case $end_wrappers will be used as closing markup)
-		if ( is_string( $this->wrappers ) || ( is_array( $this->wrappers ) && isset( $this->wrappers['callback'] ) ) ) {
-			// Standardize it
-			$this->wrappers = array( $this->wrappers );
-		}
 
 		// To be sure we are not bother with the intricacies of foreach
 		// (whether or not it makes a copy of the array it iterates over, and what does it copy)
 		// we will recreate the array.
 		$new_wrappers = array();
 
-		foreach ( $this->wrappers as $wrapper_id => $wrapper ) {
-			if ( $wrapper instanceof Pixelgrade_Wrapper ) {
-				// We are good
-				$new_wrappers[ $wrapper_id ] = $wrapper;
-				continue;
-			} elseif ( is_string( $wrapper ) ) {
-				// We will treat it as shorthand for just a HTML tag, an inline wrapper markup, or even a callback
-				// Since we don't have a priority, we will put a priority with one higher than the last wrapper added
-				$priority = 10;
-				if ( $previous_wrapper = end( $new_wrappers ) ) {
-					$priority = $previous_wrapper->priority + 1;
-				}
-
-				if ( Pixelgrade_Wrapper::isInlineTag( $this->wrappers ) ) {
-					// We are dealing with a fully qualified opening markup
-					// We need to also have the $end_wrappers
-					if ( ! empty( $this->end_wrappers ) ) {
-						$new_wrappers[] = new Pixelgrade_Wrapper( array( 'tag' => $this->wrappers, 'end_tag' => $this->end_wrappers, 'priority' => $priority, ) );
-					} else {
-						_doing_it_wrong( __METHOD__, sprintf( 'Failed to add wrapper! Got inline opening markup (%s), but no ending markup. Please provide the `end_wrappers` config also!', htmlspecialchars( $this->wrappers ) ), '1.0.0' );
-					}
+		if ( is_string( $this->wrappers ) ) {
+			if ( Pixelgrade_Wrapper::isInlineMarkup( $this->wrappers ) ) {
+				// If we have been given a fully qualified wrapper(s) opening markup, we expect to also receive the ending markup
+				if ( empty( $this->end_wrappers ) || ! Pixelgrade_Wrapper::isInlineMarkup( $this->end_wrappers ) ) {
+					_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s), but no valid ending provided (%s)!', htmlentities( $this->wrappers ), htmlentities( $this->end_wrappers ) ), null );
 				} else {
-					// This a shorthand tag
-					$new_wrappers[ $wrapper_id ] = new Pixelgrade_Wrapper( array( 'tag' => $wrapper, 'priority' => $priority, ) );
+					$new_wrappers[] = new Pixelgrade_Wrapper( array( 'tag' => $this->wrappers, 'end_tag' => $this->end_wrappers ) );
 				}
-			} elseif ( is_array( $wrapper ) ) {
-				// This is either a wrapper configuration or a callback configuration
-				if ( isset( $wrapper['callback'] ) ) {
-					// Since we don't have a priority, we will put a priority with one higher than the last wrapper added
-					$priority = 10;
-					if ( $previous_wrapper = end( $new_wrappers ) ) {
-						$priority = $previous_wrapper->priority + 1;
-					}
+			} else {
+				// This is just a shorthand for a tag
+				$new_wrappers[] = new Pixelgrade_Wrapper( array( 'tag' => $this->wrappers, ) );
+			}
+		} elseif ( is_array( $this->wrappers ) && isset( $this->wrappers['callback'] ) ) {
+			// If it's a callback we will treat it as the master callback for the wrapper
+			$new_wrappers[] = new Pixelgrade_Wrapper( array(
+				'master_callback' => $this->wrappers,
+			) );
+		} else {
+			// We have a collection of wrappers
+			// We will save the last priority present so we can help wrappers without priority maintain their relative order
+			$default_priority = 10;
+			foreach ( $this->wrappers as $wrapper_id => $wrapper ) {
+				$new_wrappers[ $wrapper_id ] = $this->maybeProcessWrapper( $wrapper, $default_priority );
 
-					// If it's a callback we will treat it as the callback for the tag
-					$new_wrappers[ $wrapper_id ] = new Pixelgrade_Wrapper( array( 'tag' => $wrapper, 'priority' => $priority, ) );
-				} else {
-					// If we don't have a priority, we will put a priority with one higher than the last wrapper added
-					if ( ! isset( $wrapper['priority'] ) ) {
-						$wrapper['priority'] = 10;
-						if ( $previous_wrapper = end( $new_wrappers ) ) {
-							$wrapper['priority'] = $previous_wrapper->priority + 1;
-						}
-					}
-					$new_wrappers[ $wrapper_id ] = new Pixelgrade_Wrapper( $wrapper );
+				// Setup the new default priority
+				if ( ! empty( $new_wrappers[ $wrapper_id ]->priority ) ) {
+					$default_priority = $new_wrappers[ $wrapper_id ]->priority + 0.1;
 				}
 			}
 		}
 
 		$this->wrappers = $new_wrappers;
+	}
+
+	/**
+	 * Given an wrapper, make sure we have a Pixelgrade_Wrapper instance.
+	 *
+	 * @param $wrapper
+	 * @param int $default_priority
+	 *
+	 * @return Pixelgrade_Wrapper|false
+	 */
+	protected function maybeProcessWrapper( $wrapper, $default_priority = 10 ) {
+		// Bail if we have nothing to work with
+		if ( empty( $wrapper ) ) {
+			return false;
+		}
+
+		if ( $wrapper instanceof Pixelgrade_Wrapper ) {
+			// We are good
+			return $wrapper;
+		} elseif ( is_string( $wrapper ) ) {
+			// We will treat it as shorthand for just the tag
+			// But first we need to make sure that it is not accidentally inline opening markup
+			if ( Pixelgrade_Wrapper::isInlineMarkup( $wrapper ) ) {
+				_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s) in an individual wrapper config! This is not possible since there is no way to provide the ending markup.', htmlentities( $wrapper ) ), null );
+				return false;
+			} else {
+				return new Pixelgrade_Wrapper( array(
+					'tag'      => $wrapper,
+					'priority' => $default_priority,
+				) );
+			}
+		} elseif ( is_array( $wrapper ) && isset( $wrapper['callback'] ) ) {
+			// If it's a callback we will treat it as the master callback for the wrapper
+			return new Pixelgrade_Wrapper( array(
+				'master_callback' => $wrapper,
+				'priority' => $default_priority,
+			) );
+		} elseif ( is_array( $wrapper ) ) {
+			// If we don't have a priority, we will put the default priority (it may be different than 10)
+			if ( ! isset( $wrapper['priority'] ) ) {
+				$wrapper['priority'] = $default_priority;
+			}
+			return new Pixelgrade_Wrapper( $wrapper );
+		}
+
+		// Bail if the wrapper didn't meet our needs
+		return false;
 	}
 
 	/**

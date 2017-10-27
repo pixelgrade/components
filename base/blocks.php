@@ -71,7 +71,7 @@ function pixelgrade_get_rendered_block( $block ) {
 	} elseif ( is_string( $block ) && Pixelgrade_BlocksManager()->isRegisteredBlock( $block ) ) {
 		return Pixelgrade_BlocksManager()->getRegisteredBlock( $block )->getRendered();
 	} else {
-		_doing_it_wrong( __FUNCTION__, sprintf( 'Tried to render an unknown block (%s)!', $block ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, sprintf( 'Tried to render an unknown block (%s)!', $block ), null );
 	}
 
 	return '';

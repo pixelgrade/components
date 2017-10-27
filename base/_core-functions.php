@@ -579,30 +579,51 @@ function pixelgrade_locate_template_part( $slug, $template_path, $name = '', $de
 		$template_path_temp = trailingslashit( $template_path );
 	}
 
+	// Make sure that the slug doesn't have slashes at the beginning or end
+	$slug = trim( $slug, '/\\' );
+
+	// First try it with the name also, if it's not empty.
 	if ( ! empty( $name ) ) {
+		// If the name includes the .php extension by any chance, remove it
+		if ( false !== $pos = stripos( $name, '.php' ) ) {
+			$name = substr( $name, 0, $pos );
+		}
+
+		$template_names = array();
+		$template_names[] = $template_path_temp . "{$slug}-{$name}.php";
+		if ( ! empty( $template_path_temp ) ) {
+			$template_names[] = $template_parts_path . $template_path_temp . "{$slug}-{$name}.php";
+		}
+		$template_names[] = $template_parts_path . "{$slug}-{$name}.php";
+		$template_names[] = "{$slug}-{$name}.php";
+		if ( ! empty( $template_path_temp ) ) {
+			$template_names[] = $components_path . $template_path_temp . $template_parts_path . "{$slug}-{$name}.php";
+		}
+
 		// Look within passed path within the theme
-		$template = locate_template(
-			array(
-				$template_path_temp . "{$slug}-{$name}.php",
-				$template_parts_path . $template_path_temp . "{$slug}-{$name}.php",
-				$template_parts_path . "{$slug}-{$name}.php",
-				"{$slug}-{$name}.php",
-				$components_path . $template_path_temp . $template_parts_path . "{$slug}-{$name}.php",
-			)
-		);
+		$template = locate_template( $template_names, false );
 	}
 
+	// If we haven't found a template part with the name, use just the slug.
 	if ( empty( $template ) ) {
+		// If the slug includes the .php extension by any chance, remove it
+		if ( false !== $pos = stripos( $slug, '.php' ) ) {
+			$slug = substr( $slug, 0, $pos );
+		}
+
+		$template_names = array();
+		$template_names[] = $template_path_temp . "{$slug}.php";
+		if ( ! empty( $template_path_temp ) ) {
+			$template_names[] = $template_parts_path . $template_path_temp . "{$slug}.php";
+		}
+		$template_names[] = $template_parts_path . "{$slug}.php";
+		$template_names[] = "{$slug}.php";
+		if ( ! empty( $template_path_temp ) ) {
+			$template_names[] = $components_path . $template_path_temp . $template_parts_path . "{$slug}.php";
+		}
+
 		// Look within passed path within the theme
-		$template = locate_template(
-			array(
-				$template_path_temp . "{$slug}.php",
-				$template_parts_path . $template_path_temp . "{$slug}.php",
-				$template_parts_path . "{$slug}.php",
-				"{$slug}.php",
-				$components_path . $template_path_temp . $template_parts_path . "{$slug}.php",
-			)
-		);
+		$template = locate_template( $template_names, false );
 	}
 
 	// Get default template

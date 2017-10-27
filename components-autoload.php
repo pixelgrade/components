@@ -88,19 +88,19 @@ class Pixelgrade_Components_Autoloader {
 						 */
 						do_action( "pixelgrade_after_{$slug}_instantiation" );
 					} else {
-						_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s instantiation function in %s.', $slug, $function, $file ), '1.0.0' );
+						_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s instantiation function in %s.', $slug, $function, $file ), null );
 						return false;
 					}
 				} else {
-					_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t build the instantiation function.', $slug ), '1.0.0' );
+					_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t build the instantiation function.', $slug ), null );
 					return false;
 				}
 			} else {
-				_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s file.', $slug, $file ), '1.0.0' );
+				_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s file.', $slug, $file ), null );
 				return false;
 			}
 		} else {
-			_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s directory.', $slug, $directory ), '1.0.0' );
+			_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s directory.', $slug, $directory ), null );
 			return false;
 		}
 

@@ -38,9 +38,6 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * If `$args['settings']` is not defined, use the $id as the setting ID.
-	 *
-	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
 	 * @param string               $id      Block ID.
 	 * @param array                $args    {
@@ -61,7 +58,7 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive any templates, something is wrong
 		if ( empty( $args['templates'] ) ) {
-			_doing_it_wrong( __METHOD__, 'Can\'t register a TEMPLATE type block without any templates!', '1.0.0' );
+			_doing_it_wrong( __METHOD__, 'Can\'t register a TEMPLATE type block without any templates!', null );
 			return;
 		}
 
@@ -126,7 +123,8 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 
 					// If we found a template, we load it and stop since upper templates get precedence over lower ones
 					if ( ! empty( $found_template ) ) {
-						load_template( $found_template, true );
+						// Make sure that we don't end up using require_once!
+						load_template( $found_template, false );
 						break;
 					}
 				}

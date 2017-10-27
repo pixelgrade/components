@@ -122,11 +122,11 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 //
 //					}
 				} else {
-					_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t register the block %s because the class %s doesn\'t exist.', $id, $block_type_class ), '1.0.0' );
+					_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t register the block %s because the class %s doesn\'t exist.', $id, $block_type_class ), null );
 					return false;
 				}
 			} else {
-				_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t add the block %s because the type provided is invalid or not registered.', $id ), '1.0.0' );
+				_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t add the block %s because the type provided is invalid or not registered.', $id ), null );
 				return false;
 			}
 		}

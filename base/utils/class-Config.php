@@ -307,7 +307,7 @@ class Pixelgrade_Config {
 						if ( ! isset( $modified_config[ $section_key ]['options'][ $option_key ]['default'] ) ) {
 							_doing_it_wrong( __FUNCTION__,
 								sprintf( 'You need to define a default value for the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
-								( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : ''), '1.0.0' );
+								( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : ''), null );
 
 							$errors = true;
 						}
