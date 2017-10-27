@@ -1,0 +1,146 @@
+$editor-style: 						false						!default;
+$baseline-unit: 					16px						!default;
+
+$body-font-size:             		17px            			!default;
+$body-line-height:           		1.5             			!default;
+$body-font-weight:           		300             			!default;
+$body-font-family:          		"Roboto", sans-serif       	!default;
+$body-text-color:					#000000						!default;
+
+$text-selection-color: 				#FFFFFF						!default;
+$text-selection-background-color: 	#000000						!default;
+
+// just set the desired baseline unit here
+// so we can use rem units to multiply it
+html {
+	font-size: percentage($baseline-unit/16px);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	font-family: $body-font-family;
+	font-weight: $body-font-weight;
+	@include fontsize($body-font-size);
+	line-height: $body-line-height;
+
+	color: $body-text-color;
+}
+
+@mixin p {
+	//@include baseline($body-line-height, 0.68);
+
+	&:not(:last-child) {
+		@include spacing(padding-bottom, 2rem);
+	}
+
+	a img {
+		margin-top: 0; // ??
+	}
+}
+
+em,
+i,
+small {
+	font-style: italic;
+}
+
+@mixin render-typography-styles() {
+	.h0, .entry-title  { @include h0 }
+	h1          { @include h1 }
+	h2          { @include h2 }
+	h3          { @include h3 }
+	h4          { @include h4 }
+	h5          { @include h5 }
+	h6          { @include h6 }
+
+	p           { @include p }
+
+	blockquote  { @include blockquote }
+	cite  		{ @include cite }
+	pre         { @include pre }
+	table       { @include table }
+
+	@include lists;
+
+	ul          { @include ul }
+	ol          { @include ol }
+	dl          { @include dl }
+
+	pre {
+		@include spacing(padding, 1rem);
+		@include spacing(margin-bottom, 2rem);
+
+		border: 1px solid currentColor;
+	}
+
+	hr,
+	address,
+	.two-column,
+	.mejs-container {
+		@include spacing(margin-bottom, 2rem);
+	}
+
+	.intro {
+		@include fontsize(30px);
+		line-height: 1.5;
+
+		&.large {
+			@include fontsize(36px);
+			line-height: 1.38;
+		}
+	}
+
+	.dropcap {
+		float: left;
+		padding-right: 0.1em;
+		margin-top: 0.04em;
+		margin-bottom: -0.1em;
+
+		@include fontsize(83px);
+		line-height: 0.8;
+	}
+
+	hr {
+		border: 0;
+	    border-top: 1px solid $color-gray-darker;
+	    width: 100px;
+	    margin: 2em auto 0;
+	    padding-bottom: 3em;
+	}
+
+
+	@include above(small) {
+		.two-column {
+			@include spacing(column-gap, 2rem);
+			column-count: 2;
+		}
+	}
+}
+
+$content-selector: 			'.mce-content-body'		!default;
+
+@if ( $editor-style != true ) {
+
+	#{$content-selector} {
+		@include render-typography-styles();
+
+		& > *:first-child:not(.gallery) {
+			margin-top: 0;
+		}
+	}
+
+} @else {
+	@include render-typography-styles();
+}
+
+// Overriding The Default Text Selection Color
+::selection {
+	background: $text-selection-background-color;
+	color: $text-selection-color;
+}
+
+::-moz-selection {
+	background: $text-selection-background-color;
+	color: $text-selection-color;
+}

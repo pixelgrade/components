@@ -1,0 +1,20 @@
+@import "tools/all";
+
+@import "generic/normalize";
+@import "generic/reset";
+
+@import "utility/mq";
+@import "utility/wrap-text";
+
+// todo
+// @import "utility/debug";
+// @import "utility/widths";
+
+@import "typography/default";
+
+@import "objects/all";
+
+
+// style blog component based on variables defined in theme _settings.scss
+@import "elements/customify-content";
+@import "elements/customify-blog";
