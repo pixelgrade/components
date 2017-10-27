@@ -25,75 +25,74 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	public function setupConfig() {
 		// Initialize the $config
 		$this->config = array(
+			/*
+			 * This is the auto-loaded blocks definition section of a component config.
+			 *
+			 * Any blocks defined here will be registered on component initialization.
+			 * More so, all top level block IDs will be auto-namespaced (prefixed) with the component slug,
+			 * thus avoiding unwanted collisions.
+			 * This will only happen if the block ID is not already namespaced (ie. doesn't contain the '/' character)
+			 *
+			 * BLOCK TYPES
+			 *
+			 * A certain block type needs to be registered before it can be used by blocks (@see Pixelgrade_BlocksManager::registerBlockType()).
+			 * We currently register four block types by default:
+			 * - 'layout': a block that can have a series of child blocks;
+			 * - 'loop': a block that can have a series of child blocks, all of them being rendered in a WP loop;
+			 * - 'template_part': a block that loads a template part from a stack of template parts (first one found, from top to bottom);
+			 * - 'callback': a block that calls a certain function or method and uses the response for render content.
+			 *
+			 * BLOCK DEFINITION
+			 *
+			 * All block definitions share a common set of attributes:
+			 * - 'id' (string): this is the unique ID of the block and it is taken from the array key;
+			 * - 'type' (string): this is the pre-registered type of the block;
+			 * - 'wrappers' (string|array|callback): these are the wrappers that we will put around the block content;
+			 * - 'end_wrappers' (string): In case `wrappers` is a fully qualified opening markup, we need you to provide the closing markup also;
+			 * - 'checks' (string|array): Callback checks to run at render time to decide if the block should be shown (if any check fails, the block is not shown);
+			 * - 'dependencies' (array): Dependencies to evaluate at block register time (all dependencies need to be met for the block to be registered);
+			 * - 'extend' (string): A previously registered block ID that the current block extends.
+			 *
+			 * Each block type has it's own set of specific attributes.
+			 *
+			 * The LAYOUT block
+			 * - 'blocks' (string|array): A ordered list of child blocks to render when the parent block is rendered;
+			 *
+			 * You can specify a child block by:
+			 * - a previously registered block ID; if the provided block ID is not namespaced (ie. doesn't contain the '/' character),
+			 *   then we will try to see if it matches a sibling or a sibling of the parent block;
+			 * - an inline block definition; in this case the child block will be registered, with an ID namespaced with the parent block ID;
+			 *
+			 * The LOOP block
+			 * It has all the attributes to the `layout block`, the only difference being that the child blocks are rendered inside a WP loop.
+			 *
+			 * The TEMPLATE_PART block
+			 * - 'templates' (string|array): A stack of template part files definitions to be processed at render time;
+			 *   only the first valid template part is rendered;
+			 *
+			 * You can define a template part in number of ways:
+			 * - a simple string: this will be interpreted as a template part slug;
+			 * - an array with the `slug`, maybe the `name` of the template and maybe the `component_slug`.
+			 *
+			 * The CALLBACK block
+			 * - 'callback' (string|array): a callback definition; either a simple string or an array (@see call_user_func_array() for details);
+			 * - 'args' (array): arguments to pass to the callback;
+			 *   bear in mind that the callback will be called with call_user_func_array(), so the `args` will be expanded.
+			 *
+			 * EXTENDING BLOCKS
+			 *
+			 * A block definition can extend the definition of another, previously registered block.
+			 * This boils down to merging two block definition arrays. But we will do a smart merge that tries
+			 * as much as possible to adapt to the intricacies of each block type (@see Pixelgrade_Block::mergeExtendedBlock()).
+			 *
+			 * There are however a couple of general extend rules:
+			 * - any attributes that are not supported by the extending block will be ignored;
+			 * - any shorthand attribute specification in the extending block will overwrite the entire attribute of the extended block;
+			 * - any named entries (array entries that have a string key) can be overwritten by the extending block;
+			 * - unnamed entries in attributes like `wrappers` or `blocks` will be kept and the extending blocks entries will be added added at the end.
+			 */
 			'blocks' => array(
-				'abstract' => array(
-					'type' => 'template_part',
-					'wrappers' => array(
-						'primary' => array(
-							'tag' => 'div',
-							'id' => 'primary',
-							'classes' => 'content-area',
-							'priority' => array( 'callback' => 'get_the_id', ),
-						),
-						'main' => array(
-							'id' => 'main',
-							'classes' => 'site-main',
-							'attributes' => array( 'role' => 'main', ),
-							'priority' => 20,
-						),
-						array( 'classes' => 'o-layout', ),
-					),
-					'templates' => array(
-						'none' => array(
-							'component_slug' => self::COMPONENT_SLUG,
-							'slug' => 'content',
-							'name' => 'none',
-						),
-						'secondnone' => array(
-							'component_slug' => self::COMPONENT_SLUG,
-							'slug' => 'content',
-							'name' => 'none',
-						),
-						array(
-							'component_slug' => self::COMPONENT_SLUG,
-							'slug' => 'content',
-							'name' => 'none',
-						),
-					),
-					'blocks' => array(
-						'content_page_small' => array(
-							'type' => 'template_part',
-							'templates' => array(
-								array(
-									'component_slug' => self::COMPONENT_SLUG,
-									'slug' => 'content',
-									'name' => 'page_small',
-								),
-							),
-							'wrappers' => array(
-								array( 'classes' => 'o-layout__main' ),
-							),
-						),
-						'content_page_small234' => array(
-							'extend' => 'asdasd',
-							'templates' => 'contentasdasdas',
-						),
-						'content_page_sidebar',
-					),
-					'checks' => array(
-						array(
-							'callback' => 'is_single',
-							'args' => array(),
-						),
-						array(
-							'callback' => 'is_home',
-							'args' => array(),
-						),
-						'is_archive',
-					),
-				),
 				'page' => array(
-					'extend' => 'abstract',
 					'type' => 'template_part',
 					'wrappers' => array(
 						'primary' => array(
@@ -114,6 +113,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 								'o-wrapper', 'u-container-width',
 							),
 						),
+						array( 'callback' => 'get_the_id' ),
 					),
 					'templates' => array(
 						'secondnone' => array(

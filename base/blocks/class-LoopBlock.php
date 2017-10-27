@@ -1,6 +1,7 @@
 <?php
 /**
- * Loop Block class
+ * Loop Block class, a minor extension of the Layout block.
+ * It simply displays the child blocks in a WP loop.
  *
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
