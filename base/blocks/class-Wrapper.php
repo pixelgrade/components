@@ -197,7 +197,7 @@ class Pixelgrade_Wrapper {
 
 	public static function isInlineTag( $tag ) {
 		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-		if ( 0 === strpos( trim( $tag ), '<' ) ) {
+		if ( 'string' === gettype( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
 			return true;
 		}
 
