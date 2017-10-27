@@ -149,7 +149,6 @@ abstract class Pixelgrade_Block {
 		if ( is_string( $this->wrappers ) || ( is_array( $this->wrappers ) && isset( $this->wrappers['callback'] ) ) ) {
 			// Standardize it
 			$this->wrappers = array( $this->wrappers );
-			
 		}
 
 		// To be sure we are not bother with the intricacies of foreach
