@@ -1,0 +1,65 @@
+@mixin lists {
+	ul,
+	ol,
+	dl {
+		&:not(:last-child) {
+			@include spacing(margin-bottom, 2rem);
+		}
+	}
+
+	li {
+
+		> ul,
+		> ol,
+		> dl {
+			@include spacing(padding-top, 0.5rem);
+		}
+	}
+
+	li:not(:last-child) {
+		@include spacing(margin-bottom, 0.5rem);
+	}
+}
+
+/* Definition Lists */
+@mixin dl {
+	display: flex;
+	flex-wrap: wrap;
+
+	dt {
+		font-weight: bold;
+		flex-basis: 33%;
+	}
+
+	dd {
+		flex-basis: 66%;
+	}
+}
+
+/* Unordered Lists */
+@mixin ul {
+	@include spacing(padding-left, 2rem);
+
+	&,
+	& > li {
+		list-style: disc;
+	}
+}
+
+/* Ordered Lists */
+@mixin ol {
+	@include spacing(padding-left, 2rem);
+
+	&,
+	& > li {
+		list-style: decimal;
+	}
+}
+
+@mixin list-clean {
+	&,
+	li {
+		list-style: none;
+	}
+}
+
