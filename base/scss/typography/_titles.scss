@@ -1,0 +1,254 @@
+@mixin leading($font-size, $line-height: false, $font-family: false, $font-weight: false, $letter-spacing: false, $text-transform: false, $spacing-top: 0, $spacing-bottom: 0, $cap-height: false) {
+
+	@if $font-family != false {
+		font-family: $font-family;
+	}
+
+	@if unitless($font-size/1px) or unitless($font-size/1rem) {
+		@include fontsize($font-size);
+	} @else {
+		font-size: $font-size;
+	}
+
+	@if $line-height != false {
+		line-height: $line-height;
+	}
+
+	@if $font-weight != false {
+		font-weight: $font-weight;
+	}
+
+	@if $letter-spacing != false {
+		letter-spacing: $letter-spacing;
+	}
+
+	@if $text-transform != false {
+		text-transform: $text-transform;
+	}
+
+	@if $spacing-top != false {
+		@if $spacing-top == 0 {
+			padding-top: 0;
+		} @else {
+			@include spacing(padding-top, $spacing-top);
+		}
+	}
+
+	@if $spacing-bottom != false {
+		@if $spacing-bottom == 0 {
+			padding-bottom: 0;
+		} @else {
+			@include spacing(padding-bottom, $spacing-bottom);
+		}
+	}
+
+	@if $cap-height {
+		@include baseline($line-height, $cap-height);
+	}
+}
+
+@mixin leading-map( $options ) {
+
+	$defaults: (
+		font-family: sans-serif,
+		font-size: inherit,
+		line-height: inherit,
+		font-weight: normal,
+		letter-spacing: normal,
+		text-transform: none,
+		spacing-top: false,
+		spacing-bottom: false,
+		cap-height: false
+	);
+
+	$config: map-merge($defaults, $options);
+
+	$font-family: map_get($config, font-family);
+	$font-size: map_get($config, font-size);
+	$line-height: map_get($config, line-height);
+	$font-weight: map_get($config, font-weight);
+	$letter-spacing: map_get($config, letter-spacing);
+	$text-transform: map_get($config, text-transform);
+	$spacing-top: map_get($config, spacing-top);
+	$spacing-bottom: map_get($config, spacing-bottom);
+	$cap-height: map_get($config, cap-height);
+
+	@include leading($font-size, $line-height, $font-family, $font-weight, $letter-spacing, $text-transform, $spacing-top, $spacing-bottom, $cap-height);
+}
+
+$h0-font-family: 'Roboto', sans-serif;
+$h0-font-size: 72px;
+$h0-line-height: (80/72);
+$h0-font-weight: 300;
+$h0-letter-spacing: normal;
+$h0-text-transform: none;
+$h0-spacing-top: 0;
+$h0-spacing-bottom: 2rem;
+$h0-cap-height: 0.74;
+
+@mixin h0 {
+	@include leading-map((
+		font-family: $h0-font-family,
+		font-size: $h0-font-size,
+		line-height: $h0-line-height,
+		font-weight: $h0-font-weight,
+		letter-spacing: $h0-letter-spacing,
+		text-transform: $h0-text-transform,
+		spacing-top: $h0-spacing-top,
+		spacing-bottom: $h0-spacing-bottom,
+		cap-height: $h0-cap-height
+	));
+}
+
+
+$h1-font-family: 'Roboto', sans-serif !default;
+$h1-font-size: 40px !default;
+$h1-line-height: (50/40) !default;
+$h1-font-weight: 300 !default;
+$h1-letter-spacing: normal !default;
+$h1-text-transform: none !default;
+$h1-spacing-top: .5rem !default;
+$h1-spacing-bottom: 2rem !default;
+$h1-cap-height: 0.74 !default;
+
+@mixin h1 {
+	@include leading-map((
+		font-family: $h1-font-family,
+		font-size: $h1-font-size,
+		line-height: $h1-line-height,
+		font-weight: $h1-font-weight,
+		letter-spacing: $h1-letter-spacing,
+		text-transform: $h1-text-transform,
+		spacing-top: $h1-spacing-top,
+		spacing-bottom: $h1-spacing-bottom,
+		cap-height: $h1-cap-height
+	));
+}
+
+$h2-font-family: 'Roboto', sans-serif !default;
+$h2-font-size: 30px !default;
+$h2-line-height: (40/30) !default;
+$h2-font-weight: 300 !default;
+$h2-text-transform: none !default;
+$h2-letter-spacing: normal !default;
+$h2-spacing-top: .5rem !default;
+$h2-spacing-bottom: 2rem !default;
+$h2-cap-height: 0.74 !default;
+
+@mixin h2 {
+	@include leading-map((
+		font-family: $h2-font-family,
+		font-size: $h2-font-size,
+		line-height: $h2-line-height,
+		font-weight: $h2-font-weight,
+		letter-spacing: $h2-letter-spacing,
+		text-transform: $h2-text-transform,
+		spacing-top: $h2-spacing-top,
+		spacing-bottom: $h2-spacing-bottom,
+		cap-height: $h2-cap-height
+	));
+}
+
+$h3-font-family: 'Roboto', sans-serif !default;
+$h3-font-size: 24px !default;
+$h3-line-height: (34/24) !default;
+$h3-font-weight: 400 !default;
+$h3-text-transform: none !default;
+$h3-letter-spacing: normal !default;
+$h3-spacing-top: .5rem !default;
+$h3-spacing-bottom: 2rem !default;
+$h3-cap-height: 0.74 !default;
+
+@mixin h3 {
+	@include leading-map((
+		font-family: $h3-font-family,
+		font-size: $h3-font-size,
+		line-height: $h3-line-height,
+		font-weight: $h3-font-weight,
+		letter-spacing: $h3-letter-spacing,
+		text-transform: $h3-text-transform,
+		spacing-top: $h3-spacing-top,
+		spacing-bottom: $h3-spacing-bottom,
+		cap-height: $h3-cap-height
+	));
+}
+
+$h4-font-family: 'Roboto', sans-serif !default;
+$h4-font-size: 20px !default;
+$h4-line-height: (30/20) !default;
+$h4-font-weight: 300 !default;
+$h4-text-transform: none !default;
+$h4-letter-spacing: normal !default;
+$h4-spacing-top: .5rem !default;
+$h4-spacing-bottom: 2rem !default;
+$h4-cap-height: 0.74 !default;
+
+@mixin h4 {
+	@include leading-map((
+		font-family: $h4-font-family,
+		font-size: $h4-font-size,
+		line-height: $h4-line-height,
+		font-weight: $h4-font-weight,
+		letter-spacing: $h4-letter-spacing,
+		text-transform: $h4-text-transform,
+		spacing-top: $h4-spacing-top,
+		spacing-bottom: $h4-spacing-bottom,
+		cap-height: $h4-cap-height
+	));
+}
+
+$h5-font-family: 'Roboto', sans-serif !default;
+$h5-font-size: 15px !default;
+$h5-line-height: (17/15) !default;
+$h5-font-weight: 400 !default;
+$h5-text-transform: none !default;
+$h5-letter-spacing: 0.28em !default;
+$h5-spacing-top: .5rem !default;
+$h5-spacing-bottom: 1rem !default;
+$h5-cap-height: 0.74 !default;
+
+@mixin h5 {
+	@include leading-map((
+		font-family: $h5-font-family,
+		font-size: $h5-font-size,
+		line-height: $h5-line-height,
+		font-weight: $h5-font-weight,
+		letter-spacing: $h5-letter-spacing,
+		text-transform: $h5-text-transform,
+		spacing-top: $h5-spacing-top,
+		spacing-bottom: $h5-spacing-bottom,
+		cap-height: $h5-cap-height
+	));
+}
+
+$h6-font-family: 'Roboto', sans-serif !default;
+$h6-font-size: 14px !default;
+$h6-line-height: (15/14) !default;
+$h6-font-weight: 500 !default;
+$h6-letter-spacing: 0.1em !default;
+$h6-text-transform: uppercase !default;
+$h6-spacing-top: .5rem !default;
+$h6-spacing-bottom: .5rem !default;
+$h6-cap-height: false !default;
+
+@mixin h6 {
+	@include leading-map((
+		font-family: $h6-font-family,
+		font-size: $h6-font-size,
+		line-height: $h6-line-height,
+		font-weight: $h6-font-weight,
+		letter-spacing: $h6-letter-spacing,
+		text-transform: $h6-text-transform,
+		spacing-top: $h6-spacing-top,
+		spacing-bottom: $h6-spacing-bottom,
+		cap-height: $h6-cap-height
+	));
+}
+
+.entry-title, .h0 { @include h0 }
+h1, .h1 { @include h1 }
+h2, .h2 { @include h2 }
+h3, .h3 { @include h3 }
+h4, .h4 { @include h4 }
+h5, .h5 { @include h5 }
+h6, .h6 { @include h6 }
