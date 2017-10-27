@@ -1,23 +1,14 @@
 // layout
 @import "grid";
-@import "wrapper";
 @import "inline";
 @import "layout";
 
-// archive
 @import "gallery";
 @import "card";
 @import "meta";
 
-// single
-@import "author";
-@import "entry-content";
-@import "post-navigation";
-@import "sharedaddy";
-@import "comments";
-@import "comments-form";
-@import "comments-toggle";
+@import "btn";
+@import "forms";
+@import "wrapper";
 
-// content
-@import "wp-align";
-@import "row";
+@import "screen-reader-text";

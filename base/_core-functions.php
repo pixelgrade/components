@@ -491,6 +491,8 @@ function pixelgrade_locate_component_template_part( $component_slug, $slug, $nam
 		}
 		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
 
+		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
+
 		$template = locate_template( $template_names, false );
 	}
 
@@ -508,6 +510,8 @@ function pixelgrade_locate_component_template_part( $component_slug, $slug, $nam
 			// We need to look in the /template-parts/ root also
 			$template_names[] = $template_parts_path . "{$slug}.php";
 		}
+		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
+
 		$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
 
 		$template = locate_template( $template_names, false );

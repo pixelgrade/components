@@ -1,0 +1,130 @@
+$wp-align-image-padding: 4rem !default;
+$wp-align-wrapped-image-padding: 3rem !default;
+
+$wp-align-caption-spacing: 1rem !default;
+$wp-align-caption-font-size: 14px !default;
+
+p {
+	.alignleft {
+		margin-left: 0 !important;
+		@include spacing(margin-top, $wp-align-wrapped-image-padding);
+		@include spacing(margin-bottom, $wp-align-wrapped-image-padding);
+		@include spacing(margin-right, $wp-align-wrapped-image-padding);
+	}
+
+	.alignright {
+		margin-right: 0 !important;
+		@include spacing(margin-top, $wp-align-wrapped-image-padding);
+		@include spacing(margin-bottom, $wp-align-wrapped-image-padding);
+		@include spacing(margin-left, $wp-align-wrapped-image-padding);
+	}
+
+	.aligncenter,
+	.alignnone {
+
+	}
+
+	.alignleft,
+	.alignright,
+	.aligncenter,
+	.alignnone {
+		clear: none;
+	}
+
+	.alignnone {
+		display: inline-block;
+	}
+}
+
+// Images at the same level with paragraphs
+// <p>..</p>
+// <img>
+// <p>..</p>
+.alignleft,
+.alignright,
+.aligncenter,
+.alignnone {
+	@include spacing(margin-top, $wp-align-image-padding);
+	@include spacing(margin-bottom, $wp-align-image-padding);
+	max-width: 100%;
+
+	&, img {
+		display: block;
+	}
+}
+
+.alignnone,
+.aligncenter {
+    display: block;
+}
+
+.aligncenter {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.aligncenter,
+.alignnone {
+
+  // @todo test universal selector (* instead of p)
+	.entry-content & + p {
+		@include spacing(margin-top, $wp-align-image-padding);
+	}
+}
+
+.alignleft.alignleft,
+.alignright.alignright {
+	max-width: 50%;
+}
+
+.alignleft {
+	@include spacing(margin-right, $wp-align-image-padding);
+	float: left;
+	clear: left;
+}
+
+.alignright {
+	@include spacing(margin-left, $wp-align-image-padding);
+	float: right;
+	clear: right;
+}
+
+.aligncenter {
+	&, img {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+
+figure {
+	&.alignleft,
+	&.alignright,
+	&.aligncenter,
+	&.alignnone {
+		@include spacing(margin-top, 1rem);
+	}
+}
+
+.wp-caption-text {
+  @include leading-map((
+    font-size: $wp-align-caption-font-size,
+    spacing-top: $wp-align-caption-spacing
+  ));
+}
+
+
+// Image Only Child Inside Paragraphs (no text)
+// <p>
+//      <img>
+// </p>
+// ...
+
+.alignleft,
+.alignright,
+.aligncenter,
+.alignnone {
+  p > &:first-child:last-child {
+    // will be moved to the same level through JavaScript by the Helper.unwrapImages method
+  }
+}

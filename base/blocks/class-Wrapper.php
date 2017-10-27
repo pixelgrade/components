@@ -60,7 +60,7 @@ class Pixelgrade_Wrapper {
 	public $end_tag = null;
 
 	/**
-	 * ID to add to the wrapper.
+	 * HTML ID to add to the wrapper.
 	 *
 	 * @access public
 	 * @var string
@@ -68,7 +68,7 @@ class Pixelgrade_Wrapper {
 	public $id = '';
 
 	/**
-	 * Classes to add to the wrapper.
+	 * CSS Classes to add to the wrapper.
 	 *
 	 * @access public
 	 * @var array|string
@@ -76,7 +76,7 @@ class Pixelgrade_Wrapper {
 	public $classes = array();
 
 	/**
-	 * Attributes to add to the wrapper.
+	 * HTML Attributes to add to the wrapper.
 	 *
 	 * @access public
 	 * @var array
@@ -226,6 +226,8 @@ class Pixelgrade_Wrapper {
 
 		if ( ! empty( $tag ) && is_callable( $tag ) ) {
 			$tag = call_user_func( $tag );
+		} else {
+			$tag = tag_escape( $tag );
 		}
 
 		// Use the default tag

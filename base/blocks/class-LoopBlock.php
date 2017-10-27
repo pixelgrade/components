@@ -1,6 +1,7 @@
 <?php
 /**
- * Loop Block class
+ * Loop Block class, a minor extension of the Layout block.
+ * It simply displays the child blocks in a WP loop.
  *
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
@@ -56,7 +57,7 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 	}
 
 	/**
-	 * Render the each child block's content.
+	 * Render the loop with each child blocks group.
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
 	 *

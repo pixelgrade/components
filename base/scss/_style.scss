@@ -1,3 +1,5 @@
+@import "defaults";
+
 @import "tools/all";
 
 @import "generic/normalize";
@@ -5,16 +7,23 @@
 
 @import "utility/mq";
 @import "utility/wrap-text";
+@import "utility/misc";
 
-// todo
-// @import "utility/debug";
-// @import "utility/widths";
+@import "typography/links";
 
-@import "typography/default";
+.entry-content {
+	@import "typography/default";
+}
 
 @import "objects/all";
 
+@import "elements/dropcap";
+@import "elements/intro";
+@import "elements/two-column";
+@import "elements/wp-align";
 
-// style blog component based on variables defined in theme _settings.scss
-@import "elements/customify-content";
-@import "elements/customify-blog";
+@import "plugins/gridable";
+@import "plugins/cf7";
+@import "plugins/jetpack-forms";
+@import "plugins/ninja-forms";
+@import "plugins/wpforms";

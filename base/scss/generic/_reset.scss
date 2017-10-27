@@ -14,14 +14,12 @@ fieldset, legend {
     padding: 0;
 }
 
-// Remove default table spacing.
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
+ul, ol {
+  list-style: none;
 }
 
-ul, ol, li {
-    list-style: none;
+li {
+  list-style: inherit;
 }
 
 img[width],

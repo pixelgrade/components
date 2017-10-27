@@ -1,9 +1,167 @@
-@import "btn";
-@import "forms";
-@import "blockquote";
-@import "lists";
-@import "links";
-@import "pre";
-@import "table";
-@import "titles";
-@import "typography";
+$typography-spacing: 2rem !default;
+
+p, blockquote,
+ul, ol, dl,
+hr,
+table,
+pre {
+
+  &:not(:last-child) {
+    @include spacing(margin-bottom, $typography-spacing);
+  }
+
+}
+
+blockquote {
+  @include leading-map($blockquote-font);
+}
+
+blockquote footer, cite {
+  @include leading-map($cite-font);
+  font-style: normal;
+
+  a {
+    border-bottom: 0 !important;
+    text-decoration: none !important;
+  }
+}
+
+h1 { @include leading-map($h1) }
+h2 { @include leading-map($h2) }
+h3 { @include leading-map($h3) }
+h4 { @include leading-map($h4) }
+h5 { @include leading-map($h5) }
+h6 { @include leading-map($h6) }
+
+// LISTS
+$typography-unordered-list-style: disc !default;
+$typography-ordered-list-style: decimal !default;
+$typography-list-padding: 2rem !default;
+$typography-list-item-spacing: 0.5rem !default;
+
+li {
+  ul, ol, dl {
+    @include spacing(padding-top, $typography-list-item-spacing);
+  }
+}
+
+// UNORDERED LISTS
+ul {
+  @include spacing(padding-left, $typography-list-padding);
+  list-style: $typography-unordered-list-style;
+}
+
+// ORDERED LISTS
+ol {
+  @include spacing(padding-left, $typography-list-padding);
+  list-style: $typography-ordered-list-style;
+}
+
+li:not(:last-child),
+dl > dl:not(:last-of-type),
+dl > dd:not(:last-of-type) {
+  @include spacing(margin-bottom, $typography-list-item-spacing);
+}
+
+// DEFINITION LISTS
+dl:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+dt {
+  width: 33%;
+  float: left;
+  clear: both;
+  font-weight: bold;
+}
+
+dd {
+  width: 66%;
+  float: right;
+  clear: right;
+}
+
+
+// PREFORMATTED CODE
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+
+  @include spacing(padding, 1rem);
+  @include spacing(margin-bottom, 2rem);
+
+  border: 1px solid;
+}
+
+
+
+// TABLES
+$typography-table-cell-padding: 0.5rem !default;
+$typography-table-border-color: $color-gray-90 !default;
+
+table {
+  width: 100%;
+  //table-layout: fixed;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+  }
+
+  th,
+  td {
+    vertical-align: middle;
+  }
+
+  tr,
+  thead,
+  tbody,
+  tfoot {
+    border-bottom: 1px solid $typography-table-border-color;
+  }
+
+  caption,
+  th,
+  td {
+    @include spacing(padding, $typography-table-cell-padding);
+  }
+
+  th,
+  td {
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+
+
+// HR
+$typography-hr-width: 100% !default;
+
+hr {
+  width: $typography-hr-width;
+  border: 0;
+  border-top: 1px solid;
+  margin: 0 auto;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+em,
+i,
+small {
+	font-style: italic;
+}
