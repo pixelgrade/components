@@ -138,6 +138,25 @@ class Pixelgrade_Wrapper {
 		$keys = array_keys( get_object_vars( $this ) );
 		foreach ( $keys as $key ) {
 			if ( isset( $args[ $key ] ) ) {
+				// We need to sanitize and standardize things
+				switch ( $key ) {
+					case 'classes':
+						// Split inline classes and coerce to an array
+						if ( is_string( $args[ $key ] ) ) {
+							$args[ $key ] = Pixelgrade_Value::maybeSplitByWhitespace( $args[ $key ] );
+						}
+						break;
+					case 'checks':
+						// Make sure the checks is an array
+						if ( is_string( $args[ $key ] ) ) {
+							$args[ $key ] = array( $args[ $key ] );
+						}
+						break;
+					default:
+						break;
+				}
+
+				// Save the property
 				$this->$key = $args[ $key ];
 			}
 		}

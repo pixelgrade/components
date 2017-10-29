@@ -87,9 +87,17 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			 *
 			 * There are however a couple of general extend rules:
 			 * - any attributes that are not supported by the extending block will be ignored;
-			 * - any shorthand attribute specification in the extending block will overwrite the entire attribute of the extended block;
 			 * - any named entries (array entries that have a string key) can be overwritten by the extending block;
-			 * - unnamed entries in attributes like `wrappers` or `blocks` will be kept and the extending blocks entries will be added added at the end.
+			 * - any shorthand named attribute specification in the extending block will overwrite the entire named attribute of the extended block;
+			 * - unnamed entries in attributes like `wrappers` or `blocks` will be kept and the extending block's entries will be added added at the end.
+			 *
+			 * For named wrappers, there are few exceptions to the rule above:
+			 * - use the `extend_classes` property in a wrapper definition and we will append (rather than replace)
+			 *   the classes to the the ones of the extended block;
+			 * - use the `extend_attributes` property in a wrapper definition and we will append (rather than replace)
+			 *   the attributes to the ones of the extended block;
+			 * - if you define unnamed wrappers before a named wrapper in an extending block, we will keep the relative order
+			 *   by calculating the priority for the unnamed wrappers.
 			 */
 			'blocks' => array(
 				'default' => array(
@@ -106,7 +114,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						),
 						'sides-spacing' => array( 'classes' => 'u-container-sides-spacing' ),
 						'wrapper'       => array( 'classes' => 'o-wrapper u-container-width' ),
-						'boom' => array( 'callback' => 'post_class', 'args' => array() ),
+						'boom'          => array( 'callback' => 'post_class', 'args' => array() ),
 					),
 				),
 				'content' => array(
@@ -144,7 +152,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'wrappers' => array(
 						array( 'classes' => 'o-layout' ),
 					),
-					'blocks'   => array(
+					'blocks' => array(
 						'single-content' => array(
 							'extend'   => 'blog/content-single',
 							'wrappers' => array(
@@ -203,7 +211,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						'layout'        => array( 'classes' => 'o-layout' ),
 					),
 					'blocks'   => array(
-						'blog/default-loop' => array(),
+						'blog/default-loop',
 					),
 				),
 			),
