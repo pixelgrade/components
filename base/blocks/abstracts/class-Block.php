@@ -759,13 +759,13 @@ abstract class Pixelgrade_Block {
 					continue;
 				}
 
+				// Construct/extract the args
+				$args = get_object_vars( $extended_wrapper );
 
 				if ( isset( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] )
 					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] )
 					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] ) ) {
 					// We need to create a new wrapper instance based on the extended one
-					// Construct the args
-					$args = get_object_vars( $extended_wrapper );
 					if ( ! empty( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] ) ) {
 						$extend_classes = Pixelgrade_Value::maybeSplitByWhitespace( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] );
 						$args['classes'] = array_merge( $args['classes'], $extend_classes );
@@ -795,7 +795,7 @@ abstract class Pixelgrade_Block {
 					$final_wrappers[ $extended_wrapper_key ] = new Pixelgrade_Wrapper( $args );
 				} else {
 					// Overwrite the old wrapper entries with the new ones - a simple array merge
-					$final_wrappers[ $extended_wrapper_key ] = array_merge( $final_wrappers[ $extended_wrapper_key ], $new_wrappers[ $extended_wrapper_key ] );
+					$final_wrappers[ $extended_wrapper_key ] = array_merge( $args, $new_wrappers[ $extended_wrapper_key ] );
 				}
 
 				// We are done with the wrapper in the new_wrappers
