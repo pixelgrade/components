@@ -218,10 +218,43 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 									'extend' => 'blog/side',
 									'blocks' => array( 'blog/sidebar' ),
 									'wrappers' => array(
+										'side' => false
+									)
+								)
+							)
+						)
+					)
+				),
+
+				'single' => array(
+					'extend' => 'blog/default',
+					'blocks' => array(
+						'layout' => array(
+							'extend' => 'blog/layout',
+							'blocks' => array(
+								'main' => array(
+									'extend' => 'blog/main',
+									'blocks' => array(
+										array(
+											'type' => 'template_part',
+											'templates' => array(
+												array(
+//													'component_slug' => self::COMPONENT_SLUG,
+													'slug'           => 'single',
+												),
+											),
+										),
+									)
+								),
+								'side' => array(
+									'extend' => 'blog/side',
+									'blocks' => array( 'blog/sidebar' ),
+									'wrappers' => array(
 										'side' => array(
+											'extend_classes' => array(),
 											'checks' => array(
 												// @todo proper check
-												'callback' => '__return_false',
+												'callback' => '__return_true',
 												'args' => array()
 											)
 										)
@@ -232,42 +265,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					)
 				),
 
-//				'single' => array(
-//					'extend' => 'blog/default',
-//					'blocks' => array(
-//						'layout' => array(
-//							'extend' => 'blog/layout',
-//							'blocks' => array(
-//								'main' => array(
-//									'extend' => 'blog/main',
-//									'blocks' => array(
-//										'type' => 'template_part',
-//										'templates' => array(
-//											array(
-//												'component_slug' => self::COMPONENT_SLUG,
-//												'slug'           => 'single',
-//											),
-//										),
-//									)
-//								),
-//								'side' => array(
-//									'extend' => 'blog/side',
-//									'blocks' => array( 'blog/sidebar' ),
-//									'wrappers' => array(
-//										'side' => array(
-//											'extend_classes' => array(),
-//											'checks' => array(
-//												// @todo proper check
-//												'callback' => '__return_true',
-//												'args' => array()
-//											)
-//										)
-//									)
-//								)
-//							)
-//						)
-//					)
-//				)
+
 			),
 
 			// For custom page templates, we can handle two formats:
