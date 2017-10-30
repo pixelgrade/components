@@ -716,6 +716,14 @@ abstract class Pixelgrade_Block {
 		// So first copy priorities from the extended wrappers, if available
 		foreach ( $new_wrappers as $key => $new_wrapper ) {
 			if ( is_string( $key ) ) {
+				// Let first deal with the case where we just wish to not use a wrapper from the extended ones
+				if ( isset( $extended_wrappers[ $key ] ) && false === $new_wrapper ) {
+					unset( $extended_wrappers[ $key ] );
+					unset( $new_wrappers[ $key ] );
+					continue;
+				}
+
+				// Now copy the priorities
 				if ( empty( $new_wrapper['priority'] ) && ! empty( $extended_wrappers[ $key ] ) && ! empty( $extended_wrappers[ $key ]->priority ) ) {
 					$new_wrappers[ $key ]['priority'] = $extended_wrappers[ $key ]->priority;
 				} else {
@@ -755,7 +763,7 @@ abstract class Pixelgrade_Block {
 				// But if the new wrapper wants just to extend some properties, we need to create a new Pixelgrade_Wrapper instance
 
 				// If we are given a empty value for the new wrapper key, this means one wishes to discard the wrapper during extension
-				if ( empty( $new_wrappers[ $extended_wrapper_key ] ) ) {
+				if ( false === $new_wrappers[ $extended_wrapper_key ] ) {
 					continue;
 				}
 

@@ -218,13 +218,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 									'extend' => 'blog/side',
 									'blocks' => array( 'blog/sidebar' ),
 									'wrappers' => array(
-										'side' => array(
-											'checks' => array(
-												// @todo proper check
-												'callback' => '__return_false',
-												'args' => array()
-											)
-										)
+										'side' => false,
 									)
 								)
 							)
