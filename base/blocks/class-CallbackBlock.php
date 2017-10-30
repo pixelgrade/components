@@ -110,7 +110,8 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 		// Pass along the blocks trail, just in case someone is interested.
 		// Need to make a copy of the args to avoid side effects.
 		$args = $this->args;
-		$args['blocks_trail'] = $blocks_trail;
+		// @todo is not safe to send the blocks trail - need to find another way
+//		$args['blocks_trail'] = $blocks_trail;
 		echo call_user_func_array( $this->callback, $args );
 
 		/**
