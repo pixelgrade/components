@@ -227,7 +227,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 										'side' => array(
 											'checks' => array(
 												// @todo proper check
-												'callback' => '__return_false',
+												'callback' => '__return_true',
 												'args' => array()
 											)
 										)
