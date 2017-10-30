@@ -40,29 +40,9 @@ do_action( 'pixelgrade_before_entry_side', $location );
 ?>
 <!-- pixelgrade_before_entry_side -->
 
-<div class="o-layout__side">
-
-	<?php
-	/**
-	 * pixelgrade_after_entry_side_start hook.
-	 */
-	do_action( 'pixelgrade_after_entry_side_start', $location );
-	?>
-	<!-- pixelgrade_after_entry_side_start -->
-
-	<aside id="secondary" class="widget-area" role="complementary">
-		<?php dynamic_sidebar( 'sidebar-1' ); ?>
-	</aside><!-- #secondary -->
-
-	<?php
-	/**
-	 * pixelgrade_before_entry_side_end hook.
-	 */
-	do_action( 'pixelgrade_before_entry_side_end', $location );
-	?>
-	<!-- pixelgrade_before_entry_side_end -->
-
-</div><!-- .o-layout__side -->
+<aside id="secondary" class="widget-area" role="complementary">
+	<?php dynamic_sidebar( 'sidebar-1' ); ?>
+</aside><!-- #secondary -->
 
 <?php
 /**

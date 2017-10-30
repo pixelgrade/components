@@ -100,24 +100,35 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			 *   by calculating the priority for the unnamed wrappers.
 			 */
 			'blocks' => array(
+
+				// default wrappers
 				'default' => array(
 					'type'     => 'layout',
 					'wrappers' => array(
 						'primary'       => array(
 							'id'      => 'primary',
 							'classes' => 'content-area',
+							'priority' => 10,
 						),
 						'main'          => array(
 							'id'         => 'main',
 							'classes'    => 'site-main',
 							'attributes' => array( 'role' => 'main', ),
+							'priority' => 20,
 						),
-						'sides-spacing' => array( 'classes' => 'u-container-sides-spacing' ),
-						'wrapper'       => array( 'classes' => 'o-wrapper u-container-width' ),
-						'boom'          => array( 'callback' => 'post_class', 'args' => array() ),
+						'sides-spacing' => array(
+							'classes' => 'u-container-sides-spacing',
+							'priority' => 110,
+						),
+						'wrapper'       => array(
+							'classes' => 'o-wrapper u-container-width',
+							'priority' => 120,
+						),
 					),
 				),
-				'content' => array(
+
+				// card entry layout
+				'card' => array(
 					'type'      => 'template_part',
 					'templates' => array(
 						array(
@@ -126,95 +137,139 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						),
 					),
 				),
-				'content-single' => array(
-					'type'     => 'layout',
-					'wrappers' => array(
-						'article' => array(
-							'id'       => array(
-								'prefix'   => 'post-',
-								'callback' => 'the_ID',
-							),
-							'priority' => 10,
-						),
-					),
-				),
+
+				// sidebar
 				'sidebar' => array(
-					'type'      => 'template_part',
-					'templates' => array(
-						array(
-							'component_slug' => self::COMPONENT_SLUG,
-							'slug'           => 'sidebar',
-						),
-					),
+					'type'     => 'callback',
+					'callback' => 'pixelgrade_get_sidebar',
+					'args'     => array()
 				),
-				'single' => array(
-					'extend'   => 'blog/default',
-					'wrappers' => array(
-						array( 'classes' => 'o-layout' ),
-					),
-					'blocks' => array(
-						'single-content' => array(
-							'extend'   => 'blog/content-single',
-							'wrappers' => array(
-								'content-wrapper' => array(
-									'classes'  => 'o-layout__main',
-									'priority' => 5,
-								),
-							),
-						),
-						'sidebar'        => array(
-							'wrappers' => array(
-								'sidebar-wrapper' => array( 'classes' => 'o-layout__side' ),
-							),
-						),
-					),
-				),
-				'page' => array(
-					'extend'   => 'blog/default',
-					'wrappers' => array(
-						array( 'classes' => 'o-layout' ),
-					),
-				),
-				'default-loop' => array(
-					'type'     => 'layout',
-					'wrappers' => array(
-						array( 'classes' => 'o-layout__main' ),
-					),
+
+				// default loop
+				'loop' => array(
+					'type'     => 'loop',
 					'blocks'   => array(
-						'my-loop' => array(
-							'type'     => 'loop',
-							'blocks'   => array(
-								'blog/card' => array(
-									'type'      => 'template_part',
-									'templates' => array(
-										array(
-											'component_slug' => self::COMPONENT_SLUG,
-											'slug'           => 'card',
-										),
-									),
-									'wrappers'  => array(
-										array( 'classes' => 'o-grid__item' ),
-									),
-								),
-							),
+						'grid-item' => array(
+							'type'     => 'layout',
 							'wrappers' => array(
-								array( 'classes' => pixelgrade_get_blog_class() ),
+								array( 'classes' => array(
+									'callback' => 'get_post_class',
+									'args' => array()
+								) ),
 							),
+							'blocks'   => array( 'blog/card' )
+						),
+					),
+					'wrappers' => array(
+						array(
+							'classes'  => array(
+								'callback' => 'pixelgrade_get_blog_class',
+								'args' => array()
+							),
+							'priority' => 220
 						),
 					),
 				),
+
+				// layout
+				'layout' => array(
+					'type' => 'layout',
+					'wrappers' => array(
+						'layout' => array(
+							'priority' => 210,
+							'classes' => array( 'o-layout' )
+						)
+					),
+				),
+				'main' => array(
+					'type' => 'layout',
+					'wrappers' => array(
+						'main' => array(
+							'priority' => 310,
+							'classes' => array( 'o-layout__main' )
+						)
+					),
+				),
+				'side' => array(
+					'type' => 'layout',
+					'wrappers' => array(
+						'side' => array(
+							'priority' => 320,
+							'classes' => array( 'o-layout__side' )
+						)
+					),
+				),
+
 				'home' => array(
 					'extend'   => 'blog/default',
 					'wrappers' => array(
 						'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
 						'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
-						'layout'        => array( 'classes' => 'o-layout' ),
 					),
 					'blocks'   => array(
-						'blog/default-loop',
-					),
+						'layout' => array(
+							'extend' => 'blog/layout',
+							'blocks' => array(
+								'main' => array(
+									'extend' => 'blog/main',
+									'blocks' => array( 'blog/loop' )
+								),
+								'side' => array(
+									'extend' => 'blog/side',
+									'blocks' => array( 'blog/sidebar' ),
+									'wrappers' => array(
+										'side' => array(
+											'checks' => array(
+												// @todo proper check
+												'callback' => '__return_false',
+												'args' => array()
+											)
+										)
+									)
+								)
+							)
+						)
+					)
 				),
+
+//				'single' => array(
+//					'extend' => 'blog/default',
+//					'blocks' => array(
+//						'layout' => array(
+//							'extend' => 'blog/layout',
+//							'blocks' => array(
+//								'main' => array(
+//									'extend' => 'blog/main',
+//									'blocks' => array(
+//										'type' => 'template_part',
+//										'templates' => array(
+//											array(
+//												'component_slug' => self::COMPONENT_SLUG,
+//												'slug'           => 'single',
+//											),
+//										),
+//									)
+//								),
+//								'side' => array(
+//									'extend' => 'blog/side',
+//									'blocks' => array( 'blog/sidebar' ),
+//									'wrappers' => array(
+//										'side' => array(
+//											'extend_classes' => array(),
+//											'checks' => array(
+//												// @todo proper check
+//												'callback' => '__return_true',
+//												'args' => array()
+//											)
+//										)
+//									)
+//								)
+//							)
+//						)
+//					)
+//				)
 			),
+
 			// For custom page templates, we can handle two formats:
 			// - a simple one, where the key is the page_template partial path and the value is the template name as shown in the WP Admin dropdown; like so:
 			// 'portfolio/page-templates/portfolio-page.php' => 'Portfolio Template'
