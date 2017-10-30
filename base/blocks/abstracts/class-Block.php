@@ -754,8 +754,15 @@ abstract class Pixelgrade_Block {
 				// Usually we just overwrite the old wrapper with the new one
 				// But if the new wrapper wants just to extend some properties, we need to create a new Pixelgrade_Wrapper instance
 
+				// If we are given a empty value for the new wrapper key, this means one wishes to discard the wrapper during extension
+				if ( empty( $new_wrappers[ $extended_wrapper_key ] ) ) {
+					continue;
+				}
+
+
 				if ( isset( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] )
-					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] ) ) {
+					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] )
+					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] ) ) {
 					// We need to create a new wrapper instance based on the extended one
 					// Construct the args
 					$args = get_object_vars( $extended_wrapper );
@@ -774,14 +781,21 @@ abstract class Pixelgrade_Block {
 						unset( $new_wrappers[ $extended_wrapper_key ]['attributes'] );
 					}
 
+					if ( ! empty( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] ) ) {
+						$args['checks'] = array_merge( $args['checks'], $new_wrappers[ $extended_wrapper_key ]['extend_checks'] );
+						unset( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] );
+						// We also need to ignore any checks because one can't use both extend_checks and checks entries at the same time
+						unset( $new_wrappers[ $extended_wrapper_key ]['checks'] );
+					}
+
 					// Merge the remaining entries, if any
 					$args = array_merge( $args, $new_wrappers[ $extended_wrapper_key ] );
 
 					// Create the new wrapper and add it to the list
 					$final_wrappers[ $extended_wrapper_key ] = new Pixelgrade_Wrapper( $args );
 				} else {
-					// Overwrite the old wrapper
-					$final_wrappers[ $extended_wrapper_key ] = $new_wrappers[ $extended_wrapper_key ];
+					// Overwrite the old wrapper entries with the new ones - a simple array merge
+					$final_wrappers[ $extended_wrapper_key ] = array_merge( $final_wrappers[ $extended_wrapper_key ], $new_wrappers[ $extended_wrapper_key ] );
 				}
 
 				// We are done with the wrapper in the new_wrappers
