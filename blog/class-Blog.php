@@ -241,16 +241,17 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 								'main' => array(
 									'extend' => 'blog/main',
 									'blocks' => array(
-										array(
+										'asdasd' => array(
 											'type' => 'template_part',
 											'templates' => array(
 												array(
-//													'component_slug' => self::COMPONENT_SLUG,
-													'slug'           => 'single',
+													'component_slug' => self::COMPONENT_SLUG,
+													'slug'           => 'content',
+													'name'           => 'single'
 												),
 											),
 										),
-									)
+									),
 								),
 								'side' => array(
 									'extend' => 'blog/side',
