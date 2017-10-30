@@ -319,7 +319,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'background-color',
-								'selector' => '.site-header',
+								'selector' => '.u-header-background',
 							),
 						),
 					),

@@ -35,9 +35,12 @@ $header-font: () !default;
 	@include leading-map($logo-font);
 }
 
-.site-header {
-	background-color: $header-background-color;
+.site-header,
+.u-header-background {
+  background-color: $header-background-color;
+}
 
+.site-header {
 	transition: $transition--default;
 	transition-property: background-color;
 }

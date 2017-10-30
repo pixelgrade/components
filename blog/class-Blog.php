@@ -116,6 +116,12 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 							'attributes' => array( 'role' => 'main', ),
 							'priority' => 20,
 						),
+					),
+				),
+
+				'container' => array(
+					'type'     => 'layout',
+					'wrappers' => array(
 						'sides-spacing' => array(
 							'classes' => 'u-container-sides-spacing',
 							'priority' => 110,
@@ -124,7 +130,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 							'classes' => 'o-wrapper u-container-width',
 							'priority' => 120,
 						),
-					),
+					)
 				),
 
 				// card entry layout
@@ -232,47 +238,113 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					)
 				),
 
+				'entry-header' => array(
+					'type' => 'template_part',
+					'templates' => array(
+						array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug'           => 'entry-header',
+							'name'           => 'single'
+						),
+					),
+				),
+				'entry-thumbnail' => array(
+					'type' => 'template_part',
+					'templates' => array(
+						array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug'           => 'entry-thumbnail',
+							'name'           => 'single'
+						),
+					),
+				),
+				'entry-content' => array(
+					'type' => 'template_part',
+					'templates' => array(
+						array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug'           => 'entry-content',
+							'name'           => 'single'
+						),
+					),
+				),
+				'entry-footer' => array(
+					'type' => 'template_part',
+					'templates' => array(
+						array(
+							'component_slug' => self::COMPONENT_SLUG,
+							'slug'           => 'entry-footer',
+							'name'           => 'single'
+						),
+					),
+				),
+
+				'main-portrait' => array(
+					'blocks' => array(
+						'blog/entry-thumbnail' => array(),
+						'blog/sidebar' => array(
+							'extend' => 'blog/side',
+							'blocks' => array( 'blog/sidebar' ),
+							'wrappers' => array(
+								'side' => array(
+									'extend_classes' => 'widget-area--post'
+								)
+							)
+						),
+						'blog/entry-content' => array(),
+						'blog/entry-footer' => array(),
+					),
+				),
+
+				'main-landscape' => array(
+					'blocks' => array(
+						'blog/sidebar' => array(
+							'extend' => 'blog/side',
+							'blocks' => array( 'blog/sidebar' ),
+							'wrappers' => array(
+								'side' => array(
+									'extend_classes' => 'widget-area--post'
+								)
+							)
+						),
+						'blog/entry-thumbnail' => array(),
+						'blog/entry-content' => array(),
+						'blog/entry-footer' => array(),
+					),
+				),
+
 				'single' => array(
 					'extend' => 'blog/default',
 					'blocks' => array(
+						'header' => array(
+							'extend' => 'blog/container',
+							'blocks' => array( 'blog/entry-header' ),
+							'wrappers' => array(
+								array(
+									'priority' => 100,
+									'classes' => 'u-header-background'
+								)
+							)
+						),
 						'layout' => array(
-							'extend' => 'blog/layout',
+							'extend' => 'blog/container',
 							'blocks' => array(
-								'main' => array(
-									'extend' => 'blog/main',
-									'blocks' => array(
-										'asdasd' => array(
-											'type' => 'template_part',
-											'templates' => array(
-												array(
-													'component_slug' => self::COMPONENT_SLUG,
-													'slug'           => 'content',
-													'name'           => 'single'
-												),
-											),
-										),
+								'landscape' => array(
+									'extend' => 'blog/main-landscape',
+									'checks' => array(
+										'callback' => 'julia_has_landscape_thumbnail'
 									),
 								),
-								'side' => array(
-									'extend' => 'blog/side',
-									'blocks' => array( 'blog/sidebar' ),
-									'wrappers' => array(
-										'side' => array(
-											'extend_classes' => array(),
-											'checks' => array(
-												// @todo proper check
-												'callback' => '__return_true',
-												'args' => array()
-											)
-										)
-									)
-								)
+								'portrait' => array(
+									'extend' => 'blog/main-portrait',
+									'checks' => array(
+										'callback' => 'julia_has_portrait_thumbnail'
+									),
+								),
 							)
 						)
 					)
 				),
-
-
 			),
 
 			// For custom page templates, we can handle two formats:
