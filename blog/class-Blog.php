@@ -247,7 +247,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 												array(
 													'component_slug' => self::COMPONENT_SLUG,
 													'slug'           => 'content',
-													'name'           => 'single'
+													'name'           => 'single',
 												),
 											),
 										),
