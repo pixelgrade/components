@@ -9,10 +9,10 @@
 @import "utility/wrap-text";
 @import "utility/misc";
 
-@import "typography/links";
+$content-class: '.entry-content' !default;
 
-.entry-content {
-	@import "typography/default";
+#{$content-class} {
+	@import "typography";
 }
 
 @import "objects/all";

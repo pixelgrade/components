@@ -43,72 +43,7 @@ pixelgrade_get_header(); ?>
 do_action( 'pixelgrade_before_primary_wrapper', $location );
 ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-			<?php
-			/**
-			 * pixelgrade_after_entry_article_start hook.
-			 */
-			do_action( 'pixelgrade_after_entry_article_start', $location );
-			?>
-			<!-- pixelgrade_after_entry_article_start -->
-
-			<div class="u-container-sides-spacing  u-content-top-spacing  u-content-bottom-spacing">
-				<div class="o-wrapper  u-container-grid-width">
-
-					<?php
-					/**
-					 * pixelgrade_after_entry_start hook.
-					 */
-					do_action( 'pixelgrade_after_entry_start', $location );
-					?>
-					<!-- pixelgrade_after_entry_start -->
-
-					<div class="o-layout">
-
-						<?php
-						/**
-						 * pixelgrade_before_entry_main hook.
-						 */
-						do_action( 'pixelgrade_before_entry_main', $location );
-						?>
-						<!-- pixelgrade_before_entry_main -->
-
-						<div class="o-layout__main">
-
-							<?php
-							/*
-							 * Load the loop
-							 */
-							pixelgrade_get_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, 'loop', '', true ); ?>
-
-						</div><!-- .o-layout__main -->
-
-						<?php
-						/**
-						 * pixelgrade_after_entry_main hook.
-						 */
-						do_action( 'pixelgrade_after_entry_main', $location );
-						?>
-						<!-- pixelgrade_after_entry_main -->
-
-						<?php // pixelgrade_get_sidebar(); ?>
-
-					</div><!-- .o-layout -->
-
-					<?php
-					/**
-					 * pixelgrade_before_entry_end hook.
-					 */
-					do_action( 'pixelgrade_before_entry_end', $location );
-					?>
-					<!-- pixelgrade_before_entry_end -->
-
-				</div><!-- .o-wrapper.u-container-grid-width -->
-			</div><!-- .u-container-sides-spacing -->
-		</main><!-- #main -->
-	</div><!-- #primary -->
+<?php pixelgrade_render_block( 'blog/index' ); ?>
 
 <?php
 /**
