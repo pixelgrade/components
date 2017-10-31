@@ -375,7 +375,14 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	}
 
 	/**
-	 * Add a namespace to a block ID.
+	 * Namespace a block ID, but in a smart way.
+	 *
+	 * If the $block_id is already namespaced, it will try and merge the two namespaces.
+	 *
+	 * For example, if $block_id is 'blog/content/sidebar' and the $namespace is 'single/blog/content/main',
+	 * it will result a $block_id = 'single/blog/content/sidebar'.
+	 *
+	 * It will treat the two namespaces as trees and it will try to find the lowest point where to merge them.
 	 *
 	 * @param mixed $block_id
 	 * @param string $namespace
@@ -383,7 +390,40 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return string
 	 */
 	public static function namespaceBlockId( $block_id, $namespace = '' ) {
-		if ( is_string( $block_id ) ) {
+		// We only accept strings
+		if ( is_string( $block_id ) && is_string( $namespace ) ) {
+			// First will need to determine if both $block_id and $namespace are already namespaced
+			// This is the case where our smart merge will kick in
+			if ( self::isBlockIdNamespaced( $block_id ) && self::isBlockIdNamespaced( $namespace ) ) {
+				// Split them by the namespace separator
+				$block_id_parts = explode( PIXELGRADE_BLOCK_ID_SEPARATOR, $block_id );
+				$namespace_parts = explode( PIXELGRADE_BLOCK_ID_SEPARATOR, $namespace );
+
+				$k = 0;
+				// Search the first part in the $namespace parts
+				$key = array_search( $block_id_parts[ $k ], $namespace_parts );
+				// If we have found the part, this is the current point of merge
+				if ( false !== $key ) {
+					// Now we need to see how many consecutive parts are common
+					do {
+						// We remove this common part from the $block_id_parts so we don't have duplicates
+						unset( $block_id_parts[ $k ] );
+
+						// Check the next part
+						$k++;
+						$key++;
+					} while ( $block_id_parts[ $k ] == $namespace_parts[ $key ] );
+
+					// Now we need to discard the end part of the $namespace that is not common
+					$namespace_parts = array_slice( $namespace_parts, 0, $key );
+
+					// And finally merge the two
+					$block_id_parts = array_merge( array_values( $namespace_parts ), array_values( $block_id_parts ) );
+
+					return implode( PIXELGRADE_BLOCK_ID_SEPARATOR, $block_id_parts );
+				}
+			}
+
 			$block_id = $namespace . PIXELGRADE_BLOCK_ID_SEPARATOR . $block_id;
 		}
 

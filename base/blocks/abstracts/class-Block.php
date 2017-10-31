@@ -802,7 +802,8 @@ abstract class Pixelgrade_Block {
 					// Create the new wrapper and add it to the list
 					$final_wrappers[ $extended_wrapper_key ] = new Pixelgrade_Wrapper( $args );
 				} else {
-					// Overwrite the old wrapper entries with the new ones - a simple array merge
+					// Merge the old wrapper entries with the new ones - a simple array merge that will replace common entries and add new ones
+					// while keeping all of the ones of the original wrapper
 					$final_wrappers[ $extended_wrapper_key ] = array_merge( $args, $new_wrappers[ $extended_wrapper_key ] );
 				}
 

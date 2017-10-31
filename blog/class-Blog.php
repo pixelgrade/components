@@ -96,6 +96,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			 *   the classes to the the ones of the extended block;
 			 * - use the `extend_attributes` property in a wrapper definition and we will append (rather than replace)
 			 *   the attributes to the ones of the extended block;
+			 * - use the `extend_checks` property in a wrapper definition and we will append (rather than replace)
+			 *   the checks to the ones of the extended block;
 			 * - if you define unnamed wrappers before a named wrapper in an extending block, we will keep the relative order
 			 *   by calculating the priority for the unnamed wrappers.
 			 */
@@ -130,7 +132,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 							'classes' => 'o-wrapper u-container-width',
 							'priority' => 120,
 						),
-					)
+					),
 				),
 
 				// card entry layout
@@ -148,7 +150,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'sidebar' => array(
 					'type'     => 'callback',
 					'callback' => 'pixelgrade_get_sidebar',
-					'args'     => array()
+					'args'     => array(),
 				),
 
 				// default loop
@@ -158,21 +160,23 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						'grid-item' => array(
 							'type'     => 'layout',
 							'wrappers' => array(
-								array( 'classes' => array(
-									'callback' => 'get_post_class',
-									'args' => array()
-								) ),
+								array(
+									'classes' => array(
+										'callback' => 'get_post_class',
+										'args'     => array(),
+									),
+								),
 							),
-							'blocks'   => array( 'blog/card' )
+							'blocks'   => array( 'blog/card' ),
 						),
 					),
 					'wrappers' => array(
 						array(
 							'classes'  => array(
 								'callback' => 'pixelgrade_get_blog_class',
-								'args' => array()
+								'args' => array(),
 							),
-							'priority' => 220
+							'priority' => 220,
 						),
 					),
 				),
@@ -183,8 +187,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'wrappers' => array(
 						'layout' => array(
 							'priority' => 210,
-							'classes' => array( 'o-layout' )
-						)
+							'classes' => array( 'o-layout' ),
+						),
 					),
 				),
 				'main' => array(
@@ -192,8 +196,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'wrappers' => array(
 						'main' => array(
 							'priority' => 310,
-							'classes' => array( 'o-layout__main' )
-						)
+							'classes' => array( 'o-layout__main' ),
+						),
 					),
 				),
 				'side' => array(
@@ -201,8 +205,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'wrappers' => array(
 						'side' => array(
 							'priority' => 320,
-							'classes' => array( 'o-layout__side' )
-						)
+							'classes' => array( 'o-layout__side' ),
+						),
 					),
 				),
 
@@ -226,16 +230,18 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 									'wrappers' => array(
 										'side' => array(
 											'checks' => array(
-												// @todo proper check
-												'callback' => '__return_false',
-												'args' => array()
-											)
-										)
-									)
-								)
-							)
-						)
-					)
+												array(
+													// @todo proper check
+													'callback' => '__return_false',
+													'args'     => array(),
+												),
+											),
+										),
+									),
+								),
+							),
+						),
+					),
 				),
 
 				'entry-header' => array(
@@ -244,7 +250,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						array(
 							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-header',
-							'name'           => 'single'
+							'name'           => 'single',
 						),
 					),
 				),
@@ -254,7 +260,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						array(
 							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-thumbnail',
-							'name'           => 'single'
+							'name'           => 'single',
 						),
 					),
 				),
@@ -274,31 +280,31 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						array(
 							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-footer',
-							'name'           => 'single'
+							'name'           => 'single',
 						),
 					),
 				),
 
 				'main-portrait' => array(
 					'blocks' => array(
-						'blog/entry-thumbnail' => array(),
-						'blog/sidebar' => array(
+						'blog/entry-thumbnail',
+						'sidebar' => array(
 							'extend' => 'blog/side',
 							'blocks' => array( 'blog/sidebar' ),
 							'wrappers' => array(
 								'side' => array(
-									'extend_classes' => 'widget-area--post'
-								)
-							)
+									'extend_classes' => 'widget-area--post',
+								),
+							),
 						),
-						'blog/entry-content' => array(),
-						'blog/entry-footer' => array(),
+						'blog/entry-content',
+						'blog/entry-footer',
 					),
 				),
 
 				'main-landscape' => array(
 					'blocks' => array(
-						'blog/sidebar' => array(
+						'sidebar' => array(
 							'extend' => 'blog/side',
 							'blocks' => array( 'blog/sidebar' ),
 							'wrappers' => array(
@@ -307,9 +313,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 								)
 							)
 						),
-						'blog/entry-thumbnail' => array(),
-						'blog/entry-content' => array(),
-						'blog/entry-footer' => array(),
+						'blog/entry-thumbnail',
+						'blog/entry-content',
+						'blog/entry-footer',
 					),
 				),
 

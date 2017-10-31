@@ -119,6 +119,10 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				// Get the block instance, if all is well
 				$block_instance = $this->addBlock( $key, $block, true );
 
+				if ( null === $block_instance ) {
+					echo 'boom';
+				}
+
 				if ( false !== $block_instance ) {
 					$new_blocks[] = $block_instance;
 				}
@@ -153,8 +157,8 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				$id = Pixelgrade_BlocksManager::namespaceBlockId( $id, $this->id );
 
 				// If the type is not set, we will default to 'layout' (if registered)
-				if ( ! isset( $args['type'] ) && $this->manager->isRegisteredBlockType( 'layout' ) ) {
-					$args['type'] = 'layout';
+				if ( ! isset( $args['type'] ) && $this->manager->isRegisteredBlockType( Pixelgrade_BlocksManager::$default_block_type ) ) {
+					$args['type'] = Pixelgrade_BlocksManager::$default_block_type;
 				}
 
 				// Register the new block (and instantiate it)
