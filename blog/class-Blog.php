@@ -135,17 +135,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					),
 				),
 
-				// card entry layout
-				'card' => array(
-					'type'      => 'template_part',
-					'templates' => array(
-						array(
-							'component_slug' => self::COMPONENT_SLUG,
-							'slug'           => 'card',
-						),
-					),
-				),
-
 				// sidebar
 				'sidebar' => array(
 					'type'     => 'callback',
@@ -160,20 +149,30 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 						'grid-item' => array(
 							'type'     => 'layout',
 							'wrappers' => array(
-								array(
+								'grid-item' => array(
 									'classes' => array(
-										'callback' => 'get_post_class', // .c-gallery__item
+										'callback' => array( $this, 'postClasses' ), // .c-gallery__item
 										'args'     => array(),
 									),
 								),
 							),
-							'blocks'   => array( 'blog/card' ) // .c-card
+							'blocks'   => array(
+								'content' => array(
+									'type' => 'template_part',
+									'templates' => array(
+										array(
+											'component_slug' => self::COMPONENT_SLUG,
+											'slug'           => 'content'
+										),
+									),
+								),
+							) // .c-card
 						),
 					),
 					'wrappers' => array(
 						array(
 							'classes'  => array(
-								'callback' => 'pixelgrade_get_blog_class', // .c-gallery .o-grid [.o-grid-3-col ...]
+								'callback' => 'pixelgrade_get_blog_grid_class', // .c-gallery .o-grid [.o-grid-3-col ...]
 								'args' => array(),
 							),
 							'priority' => 220,
@@ -684,16 +683,12 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	function postClasses( $classes ) {
+	function postClasses( $classes = array() ) {
 		//we first need to know the bigger picture - the location this template part was loaded from
 		$location = pixelgrade_get_location();
 
-		// This means we are displaying the blog loop
 		if ( pixelgrade_in_location( 'index blog post portfolio jetpack', $location, false ) && ! is_single() ) {
-			$classes[] = 'c-gallery__item';
-
-			// $classes[] = 'u-width-' . $columns * 25 . '-@desk';
-			$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+			$classes = array_merge( $classes, pixelgrade_get_blog_grid_item_class() );
 		}
 
 		// Add a class to the post for the full width page templates

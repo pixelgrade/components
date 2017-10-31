@@ -90,7 +90,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 						<?php
 						if ( $primary_meta ) {
-							echo '<div class="c-card__meta-primary">' . $primary_meta . '</div>';
+							echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
 
 							if ( $secondary_meta ) {
 								echo '<div class="c-card__separator"></div>';
@@ -98,7 +98,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						}
 
 						if ( $secondary_meta ) {
-							echo '<div class="c-card__meta-secondary">' . $secondary_meta . '</div>';
+							echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
 						} ?>
 
 					</div><!-- .c-card__meta -->

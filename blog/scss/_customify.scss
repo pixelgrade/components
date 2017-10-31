@@ -216,12 +216,12 @@ $blog-card-meta-secondary-font: () !default;
 	@include leading-map($blog-card-title-font);
 }
 
-.c-card__meta-primary {
+.c-meta__primary {
 	color: $blog-primary-meta-color;
 	@include leading-map($blog-card-meta-primary-font);
 }
 
-.c-card__meta-secondary {
+.c-meta__secondary {
 	color: $blog-secondary-meta-color;
 	@include leading-map($blog-card-meta-secondary-font);
 }

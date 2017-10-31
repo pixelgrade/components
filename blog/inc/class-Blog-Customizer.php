@@ -1271,7 +1271,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-gallery--blog .c-card__meta-primary',
+								'selector' => '.c-gallery--blog .c-meta__primary',
 							),
 						),
 					),
@@ -1283,7 +1283,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-gallery--blog .c-card__meta-secondary',
+								'selector' => '.c-gallery--blog .c-meta__secondary',
 							),
 						),
 					),
@@ -1374,7 +1374,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Meta Font', 'components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-gallery--blog .c-card__meta-primary, .c-gallery--blog .c-card__meta-secondary',
+						'selector' => '.c-gallery--blog .c-meta__primary, .c-gallery--blog .c-meta__secondary',
 						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme

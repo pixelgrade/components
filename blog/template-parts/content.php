@@ -22,11 +22,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//we first need to know the bigger picture - the location this template part was loaded from
+// We first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'post' );
-?>
 
-<?php
+// Let's deal with the meta
+$meta                      = pixelgrade_get_post_meta();
+$blog_items_primary_meta   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
+$blog_items_secondary_meta = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
+$primary_meta              = $blog_items_primary_meta !== 'none' && ! empty( $meta[ $blog_items_primary_meta ] ) ? $meta[ $blog_items_primary_meta ] : '';
+$secondary_meta            = $blog_items_secondary_meta !== 'none' && ! empty( $meta[ $blog_items_secondary_meta ] ) ? $meta[ $blog_items_secondary_meta ] : '';
+
 /**
  * pixelgrade_before_loop_entry hook.
  *
@@ -34,104 +39,84 @@ $location = pixelgrade_get_location( 'post' );
  */
 do_action( 'pixelgrade_before_loop_entry', $location );
 ?>
-<!-- pixelgrade_before_loop_entry -->
 
-<article id="post-<?php the_ID(); ?>" <?php post_class() ?>>
+	<article id="post-<?php the_ID(); ?>" <?php post_class() ?>>
 
-	<div class="c-card">
-
-		<?php
-		/**
-		 * pixelgrade_after_entry_start hook.
-		 */
-		do_action( 'pixelgrade_after_entry_start', $location );
-		?>
-		<!-- pixelgrade_after_entry_start -->
-
-		<?php if ( pixelgrade_display_featured_images() ) { ?>
-			<div class="c-card__aside c-card__thumbnail-background">
-				<div class="c-card__frame">
-					<?php if ( has_post_thumbnail() ) {
-						the_post_thumbnail();
-					}
-
-					if ( pixelgrade_option( 'blog_items_title_position', 'regular' ) != 'overlay' ) {
-						echo '<span class="c-card__letter">' . substr( get_the_title(), 0, 1 ) . '</span>';
-					}
-					?>
-				</div><!-- .c-card__frame -->
-			</div><!-- .c-card__aside -->
-		<?php } ?>
-
-		<div class="c-card__content">
+		<div class="c-card">
 
 			<?php
-			/*
-			 * Let's deal with the meta
+			/**
+			 * pixelgrade_after_entry_start hook.
 			 */
-			$blog_items_primary_meta   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
-			$blog_items_secondary_meta = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
+			do_action( 'pixelgrade_after_entry_start', $location );
+			?>
 
-			$meta = pixelgrade_get_post_meta();
+			<?php if ( pixelgrade_display_featured_images() ) { ?>
+				<div class="c-card__aside c-card__thumbnail-background">
+					<div class="c-card__frame">
+						<?php if ( has_post_thumbnail() ) {
+							the_post_thumbnail();
+						}
 
-			// Let's determine if we really need to do anything
-			if ( ( $blog_items_primary_meta === 'none' || empty( $meta[ $blog_items_primary_meta ] ) ) &&
-			     ( $blog_items_secondary_meta === 'none' || empty( $meta[ $blog_items_secondary_meta ] ) ) ) {
-				// We have nothing to do regarding meta
-			} else {
-				$primary_meta   = $blog_items_primary_meta !== 'none' && ! empty( $meta[ $blog_items_primary_meta ] ) ? $meta[ $blog_items_primary_meta ] : '';
-				$secondary_meta = $blog_items_secondary_meta !== 'none' && ! empty( $meta[ $blog_items_secondary_meta ] ) ? $meta[ $blog_items_secondary_meta ] : '';
+						if ( pixelgrade_option( 'blog_items_title_position', 'regular' ) != 'overlay' ) {
+							echo '<span class="c-card__letter">' . substr( get_the_title(), 0, 1 ) . '</span>';
+						}
+						?>
+					</div>
+				</div>
+			<?php } ?>
+
+			<div class="c-card__content">
+
+				<?php
+
 
 				if ( $primary_meta || $secondary_meta ) { ?>
 
-					<div class='c-meta c-card__meta'>
-
-						<?php
-						if ( $primary_meta ) {
-							echo '<div class="c-card__meta-primary">' . $primary_meta . '</div>';
-							// Add a separator if we also have secondary meta
-							if ( $secondary_meta ) {
-								echo '<div class="c-card__meta-separator"></div>';
+					<div class="c-card__meta">
+						<div class="c-meta">
+							<?php
+							if ( $primary_meta ) {
+								echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
+								// Add a separator if we also have secondary meta
+								if ( $secondary_meta ) {
+									echo '<div class="c-meta__separator js-card-meta-separator"></div>';
+								}
 							}
-						}
 
-						if ( $secondary_meta ) {
-							echo '<div class="c-card__meta-secondary">' . $secondary_meta . '</div>';
-						} ?>
-
-					</div><!-- .c-meta.c-card__meta -->
+							if ( $secondary_meta ) {
+								echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
+							} ?>
+						</div>
+					</div>
 
 				<?php }
-			}
-			/*
-			 * Finished with the meta
+
+				if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) { ?>
+					<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
+				<?php }
+
+				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) ) { ?>
+					<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
+				<?php } ?>
+
+				<div class="c-card__action"><?php esc_html_e( 'Read More', 'components_txtd' ); ?></div>
+
+			</div>
+
+			<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
+			<div class="c-card__badge"></div>
+
+			<?php
+			/**
+			 * pixelgrade_before_entry_end hook.
 			 */
+			do_action( 'pixelgrade_before_entry_end', $location );
+			?>
 
-			if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) { ?>
-				<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
-			<?php }
+		</div>
 
-			if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) ) { ?>
-				<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
-			<?php } ?>
-
-			<div class="c-card__action"><?php esc_html_e( 'Read More', 'components_txtd' ); ?></div>
-
-		</div><!-- .c-card__content -->
-		<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
-		<div class="c-card__badge"></div>
-
-		<?php
-		/**
-		 * pixelgrade_before_entry_end hook.
-		 */
-		do_action( 'pixelgrade_before_entry_end', $location );
-		?>
-		<!-- pixelgrade_before_entry_end -->
-
-	</div><!-- .c-card -->
-
-</article><!-- #post-<?php the_ID(); ?> -->
+	</article>
 
 <?php
 /**

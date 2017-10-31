@@ -20,12 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param string|array $class Optional. One or more classes to add to the class list.
  * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
  */
-function pixelgrade_blog_class( $class = '', $location = '' ) {
+function pixelgrade_blog_grid_class( $class = '', $location = '' ) {
 	// Separates classes with a single space, collates classes
-	echo 'class="' . join( ' ', pixelgrade_get_blog_class( $class, $location ) ) . '"';
+	echo 'class="' . join( ' ', pixelgrade_get_blog_grid_class( $class, $location ) ) . '"';
 }
 
-if ( ! function_exists( 'pixelgrade_get_blog_class' ) ) {
+if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 	/**
 	 * Retrieve the classes for the blog wrapper as an array.
 	 *
@@ -36,7 +36,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_class' ) ) {
 	 *
 	 * @return array Array of classes.
 	 */
-	function pixelgrade_get_blog_class( $class = '', $location = '' ) {
+	function pixelgrade_get_blog_grid_class( $class = '', $location = '' ) {
 
 		$classes = array();
 
@@ -92,10 +92,25 @@ if ( ! function_exists( 'pixelgrade_get_blog_class' ) ) {
 		 * @param array $class An array of additional classes added to the blog wrapper.
 		 * @param string|array $location The place (template) where the classes are displayed.
 		 */
-		$classes = apply_filters( 'pixelgrade_blog_class', $classes, $class, $location );
+		$classes = apply_filters( 'pixelgrade_blog_grid_class', $classes, $class, $location );
 
 		return array_unique( $classes );
 	} #function
+}
+
+function pixelgrade_blog_grid_item_class( $class = '', $location = '' ) {
+	echo 'class="' . join( ' ', pixelgrade_get_blog_grid_item_class( $class, $location ) ) . '"';
+}
+
+if ( ! function_exists( 'pixelgrade_get_blog_grid_item_class' ) ) {
+
+	function pixelgrade_get_blog_grid_item_class( $class = '', $location = '' ) {
+		$classes   = array();
+		$classes[] = 'c-gallery__item';
+		$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+
+		return array_unique( $classes );
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {

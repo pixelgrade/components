@@ -126,29 +126,12 @@ $card-letter-font: () !default;
 // Card Meta
 // ------------------------------------------------------------
 
-.c-card__meta-separator[class] {
-  display: none;
+.c-card__meta {
+  width: 100%;
 }
 
 .c-card__excerpt {
   max-width: 100%;
-}
-
-.c-card__meta {
-
-  ul, ol {
-    padding-left: 0;
-    list-style: none;
-
-    > li {
-      list-style: none;
-    }
-  }
-
-  .u-underlined-links & a {
-    text-decoration: none;
-    border-bottom: none;
-  }
 }
 
 .c-card__badge {
