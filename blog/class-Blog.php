@@ -250,6 +250,15 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 							'name'           => 'single',
 						),
 					),
+          'wrappers' => array(
+            array(
+              'tag' => 'header',
+              'classes' => 'entry-header',
+            ),
+            array(
+              'classes' => 'entry-header__container  entry-content'
+            )
+          )
 				),
 				'entry-thumbnail' => array(
 					'type' => 'template_part',

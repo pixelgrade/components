@@ -55,6 +55,11 @@
 }
 
 .gallery-item {
+
+  a {
+    padding: 0;
+  }
+
   a, img {
     display: block;
   }
