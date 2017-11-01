@@ -246,7 +246,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'type' => 'template_part',
 					'templates' => array(
 						array(
-							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-header',
 							'name'           => 'single',
 						),
@@ -256,7 +255,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'type' => 'template_part',
 					'templates' => array(
 						array(
-							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-thumbnail',
 							'name'           => 'single',
 						),
@@ -266,7 +264,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'type' => 'template_part',
 					'templates' => array(
 						array(
-							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-content',
 							'name'           => 'single',
 						),
@@ -276,7 +273,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'type' => 'template_part',
 					'templates' => array(
 						array(
-							'component_slug' => self::COMPONENT_SLUG,
 							'slug'           => 'entry-footer',
 							'name'           => 'single',
 						),

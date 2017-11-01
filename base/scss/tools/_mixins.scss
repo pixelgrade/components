@@ -107,7 +107,9 @@
     @if $spacing-top == 0 {
       padding-top: 0;
     } @else {
-      @include spacing(padding-top, $spacing-top);
+      &:not(:first-child) {
+        @include spacing(padding-top, $spacing-top);
+      }
     }
   }
 
@@ -115,7 +117,9 @@
     @if $spacing-bottom == 0 {
       padding-bottom: 0;
     } @else {
-      @include spacing(padding-bottom, $spacing-bottom);
+      &:not(:last-child) {
+        @include spacing(padding-bottom, $spacing-bottom);
+      }
     }
   }
 

@@ -56,8 +56,8 @@ $card-letter-font: () !default;
     @include spacing(margin-top, 2.5rem);
   }
 
-  > * + * {
-    @include spacing(margin-top, 1.5rem);
+  > :not(:last-child) {
+    @include spacing(padding-bottom, 1.5rem);
   }
 }
 

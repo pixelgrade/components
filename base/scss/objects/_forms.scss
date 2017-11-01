@@ -136,12 +136,6 @@ $input-spacing-right: 14px !default; // Checkboxes and Radios
   cursor: pointer;
 }
 
-@mixin submit_button {
-  @include btn;
-  -webkit-font-smoothing: auto;
-  @include spacing(margin-bottom, 2rem);
-}
-
 @include placeholder() {
   color: $placeholder-color;
   opacity: .7;
@@ -193,7 +187,8 @@ input[type="button"],
 button[type="submit"],
 button[type="button"],
 button[type="reset"] {
-  @include submit_button;
+  @include btn;
+  -webkit-font-smoothing: auto;
 }
 
 input[type="file"] {
