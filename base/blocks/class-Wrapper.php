@@ -206,7 +206,12 @@ class Pixelgrade_Wrapper {
 		return $this->getOpeningMarkup() . PHP_EOL . $content . PHP_EOL . $this->getClosingMarkup();
 	}
 
-	protected function getOpeningMarkup() {
+  /**
+   * Get the fully formed opening markup.
+   *
+   * @return string
+   */
+  protected function getOpeningMarkup() {
 		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
 		$tag = $this->getTag();
 		if ( self::isInlineMarkup( $tag ) ) {
@@ -217,7 +222,12 @@ class Pixelgrade_Wrapper {
 		return '<' . implode( ' ', array_filter( array( $tag, self::getIdMarkup( $this->id ), self::getClassMarkup( $this->classes, $this ), self::getAttributesMarkup( $this->attributes, $this ) ) ) ) . '>';
 	}
 
-	protected function getClosingMarkup() {
+  /**
+   * Get the fully formed closing markup.
+   *
+   * @return string
+   */
+  protected function getClosingMarkup() {
 		// If the opening tag starts with a '<' character then we will use $end_tag - no
 		$tag = $this->getTag();
 		if ( self::isInlineMarkup( $tag ) ) {
@@ -227,7 +237,14 @@ class Pixelgrade_Wrapper {
 		return "</{$tag}>";
 	}
 
-	public static function isInlineMarkup( $tag ) {
+  /**
+   * Check if a tag has inline markup (starts with <)
+   *
+   * @param string $tag
+   *
+   * @return bool
+   */
+  public static function isInlineMarkup( $tag ) {
 		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
 		if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
 			return true;
@@ -236,7 +253,12 @@ class Pixelgrade_Wrapper {
 		return false;
 	}
 
-	protected function getTag() {
+  /**
+   * Get the opening tag or the fully formed opening markup if it's an inline tag.
+   *
+   * @return string
+   */
+  protected function getTag() {
 		$tag = $this->tag;
 
 		$tag = self::maybeProcessCallback( $tag );
@@ -252,10 +274,13 @@ class Pixelgrade_Wrapper {
 		return $tag;
 	}
 
-	protected function getEndTag() {
-		$tag = $this->end_tag;
-
-    $tag = self::maybeProcessCallback( $tag );
+  /**
+   * Get the fully formed closing tag (aka inline tag).
+   *
+   * @return string
+   */
+  protected function getEndTag() {
+    $tag = self::maybeProcessCallback( $this->end_tag );
 
 		// Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
 		if ( empty( $tag ) ) {
