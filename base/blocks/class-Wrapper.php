@@ -206,64 +206,94 @@ class Pixelgrade_Wrapper {
 		return $this->getOpeningMarkup() . PHP_EOL . $content . PHP_EOL . $this->getClosingMarkup();
 	}
 
-	protected function getOpeningMarkup() {
-		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-		$tag = $this->getTag();
-		if ( self::isInlineMarkup( $tag ) ) {
-			return $tag;
-		}
+    /**
+     * Get the fully formed opening markup.
+     *
+     * @return string
+     */
+    protected function getOpeningMarkup() {
+        // If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
+        $tag = $this->getTag();
+        if ( self::isInlineMarkup( $tag ) ) {
+            return $tag;
+        }
 
-		// We will filter the markup parts to avoid gluing empty entries
-		return '<' . implode( ' ', array_filter( array( $tag, self::getIdMarkup( $this->id ), self::getClassMarkup( $this->classes, $this ), self::getAttributesMarkup( $this->attributes, $this ) ) ) ) . '>';
-	}
-
-	protected function getClosingMarkup() {
-		// If the opening tag starts with a '<' character then we will use $end_tag - no
-		$tag = $this->getTag();
-		if ( self::isInlineMarkup( $tag ) ) {
-			return $this->getEndTag();
-		}
-
-		return "</{$tag}>";
-	}
-
-	public static function isInlineMarkup( $tag ) {
-		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-		if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected function getTag() {
-		$tag = $this->tag;
-
-		$tag = self::maybeProcessCallback( $tag );
-
-    if ( ! empty( $tag ) && is_string( $tag ) ) {
-			$tag = tag_escape( $tag );
-		} else {
-		  // Something is not right with the tag.
-      // Use the default tag
-      $tag = self::$default_tag;
+        // We will filter the markup parts to avoid gluing empty entries
+        return '<' . implode( ' ', array_filter( array(
+                $tag,
+                self::getIdMarkup( $this->id ),
+                self::getClassMarkup( $this->classes, $this ),
+                self::getAttributesMarkup( $this->attributes, $this ),
+            ) ) ) . '>';
     }
 
-		return $tag;
-	}
+    /**
+     * Get the fully formed closing markup.
+     *
+     * @return string
+     */
+    protected function getClosingMarkup() {
+        // If the opening tag starts with a '<' character then we will use $end_tag - no
+        $tag = $this->getTag();
+        if ( self::isInlineMarkup( $tag ) ) {
+            return $this->getEndTag();
+        }
 
-	protected function getEndTag() {
-		$tag = $this->end_tag;
+        return "</{$tag}>";
+    }
 
-    $tag = self::maybeProcessCallback( $tag );
+    /**
+     * Check if a tag has inline markup (starts with <)
+     *
+     * @param string $tag
+     *
+     * @return bool
+     */
+    public static function isInlineMarkup( $tag ) {
+        // If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
+        if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
+            return true;
+        }
 
-		// Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
-		if ( empty( $tag ) ) {
-			$tag = '</' . self::$default_tag . '>';
-		}
+        return false;
+    }
 
-		return $tag;
-	}
+    /**
+     * Get the opening tag or the fully formed opening markup if it's an inline tag.
+     *
+     * @return string
+     */
+    protected function getTag() {
+        $tag = $this->tag;
+
+        $tag = self::maybeProcessCallback( $tag );
+
+        if ( ! empty( $tag ) && is_string( $tag ) ) {
+            $tag = tag_escape( $tag );
+        } else {
+            // Something is not right with the tag.
+            // Use the default tag
+            $tag = self::$default_tag;
+        }
+
+        return $tag;
+    }
+
+    /**
+     * Get the fully formed closing tag (aka inline tag).
+     *
+     * @return string
+     */
+    protected function getEndTag() {
+        $tag = self::maybeProcessCallback( $this->end_tag );
+
+        // Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
+        if ( empty( $tag ) ) {
+            $tag = '</' . self::$default_tag . '>';
+        }
+
+        return $tag;
+    }
 
 	/**
 	 * Given an HTML id definition, return the full id attribute (ie. 'id="..."').

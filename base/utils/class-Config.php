@@ -214,14 +214,25 @@ class Pixelgrade_Config {
 		// First, a little standardization and sanitization
 		$checks = self::sanitizeChecks( $checks );
 
-		// Process the checks, top to bottom and stop at the first that fails (returns something resembling false)
-		foreach ( $checks as $check ) {
-			$response = self::evaluateCheck( $check );
-			if ( empty( $response ) ) {
-				// One check function returned false, bail
-				return false;
-			}
-		}
+		// Determine the relation we will use between the checks
+        $relation = 'AND';
+        if ( isset( $checks['relation'] ) && strtoupper( $checks['relation'] ) == 'OR' ) {
+            $relation = 'OR';
+        }
+
+        // Process the checks, top to bottom
+        // In case of an AND relation, we stop at the first that fails (meaning returns something resembling false).
+        // In case of an OR relation, only one check needs to pass.
+        foreach ( $checks as $check ) {
+            $response = self::evaluateCheck( $check );
+            if ( empty( $response ) && 'AND' == $relation ) {
+                // One check function failed, bail
+                return false;
+            } else if ( ! empty( $response ) && 'OR' == $relation ) {
+                // A check has passed, all is good
+                return true;
+            }
+        }
 
 		// On invalid data, we allow things to proceed
 		return true;
