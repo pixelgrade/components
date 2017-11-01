@@ -44,7 +44,7 @@ div.wpforms-container[class] {
         &:focus,
         &:checked {
             border-color: $color-dark;
-            background: url('assets/images/checkbox.svg') center center no-repeat;
+            background: url('#{$checkboxSVG}') center center no-repeat;
             background-size: 100% 100%;
             outline: 0;
         }

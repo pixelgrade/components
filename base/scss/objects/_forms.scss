@@ -89,7 +89,7 @@ $input-spacing-right: 14px !default; // Checkboxes and Radios
   width: 100%;
   padding-right: 50px;
 
-  background: $input-background-color url('assets/images/arrow-caret.svg') calc(100% - 17px) center no-repeat;
+  background: $input-background-color url('#{$arrowCaretSVG}') calc(100% - 17px) center no-repeat;
   background-size: 9px 5px;
 
   -webkit-appearance: none;
@@ -98,7 +98,7 @@ $input-spacing-right: 14px !default; // Checkboxes and Radios
 
 @mixin taxonomy-select {
   width: auto;
-  background: url('assets/images/select-arrow.svg') 100% center no-repeat;
+  background: url('#{$selectArrowSVG}') 100% center no-repeat;
   background-size: 8px 11px;
   padding: 0 10px 0 0;
   border: none;
@@ -166,7 +166,7 @@ input[type="checkbox"] {
 
   &:checked {
     border-color: $color-dark;
-    background: $color-white url('assets/images/checkbox.svg') center center no-repeat;
+    background: $color-white url('#{$checkboxSVG}') center center no-repeat;
     background-size: 100% 100%;
     outline: 0;
   }
