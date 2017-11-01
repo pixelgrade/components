@@ -239,17 +239,15 @@ class Pixelgrade_Wrapper {
 	protected function getTag() {
 		$tag = $this->tag;
 
-		if ( ! empty( $tag ) && is_callable( $tag ) ) {
-			// We should not escape the response because it might be a fully qualified opening markup, not just a tag
-			$tag = call_user_func( $tag );
-		} else {
-			$tag = tag_escape( $tag );
-		}
+		$tag = self::maybeProcessCallback( $tag );
 
-		// Use the default tag
-		if ( empty( $tag ) ) {
-			$tag = self::$default_tag;
-		}
+    if ( ! empty( $tag ) && is_string( $tag ) ) {
+			$tag = tag_escape( $tag );
+		} else {
+		  // Something is not right with the tag.
+      // Use the default tag
+      $tag = self::$default_tag;
+    }
 
 		return $tag;
 	}
@@ -257,11 +255,9 @@ class Pixelgrade_Wrapper {
 	protected function getEndTag() {
 		$tag = $this->end_tag;
 
-		if ( ! empty( $tag ) && is_callable( $tag ) ) {
-			$tag = call_user_func( $tag );
-		}
+    $tag = self::maybeProcessCallback( $tag );
 
-		// Use the default tag
+		// Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
 		if ( empty( $tag ) ) {
 			$tag = '</' . self::$default_tag . '>';
 		}
