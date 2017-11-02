@@ -149,7 +149,7 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 				// On archives we want to show all the categories, not just the main one
 				$categories = get_the_terms( get_the_ID(), 'category' );
 				if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
-					$category .= '<span class="screen-reader-text">' . esc_html__( 'Categories', 'components_txtd' ) . '</span><ul class="cats">' . PHP_EOL;
+					$category .= '<span class="screen-reader-text">' . esc_html__( 'Categories', 'components_txtd' ) . '</span><ul>' . PHP_EOL;
 					foreach ( $categories as $this_category ) {
 						$category .= '<li><a href="' . esc_url( get_category_link( $this_category ) ) . '" rel="category">' . $this_category->name . '</a></li>' . PHP_EOL;
 					};
@@ -163,7 +163,7 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 			$post_tags = get_the_terms( get_the_ID(), 'post_tag' );
 			$tags      = '';
 			if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
-				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', 'components_txtd' ) . '</span><ul class="tags">' . PHP_EOL;
+				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', 'components_txtd' ) . '</span><ul>' . PHP_EOL;
 				foreach ( $post_tags as $post_tag ) {
 					$tags .= '<li><a href="' . esc_url( get_term_link( $post_tag ) ) . '" rel="tag">' . $post_tag->name . '</a></li>' . PHP_EOL;
 				};
