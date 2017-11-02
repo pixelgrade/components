@@ -1,3 +1,7 @@
+$meta-title-font: () !default;
+$meta-category-items-font: () !default;
+$meta-tags-items-font: () !default;
+
 .meta {
   position: relative;
 
@@ -73,8 +77,4 @@
 .entry-header .cats {
   @extend .meta;
   @include leading-map($meta-category-items-font);
-
-  a {
-    color: $theme-accent-color;
-  }
 }
