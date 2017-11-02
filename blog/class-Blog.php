@@ -355,6 +355,39 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         )
                     )
                 ),
+
+                'page' => array(
+                    'extend' => 'blog/default',
+                    'blocks' => array(
+                        'header' => array(
+                            'extend'   => 'blog/container',
+                            'blocks'   => array( 'blog/entry-header' ),
+                            'wrappers' => array(
+                                array(
+                                    'priority' => 100,
+                                    'classes'  => 'u-header-background'
+                                )
+                            )
+                        ),
+                        'layout' => array(
+                            'extend' => 'blog/container',
+                            'blocks' => array(
+                                'landscape' => array(
+                                    'extend' => 'blog/main-landscape',
+                                    'checks' => array(
+                                        'callback' => 'julia_has_landscape_thumbnail'
+                                    ),
+                                ),
+                                'portrait'  => array(
+                                    'extend' => 'blog/main-portrait',
+                                    'checks' => array(
+                                        'callback' => 'julia_has_portrait_thumbnail'
+                                    ),
+                                ),
+                            )
+                        )
+                    )
+                ),
             ),
 
             // For custom page templates, we can handle two formats:
