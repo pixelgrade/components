@@ -22,7 +22,7 @@ $layout-side-width: percentage(1/3) !default;
 
 		// hack to avoid figure elements with inline width to overflow this container
     // @todo find a better solution since crops side titles in Felt
-		overflow: hidden;
+		// overflow: hidden;
 	}
 
 	.o-layout__side {
