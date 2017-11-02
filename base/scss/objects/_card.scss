@@ -5,6 +5,9 @@ $card-letter-hover-opacity: 0.7 !default;
 $card-separator-color: currentColor !default;
 $card-letter-font: () !default;
 
+$card-gutter: 2.5rem !default;
+$card-content-spacing: 1.5rem !default;
+
 // Cards
 // ------------------------------------------------------------
 
@@ -53,11 +56,11 @@ $card-letter-font: () !default;
   flex-direction: column;
 
   .c-card__aside + & {
-    @include spacing(margin-top, 2.5rem);
+    @include spacing(margin-top, $card-gutter);
   }
 
-  > * + * {
-    @include spacing(margin-top, 1.5rem);
+  > :not(:last-child) {
+    @include spacing(padding-bottom, $card-content-spacing);
   }
 }
 

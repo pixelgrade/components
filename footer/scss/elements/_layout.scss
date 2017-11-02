@@ -22,10 +22,6 @@
 			display: inline-block;
 		}
 
-		a {
-			@include spacing(padding-left, .5rem);
-			@include spacing(padding-right, .5rem);
-		}
 	}
 
 	nav + .c-footer__copyright-text {

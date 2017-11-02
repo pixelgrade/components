@@ -41,7 +41,6 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 
 <?php pixelgrade_render_block( 'blog/home' ); ?>
 
-
 <?php
 /**
  * pixelgrade_after_primary_wrapper hook.

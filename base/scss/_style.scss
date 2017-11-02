@@ -11,6 +11,25 @@
 
 $content-class: '.entry-content' !default;
 
+a {
+  color: $body-link-color;
+  text-decoration: none;
+
+  img {
+    transition: opacity $transition--macro ease-out;
+  }
+
+  &:hover,
+  &:active {
+    color: $body-link-active-color;
+    text-decoration: underline;
+
+    img {
+      opacity: 0.8;
+    }
+  }
+}
+
 #{$content-class} {
 	@import "typography";
 }
@@ -18,6 +37,8 @@ $content-class: '.entry-content' !default;
 @import "objects/all";
 
 @import "elements/dropcap";
+@import "elements/edit-link";
 @import "elements/intro";
+@import "elements/screen-reader-text";
 @import "elements/two-column";
 @import "elements/wp-align";

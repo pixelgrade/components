@@ -100,7 +100,9 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
 				<?php } ?>
 
-				<div class="c-card__action"><?php esc_html_e( 'Read More', 'components_txtd' ); ?></div>
+				<div class="c-card__footer">
+					<div class="c-card__action"><?php esc_html_e( 'Read More', 'components_txtd' ); ?></div>
+				</div>
 
 			</div>
 

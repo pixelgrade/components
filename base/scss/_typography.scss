@@ -29,25 +29,6 @@ blockquote footer, cite {
   }
 }
 
-a {
-  color: $body-link-color;
-  text-decoration: none;
-
-  img {
-    transition: opacity $transition--macro ease-out;
-  }
-
-  &:hover,
-  &:active {
-    color: $body-link-active-color;
-    text-decoration: underline;
-
-    img {
-      opacity: 0.8;
-    }
-  }
-}
-
 h1 { @include leading-map($h1) }
 h2 { @include leading-map($h2) }
 h3 { @include leading-map($h3) }

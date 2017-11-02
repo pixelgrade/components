@@ -1,0 +1,80 @@
+$meta-title-font: () !default;
+$meta-category-items-font: () !default;
+$meta-tags-items-font: () !default;
+
+.meta {
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.meta__title {
+  @include spacing(margin-right, 1rem);
+  @include leading-map($meta-title-font);
+}
+
+.meta__title:after {
+  content: ": ";
+}
+
+.meta__title--above {
+  @include spacing(margin-bottom, 0.5rem);
+  flex-basis: 100%;
+}
+
+.meta__item--button {
+  @include btn;
+  padding: 1em 1.5em 0.9em 1.6em;
+}
+
+.meta__item--text:not(:last-child):after {
+  content: ",";
+}
+
+.entry-content {
+
+  .cats,
+  .tags {
+    @extend .meta;
+    @include leading-map($meta-category-items-font);
+  }
+
+  .cats {
+
+    &__title {
+      @extend .meta__title;
+      @extend .meta__title--above;
+    }
+
+    > a {
+      @extend .meta__item--button;
+    }
+
+    * + & {
+      @include spacing(margin-top, 4rem);
+    }
+  }
+
+  .tags {
+
+    &__title {
+      @extend .meta__title;
+    }
+
+    > a {
+      @extend .meta__item--text;
+      @include leading-map($meta-tags-items-font);
+    }
+
+    * + & {
+      @include spacing(margin-top, 3rem);
+    }
+  }
+}
+
+.entry-header .cats {
+  @extend .meta;
+  @include leading-map($meta-category-items-font);
+}

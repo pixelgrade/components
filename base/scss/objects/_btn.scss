@@ -47,10 +47,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 @mixin btn {
 	@include button;
 
-	@include spacing(padding, 12px);
-	@include spacing(padding-left, 28px);
-	@include spacing(padding-right, 28px);
-
+	padding: 0.75em 1.75em;
 	border: $btn-border-width $btn-border-style $btn-border-color;
   border-radius: $btn-border-radius;
 

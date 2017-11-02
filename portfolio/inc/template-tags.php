@@ -50,7 +50,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 				// On archives we want to show all the categories, not just the main one
 				$categories = get_the_terms( get_the_ID(), Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE );
 				if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
-					$category .= '<span class="screen-reader-text">' . esc_html__( 'Types', 'components_txtd' ) . '</span><ul class="cats">' . PHP_EOL;
+					$category .= '<span class="screen-reader-text">' . esc_html__( 'Types', 'components_txtd' ) . '</span><ul>' . PHP_EOL;
 					foreach ( $categories as $this_category ) {
 						$category .= '<li><a href="' . esc_url( get_term_link( $this_category, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" rel="category">' . $this_category->name . '</a></li>' . PHP_EOL;
 					};
@@ -64,7 +64,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 			$post_tags = get_the_terms( get_the_ID(), Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG );
 			$tags      = '';
 			if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
-				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', 'components_txtd' ) . '</span><ul class="tags">' . PHP_EOL;
+				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', 'components_txtd' ) . '</span><ul>' . PHP_EOL;
 				foreach ( $post_tags as $post_tag ) {
 					$tags .= '<li><a href="' . esc_url( get_term_link( $post_tag, Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG ) ) . '" rel="tag">' . $post_tag->name . '</a></li>' . PHP_EOL;
 				};
