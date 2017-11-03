@@ -55,7 +55,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 	background-color: $btn-background;
 
 	box-shadow: none;
-	-webkit-font-smoothing: initial;
+	//-webkit-font-smoothing: initial;
 
 	transition: $btn-transition;
 	transition-property: color, background-color, opacity;

@@ -38,7 +38,6 @@ $meta-tags-items-font: () !default;
   .cats,
   .tags {
     @extend .meta;
-    @include leading-map($meta-category-items-font);
   }
 
   .cats {
@@ -50,6 +49,7 @@ $meta-tags-items-font: () !default;
 
     > a {
       @extend .meta__item--button;
+      @include leading-map($meta-category-items-font);
     }
 
     * + & {
