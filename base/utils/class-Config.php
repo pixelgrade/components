@@ -216,8 +216,13 @@ class Pixelgrade_Config {
 
 		// Determine the relation we will use between the checks
         $relation = 'AND';
-        if ( isset( $checks['relation'] ) && strtoupper( $checks['relation'] ) == 'OR' ) {
-            $relation = 'OR';
+        if ( isset( $checks['relation'] ) ) {
+            if ( strtoupper( $checks['relation'] ) == 'OR' ) {
+                $relation = 'OR';
+            }
+
+            // Cleanup as this entry may mess things up from here on out.
+            unset( $checks['relation'] );
         }
 
         // Process the checks, top to bottom
@@ -226,15 +231,20 @@ class Pixelgrade_Config {
         foreach ( $checks as $check ) {
             $response = self::evaluateCheck( $check );
             if ( empty( $response ) && 'AND' == $relation ) {
-                // One check function failed, bail
+                // One check function failed in an AND relation, return
                 return false;
             } else if ( ! empty( $response ) && 'OR' == $relation ) {
-                // A check has passed, all is good
+                // A check has passed in an OR relation, all is good
                 return true;
             }
         }
 
-		// On invalid data, we allow things to proceed
+        // If we are in a OR relation, then at least one check should have passed
+        // If we have reached this far, we failed
+		if ( 'OR' === $relation ) {
+            return false;
+        }
+
 		return true;
 	}
 
@@ -262,7 +272,7 @@ class Pixelgrade_Config {
 		if ( is_string( $check ) && is_callable( $check ) ) {
 			$response = call_user_func( $check );
 			if ( ! $response ) {
-				// One check function returned false, bail
+				// Standardize the response
 				return false;
 			}
 		} elseif ( is_array( $check ) && ! empty( $check['callback'] ) && is_callable( $check['callback'] ) ) {
@@ -276,7 +286,7 @@ class Pixelgrade_Config {
 			}
 		}
 
-		// On invalid data, we allow things to proceed
+		// On data that is not a valid check, we allow things to proceed
 		return true;
 	}
 
