@@ -284,6 +284,16 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         array(
                             'slug' => 'entry-footer',
                             'name' => 'single',
+                            'checks' => array(
+                                'callback' => 'is_single'
+                            )
+                        ),
+                        array(
+                            'slug' => 'entry-footer',
+                            'name' => 'page',
+                            'checks' => array(
+                                'callback' => 'is_page'
+                            )
                         ),
                     ),
                 ),
