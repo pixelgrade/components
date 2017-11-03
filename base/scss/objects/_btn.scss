@@ -170,15 +170,15 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 }
 
 @mixin btn-directional--right {
-	@include spacing(padding-right, 100px);
+	padding-right: 6.5em;
 	text-align: left;
 
 	&:before {
-		@include spacing(right, 35px);
+		right: (7em/3);
 	}
 
 	&:after {
-		@include spacing(right, 30px);
+		right: calc(#{7em/3} - 5px);
 		border-left: 5px solid currentColor;
 	}
 }
