@@ -76,7 +76,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 		$component_metaboxes = array(
 			'base_custom_css_style'               => array(
 				'id'         => 'base_custom_css_style',
-				'title'      => esc_html__( 'Custom CSS Styles', 'components_txtd' ),
+				'title'      => esc_html__( 'Custom CSS Styles', '__components_txtd' ),
 				'pages'      => array( 'page', ), // Post type
 				'context'    => 'normal',
 				'priority'   => 'low',
@@ -84,8 +84,8 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 				'show_names' => false, // Show field names on the left
 				'fields'     => array(
 					array(
-						'name' => esc_html__( 'CSS Style', 'components_txtd' ),
-						'desc' => esc_html__( 'Add CSS that will only be applied to this post.', 'components_txtd' ),
+						'name' => esc_html__( 'CSS Style', '__components_txtd' ),
+						'desc' => esc_html__( 'Add CSS that will only be applied to this post.', '__components_txtd' ),
 						'id'   => 'custom_css_style',
 						'type' => 'textarea_code',
 						'rows' => '12',
@@ -234,7 +234,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -243,6 +243,6 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }

@@ -508,8 +508,8 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	// creates a checkbox true/false option. Other types are surely possible
 	//
 	public function pageForProjectsSettingCallback() {
-		wp_dropdown_pages( array( 'name' => 'page_for_projects', 'echo' => 1, 'show_option_none' => esc_html__( '&mdash; Select &mdash;', 'components_txtd' ), 'option_none_value' => '0', 'selected' => get_option( 'page_for_projects' ) ) );
-		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', 'components_txtd' ) .'</p>';
+		wp_dropdown_pages( array( 'name' => 'page_for_projects', 'echo' => 1, 'show_option_none' => esc_html__( '&mdash; Select &mdash;', '__components_txtd' ), 'option_none_value' => '0', 'selected' => get_option( 'page_for_projects' ) ) );
+		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', '__components_txtd' ) .'</p>';
 	}
 
 	/**
@@ -528,7 +528,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 * Display a notice when editing the page for projects.
 	 */
 	function projectsPageNotice() {
-		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.','components_txtd' ) . '</p></div>';
+		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.','__components_txtd' ) . '</p></div>';
 	}
 
 	/**

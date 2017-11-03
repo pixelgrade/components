@@ -723,7 +723,7 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'Conditional query tags do not work before the query is run. Before then, they always return false.', 'components_txtd' ), '3.1.0' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Conditional query tags do not work before the query is run. Before then, they always return false.', '__components_txtd' ), '3.1.0' );
 
 			return false;
 		}

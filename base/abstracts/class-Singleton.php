@@ -56,13 +56,13 @@ abstract class Pixelgrade_Singleton {
 	 * Cloning is forbidden.
 	 */
 	private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), null );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), null );
 	} // End __clone ()
 
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 */
 	private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  null );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  null );
 	} // End __wakeup ()
 }

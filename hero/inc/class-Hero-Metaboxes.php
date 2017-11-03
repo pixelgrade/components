@@ -91,7 +91,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 
 			wp_localize_script( 'pixelgrade_hero-admin-metaboxes-scripts', 'pixelgrade_hero_admin', array(
 				'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-				'featured_projects_ids_helper' => esc_html__( 'Here are the IDs of the selected featured projects to use elsewhere, if the need arises: ', 'components_txtd' ),
+				'featured_projects_ids_helper' => esc_html__( 'Here are the IDs of the selected featured projects to use elsewhere, if the need arises: ', '__components_txtd' ),
 			) );
 		}
 	}
@@ -109,7 +109,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			//The Hero Background controls - For pages
 			'hero_area_background__page'       => array(
 				'id'         => 'hero_area_background__page',
-				'title'      => esc_html__( 'Hero Area &#187; Background', 'components_txtd' ),
+				'title'      => esc_html__( 'Hero Area &#187; Background', '__components_txtd' ),
 				'pages'      => array( 'page' ), // Post type
 				'context'    => 'side',
 				'priority'   => 'low',
@@ -122,18 +122,18 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 				'show_on_page_for_posts' => true, //this is a special entry of our's to force things
 				'fields'     => array(
 					array(
-						'name' => esc_html__( 'Gallery Image', 'components_txtd' ),
+						'name' => esc_html__( 'Gallery Image', '__components_txtd' ),
 						'id'   => '_hero_background_gallery',
 						'type' => 'gallery',
 					),
 					array(
-						'name' => esc_html__( 'Playlist', 'components_txtd' ),
+						'name' => esc_html__( 'Playlist', '__components_txtd' ),
 						'id'   => '_hero_background_videos',
 						'type' => 'playlist',
 					),
 					array(
-						'name'      => esc_html__( 'Image Opacity', 'components_txtd' ),
-						'desc'	 	=> '<strong>' . esc_html__( 'Image Opacity', 'components_txtd' ) . '</strong>',
+						'name'      => esc_html__( 'Image Opacity', '__components_txtd' ),
+						'desc'	 	=> '<strong>' . esc_html__( 'Image Opacity', '__components_txtd' ) . '</strong>',
 						'id'        => '_hero_image_opacity',
 						'type'      => 'text_range',
 						'std'   => '100',
@@ -143,8 +143,8 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 						)
 					),
 					array(
-						'name' => esc_html__( 'Background Color', 'components_txtd' ),
-						'desc' => '<strong>' . esc_html__( 'Background Color', 'components_txtd' ) . '</strong> <span class="tooltip" title="<p>' . esc_html__( 'Used as a background color during page transitions.', 'components_txtd' ) . '</p><p>' . esc_html__( 'Tip: It helps if the color matches the background color of the Hero image.', 'components_txtd' ) . '</p>"></span>',
+						'name' => esc_html__( 'Background Color', '__components_txtd' ),
+						'desc' => '<strong>' . esc_html__( 'Background Color', '__components_txtd' ) . '</strong> <span class="tooltip" title="<p>' . esc_html__( 'Used as a background color during page transitions.', '__components_txtd' ) . '</p><p>' . esc_html__( 'Tip: It helps if the color matches the background color of the Hero image.', '__components_txtd' ) . '</p>"></span>',
 						'id'   => '_hero_background_color',
 						'type' => 'colorpicker',
 						'std' => '#131313',
@@ -155,17 +155,17 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			// The Hero Content controls - For pages
 			'hero_area_content__page'     => array(
 				'id'         => 'hero_area_content__page',
-				'title'      => '&#x1f535; ' . esc_html__( 'Hero Area &#187; Content', 'components_txtd' )
+				'title'      => '&#x1f535; ' . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
 				                . ' <span class="tooltip" title="<' . 'title>'
-				                . esc_html__( 'Hero Area &#187; Content', 'components_txtd' )
+				                . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
 				                . '</title><p>'
-				                . wp_kses( __( 'Use this section to add a <strong>Title</strong> or a summary for this page. Get creative and add different elements like buttons, logos or other headings.', 'components_txtd' ), wp_kses_allowed_html() )
+				                . wp_kses( __( 'Use this section to add a <strong>Title</strong> or a summary for this page. Get creative and add different elements like buttons, logos or other headings.', '__components_txtd' ), wp_kses_allowed_html() )
 				                . '</p><p>'
-				                . wp_kses( __( 'You can insert a title using a <strong>Heading 1</strong> element, either on the Hero Area or using a <b>Text Block</b> within the above content area.', 'components_txtd' ), wp_kses_allowed_html() )
+				                . wp_kses( __( 'You can insert a title using a <strong>Heading 1</strong> element, either on the Hero Area or using a <b>Text Block</b> within the above content area.', '__components_txtd' ), wp_kses_allowed_html() )
 				                . '</p><p>'
-				                . wp_kses( __( '* Note that the <strong>Page Title</strong> written above will <u>not</u> be included automatically on the page, so you have complete freedom in choosing where you place or how it looks.', 'components_txtd' ), wp_kses_allowed_html() )
+				                . wp_kses( __( '* Note that the <strong>Page Title</strong> written above will <u>not</u> be included automatically on the page, so you have complete freedom in choosing where you place or how it looks.', '__components_txtd' ), wp_kses_allowed_html() )
 				                . "</p><p><a href='#'>"
-				                . esc_html__( 'Learn more about Managing the Hero Area', 'components_txtd' )
+				                . esc_html__( 'Learn more about Managing the Hero Area', '__components_txtd' )
 				                . '</a></p>"></span>',
 				'pages'      => array( 'page', ), // Post type
 				'context'    => 'normal',
@@ -179,7 +179,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 				'show_on_page_for_posts' => true, //this is a special entry of our's to force things
 				'fields'     => array(
 					array(
-						'name'       => esc_html__( 'Description', 'components_txtd' ),
+						'name'       => esc_html__( 'Description', '__components_txtd' ),
 						'id'         => '_hero_content_description',
 						'type'       => 'wysiwyg',
 						'show_names' => false,
@@ -187,11 +187,11 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 						'desc' => '<span class="hero-editor-visibility-status">
 								<span class="dashicons  dashicons-visibility"></span>
 								<span class="dashicons  dashicons-hidden"></span>
-								<span class="hero-visibility-text">' . esc_html__( 'Visible Hero Area', 'components_txtd' ) . '</span>
-								<span class="hero-hidden-text">' . esc_html__( 'Hidden Hero Area', 'components_txtd' ) . '</span>
+								<span class="hero-visibility-text">' . esc_html__( 'Visible Hero Area', '__components_txtd' ) . '</span>
+								<span class="hero-hidden-text">' . esc_html__( 'Hidden Hero Area', '__components_txtd' ) . '</span>
 								</span>
-								<span class="hero-visibility-description">' . esc_html__( 'To hide the Hero Area section, remove the content above and any item from the Hero Area &#187; Background.', 'components_txtd' ) . '</span>
-								<span class="hero-hidden-description">' . esc_html__( 'Add some content above or an image to the Hero Area &#187; Background to make the Hero Area visible.', 'components_txtd' ) . '</span>',
+								<span class="hero-visibility-description">' . esc_html__( 'To hide the Hero Area section, remove the content above and any item from the Hero Area &#187; Background.', '__components_txtd' ) . '</span>
+								<span class="hero-hidden-description">' . esc_html__( 'Add some content above or an image to the Hero Area &#187; Background to make the Hero Area visible.', '__components_txtd' ) . '</span>',
 
 						'options'    => array(
 							'media_buttons' => true,
@@ -204,34 +204,34 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 					),
 
 					array(
-						'name'    => esc_html__( 'Hero Area Height', 'components_txtd' ),
-						'desc'    => '<p>' . esc_html__( 'Set the height of the Hero Area relative to the browser window.', 'components_txtd' ) . '</p>',
+						'name'    => esc_html__( 'Hero Area Height', '__components_txtd' ),
+						'desc'    => '<p>' . esc_html__( 'Set the height of the Hero Area relative to the browser window.', '__components_txtd' ) . '</p>',
 						'id'      => '_hero_height',
 						'type'    => 'select',
 						'options' => array(
 							array(
-								'name'  => '&#9673;&#9673;&#9673; ' . esc_html__( 'Full Height', 'components_txtd' ),
+								'name'  => '&#9673;&#9673;&#9673; ' . esc_html__( 'Full Height', '__components_txtd' ),
 								'value' => 'c-hero--full',
 							),
 							array(
-								'name'  => '&#9673;&#9673;&#9711; ' . esc_html__( 'Two Thirds', 'components_txtd' ),
+								'name'  => '&#9673;&#9673;&#9711; ' . esc_html__( 'Two Thirds', '__components_txtd' ),
 								'value' => 'c-hero--two-thirds',
 							),
 							array(
-								'name'  => '&nbsp; &#9673;&#9711; ' . esc_html__( '&nbsp;Half', 'components_txtd' ),
+								'name'  => '&nbsp; &#9673;&#9711; ' . esc_html__( '&nbsp;Half', '__components_txtd' ),
 								'value' => 'c-hero--half',
 							),
 						),
 						'std'     => 'c-hero--two-thirds',
 					),
 					array(
-						'name'    => esc_html__( 'Hero Content Alignment', 'components_txtd' ),
+						'name'    => esc_html__( 'Hero Content Alignment', '__components_txtd' ),
 						'desc'    => wp_kses( __( '<p>Considering the background image focal point, you can align the content to make them both more visible.</p>
 							<ul>
 								<li>Mix it with a background color overlay to make it pop</li>
 								<li>Individual text alignments will override this option</li>
 								<li>You can align the content to make them both more visible.</li>
-							</ul>', 'components_txtd' ), wp_kses_allowed_html() ),
+							</ul>', '__components_txtd' ), wp_kses_allowed_html() ),
 						'id'      => '_hero_description_alignment',
 						'type'    => 'positions_map',
 						'options' => array(
@@ -283,31 +283,31 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 					),
 					// PAGE (Regular) Slideshow Options
 					array(
-						'name'    => '&#x1F307; &nbsp; ' . esc_html__( 'Slideshow Options', 'components_txtd' ),
+						'name'    => '&#x1F307; &nbsp; ' . esc_html__( 'Slideshow Options', '__components_txtd' ),
 						'id'      => '_hero_slideshow_options__title',
-						'value'   => wp_kses( __( 'Add more than one image to the <strong>Hero Area &#187; Background</strong> to enable this section. ', 'components_txtd' ), wp_kses_allowed_html() ),
+						'value'   => wp_kses( __( 'Add more than one image to the <strong>Hero Area &#187; Background</strong> to enable this section. ', '__components_txtd' ), wp_kses_allowed_html() ),
 						'type'    => 'title',
 					),
 					array(
-						'name'    => esc_html__( 'Auto Play', 'components_txtd' ),
-						'desc'    => esc_html__( 'The slideshow will automatically move to the next slide, after a period of time.', 'components_txtd' ),
+						'name'    => esc_html__( 'Auto Play', '__components_txtd' ),
+						'desc'    => esc_html__( 'The slideshow will automatically move to the next slide, after a period of time.', '__components_txtd' ),
 						'id'      => '_hero_slideshow_options__autoplay',
 						'type'    => 'select',
 						'options' => array(
 							array(
-								'name'  => esc_html__( 'Enabled', 'components_txtd' ),
+								'name'  => esc_html__( 'Enabled', '__components_txtd' ),
 								'value' => true,
 							),
 							array(
-								'name'  => esc_html__( 'Disabled', 'components_txtd' ),
+								'name'  => esc_html__( 'Disabled', '__components_txtd' ),
 								'value' => false,
 							),
 						),
 						'std'     => false,
 					),
 					array(
-						'name'       => esc_html__( 'Auto Play Delay (s)', 'components_txtd' ),
-						'desc'       => esc_html__( 'Set the number of seconds to wait before moving to the next slide.', 'components_txtd' ),
+						'name'       => esc_html__( 'Auto Play Delay (s)', '__components_txtd' ),
+						'desc'       => esc_html__( 'Set the number of seconds to wait before moving to the next slide.', '__components_txtd' ),
 						'id'         => '_hero_slideshow_options__delay',
 						'type'       => 'text_small',
 						'std'        => '5',
@@ -325,7 +325,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			//for the Contact/Location Page template
 			'hero_area_map__page' => array(
 				'id'         => 'hero_area_map__page',
-				'title'      => esc_html__( 'Map Coordinates & Display Options', 'components_txtd' ),
+				'title'      => esc_html__( 'Map Coordinates & Display Options', '__components_txtd' ),
 				'pages'      => array( 'page' ), // Post type
 				'context'    => 'normal',
 				'priority'   => 'high',
@@ -338,43 +338,43 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 				'show_names' => true, // Show field names on the left
 				'fields'     => array(
 					array(
-						'name'    => esc_html__( 'Map Height', 'components_txtd' ),
-						'desc'    => '<p>' . esc_html__( 'Select the height of the Google Map area in relation to the browser window.', 'components_txtd' ) . '</p>',
+						'name'    => esc_html__( 'Map Height', '__components_txtd' ),
+						'desc'    => '<p>' . esc_html__( 'Select the height of the Google Map area in relation to the browser window.', '__components_txtd' ) . '</p>',
 						'id'      => '_hero_map_height',
 						'type'    => 'select',
 						'options' => array(
 							array(
-								'name'  => '&#9673;&#9673;&#9673; ' . esc_html__( 'Full Height', 'components_txtd' ),
+								'name'  => '&#9673;&#9673;&#9673; ' . esc_html__( 'Full Height', '__components_txtd' ),
 								'value' => 'c-hero--full',
 							),
 							array(
-								'name'  => '&#9673;&#9673;&#9711; ' . esc_html__( 'Two Thirds', 'components_txtd' ),
+								'name'  => '&#9673;&#9673;&#9711; ' . esc_html__( 'Two Thirds', '__components_txtd' ),
 								'value' => 'c-hero--two-thirds',
 							),
 							array(
-								'name'  => '&nbsp; &#9673;&#9711; ' . esc_html__( '&nbsp;Half', 'components_txtd' ),
+								'name'  => '&nbsp; &#9673;&#9711; ' . esc_html__( '&nbsp;Half', '__components_txtd' ),
 								'value' => 'c-hero--half',
 							),
 						),
 						'std'     => 'c-hero--two-thirds',
 					),
 					array(
-						'name' => esc_html__( 'Google Maps URL', 'components_txtd' ),
-						'desc' => wp_kses( __( 'Paste here the <strong>Share Link</strong>URL you have copied from <a href="https://www.google.com/maps" target="_blank">Google Maps</a>. Do not use the embed code or a short URL.', 'components_txtd' ), wp_kses_allowed_html() ),
+						'name' => esc_html__( 'Google Maps URL', '__components_txtd' ),
+						'desc' => wp_kses( __( 'Paste here the <strong>Share Link</strong>URL you have copied from <a href="https://www.google.com/maps" target="_blank">Google Maps</a>. Do not use the embed code or a short URL.', '__components_txtd' ), wp_kses_allowed_html() ),
 						'id'   => '_hero_map_url',
 						'type' => 'textarea_small',
 						'std'  => '',
 					),
 					array(
-						'name' => esc_html__( 'Custom Colors', 'components_txtd' ),
-						'desc' => esc_html__( 'Allow us to change the map colors to better match your website.', 'components_txtd' ),
+						'name' => esc_html__( 'Custom Colors', '__components_txtd' ),
+						'desc' => esc_html__( 'Allow us to change the map colors to better match your website.', '__components_txtd' ),
 						'id'   => '_hero_map_custom_style',
 						'type' => 'checkbox',
 						'std'  => 'on',
 					),
 					array(
-						'name'    => esc_html__( 'Pin Content', 'components_txtd' ),
-						'desc'    => esc_html__( 'Insert here the content of the location marker - leave empty for no custom marker.', 'components_txtd' ),
+						'name'    => esc_html__( 'Pin Content', '__components_txtd' ),
+						'desc'    => esc_html__( 'Insert here the content of the location marker - leave empty for no custom marker.', '__components_txtd' ),
 						'id'      => '_hero_map_marker_content',
 						'type'    => 'wysiwyg',
 						'std'     => '',
@@ -560,11 +560,11 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		if ( ! isset( $form_fields['link_media_to'] ) ) {
 
 			$select_options = array(
-				'none'             => esc_html__( 'None', 'components_txtd' ),
-				'media_file'       => esc_html__( 'Media File', 'components_txtd' ),
-				'custom_image_url' => esc_html__( 'Custom Image URL', 'components_txtd' ),
-				'custom_video_url' => esc_html__( 'Custom Video URL', 'components_txtd' ),
-				'external'         => esc_html__( 'External URL', 'components_txtd' ),
+				'none'             => esc_html__( 'None', '__components_txtd' ),
+				'media_file'       => esc_html__( 'Media File', '__components_txtd' ),
+				'custom_image_url' => esc_html__( 'Custom Image URL', '__components_txtd' ),
+				'custom_video_url' => esc_html__( 'Custom Video URL', '__components_txtd' ),
+				'external'         => esc_html__( 'External URL', '__components_txtd' ),
 			);
 
 			$select_html = '<select name="attachments[' . $post->ID . '][link_media_to]" id="attachments[' . $post->ID . '][link_media_to]">';
@@ -583,7 +583,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			$select_html .= '</select>';
 
 			$form_fields['link_media_to'] = array(
-				'label' => esc_html__( 'Linked To', 'components_txtd' ),
+				'label' => esc_html__( 'Linked To', '__components_txtd' ),
 				'input' => 'html',
 				'html'  => $select_html
 			);
@@ -591,19 +591,19 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 
 		if ( ! isset( $form_fields['video_url'] ) && ! empty( $link_media_to_value ) && $link_media_to_value == 'custom_video_url' ) {
 			$form_fields['video_url'] = array(
-				'label' => esc_html__( 'Custom Video URL', 'components_txtd' ),
+				'label' => esc_html__( 'Custom Video URL', '__components_txtd' ),
 				'input' => 'text', // this is default if "input" is omitted
 				'value' => esc_url( get_post_meta( $post->ID, '_video_url', true ) ),
-				'helps' => '<p class="desc">' . wp_kses( __( 'Attach a video to this image <span class="small">(YouTube or Vimeo)</span>.', 'components_txtd' ), wp_kses_allowed_html() ) . '</p>',
+				'helps' => '<p class="desc">' . wp_kses( __( 'Attach a video to this image <span class="small">(YouTube or Vimeo)</span>.', '__components_txtd' ), wp_kses_allowed_html() ) . '</p>',
 			);
 		}
 
 		if ( ! isset( $form_fields['custom_image_url'] ) && ! empty( $link_media_to_value ) && $link_media_to_value == 'custom_image_url' ) {
 			$form_fields['custom_image_url'] = array(
-				'label' => esc_html__( 'Custom Image URL', 'components_txtd' ),
+				'label' => esc_html__( 'Custom Image URL', '__components_txtd' ),
 				'input' => "text", // this is default if "input" is omitted
 				'value' => esc_url( get_post_meta( $post->ID, '_custom_image_url', true ) ),
-				'helps' => '<p class="desc">' . esc_html__( 'Link this image to a custom url.', 'components_txtd' ) . '</p>',
+				'helps' => '<p class="desc">' . esc_html__( 'Link this image to a custom url.', '__components_txtd' ) . '</p>',
 			);
 		}
 
@@ -618,18 +618,18 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			}
 
 			$form_fields['video_autoplay'] = array(
-				'label' => esc_html__( 'Video Autoplay', 'components_txtd' ),
+				'label' => esc_html__( 'Video Autoplay', '__components_txtd' ),
 				'input' => 'html',
-				'html'  => '<input' . $checked . ' type="checkbox" name="attachments[' . $post->ID . '][video_autoplay]" id="attachments[' . $post->ID . '][video_autoplay]" /><label for="attachments[' . $post->ID . '][video_autoplay]">' . esc_html__( 'Enable Video Autoplay?', 'components_txtd' ) . '</label>',
+				'html'  => '<input' . $checked . ' type="checkbox" name="attachments[' . $post->ID . '][video_autoplay]" id="attachments[' . $post->ID . '][video_autoplay]" /><label for="attachments[' . $post->ID . '][video_autoplay]">' . esc_html__( 'Enable Video Autoplay?', '__components_txtd' ) . '</label>',
 			);
 		}
 
 		if ( ! isset( $form_fields['external_url'] ) && ! empty( $link_media_to_value ) && $link_media_to_value == 'external' ) {
 			$form_fields['external_url'] = array(
-				'label' => esc_html__( 'External URL', 'components_txtd' ),
+				'label' => esc_html__( 'External URL', '__components_txtd' ),
 				'input' => 'text',
 				'value' => esc_url( get_post_meta( $post->ID, '_external_url', true ) ),
-				'helps' => '<p class="desc">' . esc_html__( 'Set this image to link to an external website.', 'components_txtd' ) . '</p>',
+				'helps' => '<p class="desc">' . esc_html__( 'Set this image to link to an external website.', '__components_txtd' ) . '</p>',
 			);
 		}
 
@@ -695,7 +695,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -704,6 +704,6 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }

@@ -135,26 +135,26 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		$header_section = array(
 			// Header
 			'header_section' => array(
-				'title'   => esc_html__( 'Header', 'components_txtd' ),
+				'title'   => esc_html__( 'Header', '__components_txtd' ),
 				'options' => array(
 					'header_options_customizer_tabs'        => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
-							<a href="#section-title-header-layout">' . esc_html__( 'Layout', 'components_txtd' ) . '</a>
-							<a href="#section-title-header-colors">' . esc_html__( 'Colors', 'components_txtd' ) . '</a>
-							<a href="#section-title-header-fonts">' . esc_html__( 'Fonts', 'components_txtd' ) . '</a>
+							<a href="#section-title-header-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
+							<a href="#section-title-header-colors">' . esc_html__( 'Colors', '__components_txtd' ) . '</a>
+							<a href="#section-title-header-fonts">' . esc_html__( 'Fonts', '__components_txtd' ) . '</a>
 							</nav>',
 					),
 
 					// [Section] Layout
 					'header_title_layout_section'    => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-header-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-header-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
 					'header_logo_height'              => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Logo Height', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the max height of your logo container.', 'components_txtd' ),
+						'label'       => esc_html__( 'Logo Height', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the max height of your logo container.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 23)
 						'input_attrs' => array(
@@ -173,8 +173,8 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 					'header_height' => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Header Height', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the header and navigation bar height.', 'components_txtd' ),
+						'label'       => esc_html__( 'Header Height', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the header and navigation bar height.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 100)
 						'input_attrs' => array(
@@ -193,8 +193,8 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 					'header_navigation_links_spacing' => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Navigation Link Spacing', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the spacing between individual items in your navigation.', 'components_txtd' ),
+						'label'       => esc_html__( 'Navigation Link Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the spacing between individual items in your navigation.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 40)
 						'input_attrs' => array(
@@ -220,28 +220,28 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 					'header_position' => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Header Position', 'components_txtd' ),
-						'desc'    => esc_html__( 'Choose if you want a static menu or a fixed (sticky) one that stays visible no matter how much you scroll the page.', 'components_txtd' ),
+						'label'   => esc_html__( 'Header Position', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose if you want a static menu or a fixed (sticky) one that stays visible no matter how much you scroll the page.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously sticky)
 						'choices' => array(
-							'static' => esc_html__( 'Static', 'components_txtd' ),
-							'sticky' => esc_html__( 'Sticky (fixed)', 'components_txtd' ),
+							'static' => esc_html__( 'Static', '__components_txtd' ),
+							'sticky' => esc_html__( 'Sticky (fixed)', '__components_txtd' ),
 						),
 					),
 					'header_width'    => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Header Width', 'components_txtd' ),
-						'desc'    => esc_html__( 'Choose if you want the header span to the full-browser or stay aligned with the site container width.', 'components_txtd' ),
+						'label'   => esc_html__( 'Header Width', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose if you want the header span to the full-browser or stay aligned with the site container width.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously full)
 						'choices' => array(
-							'full'      => esc_html__( 'Full Browser Width', 'components_txtd' ),
-							'container' => esc_html__( 'Container Width', 'components_txtd' ),
+							'full'      => esc_html__( 'Full Browser Width', '__components_txtd' ),
+							'container' => esc_html__( 'Container Width', '__components_txtd' ),
 						),
 					),
 					'header_sides_spacing'          => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Header Sides Spacing', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the space separating the header and the sides of the browser.', 'components_txtd' ),
+						'label'       => esc_html__( 'Header Sides Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the space separating the header and the sides of the browser.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 40)
 						'input_attrs' => array(
@@ -269,11 +269,11 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					// [Section] COLORS
 					'header_title_colors_section'    => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-header-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-header-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
 					'header_navigation_links_color' => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Navigation Links Color', 'components_txtd' ),
+						'label'   => esc_html__( 'Navigation Links Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #252525)
 						'css'     => array(
@@ -285,7 +285,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 					'header_links_active_color'     => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Links Active Color', 'components_txtd' ),
+						'label'   => esc_html__( 'Links Active Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #bf493d)
 						'css'     => array(
@@ -303,17 +303,17 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 					'header_links_active_style'     => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Links Active Style', 'components_txtd' ),
-						'desc'    => esc_html__( '', 'components_txtd' ),
+						'label'   => esc_html__( 'Links Active Style', '__components_txtd' ),
+						'desc'    => esc_html__( '', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously active)
 						'choices' => array(
-							'active'    => esc_html__( 'Active', 'components_txtd' ),
-							'underline' => esc_html__( 'Underline', 'components_txtd' ),
+							'active'    => esc_html__( 'Active', '__components_txtd' ),
+							'underline' => esc_html__( 'Underline', '__components_txtd' ),
 						),
 					),
 					'header_background'             => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Header Background', 'components_txtd' ),
+						'label'   => esc_html__( 'Header Background', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #F5FBFE)
 						'css'     => array(
@@ -327,13 +327,13 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					// [Section] FONTS
 					'header_title_fonts_section'    => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-header-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-header-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
 					'header_site_title_font' => array(
 						'type'     			=> 'font',
-						'label'            => esc_html__( 'Site Title Font', 'components_txtd' ),
-						'desc'             => esc_html__( '', 'components_txtd' ),
+						'label'            => esc_html__( 'Site Title Font', '__components_txtd' ),
+						'desc'             => esc_html__( '', '__components_txtd' ),
 						'selector'         => '.site-title',
 						'callback' => 'typeline_font_cb',
 
@@ -369,8 +369,8 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 
 					'header_navigation_font' => array(
 						'type'     			=> 'font',
-						'label'            => esc_html__( 'Navigation Text', 'components_txtd' ),
-						'desc'             => esc_html__( '', 'components_txtd' ),
+						'label'            => esc_html__( 'Navigation Text', '__components_txtd' ),
+						'desc'             => esc_html__( '', '__components_txtd' ),
 						'selector'         => '.c-navbar',
 						'callback' => 'typeline_font_cb',
 
@@ -487,7 +487,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -496,6 +496,6 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }

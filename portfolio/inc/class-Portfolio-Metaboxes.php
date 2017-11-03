@@ -173,14 +173,14 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 		 */
 		$featured_projects_fields = array(
 			array(
-				'name'       => '&#x1F48E; ' . esc_html__( 'Featured Projects Options', 'components_txtd' ),
+				'name'       => '&#x1F48E; ' . esc_html__( 'Featured Projects Options', '__components_txtd' ),
 				'id'         => '_hero_featured_projects_title',
 				'type'       => 'title',
 			),
 			array(
-				'name'            => esc_html__( 'Selected Projects', 'components_txtd' ),
+				'name'            => esc_html__( 'Selected Projects', '__components_txtd' ),
 				'id'              => '_hero_featured_projects_ids',
-				'desc'            => esc_html__( 'Choose the projects to be part of the Hero Slider.', 'components_txtd' ),
+				'desc'            => esc_html__( 'Choose the projects to be part of the Hero Slider.', '__components_txtd' ),
 				'type'            => 'pw_multiselect_cpt_v2',
 				'options'         => array(
 					'args' => array(
@@ -191,11 +191,11 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 				'sanitization_cb' => 'pw_select2_v2_sanitise',
 			),
 			array(
-				'name'       => esc_html__( '"View Project" Button Label', 'components_txtd' ),
+				'name'       => esc_html__( '"View Project" Button Label', '__components_txtd' ),
 				'id'         => '_hero_featured_projects_view_more_label',
-				'desc'       => esc_html__( 'Adjust the label for the single project button, displayed on each slide. Empty it if you want to hide the button.', 'components_txtd' ),
+				'desc'       => esc_html__( 'Adjust the label for the single project button, displayed on each slide. Empty it if you want to hide the button.', '__components_txtd' ),
 				'type'       => 'text_medium',
-				'std'        => esc_html__( 'View project', 'components_txtd' ),
+				'std'        => esc_html__( 'View project', '__components_txtd' ),
 			),
 		);
 
@@ -230,7 +230,7 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 		 */
 		$portfolio_grid_fields = array(
 			array(
-				'name'       => '&#x1F3C1; ' . esc_html__( 'Portfolio Grid', 'components_txtd' ),
+				'name'       => '&#x1F3C1; ' . esc_html__( 'Portfolio Grid', '__components_txtd' ),
 				'id'         => '_portfolio_grid_title',
 				'type'       => 'title',
 				'display_on' => array(
@@ -242,21 +242,21 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 				),
 			),
 			array(
-				'name'    => esc_html__( 'Projects List Visibility', 'components_txtd' ),
+				'name'    => esc_html__( 'Projects List Visibility', '__components_txtd' ),
 				'id'      => '_portfolio_grid_show',
-				'desc'    => esc_html__( 'Select which projects to be shown in the Portfolio Grid section.', 'components_txtd' ),
+				'desc'    => esc_html__( 'Select which projects to be shown in the Portfolio Grid section.', '__components_txtd' ),
 				'type'    => 'select',
 				'options' => array(
 					array(
-						'name'  => esc_html__( 'Show All Projects', 'components_txtd' ),
+						'name'  => esc_html__( 'Show All Projects', '__components_txtd' ),
 						'value' => 'all',
 					),
 					array(
-						'name'  => esc_html__( 'Show Only Projects That Are Not Featured', 'components_txtd' ),
+						'name'  => esc_html__( 'Show Only Projects That Are Not Featured', '__components_txtd' ),
 						'value' => 'exclude_featured',
 					),
 					array(
-						'name'  => esc_html__( 'Hide All Projects', 'components_txtd' ),
+						'name'  => esc_html__( 'Hide All Projects', '__components_txtd' ),
 						'value' => 'none',
 					),
 				),
@@ -340,7 +340,7 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -349,6 +349,6 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }
