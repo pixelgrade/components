@@ -101,7 +101,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			 * - if you define unnamed wrappers before a named wrapper in an extending block, we will keep the relative order
 			 *   by calculating the priority for the unnamed wrappers.
 			 */
-            'blocks'         => array(
+            'blocks' => array(
 
                 // default wrappers
                 'default' => array(
@@ -182,7 +182,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                 ),
 
                 // layout
-                'layout'    => array(
+                'layout' => array(
                     'type'     => 'layout',
                     'wrappers' => array(
                         'layout' => array(
@@ -191,7 +191,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         ),
                     ),
                 ),
-                'main'      => array(
+                'main'   => array(
                     'type'     => 'layout',
                     'wrappers' => array(
                         'main' => array(
@@ -200,7 +200,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         ),
                     ),
                 ),
-                'side'      => array(
+                'side'   => array(
                     'type'     => 'layout',
                     'wrappers' => array(
                         'side' => array(
@@ -238,7 +238,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         ),
                     ),
                 ),
-
                 'home' => array(
                     'extend' => 'blog/index'
                 ),
@@ -289,7 +288,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     ),
                 ),
 
-                'main-portrait' => array(
+                'main-portrait'  => array(
                     'blocks' => array(
                         'blog/entry-thumbnail',
                         'sidebar' => array(
@@ -305,7 +304,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         'blog/entry-footer',
                     ),
                 ),
-
                 'main-landscape' => array(
                     'blocks' => array(
                         'sidebar' => array(
@@ -355,37 +353,38 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         )
                     )
                 ),
-
-                'page' => array(
+                'page'   => array(
                     'extend' => 'blog/default',
                     'blocks' => array(
-                        'header' => array(
-                            'extend'   => 'blog/container',
-                            'blocks'   => array( 'blog/entry-header' ),
-                            'wrappers' => array(
-                                array(
-                                    'priority' => 100,
-                                    'classes'  => 'u-header-background'
-                                )
-                            )
-                        ),
-                        'layout' => array(
+                        'container' => array(
                             'extend' => 'blog/container',
                             'blocks' => array(
-                                'landscape' => array(
-                                    'extend' => 'blog/main-landscape',
-                                    'checks' => array(
-                                        'callback' => 'julia_has_landscape_thumbnail'
+                                'layout' => array(
+                                    'extend' => 'blog/layout',
+                                    'blocks' => array(
+                                        'main' => array(
+                                            'extend' => 'blog/main',
+                                            'blocks' => array(
+                                                'blog/entry-header',
+                                                'blog/entry-thumbnail',
+                                                'blog/entry-content',
+                                                'blog/entry-footer',
+                                            )
+                                        ),
+                                        'side' => array(
+                                            'extend' => 'blog/side',
+                                            'blocks' => array( 'blog/sidebar' ),
+                                            'checks' => array(
+                                                array(
+                                                    'callback' => '__return_true',
+                                                    'args'     => array(),
+                                                ),
+                                            ),
+                                        ),
                                     ),
                                 ),
-                                'portrait'  => array(
-                                    'extend' => 'blog/main-portrait',
-                                    'checks' => array(
-                                        'callback' => 'julia_has_portrait_thumbnail'
-                                    ),
-                                ),
-                            )
-                        )
+                            ),
+                        ),
                     )
                 ),
             ),
