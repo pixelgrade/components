@@ -63,8 +63,8 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'container_class' => array( 'c-gallery', 'c-footer__gallery', 'o-grid', 'o-grid--4col-@lap' ), // classes to be added to the sidebar <aside> wrapper
 					'sidebar_args' => array( // skip 'id' arg as we will force that
-						'name' => esc_html__( 'Footer', 'components_txtd' ),
-						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', 'components_txtd' ),
+						'name' => esc_html__( 'Footer', '__components_txtd' ),
+						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', '__components_txtd' ),
 						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap', // in case you need some classes added to the sidebar - in the WP Admin only!!!
 						'before_widget' => '<div id="%1$s" class="c-gallery__item  c-widget  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
 						'after_widget'  => '</div></div>',
@@ -82,7 +82,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
 				),
 				'footer' => array(
-					'title' => esc_html__( 'Footer', 'components_txtd' ),
+					'title' => esc_html__( 'Footer', '__components_txtd' ),
 					'default_zone' => 'bottom',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,

@@ -605,13 +605,13 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 * Cloning is forbidden.
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->version ) );
 	} // End __clone ()
 
 	/**
 	 * Unserializing instances of this class is forbidden.
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->version ) );
 	} // End __wakeup ()
 }

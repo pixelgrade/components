@@ -129,26 +129,26 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 		$portfolio_grid_section = array(
 			// Portfolio Grid
 			'portfolio_grid' => array(
-				'title'   => esc_html__( 'Portfolio Grid Items', 'components_txtd' ),
+				'title'   => esc_html__( 'Portfolio Grid Items', '__components_txtd' ),
 				'options' => array(
 					'portfolio_grid_options_customizer_tabs'               => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
-							<a href="#section-title-portfolio-layout">' . esc_html__( 'Layout', 'components_txtd' ) . '</a>
-							<a href="#section-title-portfolio-colors">' . esc_html__( 'Colors', 'components_txtd' ) . '</a>
-							<a href="#section-title-portfolio-fonts">' . esc_html__( 'Fonts', 'components_txtd' ) . '</a>
+							<a href="#section-title-portfolio-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
+							<a href="#section-title-portfolio-colors">' . esc_html__( 'Colors', '__components_txtd' ) . '</a>
+							<a href="#section-title-portfolio-fonts">' . esc_html__( 'Fonts', '__components_txtd' ) . '</a>
 							</nav>',
 					),
 
 					// [Section] Layout
 					'portfolio_grid_title_layout_section'    => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-portfolio-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-portfolio-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_grid_width'                     => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Portfolio Grid Max Width', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the max width of the portfolio area.', 'components_txtd' ),
+						'label'       => esc_html__( 'Portfolio Grid Max Width', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the max width of the portfolio area.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 1300)
 						'input_attrs' => array(
@@ -167,8 +167,8 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_container_sides_spacing'        => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Container Sides Spacing', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', 'components_txtd' ),
+						'label'       => esc_html__( 'Container Sides Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 60)
 						'input_attrs' => array(
@@ -196,24 +196,24 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// [Sub Section] Items Grid
 					'portfolio_grid_title_items_grid_section'                  => array(
 						'type' => 'html',
-						'html' => '<span class="separator sub-section label large">' . esc_html__( 'Items Grid', 'components_txtd' ) . '</span>',
+						'html' => '<span class="separator sub-section label large">' . esc_html__( 'Items Grid', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_grid_layout'                    => array(
 						'type'    => 'radio',
-						'label'   => esc_html__( 'Grid Layout', 'components_txtd' ),
-						'desc'    => esc_html__( 'Choose whether the items display in a fixed height regular grid, or in a packed style layout.', 'components_txtd' ),
+						'label'   => esc_html__( 'Grid Layout', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose whether the items display in a fixed height regular grid, or in a packed style layout.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously packed)
 						'choices' => array(
-							'regular' => esc_html__( 'Regular Grid', 'components_txtd' ),
-							'masonry' => esc_html__( 'Masonry', 'components_txtd' ),
-							'mosaic'  => esc_html__( 'Mosaic', 'components_txtd' ),
-							'packed'  => esc_html__( 'Packed', 'components_txtd' ),
+							'regular' => esc_html__( 'Regular Grid', '__components_txtd' ),
+							'masonry' => esc_html__( 'Masonry', '__components_txtd' ),
+							'mosaic'  => esc_html__( 'Mosaic', '__components_txtd' ),
+							'packed'  => esc_html__( 'Packed', '__components_txtd' ),
 						)
 					),
 					'portfolio_items_aspect_ratio'             => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Items Aspect Ratio', 'components_txtd' ),
-						'desc'        => esc_html__( 'Leave the images to their original ratio or crop them to get a more defined grid layout.', 'components_txtd' ),
+						'label'       => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
+						'desc'        => esc_html__( 'Leave the images to their original ratio or crop them to get a more defined grid layout.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 100)
 						'input_attrs' => array(
@@ -234,8 +234,8 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_items_per_row'                  => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Items per Row', 'components_txtd' ),
-						'desc'        => esc_html__( 'Set the desktop-based number of columns you want and we automatically make it right for other screen sizes.', 'components_txtd' ),
+						'label'       => esc_html__( 'Items per Row', '__components_txtd' ),
+						'desc'        => esc_html__( 'Set the desktop-based number of columns you want and we automatically make it right for other screen sizes.', '__components_txtd' ),
 						'live'        => false,
 						'default'     => null, // this should be set by the theme (previously 4)
 						'input_attrs' => array(
@@ -253,8 +253,8 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_items_vertical_spacing'                  => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Items Vertical Spacing', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', 'components_txtd' ),
+						'label'       => esc_html__( 'Items Vertical Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 150)
 						'input_attrs' => array(
@@ -274,8 +274,8 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_items_horizontal_spacing'                  => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Items Horizontal Spacing', 'components_txtd' ),
-						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', 'components_txtd' ),
+						'label'       => esc_html__( 'Items Horizontal Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 40)
 						'input_attrs' => array(
@@ -297,48 +297,48 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// [Sub Section] Items Title
 					'portfolio_grid_title_items_title_section'                 => array(
 						'type' => 'html',
-						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Title', 'components_txtd' ) . '</span>',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Title', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_items_title_position'           => array(
 						'type'    => 'radio',
-						'label'   => esc_html__( 'Title Position', 'components_txtd' ),
-						'desc'    => esc_html__( 'Choose whether the items titles are placed nearby the thumbnail or show as an overlay cover on  mouse over.', 'components_txtd' ),
+						'label'   => esc_html__( 'Title Position', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose whether the items titles are placed nearby the thumbnail or show as an overlay cover on  mouse over.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously below)
 						'choices' => array(
-							'above'   => esc_html__( 'Above', 'components_txtd' ),
-							'below'   => esc_html__( 'Below', 'components_txtd' ),
-							'overlay' => esc_html__( 'Overlay', 'components_txtd' ),
+							'above'   => esc_html__( 'Above', '__components_txtd' ),
+							'below'   => esc_html__( 'Below', '__components_txtd' ),
+							'overlay' => esc_html__( 'Overlay', '__components_txtd' ),
 						)
 					),
 					'portfolio_items_title_alignment_nearby'   => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Title Alignment (Above/Below)', 'components_txtd' ),
-						'desc'    => esc_html__( 'Adjust the alignment of your title.', 'components_txtd' ),
+						'label'   => esc_html__( 'Title Alignment (Above/Below)', '__components_txtd' ),
+						'desc'    => esc_html__( 'Adjust the alignment of your title.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously left)
 						'choices' => array(
-							'left'   => esc_html__( '← Left', 'components_txtd' ),
-							'center' => esc_html__( '↔ Center', 'components_txtd' ),
-							'right'  => esc_html__( '→ Right', 'components_txtd' ),
+							'left'   => esc_html__( '← Left', '__components_txtd' ),
+							'center' => esc_html__( '↔ Center', '__components_txtd' ),
+							'right'  => esc_html__( '→ Right', '__components_txtd' ),
 						),
 						'active_callback' => 'pixelgrade_portfolio_items_title_alignment_nearby_control_show',
 					),
 					'portfolio_items_title_alignment_overlay'  => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Title Alignment (Overlay)', 'components_txtd' ),
-						'desc'    => esc_html__( 'Adjust the alignment of your hover title.', 'components_txtd' ),
+						'label'   => esc_html__( 'Title Alignment (Overlay)', '__components_txtd' ),
+						'desc'    => esc_html__( 'Adjust the alignment of your hover title.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously middle-center)
 						'choices' => array(
-							'top-left'   => esc_html__( '↑ Top     ← Left', 'components_txtd' ),
-							'top-center' => esc_html__( '↑ Top     ↔ Center', 'components_txtd' ),
-							'top-right'  => esc_html__( '↑ Top     → Right', 'components_txtd' ),
+							'top-left'   => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
+							'top-center' => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
+							'top-right'  => esc_html__( '↑ Top     → Right', '__components_txtd' ),
 
-							'middle-left'   => esc_html__( '↕ Middle     ← Left', 'components_txtd' ),
-							'middle-center' => esc_html__( '↕ Middle     ↔ Center', 'components_txtd' ),
-							'middle-right'  => esc_html__( '↕ Middle     → Right', 'components_txtd' ),
+							'middle-left'   => esc_html__( '↕ Middle     ← Left', '__components_txtd' ),
+							'middle-center' => esc_html__( '↕ Middle     ↔ Center', '__components_txtd' ),
+							'middle-right'  => esc_html__( '↕ Middle     → Right', '__components_txtd' ),
 
-							'bottom-left'   => esc_html__( '↓ bottom     ← Left', 'components_txtd' ),
-							'bottom-center' => esc_html__( '↓ bottom     ↔ Center', 'components_txtd' ),
-							'bottom-right'  => esc_html__( '↓ bottom     → Right', 'components_txtd' ),
+							'bottom-left'   => esc_html__( '↓ bottom     ← Left', '__components_txtd' ),
+							'bottom-center' => esc_html__( '↓ bottom     ↔ Center', '__components_txtd' ),
+							'bottom-right'  => esc_html__( '↓ bottom     → Right', '__components_txtd' ),
 						),
 						'active_callback' => 'pixelgrade_portfolio_items_title_alignment_overlay_control_show',
 					),
@@ -347,76 +347,76 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'portfolio_items_title_visibility_title'   => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', 'components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', 'components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_items_title_visibility'         => array(
 						'type'    => 'checkbox',
-						'label'   => esc_html__( 'Show Title', 'components_txtd' ),
+						'label'   => esc_html__( 'Show Title', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
 					),
 
 					// [Sub Section] Items Excerpt
 					'portfolio_grid_title_items_excerpt_section'                 => array(
 						'type' => 'html',
-						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Excerpt', 'components_txtd' ) . '</span>',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Excerpt', '__components_txtd' ) . '</span>',
 					),
 
 					// Excerpt Visiblity
 					// Title + Checkbox
 					'portfolio_items_excerpt_visibility_title' => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', 'components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', 'components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_items_excerpt_visibility'       => array(
 						'type'    => 'checkbox',
-						'label'   => esc_html__( 'Show Excerpt Text', 'components_txtd' ),
+						'label'   => esc_html__( 'Show Excerpt Text', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 0)
 					),
 
 					// [Sub Section] Items Meta
 					'portfolio_grid_title_items_meta_section'               => array(
 						'type' => 'html',
-						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Meta', 'components_txtd' ) . '</span>',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Meta', '__components_txtd' ) . '</span>',
 					),
 
 					'portfolio_items_primary_meta' => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Primary Meta Section', 'components_txtd' ),
-						'desc'    => esc_html__( 'Set the meta info that display around the title. ', 'components_txtd' ),
+						'label'   => esc_html__( 'Primary Meta Section', '__components_txtd' ),
+						'desc'    => esc_html__( 'Set the meta info that display around the title. ', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously none)
 						'choices' => array(
-							'none'     => esc_html__( 'None', 'components_txtd' ),
-							'category' => esc_html__( 'Category', 'components_txtd' ),
-							'author'   => esc_html__( 'Author', 'components_txtd' ),
-							'date'     => esc_html__( 'Date', 'components_txtd' ),
-							'tags'     => esc_html__( 'Tags', 'components_txtd' ),
-							'comments' => esc_html__( 'Comments', 'components_txtd' ),
+							'none'     => esc_html__( 'None', '__components_txtd' ),
+							'category' => esc_html__( 'Category', '__components_txtd' ),
+							'author'   => esc_html__( 'Author', '__components_txtd' ),
+							'date'     => esc_html__( 'Date', '__components_txtd' ),
+							'tags'     => esc_html__( 'Tags', '__components_txtd' ),
+							'comments' => esc_html__( 'Comments', '__components_txtd' ),
 						),
 					),
 
 					'portfolio_items_secondary_meta' => array(
 						'type'    => 'select',
-						'label'   => esc_html__( 'Secondary Meta Section', 'components_txtd' ),
+						'label'   => esc_html__( 'Secondary Meta Section', '__components_txtd' ),
 						'desc'    => '',
 						'default' => null, // this should be set by the theme (previously category)
 						'choices' => array(
-							'none'     => esc_html__( 'None', 'components_txtd' ),
-							'category' => esc_html__( 'Category', 'components_txtd' ),
-							'author'   => esc_html__( 'Author', 'components_txtd' ),
-							'date'     => esc_html__( 'Date', 'components_txtd' ),
-							'tags'     => esc_html__( 'Tags', 'components_txtd' ),
-							'comments' => esc_html__( 'Comments', 'components_txtd' ),
+							'none'     => esc_html__( 'None', '__components_txtd' ),
+							'category' => esc_html__( 'Category', '__components_txtd' ),
+							'author'   => esc_html__( 'Author', '__components_txtd' ),
+							'date'     => esc_html__( 'Date', '__components_txtd' ),
+							'tags'     => esc_html__( 'Tags', '__components_txtd' ),
+							'comments' => esc_html__( 'Comments', '__components_txtd' ),
 						),
 					),
 
 					// [Section] COLORS
 					'portfolio_grid_title_colors_section'             => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-portfolio-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-portfolio-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_item_title_color'             => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Item Title Color', 'components_txtd' ),
+						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #222222)
 						'css'     => array(
@@ -428,7 +428,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_item_meta_primary_color'      => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Meta Primary', 'components_txtd' ),
+						'label'   => esc_html__( 'Meta Primary', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #222222)
 						'css'     => array(
@@ -440,7 +440,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_item_meta_secondary_color'    => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Meta Secondary', 'components_txtd' ),
+						'label'   => esc_html__( 'Meta Secondary', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #818282)
 						'css'     => array(
@@ -452,7 +452,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_item_thumbnail_background'    => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Thumbnail Background', 'components_txtd' ),
+						'label'   => esc_html__( 'Thumbnail Background', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #FFF)
 						'css'     => array(
@@ -466,11 +466,11 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// [Sub Section] Thumbnail Hover
 					'portfolio_grid_title_thumbnail_hover_section'             => array(
 						'type' => 'html',
-						'html' => '<span class="separator sub-section label">' . esc_html__( 'Thumbnail Hover', 'components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Customize the mouse over effect for your thumbnails.', 'components_txtd' ) . '</span>',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Customize the mouse over effect for your thumbnails.', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_item_thumbnail_hover_opacity' => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Thumbnail Background Opacity', 'components_txtd' ),
+						'label'       => esc_html__( 'Thumbnail Background Opacity', '__components_txtd' ),
 						'desc'        => '',
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 0.7)
@@ -492,12 +492,12 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// [Section] FONTS
 					'portfolio_grid_title_fonts_section'               => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-portfolio-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-portfolio-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
 					'portfolio_item_title_font' => array(
 						'type'     => 'font',
-						'label'    => esc_html__( 'Item Title Font', 'components_txtd' ),
+						'label'    => esc_html__( 'Item Title Font', '__components_txtd' ),
 						'desc'     => '',
 						'selector' => '.c-gallery--portfolio .c-card__title',
 						'callback' => 'typeline_font_cb',
@@ -535,7 +535,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 
 					'portfolio_item_meta_font' => array(
 						'type'     => 'font',
-						'label'    => esc_html__( 'Item Meta Font', 'components_txtd' ),
+						'label'    => esc_html__( 'Item Meta Font', '__components_txtd' ),
 						'desc'     => '',
 						'selector' => '.c-gallery--portfolio .c-meta__primary, .c-gallery--portfolio .c-meta__secondary',
 						'callback' => 'typeline_font_cb',
@@ -619,7 +619,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -628,6 +628,6 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }

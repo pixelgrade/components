@@ -114,34 +114,34 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 		$footer_section = array(
 			// Footer
 			'footer_section' => array(
-				'title'   => esc_html__( 'Footer', 'components_txtd' ),
+				'title'   => esc_html__( 'Footer', '__components_txtd' ),
 				'options' => array(
 					'footer_options_customizer_tabs'    => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
-							<a href="#section-title-footer-layout">' . esc_html__( 'Layout', 'components_txtd' ) . '</a>
-							<a href="#section-title-footer-colors">' . esc_html__( 'Colors', 'components_txtd' ) . '</a>
+							<a href="#section-title-footer-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
+							<a href="#section-title-footer-colors">' . esc_html__( 'Colors', '__components_txtd' ) . '</a>
 							</nav>',
 					),
 
 					// [Section] Layout
 					'footer_title_layout_section'    => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-footer-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-footer-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
 					'copyright_text'               => array(
 						'type'              => 'textarea',
-						'label'             => esc_html__( 'Copyright Text', 'components_txtd' ),
-						'desc'              => esc_html__( 'Set the text that will appear in the footer area. Use %year% to display the current year.', 'components_txtd' ),
+						'label'             => esc_html__( 'Copyright Text', '__components_txtd' ),
+						'desc'              => esc_html__( 'Set the text that will appear in the footer area. Use %year% to display the current year.', '__components_txtd' ),
 						// This should be defined by the theme
-						// Previously: sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components_txtd' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ),
+						// Previously: sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', '__components_txtd' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ),
 						'default'           => null,
 						'sanitize_callback' => 'wp_kses_post',
 						'live'              => array( '.c-footer__copyright-text' ),
 					),
 					'footer_top_spacing'           => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'Top Spacing', 'components_txtd' ),
+						'label'       => esc_html__( 'Top Spacing', '__components_txtd' ),
 						'desc'        => '',
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 84)
@@ -162,7 +162,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 					),
 					'footer_bottom_spacing'        => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'bottom Spacing', 'components_txtd' ),
+						'label'       => esc_html__( 'bottom Spacing', '__components_txtd' ),
 						'desc'        => '',
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 84)
@@ -183,28 +183,28 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 					),
 					'footer_hide_back_to_top_link' => array(
 						'type'    => 'checkbox',
-						'label'   => esc_html__( 'Hide "Back To Top" Link', 'components_txtd' ),
+						'label'   => esc_html__( 'Hide "Back To Top" Link', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
 					),
 					'footer_layout'                => array(
 						'type'    => 'select',
-						'label'   => esc_html__( '"Footer Area" Widgets Layout', 'components_txtd' ),
-						'desc'    => esc_html__( 'Choose if you want the footer widgets stack into one column or spread to a row.', 'components_txtd' ),
+						'label'   => esc_html__( '"Footer Area" Widgets Layout', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose if you want the footer widgets stack into one column or spread to a row.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously row)
 						'choices' => array(
-							'stacked' => esc_html__( 'Stacked', 'components_txtd' ),
-							'row'     => esc_html__( 'Row', 'components_txtd' ),
+							'stacked' => esc_html__( 'Stacked', '__components_txtd' ),
+							'row'     => esc_html__( 'Row', '__components_txtd' ),
 						),
 					),
 
 					// [Section] COLORS
 					'footer_title_colors_section'    => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-footer-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', 'components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-footer-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
 					'footer_body_text_color'       => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Body Text Color', 'components_txtd' ),
+						'label'   => esc_html__( 'Body Text Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #757575)
 						'css'     => array(
@@ -216,7 +216,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 					),
 					'footer_links_color'           => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Links Color', 'components_txtd' ),
+						'label'   => esc_html__( 'Links Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #000000)
 						'css'     => array(
@@ -228,7 +228,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 					),
 					'footer_background'            => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Footer Background', 'components_txtd' ),
+						'label'   => esc_html__( 'Footer Background', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #F5FBFE)
 						'css'     => array(
@@ -307,7 +307,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -316,6 +316,6 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }

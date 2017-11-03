@@ -101,7 +101,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 				<?php } ?>
 
 				<div class="c-card__footer">
-					<div class="c-card__action"><?php esc_html_e( 'Read More', 'components_txtd' ); ?></div>
+					<div class="c-card__action"><?php esc_html_e( 'Read More', '__components_txtd' ); ?></div>
 				</div>
 
 			</div>

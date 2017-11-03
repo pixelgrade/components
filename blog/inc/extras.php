@@ -33,7 +33,7 @@ function pixelgrade_add_cats_list( $content ) {
 		$categories_list = get_the_category_list( ' ' );
 
 		if ( ! empty( $categories_list ) ) {
-			$cats_content .= '<div class="cats"><span class="cats__title">' . esc_html__( 'Categories', 'components_txtd' ) . sprintf( '</span>' . esc_html__( '%1$s', 'components_txtd' ), $categories_list ) . '</div>'; // WPCS: XSS OK.
+			$cats_content .= '<div class="cats"><span class="cats__title">' . esc_html__( 'Categories', '__components_txtd' ) . sprintf( '</span>' . esc_html__( '%1$s', '__components_txtd' ), $categories_list ) . '</div>'; // WPCS: XSS OK.
 		}
 	}
 
@@ -60,7 +60,7 @@ function pixelgrade_add_tags_list( $content ) {
 		$tags_list = get_the_tag_list();
 
 		if ( ! empty( $tags_list ) ) {
-			$tags_content .= '<div class="tags"><div class="tags__title">' . esc_html__( 'Tags', 'components_txtd' ) . sprintf( '</div>' . esc_html__( '%1$s', 'components_txtd' ) . '</div>', $tags_list ); // WPCS: XSS OK.
+			$tags_content .= '<div class="tags"><div class="tags__title">' . esc_html__( 'Tags', '__components_txtd' ) . sprintf( '</div>' . esc_html__( '%1$s', '__components_txtd' ) . '</div>', $tags_list ); // WPCS: XSS OK.
 		}
 	}
 
@@ -124,9 +124,9 @@ if ( ! function_exists( 'pixelgrade_search_form' ) ) :
 	 */
 	function pixelgrade_search_form( $form ) {
 		$form = '<form role="search" method="get" class="search-form" action="' . esc_attr( home_url( '/' ) ) . '" >
-		<label class="screen-reader-text">' . esc_html__( 'Search for:', 'components_txtd' ) . '</label>
-		<input type="text" placeholder="' . esc_attr__( 'Search here', 'components_txtd' ) . '" value="' . esc_attr( get_search_query() ) . '" name="s" class="search-field" />
-		<button type="submit" class="search-submit"><span>'. esc_html__( 'Search', 'components_txtd' ) .'</span></button>
+		<label class="screen-reader-text">' . esc_html__( 'Search for:', '__components_txtd' ) . '</label>
+		<input type="text" placeholder="' . esc_attr__( 'Search here', '__components_txtd' ) . '" value="' . esc_attr( get_search_query() ) . '" name="s" class="search-field" />
+		<button type="submit" class="search-submit"><span>'. esc_html__( 'Search', '__components_txtd' ) .'</span></button>
 		</form>';
 
 		return $form;
@@ -164,7 +164,7 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
-			_doing_it_wrong( __FUNCTION__, esc_html__( 'Conditional query tags do not work before the query is run. Before then, they always return false.', 'components_txtd' ), '3.1.0' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Conditional query tags do not work before the query is run. Before then, they always return false.', '__components_txtd' ), '3.1.0' );
 
 			return false;
 		}

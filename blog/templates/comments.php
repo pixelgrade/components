@@ -45,7 +45,7 @@ if ( post_password_required() ) {
 			<span class="c-comments-toggle__icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG,'svg/comments-toggle-icon' ); ?></span>
 			<span class="c-comments-toggle__text"><?php
 				printf( // WPCS: XSS OK.
-					esc_html( _nx( '%2$s comment', '%1$s comments', get_comments_number(), 'comments title', 'components_txtd' ) ),
+					esc_html( _nx( '%2$s comment', '%1$s comments', get_comments_number(), 'comments title', '__components_txtd' ) ),
 					number_format_i18n( get_comments_number() ),
 					number_format_i18n( get_comments_number() )
 				);
@@ -58,11 +58,11 @@ if ( post_password_required() ) {
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 				<nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
-					<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'components_txtd' ); ?></h2>
+					<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', '__components_txtd' ); ?></h2>
 					<div class="nav-links">
 
-						<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'components_txtd' ) ); ?></div>
-						<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'components_txtd' ) ); ?></div>
+						<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', '__components_txtd' ) ); ?></div>
+						<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', '__components_txtd' ) ); ?></div>
 
 					</div><!-- .nav-links -->
 				</nav><!-- #comment-nav-above -->
@@ -81,11 +81,11 @@ if ( post_password_required() ) {
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 				<nav id="comment-nav-below" class="navigation comment-navigation" role="navigation">
-					<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'components_txtd' ); ?></h2>
+					<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', '__components_txtd' ); ?></h2>
 					<div class="nav-links">
 
-						<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'components_txtd' ) ); ?></div>
-						<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'components_txtd' ) ); ?></div>
+						<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', '__components_txtd' ) ); ?></div>
+						<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', '__components_txtd' ) ); ?></div>
 
 					</div><!-- .nav-links -->
 				</nav><!-- #comment-nav-below -->
@@ -98,15 +98,15 @@ if ( post_password_required() ) {
 		// If comments are closed and there are comments, let's leave a little note, shall we?
 		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
 
-			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'components_txtd' ); ?></p>
+			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', '__components_txtd' ); ?></p>
 			<?php
 		endif;
 
 		$args = array(
 			'class_form' => 'comment-form  inputs--alt',
-			'comment_field' =>  '<p class="comment-form-comment"><label for="comment">' . esc_html_x( 'Comment', 'noun', 'components_txtd' ) .
+			'comment_field' =>  '<p class="comment-form-comment"><label for="comment">' . esc_html_x( 'Comment', 'noun', '__components_txtd' ) .
 			                    '</label><textarea id="comment" class="comment__text" name="comment" cols="45" rows="8" aria-required="true" 
-			                    placeholder="'. esc_html__('Your comment...', 'components_txtd') .'">' .
+			                    placeholder="'. esc_html__('Your comment...', '__components_txtd') .'">' .
 			                    '</textarea></p>',
 			'submit_button'  => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
 		);

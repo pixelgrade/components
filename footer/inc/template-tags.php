@@ -157,7 +157,7 @@ function pixelgrade_footer_the_back_to_top_link() {
 function pixelgrade_footer_get_back_to_top_link() {
 	$option = pixelgrade_option( 'footer_hide_back_to_top_link', false );
 	if ( empty( $option ) ) {
-		return '<a class="back-to-top" href="#">' . esc_html__( 'Back to Top', 'components_txtd' ) . '</a>';
+		return '<a class="back-to-top" href="#">' . esc_html__( 'Back to Top', '__components_txtd' ) . '</a>';
 	}
 
 	return '';
@@ -181,7 +181,7 @@ function pixelgrade_footer_the_copyright() {
  * @return bool|string
  */
 function pixelgrade_footer_get_copyright_content() {
-	$copyright_text = pixelgrade_option( 'copyright_text', sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', 'components_txtd' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ) );
+	$copyright_text = pixelgrade_option( 'copyright_text', sprintf( esc_html__( '%%year%% &copy; Handcrafted with love by the %1$s Team', '__components_txtd' ), '<a href="https://pixelgrade.com/" rel="designer">Pixelgrade</a>' ) );
 
 	if ( ! empty( $copyright_text ) ) {
 		// We need to parse some tags

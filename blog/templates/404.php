@@ -62,11 +62,11 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 						?>
 
 						<header class="entry-header  c-page-header  u-content-bottom-spacing  <?php echo $visibility_class; ?>">
-							<h1 class="entry-title"><?php esc_html_e( 'Oops! This page can&rsquo;t be found anywhere.', 'components_txtd' ); ?></h1>
+							<h1 class="entry-title"><?php esc_html_e( 'Oops! This page can&rsquo;t be found anywhere.', '__components_txtd' ); ?></h1>
 						</header><!-- .page-header -->
 
 						<div class="entry-content u-content-width">
-							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'components_txtd' ); ?></p>
+							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', '__components_txtd' ); ?></p>
 							<?php get_search_form(); ?>
 						</div><!-- .entry-content -->
 

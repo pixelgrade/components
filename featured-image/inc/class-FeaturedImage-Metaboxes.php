@@ -80,15 +80,15 @@ class Pixelgrade_FeaturedImage_Metaboxes extends Pixelgrade_Singleton {
 			//The Hero Background controls - For pages
 			'enhanced_featured_image' => array(
 				'id'         => 'enhanced_featured_image',
-				'title'      => esc_html__( 'Thumbnail', 'components_txtd' )
+				'title'      => esc_html__( 'Thumbnail', '__components_txtd' )
 				                . ' <span class="tooltip" title="<' . 'title>' // This is split is just to not get annoyed by Theme Check
-				                . esc_html__( 'Thumbnail (Featured Image)', 'components_txtd' )
+				                . esc_html__( 'Thumbnail (Featured Image)', '__components_txtd' )
 				                . '</title><p>'
-				                . esc_html__( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', 'components_txtd' )
+				                . esc_html__( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', '__components_txtd' )
 				                . '</p><p>'
-				                . '<strong>' . esc_html__( 'Thumbnail Hover', 'components_txtd' ) . '</strong>'
+				                . '<strong>' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</strong>'
 				                . '</p><p>'
-				                . esc_html__( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', 'components_txtd' )
+				                . esc_html__( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', '__components_txtd' )
 				                . '</p>"></span>',
 				'pages'      => $component_config['post_types'], // Post types to display this metabox on
 				'context'    => 'side',
@@ -96,18 +96,18 @@ class Pixelgrade_FeaturedImage_Metaboxes extends Pixelgrade_Singleton {
 				'show_names' => false, // Show field names on the left
 				'fields'     => array(
 					array(
-						'name'        => esc_html__( 'Thumbnail Image', 'components_txtd' ),
+						'name'        => esc_html__( 'Thumbnail Image', '__components_txtd' ),
 						'id'          => '_thumbnail_id', //this is the same id of the featured image we are replacing
 						'type'        => 'image',
-						'button_text' => esc_html__( 'Add Thumbnail Image', 'components_txtd' ),
+						'button_text' => esc_html__( 'Add Thumbnail Image', '__components_txtd' ),
 						'class'       => '',
 						'validate_func' => 'pixelgrade_featured_image_validate_thumbnail_id_field',
 					),
 					array(
-						'name'        => esc_html__( 'Thumbnail Hover Image', 'components_txtd' ),
+						'name'        => esc_html__( 'Thumbnail Hover Image', '__components_txtd' ),
 						'id'          => '_thumbnail_hover_image',
 						'type'        => 'image',
-						'button_text' => esc_html__( 'Add Thumbnail Hover', 'components_txtd' ),
+						'button_text' => esc_html__( 'Add Thumbnail Hover', '__components_txtd' ),
 						'class'       => 'thumbnail-hover',
 					),
 				),
@@ -228,7 +228,7 @@ class Pixelgrade_FeaturedImage_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ), esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
 	} // End __clone ()
 
 	/**
@@ -237,6 +237,6 @@ class Pixelgrade_FeaturedImage_Metaboxes extends Pixelgrade_Singleton {
 	 * @since 1.0.0
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'components_txtd' ),  esc_html( $this->parent->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
 	} // End __wakeup ()
 }
