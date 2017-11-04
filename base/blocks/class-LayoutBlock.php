@@ -94,8 +94,8 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				$new_blocks[] = $block;
 				continue;
 			} elseif ( is_string( $block ) ) {
-				// We need to search for the registered block ID and save it's instance
-				// We need to handle namespaced and non-namespaced block IDs differently
+				// We need to search for the registered block ID and save it's instance.
+				// Namespaced and non-namespaced block IDs need to be handled differently.
 				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block ) ) {
 					// For non-namespaced block IDs references, we will consider that it is a reference to a sibling block
 					// It still needs to be previously registered (ie. previously in the config array)

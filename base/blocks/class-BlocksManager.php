@@ -274,7 +274,10 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @access public
 	 */
 	public function renderBlockTemplates() {
+		// @todo This is not used right now. Decide if we need the logic for block JS templates.
+
 		foreach ( $this->registered_block_types as $block_type ) {
+			/** @var Pixelgrade_Block $block */
 			$block = new $block_type( $this, 'temp', array(
 				'settings' => array(),
 			) );
@@ -368,6 +371,21 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 */
 	public static function isBlockIdNamespaced( $block_id ) {
 		if ( is_string( $block_id ) && false !== strpos( $block_id, PIXELGRADE_BLOCK_ID_SEPARATOR ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Determine if a block ID is a root block ID (starts with the separator).
+	 *
+	 * @param mixed $block_id
+	 *
+	 * @return bool
+	 */
+	public static function isRootBlockId( $block_id ) {
+		if ( is_string( $block_id ) && 0 === strpos( $block_id, PIXELGRADE_BLOCK_ID_SEPARATOR ) ) {
 			return true;
 		}
 
