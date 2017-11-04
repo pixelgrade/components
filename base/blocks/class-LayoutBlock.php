@@ -97,14 +97,14 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				// We need to search for the registered block ID and save it's instance.
 				// Namespaced and non-namespaced block IDs need to be handled differently.
 				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block ) ) {
-					// For non-namespaced block IDs references, we will consider that it is a reference to a sibling block
-					// It still needs to be previously registered (ie. previously in the config array)
+					// For non-namespaced block IDs references, we will consider that it is a reference to a sibling block.
+					// It still needs to be previously registered (ie. previously in the config array).
 					if ( $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id ) ) ) {
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id );
 					} elseif ( $parent instanceof Pixelgrade_Block
 					           && $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
 
-						// We see if there is a block in the parent that matches
+						// We try and see if there is a block in the parent that matches the block ID
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id );
 					}
 				}
@@ -119,8 +119,10 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				// Get the block instance, if all is well
 				$block_instance = $this->addBlock( $key, $block, true );
 
+				// This should never happen, but it's best to let someone know, besides ignoring it.
 				if ( null === $block_instance ) {
-					echo 'boom';
+					_doing_it_wrong( __METHOD__, sprintf( 'You tried to add or define a block (%s) but ended up with NULL - very strange indeed!', $key ), null );
+					continue;
 				}
 
 				if ( false !== $block_instance ) {
@@ -148,7 +150,15 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 		if ( $id instanceof Pixelgrade_Block ) {
 			// We have got a Pixelgrade_Block instance directly - just save it and that is that
 			$block = $id;
-		} elseif ( is_string( $id ) ) {
+		} elseif ( is_string( $id ) || is_numeric( $id ) ) {
+
+			// For numeric block IDs (most likely completely missing the array key - non-associative arrays)
+			// we will generate a random ID, but this will make it impossible to extend or reuse this block!!!
+			if ( is_numeric( $id ) ) {
+				// Generate a random integer
+				$id = (string) wp_rand();
+			}
+
 			// We've got a string
 			// If we have also got $args, this means we are dealing with an inline block
 			if ( ! empty( $args ) ) {
@@ -169,7 +179,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				$block = $this->manager->getRegisteredBlock( $id );
 			}
 		} else {
-			_doing_it_wrong( __METHOD__, 'You tried to add or define a block using a strange (e.g. not supported) way!', null );
+			_doing_it_wrong( __METHOD__, sprintf( 'You tried to add or define a block (%s) using a strange (e.g. not supported) way!', $id ), null );
 		}
 
 		// Add the block instance to the child blocks list
