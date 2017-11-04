@@ -115,11 +115,14 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_item_class' ) ) {
 
 if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 	/**
-	 * Get all the needed meta for a post.
+	 * Get the needed meta for a post. Either all the meta or just a specific one.
 	 *
-	 * @return array
+	 * @param bool|string $key Optional. A specific meta key from the supported: 'category', 'tags', 'author', 'date', 'comments'.
+	 *                          Will return all the metas if an invalid key is given.
+	 *
+	 * @return array|string|false
 	 */
-	function pixelgrade_get_post_meta() {
+	function pixelgrade_get_post_meta( $key = false ) {
 		// Gather up all the meta we might need to display
 		// But first initialize please
 		$meta = array(
@@ -130,64 +133,83 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 			'comments' => false,
 		);
 
-		// And get the options
-		$items_primary_meta   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
-		$items_secondary_meta = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
-
-		if ( 'category' == $items_primary_meta || 'category' == $items_secondary_meta ) {
-			$category = '';
-
-			if ( is_page() ) {
-				// If we are on a page then we only want the main category
-				$main_category = pixelgrade_get_main_category_link();
-				if ( ! empty( $main_category ) ) {
-					$category .= '<span class="screen-reader-text">' . esc_html__( 'Main Category', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
-					$category .= '<li>' . $main_category . '</li>' . PHP_EOL;
-					$category .= '</ul>' . PHP_EOL;
-				}
-			} else {
-				// On archives we want to show all the categories, not just the main one
-				$categories = get_the_terms( get_the_ID(), 'category' );
-				if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
-					$category .= '<span class="screen-reader-text">' . esc_html__( 'Categories', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
-					foreach ( $categories as $this_category ) {
-						$category .= '<li><a href="' . esc_url( get_category_link( $this_category ) ) . '" rel="category">' . $this_category->name . '</a></li>' . PHP_EOL;
-					};
-					$category .= '</ul>' . PHP_EOL;
-				}
-			}
-			$meta['category'] = $category;
+		$single_meta_needed = false;
+		if ( ! empty( $key ) && in_array( $key, array_keys( $meta ) ) ) {
+			// We have been given a valid key, we only want that
+			$meta = array( $key => false );
+			$single_meta_needed = true;
 		}
 
-		if ( 'tags' == $items_primary_meta || 'tags' == $items_secondary_meta ) {
-			$post_tags = get_the_terms( get_the_ID(), 'post_tag' );
-			$tags      = '';
-			if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
-				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
-				foreach ( $post_tags as $post_tag ) {
-					$tags .= '<li><a href="' . esc_url( get_term_link( $post_tag ) ) . '" rel="tag">' . $post_tag->name . '</a></li>' . PHP_EOL;
-				};
-				$tags .= '</ul>' . PHP_EOL;
+		foreach ( $meta as $meta_key => $item ) {
+			switch ( $meta_key ) {
+				case 'category':
+					$category = '';
+					if ( is_page() ) {
+						// If we are on a page then we only want the main category
+						$main_category = pixelgrade_get_main_category_link();
+						if ( ! empty( $main_category ) ) {
+							$category .= '<span class="screen-reader-text">' . esc_html__( 'Main Category', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
+							$category .= '<li>' . $main_category . '</li>' . PHP_EOL;
+							$category .= '</ul>' . PHP_EOL;
+						}
+					} else {
+						// On archives we want to show all the categories, not just the main one
+						$categories = get_the_terms( get_the_ID(), 'category' );
+						if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+							$category .= '<span class="screen-reader-text">' . esc_html__( 'Categories', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
+							foreach ( $categories as $this_category ) {
+								$category .= '<li><a href="' . esc_url( get_category_link( $this_category ) ) . '" rel="category">' . $this_category->name . '</a></li>' . PHP_EOL;
+							};
+							$category .= '</ul>' . PHP_EOL;
+						}
+					}
+					$meta['category'] = $category;
+					break;
+				case 'tags':
+					$post_tags = get_the_terms( get_the_ID(), 'post_tag' );
+					$tags      = '';
+					if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
+						$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
+						foreach ( $post_tags as $post_tag ) {
+							$tags .= '<li><a href="' . esc_url( get_term_link( $post_tag ) ) . '" rel="tag">' . $post_tag->name . '</a></li>' . PHP_EOL;
+						};
+						$tags .= '</ul>' . PHP_EOL;
+					}
+					$meta['tags'] = $tags;
+					break;
+				case 'author':
+					$meta['author'] = '<span class="byline">' . get_the_author() . '</span>';
+					break;
+				case 'date':
+					$meta['date']   = '<span class="posted-on">' . get_the_date() . '</span>';
+					break;
+				case 'comments':
+					$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
+					if ( comments_open() ) {
+						if ( $comments_number == 0 ) {
+							$comments = esc_html__( 'No Comments', '__components_txtd' );
+						} else {
+							$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
+						}
+						$meta['comments'] = '<a href="' . esc_url( get_comments_link() ) . '">' . esc_html( $comments ) . '</a>';
+					} else {
+						$meta['comments'] = '';
+					}
+					break;
+				default:
+					break;
 			}
-			$meta['tags'] = $tags;
 		}
 
-		$meta['author'] = '<span class="byline">' . get_the_author() . '</span>';
-		$meta['date']   = '<span class="posted-on">' . get_the_date() . '</span>';
+		// Filter it before we decide what to return
+		$meta = apply_filters( 'pixelgrade_get_post_meta', $meta, $key );
 
-		$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
-		if ( comments_open() ) {
-			if ( $comments_number == 0 ) {
-				$comments = esc_html__( 'No Comments', '__components_txtd' );
-			} else {
-				$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
-			}
-			$meta['comments'] = '<a href="' . esc_url( get_comments_link() ) . '">' . esc_html( $comments ) . '</a>';
-		} else {
-			$meta['comments'] = '';
+		// We have been asked for a single meta, we will return the string value; no array
+		if ( true === $single_meta_needed ) {
+			return $meta[ $key ];
 		}
 
-		return apply_filters( 'pixelgrade_get_post_meta', $meta );
+		return $meta;
 	} #function
 }
 

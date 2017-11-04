@@ -150,12 +150,12 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 		if ( $id instanceof Pixelgrade_Block ) {
 			// We have got a Pixelgrade_Block instance directly - just save it and that is that
 			$block = $id;
-		} elseif ( is_string( $id ) || is_numeric( $id ) ) {
+		} elseif ( is_string( $id ) || is_int( $id ) ) {
 
-			// For numeric block IDs (most likely completely missing the array key - non-associative arrays)
-			// we will generate a random ID, but this will make it impossible to extend or reuse this block!!!
+			// For numeric block IDs (most likely due to completely missing the blocks array key - non-associative arrays)
+			// we will generate a random ID, but this will make it next to impossible to extend or reuse this block!!!
 			if ( is_numeric( $id ) ) {
-				// Generate a random integer
+				// Generate a random integer string
 				$id = (string) wp_rand();
 			}
 
