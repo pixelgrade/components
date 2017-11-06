@@ -92,49 +92,12 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 		 */
 		do_action( "pixelgrade_before_render_templatepart_block_{$this->id}_content", $this, $blocks_trail );
 
-		// Handle the various formats we could be receiving the template info in
-		if ( is_string( $this->templates ) ) {
-			// This is directly the slug of a template part - load it
-			get_template_part( $this->templates );
-		} elseif ( is_array( $this->templates ) ) {
-			// We have an array but it may be a simple array, or an array of arrays - standardize it
-			if ( isset( $this->templates['slug'] ) ) {
-				// We have a simple array
-				$this->templates = array( $this->templates );
-			}
+		$found_template = Pixelgrade_Config::evaluateTemplateParts( $this->templates );
 
-			// We respect our promise to process the templates according to their priority, descending
-			// So we will stop at the first found template
-			foreach ( $this->templates as $template ) {
-				// First, if this template has any checks, we will evaluate them.
-				// If the checks pass, we will proceed with locating and loading the template.
-				if ( ! empty( $template['checks'] ) && false === Pixelgrade_Config::evaluateChecks( $template['checks'] ) ) {
-					// We need to skip this template since the checks have failed.
-					continue;
-				}
-
-				// We really need at least a slug to be able to do something
-				if ( ! empty( $template['slug'] ) ) {
-					// We have a simple template array - just a slug; make sure the name is present
-					if ( empty( $template['name'] ) ) {
-						$template['name'] = '';
-					}
-
-					if ( ! empty( $template['component_slug'] ) ) {
-						// We will treat it as a component template part
-						$found_template = pixelgrade_locate_component_template_part( $template['component_slug'], $template['slug'], $template['name'] );
-					} else {
-						$found_template = pixelgrade_locate_template_part( $template['slug'], '', $template['name'] );
-					}
-
-					// If we found a template, we load it and stop since upper templates get precedence over lower ones
-					if ( ! empty( $found_template ) ) {
-						// Make sure that we don't end up using require_once!
-						load_template( $found_template, false );
-						break;
-					}
-				}
-			}
+		// If we found a template, we load it
+		if ( ! empty( $found_template ) ) {
+			// Make sure that we don't end up using require_once!
+			load_template( $found_template, false );
 		}
 
 		/**

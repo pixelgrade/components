@@ -103,6 +103,74 @@ class Pixelgrade_Config {
 	}
 
 	/**
+	 * Given a list of template-parts templates, process it (aka evaluate checks and so on)
+	 * and return the first located template path for inclusion.
+	 *
+	 * @param array|string $templates
+	 *
+	 * @return string|false The found template path or false if no template was found or passed the processing.
+	 */
+	public static function evaluateTemplateParts( $templates ) {
+		$found_template = false;
+		// Handle the various formats we could be receiving the template info in
+		if ( is_string( $templates ) ) {
+			// This is directly the slug of a template part - locate it
+			$found_template = pixelgrade_locate_template_part( $templates );
+		} elseif ( is_array( $templates ) ) {
+			// We have an array but it may be a simple array, or an array of arrays - standardize it
+			if ( isset( $templates['slug'] ) ) {
+				// We have a simple array
+				$templates = array( $templates );
+			}
+
+			// We respect our promise to process the templates according to their priority, descending
+			// So we will stop at the first found template
+			foreach ( $templates as $template ) {
+				// First, if this template has any checks, we will evaluate them.
+				// If the checks pass, we will proceed with locating and loading the template.
+				if ( ! empty( $template['checks'] ) && false === Pixelgrade_Config::evaluateChecks( $template['checks'] ) ) {
+					// We need to skip this template since the checks have failed.
+					continue;
+				}
+
+				// We really need at least a slug to be able to do something
+				if ( ! empty( $template['slug'] ) ) {
+					// We have a simple template array - just a slug; make sure the name is present
+					if ( empty( $template['name'] ) ) {
+						$template['name'] = '';
+					}
+
+					if ( ! empty( $template['component_slug'] ) ) {
+						// We will treat it as a component template part
+
+						// If we have been told to also look in the template parts root (the 'template-parts' directory in the theme root), we will do so
+						$lookup_parts_root = false;
+						if ( ! empty( $template['lookup_parts_root'] ) ) {
+							$lookup_parts_root = true;
+						}
+
+						$found_template = pixelgrade_locate_component_template_part( $template['component_slug'], $template['slug'], $template['name'], $lookup_parts_root );
+					} else {
+						$found_template = pixelgrade_locate_template_part( $template['slug'], '', $template['name'] );
+					}
+
+					// If we found a template, we stop since upper templates get precedence over lower ones
+					if ( ! empty( $found_template ) ) {
+						break;
+					}
+				}
+			}
+		}
+
+		// Standardize our failure response
+		if ( empty( $found_template ) ) {
+			return false;
+		}
+
+		return $found_template;
+	}
+
+	/**
 	 * Evaluate a series of dependencies.
 	 *
 	 * We currently handle dependencies like these:
