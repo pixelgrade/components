@@ -196,6 +196,13 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 }
 
 if ( ! function_exists( 'pixelgrade_change_excerpt_more' ) ) {
+	/**
+	 * Change the default [...] at the end of auto-generated excerpts.
+	 *
+	 * @param string $more The current excerpt more string.
+	 *
+	 * @return string The new excerpt more string.
+	 */
 	function pixelgrade_change_excerpt_more( $more ) {
 		return '..';
 	}
