@@ -40,7 +40,6 @@ $header-font: () !default;
   @include leading-map($logo-font);
 }
 
-.site-header,
 .u-header-background {
   background-color: $header-background-color;
 }

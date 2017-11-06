@@ -49,6 +49,7 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
 	$classes = array();
 
 	$classes[] = 'site-header';
+	$classes[] = 'u-header-background';
 
 	if ( ! empty( $class ) ) {
 		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
