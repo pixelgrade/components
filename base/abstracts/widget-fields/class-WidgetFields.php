@@ -663,12 +663,15 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
             // We only save the fields that have been defined
             foreach ( $this->getFields() as $field_name => $field_config ) {
-                // First put in the default value
-                $instance[ $field_name ] = $this->getDefault( $field_name );
-
-                // Now determine if we use the new value
-                if ( isset( $sanitized_instance[ $field_name ] ) && null !== $sanitized_instance[ $field_name ] ) {
-                    $instance[ $field_name ] = $sanitized_instance[ $field_name ];
+                // We only want to save entries for the fields currently supports by the current widget type
+	            // No disabled fields!
+                if ( isset( $sanitized_instance[ $field_name ] ) ) {
+	                // First put in the default value
+	                $instance[ $field_name ] = $this->getDefault( $field_name );
+	                // Now determine if we use the new value
+                	if ( null !== $sanitized_instance[ $field_name ] ) {
+		                $instance[ $field_name ] = $sanitized_instance[ $field_name ];
+	                }
                 }
             }
 
@@ -696,6 +699,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
             foreach( $this->getFields() as $field_name => $field_config ) {
                 if ( $this->isFieldDisabled( $field_name ) ) {
+                	// We want to keep a clean instance, hence we don't want values for fields that are disabled
+                	unset( $instance[ $field_name ] );
                     continue;
                 }
 

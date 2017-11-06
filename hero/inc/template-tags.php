@@ -783,8 +783,8 @@ function pixelgrade_hero_the_slide_background( $slide, $img_opacity = '100' ) {
 		return false;
 	}
 
-	//sanitize the opacity
-	//if it's empty (probably because someone hasn't saved the post with the new metas) give it the default value
+	// Sanitize the opacity
+	// If it's empty (probably because someone hasn't saved the post with the new metas) give it the default value
 	if ( '' === $img_opacity ) {
 		$img_opacity = '100';
 	}
@@ -811,6 +811,7 @@ function pixelgrade_hero_the_slide_background( $slide, $img_opacity = '100' ) {
 			break;
 
 		case 'featured-project':
+		case 'featured-post':
 			// In case of projects we only work with the featured image
 			if ( has_post_thumbnail( $slide['post_id'] ) ) {
 				$thumbnail_ID = get_post_thumbnail_id( $slide['post_id'] );
@@ -837,7 +838,7 @@ function pixelgrade_hero_the_slide_background( $slide, $img_opacity = '100' ) {
 			break;
 	}
 
-	//bail if we could not determine a type
+	// Bail if we could not determine a type
 	if ( empty( $type ) ) {
 		return false;
 	}
@@ -855,7 +856,7 @@ function pixelgrade_hero_the_slide_background( $slide, $img_opacity = '100' ) {
 			break;
 	}
 
-	//maybe someone is wondering if we have succeeded
+	// Maybe someone is wondering if we have succeeded
 	return true;
 }
 
