@@ -194,3 +194,10 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 		return false;
 	}
 }
+
+if ( ! function_exists( 'pixelgrade_change_excerpt_more' ) ) {
+	function pixelgrade_change_excerpt_more( $more ) {
+		return '..';
+	}
+}
+add_filter('excerpt_more', 'pixelgrade_change_excerpt_more', 10, 1 );
