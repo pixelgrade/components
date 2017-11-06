@@ -554,12 +554,12 @@ if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) :
  *
  * @access public
  * @param string $slug
- * @param string $template_path
+ * @param string $template_path Optional. Default: ''
  * @param string $name Optional. Default: ''
  * @param string $default_path (default: '')
  * @return string
  */
-function pixelgrade_locate_template_part( $slug, $template_path, $name = '', $default_path = '' ) {
+function pixelgrade_locate_template_part( $slug, $template_path = '', $name = '', $default_path = '' ) {
 	$template = '';
 
 	// Setup our partial path (mainly trailingslashit)

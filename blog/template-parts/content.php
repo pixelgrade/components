@@ -25,12 +25,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 // We first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'post' );
 
-// Let's deal with the meta
-$meta                      = pixelgrade_get_post_meta();
-$blog_items_primary_meta   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
-$blog_items_secondary_meta = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
-$primary_meta              = $blog_items_primary_meta !== 'none' && ! empty( $meta[ $blog_items_primary_meta ] ) ? $meta[ $blog_items_primary_meta ] : '';
-$secondary_meta            = $blog_items_secondary_meta !== 'none' && ! empty( $meta[ $blog_items_secondary_meta ] ) ? $meta[ $blog_items_secondary_meta ] : '';
+// Let's deal with the meta keys, if they are not already defined.. by higher powers
+// We may have got the meta names from an include (like in custom widgets using this template part)
+if ( ! isset( $primary_meta_key ) && ! isset( $secondary_meta_key ) ) {
+	$primary_meta_key   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
+	$secondary_meta_key = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
+
+}
+
+$primary_meta   = $primary_meta_key !== 'none' ? pixelgrade_get_post_meta( $primary_meta_key ) : '';
+$secondary_meta = $secondary_meta_key !== 'none' ? pixelgrade_get_post_meta( $secondary_meta_key ) : '';
 
 /**
  * pixelgrade_before_loop_entry hook.
@@ -69,8 +73,6 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 			<div class="c-card__content">
 
 				<?php
-
-
 				if ( $primary_meta || $secondary_meta ) { ?>
 
 					<div class="c-card__meta">
@@ -96,7 +98,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
 				<?php }
 
-				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) ) { ?>
+				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) { ?>
 					<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
 				<?php } ?>
 

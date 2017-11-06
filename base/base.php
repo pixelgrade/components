@@ -45,10 +45,11 @@ require_once PIXELGRADE_BASE_PATH . 'utils/class-Config.php';
 
 /**
  * SECOND (REALLY SECOND)
- * Load our abstract classes needed by all components
+ * Load our abstract classes needed by all components and others.
  */
 require_once PIXELGRADE_BASE_PATH . 'abstracts/class-Singleton.php';
 require_once PIXELGRADE_BASE_PATH . 'abstracts/class-Component.php';
+require_once PIXELGRADE_BASE_PATH . 'abstracts/widget-fields/class-WidgetFields.php';
 
 /**
  * THIRD (REALLY THIRD)

@@ -58,7 +58,7 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive any templates, something is wrong
 		if ( empty( $args['templates'] ) ) {
-			_doing_it_wrong( __METHOD__, 'Can\'t register a TEMPLATE type block without any templates!', null );
+			_doing_it_wrong( __METHOD__, 'Can\'t register a TEMPLATE PART type block without any templates!', null );
 			return;
 		}
 
@@ -71,8 +71,7 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 * @param array $blocks_trail The current trail of parent blocks (aka the anti-looping machine).
 	 */
 	protected function renderContent( $blocks_trail = array() ) {
-		// Pass along the blocks trail, just in case someone is interested.
-		// @todo ^
+		// @todo Pass along the blocks trail, just in case someone is interested.
 
 		/**
 		 * Fires before a template-part block's content is rendered.
@@ -93,42 +92,12 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 		 */
 		do_action( "pixelgrade_before_render_templatepart_block_{$this->id}_content", $this, $blocks_trail );
 
-		// Handle the various formats we could be receiving the template info in
-		if ( is_string( $this->templates ) ) {
-			// This is directly the slug of a template part - load it
-			get_template_part( $this->templates );
-		} elseif ( is_array( $this->templates ) ) {
-			// We have an array but it may be a simple array, or an array of arrays - standardize it
-			if ( isset( $this->templates['slug'] ) ) {
-				// We have a simple array
-				$this->templates = array( $this->templates );
-			}
+		$found_template = Pixelgrade_Config::evaluateTemplateParts( $this->templates );
 
-			// We respect our promise to process the templates according to their priority, descending
-			// So we will stop at the first found template
-			foreach ( $this->templates as $item ) {
-				// We really need at least a slug to be able to do something
-				if ( ! empty( $item['slug'] ) ) {
-					// We have a simple template array - just a slug; make sure the name is present
-					if ( empty( $item['name'] ) ) {
-						$item['name'] = '';
-					}
-
-					if ( ! empty( $item['component_slug'] ) ) {
-						// We will treat it as a component template part
-						$found_template = pixelgrade_locate_component_template_part( $item['component_slug'], $item['slug'], $item['name'] );
-					} else {
-						$found_template = pixelgrade_locate_template_part( $item['slug'], '', $item['name'] );
-					}
-
-					// If we found a template, we load it and stop since upper templates get precedence over lower ones
-					if ( ! empty( $found_template ) ) {
-						// Make sure that we don't end up using require_once!
-						load_template( $found_template, false );
-						break;
-					}
-				}
-			}
+		// If we found a template, we load it
+		if ( ! empty( $found_template ) ) {
+			// Make sure that we don't end up using require_once!
+			load_template( $found_template, false );
 		}
 
 		/**
