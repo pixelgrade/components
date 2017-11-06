@@ -32,7 +32,7 @@ function pixelgrade_add_cats_list( $content ) {
 		// This is list can be filtered via 'the_category_list' and the main category be removed on single posts
 		$categories_list = get_the_category_list( ' ' );
 
-		if ( ! empty( $categories_list ) ) {
+		if ( ! empty( $categories_list ) && 'Uncategorized' != $categories_list ) {
 			$cats_content .= '<div class="cats"><span class="cats__title">' . esc_html__( 'Categories', '__components_txtd' ) . sprintf( '</span>' . esc_html__( '%1$s', '__components_txtd' ), $categories_list ) . '</div>'; // WPCS: XSS OK.
 		}
 	}
