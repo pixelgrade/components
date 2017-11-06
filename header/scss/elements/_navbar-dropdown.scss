@@ -43,10 +43,11 @@ $navbar-dropdown-width: 15em !default;
       width: 100%;
       margin: 0;
     }
+  }
 
-    [class*="has-children"] > a:after {
-      transform: rotate(-90deg);
-    }
+  .sub-menu [class*="has-children"] > a:after,
+  .children [class*="has_children"] > a:after {
+    transform: rotate(-90deg);
   }
 
   .sub-menu .sub-menu,
