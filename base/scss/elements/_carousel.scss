@@ -1,0 +1,76 @@
+.featured-posts-carousel {
+  display: flex;
+  flex-flow: row wrap;
+
+  .slick-slide {
+    padding: 0 0.9em;
+  }
+
+  .slick-arrow {
+    max-width: 50px;
+    flex: 1;
+    order: 0;
+    cursor: pointer;
+
+    &.slick-disabled {
+      opacity: 0;
+    }
+  }
+
+  .slick-next {
+    @include btn-directional;
+    @include btn-directional--right;
+
+    padding-right: 18px;
+
+    &:after {
+      right: 0;
+    }
+    &:before {
+      right: 3px;
+    }
+  }
+
+  .slick-prev {
+    @include btn-directional;
+    @include btn-directional--left;
+
+    padding-left: 18px;
+
+    &:after {
+      left: 0;
+    }
+    &:before {
+      left: 3px;
+    }
+  }
+
+  .slick-list {
+    flex: 1;
+    order: 0;
+  }
+
+  .slick-dots {
+    order: 1;
+    flex: 1 100%;
+    text-align: center;
+
+    > li {
+      display: inline-block;
+    }
+
+    .slick-active {
+      button {
+        text-decoration: underline;
+        color: $btn-background;
+      }
+    }
+
+    button {
+      background: transparent;
+      color: $theme-text-color;
+      padding-left: .9em;
+      padding-right: .9em;
+    }
+  }
+}
