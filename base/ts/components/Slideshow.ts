@@ -11,22 +11,20 @@ export class Slideshow extends BaseComponent {
   private headerBlendedClass: string = 'site-header--blended';
 
   private element: JQueryExtended;
+
   private slickOptions = {
     dots: true,
-    infinite: false,
+    infinite: true,
     nextArrow: '<div class="slick-next"></div>',
     prevArrow: '<div class="slick-prev"></div>',
-    slidesToScroll: 3,
-    slidesToShow: 3,
     speed: 500,
-    variableWidth: true
   };
 
   constructor( element ) {
     super();
 
     this.element = element;
-    // this.maybeBlendHeader();
+    this.maybeBlendHeader();
     this.bindEvents();
   }
 
@@ -49,6 +47,6 @@ export class Slideshow extends BaseComponent {
   }
 
   private bindSlick() {
-    // this.element.slick( this.slickOptions );
+    ( this.element.find( '.c-hero__slider' ) as JQueryExtended ).slick( this.slickOptions );
   }
 }
