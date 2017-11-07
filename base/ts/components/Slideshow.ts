@@ -13,6 +13,10 @@ export class Slideshow extends BaseComponent {
   private element: JQueryExtended;
 
   private slickOptions = {
+    customPaging: (slider, i) => {
+      const index = i < 9 ? '0' + i : i;
+      return '<a>' + index + '</a>';
+    },
     dots: true,
     infinite: true,
     nextArrow: '<div class="slick-next"></div>',
