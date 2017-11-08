@@ -191,17 +191,23 @@ export class StickyHeader extends BaseComponent {
     // If if has not been done yet, prepare the mark-up for the mobile navigation
     if ( !this.isMobileHeaderInitialised ) {
 
+      // Append the branding
+      const $branding = $( '.c-branding' );
+      const $navbarZone = $( '.c-navbar__zone--right' );
+      $branding.clone().appendTo( '.c-navbar' );
+      $branding.find( 'img' ).removeClass( 'is--loading' );
+
       // Create the mobile site header
       const $siteHeaderMobile = $( '<div class="site-header-mobile u-container-sides-spacings"></div>' )
         .appendTo( '.c-navbar' );
 
-      // Append the branding
-      const $branding = $( '.c-branding' );
-      $branding.clone().appendTo( $siteHeaderMobile );
-      $branding.find( 'img' ).removeClass( 'is--loading' );
-
       // Append the social menu
-      $( '.c-navbar__zone--left .jetpack-social-navigation' ).clone().appendTo( $siteHeaderMobile );
+      const $socialMenu = $( '.c-navbar__zone--left .jetpack-social-navigation' );
+      const $searchTrigger = $socialMenu.find('.js-search-trigger').parent().clone();
+      $navbarZone.append( $socialMenu.clone() );
+      $navbarZone.find('.js-search-trigger' ).parent().remove();
+      $siteHeaderMobile.append( $socialMenu.clone().empty().append( $searchTrigger ) );
+      $socialMenu.empty();
 
       // Handle sub menus:
       // Make sure there are no open menu items

@@ -1,6 +1,6 @@
 $nav-mobile-width: 75vw !default;
 $nav-mobile-background: #FBFBFB !default;
-$nav-mobile-color: #000000 !default;
+$nav-mobile-color: #000 !default;
 $mobile-header-height: 56px !default;
 
 .c-navbar {
@@ -8,12 +8,11 @@ $mobile-header-height: 56px !default;
 
   .menu-item-has-children,
   .page_item_has_children {
-
     > a {
       position: relative;
 
       &:after {
-        content: "";
+        content: '';
 
         position: absolute;
         top: 50%;
@@ -36,8 +35,8 @@ $mobile-header-height: 56px !default;
 }
 
 .c-navbar[class] {
-
-  ul, li {
+  ul,
+  li {
     margin: 0;
   }
 }
@@ -58,7 +57,7 @@ $mobile-header-height: 56px !default;
   background: $nav-mobile-background;
   border: 0 solid transparent;
 
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   -webkit-overflow-scrolling: touch;
 
@@ -85,7 +84,7 @@ $mobile-header-height: 56px !default;
 
   cursor: pointer;
 
-  & > * {
+  > * {
     flex-shrink: 0;
   }
 }
