@@ -17,7 +17,7 @@ export class Slideshow extends BaseComponent {
       const index = i < 9 ? '0' + i : i;
       return '<a>' + index + '</a>';
     },
-    dots: true,
+    dots: false,
     infinite: true,
     nextArrow: '<div class="slick-next"></div>',
     prevArrow: '<div class="slick-prev"></div>',
@@ -28,6 +28,8 @@ export class Slideshow extends BaseComponent {
     super();
 
     this.element = element;
+    this.slickOptions.dots = typeof this.element.data('show_pagination') !== 'undefined';
+
     this.maybeBlendHeader();
     this.bindEvents();
   }

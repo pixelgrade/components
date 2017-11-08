@@ -1285,6 +1285,10 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 								'property' => 'color',
 								'selector' => '.c-gallery--blog .c-meta__secondary',
 							),
+							array(
+								'property' => 'background-color',
+								'selector' => '.c-gallery--blog .c-meta__separator:after',
+							),
 						),
 					),
 					'blog_item_thumbnail_background'    => array(
