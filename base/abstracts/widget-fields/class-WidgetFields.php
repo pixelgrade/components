@@ -152,8 +152,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		            	if ( $do_accordion ) {
 				            $state_field_name = "widget-section-state[{$section_id}]";
 				            $state_value = $this->getSectionDefaultState( $section_id );
-				            if ( isset( $instance[ $state_field_name ] ) && in_array( $instance[ $state_field_name ], array( 'open', 'closed', ) ) ) {
-					            $state_value = $instance[ $state_field_name ];
+				            // In case this is a AJAX request (like when saving the widget) - keep the current state so we don't confuse the user
+				            if ( wp_doing_ajax() && isset( $_REQUEST['widget-section-state'][ $section_id ] ) && in_array( $_REQUEST['widget-section-state'][ $section_id ], array( 'open', 'closed', ) ) ) {
+					            $state_value = $_REQUEST['widget-section-state'][ $section_id ];
 				            }
 
 				            // We will use the state value as a class also!!!
@@ -698,37 +699,41 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             $instance = (array) $instance;
 
             foreach( $this->getFields() as $field_name => $field_config ) {
-                if ( $this->isFieldDisabled( $field_name ) ) {
-                	// We want to keep a clean instance, hence we don't want values for fields that are disabled
-                	unset( $instance[ $field_name ] );
-                    continue;
-                }
+	            if ( $this->isFieldDisabled( $field_name ) ) {
+		            // We want to keep a clean instance, hence we don't want values for fields that are disabled
+		            unset( $instance[ $field_name ] );
+		            continue;
+	            }
 
-                // Make sure the type is in place
-                if ( empty( $field_config['type'] ) ) {
-                    $field_config['type'] = self::$default_field_type;
-                }
+	            // Make sure the type is in place
+	            if ( empty( $field_config['type'] ) ) {
+		            $field_config['type'] = self::$default_field_type;
+	            }
 
-                // Make sure the section is in place
-                if ( empty( $field_config['section'] ) ) {
-                    $field_config['section'] = self::$default_field_section;
-                }
+	            // Make sure the section is in place
+	            if ( empty( $field_config['section'] ) ) {
+		            $field_config['section'] = self::$default_field_section;
+	            }
 
-                if ( isset( $instance[ $field_name ] ) ) {
-                    if ( isset( $field_config['sanitize_callback'] ) && is_callable( $field_config['sanitize_callback'] ) ) {
-                        $instance[ $field_name ] = call_user_func_array( $field_config['sanitize_callback'], array(
-                            $instance[ $field_name ],
-                            $field_name,
-                            $field_config,
-                        ) );
-                    } elseif ( method_exists( $this, "sanitize_{$field_config['type']}" ) ) {
-                        // Default to the field type sanitization, if available
-                        $instance[ $field_name ] = call_user_func_array( array(
-                            $this,
-                            "sanitize_{$field_config['type']}"
-                        ), array( $instance[ $field_name ], $field_name, $field_config, ) );
-                    }
-                }
+	            // If the field value is not set (probably a checkbox that doesn't send the input when not checked)
+	            if ( ! isset( $instance[ $field_name ] ) ) {
+		            // Give it an empty value, that will be sanitized
+		            $instance[ $field_name ] = '0';
+	            }
+
+	            if ( isset( $field_config['sanitize_callback'] ) && is_callable( $field_config['sanitize_callback'] ) ) {
+		            $instance[ $field_name ] = call_user_func_array( $field_config['sanitize_callback'], array(
+			            $instance[ $field_name ],
+			            $field_name,
+			            $field_config,
+		            ) );
+	            } elseif ( method_exists( $this, "sanitize_{$field_config['type']}" ) ) {
+		            // Default to the field type sanitization, if available
+		            $instance[ $field_name ] = call_user_func_array( array(
+			            $this,
+			            "sanitize_{$field_config['type']}"
+		            ), array( $instance[ $field_name ], $field_name, $field_config, ) );
+	            }
             }
 
             return $instance;
