@@ -243,7 +243,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'wrappers' => array(
                         'header' => array(
                             'tag'     => 'header',
-                            'classes' => 'entry-header',
+                            'classes' => 'entry-header u-header-background',
                         ),
                     ),
                 ),
@@ -374,38 +374,76 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     ),
                 ),
 
+//                'single' => array(
+//                    'extend' => 'blog/default',
+//                    'blocks' => array(
+//                        'header' => array(
+//                            'extend'   => 'blog/container',
+//                            'blocks'   => array( 'blog/entry-header-single' ),
+//                            'wrappers' => array(
+//                                array(
+//                                    'priority' => 100,
+//                                    'classes'  => 'u-header-background'
+//                                ),
+//                            ),
+//                        ),
+//                        'layout' => array(
+//                            'extend' => 'blog/container',
+//                            'blocks' => array(
+//                                'landscape' => array(
+//                                    'extend' => 'blog/main-landscape',
+//                                    'checks' => array(
+//                                        'callback' => 'julia_has_landscape_thumbnail'
+//                                    ),
+//                                ),
+//                                'portrait'  => array(
+//                                    'extend' => 'blog/main-portrait',
+//                                    'checks' => array(
+//                                        'callback' => 'julia_has_portrait_thumbnail'
+//                                    ),
+//                                ),
+//                            ),
+//                        ),
+//                        'blog/related-posts',
+//                    ),
+//                ),
+
                 'single' => array(
-                    'extend' => 'blog/default',
-                    'blocks' => array(
-                        'header' => array(
-                            'extend'   => 'blog/container',
-                            'blocks'   => array( 'blog/entry-header-single' ),
-                            'wrappers' => array(
-                                array(
-                                    'priority' => 100,
-                                    'classes'  => 'u-header-background'
-                                ),
-                            ),
-                        ),
-                        'layout' => array(
-                            'extend' => 'blog/container',
-                            'blocks' => array(
-                                'landscape' => array(
-                                    'extend' => 'blog/main-landscape',
-                                    'checks' => array(
-                                        'callback' => 'julia_has_landscape_thumbnail'
-                                    ),
-                                ),
-                                'portrait'  => array(
-                                    'extend' => 'blog/main-portrait',
-                                    'checks' => array(
-                                        'callback' => 'julia_has_portrait_thumbnail'
-                                    ),
-                                ),
-                            ),
-                        ),
-                        'blog/related-posts',
-                    ),
+	                'extend' => 'blog/default',
+	                'blocks' => array(
+		                'header' => array(
+			                'extend'   => 'blog/container',
+			                'blocks'   => array(
+				                'blog/entry-thumbnail',
+			                	'entry-header-single' => array(
+					                'extend' => 'blog/entry-header-single',
+				                ),
+			                ),
+			                'wrappers' => array(
+				                array(
+					                'priority' => 100,
+					                'classes'  => 'single-header'
+				                ),
+			                ),
+		                ),
+		                'layout' => array(
+			                'extend' => 'blog/container',
+			                'blocks' => array(
+				                'sidebar' => array(
+					                'extend'   => 'blog/side',
+					                'blocks'   => array( 'blog/sidebar' ),
+					                'wrappers' => array(
+						                'side' => array(
+							                'extend_classes' => 'widget-area--post',
+						                ),
+					                ),
+				                ),
+				                'blog/entry-content',
+				                'blog/entry-footer',
+			                ),
+		                ),
+		                'blog/related-posts',
+	                ),
                 ),
 
                 'page'   => array(
