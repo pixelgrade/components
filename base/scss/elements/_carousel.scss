@@ -1,53 +1,95 @@
-.featured-posts-carousel {
-  display: flex;
-  flex-flow: row wrap;
+.u-widget-title-sideways {
+  .widget.widget_featured_posts_carousel {
+    @include below( 'lap' ) {
+      padding-left: 0;
+
+      .widget__title {
+        display: none;
+      }
+    }
+  }
+}
+
+.slick-slider {
+
+  @include above( 'lap' ) {
+    display: flex;
+    flex-flow: row wrap;
+
+    .slick-arrow {
+      max-width: 50px;
+      flex: 1;
+      order: 0;
+      cursor: pointer;
+
+      &.slick-disabled {
+        opacity: 0;
+      }
+    }
+
+    .slick-next {
+      @include btn-directional;
+      @include btn-directional--right;
+
+      padding-right: 18px;
+
+      &:after {
+        right: 0;
+      }
+      &:before {
+        right: 3px;
+      }
+    }
+
+    .slick-prev {
+      @include btn-directional;
+      @include btn-directional--left;
+
+      padding-left: 18px;
+
+      &:after {
+        left: 0;
+      }
+      &:before {
+        left: 3px;
+      }
+    }
+
+    .slick-list {
+      flex: 1;
+      order: 0;
+    }
+
+    &[data-items_layout='variable_width'] {
+      .c-card {
+        display: table;
+        width: 1px;
+      }
+
+      .c-card__content,
+      .c-card__aside {
+        display: table-row;
+      }
+
+      .c-card__content>:first-child {
+        padding-top: 1em;
+      }
+
+      .c-card__frame {
+        padding-top: 0;
+
+        img {
+          height: 300px;
+          position: static;
+          width: auto;
+          max-width: none;
+        }
+      }
+    }
+  }
 
   .slick-slide {
     padding: 0 0.9em;
-  }
-
-  .slick-arrow {
-    max-width: 50px;
-    flex: 1;
-    order: 0;
-    cursor: pointer;
-
-    &.slick-disabled {
-      opacity: 0;
-    }
-  }
-
-  .slick-next {
-    @include btn-directional;
-    @include btn-directional--right;
-
-    padding-right: 18px;
-
-    &:after {
-      right: 0;
-    }
-    &:before {
-      right: 3px;
-    }
-  }
-
-  .slick-prev {
-    @include btn-directional;
-    @include btn-directional--left;
-
-    padding-left: 18px;
-
-    &:after {
-      left: 0;
-    }
-    &:before {
-      left: 3px;
-    }
-  }
-
-  .slick-list {
-    flex: 1;
-    order: 0;
   }
 
   .slick-dots {
@@ -63,14 +105,27 @@
       button {
         text-decoration: underline;
         color: $btn-background;
+
+        @include below( 'lap' ) {
+          background: rgba(0, 0, 0, 0.8);
+        }
       }
     }
 
     button {
       background: transparent;
       color: $theme-text-color;
-      padding-left: .9em;
-      padding-right: .9em;
+      padding-left: 0.9em;
+      padding-right: 0.9em;
+
+      @include below( 'lap' ) {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        font-size: 0;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+      }
     }
   }
 }

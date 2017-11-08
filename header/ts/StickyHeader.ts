@@ -297,9 +297,17 @@ export class StickyHeader extends BaseComponent {
     // Header behaviour below lap
     if ( Helper.below( 'lap' ) ) {
       // First, do the bindings for the mobile sub menus
-      this.prepareMobileMenuMarkup();
+      if (this.isDesktopHeaderInitialised) {
+        window.location.reload();
+      } else {
+        this.prepareMobileMenuMarkup();
+      }
     } else if ( this.isStickyHeaderEnabled ) {
-      this.prepareDesktopMenuMarkup();
+      if (this.isMobileHeaderInitialised) {
+        window.location.reload();
+      } else {
+        this.prepareDesktopMenuMarkup();
+      }
     }
   }
 

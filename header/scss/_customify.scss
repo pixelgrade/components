@@ -16,7 +16,6 @@ $header-links-color: #000 !default;
 $header-links-active-color: #000 !default;
 // @todo $header-links-active-style
 $header-background-color: #FFF !default;
-$header-mobile-border-color: #E7E6E7 !default;
 
 $header-sticky-links-color: $header-links-color !default;
 $header-sticky-links-active-color: $header-links-active-color !default;
@@ -30,10 +29,6 @@ $header-font: () !default;
 .site-logo img,
 .custom-logo-link img {
   max-height: $logo-height;
-
-  @include below('lap') {
-    max-height: $logo-mobile-height;
-  }
 }
 
 .site-title {
@@ -47,11 +42,6 @@ $header-font: () !default;
 .site-header {
   transition: $transition--default;
   transition-property: background-color;
-
-  @include below('lap') {
-    background: $content-background-color;
-    border-bottom: solid 1px $header-mobile-border-color;
-  }
 }
 
 .site-header-sticky {

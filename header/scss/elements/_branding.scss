@@ -3,15 +3,6 @@
   flex-direction: column;
   justify-content: center;
 
-  @include below('lap') {
-    width: 100%;
-    padding: 10px;
-
-    .custom-logo-link + a {
-      margin-top: 0;
-    }
-  }
-
   a,
   img {
     display: block;
