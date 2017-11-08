@@ -28,7 +28,6 @@ export class Slideshow extends BaseComponent {
     super();
 
     this.element = element;
-    this.slickOptions.dots = typeof this.element.data('show_pagination') !== 'undefined';
 
     this.maybeBlendHeader();
     this.bindEvents();
@@ -53,6 +52,16 @@ export class Slideshow extends BaseComponent {
   }
 
   private bindSlick() {
-    ( this.element.find( '.c-hero__slider' ) as JQueryExtended ).slick( this.slickOptions );
+    const that: Slideshow = this;
+
+    this.element.each((i, obj) => {
+      const $element = $(obj);
+      const $slider = $element.find( '.c-hero__slider' );
+      const slickOptions = that.slickOptions;
+
+      slickOptions.dots = typeof $element.data('show_pagination') !== 'undefined';
+
+      ( $slider as JQueryExtended ).slick( slickOptions );
+    });
   }
 }
