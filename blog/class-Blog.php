@@ -442,6 +442,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				                'blog/entry-content',
 				                'blog/entry-footer',
 			                ),
+			                'wrappers' => array(
+				                'main' => array(
+					                'classes' => 'single-main'
+				                ),
+			                ),
 		                ),
 		                'blog/related-posts',
 	                ),
@@ -489,6 +494,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 								                ),
 							                ),
 						                ),
+					                ),
+					                'wrappers' => array(
+					                    'main' => array(
+					                        'classes' => 'single-main',
+					                    ),
 					                ),
 				                ),
 			                ),
