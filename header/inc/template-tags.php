@@ -242,6 +242,29 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 }
 
 /**
+ * Determines whether the site has a custom transparent logo.
+ *
+ * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
+ * @return bool Whether the site has a custom logo or not.
+ */
+function pixelgrade_has_custom_logo_transparent( $blog_id = 0 ) {
+	$switched_blog = false;
+
+	if ( is_multisite() && ! empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
+		switch_to_blog( $blog_id );
+		$switched_blog = true;
+	}
+
+	$custom_logo_id = get_theme_mod( 'pixelgrade_transparent_logo' );
+
+	if ( $switched_blog ) {
+		restore_current_blog();
+	}
+
+	return (bool) $custom_logo_id;
+}
+
+/**
  * Returns a custom logo, linked to home.
  *
  * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
