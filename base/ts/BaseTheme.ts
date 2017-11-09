@@ -8,6 +8,7 @@ export interface JQueryExtended extends JQuery {
   imagesLoaded?( params: any );
   masonry?( options?: any, elements?: any, isStill?: boolean );
   select2?( params?: any );
+  slick?( params?: any );
 }
 
 export class BaseTheme {

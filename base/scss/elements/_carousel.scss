@@ -1,0 +1,172 @@
+.u-widget-title-sideways {
+  .widget.widget_featured_posts_carousel {
+    @include below( 'lap' ) {
+      padding-left: 0;
+
+      .widget__title {
+        display: none;
+      }
+    }
+  }
+}
+
+.slick-slider {
+  position: relative;
+
+  @include above( 'lap' ) {
+    display: flex;
+    flex-flow: row wrap;
+
+    .slick-arrow {
+      max-width: 50px;
+      flex: 1;
+      order: 0;
+      cursor: pointer;
+
+      &.slick-disabled {
+        opacity: 0;
+      }
+
+      @include above(lap) {
+        position: absolute !important;
+        width: 34px;
+        height: 100%;
+      }
+    }
+
+    div.slick-next[class] {
+      @include btn-directional;
+      @include btn-directional--right;
+
+      padding-right: 0;
+
+      @include above(lap) {
+        right: -12px;
+      }
+
+      &:after {
+        right: 0;
+      }
+      &:before {
+        right: 3px;
+      }
+    }
+
+    div.slick-prev[class] {
+      @include btn-directional;
+      @include btn-directional--left;
+
+      padding-left: 0;
+
+      @include above(lap) {
+        left: -12px;
+
+        .u-widget-title-sideways & {
+          left: -40px;
+        }
+      }
+
+      &:after {
+        left: 0;
+      }
+
+      &:before {
+        left: 3px;
+      }
+    }
+
+    .slick-list {
+      flex: 1;
+      order: 0;
+      margin-right: 30px;
+      margin-left: 30px;
+
+      .u-widget-title-sideways & {
+        margin-left: 0;
+      }
+
+      @include above(lap) {
+        flex: auto;
+      }
+    }
+
+    &[data-items_layout='variable_width'] {
+      .c-card {
+        display: table;
+        width: 1px;
+      }
+
+      .c-card__content,
+      .c-card__aside {
+        display: table-row;
+      }
+
+      .c-card__content>:first-child {
+        padding-top: 1em;
+      }
+
+      .c-card__frame {
+        padding-top: 0;
+
+        img {
+          height: 300px;
+          position: static;
+          width: auto;
+          max-width: none;
+        }
+      }
+    }
+  }
+
+  .slick-slide {
+    padding: 0 0.8em;
+    transition: opacity $transition--macro ease-in-out;
+    will-change: opacity;
+
+    @include below(lap) {
+      opacity: 0.5;
+
+      &.slick-active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .slick-dots {
+    order: 1;
+    flex: 1 100%;
+    text-align: center;
+    margin-top: 1em;
+
+    > li {
+      display: inline-block;
+    }
+
+    .slick-active {
+      button {
+        text-decoration: underline;
+        color: $btn-background;
+
+        @include below( 'lap' ) {
+          background: rgba(0, 0, 0, 0.8);
+        }
+      }
+    }
+
+    button {
+      background: transparent;
+      color: $theme-text-color;
+      padding-left: 0.9em;
+      padding-right: 0.9em;
+
+      @include below( 'lap' ) {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        font-size: 0;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+      }
+    }
+  }
+}
