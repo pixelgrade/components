@@ -49,6 +49,7 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
 	$classes = array();
 
 	$classes[] = 'site-header';
+	$classes[] = 'u-header-background';
 
 	if ( ! empty( $class ) ) {
 		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
@@ -238,4 +239,60 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 	} else {
 		return 0;
 	}
+}
+
+/**
+ * Returns a custom logo, linked to home.
+ *
+ * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
+ *
+ * @return string Custom logo transparent markup.
+ */
+function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
+	$html          = '';
+	$switched_blog = false;
+
+	if ( is_multisite() && ! empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
+		switch_to_blog( $blog_id );
+		$switched_blog = true;
+	}
+
+	$custom_logo_id = get_theme_mod( 'pixelgrade_transparent_logo' );
+
+	// We have a logo. Logo is go.
+	if ( $custom_logo_id ) {
+		$html = sprintf( '<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
+			esc_url( home_url( '/' ) ),
+			wp_get_attachment_image( $custom_logo_id, 'full', false, array(
+				'class'    => 'custom-logo--transparent',
+				'itemprop' => 'logo',
+			) )
+		);
+	} // If no logo is set but we're in the Customizer, leave a placeholder (needed for the live preview).
+	elseif ( is_customize_preview() ) {
+		$html = sprintf( '<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" style="display:none;"><img class="custom-logo--transparent"/></a>',
+			esc_url( home_url( '/' ) )
+		);
+	}
+
+	if ( $switched_blog ) {
+		restore_current_blog();
+	}
+
+	/**
+	 * Filters the custom logo output.
+	 *
+	 * @param string $html Custom logo HTML output.
+	 * @param int $blog_id ID of the blog to get the custom logo for.
+	 */
+	return apply_filters( 'pixelgrade_get_custom_logo_transparent', $html, $blog_id );
+}
+
+/**
+ * Displays a custom logo transparent, linked to home.
+ *
+ * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
+ */
+function pixelgrade_the_custom_logo_transparent( $blog_id = 0 ) {
+	echo pixelgrade_get_custom_logo_transparent( $blog_id );
 }

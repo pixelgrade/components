@@ -3,12 +3,13 @@ import 'slick-carousel';
 
 import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
+import { CarouselOptions } from './Carousel';
 
 export class Slideshow extends BaseComponent {
   private blendedSelector: string = '.blend-with-header';
   private slideshowWidgetSelector: string = '.widget_featured_posts_slideshow';
   private $siteHeader: JQuery = $( '.site-header' );
-  private headerBlendedClass: string = 'site-header--blended';
+  private headerBlendedClass: string = 'site-header--inverted';
 
   private element: JQueryExtended;
 
@@ -24,13 +25,20 @@ export class Slideshow extends BaseComponent {
     speed: 500,
   };
 
-  constructor( element ) {
+  constructor( element, options: CarouselOptions = {} ) {
     super();
 
     this.element = element;
 
+    this.extendOptions( options );
     this.maybeBlendHeader();
     this.bindEvents();
+  }
+
+  public extendOptions( options: CarouselOptions ) {
+    if ( options.show_pagination === '' ) {
+      this.slickOptions.dots = true;
+    }
   }
 
   public bindEvents() {
@@ -52,16 +60,8 @@ export class Slideshow extends BaseComponent {
   }
 
   private bindSlick() {
-    const that: Slideshow = this;
+    const $slider = ( this.element.find( '.c-hero__slider' ) as JQueryExtended );
 
-    this.element.each((i, obj) => {
-      const $element = $(obj);
-      const $slider = $element.find( '.c-hero__slider' );
-      const slickOptions = that.slickOptions;
-
-      slickOptions.dots = typeof $element.data('show_pagination') !== 'undefined';
-
-      ( $slider as JQueryExtended ).slick( slickOptions );
-    });
+    $slider.slick( this.slickOptions );
   }
 }
