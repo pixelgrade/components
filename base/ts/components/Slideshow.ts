@@ -46,7 +46,7 @@ export class Slideshow extends BaseComponent {
   }
 
   public destroy() {
-    this.element.slick('unslick');
+    this.element.slick('unslick' );
   }
 
   private maybeBlendHeader() {
