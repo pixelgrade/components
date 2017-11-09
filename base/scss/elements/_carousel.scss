@@ -11,76 +11,128 @@
   }
 }
 
+.slick-slide {
+  position: relative;
+}
+
+.slick-arrow {
+  @include btn-directional;
+
+  position: absolute;
+  top: 0;
+  z-index: 30;
+
+  width: 7em;
+  height: 100%;
+
+  cursor: pointer;
+
+  &.slick-disabled {
+    opacity: 0;
+  }
+}
+
+.slick-next {
+  @include directional--right;
+  padding-right: 0;
+  right: 0;
+}
+
+.slick-prev {
+  @include directional--left;
+  padding-left: 0;
+  left: 0;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include spacing(height, 100px);
+
+  .widget &[class][class] > * {
+    margin: 0;
+  }
+
+  button {
+    display: block;
+    background: transparent;
+    color: inherit;
+    padding-left: 0.9em;
+    padding-right: 0.9em;
+  }
+}
+
+.slick-dots .slick-active > a {
+  text-decoration: underline;
+}
+
+
 .widget_featured_posts_carousel {
 
   .slick-slider {
-    position: relative;
 
     @include above('lap') {
       display: flex;
       flex-flow: row wrap;
 
-      .slick-arrow {
-        max-width: 50px;
-        flex: 1;
-        order: 0;
-        cursor: pointer;
-
-        &.slick-disabled {
-          opacity: 0;
-        }
-
-        @include above(lap) {
-          position: absolute !important;
-          width: 34px;
-          height: 100%;
-        }
-      }
-
-      div.slick-next[class] {
-        @include btn-directional;
-        @include btn-directional--right;
-
-        padding-right: 0;
-
-        @include above(lap) {
-          right: -12px;
-        }
-
-        &:after {
-          right: 0;
-        }
-        &:before {
-          right: 3px;
-        }
-      }
-
-      div.slick-prev[class] {
-        @include btn-directional;
-        @include btn-directional--left;
-
-        padding-left: 0;
-
-        @include above(lap) {
-          left: -12px;
-
-          .u-widget-title-sideways & {
-            left: -40px;
-          }
-        }
-
-        &:after {
-          left: 0;
-        }
-
-        &:before {
-          left: 3px;
-        }
-      }
+      //.slick-arrow {
+      //  max-width: 50px;
+      //  flex: 1;
+      //  order: 0;
+      //  cursor: pointer;
+      //  z-index: 100;
+      //
+      //
+      //  @include above(lap) {
+      //    position: absolute !important;
+      //    width: 37px;
+      //    height: 100%;
+      //  }
+      //}
+      //
+      //div.slick-next[class] {
+      //
+      //  @include above(lap) {
+      //    right: -12px;
+      //  }
+      //
+      //  &:after {
+      //    right: 0;
+      //  }
+      //  &:before {
+      //    right: 3px;
+      //  }
+      //}
+      //
+      //div.slick-prev[class] {
+      //
+      //  @include above(lap) {
+      //    left: -12px;
+      //
+      //    .u-widget-title-sideways & {
+      //      left: -40px;
+      //    }
+      //  }
+      //
+      //  &:after {
+      //    left: 0;
+      //  }
+      //
+      //  &:before {
+      //    left: 3px;
+      //  }
+      //}
 
       .slick-list {
         flex: 1;
         order: 0;
+
         margin-right: 30px;
         margin-left: 30px;
 
@@ -122,53 +174,34 @@
     }
 
     .slick-slide {
-      padding: 0 0.8em;
+      @include spacing(padding-left, $featured-posts-horizontal-spacing/2);
+      @include spacing(padding-right, $featured-posts-horizontal-spacing/2);
       transition: opacity $transition--macro ease-in-out;
-      will-change: opacity;
-
-      @include below(lap) {
-        opacity: 0.5;
-
-        &.slick-active {
-          opacity: 1;
-        }
-      }
     }
 
     .slick-dots {
-      order: 1;
-      flex: 1 100%;
-      text-align: center;
       margin-top: 1em;
+    }
 
-      > li {
-        display: inline-block;
+    @include below(lap) {
+
+      .slick-slide:not(.slick-active) {
+        opacity: 0.5;
       }
 
-      .slick-active {
+      .slick-dots {
+
         button {
-          text-decoration: underline;
-          color: $btn-background;
-
-          @include below('lap') {
-            background: rgba(0, 0, 0, 0.8);
-          }
-        }
-      }
-
-      button {
-        background: transparent;
-        color: $theme-text-color;
-        padding-left: 0.9em;
-        padding-right: 0.9em;
-
-        @include below('lap') {
           background: rgba(0, 0, 0, 0.3);
           border-radius: 50%;
           font-size: 0;
           width: 10px;
           height: 10px;
           margin: 0 5px;
+        }
+
+        .slick-active {
+          background: rgba(0, 0, 0, 0.8);
         }
       }
     }
