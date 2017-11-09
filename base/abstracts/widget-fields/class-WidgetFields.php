@@ -350,7 +350,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
-			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" />' . $value . '</textarea>' . PHP_EOL;
+			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . esc_html( $value ) . '</textarea>' . PHP_EOL;
 
 			if ( ! empty( $desc ) ) {
 				$output .= '<br />' . PHP_EOL;
