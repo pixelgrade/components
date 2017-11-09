@@ -11,6 +11,7 @@
 }
 
 .slick-slider {
+  position: relative;
 
   @include above( 'lap' ) {
     display: flex;
@@ -25,13 +26,23 @@
       &.slick-disabled {
         opacity: 0;
       }
+
+      @include above(lap) {
+        position: absolute !important;
+        width: 34px;
+        height: 100%;
+      }
     }
 
-    .slick-next {
+    div.slick-next[class] {
       @include btn-directional;
       @include btn-directional--right;
 
-      padding-right: 18px;
+      padding-right: 0;
+
+      @include above(lap) {
+        right: -12px;
+      }
 
       &:after {
         right: 0;
@@ -41,15 +52,24 @@
       }
     }
 
-    .slick-prev {
+    div.slick-prev[class] {
       @include btn-directional;
       @include btn-directional--left;
 
-      padding-left: 18px;
+      padding-left: 0;
+
+      @include above(lap) {
+        left: -12px;
+
+        .u-widget-title-sideways & {
+          left: -40px;
+        }
+      }
 
       &:after {
         left: 0;
       }
+
       &:before {
         left: 3px;
       }
@@ -58,6 +78,16 @@
     .slick-list {
       flex: 1;
       order: 0;
+      margin-right: 30px;
+      margin-left: 30px;
+
+      .u-widget-title-sideways & {
+        margin-left: 0;
+      }
+
+      @include above(lap) {
+        flex: auto;
+      }
     }
 
     &[data-items_layout='variable_width'] {
@@ -89,13 +119,24 @@
   }
 
   .slick-slide {
-    padding: 0 0.9em;
+    padding: 0 0.8em;
+    transition: opacity $transition--macro ease-in-out;
+    will-change: opacity;
+
+    @include below(lap) {
+      opacity: 0.5;
+
+      &.slick-active {
+        opacity: 1;
+      }
+    }
   }
 
   .slick-dots {
     order: 1;
     flex: 1 100%;
     text-align: center;
+    margin-top: 1em;
 
     > li {
       display: inline-block;
