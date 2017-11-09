@@ -408,14 +408,15 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 //                    ),
 //                ),
 
-                'single' => array(
+	            // Felt single post block configuration for posts with portrait featured image
+                'single-portrait' => array(
 	                'extend' => 'blog/default',
 	                'blocks' => array(
 		                'header' => array(
 			                'extend'   => 'blog/container',
 			                'blocks'   => array(
 				                'blog/entry-thumbnail',
-			                	'entry-header-single' => array(
+				                'entry-header-single' => array(
 					                'extend' => 'blog/entry-header-single',
 				                ),
 			                ),
@@ -444,6 +445,80 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		                ),
 		                'blog/related-posts',
 	                ),
+                ),
+
+                // Felt single post block configuration for posts with landscape or no featured image
+                'single-landscape' => array(
+	                'extend' => 'blog/default',
+	                'blocks' => array(
+		                'header' => array(
+			                'extend'   => 'blog/container',
+			                'blocks'   => array(
+				                'entry-header-single' => array(
+					                'extend' => 'blog/entry-header-single',
+				                ),
+			                ),
+			                'wrappers' => array(
+				                array(
+					                'priority' => 100,
+					                'classes'  => 'single-header'
+				                ),
+			                ),
+		                ),
+		                'content' => array(
+			                'extend' => 'blog/container',
+			                'blocks' => array(
+				                'layout' => array(
+					                'extend' => 'blog/layout',
+					                'blocks' => array(
+						                'main' => array(
+							                'extend' => 'blog/main',
+							                'blocks' => array(
+								                'blog/entry-thumbnail',
+								                'blog/entry-content',
+								                'blog/entry-footer',
+							                ),
+						                ),
+						                'side' => array(
+							                'extend' => 'blog/side',
+							                'blocks' => array( 'blog/sidebar' ),
+							                'checks' => array(
+								                array(
+									                'callback' => '__return_true',
+									                'args'     => array(),
+								                ),
+							                ),
+						                ),
+					                ),
+				                ),
+			                ),
+		                ),
+		                'blog/related-posts',
+	                ),
+                ),
+
+                // Felt single post block configuration for posts with landscape featured image
+                'single' => array(
+                    'blocks' => array(
+                        'image-landscape' => array(
+                            'extend' => 'blog/single-landscape',
+	                        'checks' => array(
+	                            'callback' => 'julia_has_landscape_thumbnail'
+	                        ),
+                        ),
+                        'image-portrait' => array(
+                            'extend' => 'blog/single-portrait',
+                            'checks' => array(
+	                            'callback' => 'julia_has_portrait_thumbnail'
+                            ),
+                        ),
+                        'image-none' => array(
+                            'extend' => 'blog/single-portrait',
+                            'checks' => array(
+	                            'callback' => 'julia_has_no_thumbnail'
+                            ),
+                        ),
+                    ),
                 ),
 
                 'page'   => array(
