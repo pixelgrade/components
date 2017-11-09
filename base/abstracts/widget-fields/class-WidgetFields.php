@@ -781,9 +781,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
                 $display_on = $field_config['display_on'];
 
                 if ( isset( $display_on['display'] ) && ! empty( $display_on['display'] ) ) {
+                	// 'display' is set to true or the like
                     $requires .= ' data-action="show"';
                 } else {
-                    $requires .= ' data-action="hide" style="display:none;"';
+	                // 'display' is not set or is false
+                    $requires .= ' data-action="hide"';
                 }
 
                 if ( isset( $display_on['on'] ) && is_array( $display_on['on'] ) ) {
