@@ -51,23 +51,34 @@ $typeline-config: (
     @return $computedValue * $sign / $ratio;
 }
 
-@mixin typeline($property, $value, $config) {
+@mixin typeline($property, $values, $config) {
 	$points: map-get($config, points);
 	$breakpoints: map-get($config, breakpoints);
 
-	#{$property}: $value;
+  $newValues: ();
+
+  @each $value in $values {
+    @if unitless($value / 1rem) {
+      $value: $value * $baseline-unit / 1rem;
+    }
+    $newValues: append( $newValues, $value, space );
+  }
+
+	#{$property}: $values;
 
 	@each $breakpoint in $breakpoints {
 		@media only screen and (max-width: $breakpoint) {
-			#{$property}: getComputedValue($points, $breakpoints, $value, $breakpoint);
+      $newValues: ();
+      @each $value in $values {
+        $newVal: getComputedValue($points, $breakpoints, $value, $breakpoint);
+        $newValues: append( $newValues, $newVal, space );
+      }
+      #{$property}: $newValues;
 		}
 	}
 }
 
 @mixin spacing($property, $value) {
-	@if unitless($value / 1rem) {
-		$value: $value * $baseline-unit / 1rem;
-	}
 	@include typeline($property, $value, map-get($typeline-config, spacings));
 }
 
