@@ -257,7 +257,7 @@ abstract class Pixelgrade_Block {
 	final public function getRendered( $blocks_trail = array() ) {
 		// Initialize blocks trail if empty
 		if ( empty( $blocks_trail ) ) {
-			$blocks_trail[] = $this;
+			$blocks_trail = array( $this );
 		}
 
 		// Start the output buffering
@@ -390,7 +390,7 @@ abstract class Pixelgrade_Block {
 	protected function render( $blocks_trail = array() ) {
 		// Initialize blocks trail if empty
 		if ( empty( $blocks_trail ) ) {
-			$blocks_trail[] = $this;
+			$blocks_trail = array( $this );
 		}
 
 		// Since there might be wrappers that shouldn't be shown when there is no content

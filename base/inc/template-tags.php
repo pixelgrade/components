@@ -366,6 +366,7 @@ if ( ! function_exists( 'pixelgrade_get_rendered_content' ) ) :
 		 */
 		$content = apply_filters( 'the_content', $content );
 		$content = str_replace( ']]>', ']]&gt;', $content );
+
 		return $content;
 	}
 endif;
