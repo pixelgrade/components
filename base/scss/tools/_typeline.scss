@@ -70,6 +70,9 @@ $typeline-config: (
 		@media only screen and (max-width: $breakpoint) {
       $newValues: ();
       @each $value in $values {
+        @if unitless($value / 1rem) {
+          $value: $value * $baseline-unit / 1rem;
+        }
         $newVal: getComputedValue($points, $breakpoints, $value, $breakpoint);
         $newValues: append( $newValues, $newVal, space );
       }
