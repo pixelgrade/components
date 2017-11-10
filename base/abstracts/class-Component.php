@@ -587,6 +587,15 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	}
 
 	/**
+	 * Get the theme supports key for us with add_theme_support() or current_theme_supports().
+	 *
+	 * @return string
+	 */
+	public function getThemeSupportsKey() {
+		return 'pixelgrade-' . constant( get_class( $this ) . '::COMPONENT_SLUG' ) . '-component';
+	}
+
+	/**
 	 * Check if the class has been instantiated.
 	 *
 	 * @return bool

@@ -53,6 +53,19 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	}
 
 	/**
+	 * Load, instantiate and hook up.
+	 */
+	public function fireUp() {
+		// We will not fire up the component if the theme doesn't explicitly declare support for it.
+		if ( ! current_theme_supports( $this->getThemeSupportsKey() ) ) {
+			return;
+		}
+
+		// Let parent's fire up as well - One big happy family!
+		parent::fireUp();
+	}
+
+	/**
 	 * Register our actions and filters
 	 */
 	public function registerHooks() {
