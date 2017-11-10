@@ -248,4 +248,93 @@
 			});
 		});
 	}
+
+	/**
+	 * Inspired by the Tribe Image Widget Javascript
+	 * @link https://github.com/moderntribe/image-widget
+	 */
+	widgetImageFields = {
+
+		// Call this from the upload button to initiate the upload frame.
+		uploader : function( widget_id, widget_id_string ) {
+
+			var frame = wp.media({
+				title : pixelgradeWidgetFields.image.frame_title,
+				multiple : false,
+				library : { type : 'image' },
+				button : { text : pixelgradeWidgetFields.image.button_title }
+			});
+
+			// Handle results from media manager.
+			frame.on('close',function( ) {
+				var attachments = frame.state().get('selection').toJSON();
+				widgetImageFields.render( widget_id, widget_id_string, attachments[0] );
+			});
+
+			frame.open();
+			return false;
+		},
+
+		// Output Image preview and populate widget form.
+		render : function( widget_id, widget_id_string, attachment ) {
+
+			var $attachment_id = $( document.getElementById( widget_id_string ) );
+			var $image_url     = $( document.getElementById( widget_id_string + '-imageurl' ) );
+			var $preview     = $( document.getElementById( widget_id_string + '-preview' ) );
+
+			// Make sure that we know if we have an image or not
+			if ( ! attachment.id ) {
+				$preview.addClass( 'no-image' );
+			} else {
+				$preview.removeClass( 'no-image' )
+			}
+
+			// Delete the previous img element, if any
+			$preview.find('img').remove();
+			// Add the new img element
+			$("#" + widget_id_string + '-preview').append(widgetImageFields.imgHTML( attachment ) );
+
+			// update the attachment id if it has changed
+			if ( $attachment_id.val() !== attachment.id ) {
+				$attachment_id.val( attachment.id ).trigger( 'change' );
+			}
+
+			// update the url if it has changed
+			if ( $image_url.val() !== attachment.url ) {
+				$image_url.val( attachment.url ).trigger( 'change' );
+			}
+		},
+
+		// Delete the currently saved image
+		clear : function( widget_id, widget_id_string ) {
+			var $attachment_id = $( document.getElementById( widget_id_string ) );
+			var $image_url     = $( document.getElementById( widget_id_string + '-imageurl' ) );
+			var $preview     = $( document.getElementById( widget_id_string + '-preview' ) );
+
+			// Delete the attachment ID and image URL
+			$attachment_id.val('0');
+			$image_url.val('');
+
+			// Delete the image element
+			$preview.find('img').remove();
+			$preview.addClass( 'no-image' );
+
+			// And trigger a change so the widget knows it should save
+			$attachment_id.trigger( 'change' );
+		},
+
+		// Render html for the image.
+		imgHTML : function( attachment ) {
+			var img_html = '<img src="' + attachment.url + '" ';
+			img_html += 'width="' + attachment.width + '" ';
+			img_html += 'height="' + attachment.height + '" ';
+			if ( attachment.alt != '' ) {
+				img_html += 'alt="' + attachment.alt + '" ';
+			}
+			img_html += '/>';
+			return img_html;
+		},
+
+	}
+
 })(window.jQuery);
