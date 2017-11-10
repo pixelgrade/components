@@ -31,7 +31,7 @@ function pixelgrade_featured_image_get_hover_id( $post = null, $location = '' ) 
 }
 
 /**
- * This is a validation function for the _thumbnail_id field (the same as in core) so we can shortcircuit it's save
+ * This is a validation function for the _thumbnail_id field (the same as in core) so we can short-circuit it's save
  * Think for cases where this metabox is hidden but it still gets saved as null
  *
  * @param mixed $new_value
