@@ -76,6 +76,7 @@
 .widget_featured_posts_carousel {
 
   .slick-slider {
+    z-index: 2;
 
     @include above('lap') {
       display: flex;
@@ -201,6 +202,47 @@
         }
 
         .slick-active {
+          > button {
+            background: rgba(0, 0, 0, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+.featured-posts-cards--mobile {
+  z-index: 2;
+
+  @include below(lap) {
+    padding-bottom: 50px;
+  }
+
+  .slick-slide {
+    @include spacing(padding-left, $featured-posts-horizontal-spacing/2);
+    @include spacing(padding-right, $featured-posts-horizontal-spacing/2);
+    transition: opacity $transition--macro ease-in-out;
+  }
+
+  @include below(lap) {
+
+    .slick-slide:not(.slick-active) {
+      opacity: 0.5;
+    }
+
+    .slick-dots {
+
+      button {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        font-size: 0;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+      }
+
+      .slick-active {
+        > button {
           background: rgba(0, 0, 0, 0.8);
         }
       }
