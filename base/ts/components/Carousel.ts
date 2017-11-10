@@ -5,7 +5,7 @@ import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
 import { Helper } from '../services/Helper';
 
-interface CarouselOptions {
+export interface CarouselOptions {
   items_layout?: string;
   items_per_row?: number;
   show_pagination?: string;
@@ -20,8 +20,8 @@ const variableWidthDefaults = {
 
 const fixedWidthDefaults = {
   infinite: false,
-  slidesToScroll: 3,
-  slidesToShow: 3,
+  slidesToScroll: 1,
+  slidesToShow: 1,
   variableWidth: false,
 };
 
@@ -41,7 +41,7 @@ export class Carousel extends BaseComponent {
     return $('<button type="button" />').text( sIndex );
   }
 
-  constructor( element: JQuery, options: CarouselOptions = {} ) {
+  constructor( element: JQuery, options: CarouselOptions = {}, isSlideshow: boolean = false ) {
     super();
     this.element = element;
 
