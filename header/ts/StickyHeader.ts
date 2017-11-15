@@ -177,7 +177,7 @@ export class StickyHeader extends BaseComponent {
         .find( '.c-navbar' )
         .css( 'height', this.$stickyHeader.height() );
 
-    this.$readingBar = null;
+    // this.$readingBar = null;
     // this.$progressBar = null;
 
     this.prepareSingleHeader();
@@ -278,7 +278,7 @@ export class StickyHeader extends BaseComponent {
       this.hideReadingBar = hideReadingBar;
     }
 
-    if ( this.ProgressBar && this.$readingBar ) {
+    if ( this.ProgressBar && null !== this.$readingBar ) {
       this.$readingBar.toggleClass( 'show-next-title', this.ProgressBar.isCloseToEnd() );
     }
 
