@@ -278,8 +278,8 @@ export class StickyHeader extends BaseComponent {
       this.hideReadingBar = hideReadingBar;
     }
 
-    if ( this.ProgressBar ) {
-      // this.$readingBar.toggleClass( 'show-next-title', this.ProgressBar.isCloseToEnd() );
+    if ( this.ProgressBar && this.$readingBar ) {
+      this.$readingBar.toggleClass( 'show-next-title', this.ProgressBar.isCloseToEnd() );
     }
 
     if ( showSticky !== this.stickyHeaderShown ) {

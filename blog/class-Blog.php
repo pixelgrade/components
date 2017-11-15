@@ -434,9 +434,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			                'extend'   => 'blog/container',
 			                'blocks'   => array(
 				                'blog/entry-thumbnail',
-				                'entry-header-single' => array(
-					                'extend' => 'blog/entry-header-single',
-				                ),
+				                'blog/entry-header-single',
 			                ),
 			                'wrappers' => array(
 				                array(
@@ -477,9 +475,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		                'header' => array(
 			                'extend'   => 'blog/container',
 			                'blocks'   => array(
-				                'entry-header-single' => array(
-					                'extend' => 'blog/entry-header-single',
-				                ),
+				                'blog/entry-header-single',
 			                ),
 			                'wrappers' => array(
 				                array(
@@ -541,7 +537,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                             ),
                         ),
                         'image-none' => array(
-                            'extend' => 'blog/single-portrait',
+                            'extend' => 'blog/single-landscape',
                             'checks' => array(
 	                            'callback' => 'julia_has_no_thumbnail'
                             ),
