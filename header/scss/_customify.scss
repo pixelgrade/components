@@ -60,8 +60,6 @@ $header-font: () !default;
 }
 
 .c-navbar {
-  height: $header-height;
-
   @include leading-map($header-font);
 
   transition: $transition--default;

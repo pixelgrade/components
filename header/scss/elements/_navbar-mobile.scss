@@ -1,10 +1,10 @@
 $nav-mobile-width: 75vw !default;
 $nav-mobile-background: #FBFBFB !default;
 $nav-mobile-color: #000 !default;
-$mobile-header-height: 56px !default;
+$header-mobile-height: 56px !default;
 
 .c-navbar {
-  height: $mobile-header-height;
+  height: $header-mobile-height;
 
   .menu-item-has-children,
   .page_item_has_children {
@@ -51,7 +51,7 @@ $mobile-header-height: 56px !default;
 
   width: $nav-mobile-width;
   height: 100vh !important;
-  padding-top: $mobile-header-height;
+  padding-top: $header-mobile-height;
   overflow-y: auto;
 
   background: $nav-mobile-background;

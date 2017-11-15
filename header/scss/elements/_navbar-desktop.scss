@@ -6,6 +6,7 @@
 }
 
 .c-navbar {
+  height: $header-height;
   @extend %flex-center-all;
 
   li {
