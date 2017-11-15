@@ -100,3 +100,15 @@
 .says {
   display: none;
 }
+
+@include below(lap) {
+
+  .c-author {
+    text-align: center;
+  }
+
+  .c-author__avatar {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

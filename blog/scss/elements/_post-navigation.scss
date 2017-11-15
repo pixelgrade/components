@@ -26,22 +26,29 @@
 
 }
 
+$post-navigation-spacing: 4rem !default;
+
+
 // SINGLE NAVIGATION
 .post-navigation {
 
 	.nav-links {
-		@include spacing(margin-left, -4rem);
+		@include spacing(margin-left, -$post-navigation-spacing);
 
 		display: flex;
 		flex-wrap: wrap;
 
-		& > * {
-			@include spacing(padding-left, 4rem);
+		> * {
+			@include spacing(margin-left, $post-navigation-spacing);
 
 			position: relative;
 			flex: 1 1 18em;
 			width: 20em;
 		}
+
+    > :not(:last-child) {
+      @include spacing(margin-bottom, $post-navigation-spacing);
+    }
 
 		a:after {
 			content: "";
@@ -53,8 +60,6 @@
 		}
 
 		[class*="title"] a {
-			//@include fontsize(20px);
-
 			text-decoration: none;
 			color: inherit;
 		}
@@ -78,7 +83,6 @@
 		@include fontsize(12px);
 
 		padding: 0;
-
 		border: 0;
 
 		background-color: transparent;

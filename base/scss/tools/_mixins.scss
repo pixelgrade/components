@@ -156,3 +156,9 @@
 
   @include leading($font-size, $line-height, $font-family, $font-weight, $letter-spacing, $text-transform, $spacing-top, $spacing-bottom, $cap-height);
 }
+
+@mixin vertical-spacing( $spacing ) {
+  > :not(:first-child) {
+    @include spacing(margin-top, $spacing);
+  }
+}
