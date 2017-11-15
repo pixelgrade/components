@@ -24,15 +24,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div <?php pixelgrade_css_class( 'header nav', 'header navbar zone branding wrapper' ); ?>>
+
 	<div class="c-branding">
 
-		<?php if ( function_exists( 'the_custom_logo' ) ) {
-			the_custom_logo();
-		} ?>
+		<?php if ( has_custom_logo() || pixelgrade_has_custom_logo_transparent() ) { ?>
 
-		<?php if ( function_exists( 'pixelgrade_the_custom_logo_transparent' ) ) {
-			pixelgrade_the_custom_logo_transparent();
-		} ?>
+		<div class="c-logo">
+			<?php if ( has_custom_logo() ) { ?>
+				<div class="c-logo__default">
+					<?php the_custom_logo(); ?>
+				</div>
+			<?php } ?>
+
+			<?php if ( pixelgrade_has_custom_logo_transparent() ) { ?>
+				<div class="c-logo__inverted">
+					<?php pixelgrade_the_custom_logo_transparent(); ?>
+				</div>
+			<?php } ?>
+		</div>
+
+		<?php } ?>
 
 	    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php if ( is_front_page() && is_home() ) : ?>
@@ -41,6 +52,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	            <p class="site-title"><?php bloginfo( 'name' ); ?></p>
 			<?php endif; ?>
 	    </a>
-	    <p class="site-description site-description-text"><?php bloginfo( 'description' ) /* WPCS: xss ok. */ ?></p>
+
+       <p class="site-description site-description-text"><?php bloginfo( 'description' ) /* WPCS: xss ok. */ ?></p>
+
 	</div><!-- .c-branding -->
+
 </div>

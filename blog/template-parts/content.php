@@ -30,11 +30,10 @@ $location = pixelgrade_get_location( 'post' );
 if ( ! isset( $primary_meta_key ) && ! isset( $secondary_meta_key ) ) {
 	$primary_meta_key   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
 	$secondary_meta_key = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
-
 }
 
-$primary_meta   = $primary_meta_key !== 'none' ? pixelgrade_get_post_meta( $primary_meta_key ) : '';
-$secondary_meta = $secondary_meta_key !== 'none' ? pixelgrade_get_post_meta( $secondary_meta_key ) : '';
+$primary_meta   = $primary_meta_key !== 'none' ? pixelgrade_get_post_meta( $primary_meta_key ) : false;
+$secondary_meta = $secondary_meta_key !== 'none' ? pixelgrade_get_post_meta( $secondary_meta_key ) : false;
 
 /**
  * pixelgrade_before_loop_entry hook.
@@ -63,7 +62,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						}
 
 						if ( pixelgrade_option( 'blog_items_title_position', 'regular' ) != 'overlay' ) {
-							echo '<span class="c-card__letter">' . substr( get_the_title(), 0, 1 ) . '</span>';
+							echo '<span class="c-card__letter">' . mb_substr( get_the_title(), 0, 1 ) . '</span>';
 						}
 						?>
 					</div>

@@ -1,0 +1,251 @@
+.u-widget-title-sideways {
+
+  .widget.widget_featured_posts_carousel {
+    @include below( 'lap' ) {
+      padding-left: 0;
+
+      .widget__title {
+        display: none;
+      }
+    }
+  }
+}
+
+.slick-slide {
+  position: relative;
+}
+
+.slick-arrow {
+  @include btn-directional;
+
+  position: absolute;
+  top: 0;
+  z-index: 30;
+
+  width: 7em;
+  height: 100%;
+
+  cursor: pointer;
+
+  &.slick-disabled {
+    opacity: 0;
+  }
+}
+
+.slick-next {
+  @include directional--right;
+  padding-right: 0;
+  right: 0;
+}
+
+.slick-prev {
+  @include directional--left;
+  padding-left: 0;
+  left: 0;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include spacing(height, 100px);
+
+  .widget &[class][class] > * {
+    margin: 0;
+  }
+
+  button {
+    display: block;
+    background: transparent;
+    color: inherit;
+    padding-left: 0.9em;
+    padding-right: 0.9em;
+  }
+}
+
+.slick-dots .slick-active > a {
+  text-decoration: underline;
+}
+
+
+.widget_featured_posts_carousel {
+
+  .slick-slider {
+    z-index: 2;
+
+    @include above('lap') {
+      display: flex;
+      flex-flow: row wrap;
+
+      //.slick-arrow {
+      //  max-width: 50px;
+      //  flex: 1;
+      //  order: 0;
+      //  cursor: pointer;
+      //  z-index: 100;
+      //
+      //
+      //  @include above(lap) {
+      //    position: absolute !important;
+      //    width: 37px;
+      //    height: 100%;
+      //  }
+      //}
+      //
+      //div.slick-next[class] {
+      //
+      //  @include above(lap) {
+      //    right: -12px;
+      //  }
+      //
+      //  &:after {
+      //    right: 0;
+      //  }
+      //  &:before {
+      //    right: 3px;
+      //  }
+      //}
+      //
+      //div.slick-prev[class] {
+      //
+      //  @include above(lap) {
+      //    left: -12px;
+      //
+      //    .u-widget-title-sideways & {
+      //      left: -40px;
+      //    }
+      //  }
+      //
+      //  &:after {
+      //    left: 0;
+      //  }
+      //
+      //  &:before {
+      //    left: 3px;
+      //  }
+      //}
+
+      .slick-list {
+        flex: 1;
+        order: 0;
+
+        margin-right: 30px;
+        margin-left: 30px;
+
+        .u-widget-title-sideways & {
+          margin-left: 0;
+        }
+
+        @include above(lap) {
+          flex: auto;
+        }
+      }
+
+      &[data-items_layout='variable_width'] {
+        .c-card {
+          display: table;
+          width: 1px;
+        }
+
+        .c-card__content,
+        .c-card__aside {
+          display: table-row;
+        }
+
+        .c-card__content > :first-child {
+          padding-top: 1em;
+        }
+
+        .c-card__frame {
+          padding-top: 0;
+
+          img {
+            height: 300px;
+            position: static;
+            width: auto;
+            max-width: none;
+          }
+        }
+      }
+    }
+
+    .slick-slide {
+      @include spacing(padding-left, $featured-posts-horizontal-spacing/2);
+      @include spacing(padding-right, $featured-posts-horizontal-spacing/2);
+      transition: opacity $transition--macro ease-in-out;
+    }
+
+    .slick-dots {
+      margin-top: 1em;
+    }
+
+    @include below(lap) {
+
+      .slick-slide:not(.slick-active) {
+        opacity: 0.5;
+      }
+
+      .slick-dots {
+
+        button {
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 50%;
+          font-size: 0;
+          width: 10px;
+          height: 10px;
+          margin: 0 5px;
+        }
+
+        .slick-active {
+          > button {
+            background: rgba(0, 0, 0, 0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+.featured-posts-cards--mobile {
+  z-index: 2;
+
+  @include below(lap) {
+    padding-bottom: 50px;
+  }
+
+  .slick-slide {
+    @include spacing(padding-left, $featured-posts-horizontal-spacing/2);
+    @include spacing(padding-right, $featured-posts-horizontal-spacing/2);
+    transition: opacity $transition--macro ease-in-out;
+  }
+
+  @include below(lap) {
+
+    .slick-slide:not(.slick-active) {
+      opacity: 0.5;
+    }
+
+    .slick-dots {
+
+      button {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        font-size: 0;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+      }
+
+      .slick-active {
+        > button {
+          background: rgba(0, 0, 0, 0.8);
+        }
+      }
+    }
+  }
+}

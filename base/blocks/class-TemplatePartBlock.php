@@ -96,8 +96,18 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 
 		// If we found a template, we load it
 		if ( ! empty( $found_template ) ) {
+			// We need to do the post to make sure that the current post is available
+			// @todo Need to do better here - block context
+			if ( ! in_the_loop() ) {
+				global $post;
+				setup_postdata( $post );
+			}
 			// Make sure that we don't end up using require_once!
 			load_template( $found_template, false );
+
+			if ( ! in_the_loop() ) {
+				wp_reset_postdata();
+			}
 		}
 
 		/**

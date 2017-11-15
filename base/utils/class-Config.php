@@ -256,13 +256,15 @@ class Pixelgrade_Config {
 	 * We currently handle checks like these:
 	 *  // Elaborate check description
 	 *  array(
-	 *		'function' or 'callback' => 'is_post_type_archive',
+	 *		'callback' (or legacy 'function') => 'is_post_type_archive',
 	 *		// The arguments we should pass to the check function.
 	 *		// Think post types, taxonomies, or nothing if that is the case.
 	 *		// It can be an array of values or a single value.
 	 *		'args' => array(
 	 *			'jetpack-portfolio',
 	 *		),
+	 *      'value' => some value
+	 *      'compare' => '>'
 	 *	),
 	 *  // Simple check - just the function name
 	 *  'is_404',
@@ -319,6 +321,22 @@ class Pixelgrade_Config {
 	/**
 	 * Evaluate a single check
 	 *
+	 * We currently handle checks like these:
+	 *  // Elaborate check description
+	 *  array(
+	 *		'callback' (or legacy 'function') => 'is_post_type_archive',
+	 *		// The arguments we should pass to the check function.
+	 *		// Think post types, taxonomies, or nothing if that is the case.
+	 *		// It can be an array of values or a single value.
+	 *		'args' => array(
+	 *			'jetpack-portfolio',
+	 *		),
+	 *      'value' => some value
+	 *      'compare' => '>'
+	 *	),
+	 *  // Simple check - just the function name
+	 *  'is_404',
+	 *
 	 * @param array|string $check
 	 *
 	 * @return bool
@@ -347,10 +365,12 @@ class Pixelgrade_Config {
 			if ( empty( $check['args'] ) ) {
 				$check['args'] = array();
 			}
-			$response = call_user_func_array( $check['callback'], $check['args'] );
+			$response = self::maybeEvaluateComparison( call_user_func_array( $check['callback'], $check['args'] ), $check );
 			// Standardize the response
 			if ( ! $response ) {
 				return false;
+			} else {
+				return true;
 			}
 		}
 
@@ -370,6 +390,106 @@ class Pixelgrade_Config {
 		}
 
 		return $checks;
+	}
+
+	/**
+	 * Given some data/value and a comparison config, return the result of the comparison.
+	 *
+	 * For binary operators, the left side operator is the data given, and the right side operator is the value provided in the $args.
+	 *
+	 * @param mixed $data
+	 * @param array $args
+	 *
+	 * @return bool
+	 */
+	public static function maybeEvaluateComparison( $data, $args ) {
+		// If there are no comparison args given, just return the data to compare
+		if ( empty( $args ) || ! is_array( $args ) || ! isset( $args['compare'] ) ) {
+			return $data;
+		}
+
+		// Initialize the comparison operator
+		$operator = false;
+		// Initialize the value to compare with
+		$value = null;
+
+		$operators = array(
+			'=', '!=', '>', '>=', '<', '<=',
+			'IN', 'NOT IN',
+			'NOT',
+		);
+
+		$operator = strtoupper( $args['compare'] );
+
+		// On invalid operators, return the data to compare, but give an notice to developers
+		if ( empty( $operator ) || ! in_array( $operator, $operators ) ) {
+			_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is invalid! Please check your comparison!', $operator ), null );
+			return $data;
+		}
+
+		// We currently only support one unary operator, NOT
+		if ( 'NOT' === $operator ) {
+			// We ignore any value given, and just return a negation of the data given
+			// We force the data to a boolean
+			return ! ( (bool) $data );
+		}
+
+		// We are now dealing with binary operators so we need to have a value
+		if ( ! isset( $args['value'] ) ) {
+			_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is a binary one, but no \'value\' provided! Please check your comparison!', $operator ), null );
+			return $data;
+		}
+
+		$value = $args['value'];
+
+		switch ( $operator ) {
+			case '=' :
+				return $data == $value;
+				break;
+			case '!=' :
+				return $data != $value;
+				break;
+			case '>':
+				return $data > $value;
+				break;
+			case '>=':
+				return $data >= $value;
+				break;
+			case '<':
+				return $data < $value;
+				break;
+			case '<=':
+				return $data <= $value;
+				break;
+			case 'IN':
+				// We will give it a try to convert the string to a list
+				if ( is_string( $value ) ) {
+					$value = Pixelgrade_Value::maybeExplodeList( $value );
+				}
+
+				if ( ! is_array( $value ) ) {
+					_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', $operator ), null );
+					return $data;
+				}
+
+				return in_array( $data, $value );
+				break;
+			case 'NOT IN':
+				// We will give it a try to convert the string to a list
+				if ( is_string( $value ) ) {
+					$value = Pixelgrade_Value::maybeExplodeList( $value );
+				}
+
+				if ( ! is_array( $value ) ) {
+					_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', $operator ), null );
+					return $data;
+				}
+
+				return ! in_array( $data, $value );
+				break;
+			default:
+				break;
+		}
 	}
 
 	/**

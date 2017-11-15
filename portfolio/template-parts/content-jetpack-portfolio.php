@@ -24,9 +24,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 //we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'portfolio jetpack jetpack-portfolio' );
-?>
 
-<?php
+// Let's deal with the meta keys, if they are not already defined.. by higher powers
+// We may have got the meta names from an include (like in custom widgets using this template part)
+if ( ! isset( $primary_meta_key ) && ! isset( $secondary_meta_key ) ) {
+	$primary_meta_key   = pixelgrade_option( 'portfolio_items_primary_meta', 'types' );
+	$secondary_meta_key = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
+}
+
+$primary_meta   = $primary_meta_key !== 'none' ? pixelgrade_get_post_meta( $primary_meta_key ) : false;
+$secondary_meta = $secondary_meta_key !== 'none' ? pixelgrade_get_post_meta( $secondary_meta_key ) : false;
+
 /**
  * pixelgrade_before_loop_entry hook.
  *
@@ -35,7 +43,7 @@ $location = pixelgrade_get_location( 'portfolio jetpack jetpack-portfolio' );
 do_action( 'pixelgrade_before_loop_entry', $location );
 ?>
 
-<article id="postit-<?php the_ID(); ?>" <?php post_class() ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class() ?>>
 	<div class="c-card">
 		<?php if ( pixelgrade_display_featured_images() ) { ?>
 			<div class="c-card__aside c-card__thumbnail-background">
@@ -58,7 +66,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					}
 
 					if ( pixelgrade_option( 'portfolio_items_title_position', 'regular' ) != 'overlay' ) {
-						echo '<span class="c-card__letter">' . substr( get_the_title(), 0, 1 ) . '</span>';
+						echo '<span class="c-card__letter">' . mb_substr( get_the_title(), 0, 1 ) . '</span>';
 					}
 					?>
 				</div><!-- .c-card__frame -->
@@ -68,46 +76,26 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 		<div class="c-card__content">
 
 			<?php
-			/*
-			 * Let's deal with the meta
-			 */
-			$portfolio_items_primary_meta   = pixelgrade_option( 'portfolio_items_primary_meta', 'types' );
-			$portfolio_items_secondary_meta = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
+			if ( $primary_meta || $secondary_meta ) { ?>
 
-			$meta = pixelgrade_portfolio_get_project_meta();
+				<div class='c-card__meta'>
 
-			if ( ( $portfolio_items_primary_meta === 'none' || empty( $meta[ $portfolio_items_primary_meta ] ) ) &&
-			     ( $portfolio_items_secondary_meta === 'none' || empty( $meta[ $portfolio_items_secondary_meta ] ) ) ) {
-				// We have nothing to do regarding meta
-			} else {
-				$primary_meta   = $portfolio_items_primary_meta !== 'none' && ! empty( $meta[ $portfolio_items_primary_meta ] ) ? $meta[ $portfolio_items_primary_meta ] : '';
-				$secondary_meta = $portfolio_items_secondary_meta !== 'none' && ! empty( $meta[ $portfolio_items_secondary_meta ] ) ? $meta[ $portfolio_items_secondary_meta ] : '';
-
-
-				if ( $primary_meta || $secondary_meta ) { ?>
-
-					<div class='c-card__meta'>
-
-						<?php
-						if ( $primary_meta ) {
-							echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
-
-							if ( $secondary_meta ) {
-								echo '<div class="c-card__separator"></div>';
-							}
-						}
+					<?php
+					if ( $primary_meta ) {
+						echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
 
 						if ( $secondary_meta ) {
-							echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
-						} ?>
+							echo '<div class="c-card__separator"></div>';
+						}
+					}
 
-					</div><!-- .c-card__meta -->
+					if ( $secondary_meta ) {
+						echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
+					} ?>
 
-				<?php }
-			}
-			/*
-			 * Finished with the meta
-			 */
+				</div><!-- .c-card__meta -->
+
+			<?php }
 
 			if ( pixelgrade_option( 'portfolio_items_title_visibility', true ) ) { ?>
 				<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>

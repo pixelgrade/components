@@ -234,7 +234,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	protected function renderContent( $blocks_trail = array() ) {
 		// Initialize blocks trail if empty
 		if ( empty( $blocks_trail ) ) {
-			$blocks_trail[] = $this;
+			$blocks_trail = array( $this );
 		}
 
 		/**

@@ -299,9 +299,10 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 * Load, instantiate and hook up.
 	 */
 	public function fireUp() {
-		// We need to make sure that the portfolio CPT is all good
-		// There is no point in continuing if it is not
-		if ( ! self::siteSupportsPortfolio() || ! current_theme_supports( 'jetpack-portfolio' ) ) {
+		// We need to make sure that the portfolio CPT is all good.
+		// There is no point in continuing if it is not.
+		// Also, we will not fire up the component if the theme doesn't explicitly declare support for it.
+		if ( ! current_theme_supports( $this->getThemeSupportsKey() ) || ! self::siteSupportsPortfolio() || ! current_theme_supports( 'jetpack-portfolio' ) ) {
 			return;
 		}
 
