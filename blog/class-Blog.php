@@ -359,39 +359,40 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     ),
                 ),
 
-                'main-portrait'  => array(
-                    'blocks' => array(
-                        'blog/entry-thumbnail',
-                        'sidebar' => array(
-                            'extend'   => 'blog/side',
-                            'blocks'   => array( 'blog/sidebar' ),
-                            'wrappers' => array(
-                                'side' => array(
-                                    'extend_classes' => 'widget-area--post',
-                                ),
-                            ),
-                        ),
-                        'blog/entry-content',
-                        'blog/entry-footer',
-                    ),
-                ),
-                'main-landscape' => array(
-                    'blocks' => array(
-                        'sidebar' => array(
-                            'extend'   => 'blog/side',
-                            'blocks'   => array( 'blog/sidebar' ),
-                            'wrappers' => array(
-                                'side' => array(
-                                    'extend_classes' => 'widget-area--post'
-                                ),
-                            ),
-                        ),
-                        'blog/entry-thumbnail',
-                        'blog/entry-content',
-                        'blog/entry-footer',
-                    ),
-                ),
-
+//                Julia variation blocks
+//
+//                'main-portrait'  => array(
+//                    'blocks' => array(
+//                        'blog/entry-thumbnail',
+//                        'sidebar' => array(
+//                            'extend'   => 'blog/side',
+//                            'blocks'   => array( 'blog/sidebar' ),
+//                            'wrappers' => array(
+//                                'side' => array(
+//                                    'extend_classes' => 'widget-area--post',
+//                                ),
+//                            ),
+//                        ),
+//                        'blog/entry-content',
+//                        'blog/entry-footer',
+//                    ),
+//                ),
+//                'main-landscape' => array(
+//                    'blocks' => array(
+//                        'sidebar' => array(
+//                            'extend'   => 'blog/side',
+//                            'blocks'   => array( 'blog/sidebar' ),
+//                            'wrappers' => array(
+//                                'side' => array(
+//                                    'extend_classes' => 'widget-area--post'
+//                                ),
+//                            ),
+//                        ),
+//                        'blog/entry-thumbnail',
+//                        'blog/entry-content',
+//                        'blog/entry-footer',
+//                    ),
+//                ),
 //                'single' => array(
 //                    'extend' => 'blog/default',
 //                    'blocks' => array(
