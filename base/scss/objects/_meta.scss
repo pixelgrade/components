@@ -3,7 +3,7 @@ $meta-spacing: 0.5rem !default;
 .c-meta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   justify-content: inherit;
 
   &, ul {
