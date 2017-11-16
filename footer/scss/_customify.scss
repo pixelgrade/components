@@ -8,9 +8,8 @@ $footer-text-color: #757575 !default;
 $footer-links-color: #000000 !default;
 $footer-background-color: #FFFFFF !default;
 
-.u-footer__background {
-	background-color: $footer-background-color;
-}
+$footer-top-spacing: 0 !default;
+$footer-bottom-spacing: 0 !default;
 
 .c-footer {
 	@include spacing(padding-top, $footer-top-spacing);
@@ -20,4 +19,16 @@ $footer-background-color: #FFFFFF !default;
 	a {
 		color: $footer-links-color;
 	}
+}
+
+.u-footer-top-spacing {
+  @include spacing(padding-top, 0);
+}
+
+.u-footer-bottom-spacing {
+  @include spacing(padding-bottom, 0);
+}
+
+.u-footer-background {
+	background-color: $footer-background-color;
 }

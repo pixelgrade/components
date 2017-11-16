@@ -154,7 +154,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property'        => 'padding-top',
-								'selector'        => '.c-footer',
+								'selector'        => '.u-footer-top-spacing',
 								'unit'            => 'px',
 								'callback_filter' => 'typeline_spacing_cb',
 							),
@@ -175,7 +175,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property'        => 'padding-bottom',
-								'selector'        => '.c-footer',
+								'selector'        => '.u-footer-bottom-spacing',
 								'unit'            => 'px',
 								'callback_filter' => 'typeline_spacing_cb',
 							),
@@ -234,7 +234,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'background',
-								'selector' => '.u-footer__background',
+								'selector' => '.u-footer-background',
 							),
 						),
 					),

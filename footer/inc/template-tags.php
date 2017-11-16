@@ -49,7 +49,7 @@ function pixelgrade_get_footer_class( $class = '', $location = '', $post = null 
 	$classes = array();
 
 	$classes[] = 'site-footer';
-	$classes[] = 'u-footer__background';
+	$classes[] = 'u-footer-background';
 	$classes[] = 'u-container-sides-spacing';
 
 	if ( ! empty( $class ) ) {
