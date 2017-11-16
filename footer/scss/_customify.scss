@@ -12,8 +12,6 @@ $footer-top-spacing: 0 !default;
 $footer-bottom-spacing: 0 !default;
 
 .c-footer {
-	@include spacing(padding-top, $footer-top-spacing);
-	@include spacing(padding-bottom, $footer-bottom-spacing);
 	color: $footer-text-color;
 
 	a {
@@ -22,11 +20,11 @@ $footer-bottom-spacing: 0 !default;
 }
 
 .u-footer-top-spacing {
-  @include spacing(padding-top, 0);
+  @include spacing(padding-top, $footer-top-spacing);
 }
 
 .u-footer-bottom-spacing {
-  @include spacing(padding-bottom, 0);
+  @include spacing(padding-bottom, $footer-top-spacing);
 }
 
 .u-footer-background {

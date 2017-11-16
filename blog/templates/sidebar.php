@@ -40,7 +40,7 @@ do_action( 'pixelgrade_before_entry_side', $location );
 ?>
 <!-- pixelgrade_before_entry_side -->
 
-<aside id="secondary" class="widget-area" role="complementary">
+<aside id="secondary" class="widget-area  widget-area--side" role="complementary">
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 </aside><!-- #secondary -->
 

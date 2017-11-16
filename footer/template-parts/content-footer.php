@@ -30,7 +30,7 @@ if ( ! pixelgrade_footer_is_valid_config() ) {
 $zones = pixelgrade_footer_get_zones();
 ?>
 
-<div class="c-footer">
+<div class="c-footer  u-footer-top-spacing  u-footer-bottom-spacing">
 
 	<?php
 

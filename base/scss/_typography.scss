@@ -3,6 +3,13 @@ $typography-spacing: 2rem !default;
 $body-link-color: #3B3B3B !default;
 $body-link-active-color: #DFA671 !default;
 
+$h1-color: #333 !default;
+$h2-color: #333 !default;
+$h3-color: #333 !default;
+$h4-color: #333 !default;
+$h5-color: #333 !default;
+$h6-color: #333 !default;
+
 p, blockquote,
 ul, ol, dl,
 hr,
@@ -10,7 +17,8 @@ table,
 pre {
 
   &:not(:last-child) {
-    @include spacing(margin-bottom, $typography-spacing);
+    @include baseline(1.5, 0.75);
+    @include spacing(padding-bottom, $typography-spacing);
   }
 
 }
@@ -29,12 +37,44 @@ blockquote footer, cite {
   }
 }
 
-h1 { @include leading-map($h1) }
-h2 { @include leading-map($h2) }
-h3 { @include leading-map($h3) }
-h4 { @include leading-map($h4) }
-h5 { @include leading-map($h5) }
-h6 { @include leading-map($h6) }
+h1 {
+  @include leading-map($h1);
+  color: $h1-color;
+}
+
+h2 {
+  @include leading-map($h2);
+  color: $h2-color;
+}
+
+h3 {
+  @include leading-map($h3);
+  color: $h3-color;
+}
+
+h4 {
+  @include leading-map($h4);
+  color: $h4-color;
+}
+
+h5 {
+  @include leading-map($h5);
+  color: $h5-color;
+}
+
+h6 {
+  @include leading-map($h6);
+  color: $h6-color;
+}
+
+$wrapper: &;
+@at-root {
+  h1, h2, h3, h4, h5, h6 {
+    #{$wrapper} & + &:not(:first-child) {
+      padding-top: 0;
+    }
+  }
+}
 
 // LISTS
 $typography-unordered-list-style: disc !default;
