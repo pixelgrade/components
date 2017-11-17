@@ -295,7 +295,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             $output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
             if ( ! empty( $label ) ) {
-                $output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+                $output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
             }
 
             $output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="text" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
@@ -347,7 +347,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
 			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . esc_html( $value ) . '</textarea>' . PHP_EOL;
@@ -410,7 +410,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             $output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
             if ( ! empty( $label ) ) {
-                $output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+                $output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
             }
 
             $output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
@@ -472,7 +472,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
 			$output .= '<input class="widget-range" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="range" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
@@ -572,7 +572,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
                 $output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
                 if ( ! empty( $label ) ) {
-                    $output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+                    $output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
                 }
 
                 if ( ! empty( $field_config['options'] ) ) {
@@ -632,7 +632,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
                 $output .= '<div class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
                 if ( ! empty( $label ) ) {
-                    $output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+                    $output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
                 }
 
                 if ( ! empty( $field_config['options'] ) ) {
@@ -700,7 +700,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<div class="pixelgrade_image_field pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
 			// Output the image preview
