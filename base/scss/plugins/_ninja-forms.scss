@@ -4,7 +4,7 @@
     .list-radio-wrap .nf-field-element li,
     .list-checkbox-wrap .nf-field-element li {
         display: flex;
-        margin-bottom: $input-spacing-bottom !important;
+        margin-bottom: $input-vertical-spacing !important;
 
         &:last-child {
             margin-bottom: 0 !important;
@@ -14,15 +14,15 @@
     .list-radio-wrap .nf-field-element li input,
     .list-checkbox-wrap .nf-field-element li input,
     .nf-field-element input[type="checkbox"] {
-        width: 21px !important;
-        margin-right: $input-spacing-right !important;
+        width: $checkbox-width !important;
+        margin-right: $input-horizontal-spacing !important;
     }
 
     .list-radio-wrap .nf-field-element li label,
     .list-checkbox-wrap .nf-field-element li label {
         padding-bottom: 0;
         line-height: 1.5;
-        font-weight: $input-font-weight;
+        font-weight: map-get($input-font, font-weight);
 
         &:before {
             margin-bottom: 0;
@@ -44,7 +44,7 @@
     }
 
     .nf-field-label label {
-        font-weight: $input-font-weight;
+        font-weight: map-get($input-font, font-weight);
     }
 
     .label-above .nf-field-label label {
@@ -53,7 +53,7 @@
     }
 
     .nf-before-form-content {
-        @include spacing(margin-bottom, 1rem);
+        @include spacing(margin-bottom, $input-vertical-spacing);
     }
 }
 

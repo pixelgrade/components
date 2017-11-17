@@ -25,7 +25,7 @@ $meta-tags-items-font: () !default;
 }
 
 .meta__item--button {
-  @include btn;
+  @include button;
   padding: 1em 1.5em 0.9em 1.6em;
 }
 

@@ -7,7 +7,7 @@
  */
 
 // Predefine the variables below in order to alter and enable specific features.
-$btn-padding:         		8px                 !default;
+$btn-padding:         		0.75em 1.75em       !default;
 $btn-background:      		#222222             !default;
 $btn-hover-background:    #000000             !default;
 $btn-color:           		#FFFFFF             !default;
@@ -28,7 +28,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
  * 5. Force all button-styled elements to appear clickable.
  */
 
-@mixin btn-reset {
+@mixin button-reset {
 	border: 0;
   padding: 0;
 	background: none;
@@ -44,12 +44,16 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 	cursor: pointer; /* [5] */
 }
 
+@mixin button-box {
+  padding: $btn-padding;
+  border: $btn-border-width $btn-border-style $btn-border-color;
+  border-radius: $btn-border-radius;
+  margin: 0;
+}
+
 @mixin btn {
 	@include button;
-
-	padding: 0.75em 1.75em;
-	border: $btn-border-width $btn-border-style $btn-border-color;
-  border-radius: $btn-border-radius;
+  @include button-box;
 
 	color: $btn-color;
 	background-color: $btn-background;
@@ -75,7 +79,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 	}
 }
 
-@mixin btn-directional {
+@mixin button-directional {
 	position: relative;
 
 	&:before,
@@ -143,7 +147,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 	}
 }
 
-@mixin btn-directional--left {
+@mixin button-directional--left {
 	@include spacing(padding-left, 100px);
 
 	&:before {
@@ -169,7 +173,7 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 	}
 }
 
-@mixin btn-directional--right {
+@mixin button-directional--right {
 	padding-right: 6.5em;
 	text-align: left;
 
@@ -188,20 +192,19 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 }
 
 .c-btn-directional {
-	@include btn-directional;
+	@include button-directional;
 }
 
 .c-button-text {
-	@include btn-reset;
-	padding: 0;
+	@include button-reset;
 }
 
 .c-btn-directional--left {
-	@include btn-directional--left;
+	@include button-directional--left;
 }
 
 .c-btn-directional--right {
-	@include btn-directional--right;
+	@include button-directional--right;
 }
 
 
@@ -211,16 +214,17 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 // <a class="button arrow">	Button with Arrow 	</a>
 
 .entry-content a {
+
 	&.button {
-		@include btn;
+		@include button;
 
 		&.arrow {
-			@include btn-directional;
-			@include btn-directional--right;
+			@include button-directional;
+			@include button-directional--right;
 		}
 	}
 }
 
 .c-btn--reset {
-  @include btn-reset;
+  @include button-reset;
 }

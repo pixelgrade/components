@@ -4,42 +4,71 @@
 $color-dark: #3B3B3B !default;
 $color-white: #FFFFFF !default;
 
+$input-font: () !default;
 $input-color: #3B3B3B !default;
 $input-border-color: #E0E0E0 !default;
 $input-background-color: #FFFFFF !default;
-$input-font-size: 17px !default;
-$input-line-height: 1.5 !default;
-$input-font-weight: 400 !default;
-$input-font-family: sans-serif !default;
-
-$placeholder-color: #3B3B3B !default;
-
+$input-padding: 13px 19px 15px !default;
 $input-focus-border-color: #383838 !default;
 $input-focus-background-color: #FFFFFF !default;
 
-$input-disabled-color: #FFFFFF !default;
+$input-disabled-color: #3B3B3B !default;
 $input-disabled-background-color: #EBEBEB !default;
 
-// Fonts
-$label-font-size: 14px !default;
-$label-line-height: 1.5 !default;
-$label-font-weight: 500 !default;
-$label-font-family: sans-serif !default;
+$placeholder-color: #3B3B3B !default;
 
-$legend-font-size: 12px !default;
+$label-font: () !default;
+$label-color: #3B3B3B !default;
+
+$legend-font: () !default;
 $legend-color: #3B3B3B !default;
 
-$button-background-color: #3B3B3B !default;
 $button-color: #FFFFFF !default;
+$button-background-color: #3B3B3B !default;
+
+$checkbox-color: #3B3B3B !default;
+$checkbox-background-color: #FFFFFF !default;
+$checkbox-width: 1.5rem !default;
+$checkbox-height: 1.5rem !default;
 
 // Spacing
-$input-spacing-bottom: 12px !default;
-$input-spacing-right: 14px !default; // Checkboxes and Radios
+$input-vertical-spacing: 1rem !default;
+$input-horizontal-spacing: 1rem !default; // Checkboxes and Radios
+
+
+$label-font: (
+  font-size: 14px,
+  line-height: 1.5,
+  font-weight: 500,
+  letter-spacing: 1px,
+  text-transform: uppercase,
+);
+
+$input-font: (
+  font-size: 17px,
+  line-height: 1.5,
+  font-weight: 400,
+);
+
+
+$legend-font: (
+  font-size: 12px,
+  text-transform: uppercase,
+  font-weight: 500,
+);
 
 @mixin field {
-  padding: 13px 19px 15px;
+  width: 100%;
+  max-width: 100%;
+  @include spacing(padding, $input-padding);
   border: 1px solid $input-border-color;
+
+  @include leading-map($input-font);
+
+  color: $input-color;
   border-radius: 0;
+
+  -webkit-font-smoothing: initial;
 
   &:focus,
   &:active {
@@ -49,51 +78,29 @@ $input-spacing-right: 14px !default; // Checkboxes and Radios
   }
 }
 
+
 @mixin input {
   @include field;
-  @include fontsize($input-font-size);
-  line-height: $input-line-height;
-  font-family: $input-font-family;
-  font-weight: $input-font-weight;
-  color: $input-color;
-
-  width: 100%;
-  max-width: 100%;
-
-  -webkit-font-smoothing: initial;
 }
+
+$textarea-font: () !default;
 
 @mixin textarea {
   @include field;
-  @include fontsize($input-font-size);
-  line-height: $input-line-height;
-  font-family: $input-font-family;
-  font-weight: $input-font-weight;
-  color: $input-color;
-
-  width: 100%;
-  max-width: 100%;
 
   min-height: 120px;
   resize: vertical;
-
-  -webkit-font-smoothing: initial;
 }
 
 @mixin select {
   @include field;
-  @include fontsize($input-font-size);
-  line-height: $input-line-height;
-  font-family: $input-font-family;
 
-  width: 100%;
   padding-right: 50px;
 
   background: $input-background-color url('#{$arrow-caret-svg}') calc(100% - 17px) center no-repeat;
   background-size: 9px 5px;
 
   -webkit-appearance: none;
-  -webkit-font-smoothing: initial;
 }
 
 @mixin taxonomy-select {
@@ -109,37 +116,35 @@ $input-spacing-right: 14px !default; // Checkboxes and Radios
 }
 
 @mixin label {
-  @include fontsize($label-font-size);
-  line-height: $label-line-height;
-  font-family: $label-font-family;
-  font-weight: $label-font-weight;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-
-  @include spacing(padding-bottom, 1rem);
+  @include leading-map($label-font);
+  color: $label-color;
+  @include spacing(padding-bottom, $input-vertical-spacing);
   margin: 0;
 }
 
 @mixin checkbox {
   position: relative;
+  top: 1px;
+  left: 0;
+
   border: 1px solid $input-border-color;
   border-radius: 0;
 
-  width: 21px !important;
-  height: 21px !important;
-  margin-right: $input-spacing-right;
-  margin-bottom: $input-spacing-bottom;
-  top: 1px;
+  width: $checkbox-width !important;
+  height: $checkbox-height !important;
+  margin-right: $input-horizontal-spacing;
+  margin-bottom: $input-vertical-spacing;
 
   background-color: $color-white;
-  -webkit-appearance: none;
   cursor: pointer;
+
+  -webkit-appearance: none;
 }
 
 @include placeholder() {
   color: $placeholder-color;
   opacity: .7;
-  font-weight: $input-font-weight;
+  font-weight: map-get($input-font, font-weight);
   font-style: normal;
 }
 
@@ -150,7 +155,8 @@ input {
   &[type="date"],
   &[type="email"],
   &[type="password"],
-  &[type="url"] {
+  &[type="url"],
+  &[type="search"] {
     @include input;
   }
 }
@@ -165,8 +171,8 @@ input[type="checkbox"] {
   @include checkbox;
 
   &:checked {
-    border-color: $color-dark;
-    background: $color-white url('#{$checkbox-svg}') center center no-repeat;
+    border-color: $checkbox-color;
+    background: $checkbox-background-color url('#{$checkbox-svg}') center center no-repeat;
     background-size: 100% 100%;
     outline: 0;
   }
@@ -177,7 +183,7 @@ input[type="radio"] {
   border-radius: 50%;
 
   &:checked {
-    border: 7px solid $color-dark;
+    border: 7px solid $checkbox-color;
     outline: 0;
   }
 }
@@ -187,13 +193,10 @@ input[type="button"],
 button[type="submit"],
 button[type="button"],
 button[type="reset"] {
-  @include btn;
-  -webkit-font-smoothing: auto;
+  @include button;
 }
 
 input[type="file"] {
-  @include fontsize(16px);
-  font-family: $input-font-family;
   width: 100%;
 }
 
@@ -206,7 +209,6 @@ input[type="file"]::-webkit-file-upload-button {
   background-clip: padding-box;
   overflow: visible;
 
-  font-family: $input-font-family;
   font-weight: 600;
   text-align: center;
 
@@ -245,16 +247,13 @@ fieldset {
   border: 0;
 
   legend {
-    @include fontsize($legend-font-size);
-    font-weight: $label-font-weight;
-    text-transform: uppercase;
+    @include leading-map($legend-font);
     color: $legend-color;
-
     padding: 0 !important;
   }
 
   > div {
-    @include spacing(margin-top, 1rem);
+    @include spacing(margin-top, $input-vertical-spacing);
   }
 }
 

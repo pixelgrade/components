@@ -73,14 +73,14 @@ div.wpforms-container[class] {
     }
 
     .wpforms-form .wpforms-submit {
-        @include btn;
+        @include button;
     }
 
     .wpforms-field-radio li,
     .wpforms-field-checkbox li {
         display: flex;
         align-items: center;
-        margin-bottom: $input-spacing-bottom !important;
+        margin-bottom: $input-vertical-spacing !important;
 
         input {
             margin-bottom: 0 !important;

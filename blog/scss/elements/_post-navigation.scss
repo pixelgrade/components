@@ -11,16 +11,16 @@
 		> :last-child { margin-left: auto; }
 
 		a {
-			@include btn;
-			@include btn-directional;
+			@include button;
+			@include button-directional;
 		}
 
 		.nav-previous a {
-			@include btn-directional--left;
+			@include button-directional--left;
 		}
 
 		.nav-next a {
-			@include btn-directional--right;
+			@include button-directional--right;
 		}
 	}
 
@@ -79,7 +79,7 @@ $post-navigation-spacing: 4rem !default;
 
 	.nav-links__label {
 		@include button;
-		@include btn-directional;
+		@include button-directional;
 		@include fontsize(12px);
 
 		padding: 0;
@@ -117,7 +117,7 @@ $post-navigation-spacing: 4rem !default;
 	}
 
 	.nav-links__label--previous {
-		@include btn-directional--left;
+		@include button-directional--left;
 
 		@include spacing(padding-left, 2rem);
 
@@ -126,7 +126,7 @@ $post-navigation-spacing: 4rem !default;
 	}
 
 	.nav-links__label--next {
-		@include btn-directional--right;
+		@include button-directional--right;
 
 		@include spacing(padding-right, 2rem);
 

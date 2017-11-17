@@ -4,12 +4,12 @@
         label,
         label.checkbox,
         label.radio  {
-             font-weight: $input-font-weight;
+             font-weight: map-get($input-font, font-weight);
         }
 
         label.radio,
         label.checkbox-multiple {
-            margin-bottom: $input-spacing-bottom;
+            margin-bottom: $input-vertical-spacing;
         }
     }
 }
