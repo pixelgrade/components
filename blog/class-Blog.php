@@ -358,35 +358,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         ),
                     ),
                 ),
-
-                'page'   => array(
-                    'extend' => 'blog/default',
-                    'blocks' => array(
-                        'container' => array(
-                            'extend' => 'blog/container',
-                            'blocks' => array(
-                                'layout' => array(
-                                    'extend' => 'blog/layout',
-                                    'blocks' => array(
-                                        'main' => array(
-                                            'extend' => 'blog/main',
-                                            'blocks' => array(
-                                                'blog/entry-header-page',
-                                                'blog/entry-thumbnail',
-                                                'blog/entry-content',
-                                                'blog/entry-footer',
-                                            )
-                                        ),
-                                        'side' => array(
-                                            'extend' => 'blog/side',
-                                            'blocks' => array( 'blog/sidebar' ),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
             ),
 
             // For custom page templates, we can handle two formats:
@@ -694,7 +665,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
             $classes[] = 'has-sidebar';
         }
 
-        if ( is_single() ) {
+        if ( is_single() || is_page() ) {
             $image_orientation = pixelgrade_get_post_thumbnail_aspect_ratio_class();
 
             if ( ! empty( $image_orientation ) ) {
