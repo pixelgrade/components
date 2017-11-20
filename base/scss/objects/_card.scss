@@ -89,17 +89,16 @@ $card-content-spacing: 1.5rem !default;
   }
 }
 
-.has-post-thumbnail {
-  .c-card {
-    .c-card__letter {
-      opacity: 0;
-      color: $card-letter-hover-color;
-    }
+.has-post-thumbnail > .c-card {
 
-    &:hover {
-      .c-card__letter {
-        opacity: $card-letter-hover-opacity;
-      }
+  .c-card__letter {
+    opacity: 0;
+    color: $card-letter-hover-color;
+  }
+
+  &:hover {
+    .c-card__letter {
+      opacity: $card-letter-hover-opacity;
     }
   }
 }
