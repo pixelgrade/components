@@ -27,13 +27,15 @@ const fixedWidthDefaults = {
 
 export class Carousel extends BaseComponent {
 
-  private element: JQueryExtended;
-  private slickOptions = {
+  protected slickOptions = {
     dots: false,
+    fade: false,
     nextArrow: '<div class="slick-next"></div>',
     prevArrow: '<div class="slick-prev"></div>',
-    speed: 500
+    speed: 500,
   };
+
+  protected element: JQueryExtended;
 
   public static customPagination(slider: JQuery, i: number ): JQuery {
     const index = i + 1;
@@ -41,7 +43,7 @@ export class Carousel extends BaseComponent {
     return $('<button type="button" />').text( sIndex );
   }
 
-  constructor( element: JQuery, options: CarouselOptions = {}, isSlideshow: boolean = false ) {
+  constructor( element: JQuery, options: CarouselOptions = {} ) {
     super();
     this.element = element;
 
