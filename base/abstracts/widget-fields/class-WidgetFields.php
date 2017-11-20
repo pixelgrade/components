@@ -920,7 +920,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		}
 
         public function sanitize_select( $value, $field_name, $field_config ) {
-            // If this select has no options, any value is not good
+            // If this select has no options, any value is NOT good
             if ( empty( $field_config['options'] ) ) {
                 return false;
             }
