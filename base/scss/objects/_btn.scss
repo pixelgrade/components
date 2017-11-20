@@ -7,17 +7,17 @@
  */
 
 // Predefine the variables below in order to alter and enable specific features.
-$btn-padding:         		0.75em 1.75em       !default;
-$btn-background:      		#222222             !default;
-$btn-hover-background:    #000000             !default;
-$btn-color:           		#FFFFFF             !default;
+$btn-padding: 0.75em 1.75em !default;
+$btn-background: #222222 !default;
+$btn-hover-background: #000000 !default;
+$btn-color: #FFFFFF !default;
 
-$btn-border-width:    		0 					        !default;
-$btn-border-style:    		solid               !default;
-$btn-border-color:    		#222222             !default;
-$btn-border-radius:    		0                   !default;
+$btn-border-width: 0 !default;
+$btn-border-style: solid !default;
+$btn-border-color: #222222 !default;
+$btn-border-radius: 0 !default;
 
-$btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
+$btn-transition: all .3s cubic-bezier(.18, .61, .43, .99) !default;
 
 /**
  * 1. Allow us to style box model properties.
@@ -29,19 +29,19 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
  */
 
 @mixin button-reset {
-	border: 0;
+  border: 0;
   padding: 0;
-	background: none;
-	appearance: none;
+  background: none;
+  appearance: none;
 }
 
 @mixin button {
-	display: inline-block; /* [1] */
-	vertical-align: middle; /* [2] */
-	//font: inherit; /* [3] */
-	text-align: center; /* [4] */
-	margin: 0; /* [4] */
-	cursor: pointer; /* [5] */
+  display: inline-block; /* [1] */
+  vertical-align: middle; /* [2] */
+  //font: inherit; /* [3] */
+  text-align: center; /* [4] */
+  margin: 0; /* [4] */
+  cursor: pointer; /* [5] */
 }
 
 @mixin button-box {
@@ -52,162 +52,160 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 }
 
 @mixin btn {
-	@include button;
+  @include button;
   @include button-box;
 
-	color: $btn-color;
-	background-color: $btn-background;
+  color: $btn-color;
+  background-color: $btn-background;
 
-	box-shadow: none;
-	//-webkit-font-smoothing: initial;
+  box-shadow: none;
+  //-webkit-font-smoothing: initial;
 
-	transition: $btn-transition;
-	transition-property: color, background-color, opacity;
+  transition: $btn-transition;
+  transition-property: color, background-color, opacity;
 
-	&, body & {
-		text-decoration: none;
-	}
+  &,
+  body & {
+    text-decoration: none;
+  }
 
-	&:hover,
-	&:active,
-	&:focus {
-		color: $btn-color;
-		background-color: $btn-hover-background;
-		opacity: .8;
-		text-decoration: none;
-		border: initial;
-	}
+  &:hover,
+  &:active,
+  &:focus {
+    color: $btn-color;
+    background-color: $btn-hover-background;
+    opacity: 0.8;
+    text-decoration: none;
+    border: initial;
+  }
 }
 
 @mixin button-directional {
-	position: relative;
+  position: relative;
 
-	&:before,
-	&:after {
-		color: inherit;
-		margin-top: -1px;
-		transition: $btn-transition;
-		transition-property: transform;
-	}
+  &:before,
+  &:after {
+    color: inherit;
+    margin-top: -1px;
+    transition: $btn-transition;
+    transition-property: transform;
+  }
 
-	&:after {
-		transform: translate(0, calc(0.5px - 50%));
-	}
+  &:after {
+    transform: translate(0, calc(0.5px - 50%));
+  }
 
-	&:hover {
+  &:hover {
+    &:before {
+      transform: translate(0, 0);
+    }
 
-		&:before {
-			transform: translate(0, 0);
-		}
+    &:after {
+      transform: translate(0, -50%);
+    }
+  }
 
-		&:after {
-			transform: translate(0, -50%);
-		}
-	}
+  // The stick
+  &:before {
+    content: '';
 
-	// The stick
-	&:before {
-		content: "";
+    position: absolute;
+    top: 50%;
 
-		position: absolute;
-		top: 50%;
+    @include spacing(width, 20px);
+    height: 1px;
 
-		@include spacing(width, 37px);
-		height: 1px;
+    background-color: currentColor;
+  }
 
-		background-color: currentColor;
-	}
+  // The arrow
+  &:after {
+    content: '';
 
-	// The arrow
-	&:after {
-		content: "";
+    position: absolute;
+    top: 50%;
 
-		position: absolute;
-		top: 50%;
+    display: block;
+    width: 0;
+    height: 0;
 
-		display: block;
-		width: 0;
-		height: 0;
-
-		border-top: 5px solid transparent;
-		border-bottom: 5px solid transparent;
-	}
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
 }
 
 @mixin directional--left {
-	@include spacing(padding-left, 55px);
+  @include spacing(padding-left, 55px);
 
-	&:before {
-		left: 5px;
-	}
+  &:before {
+    left: 5px;
+  }
 
-	&:after {
-		left: 0;
-		border-right: 5px solid currentColor;
-	}
+  &:after {
+    left: 0;
+    border-right: 5px solid currentColor;
+  }
 }
 
 @mixin button-directional--left {
-	@include spacing(padding-left, 100px);
+  @include spacing(padding-left, 100px);
 
-	&:before {
-		@include spacing(left, 35px);
-	}
+  &:before {
+    @include spacing(left, 35px);
+  }
 
-	&:after {
-		@include spacing(left, 30px);
-		border-right: 5px solid currentColor;
-	}
+  &:after {
+    @include spacing(left, 30px);
+    border-right: 5px solid currentColor;
+  }
 }
 
 @mixin directional--right {
-	@include spacing(padding-right, 55px);
+  @include spacing(padding-right, 55px);
 
-	&:before {
-		right: 5px;
-	}
+  &:before {
+    right: 5px;
+  }
 
-	&:after {
-		right: 0;
-		border-left: 5px solid currentColor;
-	}
+  &:after {
+    right: 0;
+    border-left: 5px solid currentColor;
+  }
 }
 
 @mixin button-directional--right {
-	padding-right: 6.5em;
-	text-align: left;
+  padding-right: 6.5em;
+  text-align: left;
 
-	&:before {
-		right: (7em/3);
-	}
+  &:before {
+    right: (7em/3);
+  }
 
-	&:after {
-		right: calc(#{7em/3} - 5px);
-		border-left: 5px solid currentColor;
-	}
+  &:after {
+    right: calc(#{7em/3} - 5px);
+    border-left: 5px solid currentColor;
+  }
 }
 
 .c-btn {
-	@include btn;
+  @include btn;
 }
 
 .c-btn-directional {
-	@include button-directional;
+  @include button-directional;
 }
 
 .c-button-text {
-	@include button-reset;
+  @include button-reset;
 }
 
 .c-btn-directional--left {
-	@include button-directional--left;
+  @include button-directional--left;
 }
 
 .c-btn-directional--right {
-	@include button-directional--right;
+  @include button-directional--right;
 }
-
-
 
 // Helper Classes for Humans & Nature
 // <a class="button">		Regular Button 		</a>
@@ -215,14 +213,14 @@ $btn-transition: 			    all .3s cubic-bezier(.18, .61, .43, .99) !default;
 
 .entry-content a {
 
-	&.button {
-		@include button;
+  &.button {
+    @include button;
 
-		&.arrow {
-			@include button-directional;
-			@include button-directional--right;
-		}
-	}
+    &.arrow {
+      @include button-directional;
+      @include button-directional--right;
+    }
+  }
 }
 
 .c-btn--reset {

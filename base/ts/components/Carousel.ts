@@ -71,7 +71,7 @@ export class Carousel extends BaseComponent {
     this.slickOptions = Object.assign( {}, this.slickOptions, {
       arrows: false,
       centerMode: true,
-      centerPadding: '40px',
+      centerPadding: '30px',
       dots: options.show_pagination === '',
       infinite: true,
       slidesToScroll: 1,
