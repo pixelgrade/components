@@ -25,7 +25,6 @@ export class Slideshow extends Carousel {
 
     $( slick.$slides ).css( 'zIndex', 800 );
 
-    console.log( this.getDirection( slick, currentSlide, nextSlide ) );
     this.transition( $currentSlide, $nextSlide, this.getDirection( slick, currentSlide, nextSlide ) );
   }
 
