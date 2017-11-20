@@ -186,6 +186,12 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 						'label'   => esc_html__( 'Hide "Back To Top" Link', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
 					),
+					// Temporary (George)
+					'footer_credits' => array(
+						'type'    => 'checkbox',
+						'label'   => esc_html__( 'Hide Pixelgrade Credits', '__components_txtd' ),
+						'default' => 0,
+					),
 					'footer_layout'                => array(
 						'type'    => 'select',
 						'label'   => esc_html__( '"Footer Area" Widgets Layout', '__components_txtd' ),
