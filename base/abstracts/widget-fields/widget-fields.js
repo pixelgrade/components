@@ -11,9 +11,12 @@
             toggleWidgetFields(this);
         });
 
-		// Initialize range fields logic
 		$('#widgets-right .widget-content').each(function () {
+			// Initialize range fields logic
 			handleRangeFields(this);
+
+			// Initialize select2 fields logic
+			handleSelect2Fields(this);
 		});
     });
 
@@ -29,9 +32,12 @@
             toggleWidgetFields(this);
         });
 
-		// Initialize range fields logic
 		widgetContainer.find('.widget-content').each(function () {
+			// Initialize range fields logic
 			handleRangeFields(this);
+
+			// Initialize select2 fields logic
+			handleSelect2Fields(this);
 		});
     });
 
@@ -47,9 +53,12 @@
             toggleWidgetFields(this);
         });
 
-		// Initialize range fields logic
 		widgetContainer.find('.widget-content').each(function () {
+			// Initialize range fields logic
 			handleRangeFields(this);
+
+			// Initialize select2 fields logic
+			handleSelect2Fields(this);
 		});
     });
 
@@ -246,6 +255,14 @@
 			$($clone).on('input', function () {
 				$(this).siblings('input[type="range"]').val($(this).val());
 			});
+		});
+	}
+
+	var handleSelect2Fields = function (el) {
+
+		// Initialize each select with the appropriate class
+		$(el).find('select.js-select2').each(function () {
+			$(this).select2();
 		});
 	}
 
