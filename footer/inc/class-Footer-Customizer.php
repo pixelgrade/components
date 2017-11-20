@@ -162,7 +162,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 					),
 					'footer_bottom_spacing'        => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'bottom Spacing', '__components_txtd' ),
+						'label'       => esc_html__( 'Bottom Spacing', '__components_txtd' ),
 						'desc'        => '',
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 84)
@@ -185,6 +185,12 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Hide "Back To Top" Link', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
+					),
+					// Temporary (George)
+					'footer_credits' => array(
+						'type'    => 'checkbox',
+						'label'   => esc_html__( 'Hide Pixelgrade Credits', '__components_txtd' ),
+						'default' => 0,
 					),
 					'footer_layout'                => array(
 						'type'    => 'select',
