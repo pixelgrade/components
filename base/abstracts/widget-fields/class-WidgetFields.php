@@ -193,6 +193,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		            echo '</ul>' . PHP_EOL;
 		            echo '</div><!-- .accordion-container -->' . PHP_EOL;
 	            }
+            } else {
+            	// We have not sections so just display all the fields
+	            $this->displayFields( $this->getFields(), $instance );
             }
 		}
 
