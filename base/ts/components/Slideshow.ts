@@ -25,6 +25,7 @@ export class Slideshow extends Carousel {
 
     $( slick.$slides ).css( 'zIndex', 800 );
 
+    console.log( this.getDirection( slick, currentSlide, nextSlide ) );
     this.transition( $currentSlide, $nextSlide, this.getDirection( slick, currentSlide, nextSlide ) );
   }
 
@@ -50,10 +51,10 @@ export class Slideshow extends Carousel {
   }
 
   private getDirection( slick, currentSlide: number, nextSlide: number ): number {
-    if ( nextSlide === currentSlide - 1 || ( currentSlide === 0 && nextSlide === slick.$slides.length - 1 ) ) {
-      return -1;
+    if ( nextSlide === currentSlide + 1 || ( nextSlide === 0 && currentSlide === slick.$slides.length - 1 ) ) {
+      return 1;
     }
-    return 1;
+    return -1;
   }
 
 }
