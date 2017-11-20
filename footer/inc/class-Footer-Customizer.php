@@ -162,7 +162,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 					),
 					'footer_bottom_spacing'        => array(
 						'type'        => 'range',
-						'label'       => esc_html__( 'bottom Spacing', '__components_txtd' ),
+						'label'       => esc_html__( 'Bottom Spacing', '__components_txtd' ),
 						'desc'        => '',
 						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 84)
