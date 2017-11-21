@@ -70,6 +70,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             parent::__construct( $id,
                 apply_filters( 'pixelgrade_widget_name', $name ),
                 $widget_ops );
+
+			// Enqueue the frontend styles and scripts, if that is the case
+			if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+			}
 		}
 
 		/**
@@ -85,6 +90,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			if ( $this->isFieldTypeUsed( 'select2'  ) ) {
 				wp_enqueue_script( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.js', array( 'jquery' ), '4.0.5' ) );
+				wp_enqueue_script( 'select2-sortable', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2v4-sortable/select2-sortable.js', array( 'jquery', 'select2' ), '4.0.5' ) );
 				wp_enqueue_style( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/css/select2.min.css' ), array(), 20171111 );
 			}
 
@@ -110,6 +116,15 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
         public function enqueueAdminScripts() {
             // Nothing right now. Override by extending the class
         }
+
+		/**
+		 * Enqueue frontend scripts and styles.
+		 *
+		 * @access public
+		 */
+		public function enqueueScripts() {
+			// Nothing right now. Override by extending the class
+		}
 
 		/**
 		 * Outputs the settings form for the widget.
@@ -669,7 +684,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 					$options = $field_config['options'];
 					// If we have been given a callback that returns the options, then we should give it a call
 					if ( is_callable( $options ) ) {
-						$options = call_user_func_array( $options, array() );
+						$options = call_user_func_array( $options, array( $field_name, $field_config, $instance ) );
 					}
 
 					// Standardize the empty

@@ -263,6 +263,14 @@
 		// Initialize each select with the appropriate class
 		$(el).find('select.js-select2').each(function () {
 			$(this).select2();
+
+			$(this).on('select2:select', function(e){
+				var elm = e.params.data.element;
+				$elm = $(elm);
+				$t = $(this);
+				$t.append($elm);
+				$t.trigger('change.select2');
+			});
 		});
 	}
 
