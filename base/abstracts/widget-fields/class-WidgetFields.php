@@ -70,6 +70,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             parent::__construct( $id,
                 apply_filters( 'pixelgrade_widget_name', $name ),
                 $widget_ops );
+
+			// Enqueue the frontend styles and scripts, if that is the case
+			if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+			}
 		}
 
 		/**
@@ -77,7 +82,18 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 *
 		 * @access public
 		 */
-		public function enqueueAdminConditionalScripts() {
+		public function enqueueAdminFieldsScripts() {
+			if ( $this->isFieldTypeUsed( 'image'  ) ) {
+				wp_enqueue_media();
+				wp_enqueue_script( 'media-widgets' );
+			}
+
+			if ( $this->isFieldTypeUsed( 'select2'  ) ) {
+				wp_enqueue_script( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.js', array( 'jquery' ), '4.0.5' ) );
+				wp_enqueue_script( 'select2-sortable', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2v4-sortable/select2-sortable.js', array( 'jquery', 'select2' ), '4.0.5' ) );
+				wp_enqueue_style( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/css/select2.min.css' ), array(), 20171111 );
+			}
+
 			// Enqueue the needed admin scripts
             wp_enqueue_script( 'pixelgrade-widget-fields-js', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/widget-fields.js' ), array( 'jquery', 'media-upload', 'media-views' ), 20171111 );
 
@@ -102,6 +118,15 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
         }
 
 		/**
+		 * Enqueue frontend scripts and styles.
+		 *
+		 * @access public
+		 */
+		public function enqueueScripts() {
+			// Nothing right now. Override by extending the class
+		}
+
+		/**
 		 * Outputs the settings form for the widget.
 		 *
 		 * @access public
@@ -112,7 +137,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 */
 		public function form( $instance ) {
 		    // The conditional fields logic
-			$this->enqueueAdminConditionalScripts();
+			$this->enqueueAdminFieldsScripts();
 			// Any WP admin logic a widget may have
 			$this->enqueueAdminScripts();
 
@@ -579,9 +604,26 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
                 }
 
                 if ( ! empty( $field_config['options'] ) ) {
-                    $output .= '<select name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat">' . PHP_EOL;
-                    foreach ( $field_config['options'] as $option_value => $option_name ) {
-                        $output .= '<option value="' . esc_attr( $option_value ) . '" ' . selected( $value, $option_value, false ) . '>' . $option_name . '</option>' . PHP_EOL;
+                	$options = $field_config['options'];
+                	// If we have been given a callback that returns the options, then we should give it a call
+	                if ( is_callable( $options ) ) {
+		                $options = call_user_func_array( $options, array() );
+	                }
+
+	                // Standardize the empty
+	                if ( empty( $options ) ) {
+		                $options = array();
+	                }
+
+	                // Handle the setting for multiple values
+	                $multiple = '';
+	                if ( ! empty( $field_config['multiple'] ) && true === $field_config['multiple'] ) {
+	                	$multiple = '[]';
+	                }
+
+	                $output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat">' . PHP_EOL;
+                    foreach ( $options as $option_value => $option_name ) {
+                        $output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . '</option>' . PHP_EOL;
                     }
                     $output .= '</select>' . PHP_EOL;
                 }
@@ -596,6 +638,83 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
             return apply_filters( 'pixelgrade_widget_form_select_field_markup', $output, $field_name, $field_config, $instance );
         }
+
+		/**
+		 * Generate the select2 field markup.
+		 *
+		 * @param string $field_name The name if the field.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
+		 *
+		 * @return string The field HTML markup.
+		 */
+		public function displayField_select2( $field_name, $field_config, $instance ) {
+			// First the value
+			$value = $this->getDefault( $field_name );
+			if ( isset( $instance[ $field_name ] ) ) {
+				$value = $instance[ $field_name ];
+			}
+
+			$output = '';
+
+			// If we have been given a callback we will rely on it to generate the markup
+			if ( ! empty( $field_config['callback'] ) && is_callable( $field_config['callback'] ) ) {
+				$output = call_user_func_array( $field_config['callback'], array( $value, $field_name, $field_config ) );
+			} else {
+
+				// Now for attributes
+				$label = '';
+				if ( ! empty( $field_config['label'] ) ) {
+					$label = $field_config['label'];
+				}
+
+				$desc = '';
+				if ( ! empty( $field_config['desc'] ) ) {
+					$desc = $field_config['desc'];
+				}
+
+				// Lets generate the markup
+				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+
+				if ( ! empty( $label ) ) {
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				}
+
+				if ( ! empty( $field_config['options'] ) ) {
+					$options = $field_config['options'];
+					// If we have been given a callback that returns the options, then we should give it a call
+					if ( is_callable( $options ) ) {
+						$options = call_user_func_array( $options, array( $field_name, $field_config, $instance ) );
+					}
+
+					// Standardize the empty
+					if ( empty( $options ) ) {
+						$options = array();
+					}
+
+					// Handle the setting for multiple values
+					$multiple = '';
+					if ( ! empty( $field_config['multiple'] ) && true === $field_config['multiple'] ) {
+						$multiple = '[]';
+					}
+
+					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat js-select2" ' . ( $multiple === '' ? '' : 'multiple="multiple"' ) . ' style="width:100%;">' . PHP_EOL;
+					foreach ( $options as $option_value => $option_name ) {
+						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . '</option>' . PHP_EOL;
+					}
+					$output .= '</select>' . PHP_EOL;
+				}
+
+				if ( ! empty( $desc ) ) {
+					$output .= '<br />' . PHP_EOL;
+					$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				}
+
+				$output .= '</p>' . PHP_EOL;
+			}
+
+			return apply_filters( 'pixelgrade_widget_form_select_field_markup', $output, $field_name, $field_config, $instance );
+		}
 
 		/**
 		 * Generate the radio group field markup.
@@ -656,8 +775,6 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
             return apply_filters( 'pixelgrade_widget_form_select_field_markup', $output, $field_name, $field_config, $instance );
         }
-
-		const CUSTOM_IMAGE_SIZE_SLUG = 'tribe_image_widget_custom';
 
 		/**
 		 * Generate the image field markup.
@@ -859,6 +976,13 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             // Make sure this is an array
             $instance = (array) $instance;
 
+            // We need to remember if the instance was empty to being with
+			// We will interpret this as being an initial instance that should use the default values (mostly important for checkboxes).
+            $unsaved_instance = false;
+            if ( count( $instance ) === 0 ) {
+	            $unsaved_instance = true;
+            }
+
             foreach( $this->getFields() as $field_name => $field_config ) {
 	            if ( $this->isFieldDisabled( $field_name ) ) {
 		            // We want to keep a clean instance, hence we don't want values for fields that are disabled
@@ -879,7 +1003,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 	            // If the field value is not set
 	            if ( ! isset( $instance[ $field_name ] ) ) {
 	            	// If it is a checkbox (that doesn't send the input when not checked)
-                    if ( $field_config['type'] === 'checkbox' ) {
+		            // we need to do special handling to distinguish between an initial state (that should use the default value)
+		            // and an update that should mark the checkbox as unchecked.
+                    if ( $field_config['type'] === 'checkbox' && false === $unsaved_instance ) {
 	                    // Give it an empty value, that will be sanitized
 	                    $instance[ $field_name ] = '0';
                     } else {
@@ -941,6 +1067,49 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             return $value;
         }
 
+		public function sanitize_select2( $value, $field_name, $field_config ) {
+//			// If this select has no options, any value is NOT good
+//			if ( empty( $field_config['options'] ) ) {
+//				return false;
+//			}
+//
+//			if ( ! in_array( $value, array_keys( $field_config['options'] ) ) ) {
+//				// Fallback on the default value
+//				if ( isset( $field_config['default'] ) ) {
+//					return $field_config['default'];
+//				} else {
+//					return false;
+//				}
+//			}
+
+			// All is good
+			return $value;
+		}
+
+		/**
+		 * Outputs the html selected attribute.
+		 *
+		 * This is a modified version of the core selected() to take into account multiple values, not just one,
+		 * like in the case for multiple selects or select2 with multiple.
+		 *
+		 * @param mixed $selected One or more of the values to compare
+		 * @param mixed $current  (true) The other value to compare if not just true
+		 * @param bool  $echo     Whether to echo or just return the string
+		 * @return string html attribute or empty string
+		 */
+		public function selected( $selected, $current = true, $echo = true ) {
+			if ( ! is_array( $selected ) ) {
+				return __checked_selected_helper( $selected, $current, $echo, 'selected' );
+			} else {
+				if ( in_array( $current, $selected ) ) {
+					// It is definitely selected - force it to be so
+					return __checked_selected_helper( 'yes', 'yes', $echo, 'selected' );
+				}
+			}
+
+			return '';
+		}
+
         /**
          * We check the $config and determine if this field should be show or not.
          *
@@ -978,6 +1147,46 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
             return false;
         }
+
+		/**
+		 * We check the $config and determine if this field type is used by any active field.
+		 *
+		 * @param string $field_type
+		 * @param array $fields
+		 *
+		 * @return bool
+		 */
+		public function isFieldTypeUsed( $field_type, $fields = array() ) {
+			if ( empty( $field_type ) ) {
+				return false;
+			}
+
+			// If we are not given any fields, we default to all the fields
+			if ( empty( $fields ) ) {
+				$fields = $this->getFields();
+			}
+
+			// No fields, no used field type, doh!
+			if ( empty( $fields ) ) {
+				return false;
+			}
+
+			foreach ( $fields as $field_name => $field_config ) {
+				if ( empty( $field_config ) || $this->isFieldDisabled( $field_name ) ) {
+					continue;
+				}
+
+				if ( empty( $field_config['type'] ) ) {
+					$field_config['type'] = 'text';
+				}
+
+				if ( $field_config['type'] == $field_type ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
 
         /**
          * Return an associative array of default values
