@@ -85,7 +85,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			if ( $this->isFieldTypeUsed( 'select2'  ) ) {
 				wp_enqueue_script( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.js', array( 'jquery' ), '4.0.5' ) );
-				wp_enqueue_style( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.css' ), array(), 20171111 );
+				wp_enqueue_style( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/css/select2.min.css' ), array(), 20171111 );
 			}
 
 			// Enqueue the needed admin scripts
@@ -683,7 +683,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 						$multiple = '[]';
 					}
 
-					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat js-select2" ' . ( $multiple === '' ? '' : 'multiple="multiple"' ) . '>' . PHP_EOL;
+					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat js-select2" ' . ( $multiple === '' ? '' : 'multiple="multiple"' ) . ' style="width:100%;">' . PHP_EOL;
 					foreach ( $options as $option_value => $option_name ) {
 						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . '</option>' . PHP_EOL;
 					}
@@ -961,6 +961,13 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             // Make sure this is an array
             $instance = (array) $instance;
 
+            // We need to remember if the instance was empty to being with
+			// We will interpret this as being an initial instance that should use the default values (mostly important for checkboxes).
+            $unsaved_instance = false;
+            if ( count( $instance ) === 0 ) {
+	            $unsaved_instance = true;
+            }
+
             foreach( $this->getFields() as $field_name => $field_config ) {
 	            if ( $this->isFieldDisabled( $field_name ) ) {
 		            // We want to keep a clean instance, hence we don't want values for fields that are disabled
@@ -981,7 +988,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 	            // If the field value is not set
 	            if ( ! isset( $instance[ $field_name ] ) ) {
 	            	// If it is a checkbox (that doesn't send the input when not checked)
-                    if ( $field_config['type'] === 'checkbox' ) {
+		            // we need to do special handling to distinguish between an initial state (that should use the default value)
+		            // and an update that should mark the checkbox as unchecked.
+                    if ( $field_config['type'] === 'checkbox' && false === $unsaved_instance ) {
 	                    // Give it an empty value, that will be sanitized
 	                    $instance[ $field_name ] = '0';
                     } else {
@@ -1078,8 +1087,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				return __checked_selected_helper( $selected, $current, $echo, 'selected' );
 			} else {
 				if ( in_array( $current, $selected ) ) {
-					// It is definitely selected
-					return __checked_selected_helper( $current, $current, $echo, 'selected' );
+					// It is definitely selected - force it to be so
+					return __checked_selected_helper( 'yes', 'yes', $echo, 'selected' );
 				}
 			}
 
