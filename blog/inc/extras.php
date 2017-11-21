@@ -90,6 +90,7 @@ function pixelgrade_remove_main_category_from_list( $categories, $post_id ) {
 
 	return $categories;
 }
+// We should leave this up the the theme
 //add_filter( 'the_category_list', 'pixelgrade_remove_main_category_from_list', 10, 2 );
 
 /**
