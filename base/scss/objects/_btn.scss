@@ -211,7 +211,8 @@ $btn-transition: all .3s cubic-bezier(.18, .61, .43, .99) !default;
 // <a class="button">		Regular Button 		</a>
 // <a class="button arrow">	Button with Arrow 	</a>
 
-.entry-content a {
+.entry-content a,
+input[type=submit] {
 
   &.button {
     @include button;
