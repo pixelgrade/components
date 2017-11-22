@@ -226,8 +226,8 @@ $blog-card-meta-secondary-font: () !default;
 	@include leading-map($blog-card-meta-secondary-font);
 }
 
-.c-meta__separator:after {
-  background-color: $blog-secondary-meta-color;
+.c-meta__separator {
+  color: $blog-secondary-meta-color;
 }
 
 .c-card__thumbnail-background {
