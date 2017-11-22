@@ -13,7 +13,7 @@
     height: auto;
     margin-left: auto;
     margin-right: auto;
-    transition: filter $transition--macro ease-in-out;
+    transition: filter $transition--macro ease-in-out, opacity $transition--micro ease-out;
   }
 }
 
