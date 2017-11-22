@@ -215,7 +215,7 @@ $btn-transition: all .3s cubic-bezier(.18, .61, .43, .99) !default;
 input[type=submit] {
 
   &.button {
-    @include button;
+    @include btn;
 
     &.arrow {
       @include button-directional;

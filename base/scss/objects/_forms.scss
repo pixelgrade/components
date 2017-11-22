@@ -68,6 +68,7 @@ $legend-font: (
   color: $input-color;
   border-radius: 0;
 
+  font-family: inherit;
   -webkit-font-smoothing: initial;
 
   &:focus,
@@ -143,9 +144,9 @@ $textarea-font: () !default;
 
 @include placeholder() {
   color: $placeholder-color;
-  opacity: .7;
+  opacity: .6;
   font-weight: map-get($input-font, font-weight);
-  font-style: normal;
+  font-style: italic;
 }
 
 input {
@@ -193,7 +194,7 @@ input[type="button"],
 button[type="submit"],
 button[type="button"],
 button[type="reset"] {
-  @include button;
+  @include btn;
 }
 
 input[type="file"] {
@@ -254,6 +255,20 @@ fieldset {
 
   > div {
     @include spacing(margin-top, $input-vertical-spacing);
+  }
+}
+
+// Helper Classes for Humans & Nature
+// <div class="form-inline">  <input> <input type="submit">  </div>
+.form-inline {
+  display: flex;
+
+  input[type="submit"],
+  input[type="button"],
+  button[type="submit"],
+  button[type="button"],
+  button[type="reset"] {
+    flex-shrink: 0;
   }
 }
 
