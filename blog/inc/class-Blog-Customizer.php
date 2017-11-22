@@ -596,7 +596,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'     => 'font',
 						'label'    => esc_html__( 'Body Text Font', '__components_txtd' ),
 						'desc'     => '',
-						'selector' => 'body, .entry-content p, .comment-content p',
+						'selector' => 'body',
 						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme
