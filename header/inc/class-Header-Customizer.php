@@ -214,7 +214,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 								'property'        => 'margin-left',
 								'selector'        => '.c-navbar li',
 								'unit'            => 'px',
-//								'callback_filter' => 'typeline_spacing_cb',
+								'callback_filter' => 'typeline_spacing_cb',
 							),
 						),
 					),
