@@ -267,7 +267,9 @@ export class StickyHeader extends BaseComponent {
       clearTimeout( this.overflowTimeout );
 
       if ( !hideReadingBar ) {
-        this.$stickyHeader.css( 'overflow', 'hidden' );
+        if ( this.$readingBar.length ) {
+          this.$stickyHeader.css( 'overflow', 'hidden' );
+        }
       } else {
         this.overflowTimeout = setTimeout( () => {
           this.$stickyHeader.css( 'overflow', '' );
