@@ -175,7 +175,7 @@ function pixelgrade_footer_the_copyright() {
 		$output .= $copyright_text . PHP_EOL;
 		$hide_credits = pixelgrade_option( 'footer_hide_credits', false );
 		if ( empty( $hide_credits ) ) {
-			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>') . '</span>' . PHP_EOL;
+			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>') . '</span>' . PHP_EOL;
 		}
 		$output .= '</div>' . PHP_EOL;
 	}
