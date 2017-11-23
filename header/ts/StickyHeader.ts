@@ -233,9 +233,9 @@ export class StickyHeader extends BaseComponent {
     $( '.c-reading-bar__wrapper-social' ).find( '.share-end' ).remove();
 
     const entryHeader = $( '.entry-header' );
-    const entryContent = $( '.entry-content__wrapper' ).find( '.entry-content' );
-    const entryHeaderHeight = entryHeader.outerHeight();
-    const entryContentHeight = entryContent.outerHeight();
+    const entryContent = $( '.single-main' ).find( '.entry-content' );
+    const entryHeaderHeight = entryHeader.outerHeight() || 0;
+    const entryContentHeight = entryContent.outerHeight() || 0;
     let articleHeight = entryHeaderHeight + entryContentHeight;
 
     if ( this.$body.hasClass( 'entry-image--landscape' ) ) {
