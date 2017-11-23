@@ -36,7 +36,7 @@ class Pixelgrade_Array {
 	}
 
 	/**
-	 * Insert a value or key/value pair after a specific key in an array.  If key doesn't exist, value is appended
+	 * Insert a value (array included) or key/value pair after a specific key in an array.  If key doesn't exist, value is appended
 	 * to the end of the array.
 	 *
 	 * @param array $array

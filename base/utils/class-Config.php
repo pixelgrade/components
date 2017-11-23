@@ -529,8 +529,7 @@ class Pixelgrade_Config {
 	}
 
 	/**
-	 * Insert a value or key/value pair before a specific key in an array.  If key doesn't exist, value is prepended
-	 * at the beginning of the array.
+	 * Merge two configuration arrays.
 	 *
 	 * @param array $original_config The original config we should apply the changes.
 	 * @param array $partial_changes The partial changes we wish to make to the original config.
