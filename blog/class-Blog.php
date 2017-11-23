@@ -143,25 +143,34 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
                 // default loop
                 'loop'      => array(
-                    'type'     => 'loop',
-                    'blocks'   => array(
-                        'grid-item' => array(
-	                        'type'      => 'template_part',
-	                        'templates' => array(
-		                        array(
-			                        'component_slug' => self::COMPONENT_SLUG,
-			                        'slug'           => 'content'
-		                        ),
-	                        ),
-                        ),
-                    ),
-                    'wrappers' => array(
-                        array(
-                            'classes'  => array(
-                                'callback' => 'pixelgrade_get_blog_grid_class',
-                            ),
-                            'priority' => 220,
-                        ),
+                    'blocks' => array(
+                    	'loop-posts' => array(
+		                    'type'     => 'loop',
+		                    'wrappers' => array(
+			                    array(
+				                    'classes'  => array(
+					                    'callback' => 'pixelgrade_get_blog_grid_class',
+				                    ),
+				                    'priority' => 220,
+			                    ),
+		                    ),
+		                    'blocks'   => array(
+			                    'grid-item' => array(
+				                    'type'      => 'template_part',
+				                    'templates' => array(
+					                    array(
+						                    'component_slug' => self::COMPONENT_SLUG,
+						                    'slug'           => 'content'
+					                    ),
+				                    ),
+			                    ),
+		                    ),
+	                    ),
+	                    'loop-pagination' => array(
+	                    	'type' => 'callback',
+		                    'callback' => 'the_posts_navigation',
+		                    'args' => array(),
+	                    ),
                     ),
                     'checks' => array(
 	                    array(
@@ -174,19 +183,19 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                 // Default for no posts in loop
                 'loop-none'      => array(
 	                'type'      => 'template_part',
-	                'templates' => array(
-		                array(
-			                'component_slug' => self::COMPONENT_SLUG,
-			                'slug'           => 'content',
-			                'name'           => 'none',
-		                ),
-	                ),
 	                'wrappers' => array(
 		                array(
 			                'classes'  => array(
 				                'callback' => 'pixelgrade_get_blog_grid_class',
 			                ),
 			                'priority' => 220,
+		                ),
+	                ),
+	                'templates' => array(
+		                array(
+			                'component_slug' => self::COMPONENT_SLUG,
+			                'slug'           => 'content',
+			                'name'           => 'none',
 		                ),
 	                ),
 	                'checks' => array(
