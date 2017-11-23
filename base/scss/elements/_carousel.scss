@@ -77,15 +77,10 @@ $slick-dot-size: 10px !default;
   }
 
   .slick-arrow {
-    width: 0;
-  }
-
-  .slick-next {
-    right: 20px;
-  }
-
-  .slick-prev {
-    left: 20px;
+    width: 45px;
+    height: 75%;
+    top: 25%;
+    transform: translateY(calc(50% - 50vh));
   }
 }
 
