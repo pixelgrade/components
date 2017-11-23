@@ -105,5 +105,6 @@ export class Carousel extends BaseComponent {
 
   private bindSlick() {
     this.element.slick( this.slickOptions );
+    this.element.find('.slick-cloned').find('img').addClass('is-loaded');
   }
 }
