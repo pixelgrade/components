@@ -147,14 +147,6 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'blocks'   => array(
                         'grid-item' => array(
 	                        'type'      => 'template_part',
-                            'wrappers' => array(
-                                'grid-item' => array(
-                                    'classes' => array(
-                                        'callback' => array( $this, 'postClasses' ), // .c-gallery__item
-                                        'args'     => array(),
-                                    ),
-                                ),
-                            ),
 	                        'templates' => array(
 		                        array(
 			                        'component_slug' => self::COMPONENT_SLUG,
