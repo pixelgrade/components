@@ -221,6 +221,7 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( $value, $selector, $propert
 		'.c-gallery--blog > * {' . PHP_EOL .
 		'padding-left: ' . $value . 'px;' . PHP_EOL .
 		'}' . PHP_EOL .
+		'.c-gallery--blog.c-gallery--packed .c-card {' . PHP_EOL .
 		'left: ' . $value . 'px;' . PHP_EOL .
 		'}' . PHP_EOL;
 

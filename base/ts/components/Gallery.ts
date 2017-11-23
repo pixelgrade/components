@@ -1,10 +1,11 @@
+import * as Masonry from 'masonry-layout';
 import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
 
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
 
-  constructor( element: JQuery ) {
+  constructor( element: JQueryExtended ) {
     super();
     this.element = element;
 
@@ -36,7 +37,7 @@ export class Gallery extends BaseComponent {
       minColumnWidth = width < minColumnWidth ? width : minColumnWidth;
     } );
 
-    this.element.masonry( {
+    new Masonry( this.element.get(0), {
       columnWidth: minColumnWidth,
       transitionDuration: 0,
     } );
