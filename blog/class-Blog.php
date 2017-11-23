@@ -269,7 +269,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'wrappers' => array(
                         'header' => array(
                             'tag'     => 'header',
-                            'classes' => 'entry-header u-header-background',
+                            'classes' => 'entry-header',
                         ),
                     ),
                 ),

@@ -24,12 +24,16 @@ export class BaseTheme {
     this.$html.toggleClass( 'is-IE', Helper.getIEversion() && Helper.getIEversion() < 12 );
 
     this.bindEvents();
+    this.renderLoop();
   }
 
   public bindEvents(): void {
     GlobalService.onReady().take(1).subscribe(this.onReadyAction.bind(this));
     WindowService.onLoad().take(1).subscribe(this.onLoadAction.bind(this));
     WindowService.onResize().debounce(300).subscribe(this.onResizeAction.bind(this));
+    WindowService.onScroll().subscribe(() => {
+      this.frameRendered = false;
+    });
 
     // Leave comments area visible by default and
     // show it only if the URL links to a comment
@@ -73,7 +77,6 @@ export class BaseTheme {
 
   public backToTop() {
     const opacity = WindowService.getScrollY() >= WindowService.getHeight() ? 1 : 0;
-
     $( '.back-to-top' ).css( 'opacity', opacity );
   }
 

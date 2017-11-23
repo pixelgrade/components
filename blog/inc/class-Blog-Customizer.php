@@ -406,7 +406,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-page-header__title',
+								'selector' => '.u-page-title-color',
 							),
 						),
 					),

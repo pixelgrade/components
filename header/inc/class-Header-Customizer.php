@@ -279,7 +279,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-navbar',
+								'selector' => '.c-navbar, .c-navbar li',
 							),
 						),
 					),
