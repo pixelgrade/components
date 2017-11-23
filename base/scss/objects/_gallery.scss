@@ -288,6 +288,10 @@
 
 .c-gallery {
 	pointer-events: none;
+
+  .related-posts-container & {
+    pointer-events: auto;
+  }
 }
 
 .c-gallery__item {
