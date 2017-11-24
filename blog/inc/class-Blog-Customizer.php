@@ -1498,7 +1498,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Item Title Font', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.c-gallery--blog .c-card__title',
+						'selector'    => '.c-gallery--blog .c-card__title, .c-gallery--blog .c-card__letter',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
