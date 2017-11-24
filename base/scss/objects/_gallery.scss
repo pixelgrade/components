@@ -255,6 +255,10 @@
 		transition: opacity $transition--macro $easeInOutCirc;
 	}
 
+  .c-card__letter {
+    display: none;
+  }
+
 	& .c-card:hover .c-card__content {
 		opacity: 1;
 	}
@@ -277,16 +281,28 @@
 	[class*="c-gallery--title"][class*="-left"] & {
 		align-items: flex-start;
 		text-align: left;
+
+    .c-meta {
+      justify-content: flex-start;
+    }
 	}
 
 	[class*="c-gallery--title"][class*="-right"] & {
 		align-items: flex-end;
 		text-align: right;
+
+    .c-meta {
+      justify-content: flex-end;
+    }
 	}
 
 	[class*="c-gallery--title"][class*="-center"] & {
 		align-items: center;
 		text-align: center;
+
+    .c-meta {
+      justify-content: center;
+    }
 	}
 }
 

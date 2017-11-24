@@ -1,9 +1,11 @@
 import * as Masonry from 'masonry-layout';
 import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
+import {WindowService} from "../services/window.service";
 
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
+  private subscriptionActive: boolean = true;
 
   constructor( element: JQueryExtended ) {
     super();
@@ -12,6 +14,14 @@ export class Gallery extends BaseComponent {
     if ( this.element.is( '.c-gallery--packed, .c-gallery--masonry' ) ) {
       this.layout();
     }
+
+    WindowService
+      .onResize()
+      .debounce(300 )
+      .takeWhile( () => this.subscriptionActive )
+      .subscribe( () => {
+        this.layout();
+      } );
   }
 
   public bindEvents() {
@@ -19,7 +29,7 @@ export class Gallery extends BaseComponent {
   }
 
   public destroy() {
-
+    this.subscriptionActive = false;
   }
 
   private layout() {

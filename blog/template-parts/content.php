@@ -61,9 +61,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 							the_post_thumbnail();
 						}
 
-						if ( pixelgrade_option( 'blog_items_title_position', 'regular' ) != 'overlay' ) {
-							echo '<span class="c-card__letter">' . mb_substr( get_the_title(), 0, 1 ) . '</span>';
-						}
+						echo '<span class="c-card__letter">' . mb_substr( get_the_title(), 0, 1 ) . '</span>';
 						?>
 					</div>
 				</div>
@@ -74,21 +72,19 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 				<?php
 				if ( $primary_meta || $secondary_meta ) { ?>
 
-					<div class="c-card__meta">
-						<div class="c-meta">
-							<?php
-							if ( $primary_meta ) {
-								echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
-								// Add a separator if we also have secondary meta
-								if ( $secondary_meta ) {
-									echo '<div class="c-meta__separator js-card-meta-separator"></div>';
-								}
-							}
-
+					<div class="c-card__meta c-meta">
+						<?php
+						if ( $primary_meta ) {
+							echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
+							// Add a separator if we also have secondary meta
 							if ( $secondary_meta ) {
-								echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
-							} ?>
-						</div>
+								echo '<div class="c-meta__separator js-card-meta-separator"></div>';
+							}
+						}
+
+						if ( $secondary_meta ) {
+							echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
+						} ?>
 					</div>
 
 				<?php }
