@@ -9,6 +9,11 @@ export class Slideshow extends Carousel {
     super( element, options );
   }
 
+  public destroy() {
+    super.destroy();
+    this.element.off('beforeChange');
+  }
+
   public bindEvents() {
     this.element.on( 'beforeChange', this.onBeforeSlideChange.bind( this ) );
     this.slickOptions = Object.assign({}, this.slickOptions, {
