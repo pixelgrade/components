@@ -89,8 +89,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			if ( $this->isFieldTypeUsed( 'select2'  ) ) {
-				wp_enqueue_script( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.js', array( 'jquery' ), '4.0.5' ) );
-				wp_enqueue_script( 'select2-sortable', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2v4-sortable/select2-sortable.js', array( 'jquery', 'select2' ), '4.0.5' ) );
+				wp_enqueue_script( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.js' ), array( 'jquery' ), '4.0.5' );
+				wp_enqueue_script( 'select2-sortable', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2v4-sortable/select2-sortable.js' ), array( 'jquery', 'select2' ), '4.0.5' );
 				wp_enqueue_style( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/css/select2.min.css' ), array(), 20171111 );
 			}
 
