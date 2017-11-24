@@ -168,7 +168,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	                    ),
 	                    'loop-pagination' => array(
 	                    	'type' => 'callback',
-		                    'callback' => 'the_posts_pagination',
+		                    'callback' => 'julia_the_posts_pagination',
 		                    'args' =>array(
 			                    'end_size'           => 1,
 			                    'mid_size'           => 2,
