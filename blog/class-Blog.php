@@ -168,8 +168,15 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	                    ),
 	                    'loop-pagination' => array(
 	                    	'type' => 'callback',
-		                    'callback' => 'the_posts_navigation',
-		                    'args' => array(),
+		                    'callback' => 'the_posts_pagination',
+		                    'args' =>array(
+			                    'end_size'           => 1,
+			                    'mid_size'           => 2,
+			                    'type'               => 'list',
+			                    'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+			                    'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+			                    'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+		                    ),
 	                    ),
                     ),
                     'checks' => array(

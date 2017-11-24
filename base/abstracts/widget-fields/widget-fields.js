@@ -238,13 +238,15 @@
 
 		// For each range input add a number field (for preview mainly - but it can also be used for input)
 		$(el).find('input[type="range"]').each(function () {
-			var $clone = $(this).clone();
+			if ( ! $(this).siblings('.range-value').length ) {
+				var $clone = $(this).clone();
 
-			$clone
-				.attr('type', 'number')
-				.attr('class', 'range-value');
+				$clone
+					.attr('type', 'number')
+					.attr('class', 'range-value');
 
-			$(this).after($clone);
+				$(this).after($clone);
+			}
 
 			// Update the number field when changing the range
 			$(this).on('input', function () {

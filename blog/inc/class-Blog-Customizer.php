@@ -311,7 +311,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property' => 'max-width',
-								'selector' => '.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote), 
+								'selector' => '.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote),
 								.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(blockquote)',
 								'unit'     => 'px',
 							),
@@ -1212,7 +1212,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					'blog_items_aspect_ratio'               => array(
 						'type'            => 'range',
 						'label'           => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
-						'desc'            => esc_html__( 'Leave the images to their original ratio or crop them to get a more defined grid layout.', '__components_txtd' ),
+						'desc'            => esc_html__( 'Change the images ratio from landscape to portrait.', '__components_txtd' ),
 						'live'            => true,
 						'default'         => null, // this should be set by the theme (previously 130)
 						'input_attrs'     => array(
