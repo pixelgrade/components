@@ -11,7 +11,9 @@ export class GlobalService {
 
     return Rx.Observable.create( ( observer ) => {
       if ( exWindow.wp && exWindow.wp.customize && exWindow.wp.customize.selectiveRefresh ) {
+        console.log('check:1');
         exWindow.wp.customize.selectiveRefresh.bind( 'partial-content-rendered', (placement) => {
+          console.log('launch element');
           observer.onNext($(placement.container));
         });
       }
