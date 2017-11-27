@@ -114,7 +114,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         ),
                         'main'    => array(
                             'id'         => 'main',
-                            'classes'    => 'site-main',
+                            'classes'    => 'site-main  u-content-top-spacing  u-content-bottom-spacing',
                             'attributes' => array( 'role' => 'main', ),
                             'priority'   => 20,
                         ),
@@ -238,7 +238,12 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'wrappers' => array(
                         'side' => array(
                             'priority' => 320,
-                            'classes'  => array( 'o-layout__side' ),
+                            'tag' => 'aside',
+                            'id' => 'secondary',
+                            'classes'  => array( 'o-layout__side  widget-area  widget-area--side' ),
+	                        'attributes' => array(
+	                        	'role' => 'complementary'
+	                        ),
                         ),
                     ),
                 ),

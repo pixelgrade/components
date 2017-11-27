@@ -6,9 +6,12 @@
 	justify-content: space-between;
 
 	> * {
-		@include spacing(margin-bottom, 2rem);
 		flex: 0 0 100%;
 	}
+
+  > :not(:first-child) {
+    @include spacing(margin-top, 2rem);
+  }
 
 	> :last-child,
 	> p:last-of-type {
