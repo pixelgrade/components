@@ -198,7 +198,7 @@ export class StickyHeader extends BaseComponent {
       $branding.find( 'img' ).removeClass( 'is--loading' );
 
       // Create the mobile site header
-      const $siteHeaderMobile = $( '<div class="site-header-mobile u-container-sides-spacings"></div>' )
+      const $siteHeaderMobile = $( '<div class="site-header-mobile u-container-sides-spacing"></div>' )
         .appendTo( '.c-navbar' );
 
       // Append the social menu
