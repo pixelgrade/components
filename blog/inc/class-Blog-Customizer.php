@@ -311,8 +311,9 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property' => 'max-width',
-								'selector' => '.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote),
-								.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(blockquote)',
+								'selector' => '
+									.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote),
+									.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(blockquote)',
 								'unit'     => 'px',
 							),
 						),
