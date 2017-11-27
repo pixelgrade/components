@@ -4,6 +4,7 @@ $layout-side-width: percentage(1/3) !default;
 @include above(lap) {
 
 	.o-layout {
+    width: 100%;
 		display: flex;
 
 		justify-content: center;
