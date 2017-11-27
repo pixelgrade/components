@@ -10,7 +10,7 @@ $h4-color: #333 !default;
 $h5-color: #333 !default;
 $h6-color: #333 !default;
 
-p, blockquote,
+p,
 ul, ol, dl,
 hr,
 table,
@@ -25,6 +25,10 @@ pre {
 
 blockquote {
   @include leading-map($blockquote-font);
+
+  &:not(:last-child) {
+    @include spacing(margin-bottom, $typography-spacing);
+  }
 }
 
 blockquote footer, cite {
