@@ -1007,7 +1007,23 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'background-color',
-								'selector' => '.c-btn',
+								'selector' => '
+									.c-btn,
+									button[type=button],
+									button[type=reset],
+									button[type=submit],
+									input[type=button],
+									input[type=submit]',
+							),
+							array(
+								'property' => 'color',
+								'selector' => '
+									.u-buttons-outline .c-btn,
+									.u-buttons-outline button[type=button], 
+									.u-buttons-outline button[type=reset], 
+									.u-buttons-outline button[type=submit], 
+									.u-buttons-outline input[type=button], 
+									.u-buttons-outline input[type=submit]',
 							),
 						),
 					),
@@ -1019,7 +1035,13 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-btn',
+								'selector' => '
+									.c-btn,
+									button[type=button],
+									button[type=reset],
+									button[type=submit],
+									input[type=button],
+									input[type=submit]',
 							),
 						),
 					),
@@ -1031,7 +1053,13 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Button Font', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.c-btn',
+						'selector'    => '
+							.c-btn,
+							button[type=button],
+							button[type=reset],
+							button[type=submit],
+							input[type=button],
+							input[type=submit]',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -1680,6 +1708,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		if ( ! empty( $underline_links ) ) {
 			$classes[] = 'u-underlined-links';
 		}
+
+		$buttons_style = pixelgrade_option( 'buttons_style', true );
+		$classes[] = 'u-buttons-' . $buttons_style;
+
+		$buttons_shape = pixelgrade_option( 'buttons_shape', true );
+		$classes[] = 'u-buttons-' . $buttons_shape;
 
 		return $classes;
 	}

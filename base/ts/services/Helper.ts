@@ -214,7 +214,7 @@ export class Helper {
     const currentFontSize = parseFloat( $el.css( 'fontSize' ) );
     const currentLineHeight = parseFloat( $el.css( 'lineHeight' ) );
     const parentHeight = $el.parent().outerHeight();
-    console.log( parentHeight, currentLineHeight, currentFontSize );
+
     $el.css( 'fontSize', currentFontSize * parentHeight / currentLineHeight );
   }
 
