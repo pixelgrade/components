@@ -10,7 +10,7 @@ export class GlobalService {
     const exWindow: ExtendedWindow = window;
 
     return Rx.Observable.create( ( observer ) => {
-      if ( exWindow.wp && exWindow.wp.customize ) {
+      if ( exWindow.wp && exWindow.wp.customize && exWindow.wp.customize.selectiveRefresh ) {
         exWindow.wp.customize.selectiveRefresh.bind( 'partial-content-rendered', (placement) => {
           observer.onNext($(placement.container));
         });
