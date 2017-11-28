@@ -428,7 +428,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		        $max = $field_config['max'];
 	        }
 
-	        $step = '';
+	        $step = 1;
 	        if ( ! empty( $field_config['step'] ) ) {
 		        $step = $field_config['step'];
 	        }
