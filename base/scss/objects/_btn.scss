@@ -80,6 +80,26 @@ $btn-font: () !default;
     text-decoration: none;
     border: initial;
   }
+
+  .u-buttons-rounded & {
+    border-radius: 0.3em;
+  }
+
+  .u-buttons-pill & {
+    border-radius: 999em;
+  }
+
+  .u-buttons-outline & {
+    background: none;
+    border: 2px solid currentColor;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: none;
+      color: $btn-hover-background;
+    }
+  }
 }
 
 @mixin button-directional {

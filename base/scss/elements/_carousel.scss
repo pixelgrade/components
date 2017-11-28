@@ -99,7 +99,7 @@ $slick-dot-size: 10px !default;
     margin: 0;
   }
 
-  button {
+  &[class] button {
     display: block;
     padding: 0;
     margin: 0 0.75em;

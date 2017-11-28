@@ -22,36 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-// Let the template parts know about our location
-$location = pixelgrade_set_location( '404' );
-
 pixelgrade_get_header(); ?>
 
-<?php
-/**
- * pixelgrade_before_primary_wrapper hook.
- *
- * @hooked nothing() - 10 (outputs nothing)
- */
-do_action( 'pixelgrade_before_primary_wrapper', $location );
-?>
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-			<div class="u-container-sides-spacing  u-content-top-spacing  u-content-bottom-spacing">
-				<div class="o-wrapper u-container-width">
-
-					<section class="error-404 not-found">
-
-						<?php
-						/**
-						 * pixelgrade_before_entry_title hook.
-						 *
-						 * @hooked pixelgrade_the_hero() - 10 (outputs the hero markup)
-						 */
-						do_action( 'pixelgrade_before_entry_title', $location );
-						?>
+		<div class="u-container-sides-spacing  u-content-top-spacing  u-content-bottom-spacing">
+			<div class="o-wrapper  u-container-width">
+				<div class="o-layout">
+					<section class="error-404  not-found  o-layout__full">
 
 						<?php
 						$visibility_class = '';
@@ -61,39 +40,19 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 						}
 						?>
 
-						<header class="entry-header  c-page-header  u-content-bottom-spacing  <?php echo $visibility_class; ?>">
-							<h1 class="entry-title"><?php esc_html_e( 'Oops! This page can&rsquo;t be found anywhere.', '__components_txtd' ); ?></h1>
-						</header><!-- .page-header -->
-
 						<div class="entry-content u-content-width">
+							<h1 class="entry-title <?php echo $visibility_class; ?>"><?php esc_html_e( 'Oops! This page can&rsquo;t be found anywhere.', '__components_txtd' ); ?></h1>
 							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', '__components_txtd' ); ?></p>
 							<?php get_search_form(); ?>
 						</div><!-- .entry-content -->
 
-						<?php
-						/**
-						 * pixelgrade_after_entry_title hook.
-						 *
-						 * @hooked nothing() - 10 (outputs nothing)
-						 */
-						do_action( 'pixelgrade_after_entry_title', $location ); ?>
+					</section><!-- .o-layout__full -->
+				</div><!-- .o-layout -->
+			</div> <!-- .o-wrapper .u-container-width -->
+		</div><!-- .u-container-sides-spacing -->
 
-					</section><!-- .error-404 -->
-
-				</div> <!-- .o-wrapper .u-blog-grid-width -->
-			</div><!-- .u-blog-sides-spacing -->
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
-<?php
-/**
- * pixelgrade_after_primary_wrapper hook.
- *
- * @hooked nothing - 10 (outputs nothing)
- */
-do_action( 'pixelgrade_after_primary_wrapper', $location );
-?>
+	</main><!-- #main -->
+</div><!-- #primary -->
 
 <?php
 pixelgrade_get_footer();

@@ -211,11 +211,11 @@ export class Helper {
   }
 
   public static fitText( $el: JQuery ) {
-    const letterFontSize = parseFloat( $el.css( 'fontSize' ) );
-    const textHeight = $el.outerHeight();
+    const currentFontSize = parseFloat( $el.css( 'fontSize' ) );
+    const currentLineHeight = parseFloat( $el.css( 'lineHeight' ) );
     const parentHeight = $el.parent().outerHeight();
 
-    $el.css( 'fontSize', letterFontSize * parentHeight / textHeight );
+    $el.css( 'fontSize', currentFontSize * parentHeight / currentLineHeight );
   }
 
 }
