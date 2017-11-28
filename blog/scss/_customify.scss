@@ -179,6 +179,7 @@ $blog-thumbnail-background-opacity: 0.5 !default;
 // Fonts
 // ----------------------------------------
 $blog-card-title-font: () !default;
+$blog-card-excerpt-font: () !default;
 $blog-card-meta-primary-font: () !default;
 $blog-card-meta-secondary-font: () !default;
 
@@ -188,42 +189,46 @@ $blog-card-meta-secondary-font: () !default;
 
 
 .u-blog-grid-width {
-	max-width: $blog-grid-width;
+  max-width: $blog-grid-width;
 }
 
 .u-blog-sides-spacing {
-	@include spacing(padding-left, $blog-sides-spacing);
-	@include spacing(padding-right, $blog-sides-spacing);
+  @include spacing(padding-left, $blog-sides-spacing);
+  @include spacing(padding-right, $blog-sides-spacing);
 }
 
 @if ( null == index( $blog-grid-valid-layouts, $blog-grid-layout ) ) {
-	@warn "$blog-grid-layout should be one of: #{$blog-grid-valid-layouts}";
-	$blog-grid-layout: regular;
+  @warn "$blog-grid-layout should be one of: #{$blog-grid-valid-layouts}";
+  $blog-grid-layout: regular;
 }
 
 .c-gallery--blog {
-	@include spacing(margin-top, -$blog-grid-vertical-spacing);
-	@include spacing(margin-left, -$blog-grid-horizontal-spacing);
+  @include spacing(margin-top, -$blog-grid-vertical-spacing);
+  @include spacing(margin-left, -$blog-grid-horizontal-spacing);
 
-	> * {
-		@include spacing(margin-top, $blog-grid-vertical-spacing);
-		@include spacing(padding-left, $blog-grid-horizontal-spacing);
-	}
+  > * {
+    @include spacing(margin-top, $blog-grid-vertical-spacing);
+    @include spacing(padding-left, $blog-grid-horizontal-spacing);
+  }
 }
 
 .c-card__title {
-	color: $blog-card-title-color;
-	@include leading-map($blog-card-title-font);
+  color: $blog-card-title-color;
+  @include leading-map($blog-card-title-font);
+}
+
+.c-card__excerpt {
+  @include leading-map($blog-card-excerpt-font);
 }
 
 .c-meta__primary {
-	color: $blog-primary-meta-color;
-	@include leading-map($blog-card-meta-primary-font);
+  color: $blog-primary-meta-color;
+  @include leading-map($blog-card-meta-primary-font);
 }
 
 .c-meta__secondary {
-	color: $blog-secondary-meta-color;
-	@include leading-map($blog-card-meta-secondary-font);
+  color: $blog-secondary-meta-color;
+  @include leading-map($blog-card-meta-secondary-font);
 }
 
 .c-meta__separator {
@@ -231,88 +236,88 @@ $blog-card-meta-secondary-font: () !default;
 }
 
 .c-card__thumbnail-background {
-	background-color: $blog-thumbnail-background;
+  background-color: $blog-thumbnail-background;
 }
 
 .no-customify .c-gallery--blog {
-	$blog-grid-columns-at-lap: if($blog-grid-columns >= 5, $blog-grid-columns - 1, $blog-grid-columns);
-	$blog-grid-columns-at-small: if($blog-grid-columns-at-lap >= 4, $blog-grid-columns-at-lap - 1, $blog-grid-columns-at-lap);
+  $blog-grid-columns-at-lap: if($blog-grid-columns >= 5, $blog-grid-columns - 1, $blog-grid-columns);
+  $blog-grid-columns-at-small: if($blog-grid-columns-at-lap >= 4, $blog-grid-columns-at-lap - 1, $blog-grid-columns-at-lap);
 
-	@if ($blog-title-visibility != true) {
-		.c-card__title {
-			display: none;
-		}
-	}
+  @if ($blog-title-visibility != true) {
+    .c-card__title {
+      display: none;
+    }
+  }
 
-	@if ($blog-excerpt-visibility != true) {
-		.c-card__excerpt {
-			display: none;
-		}
-	}
+  @if ($blog-excerpt-visibility != true) {
+    .c-card__excerpt {
+      display: none;
+    }
+  }
 
-	@if ($blog-content-position == above) {
-		@include gallery-title-above;
-	}
+  @if ($blog-content-position == above) {
+    @include gallery-title-above;
+  }
 
-	@if ($blog-content-position == overlay) {
-		@include gallery-title-overlay;
-	}
+  @if ($blog-content-position == overlay) {
+    @include gallery-title-overlay;
+  }
 
-	@if ( packed == $blog-grid-layout ) {
-		$typeline-points: map-get(map-get($typeline-config, spacings), points);
+  @if ( packed == $blog-grid-layout ) {
+    $typeline-points: map-get(map-get($typeline-config, spacings), points);
 
-		$normal: calc( #{percentage($blog-grid-packed-ratio / $blog-grid-columns)} - #{$blog-grid-vertical-spacing * $blog-grid-packed-ratio} );
-		$featured: calc( #{percentage(2 * $blog-grid-packed-ratio / $blog-grid-columns)} - #{$blog-grid-vertical-spacing * (2 * $blog-grid-packed-ratio - 1)} );
+    $normal: calc( #{percentage($blog-grid-packed-ratio / $blog-grid-columns)} - #{$blog-grid-vertical-spacing * $blog-grid-packed-ratio} );
+    $featured: calc( #{percentage(2 * $blog-grid-packed-ratio / $blog-grid-columns)} - #{$blog-grid-vertical-spacing * (2 * $blog-grid-packed-ratio - 1)} );
 
-		$factor-at-lap: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $blog-grid-vertical-spacing ) - 1 ) * 1 / 3 + 1;
-		$value-at-lap: round( $blog-grid-vertical-spacing / $factor-at-lap);
-		$normal-at-lap: calc( #{percentage($blog-grid-packed-ratio / $blog-grid-columns-at-lap)} - #{$value-at-lap * $blog-grid-packed-ratio} );
-		$featured-at-lap: calc( #{percentage(2 * $blog-grid-packed-ratio / $blog-grid-columns-at-lap)} - #{$value-at-lap * (2 * $blog-grid-packed-ratio - 1)} );
+    $factor-at-lap: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $blog-grid-vertical-spacing ) - 1 ) * 1 / 3 + 1;
+    $value-at-lap: round( $blog-grid-vertical-spacing / $factor-at-lap);
+    $normal-at-lap: calc( #{percentage($blog-grid-packed-ratio / $blog-grid-columns-at-lap)} - #{$value-at-lap * $blog-grid-packed-ratio} );
+    $featured-at-lap: calc( #{percentage(2 * $blog-grid-packed-ratio / $blog-grid-columns-at-lap)} - #{$value-at-lap * (2 * $blog-grid-packed-ratio - 1)} );
 
-		$factor-at-small: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $blog-grid-vertical-spacing ) - 1 ) * 2 / 3 + 1;
-		$value-at-small: round( $blog-grid-vertical-spacing / $factor-at-small );
-		$normal-at-small: calc( #{percentage($blog-grid-packed-ratio / $blog-grid-columns-at-small)} - #{$value-at-small * $blog-grid-packed-ratio} );
-		$featured-at-small: calc( #{percentage(2 * $blog-grid-packed-ratio / $blog-grid-columns-at-small)} - #{$value-at-small * (2 * $blog-grid-packed-ratio - 1)} );
+    $factor-at-small: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $blog-grid-vertical-spacing ) - 1 ) * 2 / 3 + 1;
+    $value-at-small: round( $blog-grid-vertical-spacing / $factor-at-small );
+    $normal-at-small: calc( #{percentage($blog-grid-packed-ratio / $blog-grid-columns-at-small)} - #{$value-at-small * $blog-grid-packed-ratio} );
+    $featured-at-small: calc( #{percentage(2 * $blog-grid-packed-ratio / $blog-grid-columns-at-small)} - #{$value-at-small * (2 * $blog-grid-packed-ratio - 1)} );
 
-		@include gallery-cropped;
-		@include gallery-packed;
+    @include gallery-cropped;
+    @include gallery-packed;
 
-		.c-gallery__item {
+    .c-gallery__item {
 
-			@include above(small) {
-				padding-top: $normal-at-small;
-			}
+      @include above(small) {
+        padding-top: $normal-at-small;
+      }
 
-			@include above(lap) {
-				padding-top: $normal-at-lap;
-			}
+      @include above(lap) {
+        padding-top: $normal-at-lap;
+      }
 
-			@include above(desk) {
-				padding-top: $normal;
-			}
-		}
+      @include above(desk) {
+        padding-top: $normal;
+      }
+    }
 
-		.c-card {
-			@include spacing(left, $blog-grid-horizontal-spacing);
-		}
-	}
+    .c-card {
+      @include spacing(left, $blog-grid-horizontal-spacing);
+    }
+  }
 
-	@if ( regular == $blog-grid-layout ) {
-		@include gallery-cropped;
+  @if ( regular == $blog-grid-layout ) {
+    @include gallery-cropped;
 
-		.c-card__frame {
-			padding-top: percentage(1/$blog-grid-aspect-ratio);
-		}
-	}
+    .c-card__frame {
+      padding-top: percentage(1/$blog-grid-aspect-ratio);
+    }
+  }
 
-	@if ( mosaic == $blog-grid-layout ) {
-		@include gallery-cropped;
-		@include gallery-mosaic;
+  @if ( mosaic == $blog-grid-layout ) {
+    @include gallery-cropped;
+    @include gallery-mosaic;
 
-		.c-card__frame {
-			padding-top: percentage(1/$blog-grid-aspect-ratio);
-		}
-	}
+    .c-card__frame {
+      padding-top: percentage(1/$blog-grid-aspect-ratio);
+    }
+  }
 }
 
 
