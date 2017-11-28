@@ -27,6 +27,17 @@ $layout-side-width: percentage(1/3) !default;
 		@include spacing(margin-left, $layout-spacing);
 		flex: 0 0 auto;
 	}
+
+  .o-layout--blog {
+
+    .o-layout__main {
+      width: calc(100% - #{$sidebar-width} - #{$layout-spacing});
+    }
+
+    .o-layout__side {
+      width: $sidebar-width;
+    }
+  }
 }
 
 .single-post:not(.has-sidebar) {

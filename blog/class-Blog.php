@@ -257,6 +257,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'blocks'   => array(
                         'layout' => array(
                             'extend' => 'blog/layout',
+                            'wrappers' => array(
+                            	'layout' => array(
+                            		'extend_classes' => 'o-layout--blog'
+	                            ),
+                            ),
                             'blocks' => array(
                                 'main' => array(
                                     'extend' => 'blog/main',
