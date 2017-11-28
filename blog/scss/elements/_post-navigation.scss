@@ -48,6 +48,10 @@ $post-navigation-spacing: 4rem !default;
 
     > :not(:last-child) {
       @include spacing(margin-bottom, $post-navigation-spacing);
+
+      @include above(lap) {
+        margin-bottom: 0;
+      }
     }
 
 		a:after {
@@ -111,7 +115,7 @@ $post-navigation-spacing: 4rem !default;
 		margin-bottom: 0;
 	}
 
-	.nav-title {
+	.nav-title[class] {
 		padding-top: 0;
 		padding-bottom: 0;
 	}

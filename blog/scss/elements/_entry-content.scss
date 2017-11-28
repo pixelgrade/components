@@ -25,7 +25,7 @@ $meta-tags-items-font: () !default;
 }
 
 .meta__item--button {
-  @include button;
+  @include btn;
   padding: 1em 1.5em 0.9em 1.6em;
 }
 
@@ -41,19 +41,16 @@ $meta-tags-items-font: () !default;
   }
 
   .cats {
+    align-items: center;
 
     &__title {
       @extend .meta__title;
-      @extend .meta__title--above;
     }
 
-    > a {
+    &[class] > a {
       @extend .meta__item--button;
+      padding: 0.5em 1.25em;
       @include leading-map($meta-category-items-font);
-    }
-
-    * + & {
-      @include spacing(margin-top, 4rem);
     }
   }
 
@@ -66,10 +63,6 @@ $meta-tags-items-font: () !default;
     > a {
       @extend .meta__item--text;
       @include leading-map($meta-tags-items-font);
-    }
-
-    * + & {
-      @include spacing(margin-top, 3rem);
     }
   }
 }
