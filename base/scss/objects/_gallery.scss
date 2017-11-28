@@ -72,6 +72,17 @@
 	}
 }
 
+@mixin gallery-masonry {
+
+  .c-card__frame {
+    padding-top: 0;
+  }
+
+  :not(.has-post-thumbnail) > .c-card .c-card__content {
+    margin-top: 0;
+  }
+}
+
 
 
 // Packed Gallery
@@ -324,6 +335,10 @@
 
 .c-gallery--cropped {
 	@include gallery-cropped;
+}
+
+.c-gallery--masonry {
+	@include gallery-masonry;
 }
 
 .c-gallery--mosaic {
