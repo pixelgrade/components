@@ -2,6 +2,7 @@
 
 .related-posts-container {
   @include spacing(padding, 4rem 0);
+  @include spacing(margin-bottom, -4rem);
   background-color: $theme-background-color;
 
   .c-gallery {
@@ -20,6 +21,10 @@
         width: 100%;
       }
     }
+  }
+
+  .c-card__frame img {
+    @include image-fill;
   }
 
   .c-card__excerpt > *:last-child {
