@@ -20,10 +20,6 @@ $layout-side-width: percentage(1/3) !default;
 	.o-layout__main {
 		width: calc(100% - #{$layout-side-width} - #{$layout-spacing});
 		flex: 1 1 auto;
-
-		// hack to avoid figure elements with inline width to overflow this container
-    // @todo find a better solution since crops side titles in Felt
-		// overflow: hidden;
 	}
 
 	.o-layout__side {
