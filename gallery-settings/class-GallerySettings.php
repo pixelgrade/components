@@ -140,7 +140,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		}
 
 		// Register the styles and scripts specific to this component
-		wp_register_style( 'pixelgrade_gallery-admin-style', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/admin.css' ), array(), $this->assets_version );
+//		wp_register_style( 'pixelgrade_gallery-admin-style', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/admin.css' ), array(), $this->assets_version );
 	}
 
 	/**

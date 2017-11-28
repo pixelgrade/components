@@ -27,13 +27,13 @@ $location = pixelgrade_get_location( 'portfolio jetpack jetpack-portfolio' );
 
 // Let's deal with the meta keys, if they are not already defined.. by higher powers
 // We may have got the meta names from an include (like in custom widgets using this template part)
-if ( ! isset( $primary_meta_key ) && ! isset( $secondary_meta_key ) ) {
-	$primary_meta_key   = pixelgrade_option( 'portfolio_items_primary_meta', 'types' );
-	$secondary_meta_key = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
+if ( ! isset( $primary_meta ) && ! isset( $secondary_meta ) ) {
+	$primary_meta   = pixelgrade_option( 'portfolio_items_primary_meta', 'category' );
+	$secondary_meta = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
 }
 
-$primary_meta   = $primary_meta_key !== 'none' ? pixelgrade_get_post_meta( $primary_meta_key ) : false;
-$secondary_meta = $secondary_meta_key !== 'none' ? pixelgrade_get_post_meta( $secondary_meta_key ) : false;
+$primary_meta_output   = $primary_meta !== 'none' ? pixelgrade_get_post_meta( $primary_meta ) : false;
+$secondary_meta_output = $secondary_meta !== 'none' ? pixelgrade_get_post_meta( $secondary_meta ) : false;
 
 /**
  * pixelgrade_before_loop_entry hook.
@@ -76,21 +76,21 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 		<div class="c-card__content">
 
 			<?php
-			if ( $primary_meta || $secondary_meta ) { ?>
+			if ( $primary_meta_output || $secondary_meta_output ) { ?>
 
 				<div class='c-card__meta'>
 
 					<?php
-					if ( $primary_meta ) {
-						echo '<div class="c-meta__primary">' . $primary_meta . '</div>';
+					if ( $primary_meta_output ) {
+						echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>';
 
-						if ( $secondary_meta ) {
+						if ( $secondary_meta_output ) {
 							echo '<div class="c-card__separator"></div>';
 						}
 					}
 
-					if ( $secondary_meta ) {
-						echo '<div class="c-meta__secondary">' . $secondary_meta . '</div>';
+					if ( $secondary_meta_output ) {
+						echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
 					} ?>
 
 				</div><!-- .c-card__meta -->
