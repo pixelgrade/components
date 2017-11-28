@@ -76,8 +76,7 @@ export class BaseTheme {
   }
 
   public backToTop() {
-    const opacity = WindowService.getScrollY() >= WindowService.getHeight() ? 1 : 0;
-    $( '.back-to-top' ).css( 'opacity', opacity );
+    $( '.back-to-top' ).toggleClass( 'is-visible', WindowService.getScrollY() >= WindowService.getHeight() );
   }
 
   public eventHandlers( $container ) {
