@@ -24,6 +24,13 @@ export class Slideshow extends Carousel {
     this.element.slick( this.slickOptions );
   }
 
+  public onResize(): void {
+    console.warn('slideshow:resize');
+    this.destroy();
+    this.extendOptions();
+    this.bindEvents();
+  }
+
   private onBeforeSlideChange( event, slick, currentSlide, nextSlide ) {
     const $currentSlide: JQuery = $( slick.$slides[currentSlide] );
     const $nextSlide: JQuery = $( slick.$slides[nextSlide] );

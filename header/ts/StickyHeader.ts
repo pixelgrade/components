@@ -194,7 +194,7 @@ export class StickyHeader extends BaseComponent {
       // Append the branding
       const $branding = $( '.c-branding' );
       const $navbarZone = $( '.c-navbar__zone--right' );
-      $branding.clone().appendTo( '.c-navbar' );
+      $branding.clone().addClass('c-branding--mobile').appendTo( '.c-navbar' );
       $branding.find( 'img' ).removeClass( 'is--loading' );
 
       // Create the mobile site header
@@ -202,12 +202,11 @@ export class StickyHeader extends BaseComponent {
         .appendTo( '.c-navbar' );
 
       // Append the social menu
-      const $socialMenu = $( '.c-navbar__zone--left .jetpack-social-navigation' );
+      const $socialMenu = $( '.c-navbar__zone--left .jetpack-social-navigation' ).clone();
       const $searchTrigger = $socialMenu.find('.js-search-trigger').parent().clone();
-      $navbarZone.append( $socialMenu.clone() );
+      $navbarZone.append( $socialMenu );
       $navbarZone.find('.js-search-trigger' ).parent().remove();
-      $siteHeaderMobile.append( $socialMenu.clone().empty().append( $searchTrigger ) );
-      $socialMenu.empty();
+      $siteHeaderMobile.append( $socialMenu.empty().append( $searchTrigger ) );
 
       // Handle sub menus:
       // Make sure there are no open menu items
@@ -295,20 +294,10 @@ export class StickyHeader extends BaseComponent {
   private updateOnResize() {
     this.eventHandlers();
 
-    // Header behaviour below lap
     if ( Helper.below( 'lap' ) ) {
-      // First, do the bindings for the mobile sub menus
-      if (this.isDesktopHeaderInitialised) {
-        window.location.reload();
-      } else {
-        this.prepareMobileMenuMarkup();
-      }
-    } else if ( this.isStickyHeaderEnabled ) {
-      if (this.isMobileHeaderInitialised) {
-        window.location.reload();
-      } else {
-        this.prepareDesktopMenuMarkup();
-      }
+      this.prepareMobileMenuMarkup();
+    } else {
+      this.prepareDesktopMenuMarkup();
     }
   }
 
