@@ -45,11 +45,19 @@ $meta-tags-items-font: () !default;
 
     &__title {
       @extend .meta__title;
+      margin-top: 5px;
     }
 
     &[class] > a {
       @extend .meta__item--button;
+
+      // add spaciing between category items
+      margin-top: 5px;
+      margin-right: 5px;
       padding: 0.5em 1.25em;
+
+      // cleanup possible properties inherited by the anchor tag
+      text-decoration: none;
       @include leading-map($meta-category-items-font);
     }
   }
@@ -58,10 +66,17 @@ $meta-tags-items-font: () !default;
 
     &__title {
       @extend .meta__title;
+      margin-top: 5px;
     }
 
     > a {
       @extend .meta__item--text;
+      padding: 0;
+      margin-top: 5px;
+      margin-right: 5px;
+      font-style: italic;
+      background: none;
+      box-shadow: none;
       @include leading-map($meta-tags-items-font);
     }
   }
