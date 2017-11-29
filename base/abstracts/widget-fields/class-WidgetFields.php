@@ -504,6 +504,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			$output .= '<input class="widget-range" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="range" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
+			$output .= '<input class="range-value" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
 
 			if ( ! empty( $desc ) ) {
 				$output .= '<br />' . PHP_EOL;
