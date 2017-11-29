@@ -120,7 +120,7 @@ $slick-dot-size: 10px !default;
   }
 
   @include below(lap) {
-    button {
+    &[class] button {
       font-size: 0;
       background: currentColor;
       border: 0;

@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
 import { Helper } from '../services/Helper';
+import { WindowService } from '../services/window.service';
 
 export interface CarouselOptions {
   items_layout?: string;
@@ -19,7 +20,7 @@ const variableWidthDefaults = {
 };
 
 const fixedWidthDefaults = {
-  infinite: false,
+  infinite: true,
   slidesToScroll: 1,
   slidesToShow: 1,
   variableWidth: false,
@@ -27,15 +28,14 @@ const fixedWidthDefaults = {
 
 export class Carousel extends BaseComponent {
 
-  protected slickOptions = {
+  protected defaultSlickOptions = {
     dots: false,
     fade: false,
     nextArrow: '<div class="slick-next"></div>',
     prevArrow: '<div class="slick-prev"></div>',
     speed: 500,
   };
-
-  protected element: JQueryExtended;
+  protected slickOptions = this.defaultSlickOptions;
 
   public static customPagination(slider: JQuery, i: number ): JQuery {
     const index = i + 1;
@@ -43,12 +43,13 @@ export class Carousel extends BaseComponent {
     return $('<button type="button" />').text( sIndex );
   }
 
-  constructor( element: JQuery, options: CarouselOptions = {} ) {
+  constructor( protected element: JQueryExtended, protected options: CarouselOptions = {} ) {
     super();
-    this.element = element;
 
-    this.extendOptions( options );
+    this.extendOptions();
     this.bindEvents();
+
+    // WindowService.onResize().debounce(300).subscribe( this.onResize.bind(this) );
   }
 
   public bindEvents() {
@@ -59,20 +60,30 @@ export class Carousel extends BaseComponent {
     this.element.slick('unslick');
   }
 
-  private extendOptions( options: CarouselOptions ) {
+  public onResize(): void {
+    console.warn('carousel:resize');
+    this.destroy();
+    this.extendOptions();
+    this.bindEvents();
+    // setTimeout(() => {
+    //
+    // }, 100);
+  }
+
+  protected extendOptions() {
     if ( Helper.above( 'lap' ) ) {
-      return this.extendDesktopOptions( options );
+      return this.extendDesktopOptions( this.options );
     } else {
-      return this.extendMobileOptions( options );
+      return this.extendMobileOptions( this.options );
     }
   }
 
   private extendMobileOptions( options: CarouselOptions ) {
-    this.slickOptions = Object.assign( {}, this.slickOptions, {
+    this.slickOptions = Object.assign( {}, this.defaultSlickOptions, {
       arrows: false,
       centerMode: true,
       centerPadding: '30px',
-      dots: options.show_pagination === '',
+      dots: this.options.show_pagination === '',
       infinite: true,
       slidesToScroll: 1,
       slidesToShow: 1
@@ -81,24 +92,25 @@ export class Carousel extends BaseComponent {
 
   private extendDesktopOptions( options: CarouselOptions ) {
 
-    this.slickOptions = Object.assign({}, this.slickOptions, {
-      customPaging: Carousel.customPagination
+    this.slickOptions = Object.assign({}, this.defaultSlickOptions, {
+      arrows: true,
+      customPaging: Carousel.customPagination,
     });
 
-    if ( options.show_pagination === '' ) {
+    if ( this.options.show_pagination === '' ) {
       this.slickOptions.dots = true;
     }
 
-    if ( options.items_layout === 'variable_width' ) {
+    if ( this.options.items_layout === 'variable_width' ) {
       this.slickOptions = Object.assign({}, this.slickOptions, variableWidthDefaults);
     } else {
       this.slickOptions = Object.assign({}, this.slickOptions, fixedWidthDefaults);
     }
 
-    if ( options.items_per_row ) {
+    if ( this.options.items_per_row ) {
       this.slickOptions = Object.assign({}, this.slickOptions, {
-        slidesToScroll: options.items_per_row,
-        slidesToShow: options.items_per_row
+        slidesToScroll: this.options.items_per_row,
+        slidesToShow: this.options.items_per_row
       });
     }
   }
