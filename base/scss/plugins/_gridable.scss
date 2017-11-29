@@ -2,7 +2,7 @@
    #FRONTEND + EDITOR STYLES VARS
    ========================================================================== */
 
-$editor-style: true !default;
+$editor-style: false !default;
 
 // Default Options
 $gridable-row-highlighted-color: #FFFFFF !default;
@@ -133,6 +133,8 @@ $gridable-column-boxed: '.column-style--boxed' !default;
 #{$gridable-column-wrapper} {
   @include spacing(padding-bottom, $gridable-column-gutter);
   @include spacing(padding-left, $gridable-column-gutter);
+
+  @debug &;
 
   @include above(lap) {
     padding-bottom: 0;

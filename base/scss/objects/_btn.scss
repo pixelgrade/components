@@ -238,11 +238,13 @@ input[type=submit] {
 
   &.button {
     @include btn;
+  }
+}
 
-    &.arrow {
-      @include button-directional;
-      @include button-directional--right;
-    }
+.entry-content a {
+  &.arrow {
+    @include button-directional;
+    @include button-directional--right;
   }
 }
 
