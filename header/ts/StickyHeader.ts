@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import * as imagesLoaded from 'imagesloaded';
 import 'jquery-hoverintent';
 import { BaseComponent } from '../../base/ts/models/DefaultComponent';
 import { ProgressBar } from '../../base/ts/components/ProgressBar';
@@ -7,6 +8,7 @@ import { Helper } from '../../base/ts/services/Helper';
 
 interface JQueryExtended extends JQuery {
   hoverIntent?( params: any ): void;
+  imagesLoaded?( params: any );
 }
 
 export class StickyHeader extends BaseComponent {
@@ -37,12 +39,16 @@ export class StickyHeader extends BaseComponent {
   constructor() {
     super();
 
-    this.bindEvents();
-    this.eventHandlers();
-    this.appendSearchTrigger();
-    this.updateOnResize();
+    imagesLoaded( $( '.c-navbar .c-logo' ), () => {
 
-    this.refresh( WindowService.getScrollY() );
+      this.bindEvents();
+      this.eventHandlers();
+      this.appendSearchTrigger();
+      this.updateOnResize();
+
+      this.refresh(WindowService.getScrollY());
+
+    });
   }
 
   public destroy() {
