@@ -1,7 +1,7 @@
 import * as Masonry from 'masonry-layout';
 import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
-import {WindowService} from "../services/window.service";
+import { WindowService } from '../services/window.service';
 
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
