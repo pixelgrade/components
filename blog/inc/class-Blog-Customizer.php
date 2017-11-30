@@ -687,7 +687,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 1', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.entry-content h1, .h1',
+						'selector'    => '.entry-content h1, .h1, h1',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -726,7 +726,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 2', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.entry-content h2, .h2',
+						'selector'    => '.entry-content h2, .h2, h2',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -766,7 +766,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 3', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.entry-content h3, .h3',
+						'selector'    => '.entry-content h3, .h3, h3',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -807,7 +807,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 4', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.entry-content h4, .h4',
+						'selector'    => '.entry-content h4, .h4, h4',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -847,7 +847,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 5', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.entry-content h5, .h5',
+						'selector'    => '.entry-content h5, .h5, h5',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -887,7 +887,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 6', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => '.entry-content h6, .h6',
+						'selector'    => '.entry-content h6, .h6, h6',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
