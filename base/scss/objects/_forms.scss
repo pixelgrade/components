@@ -195,6 +195,7 @@ button[type="submit"],
 button[type="button"],
 button[type="reset"] {
   @include btn;
+  @include spacing(margin-top, $input-vertical-spacing);
 }
 
 input[type="file"] {
@@ -269,6 +270,7 @@ fieldset {
   button[type="button"],
   button[type="reset"] {
     flex-shrink: 0;
+    margin-top: 0;
   }
 }
 

@@ -239,6 +239,10 @@ input[type=submit] {
   &.button {
     @include btn;
   }
+
+  &.full {
+    width: 100%;
+  }
 }
 
 .entry-content a {
