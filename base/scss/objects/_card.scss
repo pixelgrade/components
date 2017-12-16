@@ -96,8 +96,10 @@ $card-content-spacing: 1.5rem !default;
   }
 
   &:hover {
-    .c-card__letter {
-      opacity: $card-letter-hover-opacity;
+    @include above(lap) {
+      .c-card__letter {
+        opacity: $card-letter-hover-opacity;
+      }
     }
   }
 }
