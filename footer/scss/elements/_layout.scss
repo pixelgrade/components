@@ -1,6 +1,12 @@
 $footer-zone-spacing: 80px !default;
 $footer-zone-items-spacing: 1rem !default;
 
+.entry-footer__wrapper {
+  @include below(lap) {
+    @include spacing(padding-bottom, 3em);
+  }
+}
+
 .c-footer__widget {
 
   &:first-child:nth-last-child(3) {

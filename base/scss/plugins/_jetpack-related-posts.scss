@@ -19,6 +19,8 @@
 
       @include below(lap) {
         width: 100%;
+
+        @include spacing(margin-top, 1.5*$featured-posts-vertical-spacing);
       }
     }
   }
