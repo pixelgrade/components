@@ -188,6 +188,10 @@
 	.c-gallery__item {
 		width: auto;
 		padding-right: 0;
+
+    @include below(lap) {
+      width: 100%;
+    }
 	}
 }
 
