@@ -75,9 +75,14 @@ $meta-tags-items-font: () !default;
       margin-top: 5px;
       margin-right: 5px;
       font-style: italic;
+      line-height: 1.2;
       background: none;
       box-shadow: none;
       @include leading-map($meta-tags-items-font);
+
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
 }
