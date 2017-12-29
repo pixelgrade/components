@@ -26,27 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-// Let the template parts know about our location
-$location = pixelgrade_set_location( 'archive  index' );
+pixelgrade_get_header();
 
-pixelgrade_get_header(); ?>
+pixelgrade_render_block( 'blog/archive' );
 
-<?php
-/**
- * pixelgrade_before_primary_wrapper hook.
- *
- * @hooked nothing() - 10 (outputs nothing)
- */
-do_action( 'pixelgrade_before_primary_wrapper', $location );
-?>
-
-<?php pixelgrade_render_block( 'blog/home' ); ?>
-
-<?php
-/**
- * pixelgrade_after_primary_wrapper hook.
- */
-do_action( 'pixelgrade_after_primary_wrapper', $location );
-?>
-
-<?php pixelgrade_get_footer();
+pixelgrade_get_footer();

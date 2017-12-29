@@ -371,15 +371,6 @@
 			position: static !important;
 		}
 	}
-
-	.c-gallery--regular,
-	.c-gallery--packed {
-		margin-top: -2 * $baseline-unit !important;
-
-		.c-gallery__item {
-			margin-top: 2 * $baseline-unit !important;
-		}
-	}
 }
 
 // Gallery Portfolio
