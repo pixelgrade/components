@@ -17,7 +17,7 @@ $btn-border-style: solid !default;
 $btn-border-color: #222222 !default;
 $btn-border-radius: 0 !default;
 
-$btn-transition: all .3s cubic-bezier(.18, .61, .43, .99) !default;
+$btn-transition: all .5s cubic-bezier(.18, .61, .43, .99) !default;
 
 $btn-font: () !default;
 
@@ -76,7 +76,7 @@ $btn-font: () !default;
   &:focus {
     color: $btn-color;
     background-color: $btn-hover-background;
-    opacity: 0.8;
+    opacity: 0.7;
     text-decoration: none;
     border: initial;
   }
@@ -113,20 +113,6 @@ $btn-font: () !default;
     transition-property: transform;
   }
 
-  &:after {
-    transform: translate(0, calc(0.5px - 50%));
-  }
-
-  &:hover {
-    &:before {
-      transform: translate(0, 0);
-    }
-
-    &:after {
-      transform: translate(0, -50%);
-    }
-  }
-
   // The stick
   &:before {
     content: '';
@@ -153,6 +139,7 @@ $btn-font: () !default;
 
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
+    transform: translate(0, calc(0.5px - 50%));
   }
 }
 
@@ -180,6 +167,14 @@ $btn-font: () !default;
     @include spacing(left, 30px);
     border-right: 5px solid currentColor;
   }
+
+  &:hover:before {
+    transform: translate3d(-5px,0,0);
+  }
+
+  &:hover:after {
+    transform: translate3d(-5px,calc(0.5px - 50%),0);
+  }
 }
 
 @mixin directional--right {
@@ -206,6 +201,14 @@ $btn-font: () !default;
   &:after {
     right: calc(#{7em/3} - 5px);
     border-left: 5px solid currentColor;
+  }
+
+  &:hover:before {
+    transform: translate3d(5px,0,0);
+  }
+
+  &:hover:after {
+    transform: translate3d(5px,calc(0.5px - 50%),0);
   }
 }
 
