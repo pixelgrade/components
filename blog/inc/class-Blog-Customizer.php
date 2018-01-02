@@ -467,7 +467,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => 'h1, .h1',
+								'selector' => '.entry-content h1, .h1, h1',
 							),
 						),
 					),
@@ -479,7 +479,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => 'h2, .h2',
+								'selector' => '.entry-content h2, .h2, h2',
 							),
 						),
 					),
@@ -491,7 +491,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => 'h3, .h3',
+								'selector' => '.entry-content h3, .h3, h3',
 							),
 						),
 					),
@@ -503,7 +503,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => 'h4, .h4',
+								'selector' => '.entry-content h4, .h4, h4',
 							),
 						),
 					),
@@ -515,7 +515,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => 'h5, .h5',
+								'selector' => '.entry-content h5, .h5, h5',
 							),
 						),
 					),
@@ -527,7 +527,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => 'h6, .h6',
+								'selector' => '.entry-content h6, .h6, h6',
 							),
 						),
 					),
