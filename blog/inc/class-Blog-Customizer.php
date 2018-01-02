@@ -1478,6 +1478,18 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
+					'blog_item_excerpt_color'                   => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => null, // this should be set by the theme (previously #252525)
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--blog .c-card__title',
+							),
+						),
+					),
 					'blog_item_thumbnail_background'          => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Thumbnail Background', '__components_txtd' ),
@@ -1598,6 +1610,31 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
 							'text-align'      => false,
 							// Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
+
+					'blog_item_excerpt_font' => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Item Excerpt Font', '__theme_txtd' ),
+						'desc'     => '',
+						'selector' => '.c-gallery--blog .c-card__excerpt',
+						'callback' => 'typeline_font_cb',
+
+						'default'  => null,
+
+						// Sub Fields Configuration (optional)
+						'fields'   => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ),           // Short-hand version
+							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
+							'text-align'      => false,                           // Disable sub-field (False by default)
 							'text-transform'  => true,
 							'text-decoration' => false,
 						),

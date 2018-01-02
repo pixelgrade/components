@@ -258,25 +258,37 @@
 		bottom: 0;
 		left: 0;
 
+		@include spacing(padding, 2rem);
+    overflow: hidden;
+
 		justify-content: center;
 		align-content: center;
 		align-items: center;
 		text-align: center;
 
-		@include spacing(padding, 2rem);
-
+		transition: opacity $transition--macro $easeInOutCirc;
 		opacity: 0;
 
-		transition: opacity $transition--macro $easeInOutCirc;
+    > * {
+      flex-shrink: 0;
+    }
 	}
+
+  article:not(.has-post-thumbnail) > .c-card .c-card__content {
+    opacity: 1;
+  }
 
   .c-card__letter {
     display: none;
   }
 
-	//& .c-card:hover .c-card__content {
-	//	opacity: 1;
-	//}
+  // hotfix for julia#319
+  // remove hover animation on small devices
+  @include above(lap) {
+    & .c-card:hover .c-card__content {
+      opacity: 1;
+    }
+  }
 }
 
 .c-card__content {
@@ -324,13 +336,10 @@
 .c-gallery {
 	pointer-events: none;
 
+  > *,
   .related-posts-container & {
     pointer-events: auto;
   }
-}
-
-.c-gallery__item {
-	pointer-events: auto;
 }
 
 .c-gallery--packed {

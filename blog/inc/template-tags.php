@@ -41,39 +41,9 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 		$classes = array();
 
 		$classes[] = 'c-gallery c-gallery--blog';
-		// layout
-		$grid_layout       = pixelgrade_option( 'blog_grid_layout', 'regular' );
-		$grid_layout_class = 'c-gallery--' . $grid_layout;
-
-		if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ) ) ) {
-			$grid_layout_class .= ' c-gallery--cropped';
-		}
-
-		if ( 'mosaic' === $grid_layout ) {
-			$grid_layout_class .= ' c-gallery--regular';
-		}
-
-		$classes[] = $grid_layout_class;
-
-		// items per row
-		$columns_at_desk  = intval( pixelgrade_option( 'blog_items_per_row', 3 ) );
-		$columns_at_lap   = $columns_at_desk >= 5 ? $columns_at_desk - 1 : $columns_at_desk;
-		$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
-		$columns_class    = 'o-grid--' . $columns_at_desk . 'col-@desk o-grid--' . $columns_at_lap . 'col-@lap o-grid--' . $columns_at_small . 'col-@small';
-
-		// title position
-		$title_position       = pixelgrade_option( 'blog_items_title_position', 'regular' );
-		$title_position_class = 'c-gallery--title-' . $title_position;
-
-		if ( $title_position == 'overlay' ) {
-			$title_alignment_class = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_overlay', 'bottom-left' );
-		} else {
-			$title_alignment_class = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_nearby', 'left' );
-		}
-
-		$classes[] = $title_position_class;
-		$classes[] = $title_alignment_class;
-		$classes[] = $columns_class;
+		$classes[] = pixelgrade_get_blog_grid_layout_class();
+		$classes[] = pixelgrade_get_blog_grid_column_class();
+		$classes[] = pixelgrade_get_blog_grid_alignment_class();
 
 		if ( ! empty( $class ) ) {
 			$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
@@ -96,6 +66,45 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 
 		return array_unique( $classes );
 	} #function
+
+	function pixelgrade_get_blog_grid_layout_class() {
+		$grid_layout       = pixelgrade_option( 'blog_grid_layout', 'regular' );
+		$grid_layout_class = 'c-gallery--' . $grid_layout;
+
+		if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ) ) ) {
+			$grid_layout_class .= ' c-gallery--cropped';
+		}
+
+		if ( 'mosaic' === $grid_layout ) {
+			$grid_layout_class .= ' c-gallery--regular';
+		}
+
+		return $grid_layout_class;
+	}
+
+	function pixelgrade_get_blog_grid_column_class() {
+		// items per row
+		$columns_at_desk  = intval( pixelgrade_option( 'blog_items_per_row', 3 ) );
+		$columns_at_lap   = $columns_at_desk >= 5 ? $columns_at_desk - 1 : $columns_at_desk;
+		$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
+		$columns_class    = 'o-grid--' . $columns_at_desk . 'col-@desk o-grid--' . $columns_at_lap . 'col-@lap o-grid--' . $columns_at_small . 'col-@small';
+
+		return $columns_class;
+	}
+
+	function pixelgrade_get_blog_grid_alignment_class() {
+		// title position
+		$title_position       = pixelgrade_option( 'blog_items_title_position', 'regular' );
+		$title_position_class = 'c-gallery--title-' . $title_position;
+
+		if ( $title_position == 'overlay' ) {
+			$title_alignment_class = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_overlay', 'bottom-left' );
+		} else {
+			$title_alignment_class = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_nearby', 'left' );
+		}
+
+		return $title_position_class . ' ' . $title_alignment_class;
+	}
 }
 
 function pixelgrade_blog_grid_item_class( $class = '', $location = '' ) {
