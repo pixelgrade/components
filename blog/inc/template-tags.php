@@ -29,8 +29,6 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 	/**
 	 * Retrieve the classes for the blog wrapper as an array.
 	 *
-	 * @since fargo 1.0.0
-	 *
 	 * @param string|array $class Optional. One or more classes to add to the class list.
 	 * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
 	 *
@@ -40,13 +38,17 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 
 		$classes = array();
 
-		$classes[] = 'c-gallery c-gallery--blog';
-		$classes[] = pixelgrade_get_blog_grid_layout_class();
-		$classes[] = pixelgrade_get_blog_grid_column_class();
-		$classes[] = pixelgrade_get_blog_grid_alignment_class();
+		// General classes
+		$classes[] = 'c-gallery';
+		$classes[] = 'c-gallery--blog';
+
+		// Options dependent classes
+		$classes = array_merge( $classes, pixelgrade_get_blog_grid_layout_class( $location ) );
+		$classes = array_merge( $classes, pixelgrade_get_blog_grid_column_class( $location ) );
+		$classes = array_merge( $classes, pixelgrade_get_blog_grid_alignment_class( $location ) );
 
 		if ( ! empty( $class ) ) {
-			$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
+			$class   = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 			$classes = array_merge( $classes, $class );
 		} else {
 			// Ensure that we always coerce class to being an array.
@@ -66,44 +68,75 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 
 		return array_unique( $classes );
 	} #function
+}
 
-	function pixelgrade_get_blog_grid_layout_class() {
-		$grid_layout       = pixelgrade_option( 'blog_grid_layout', 'regular' );
-		$grid_layout_class = 'c-gallery--' . $grid_layout;
+if ( ! function_exists( 'pixelgrade_get_blog_grid_layout_class' ) ) {
+	/**
+	 * Retrieve the blog wrapper grid layout classes.
+	 *
+	 * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
+	 *
+	 * @return array Array of classes.
+	 */
+	function pixelgrade_get_blog_grid_layout_class( $location = '' ) {
+		$grid_layout         = pixelgrade_option( 'blog_grid_layout', 'regular' );
+		$grid_layout_classes = array( 'c-gallery--' . $grid_layout );
 
+		// For certain kind of layouts, we need to add extra classes
 		if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ) ) ) {
-			$grid_layout_class .= ' c-gallery--cropped';
+			$grid_layout_classes[] = 'c-gallery--cropped';
 		}
-
 		if ( 'mosaic' === $grid_layout ) {
-			$grid_layout_class .= ' c-gallery--regular';
+			$grid_layout_classes[] = 'c-gallery--regular';
 		}
 
-		return $grid_layout_class;
+		return $grid_layout_classes;
 	}
+}
 
-	function pixelgrade_get_blog_grid_column_class() {
-		// items per row
+if ( ! function_exists( 'pixelgrade_get_blog_grid_column_class' ) ) {
+	/**
+	 * Retrieve the blog wrapper grid column classes.
+	 *
+	 * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
+	 *
+	 * @return array Array of classes.
+	 */
+	function pixelgrade_get_blog_grid_column_class( $location = '' ) {
+		// Items per row
 		$columns_at_desk  = intval( pixelgrade_option( 'blog_items_per_row', 3 ) );
 		$columns_at_lap   = $columns_at_desk >= 5 ? $columns_at_desk - 1 : $columns_at_desk;
 		$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
-		$columns_class    = 'o-grid--' . $columns_at_desk . 'col-@desk o-grid--' . $columns_at_lap . 'col-@lap o-grid--' . $columns_at_small . 'col-@small';
 
-		return $columns_class;
+		$column_classes   = array();
+		$column_classes[] = 'o-grid--' . $columns_at_desk . 'col-@desk';
+		$column_classes[] = 'o-grid--' . $columns_at_lap . 'col-@lap';
+		$column_classes[] = 'o-grid--' . $columns_at_small . 'col-@small';
+
+		return $column_classes;
 	}
+}
 
-	function pixelgrade_get_blog_grid_alignment_class() {
-		// title position
-		$title_position       = pixelgrade_option( 'blog_items_title_position', 'regular' );
-		$title_position_class = 'c-gallery--title-' . $title_position;
+if ( ! function_exists( 'pixelgrade_get_blog_grid_alignment_class' ) ) {
+	/**
+	 * Retrieve the blog wrapper grid alignment classes.
+	 *
+	 * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
+	 *
+	 * @return array Array of classes.
+	 */
+	function pixelgrade_get_blog_grid_alignment_class( $location = '' ) {
+		// Title position
+		$title_position = pixelgrade_option( 'blog_items_title_position', 'regular' );
+		$title_classes  = array( 'c-gallery--title-' . $title_position );
 
 		if ( $title_position == 'overlay' ) {
-			$title_alignment_class = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_overlay', 'bottom-left' );
+			$title_classes[] = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_overlay', 'bottom-left' );
 		} else {
-			$title_alignment_class = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_nearby', 'left' );
+			$title_classes[] = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_nearby', 'left' );
 		}
 
-		return $title_position_class . ' ' . $title_alignment_class;
+		return $title_classes;
 	}
 }
 
