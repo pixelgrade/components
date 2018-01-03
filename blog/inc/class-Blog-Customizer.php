@@ -433,7 +433,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.entry-content a',
+								'selector' => 'a',
 							),
 						),
 					),
@@ -445,7 +445,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.entry-content a:hover, .entry-content a:active, a:hover, a:active, .c-footer a:hover',
+								'selector' => 'a:hover, a:active',
 							),
 						),
 					),
