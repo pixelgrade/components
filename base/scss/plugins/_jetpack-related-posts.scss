@@ -1,8 +1,8 @@
 
 
 .related-posts-container {
+  position: relative;
   @include spacing(padding, 4rem 0);
-  @include spacing(margin-bottom, -4rem);
   background-color: $theme-background-color;
 
   .c-gallery {
