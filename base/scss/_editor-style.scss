@@ -1,21 +1,31 @@
 @import "defaults";
 
 $editor-style: true;
+$content-selector: '.mce-content-body';
 
 @import "tools/all";
 
 @import "generic/normalize";
 @import "generic/reset";
 
+.mce-item-table {
+
+  &, td, th, caption {
+    border: 0;
+  }
+}
+
 @import "typography";
 
 @import "plugins/gridable";
 
-html {
-	@include spacing(padding, 40px);
-}
+@import "../../../assets/scss/components/dropcap";
+@import "../../../assets/scss/components/blockquote-julia";
+
+@debug $content-selector;
 
 #{$content-selector} {
+  border: 0 solid transparent;
 	margin: 0 auto;
 	padding: 0;
 
@@ -32,6 +42,11 @@ html {
 	p {
 		margin-top: 0;
 		margin-bottom: 0;
+
+    .alignleft,
+    .alignright {
+      max-width: 50%;
+    }
 	}
 
 	dl {

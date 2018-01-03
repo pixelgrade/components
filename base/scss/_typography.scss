@@ -152,8 +152,11 @@ $typography-table-border-color: $color-gray-90 !default;
 
 table {
   width: 100%;
-  //table-layout: fixed;
   border-collapse: collapse;
+
+  &:not(:last-child) {
+    @include spacing(margin-bottom, $typography-spacing);
+  }
 
   th {
     text-align: left;
@@ -189,7 +192,6 @@ table {
     }
   }
 }
-
 
 
 // HR

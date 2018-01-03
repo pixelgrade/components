@@ -256,13 +256,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 								'callback_filter' => 'typeline_spacing_cb',
 							),
 							array(
-								'property'        => 'margin-left',
-								'selector'        => '.mce-content-body',
-								'unit'            => 'px',
-								'callback_filter' => 'typeline_spacing_cb',
-							),
-							array(
-								'property'        => 'margin-right',
+								'property'        => 'border-width',
 								'selector'        => '.mce-content-body',
 								'unit'            => 'px',
 								'callback_filter' => 'typeline_spacing_cb',
