@@ -55,7 +55,7 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 				$visibility_class = 'screen-reader-text';
 			} ?>
 
-			<div class="u-portfolio-sides-spacing  u-content-top-spacing  <?php echo $visibility_class; ?>">
+			<div class="u-portfolio-sides-spacing  <?php echo $visibility_class; ?>">
 				<div class="o-wrapper  u-portfolio-grid-width">
 
 					<?php
@@ -95,7 +95,7 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 				</div><!-- .o-wrapper .u-portfolio-grid-width -->
 			</div><!-- .u-portfolio-sides-spacing -->
 
-			<div class="u-portfolio-sides-spacing  u-content-top-spacing  u-content-bottom-spacing">
+			<div class="u-portfolio-sides-spacing  u-content-bottom-spacing">
 				<div class="o-wrapper  u-portfolio-grid-width">
 
 					<?php

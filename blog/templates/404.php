@@ -27,7 +27,7 @@ pixelgrade_get_header(); ?>
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
 
-		<div class="u-container-sides-spacing  u-content-top-spacing  u-content-bottom-spacing">
+		<div class="u-container-sides-spacing  u-content-bottom-spacing">
 			<div class="o-wrapper  u-container-width">
 				<div class="o-layout">
 					<section class="error-404  not-found  o-layout__full">

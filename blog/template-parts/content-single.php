@@ -63,7 +63,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 			?>
 			<!-- pixelgrade_after_entry_start -->
 
-			<div class="u-content-top-spacing u-content-bottom-spacing">
+			<div class="u-content-bottom-spacing">
 				<div class="o-layout">
 
 					<?php
@@ -166,7 +166,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					<?php pixelgrade_get_sidebar(); ?>
 
 				</div><!-- .o-layout -->
-			</div><!-- .u-content-top-spacing.u-content-bottom-spacing -->
+			</div><!-- .u-content-bottom-spacing -->
 
 			<?php
 			/**

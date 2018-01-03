@@ -94,7 +94,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						$visibility_class = 'screen-reader-text';
 					} ?>
 
-					<div class="u-content-top-spacing  u-content-bottom-spacing  <?php echo $visibility_class; ?>">
+					<div class="u-content-bottom-spacing  <?php echo $visibility_class; ?>">
 						<div class="u-content-width">
 
 							<?php
@@ -116,11 +116,11 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 							<!-- pixelgrade_after_entry_title -->
 
 						</div><!-- .u-content-width -->
-					</div><!-- .u-content-top-spacing.u-content-bottom-spacing -->
+					</div><!-- .u-content-bottom-spacing -->
 
 					<?php if ( get_the_content() ) : ?>
 
-						<div class="entry-content  u-content-width  u-content-top-spacing">
+						<div class="entry-content  u-content-width">
 							<?php
 							the_content();
 

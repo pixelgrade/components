@@ -41,7 +41,7 @@ do_action( 'pixelgrade_before_custom_loop', $location );
 
 <?php if ( $portfolio_query->have_posts() ) { ?>
 
-	<div class="u-full-width  u-portfolio-sides-spacing  u-content-top-spacing  u-content-bottom-spacing">
+	<div class="u-full-width  u-portfolio-sides-spacing  u-content-bottom-spacing">
 		<div class="o-wrapper u-portfolio-grid-width">
 			<div <?php pixelgrade_posts_container_id( $location ); ?> <?php pixelgrade_portfolio_class( '', $location, $atts ); ?>>
 				<?php while ( $portfolio_query->have_posts() ) : $portfolio_query->the_post();
@@ -50,7 +50,7 @@ do_action( 'pixelgrade_before_custom_loop', $location );
 				wp_reset_postdata(); ?>
 			</div><!-- #posts-container -->
 		</div><!-- .o-wrapper .u-portfolio-grid-width -->
-	</div><!-- .u-portfolio-sides-spacing.u-content-top-spacing.u-content-bottom-spacing -->
+	</div><!-- .u-portfolio-sides-spacing.u-content-bottom-spacing -->
 
 <?php } else { ?>
 	<p><em><?php esc_html_e( 'Your Portfolio currently has no entries. You can start creating them on your dashboard.', '__components_txtd' ); ?></em></p>
