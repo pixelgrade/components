@@ -80,8 +80,9 @@ $h6: () !default;
 
 @if ( $content-border-width != 0 ) {
 
-  body {
-    @include spacing(margin, $content-border-width);
+  .site {
+    border: solid transparent;
+    @include spacing(border-width, $content-border-width);
   }
 
   .c-border {
