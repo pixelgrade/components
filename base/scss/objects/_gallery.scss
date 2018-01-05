@@ -124,6 +124,7 @@
 			top: 100%;
 			left: 0;
 			right: 0;
+      z-index: 10; // create a stacking context for the card content to be either above or below other elements
 		}
 	}
 
