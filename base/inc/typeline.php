@@ -146,21 +146,26 @@ add_action( 'customize_preview_init', 'typeline_negative_value_cb_customizer_pre
  */
 function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 	$output = '';
+
+	// Make sure that the value given is sane
+	if ( empty( $value ) ) {
+		$value = 0;
+	}
+
 	$output .= $selector . ' {' . PHP_EOL .
 	           $property . ': ' . $value . $unit . ';' . PHP_EOL .
 	           '}' . PHP_EOL;
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
+
 	// Some sanity check before processing the config
-	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
+	if ( $value && ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 		$points      = $typeline_config['spacings']['points'];
 		$breakpoints = $typeline_config['spacings']['breakpoints'];
-
 		for ( $i = 0; $i < count( $breakpoints ); $i ++ ) {
 			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / count( $breakpoints ) + 1;
 			$newValue = round( $value / $ratio );
-
 			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 			           $selector . ' {' . PHP_EOL .
 			           $property . ': ' . $newValue . $unit . ';' . PHP_EOL .
@@ -170,7 +175,6 @@ function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 	}
 
 	return $output;
-
 }
 
 /**

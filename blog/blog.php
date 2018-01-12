@@ -42,8 +42,9 @@ endif;
  * Load other files that this component needs loaded before the actual class instantiation
  */
 
-//Load our component's template tags
+// Load our component's template tags
 pixelgrade_load_component_file( 'blog', 'inc/template-tags' );
 
-//Load our component's extra functionality
+// Load our component's extra functionality
 pixelgrade_load_component_file( 'blog', 'inc/extras' );
+pixelgrade_load_component_file( 'blog', 'inc/jetpack' );

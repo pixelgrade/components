@@ -773,3 +773,72 @@ if ( ! function_exists( 'pixelgrade_comments_template' ) ) {
 		comments_template( '/' . pixelgrade_make_relative_path( pixelgrade_locate_component_template( Pixelgrade_Blog::COMPONENT_SLUG, 'comments' ) ) );
 	}
 }
+
+if ( ! function_exists( 'pixelgrade_the_posts_pagination' ) ) {
+	/**
+	 * Displays a paginated navigation to next/previous set of posts, when applicable.
+	 *
+	 * @param array $args Optional. See paginate_links() for available arguments.
+	 *                    Default empty array.
+	 */
+	function pixelgrade_the_posts_pagination( $args = array() ) {
+		echo pixelgrade_get_the_posts_pagination( $args );
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_get_the_posts_pagination' ) ) {
+	/**
+	 * Retrieves a paginated navigation to next/previous set of posts, when applicable.
+	 *
+	 * @param array $args Optional. See paginate_links() for options.
+	 *
+	 * @return string Markup for pagination links.
+	 */
+	function pixelgrade_get_the_posts_pagination( $args = array() ) {
+		// Put our own defaults in place
+		$args = wp_parse_args( $args, array(
+			'end_size'           => 1,
+			'mid_size'           => 2,
+			'type'               => 'list',
+			'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+			'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+			'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+		) );
+
+		return get_the_posts_pagination( $args );
+	}
+}
+
+
+if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
+	/**
+	 * Prints HTML with meta information for the current post-date/time and author.
+	 */
+	function pixelgrade_posted_on() {
+		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+		}
+
+		$time_string = sprintf( $time_string,
+			esc_attr( get_the_date( 'c' ) ),
+			esc_html( get_the_date() ),
+			esc_attr( get_the_modified_date( 'c' ) ),
+			esc_html( get_the_modified_date() )
+		);
+
+		$posted_on = sprintf(
+		/* translators: %s: The current post's posted date, in the post header */
+			esc_html_x( '%s', 'post date', '__components_txtd' ),
+			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
+		);
+
+		$byline = sprintf(
+			'<span class="by">' . esc_html_x( 'by', 'post author', '__components_txtd' ) . '</span> %s',
+			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
+		);
+
+		echo '<span class="byline"> ' . $byline . '</span><span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+
+	}
+}
