@@ -132,6 +132,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 		}
 
 		// Add the block to the registry
+		// If the block is already registered, we will overwrite it with the new one.
 		$this->registered_blocks[ $block->id ] = $block;
 
 		return $block;

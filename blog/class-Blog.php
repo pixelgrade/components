@@ -243,7 +243,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'checks' => array(
 	                    'callback' => 'is_active_sidebar',
 	                    'args' => array(
-	                        'sidebar'
+	                        'sidebar-1'
 	                    ),
                     ),
                 ),
