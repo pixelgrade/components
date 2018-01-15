@@ -297,6 +297,17 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	                ),
                 ),
 
+                'entry-header-search' => array(
+	                'type'      => 'template_part',
+	                'templates' => array(
+		                array(
+			                'component_slug' => self::COMPONENT_SLUG,
+			                'slug' => 'entry-header',
+			                'name' => 'search',
+		                ),
+	                ),
+                ),
+
                 'index' => array(
                     'extend'   => 'blog/default',
                     'wrappers' => array(
