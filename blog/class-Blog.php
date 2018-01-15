@@ -713,7 +713,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
      * Enqueue styles and scripts on the frontend
      */
     public function enqueueScripts() {
-        // Register the frontend styles and scripts specific to blog
+        // Register the general frontend styles and scripts specific to blog
+	    wp_enqueue_script( 'pixelgrade-navigation', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/navigation.js' ), array(), '20180101', true );
+	    wp_enqueue_script( 'pixelgrade-skip-link-focus-fix', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/skip-link-focus-fix.js' ), array(), '20180101', true );
+
+	    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		    wp_enqueue_script( 'comment-reply' );
+	    }
     }
 
     /**

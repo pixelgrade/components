@@ -7,7 +7,6 @@ import { GlobalService } from './services/global.service';
 export interface JQueryExtended extends JQuery {
   imagesLoaded?( params: any );
   masonry?( options?: any, elements?: any, isStill?: boolean );
-  select2?( params?: any );
   slick?( params?: any );
 }
 
@@ -86,8 +85,6 @@ export class BaseTheme {
       e.preventDefault();
       Helper.smoothScrollTo( 0, 1000 );
     } );
-
-    $container.find( '.widget_categories select' ).select2();
   }
 
   public fadeOut() {
