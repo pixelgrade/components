@@ -86,8 +86,6 @@ export class BaseTheme {
       e.preventDefault();
       Helper.smoothScrollTo( 0, 1000 );
     } );
-
-    $container.find( '.widget_categories select' ).select2();
   }
 
   public fadeOut() {
