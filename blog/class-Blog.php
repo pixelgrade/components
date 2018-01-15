@@ -630,6 +630,33 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
             // @see pixelgrade_comments_template()
         );
 
+	    // Configure the sidebars (widget areas) that the blog component uses
+	    $this->config['sidebars'] = array(
+		    'sidebar-1' => array(
+			    'sidebar_args' => array(
+				    'name'          => esc_html__( 'Sidebar', '__components_txtd' ),
+				    'id'            => 'sidebar-1', // You can skip this and we will use the sidebar config key as ID
+				    'class'         => '', // In case you need some classes added to the sidebar - in the WP Admin only!!!
+				    'description'   => esc_html__( 'Add widgets here.', '__components_txtd' ),
+				    'before_widget' => '<section id="%1$s" class="widget widget--side %2$s">',
+				    'after_widget'  => '</section>',
+				    'before_title'  => '<h2 class="widget__title h3"><span>',
+				    'after_title'   => '</span></h2>',
+			    ),
+		    ),
+		    'sidebar-2' => array(
+			    'sidebar_args' => array(
+				    'name'          => esc_html__( 'Below Post', '__components_txtd' ),
+				    'id'            => 'sidebar-2',
+				    'description'   => esc_html__( 'Add widgets here.', '__components_txtd' ),
+				    'before_widget' => '<section id="%1$s" class="widget widget--content %2$s">',
+				    'after_widget'  => '</section>',
+				    'before_title'  => '<h2 class="widget__title h3"><span>',
+				    'after_title'   => '</span></h2>',
+			    ),
+		    ),
+	    );
+
         // Allow others to make changes to the config
         // Make the hooks dynamic and standard
         $hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
@@ -644,6 +671,20 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
         // Change the component's config with the modified one
         $this->config = $modified_config;
     }
+
+	/**
+	 * Load, instantiate, and hookup things that need to happen before the 'init' action (where our fire_up() is).
+	 *
+	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
+	 */
+	public function preInitSetup() {
+		// Register the widget areas
+		// We hook this in preInitSetup because the `widgets_init` hooks gets fires at init priority 1.
+		add_action( 'widgets_init', array( $this, 'registerSidebars' ), 10 );
+
+		// Register the config nav menu locations, if we have any
+//		$this->registerNavMenus();
+	}
 
     /**
      * Load, instantiate and hook up.
@@ -715,7 +756,33 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
         do_action( 'pixelgrade_blog_registered_hooks' );
     }
 
-    /**
+	/**
+	 * Register the sidebars (widget areas) configured by the component.
+	 *
+	 * @return bool
+	 */
+	public function registerSidebars() {
+		$registered_some_sidebars = false;
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			foreach ( $this->config['sidebars'] as $id => $settings ) {
+				if ( empty( $settings['sidebar_args']['id'] ) ) {
+					$settings['sidebar_args']['id'] = $id;
+				}
+
+				// Register a new widget area
+				register_sidebar( $settings['sidebar_args'] );
+
+				// Remember what we've done last summer :)
+				$registered_some_sidebars = true;
+			}
+		}
+
+		// Let others know what we did.
+		return $registered_some_sidebars;
+	}
+
+
+	/**
      * Enqueue styles and scripts on the frontend
      */
     public function enqueueScripts() {
