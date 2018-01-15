@@ -14,7 +14,7 @@ p,
 ul, ol, dl,
 hr,
 table,
-pre {
+.two-column {
 
   &:not(:last-child) {
     @include baseline(1.5, 0.75);
@@ -139,9 +139,11 @@ pre {
   word-wrap: break-word;
 
   @include spacing(padding, 1rem);
-  @include spacing(margin-bottom, 2rem);
-
   border: 1px solid;
+
+  &:not(:last-child) {
+    @include spacing(margin-bottom, 2rem);
+  }
 }
 
 

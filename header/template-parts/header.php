@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			do_action( 'pixelgrade_header_before_navbar', 'header' );
 			?>
 
-			<div class="c-navbar  c-navbar--dropdown">
+			<div class="c-navbar  c-navbar--dropdown  u-header-height">
 				<input class="c-navbar__checkbox" id="menu-toggle" type="checkbox">
 				<label class="c-navbar__label u-header-sides-spacing" for="menu-toggle">
 					<span class="c-navbar__label-icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'burger' ); ?></span>

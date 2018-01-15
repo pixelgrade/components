@@ -186,7 +186,12 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property' => 'height',
-								'selector' => '.c-navbar',
+								'selector' => '.u-header-height',
+								'unit'     => 'px',
+							),
+							array(
+								'property' => 'padding-top',
+								'selector' => '.u-header-height-padding-top',
 								'unit'     => 'px',
 							),
 						),
