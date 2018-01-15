@@ -33,9 +33,9 @@ class Pixelgrade_Helper {
 	 * For stopping time and getting the data
 	 * @example
 	 * ```php
-	 * $start = TimberHelper::start_timer();
+	 * $start = Pixelgrade_Helper::start_timer();
 	 * // do some stuff that takes awhile
-	 * echo TimberHelper::stop_timer( $start );
+	 * echo Pixelgrade_Helper::stop_timer( $start );
 	 * ```
 	 * @param int     $start
 	 * @return string

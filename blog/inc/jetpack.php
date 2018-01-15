@@ -11,21 +11,21 @@
 /**
  * Remove Jetpack's automatic Related Posts from the end of the posts because we will manually add it after the comments.
  */
-function boilerplate_jetpackme_remove_rp() {
+function pixelgrade_jetpackme_remove_rp() {
 	if ( class_exists( 'Jetpack_RelatedPosts' ) ) {
 		$jprp = Jetpack_RelatedPosts::init();
 		$callback = array( $jprp, 'filter_add_target_to_dom' );
 		remove_filter( 'the_content', $callback, 40 );
 	}
 }
-add_filter( 'wp', 'boilerplate_jetpackme_remove_rp', 20 );
+add_filter( 'wp', 'pixelgrade_jetpackme_remove_rp', 20 );
 
-function boilerplate_jetpack_more_related_posts( $options ) {
+function pixelgrade_jetpack_more_related_posts( $options ) {
 	$options['size'] = 3;
 
 	return $options;
 }
-add_filter( 'jetpack_relatedposts_filter_options', 'boilerplate_jetpack_more_related_posts', 10, 1 );
+add_filter( 'jetpack_relatedposts_filter_options', 'pixelgrade_jetpack_more_related_posts', 10, 1 );
 
 /**
  * Get the related posts using Jetpack's WordPress.com Elastic Search.
@@ -34,7 +34,7 @@ add_filter( 'jetpack_relatedposts_filter_options', 'boilerplate_jetpack_more_rel
  *
  * @return array|bool
  */
-function boilerplate_get_jetpack_related_posts_ids( $post = null ) {
+function pixelgrade_get_jetpack_related_posts_ids( $post = null ) {
 	$post = get_post( $post );
 
 	//bail if we don't have a post to work with
@@ -47,10 +47,10 @@ function boilerplate_get_jetpack_related_posts_ids( $post = null ) {
 
 	if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) {
 		// Get the Jetpack Related Options
-		$related_posts_options = boilerplate_get_jetpack_related_posts_options();
+		$related_posts_options = pixelgrade_get_jetpack_related_posts_options();
 
 		$related = Jetpack_RelatedPosts::init_raw()
-		                               ->set_query_name( 'boilerplate-jetpack-related-posts' ) // Optional, name can be anything
+		                               ->set_query_name( 'pixelgrade-jetpack-related-posts' ) // Optional, name can be anything
 		                               ->get_for_post_id(
 				$post->ID,
 				array(
@@ -77,7 +77,7 @@ function boilerplate_get_jetpack_related_posts_ids( $post = null ) {
  *
  * @return bool|void
  */
-function boilerplate_the_jetpack_related_posts_headline( $default = null ) {
+function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	$headline = '';
 
 	if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init' ) ) {
@@ -116,7 +116,7 @@ function boilerplate_the_jetpack_related_posts_headline( $default = null ) {
  *
  * @return array|bool
  */
-function boilerplate_get_jetpack_related_posts_options() {
+function pixelgrade_get_jetpack_related_posts_options() {
 	if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init' ) ) {
 		return Jetpack_RelatedPosts::init()->get_options();
 	}
@@ -131,7 +131,7 @@ function boilerplate_get_jetpack_related_posts_options() {
  *
  * @return array
  */
-function boilerplate_jetpack_related_posts_customize_options( $options ) {
+function pixelgrade_jetpack_related_posts_customize_options( $options ) {
 	// we will always show thumbnails
 	unset( $options['show_thumbnails'] );
 
@@ -143,7 +143,7 @@ function boilerplate_jetpack_related_posts_customize_options( $options ) {
 
 	return $options;
 }
-add_filter( 'jetpack_related_posts_customize_options', 'boilerplate_jetpack_related_posts_customize_options', 10, 1 );
+add_filter( 'jetpack_related_posts_customize_options', 'pixelgrade_jetpack_related_posts_customize_options', 10, 1 );
 
 /**
  * Change the thumbnail size of the images for the Jetpack Top Posts widget.
@@ -152,10 +152,10 @@ add_filter( 'jetpack_related_posts_customize_options', 'boilerplate_jetpack_rela
  *
  * @return array
  */
-function boilerplate_jetpack_top_posts_custom_thumb_size( $get_image_options ) {
+function pixelgrade_jetpack_top_posts_custom_thumb_size( $get_image_options ) {
 	$get_image_options['width'] = 405;
 	$get_image_options['height'] = 304;
 
 	return $get_image_options;
 }
-add_filter( 'jetpack_top_posts_widget_image_options', 'boilerplate_jetpack_top_posts_custom_thumb_size' );
+add_filter( 'jetpack_top_posts_widget_image_options', 'pixelgrade_jetpack_top_posts_custom_thumb_size' );

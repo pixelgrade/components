@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $location = pixelgrade_set_location( 'related-posts', true );
 
 // Get the related posts IDs from Jetpack
-$related_posts_ids = boilerplate_get_jetpack_related_posts_ids();
+$related_posts_ids = pixelgrade_get_jetpack_related_posts_ids();
 
 $args = array(
 	'post_type'           => 'post',
@@ -45,7 +45,7 @@ if ( ! empty( $related_posts_ids ) ) {
 	// Show Recent Posts instead on failure to connect to Jetpack's server or failure to find related posts (maybe it's still thinking and indexing)
 
 	// Get the Jetpack Related Options
-	$related_posts_options = boilerplate_get_jetpack_related_posts_options();
+	$related_posts_options = pixelgrade_get_jetpack_related_posts_options();
 
 	$args['post__not_in']   = array( get_the_ID() );
 	$args['posts_per_page'] = ! empty( $related_posts_options['size'] ) ? (int) $related_posts_options['size'] : 3;
@@ -67,7 +67,7 @@ if ( $query->have_posts() ) {
 	<div id="related-posts-container" class="related-posts-container">
 		<div class="u-container-sides-spacing">
 			<div class="o-wrapper u-container-width">
-				<?php boilerplate_the_jetpack_related_posts_headline( esc_html__( 'Related Posts', '__components_txtd' ) ); ?>
+				<?php pixelgrade_the_jetpack_related_posts_headline( esc_html__( 'Related Posts', '__components_txtd' ) ); ?>
 				<div class="c-gallery  o-grid--3col-@desk  o-grid--3col-@lap  o-grid--col-@small">
 					<?php
 					/* Start the Loop */

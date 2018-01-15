@@ -843,9 +843,9 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 	}
 }
 
-if ( ! function_exists( 'boilerplate_has_post_thumbnail' ) ) :
+if ( ! function_exists( 'pixelgrade_has_post_thumbnail' ) ) :
 
-	function boilerplate_has_portrait_thumbnail( $post_id = null ) {
+	function pixelgrade_has_portrait_thumbnail( $post_id = null ) {
 
 		// $post is the current post
 		$post = get_post( $post_id );
@@ -868,17 +868,15 @@ if ( ! function_exists( 'boilerplate_has_post_thumbnail' ) ) :
 
 endif;
 
-if ( ! function_exists( 'boilerplate_has_landscape_thumbnail' ) ) :
+if ( ! function_exists( 'pixelgrade_has_landscape_thumbnail' ) ) :
 	/**
 	 * Get the class corresponding to the aspect ratio of the post featured image
-	 *
-	 * @since Julia 1.0
 	 *
 	 * @param int|WP_Post $post_id Optional. Post ID or post object.
 	 *
 	 * @return string Aspect ratio specific class.
 	 */
-	function boilerplate_has_landscape_thumbnail( $post_id = null ) {
+	function pixelgrade_has_landscape_thumbnail( $post_id = null ) {
 
 		// $post is the current post
 		$post = get_post( $post_id );
@@ -901,17 +899,15 @@ if ( ! function_exists( 'boilerplate_has_landscape_thumbnail' ) ) :
 
 endif;
 
-if ( ! function_exists( 'boilerplate_has_no_thumbnail' ) ) :
+if ( ! function_exists( 'pixelgrade_has_no_thumbnail' ) ) :
 	/**
 	 * Get the class corresponding to the aspect ratio of the post featured image
-	 *
-	 * @since Julia 1.0
 	 *
 	 * @param int|WP_Post $post_id Optional. Post ID or post object.
 	 *
 	 * @return string Aspect ratio specific class.
 	 */
-	function boilerplate_has_no_thumbnail( $post_id = null ) {
+	function pixelgrade_has_no_thumbnail( $post_id = null ) {
 
 		// $post is the current post
 		$post = get_post( $post_id );
