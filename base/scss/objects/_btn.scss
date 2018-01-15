@@ -217,16 +217,16 @@ $btn-font: () !default;
   @include button-directional;
 }
 
-.c-button-text {
-  @include button-reset;
-}
-
 .c-btn-directional--left {
   @include button-directional--left;
 }
 
 .c-btn-directional--right {
   @include button-directional--right;
+}
+
+.c-btn-text {
+  @include button-reset;
 }
 
 // Helper Classes for Humans & Nature
@@ -253,8 +253,4 @@ $btn-font: () !default;
       @include button-directional--right;
     }
   }
-}
-
-.c-btn--reset {
-  @include button-reset;
 }
