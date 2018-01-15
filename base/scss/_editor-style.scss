@@ -19,9 +19,6 @@ $content-selector: '.mce-content-body';
 
 @import "plugins/gridable";
 
-@import "../../../assets/scss/components/dropcap";
-@import "../../../assets/scss/components/blockquote-julia";
-
 @debug $content-selector;
 
 #{$content-selector} {

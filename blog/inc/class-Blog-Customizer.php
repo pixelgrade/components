@@ -1611,7 +1611,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 					'blog_item_excerpt_font' => array(
 						'type'     => 'font',
-						'label'    => esc_html__( 'Item Excerpt Font', '__theme_txtd' ),
+						'label'    => esc_html__( 'Item Excerpt Font', '__components_txtd' ),
 						'desc'     => '',
 						'selector' => '.c-gallery--blog .c-card__excerpt',
 						'callback' => 'typeline_font_cb',

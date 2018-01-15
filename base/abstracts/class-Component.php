@@ -269,9 +269,12 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	/**
 	 * Register the component's blocks
 	 *
-	 * We will process the config for blocks and register the blocks accordingly.
+	 * We will process the component's config for blocks and register the blocks accordingly.
 	 */
-	public function registerBlocks( $config ) {
+	public function registerBlocks() {
+		// Get the component's config
+		$config = $this->getConfig();
+
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
@@ -279,8 +282,8 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) .'::COMPONENT_SLUG' ), $config );
 
 		// Now process the config and register any blocks we find
-		if ( ! empty( $config ) && is_array( $config ) ) {
-			foreach ( $config as $block_id => $block_config ) {
+		if ( ! empty( $config['blocks'] ) && is_array( $config['blocks'] ) ) {
+			foreach ( $config['blocks'] as $block_id => $block_config ) {
 				// If the block ID is not namespaced, we will namespace it with the component's slug
 				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
 					$block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
@@ -305,13 +308,6 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		 * Register our actions and filters
 		 */
 		$this->registerHooks();
-
-		/**
-		 * Register the component's blocks
-		 */
-		if ( ! empty( $this->config['blocks'] ) ) {
-			self::registerBlocks( $this->config['blocks'] );
-		}
 
 		/**
 		 * Setup the component's custom page templates

@@ -842,3 +842,94 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 
 	}
 }
+
+if ( ! function_exists( 'boilerplate_has_post_thumbnail' ) ) :
+
+	function boilerplate_has_portrait_thumbnail( $post_id = null ) {
+
+		// $post is the current post
+		$post = get_post( $post_id );
+
+		$jetpack_show_single_featured_image = get_option( 'jetpack_content_featured_images_post', true );
+
+		// Bail if no post or the image is hidden from Jetpack's content options
+		if ( empty( $post ) || empty( $jetpack_show_single_featured_image ) ) {
+			return 'none';
+		}
+
+		$image_type = pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post ), 'none' );
+
+		if ( 'portrait' === $image_type ) {
+			return true;
+		}
+
+		return false;
+	}
+
+endif;
+
+if ( ! function_exists( 'boilerplate_has_landscape_thumbnail' ) ) :
+	/**
+	 * Get the class corresponding to the aspect ratio of the post featured image
+	 *
+	 * @since Julia 1.0
+	 *
+	 * @param int|WP_Post $post_id Optional. Post ID or post object.
+	 *
+	 * @return string Aspect ratio specific class.
+	 */
+	function boilerplate_has_landscape_thumbnail( $post_id = null ) {
+
+		// $post is the current post
+		$post = get_post( $post_id );
+
+		$jetpack_show_single_featured_image = get_option( 'jetpack_content_featured_images_post', true );
+
+		// Bail if no post or the image is hidden from Jetpack's content options
+		if ( empty( $post ) || empty( $jetpack_show_single_featured_image ) ) {
+			return 'none';
+		}
+
+		$image_type = pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post ), 'none' );
+
+		if ( 'landscape' === $image_type ) {
+			return true;
+		}
+
+		return false;
+	}
+
+endif;
+
+if ( ! function_exists( 'boilerplate_has_no_thumbnail' ) ) :
+	/**
+	 * Get the class corresponding to the aspect ratio of the post featured image
+	 *
+	 * @since Julia 1.0
+	 *
+	 * @param int|WP_Post $post_id Optional. Post ID or post object.
+	 *
+	 * @return string Aspect ratio specific class.
+	 */
+	function boilerplate_has_no_thumbnail( $post_id = null ) {
+
+		// $post is the current post
+		$post = get_post( $post_id );
+
+		$jetpack_show_single_featured_image = get_option( 'jetpack_content_featured_images_post', true );
+
+		// Bail if no post or the image is hidden from Jetpack's content options
+		if ( empty( $post ) || empty( $jetpack_show_single_featured_image ) ) {
+			return 'none';
+		}
+
+		$image_type = pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post ), 'none' );
+
+		if ( 'none' === $image_type ) {
+			return true;
+		}
+
+		return false;
+	} #function
+
+endif;

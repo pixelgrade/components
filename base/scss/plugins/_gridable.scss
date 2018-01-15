@@ -373,8 +373,7 @@ $gridable-column-boxed: '.column-style--boxed' !default;
   }
 }
 
-// @todo
-// styles for gridable I found in Julia's _shame.scss
+// @todo styles for gridable I found in Julia's _shame.scss - is this needed here?
 .gridable {
   &:not(:last-child) {
     @include spacing(padding-bottom, 2.5rem);

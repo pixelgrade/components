@@ -4,8 +4,10 @@
  *
  * This class provides the logic for handling the programmatic (config) generation of widget fields, including conditional displaying behaviour.
  *
- * @package Julia
- * @since 2.0.0
+ * @see 	    https://pixelgrade.com
+ * @author 		Pixelgrade
+ * @package 	Components/Base
+ * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -99,8 +101,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			wp_localize_script( 'pixelgrade-widget-fields-js', 'pixelgradeWidgetFields', array(
 				'image' => array(
-					'frame_title'  => esc_html__( 'Select an Image', '__theme_txtd' ),
-					'button_title' => esc_html__( 'Insert Into Widget', '__theme_txtd' ),
+					'frame_title'  => esc_html__( 'Select an Image', '__components_txtd' ),
+					'button_title' => esc_html__( 'Insert Into Widget', '__components_txtd' ),
 				),
 			) );
 
@@ -197,7 +199,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 				            // Handle the section title and wrappers
 				            /* translators: Used for screen readers on widget sections. */
-				            echo '<h3 class="accordion-section-title hndle">' . ( ! empty( $section['title'] ) ? $section['title'] : '' ) . '<span class="screen-reader-text">' . esc_html__( 'Press return or enter to open this section.', '__theme_txtd' ) . '</span></h3>' . PHP_EOL;
+				            echo '<h3 class="accordion-section-title hndle">' . ( ! empty( $section['title'] ) ? $section['title'] : '' ) . '<span class="screen-reader-text">' . esc_html__( 'Press return or enter to open this section.', '__components_txtd' ) . '</span></h3>' . PHP_EOL;
 
 				            // The section fields wrapper
 				            echo '<div class="accordion-section-content">';
@@ -804,12 +806,12 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$desc = $field_config['desc'];
 			}
 
-			$button_label = esc_html__( 'Select Image', '__theme_txtd' );
+			$button_label = esc_html__( 'Select Image', '__components_txtd' );
 			if ( ! empty( $field_config['button_label'] ) ) {
 				$button_label = $field_config['button_label'];
 			}
 
-			$clear_label = esc_html__( 'Clear', '__theme_txtd' );
+			$clear_label = esc_html__( 'Clear', '__components_txtd' );
 			if ( ! empty( $field_config['clear_label'] ) ) {
 				$clear_label = $field_config['clear_label'];
 			}

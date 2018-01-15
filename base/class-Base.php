@@ -41,6 +41,9 @@ class Pixelgrade_Base extends Pixelgrade_Component {
 		$this->config = $modified_config;
 	}
 
+	/**
+	 * Handle everything there is to be done before the component init.
+	 */
 	public function preInitSetup() {
 		// Initialize the Blocks Manager
 		Pixelgrade_BlocksManager();
@@ -52,6 +55,7 @@ class Pixelgrade_Base extends Pixelgrade_Component {
 	 * @return void
 	 */
 	public function registerHooks() {
+		// No hooks at this point!
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_base_registered_hooks' );

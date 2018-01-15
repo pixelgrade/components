@@ -6,9 +6,9 @@
  * Everything gets hooked up and bolted in here.
  *
  * @see        https://pixelgrade.com
- * @author        Pixelgrade
+ * @author     Pixelgrade
  * @package    Components/Blog
- * @version     1.0.0
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,85 +23,84 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
      * Setup the blog component config
      */
     public function setupConfig() {
-        // Initialize the $config
-        $this->config = array(
-            /*
-			 * This is the auto-loaded blocks definition section of a component config.
-			 *
-			 * Any blocks defined here will be registered on component initialization.
-			 * More so, all top level block IDs will be auto-namespaced (prefixed) with the component slug,
-			 * thus avoiding unwanted collisions.
-			 * This will only happen if the block ID is not already namespaced (ie. doesn't contain the '/' character)
-			 *
-			 * BLOCK TYPES
-			 *
-			 * A certain block type needs to be registered before it can be used by blocks (@see Pixelgrade_BlocksManager::registerBlockType()).
-			 * We currently register four block types by default:
-			 * - 'layout': a block that can have a series of child blocks;
-			 * - 'loop': a block that can have a series of child blocks, all of them being rendered in a WP loop;
-			 * - 'template_part': a block that loads a template part from a stack of template parts (first one found, from top to bottom);
-			 * - 'callback': a block that calls a certain function or method and uses the response for render content.
-			 *
-			 * BLOCK DEFINITION
-			 *
-			 * All block definitions share a common set of attributes:
-			 * - 'id' (string): this is the unique ID of the block and it is taken from the array key;
-			 * - 'type' (string): this is the pre-registered type of the block;
-			 * - 'wrappers' (string|array|callback): these are the wrappers that we will put around the block content;
-			 * - 'end_wrappers' (string): In case `wrappers` is a fully qualified opening markup, we need you to provide the closing markup also;
-			 * - 'checks' (string|array): Callback checks to run at render time to decide if the block should be shown (if any check fails, the block is not shown);
-			 * - 'dependencies' (array): Dependencies to evaluate at block register time (all dependencies need to be met for the block to be registered);
-			 * - 'extend' (string): A previously registered block ID that the current block extends.
-			 *
-			 * Each block type has it's own set of specific attributes.
-			 *
-			 * The LAYOUT block
-			 * - 'blocks' (string|array): A ordered list of child blocks to render when the parent block is rendered;
-			 *
-			 * You can specify a child block by:
-			 * - a previously registered block ID; if the provided block ID is not namespaced (ie. doesn't contain the '/' character),
-			 *   then we will try to see if it matches a sibling or a sibling of the parent block;
-			 * - an inline block definition; in this case the child block will be registered, with an ID namespaced with the parent block ID;
-			 *
-			 * The LOOP block
-			 * It has all the attributes to the `layout block`, the only difference being that the child blocks are rendered inside a WP loop.
-			 *
-			 * The TEMPLATE_PART block
-			 * - 'templates' (string|array): A stack of template part files definitions to be processed at render time;
-			 *   only the first valid template part is rendered;
-			 *
-			 * You can define a template part in number of ways:
-			 * - a simple string: this will be interpreted as a template part slug;
-			 * - an array with the `slug`, maybe the `name` of the template and maybe the `component_slug`.
-			 *
-			 * The CALLBACK block
-			 * - 'callback' (string|array): a callback definition; either a simple string or an array (@see call_user_func_array() for details);
-			 * - 'args' (array): arguments to pass to the callback;
-			 *   bear in mind that the callback will be called with call_user_func_array(), so the `args` will be expanded.
-			 *
-			 * EXTENDING BLOCKS
-			 *
-			 * A block definition can extend the definition of another, previously registered block.
-			 * This boils down to merging two block definition arrays. But we will do a smart merge that tries
-			 * as much as possible to adapt to the intricacies of each block type (@see Pixelgrade_Block::mergeExtendedBlock()).
-			 *
-			 * There are however a couple of general extend rules:
-			 * - any attributes that are not supported by the extending block will be ignored;
-			 * - any named entries (array entries that have a string key) can be overwritten by the extending block;
-			 * - any shorthand named attribute specification in the extending block will overwrite the entire named attribute of the extended block;
-			 * - unnamed entries in attributes like `wrappers` or `blocks` will be kept and the extending block's entries will be added added at the end.
-			 *
-			 * For named wrappers, there are few exceptions to the rule above:
-			 * - use the `extend_classes` property in a wrapper definition and we will append (rather than replace)
-			 *   the classes to the the ones of the extended block;
-			 * - use the `extend_attributes` property in a wrapper definition and we will append (rather than replace)
-			 *   the attributes to the ones of the extended block;
-			 * - use the `extend_checks` property in a wrapper definition and we will append (rather than replace)
-			 *   the checks to the ones of the extended block;
-			 * - if you define unnamed wrappers before a named wrapper in an extending block, we will keep the relative order
-			 *   by calculating the priority for the unnamed wrappers.
-			 */
-            'blocks' => array(
+        /*
+		 * This is the auto-loaded blocks definition section of a component config.
+		 *
+		 * Any blocks defined here will be registered on component initialization.
+		 * More so, all top level block IDs will be auto-namespaced (prefixed) with the component slug,
+		 * thus avoiding unwanted collisions.
+		 * This will only happen if the block ID is not already namespaced (ie. doesn't contain the '/' character)
+		 *
+		 * BLOCK TYPES
+		 *
+		 * A certain block type needs to be registered before it can be used by blocks (@see Pixelgrade_BlocksManager::registerBlockType()).
+		 * We currently register four block types by default:
+		 * - 'layout': a block that can have a series of child blocks;
+		 * - 'loop': a block that can have a series of child blocks, all of them being rendered in a WP loop;
+		 * - 'template_part': a block that loads a template part from a stack of template parts (first one found, from top to bottom);
+		 * - 'callback': a block that calls a certain function or method and uses the response for render content.
+		 *
+		 * BLOCK DEFINITION
+		 *
+		 * All block definitions share a common set of attributes:
+		 * - 'id' (string): this is the unique ID of the block and it is taken from the array key;
+		 * - 'type' (string): this is the pre-registered type of the block;
+		 * - 'wrappers' (string|array|callback): these are the wrappers that we will put around the block content;
+		 * - 'end_wrappers' (string): In case `wrappers` is a fully qualified opening markup (i.e. with divs and such),
+         *                            we need you to provide the closing markup also;
+		 * - 'checks' (string|array): Callback checks to run at render time to decide if the block should be shown (if any check fails, the block is not shown);
+		 * - 'dependencies' (array): Dependencies to evaluate at block register time (all dependencies need to be met for the block to be registered);
+		 * - 'extend' (string): A previously registered block ID that the current block extends.
+		 *
+		 * Each block type has it's own set of specific attributes.
+		 *
+		 * The LAYOUT block
+		 * - 'blocks' (string|array): A ordered list of child blocks to render when the parent block is rendered;
+		 *
+		 * You can specify a child block by:
+		 * - a previously registered block ID; if the provided block ID is not namespaced (ie. doesn't contain the '/' character),
+		 *   then we will try to see if it matches a sibling or a sibling of the parent block;
+		 * - an inline block definition; in this case the child block will be registered, with an ID namespaced with the parent block ID;
+		 *
+		 * The LOOP block
+		 * It has all the attributes of the `layout block`, the only difference being that the child blocks are rendered inside a WP default loop.
+		 *
+		 * The TEMPLATE_PART block
+		 * - 'templates' (string|array): A stack of template part files definitions to be processed at render time;
+		 *   Please note that only the first valid template part is rendered;
+		 *
+		 * You can define a template part in number of ways:
+		 * - a simple string: this will be interpreted as a template part slug;
+		 * - an array with the `slug`, maybe the `name` of the template and maybe the `component_slug`.
+		 *
+		 * The CALLBACK block
+		 * - 'callback' (string|array): a callback definition; either a simple string or an array (@see call_user_func_array() for details);
+		 * - 'args' (array): arguments to pass to the callback;
+		 *   Bear in mind that the callback will be called with call_user_func_array(), so the `args` will be expanded into variables.
+		 *
+		 * EXTENDING BLOCKS
+		 *
+		 * A block definition can extend the definition of another, previously registered block.
+		 * This boils down to merging two block definition arrays. But we will do a smart merge that tries
+		 * as much as possible to adapt to the intricacies of each block type (@see Pixelgrade_Block::mergeExtendedBlock()).
+		 *
+		 * There are however a couple of general extend rules:
+		 * - any attributes that are not supported by the extending block will be ignored;
+		 * - any named entries (array entries that have a string key) can be overwritten by the extending block;
+		 * - any shorthand named attribute specification in the extending block will overwrite the entire named attribute of the extended block;
+		 * - unnamed entries in attributes like `wrappers` or `blocks` will be kept and the extending block's entries will be added added at the end.
+		 *
+		 * For named wrappers, there are few exceptions to the rule above:
+		 * - use the `extend_classes` property in a wrapper definition and we will append (rather than replace)
+		 *   the classes to the the ones of the extended block;
+		 * - use the `extend_attributes` property in a wrapper definition and we will append (rather than replace)
+		 *   the attributes to the ones of the extended block;
+		 * - use the `extend_checks` property in a wrapper definition and we will append (rather than replace)
+		 *   the checks to the ones of the extended block;
+		 * - if you define unnamed wrappers before a named wrapper in an extending block, we will keep the relative order
+		 *   by calculating the priority for the unnamed wrappers.
+		 */
+	    $this->config['blocks'] = array(
 
                 // default wrappers
                 'default' => array(
@@ -121,6 +120,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     ),
                 ),
 
+                // Default container wrappers
                 'container' => array(
                     'type'     => 'layout',
                     'wrappers' => array(
@@ -473,153 +473,155 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		                'blog/entry-footer',
 	                ),
                 ),
-            ),
+            );
 
-            // For custom page templates, we can handle two formats:
-            // - a simple one, where the key is the page_template partial path and the value is the template name as shown in the WP Admin dropdown; like so:
-            // 'portfolio/page-templates/portfolio-page.php' => 'Portfolio Template'
-            // - an extended one, where you can define dependencies (like other components); like so:
-            // array (
-            //	'page_template' => 'portfolio/page-templates/portfolio-page.php',
-            //	'name' => 'Portfolio Template',
-            //  'loop' => array(), // Optional - mark this as having a custom loop and define the behavior
-            //	'dependencies' => array (
-            //		'components' => array(
-            //			// put here the main class of the component and we will test for existence and if the component isActive
-            //			'Pixelgrade_Hero',
-            //		),
-            //		// We can also handle dependencies like 'class_exists' or 'function_exists':
-            //		// 'class_exists' => array( 'Some_Class', 'Another_Class' ),
-            //		// 'function_exists' => array( 'some_function', 'another_function' ),
-            //	),
-            // ),
-            'page_templates' => array(
-                // We put the component slug in front to make sure that we don't have collisions with other components or theme defined templates
-                trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width.php'          => 'Full Width',
-                trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' => 'Full Width (No Title)',
-                trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'no-title.php'            => 'Default Template (No title)',
-            ),
-            'templates'      => array(
-                // The config key is just for easy identification by filters. It doesn't matter in the logic.
+		/*
+		 * For custom page templates, we can handle two formats:
+		 * - a simple one, where the key is the page_template partial path and the value is the template name as shown in the WP Admin dropdown; like so:
+		 *      'portfolio/page-templates/portfolio-page.php' => 'Portfolio Template'
+		 * - an extended one, where you can define dependencies (like other components); like so:
+		 *      array (
+		 *          'page_template' => 'portfolio/page-templates/portfolio-page.php',
+		 *          'name' => 'Portfolio Template',
+		 *          'loop' => array(), // Optional - mark this as having a custom loop and define the behavior
+		 *          'dependencies' => array (
+		 *              'components' => array(
+		 *                   // put here the main class of the component and we will test for existence and if the component isActive
+		 *                  'Pixelgrade_Hero',
+		 *              ),
+		 *              // We can also handle dependencies like 'class_exists' or 'function_exists':
+		 *              // 'class_exists' => array( 'Some_Class', 'Another_Class' ),
+		 *              // 'function_exists' => array( 'some_function', 'another_function' ),
+		 *          ),
+		 *      ),
+		 */
+	    $this->config['page_templates'] = array(
+            // We put the component slug in front to make sure that we don't have collisions with other components or theme defined templates
+            trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width.php'          => 'Full Width',
+            trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' => 'Full Width (No Title)',
+            trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'no-title.php'            => 'Default Template (No title)',
+        );
+
+	    $this->config['templates'] = array(
+            // The config key is just for easy identification by filters. It doesn't matter in the logic.
+            //
+            // However, the order in which the templates are defined matters: an earlier template has a higher priority
+            // than a latter one when both match their conditions!
+            '404'     => array(
+                // The type of this template.
+                // Possible core values: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
+                // 'embed', home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
+                // You can use (carefully) other values as long it is to your logic's advantage (e.g. 'header').
+                // @see get_query_template() for more details.
+                'type'      => '404',
+                // What checks should the current query pass for the templates to be added to the template hierarchy stack?
+                // IMPORTANT: In case of multiple checks, it needs to pass all of them!
+                // The functions will usually be conditional tags like `is_archive`, `is_tax`.
+                // @see /wp-includes/template-loader.php for inspiration.
+                // This is optional so you can have a template always added to a query type.
+                // @see Pixelgrade_Config::evaluateChecks()
+                'checks'    => array(
+                    'callback' => 'is_404',
+                    // The arguments we should pass to the check callback.
+                    // Each top level array entry will be a parameter - see call_user_func_array()
+                    // So if you want to pass an array as a parameter you need to double enclose it like: array(array(1,2,3))
+                    'args'     => array(),
+                ),
+                // The template(s) that we should attempt to load.
                 //
-                // However, the order in which the templates are defined matters: an earlier template has a higher priority
-                // than a latter one when both match their conditions!
-                '404'     => array(
-                    // The type of this template.
-                    // Possible core values: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
-                    // 'embed', home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
-                    // You can use (carefully) other values as long it is to your logic's advantage (e.g. 'header').
-                    // @see get_query_template() for more details.
-                    'type'      => '404',
-                    // What checks should the current query pass for the templates to be added to the template hierarchy stack?
-                    // IMPORTANT: In case of multiple checks, it needs to pass all of them!
-                    // The functions will usually be conditional tags like `is_archive`, `is_tax`.
-                    // @see /wp-includes/template-loader.php for inspiration.
-                    // This is optional so you can have a template always added to a query type.
-                    // @see Pixelgrade_Config::evaluateChecks()
-                    'checks'    => array(
-                        'callback' => 'is_404',
-                        // The arguments we should pass to the check callback.
-                        // Each top level array entry will be a parameter - see call_user_func_array()
-                        // So if you want to pass an array as a parameter you need to double enclose it like: array(array(1,2,3))
-                        'args'     => array(),
-                    ),
-                    // The template(s) that we should attempt to load.
-                    //
-                    // It can be a:
-                    // - a single string: this will be treated as the template slug;
-                    // - an array with the slug and maybe the name of the template;
-                    // - an array of arrays each with the slug and maybe the name of the template.
-                    // @see pixelgrade_add_configured_templates()
-                    //
-                    // The order is important as this is the order of priority, descending!
-                    'templates' => array(
-                        array(
-                            'slug' => '404',
-                            'name' => '',
-                        ),
-                    ),
-                    // We also support dependencies defined like the ones bellow.
-                    // Just make sure that the defined dependencies can be reliably checked at `after_setup_theme`, priority 12
-                    //
-                    // 'dependencies' => array (
-                    //      'components' => array(
-                    //	    	// put here the main class of the component and we will test for existence and if the component isActive
-                    //  		'Pixelgrade_Hero',
-                    //      ),
-                    //      // We can also handle dependencies like 'class_exists' or 'function_exists':
-                    //      'class_exists' => array( 'Some_Class', 'Another_Class', ),
-                    //      'function_exists' => array( 'some_function', 'another_function', ),
-                    //  ),
-                ),
-                'home'    => array(
-                    'type'      => 'home',
-                    'checks'    => array(
-                        'callback' => 'is_home',
-                        'args'     => array(),
-                    ),
-                    'templates' => 'home',
-                ),
-                'single'  => array(
-                    'type'      => 'single',
-                    'checks'    => array(
-                        'callback' => 'is_single',
-                        'args'     => array(),
-                    ),
-                    'templates' => 'single',
-                ),
-                'page'    => array(
-                    'type'      => 'page',
-                    'checks'    => array(
-                        'callback' => 'is_page',
-                        'args'     => array(),
-                    ),
-                    'templates' => 'page',
-                ),
-                'archive' => array(
-                    'type'      => 'archive',
-                    'checks'    => array(
-                        'callback' => 'is_archive',
-                        'args'     => array(),
-                    ),
-                    'templates' => 'archive',
-                ),
-                'search'  => array(
-                    'type'      => 'search',
-                    'checks'    => array(
-                        'callback' => 'is_search',
-                        'args'     => array(),
-                    ),
-                    'templates' => 'search',
-                ),
-
-                // Add our index at the end to be sure that it is used
-                'index'   => array(
-                    'type'      => 'index',
-                    'templates' => array(
-                        'slug' => 'index',
-                        'name' => 'blog',
-                        // We need this so we can overcome the limitation of WordPress wanting a index.php in the theme root
+                // It can be a:
+                // - a single string: this will be treated as the template slug;
+                // - an array with the slug and maybe the name of the template;
+                // - an array of arrays each with the slug and maybe the name of the template.
+                // @see pixelgrade_add_configured_templates()
+                //
+                // The order is important as this is the order of priority, descending!
+                'templates' => array(
+                    array(
+                        'slug' => '404',
+                        'name' => '',
                     ),
                 ),
-
-                // Now for some of our own "types" that we use to handle pseudo-templates like `header.php`, `footer.php`
-                // in a standard way
-                'header'  => array(
-                    'type'      => 'header',
-                    'templates' => 'header',
-                ),
-                'footer'  => array(
-                    'type'      => 'footer',
-                    'templates' => 'footer',
-                ),
-                'sidebar' => array(
-                    'type'      => 'sidebar',
-                    'templates' => 'sidebar',
-                ),
-                // The comments.php template can't be configured this way. We pass the template path directly to comments_template()
-                // @see pixelgrade_comments_template()
+                // We also support dependencies defined like the ones bellow.
+                // Just make sure that the defined dependencies can be reliably checked at `after_setup_theme`, priority 12
+                //
+                // 'dependencies' => array (
+                //      'components' => array(
+                //	    	// put here the main class of the component and we will test for existence and if the component isActive
+                //  		'Pixelgrade_Hero',
+                //      ),
+                //      // We can also handle dependencies like 'class_exists' or 'function_exists':
+                //      'class_exists' => array( 'Some_Class', 'Another_Class', ),
+                //      'function_exists' => array( 'some_function', 'another_function', ),
+                //  ),
             ),
+            'home'    => array(
+                'type'      => 'home',
+                'checks'    => array(
+                    'callback' => 'is_home',
+                    'args'     => array(),
+                ),
+                'templates' => 'home',
+            ),
+            'single'  => array(
+                'type'      => 'single',
+                'checks'    => array(
+                    'callback' => 'is_single',
+                    'args'     => array(),
+                ),
+                'templates' => 'single',
+            ),
+            'page'    => array(
+                'type'      => 'page',
+                'checks'    => array(
+                    'callback' => 'is_page',
+                    'args'     => array(),
+                ),
+                'templates' => 'page',
+            ),
+            'archive' => array(
+                'type'      => 'archive',
+                'checks'    => array(
+                    'callback' => 'is_archive',
+                    'args'     => array(),
+                ),
+                'templates' => 'archive',
+            ),
+            'search'  => array(
+                'type'      => 'search',
+                'checks'    => array(
+                    'callback' => 'is_search',
+                    'args'     => array(),
+                ),
+                'templates' => 'search',
+            ),
+
+            // Add our index at the end to be sure that it is used
+            'index'   => array(
+                'type'      => 'index',
+                'templates' => array(
+                    'slug' => 'index',
+                    'name' => 'blog',
+                    // We need this so we can overcome the limitation of WordPress wanting a index.php in the theme root
+                ),
+            ),
+
+            // Now for some of our own "types" that we use to handle pseudo-templates like `header.php`, `footer.php`
+            // in a standard way
+            'header'  => array(
+                'type'      => 'header',
+                'templates' => 'header',
+            ),
+            'footer'  => array(
+                'type'      => 'footer',
+                'templates' => 'footer',
+            ),
+            'sidebar' => array(
+                'type'      => 'sidebar',
+                'templates' => 'sidebar',
+            ),
+            // The comments.php template can't be configured this way. We pass the template path directly to comments_template()
+            // @see pixelgrade_comments_template()
         );
 
         // Allow others to make changes to the config
