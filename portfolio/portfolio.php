@@ -15,7 +15,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Portfolio
- * @version     1.0.0
+ * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ function Pixelgrade_Portfolio() {
 	if ( ! class_exists( 'Pixelgrade_Portfolio') ) {
 		pixelgrade_load_component_file( 'portfolio', 'class-Portfolio' );
 	}
-	return Pixelgrade_Portfolio::instance( '1.0.0' );
+	return Pixelgrade_Portfolio::instance( '1.0.1' );
 }
 endif;
 

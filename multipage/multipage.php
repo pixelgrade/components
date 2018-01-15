@@ -15,7 +15,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Multipage
- * @version     1.1.2
+ * @version     1.1.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ function Pixelgrade_Multipage() {
 	if ( ! class_exists( 'Pixelgrade_Multipage') ) {
 		pixelgrade_load_component_file( 'multipage', 'class-Multipage' );
 	}
-	return Pixelgrade_Multipage::instance( '1.1.2' );
+	return Pixelgrade_Multipage::instance( '1.1.3' );
 }
 endif;
 

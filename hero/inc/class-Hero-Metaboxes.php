@@ -32,15 +32,15 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		$this->parent = $parent;
 
 		// Register our actions and filters
-		$this->register_hooks();
+		$this->registerHooks();
 	}
 
 	/**
 	 * Register our actions and filters
 	 */
-	public function register_hooks() {
+	public function registerHooks() {
 		// Setup our metaboxes configuration
-		add_filter( 'pixelgrade_filter_metaboxes', array( $this, 'metaboxes_config' ), 10, 1 );
+		add_filter( 'pixelgrade_filter_metaboxes', array( $this, 'metaboxesConfig' ), 10, 1 );
 		// Since WordPres 4.7 we need to do some trickery to show metaboxes on pages marked as Page for Posts since the page template control is removed for them
 		/*
 		 * !!! This has been moved in the base component - so make sure you have that !!!
@@ -48,29 +48,29 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 
 		// Also we need to remove the WordPress core featured image metabox because we will use the hero instead
 		// We need to make sure that we remove it only where the hero background is in use
-		add_action( 'add_meta_boxes', array( $this, 'remove_featured_image_metabox' ) );
+		add_action( 'add_meta_boxes', array( $this, 'removeFeaturedImageMetabox' ) );
 
 		// Make sure that we save something in the WordPress code featured image metabox, for legacy reasons
 		// IMPORTANT NOTICE:
 		// By default, the component will only look at the _hero_background_gallery meta
 		// If you wish to use other meta, you need to do some filtering
-		// @see $this->save_featured_image_meta()
-		add_action( "updated_post_meta", array( $this, 'save_featured_image_meta' ), 20, 4 );
+		// @see $this->saveFeaturedImageMeta()
+		add_action( "updated_post_meta", array( $this, 'saveFeaturedImageMeta' ), 20, 4 );
 
 		// Add custom fields to attachments
-		add_action( 'init', array( $this, '_register_attachments_custom_fields' ) );
+		add_action( 'init', array( $this, '_registerAttachmentsCustomFields' ) );
 
 		// Setup how things will behave in the WP admin area
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_init', array( $this, 'adminInit' ) );
 
 		// Enqueue assets for the admin
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueueScripts' ) );
 	}
 
 	/**
 	 * Load on when the admin is initialized
 	 */
-	public function admin_init() {
+	public function adminInit() {
 		/* register the styles and scripts specific to heroes */
 		wp_register_style( 'pixelgrade_hero-admin-metaboxes-style', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Hero::COMPONENT_SLUG ) . 'css/admin.css' ), array( 'cmb-styles' ), $this->parent->assets_version );
 		wp_register_script( 'pixelgrade_hero-admin-metaboxes-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Hero::COMPONENT_SLUG ) . 'js/metaboxes.js' ), array( 'cmb-scripts' ), $this->parent->assets_version );
@@ -82,7 +82,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 *
 	 * @param string $hook
 	 */
-	public function admin_enqueue_scripts( $hook ) {
+	public function adminEnqueueScripts( $hook ) {
 		/* enqueue the styles and scripts specific to heroes */
 		if ( in_array( $hook, array( 'post.php', 'post-new.php', 'page-new.php', 'page.php' ) ) ) {
 			wp_enqueue_style( 'pixelgrade_hero-admin-metaboxes-style');
@@ -103,7 +103,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 *
 	 * @return array
 	 */
-	public function metaboxes_config( $metaboxes ) {
+	public function metaboxesConfig( $metaboxes ) {
 		// These are the PixTypes configs for the metaboxes for each post type
 		$hero_metaboxes = array(
 			//The Hero Background controls - For pages
@@ -410,7 +410,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 *
 	 * @return string Post type
 	 */
-	public function get_post_type() {
+	public function getPostType() {
 		// If we are in an AJAX call we can only use the request post_id
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			if ( isset( $_REQUEST['post_id'] ) ) {
@@ -429,9 +429,9 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	/**
 	 * Removes the WordPress core featured image metabox for all the post types that use heroes as defined in the component config
 	 */
-	public function remove_featured_image_metabox() {
+	public function removeFeaturedImageMetabox() {
 		// Get the current edit post type
-		$current_post_type = $this->get_post_type();
+		$current_post_type = $this->getPostType();
 
 		// Determine the post types that we should remove the featured image metabox for
 		$post_types = array();
@@ -466,9 +466,9 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 *
 	 * @return void
 	 */
-	public function save_featured_image_meta( $meta_id, $object_id, $meta_key, $meta_value ) {
+	public function saveFeaturedImageMeta( $meta_id, $object_id, $meta_key, $meta_value ) {
 		// Get the current edit post type
-		$current_post_type = $this->get_post_type();
+		$current_post_type = $this->getPostType();
 
 		// Determine the post types that we should remove the featured image metabox for
 		$post_types = array();
@@ -540,10 +540,10 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	/**
 	 * Adds custom fields to attachments.
 	 */
-	public function _register_attachments_custom_fields() {
+	public function _registerAttachmentsCustomFields() {
 		//add video support for attachments
-		add_filter( 'attachment_fields_to_edit', array( $this, '_add_video_url_field_to_attachments' ), 99999, 2 );
-		add_filter( 'attachment_fields_to_save', array( $this, '_add_image_attachment_fields_to_save' ), 9999, 2 );
+		add_filter( 'attachment_fields_to_edit', array( $this, '_addVideoUrlFieldToAttachments' ), 99999, 2 );
+		add_filter( 'attachment_fields_to_save', array( $this, '_addImageAttachmentFieldsToSave' ), 9999, 2 );
 	}
 
 	/**
@@ -554,7 +554,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 *
 	 * @return array
 	 */
-	public function _add_video_url_field_to_attachments( $form_fields, $post ) {
+	public function _addVideoUrlFieldToAttachments( $form_fields, $post ) {
 		$link_media_to_value = get_post_meta( $post->ID, '_link_media_to', true );
 
 		if ( ! isset( $form_fields['link_media_to'] ) ) {
@@ -646,7 +646,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 *
 	 * @return WP_Post $post
 	 */
-	public function _add_image_attachment_fields_to_save( $post, $attachment ) {
+	public function _addImageAttachmentFieldsToSave( $post, $attachment ) {
 
 		if ( isset( $attachment['link_media_to'] ) ) {
 			update_post_meta( $post['ID'], '_link_media_to', $attachment['link_media_to'] );

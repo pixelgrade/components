@@ -3,9 +3,9 @@
  * This is the class that handles the Customizer behaviour of our Blog component.
  *
  * @see        https://pixelgrade.com
- * @author        Pixelgrade
+ * @author     Pixelgrade
  * @package    Components/Blog
- * @version     1.0.0
+ * @version    1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -96,8 +96,6 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		add_filter( 'customify_filter_fields', array( $this, 'addCustomifyButtonsOptions' ), 40, 1 );
 		// Setup our blog grid section Customify options
 		add_filter( 'customify_filter_fields', array( $this, 'addCustomifyBlogGridOptions' ), 50, 1 );
-		// Setup our import demo section Customify options
-		add_filter( 'customify_filter_fields', array( $this, 'addCustomifyImportDemoOptions' ), 70, 1 );
 
 		/*
 		 * ================================
@@ -136,6 +134,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 		//Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_customify_general_section_options', $general_section, $options );
+
+		// Validate the config
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfig( $modified_config, $general_section );
+		}
 
 		// Validate the default values
 		// When we have defined in the original config 'default' => null, this means the theme (or someone) must define the value via the filter above.
@@ -923,6 +927,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		//Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_customify_main_content_section_options', $main_content_section, $options );
 
+		// Validate the config
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfig( $modified_config, $main_content_section );
+		}
+
 		// Validate the default values
 		// When we have defined in the original config 'default' => null, this means the theme (or someone) must define the value via the filter above.
 		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
@@ -945,7 +955,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 	}
 
 	/**
-	 * Add the Customizer Blog Grid section configuration, via Customify
+	 * Add the Customizer Buttons section configuration, via Customify
 	 *
 	 * @param array $options
 	 *
@@ -1092,6 +1102,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 		// Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_customify_buttons_section_options', $buttons_section, $options );
+
+		// Validate the config
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfig( $modified_config, $buttons_section );
+		}
 
 		// Validate the default values
 		// When we have defined in the original config 'default' => null, this means the theme (or someone) must define the value via the filter above.
@@ -1640,6 +1656,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		// Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_customify_blog_grid_section_options', $blog_grid_section, $options );
 
+		// Validate the config
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfig( $modified_config, $blog_grid_section );
+		}
+
 		// Validate the default values
 		// When we have defined in the original config 'default' => null, this means the theme (or someone) must define the value via the filter above.
 		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
@@ -1657,63 +1679,6 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 		// Append the blog grid section
 		$options['sections'] = $options['sections'] + $blog_grid_section;
-
-		return $options;
-	}
-
-	/**
-	 * Add the Customizer Demo Data section configuration, via Customify
-	 *
-	 * @param array $options
-	 *
-	 * @return array
-	 */
-	public function addCustomifyImportDemoOptions( $options ) {
-		$import_demo_section = array(
-			// Import Demo Data
-			'import_demo_data' => array(
-				'title'       => __( 'Demo Data', '__components_txtd' ),
-				'description' => esc_html__( 'If you would like to have a "ready to go" website as the theme\'s demo site, here is THE button.', '__components_txtd' ),
-				'priority'    => 999999,
-				'options'     => array(
-					'import_demodata_button' => array(
-						'title' => esc_html__( 'Import', '__components_txtd' ),
-						'type'  => 'html',
-						'html'  => '<input type="hidden" name="wpGrade-nonce-import-posts-pages" value="' . wp_create_nonce( 'wpGrade_nonce_import_demo_posts_pages' ) . '" />
-									<input type="hidden" name="wpGrade-nonce-import-theme-options" value="' . wp_create_nonce( 'wpGrade_nonce_import_demo_theme_options' ) . '" />
-									<input type="hidden" name="wpGrade-nonce-import-widgets" value="' . wp_create_nonce( 'wpGrade_nonce_import_demo_widgets' ) . '" />
-									<input type="hidden" name="wpGrade_import_ajax_url" value="' . admin_url( "admin-ajax.php" ) . '" />' .
-						           '<span class="description customize-control-description">(' . esc_html__( 'Note: We cannot serve you the original images due the ', '__components_txtd' ) . '<strong>&copy;</strong>)</span></br>' .
-						           '<a href="#" class="button button-primary" id="wpGrade_import_demodata_button" style="width: 70%; text-align: center; padding: 10px; display: inline-block; height: auto;  margin: 0 15% 10% 15%;">
-										' . esc_html__( 'Import demo data', '__components_txtd' ) . '
-									</a>
-
-									<div class="wpGrade-loading-wrap hidden">
-										<span class="wpGrade-loading wpGrade-import-loading"></span>
-										<div class="wpGrade-import-wait">' .
-						           esc_html__( 'Please wait a few minutes (between 1 and 3 minutes usually, but depending on your hosting it can take longer) and ', '__components_txtd' ) .
-						           '<strong>' . esc_html__( 'don\'t reload the page', '__components_txtd' ) . '</strong>.' .
-						           esc_html__( 'You will be notified as soon as the import has finished!', '__components_txtd' ) . '
-										</div>
-									</div>
-
-									<div class="wpGrade-import-results hidden"></div>
-									<div class="hr"><div class="inner"><span>&nbsp;</span></div></div>',
-					),
-				),
-			),
-		);
-
-		//Allow others to make changes
-		$import_demo_section = apply_filters( 'pixelgrade_customify_import_demo_section_options', $import_demo_section, $options );
-
-		//make sure we are in good working order
-		if ( empty( $options['sections'] ) ) {
-			$options['sections'] = array();
-		}
-
-		//append the general section
-		$options['sections'] = $options['sections'] + $import_demo_section;
 
 		return $options;
 	}

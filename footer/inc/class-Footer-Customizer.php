@@ -91,7 +91,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 		 */
 
 		// Setup our footer Customify options
-		add_filter( 'customify_filter_fields', array( $this, 'add_customify_options' ), 40, 1 );
+		add_filter( 'customify_filter_fields', array( $this, 'addCustomifyOptions' ), 40, 1 );
 
 		/*
 		 * ================================
@@ -100,7 +100,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 		 */
 
 		// Add classes to the body element
-		add_filter( 'body_class', array( $this, 'body_classes' ), 10, 1 );
+		add_filter( 'body_class', array( $this, 'bodyClasses' ), 10, 1 );
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 	 *
 	 * @return array
 	 */
-	public function add_customify_options( $options ) {
+	public function addCustomifyOptions( $options ) {
 		$footer_section = array(
 			// Footer
 			'footer_section' => array(
@@ -250,6 +250,12 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 		//Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_footer_customify_section_options', $footer_section, $options );
 
+		// Validate the config
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfig( $modified_config, $footer_section );
+		}
+
 		// Validate the default values
 		// When we have defined in the original config 'default' => null, this means the theme (or someone) must define the value via the filter above.
 		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
@@ -278,7 +284,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 	 *
 	 * @return array
 	 */
-	public function body_classes( $classes ) {
+	public function bodyClasses( $classes ) {
 		// Bail if we are in the admin area
 		if ( is_admin() ) {
 			return $classes;

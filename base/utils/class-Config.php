@@ -8,7 +8,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Base
- * @version     1.1.0
+ * @version     1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -490,10 +490,48 @@ class Pixelgrade_Config {
 			default:
 				break;
 		}
+
+		// If we have reached this far, just return the data
+		return $data;
 	}
 
 	/**
-	 * Go through Customizer section(s) config and test if the defaults that should have been defined externally are so.
+	 * Go through Customizer section(s) config and check if things are in order.
+	 *
+	 * @param array $modified_config The modified/filtered config.
+	 * @param array $original_config The original component config.
+	 *
+	 * @return bool
+	 */
+	public static function validateCustomizerSectionConfig( $modified_config, $original_config ) {
+		if ( ! is_array( $modified_config ) || ! is_array( $original_config ) ) {
+			return false;
+		}
+
+		$errors = false;
+		// We will assume this is an array of array of sections
+		foreach ( $modified_config as $section_key => $section ) {
+			if ( ! empty( $section['options'] ) && is_array( $section['options'] ) ) {
+				foreach ( $section['options'] as $option_key => $option ) {
+					// We will not check for default values being not null as that is done via Pixelgrade_Config::validateCustomizerSectionConfigDefaults()
+
+					// Check if the option has a type - it should have and it usually ends up without one with poorly configured arrays (like defining a default value for an option that doesn't exist)
+					if ( is_array( $option ) && ! array_key_exists( 'type', $option ) ) {
+						_doing_it_wrong( __FUNCTION__,
+							sprintf( 'There is something wrong with the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
+							' The option has no TYPE defined! Maybe it doesn\'t even exist.', null );
+
+						$errors = true;
+					}
+				}
+			}
+		}
+
+		return $errors;
+	}
+
+	/**
+	 * Go through Customizer section(s) config and test if the defaults that should have been defined externally are being defined.
 	 *
 	 * @param array $modified_config The modified/filtered config.
 	 * @param array $original_config The original component config.
