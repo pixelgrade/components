@@ -223,15 +223,3 @@ if ( ! function_exists( 'pixelgrade_custom_excerpt_length' ) ) {
 	}
 }
 add_filter( 'excerpt_length', 'pixelgrade_custom_excerpt_length', 50 );
-
-if ( ! function_exists( 'pixelgrade_pingback_header' ) ) {
-	/**
-	 * Add a pingback url auto-discovery header for singularly identifiable articles.
-	 */
-	function pixelgrade_pingback_header() {
-		if ( is_singular() && pings_open() ) {
-			echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url', 'display' ) . '">';
-		}
-	}
-}
-add_action( 'wp_head', 'pixelgrade_pingback_header' );

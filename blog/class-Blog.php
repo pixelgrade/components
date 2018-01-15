@@ -693,6 +693,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
         // Add a classes to individual posts
         add_filter( 'post_class', array( $this, 'postClasses' ), 10, 1 );
 
+        // Filter the post title to prevent it from showing under certain conditions
+	    add_filter( 'the_title', array( $this, 'hideTitle' ), 10, 2 );
+
         /*
 		 * ================================
 		 * Hook-up to properly manage our templates like header.php, footer.php, etc
@@ -810,7 +813,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
      *
      * @return array
      */
-    function postClasses( $classes = array() ) {
+    public function postClasses( $classes = array() ) {
         //we first need to know the bigger picture - the location this template part was loaded from
         $location = pixelgrade_get_location();
 
@@ -834,7 +837,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
      *
      * @return array
      */
-    function footerClasses( $classes ) {
+    public function footerClasses( $classes ) {
         //we first need to know the bigger picture - the location this template part was loaded from
         $location = pixelgrade_get_location();
 
@@ -849,9 +852,33 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
     /**
      * Add a pingback url auto-discovery header for singularly identifiable articles.
      */
-    function pingbackHeader() {
+    public function pingbackHeader() {
         if ( is_singular() && pings_open() ) {
             echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url', 'display' ) . '">';
         }
+    }
+
+	/**
+	 * Filter to hide the title on certain conditions (mainly for no-title page templates).
+	 *
+	 * @see get_the_title()
+	 *
+	 * @param string $title The current post title.
+	 * @param int $id The current post ID.
+	 *
+	 * @return string
+	 */
+	public function hideTitle( $title, $id ) {
+		// If the current page has a no-title page template, we will return an empty string thus preventing the title to be displayed
+		// @see the_title()
+		// @todo is_page_template() doesn't have a post ID parameter - maybe we should introduce the logic here and use get_page_template_slug() directly.
+		if ( ! is_admin() && is_page( $id ) &&
+		     ( is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'no-title.php' ) ||
+		       is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' ) )
+		) {
+			$title = '';
+		}
+
+		return $title;
     }
 }
