@@ -29,15 +29,18 @@ blockquote {
   &:not(:last-child) {
     @include spacing(margin-bottom, $typography-spacing);
   }
-}
 
-blockquote footer, cite {
-  @include leading-map($cite-font);
-  font-style: normal;
+  footer, cite {
+    display: block;
+    @include spacing(margin-top, $typography-spacing);
 
-  a {
-    border-bottom: 0 !important;
-    text-decoration: none !important;
+    font-style: normal;
+    @include leading-map($cite-font);
+
+    a {
+      border-bottom: 0 !important;
+      text-decoration: none !important;
+    }
   }
 }
 

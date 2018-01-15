@@ -233,22 +233,25 @@ $btn-font: () !default;
 // <a class="button">		Regular Button 		</a>
 // <a class="button arrow">	Button with Arrow 	</a>
 
-.entry-content a,
-input[type=submit] {
 
-  &.button {
-    @include btn;
+#{$content-selector} {
+  a,
+  input[type=submit] {
+
+    &.button {
+      @include btn;
+    }
+
+    &.full {
+      width: 100%;
+    }
   }
 
-  &.full {
-    width: 100%;
-  }
-}
-
-.entry-content a {
-  &.arrow {
-    @include button-directional;
-    @include button-directional--right;
+  a {
+    &.arrow {
+      @include button-directional;
+      @include button-directional--right;
+    }
   }
 }
 

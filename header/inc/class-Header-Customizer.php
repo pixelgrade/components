@@ -221,6 +221,18 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 								'unit'            => 'px',
 								'callback_filter' => 'typeline_spacing_cb',
 							),
+							array(
+								'property'        => 'margin-left',
+								'selector'        => '.c-navbar__zone--middle',
+								'unit'            => 'px',
+								'callback_filter' => 'typeline_spacing_cb',
+							),
+							array(
+								'property'        => 'margin-right',
+								'selector'        => '.c-navbar__zone--middle',
+								'unit'            => 'px',
+								'callback_filter' => 'typeline_spacing_cb',
+							),
 						),
 					),
 					'header_position' => array(
