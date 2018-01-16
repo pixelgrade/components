@@ -831,3 +831,40 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 		return false;
 	}
 }
+
+/**
+ * Replace any content tags present in the content.
+ *
+ * @param string $content
+ *
+ * @return string
+ */
+function pixelgrade_parse_content_tags( $content ) {
+	$original_content = $content;
+
+	// Allow others to alter the content before we do our work
+	$content = apply_filters( 'pixelgrade_before_parse_content_tags', $content );
+
+	// Now we will replace all the supported tags with their value
+
+	// %year%
+	$content = str_replace( '%year%', date( 'Y' ), $content );
+
+	// %site-title% or %site_title%
+	$content = str_replace( '%site-title%', get_bloginfo('name'), $content );
+	$content = str_replace( '%site_title%', get_bloginfo('name'), $content );
+
+	// This is a little sketchy because who is the user?
+	// It is not necessarily the logged in user, nor the Administrator user...
+	// We will go with the author for cases where we are in a post/page context
+	//
+	// %first_name%
+	$content = str_replace( '%first_name%', get_the_author_meta('first_name'), $content );
+	// %last_name%
+	$content = str_replace( '%last_name%', get_the_author_meta('last_name'), $content );
+	// %display_name%
+	$content = str_replace( '%display_name%', get_the_author_meta('display_name'), $content );
+
+	// Allow others to alter the content after we did our work
+	return apply_filters( 'pixelgrade_after_parse_content_tags', $content, $original_content );
+}

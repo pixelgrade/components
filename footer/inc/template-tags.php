@@ -193,11 +193,8 @@ function pixelgrade_footer_get_copyright_content() {
 	$copyright_text = pixelgrade_option( 'copyright_text', esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ) );
 
 	if ( ! empty( $copyright_text ) ) {
-		// We need to parse some tags
-		// like %year%
-		$copyright_text = str_replace( '%year%', date( 'Y' ), $copyright_text );
-		// %site-title%
-		$copyright_text = str_replace( '%site-title%', get_bloginfo('name'), $copyright_text );
+		// We need to parse any tags present
+		$copyright_text = pixelgrade_parse_content_tags( $copyright_text );
 
 		// Finally process any shortcodes that might be in there
 		return do_shortcode( $copyright_text );

@@ -969,6 +969,26 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
         }
 
 		/**
+		 * Apply filter callbacks for field values.
+		 *
+		 * @param array $instance The current widget details.
+		 *
+		 * @return array
+		 */
+		public function applyFilters( $instance ) {
+			// Make sure this is an array
+			$instance = (array) $instance;
+
+			foreach( $this->getFields() as $field_name => $field_config ) {
+				if ( isset( $field_config['filter_callback'] ) && is_callable( $field_config['filter_callback'] ) ) {
+					$instance[ $field_name ] = call_user_func( $field_config['filter_callback'], $instance[ $field_name ] );
+				}
+			}
+
+			return $instance;
+		}
+
+		/**
 		 * Sanitize the field values in the current instance.
 		 *
 		 * @param array $instance The current widget details.
@@ -1035,15 +1055,15 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             return $instance;
         }
 
-        public function sanitize_checkbox( $value, $field_name, $field_config ) {
+		public function sanitize_checkbox( $value, $field_name, $field_config ) {
             return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
         }
 
-        public function sanitize_positive_int( $value, $field_name, $field_config ) {
+		public function sanitize_positive_int( $value, $field_name, $field_config ) {
             return absint( $value );
         }
 
-        public function sanitize_text( $value, $field_name, $field_config ) {
+		public function sanitize_text( $value, $field_name, $field_config ) {
             return sanitize_text_field( $value );
         }
 
@@ -1051,7 +1071,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			return sanitize_textarea_field( $value );
 		}
 
-        public function sanitize_select( $value, $field_name, $field_config ) {
+		public function sanitize_select( $value, $field_name, $field_config ) {
             // If this select has no options, any value is NOT good
             if ( empty( $field_config['options'] ) ) {
                 return false;
@@ -1069,6 +1089,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             // All is good
             return $value;
         }
+		// @todo Should consider this
 
 		public function sanitize_select2( $value, $field_name, $field_config ) {
 //			// If this select has no options, any value is NOT good
