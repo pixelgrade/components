@@ -148,8 +148,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		                    'type'     => 'loop',
 		                    'wrappers' => array(
 			                    array(
-				                    // This class is a general marker, not for layout, for the posts container that we will use mainly for infinite scroll
-			                    	'id' => 'posts-container',
+			                    	'id' => array(
+			                    		'callback' => 'pixelgrade_get_posts_container_id',
+				                    ),
 				                    'classes'  => array(
 					                    'callback' => 'pixelgrade_get_blog_grid_class',
 				                    ),
