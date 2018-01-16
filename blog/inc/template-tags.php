@@ -38,11 +38,15 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 
 		$classes = array();
 
-		// General classes
+		/*
+		 * General classes
+		 */
 		$classes[] = 'c-gallery';
 		$classes[] = 'c-gallery--blog';
 
-		// Options dependent classes
+		/*
+		 * Options dependent classes
+		 */
 		$classes = array_merge( $classes, pixelgrade_get_blog_grid_layout_class( $location ) );
 		$classes = array_merge( $classes, pixelgrade_get_blog_grid_column_class( $location ) );
 		$classes = array_merge( $classes, pixelgrade_get_blog_grid_alignment_class( $location ) );
