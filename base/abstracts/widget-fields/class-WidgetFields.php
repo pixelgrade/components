@@ -969,7 +969,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
         }
 
 		/**
-		 * Apply filter callbacks for field values.
+		 * Apply filter callbacks for field values, if they are configured (per field).
 		 *
 		 * @param array $instance The current widget details.
 		 *
