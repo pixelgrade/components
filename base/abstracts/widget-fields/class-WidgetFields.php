@@ -367,7 +367,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$desc = $field_config['desc'];
 			}
 
-			$rows = 3;
+			$rows = 5;
 			if ( ! empty( $field_config['rows'] ) ) {
 				$rows = absint( $field_config['rows'] );
 			}
