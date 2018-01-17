@@ -115,8 +115,9 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 					continue;
 				}
 			} elseif ( is_array( $block ) ) {
-				// We have an inline block definition
-				// Get the block instance, if all is well
+				// We have an inline block definition - Get the block instance, if all is well
+				// We don't want the block instance to be automatically added to the child list ($this->blocks).
+				// We will do that at the end with all the child blocks.
 				$block_instance = $this->addBlock( $key, $block, true );
 
 				// This should never happen, but it's best to let someone know, besides ignoring it.

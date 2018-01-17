@@ -649,7 +649,10 @@ abstract class Pixelgrade_Block {
 			foreach ( $extended_block_props as $key => $extended_property ) {
 				// If the $args don't specify a certain property present in the extended block, simply copy it over
 				if ( ! isset( $args[ $key ] ) && property_exists( __CLASS__, $key ) ) {
-					$new_args[ $key ] = $extended_property;
+					// We don't want the block ID, instance number, instance count or manager copied.
+					if ( ! in_array( $key, array( 'id', 'instance_number', 'instance_count', 'manager' ) ) ) {
+						$new_args[ $key ] = $extended_property;
+					}
 				} else {
 					// The entry is present in both the supplied $args and the extended block
 					switch( $key ) {
@@ -673,10 +676,11 @@ abstract class Pixelgrade_Block {
 								break;
 							}
 
-							// If we have got an array, merge the two
+							// If we've got an array, merge the two
 							$new_args['checks'] = array_merge( Pixelgrade_Config::sanitizeChecks( $extended_property ), Pixelgrade_Config::sanitizeChecks( $args['checks'] ) );
 							break;
 						default:
+							// All other keys don't get merged
 							break;
 					}
 				}
