@@ -12,15 +12,13 @@
 
 @import "typography";
 
-@import "elements/dropcap";
-@import "elements/intro";
 @import "elements/two-column";
 
 @import "objects/btn";
 
 @import "plugins/gridable";
 
-#{$content-selector} {
+#{$content-wrapper-selector} {
     border: 0 solid transparent;
     margin: 0 auto;
     padding: 0;

@@ -14,13 +14,11 @@ p,
 ul, ol, dl,
 hr,
 table,
-.two-column {
+.twocolumn {
 
   &:not(:last-child) {
-    @include baseline(1.5, 0.75);
-    @include spacing(padding-bottom, $typography-spacing);
+    @include spacing(margin-bottom, $typography-spacing);
   }
-
 }
 
 blockquote {
@@ -75,10 +73,11 @@ h6 {
 }
 
 $wrapper: &;
+
 @at-root {
   h1, h2, h3, h4, h5, h6 {
     #{$wrapper} & + &:not(:first-child) {
-      padding-top: 0;
+      margin-top: 0;
     }
   }
 }
@@ -91,7 +90,7 @@ $typography-list-item-spacing: 0.5rem !default;
 
 li {
   ul, ol, dl {
-    @include spacing(padding-top, $typography-list-item-spacing);
+    @include spacing(margin-top, $typography-list-item-spacing);
   }
 }
 
@@ -153,6 +152,8 @@ pre {
 
 // TABLES
 $typography-table-cell-padding: 0.5rem !default;
+$typography-table-border-width: 1px !default;
+$typography-table-border-style: solid !default;
 $typography-table-border-color: $color-gray-90 !default;
 
 table {
@@ -176,7 +177,7 @@ table {
   thead,
   tbody,
   tfoot {
-    border-bottom: 1px solid $typography-table-border-color;
+    border-bottom: $typography-table-border-width $typography-table-border-style $typography-table-border-color;
   }
 
   caption,

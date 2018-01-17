@@ -64,7 +64,7 @@ $typeline-config: (
     $newValues: append( $newValues, $value, space );
   }
 
-	#{$property}: $values;
+	#{$property}: $newValues;
 
 	@each $breakpoint in $breakpoints {
 		@media only screen and (max-width: $breakpoint) {
@@ -81,7 +81,7 @@ $typeline-config: (
 	}
 }
 
-@mixin spacing($property, $value) {
+@mixin spacing($property, $value, $offset: false) {
 	@include typeline($property, $value, map-get($typeline-config, spacings));
 }
 

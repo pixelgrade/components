@@ -73,7 +73,7 @@
   }
 }
 
-@mixin leading($font-size, $line-height: false, $font-family: false, $font-weight: false, $letter-spacing: false, $text-transform: false, $spacing-top: 0, $spacing-bottom: 0, $cap-height: false) {
+@mixin leading($font-size, $line-height: false, $font-family: false, $font-weight: false, $letter-spacing: false, $text-transform: false, $spacing-top: 0, $spacing-bottom: 0) {
 
   @if $font-family != false {
     font-family: $font-family;
@@ -105,26 +105,22 @@
 
   @if $spacing-top != false {
     @if $spacing-top == 0 {
-      padding-top: 0;
+      margin-top: 0;
     } @else {
       &:not(:first-child) {
-        @include spacing(padding-top, $spacing-top);
+        @include spacing(margin-top, $spacing-top);
       }
     }
   }
 
   @if $spacing-bottom != false {
     @if $spacing-bottom == 0 {
-      padding-bottom: 0;
+      margin-bottom: 0;
     } @else {
       &:not(:last-child) {
-        @include spacing(padding-bottom, $spacing-bottom);
+        @include spacing(margin-bottom, $spacing-bottom);
       }
     }
-  }
-
-  @if $cap-height != false {
-    @include baseline($line-height, $cap-height);
   }
 }
 
@@ -139,7 +135,6 @@
     text-transform: false,
     spacing-top: false,
     spacing-bottom: false,
-    cap-height: false
   );
 
   $config: map-merge($defaults, $options);
@@ -152,9 +147,8 @@
   $text-transform: map_get($config, text-transform);
   $spacing-top: map_get($config, spacing-top);
   $spacing-bottom: map_get($config, spacing-bottom);
-  $cap-height: map_get($config, cap-height);
 
-  @include leading($font-size, $line-height, $font-family, $font-weight, $letter-spacing, $text-transform, $spacing-top, $spacing-bottom, $cap-height);
+  @include leading($font-size, $line-height, $font-family, $font-weight, $letter-spacing, $text-transform, $spacing-top, $spacing-bottom);
 }
 
 @mixin vertical-spacing( $spacing ) {

@@ -56,6 +56,7 @@ $btn-font: () !default;
 @mixin btn {
   @include button;
   @include button-box;
+  @include leading-map($btn-font);
 
   color: $btn-color;
   background-color: $btn-background;
@@ -234,7 +235,7 @@ $btn-font: () !default;
 // <a class="button arrow">	Button with Arrow 	</a>
 
 
-#{$content-selector} {
+#{$content-wrapper-selector} {
   a,
   input[type=submit] {
 

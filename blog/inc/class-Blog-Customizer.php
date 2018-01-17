@@ -635,6 +635,46 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
+					'main_content_paragraph_text_font' => array(
+						'type'        => 'font',
+						'label'       => esc_html__( 'Content Text Font', '__components_txtd' ),
+						'desc'        => '',
+						'selector'    => '.entry-content',
+						'callback'    => 'typeline_font_cb',
+
+						// This should be set by the theme
+						// Previously:
+						//	array(
+						//		'font-family'    => 'Roboto',
+						//		'font-weight'    => '300',
+						//		'font-size'      => 17,
+						//		'line-height'    => 1.52,
+						//		'letter-spacing' => 0,
+						//		'text-transform' => 'none',
+						//	)
+						'default'     => null,
+
+						// List of recommended fonts defined by theme
+						'recommended' => $recommended_body_fonts,
+
+						// Sub Fields Configuration (optional)
+						'fields'      => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ),
+							// Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false,
+							// Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
+
 					'main_content_quote_block_font'             => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Quote Block Font', '__components_txtd' ),

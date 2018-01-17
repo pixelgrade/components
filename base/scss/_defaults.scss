@@ -22,6 +22,7 @@ $transition--micro: 0.15s !default;
 $transition--macro: 0.3s !default;
 
 $content-selector: '.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote)' !default;
+$content-wrapper-selector: '.entry-content' !default;
 
 $color-white:   #FFFFFF !default;
 $color-gray-90: #e5e5e5 !default;
