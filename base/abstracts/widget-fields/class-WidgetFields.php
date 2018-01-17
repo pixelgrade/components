@@ -1055,22 +1055,98 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             return $instance;
         }
 
+		/**
+		 * Sanitize a checkbox field value.
+		 *
+		 * @param mixed $value
+		 * @param string $field_name
+		 * @param array $field_config
+		 *
+		 * @return bool
+		 */
 		public function sanitize_checkbox( $value, $field_name, $field_config ) {
             return filter_var( $value, FILTER_VALIDATE_BOOLEAN );
         }
 
+		/**
+		 * Sanitize a positive int.
+		 *
+		 * @param mixed $value
+		 * @param string $field_name
+		 * @param array $field_config
+		 *
+		 * @return int
+		 */
 		public function sanitize_positive_int( $value, $field_name, $field_config ) {
             return absint( $value );
         }
 
+		/**
+		 * Sanitize a text field.
+		 *
+		 * @param mixed $value
+		 * @param string $field_name
+		 * @param array $field_config
+		 *
+		 * @return string
+		 */
 		public function sanitize_text( $value, $field_name, $field_config ) {
             return sanitize_text_field( $value );
         }
 
+		/**
+		 * Sanitize a textarea field.
+		 *
+		 * @param mixed $value
+		 * @param string $field_name
+		 * @param array $field_config
+		 *
+		 * @return string
+		 */
 		public function sanitize_textarea( $value, $field_name, $field_config ) {
-			return sanitize_textarea_field( $value );
+			// Handle invalid UTF8 characters
+			$filtered = wp_check_invalid_utf8( $value );
+
+			if ( strpos($filtered, '<') !== false ) {
+				// Allow others to filter the allowed tags
+				$allowed_tags = apply_filters( 'pixelgrade_widget_allowed_textarea_html_tags',
+					array(
+						'a' => array(
+							'href' => array(),
+							'title' => array(),
+						),
+						'strong' => array(),
+						'b' => array(),
+						'em' => array(),
+						'u' => array(),
+						'span' => array(
+							'class' => array(),
+						),
+					), $field_name, $field_config );
+
+				$filtered = wp_kses( $filtered, $allowed_tags );
+			}
+
+			// Remove new lines by default (define 'keep_newlines' to true in the field config to skip this)
+			if ( ! isset( $field_config['keep_newlines'] ) || true !== $field_config['keep_newlines'] ) {
+				$filtered = preg_replace( '/[\r\n\t ]+/', ' ', $filtered );
+			}
+
+			// Trim the whitespaces off the beginning and the end
+			$filtered = trim( $filtered );
+
+			return $filtered;
 		}
 
+		/**
+		 * Sanitize a select field.
+		 *
+		 * @param mixed $value
+		 * @param string $field_name
+		 * @param array $field_config
+		 *
+		 * @return mixed
+		 */
 		public function sanitize_select( $value, $field_name, $field_config ) {
             // If this select has no options, any value is NOT good
             if ( empty( $field_config['options'] ) ) {
@@ -1089,8 +1165,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
             // All is good
             return $value;
         }
-		// @todo Should consider this
 
+		// @todo Should consider this
 		public function sanitize_select2( $value, $field_name, $field_config ) {
 //			// If this select has no options, any value is NOT good
 //			if ( empty( $field_config['options'] ) ) {
