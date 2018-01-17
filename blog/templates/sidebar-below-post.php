@@ -13,6 +13,6 @@ if ( ! is_active_sidebar( 'sidebar-2' ) ) {
 }
 ?>
 
-<aside class="widget-area  widget-area--below-post">
+<aside class="widget-area  widget-area--below-post" role="complementary" aria-label="<?php esc_attr_e( 'Below Post Widget Area', '__components_txtd' ); ?>">
 	<?php dynamic_sidebar( 'sidebar-2' ); ?>
 </aside><!-- .widget-area -->
