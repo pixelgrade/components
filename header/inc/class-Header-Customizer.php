@@ -488,37 +488,4 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 
 		return $classes;
 	}
-
-	/**
-	 * Check if the class has been instantiated.
-	 *
-	 * @return bool
-	 */
-	public static function isActive() {
-		$called_class_name = get_called_class();
-
-		if ( ! is_null( self::$instance_array[ $called_class_name ] ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Cloning is forbidden.
-	 *
-	 * @since 1.0.0
-	 */
-	final private function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->parent->version ) );
-	} // End __clone ()
-
-	/**
-	 * Unserializing instances of this class is forbidden.
-	 *
-	 * @since 1.0.0
-	 */
-	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->parent->version ) );
-	} // End __wakeup ()
 }

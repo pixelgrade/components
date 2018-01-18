@@ -592,21 +592,6 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	}
 
 	/**
-	 * Check if the class has been instantiated.
-	 *
-	 * @return bool
-	 */
-	public static function isActive() {
-		$called_class_name = get_called_class();
-
-		if ( ! is_null( self::$instance_array[ $called_class_name ] ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Cloning is forbidden.
 	 */
 	final private function __clone() {

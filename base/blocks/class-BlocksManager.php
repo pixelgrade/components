@@ -48,9 +48,11 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * The constructor.
 	 *
 	 * @throws Exception
-	 * @param array $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 *
+	 * @param string $version The current class version.
+	 * @param array $args Optional. Various arguments for the initialization.
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $version = '1.0.0', $args = array() ) {
 
 		// Allow others to make changes to the arguments.
 		$args = apply_filters( 'pixelgrade_blocks_manager_init_args', $args );

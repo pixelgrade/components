@@ -5,7 +5,7 @@
  * @see 	    https://pixelgrade.com
  * @author 		Pixelgrade
  * @package 	Components/Base
- * @version     1.1.0
+ * @version     1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,22 +35,37 @@ abstract class Pixelgrade_Singleton {
 	 *
 	 * @static
 	 *
-	 * @param  string $version The component's current version.
-	 * @param array $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 * @param mixed $main_arg The first argument we will pass to the constructor.
+	 * @param array $other_args Optional. Various other arguments for the initialization.
 	 *
 	 * @return object
 	 */
-	final public static function instance( $version, $args = array() ) {
+	final public static function instance( $main_arg, $other_args = null ) {
 		// We use PHP 5.3's late binding feature, but we provide a fallback function for when we are using PHP 5.2
 		// @see /base/_core-functions.php
 		// @todo Clean this up when we can use PHP 5.3+
 		$called_class_name = get_called_class();
 
 		if ( ! isset( self::$instance_array[ $called_class_name ] ) ) {
-			self::$instance_array[ $called_class_name ] = new $called_class_name( $version, $args );
+			self::$instance_array[ $called_class_name ] = new $called_class_name( $main_arg, $other_args );
 		}
 		return self::$instance_array[ $called_class_name ];
 	} // End instance ()
+
+	/**
+	 * Check if the class has been instantiated.
+	 *
+	 * @return bool
+	 */
+	public static function isActive() {
+		$called_class_name = get_called_class();
+
+		if ( ! is_null( self::$instance_array[ $called_class_name ] ) ) {
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Cloning is forbidden.
