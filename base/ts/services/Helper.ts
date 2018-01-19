@@ -30,7 +30,7 @@ export class Helper {
    *
    * @param $container
    */
-  public static unwrapImages( $container: JQuery= Helper.$body ): void {
+  public static unwrapImages( $container: JQuery = Helper.$body ): void {
 
     $container
       .find( 'p > img:first-child:last-child, p > a:first-child:last-child > img' )

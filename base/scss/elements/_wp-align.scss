@@ -1,22 +1,27 @@
-$wp-align-image-padding: 4rem !default;
-$wp-align-wrapped-image-padding: 3rem !default;
+$wp-align-image-vertical-padding: 4rem !default;
+$wp-align-image-horizontal-padding: 4rem !default;
 
-$wp-align-caption-spacing: 1rem !default;
-$wp-align-caption-font-size: 14px !default;
+$wp-align-wrapped-image-vertical-padding: 3rem !default;
+$wp-align-wrapped-image-horizontal-padding: 3rem !default;
+
+$wp-align-caption-font: (
+  font-size: 14px,
+  spacing-top: 1rem
+) !default;
 
 p {
 	.alignleft {
 		margin-left: 0 !important;
-		@include spacing(margin-top, $wp-align-wrapped-image-padding);
-		@include spacing(margin-bottom, $wp-align-wrapped-image-padding);
-		@include spacing(margin-right, $wp-align-wrapped-image-padding);
+		@include spacing(margin-top, $wp-align-wrapped-image-vertical-padding);
+		@include spacing(margin-bottom, $wp-align-wrapped-image-vertical-padding);
+		@include spacing(margin-right, $wp-align-wrapped-image-horizontal-padding);
 	}
 
 	.alignright {
 		margin-right: 0 !important;
-		@include spacing(margin-top, $wp-align-wrapped-image-padding);
-		@include spacing(margin-bottom, $wp-align-wrapped-image-padding);
-		@include spacing(margin-left, $wp-align-wrapped-image-padding);
+		@include spacing(margin-top, $wp-align-wrapped-image-vertical-padding);
+		@include spacing(margin-bottom, $wp-align-wrapped-image-vertical-padding);
+		@include spacing(margin-left, $wp-align-wrapped-image-horizontal-padding);
 	}
 
 	.aligncenter,
@@ -44,8 +49,8 @@ p {
 .alignright,
 .aligncenter,
 .alignnone {
-	@include spacing(margin-top, $wp-align-image-padding);
-	@include spacing(margin-bottom, $wp-align-image-padding);
+	@include spacing(margin-top, $wp-align-image-vertical-padding);
+	@include spacing(margin-bottom, $wp-align-image-vertical-padding);
 	max-width: 100%;
 
 	&, img {
@@ -68,7 +73,7 @@ p {
 
   // @todo test universal selector (* instead of p)
 	.entry-content & + p {
-		@include spacing(margin-top, $wp-align-image-padding);
+		@include spacing(margin-top, $wp-align-image-vertical-padding);
 	}
 }
 
@@ -78,13 +83,13 @@ p {
 }
 
 .alignleft {
-	@include spacing(margin-right, $wp-align-image-padding);
+	@include spacing(margin-right, $wp-align-image-horizontal-padding);
 	float: left;
 	clear: left;
 }
 
 .alignright {
-	@include spacing(margin-left, $wp-align-image-padding);
+	@include spacing(margin-left, $wp-align-image-horizontal-padding);
 	float: right;
 	clear: right;
 }
@@ -107,10 +112,7 @@ figure {
 }
 
 .wp-caption-text {
-  @include leading-map((
-    font-size: $wp-align-caption-font-size,
-    spacing-top: $wp-align-caption-spacing
-  ));
+  @include leading-map($wp-align-caption-font);
 }
 
 

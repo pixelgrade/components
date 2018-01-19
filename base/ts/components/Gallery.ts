@@ -6,12 +6,13 @@ import { WindowService } from '../services/window.service';
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
   private subscriptionActive: boolean = true;
+  private masonryGallerySelector: string = '.c-gallery--packed, .c-gallery--masonry';
 
   constructor( element: JQueryExtended ) {
     super();
     this.element = element;
 
-    if ( this.element.is( '.c-gallery--packed, .c-gallery--masonry' ) ) {
+    if ( this.element.is( this.masonryGallerySelector ) ) {
       this.layout();
     }
 

@@ -2,6 +2,13 @@
 // Wordpress Galleries
 // ------------------------------------------------------------
 
+$gallery-gutter-small: 1rem !default;
+$gallery-gutter-medium: 3rem !default;
+$gallery-gutter-large: 4rem !default;
+$gallery-gutter-xlarge: 8rem !default;
+
+$gallery-spacing: 3rem !default;
+
 [class*="gallery-columns-"] {
   @include grid;
 }
@@ -34,24 +41,28 @@
   }
 }
 
+.gallery {
+  @include spacing(margin-bottom, $gallery-spacing);
+}
+
 .u-gallery-spacing--small {
-  @include grid-spacing(1rem);
+  @include grid-spacing($gallery-gutter-small);
+  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-small);
 }
 
 .u-gallery-spacing--medium {
-  @include grid-spacing(3rem);
+  @include grid-spacing($gallery-gutter-medium);
+  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-medium);
 }
 
 .u-gallery-spacing--large {
-  @include grid-spacing(4rem);
+  @include grid-spacing($gallery-gutter-large);
+  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-large);
 }
 
 .u-gallery-spacing--xlarge {
-  @include grid-spacing(8rem);
-}
-
-.gallery {
-  @include spacing(padding-bottom, 3rem);
+  @include grid-spacing($gallery-gutter-xlarge);
+  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-xlarge);
 }
 
 .gallery-item {

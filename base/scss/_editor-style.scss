@@ -1,13 +1,12 @@
 @import "tools/all";
-
 @import "generic/normalize";
 @import "generic/reset";
 
 .mce-item-table {
 
-    &, td, th, caption {
-        border: 0;
-    }
+  &, td, th, caption {
+    border: 0;
+  }
 }
 
 @import "typography";
@@ -18,33 +17,36 @@
 
 @import "plugins/gridable";
 
-#{$content-wrapper-selector} {
-    border: 0 solid transparent;
-    margin: 0 auto;
-    padding: 0;
+html {
+  border: $content-sides-spacing solid transparent;
+  background: $content-background-color;
 
-    .gallery {
-        padding: 10px;
-        margin: 0;
+  .gallery {
+    padding: 10px;
+    margin: 0;
+  }
+
+  p {
+
+    .alignleft,
+    .alignright {
+      max-width: 50%;
     }
+  }
 
-    > * {
-        margin-left: auto;
-        margin-right: auto;
-    }
+  dl {
+    display: block;
+  }
+}
 
-    p {
-        margin-top: 0;
-        margin-bottom: 0;
+body {
+  padding: 0;
+  background: none;
+}
 
-        .alignleft,
-        .alignright {
-            max-width: 50%;
-        }
-    }
-
-    dl {
-        display: block;
-    }
+#{$content-selector} {
+  max-width: $content-width;
+  margin-left: auto;
+  margin-right: auto;
 }
 
