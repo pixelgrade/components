@@ -21,6 +21,16 @@
   }
 }
 
+.comment-list {
+
+  &, ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+}
+
 .comment-list,
 .comment-respond {
   @include spacing(margin-top, 3rem);
@@ -32,6 +42,7 @@
 
 .comment__wrapper {
   display: flex;
+  align-items: flex-start;
 }
 
 .comment__body {
@@ -43,10 +54,11 @@
 
 .comment__avatar {
   flex: 0 0 auto;
-  @include spacing(margin-right, 2rem);
+  border-radius: 50%;
+  overflow: hidden;
 
   .avatar {
-    border-radius: 50%;
+    display: block;
     margin: 0;
   }
 }
@@ -54,10 +66,6 @@
 .comment__metadata {
   display: inline-block;
   margin-left: 5px;
-
-  font-size: 0.8em;
-  font-weight: normal;
-  opacity: 0.5;
 
   a {
     text-decoration: none;
@@ -67,23 +75,7 @@
 
 .reply a {
   @include spacing(margin-bottom, 1rem);
-  font-size: 12px;
-  font-weight: normal;
-
   display: block;
-
-  text-transform: uppercase;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-
-  color: $color-dark;
-
-  opacity: 0.5;
-
-  &:hover {
-    opacity: 1;
-    color: initial;
-  }
 }
 
 .pingback,

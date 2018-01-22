@@ -4,13 +4,9 @@
 
 .c-author {
 	display: flex;
-
-	&, & + * {
-		@include spacing(margin-top, 8rem);
-	}
+  align-items: flex-start;
 
 	&.has-description {
-
 		@include below(small) {
 			flex-wrap: wrap;
 
@@ -27,12 +23,6 @@
 
 .c-author__name {
 	display: block;
-}
-
-.c-author__name,
-.c-author__description {
-	@include baseline();
-	@include spacing(padding-bottom, 2rem);
 }
 
 .c-author__avatar {

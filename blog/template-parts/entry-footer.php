@@ -24,21 +24,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="entry-aside  u-content-width">
-	<?php
-	// The bellow post widget area
-	pixelgrade_get_sidebar( 'below-post' );
-
-	// The author info box
-	pixelgrade_the_author_info_box();
-	?>
-</div>
-
 <footer class="entry-footer  u-content-width">
-	<div class="entry-footer__wrapper">
-		<?php pixelgrade_entry_footer(); ?>
-		<?php pixelgrade_the_post_navigation(); ?>
-	</div><!-- .entry-footer__wrapper -->
+	<?php pixelgrade_the_author_info_box(); ?>
+	<?php pixelgrade_the_post_navigation(); ?>
+	<?php pixelgrade_entry_footer(); ?>
 </footer><!-- .entry-footer -->
 
 <?php

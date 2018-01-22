@@ -30,14 +30,11 @@ a {
   }
 }
 
-#{$content-class} {
-	@import "typography";
-  @import "elements/wp-align";
-}
+@import "typography";
+@import "elements/wp-align";
 
 @import "objects/all";
 
-@import "elements/edit-link";
 @import "elements/screen-reader-text";
 @import "elements/two-column";
 @import "elements/carousel";

@@ -141,6 +141,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                     'callback' => 'pixelgrade_get_sidebar',
                 ),
 
+                // sidebar
+                'sidebar-below-post'   => array(
+                    'type'     => 'callback',
+                    'callback' => 'pixelgrade_get_sidebar',
+                    'args'     => array( 'below-post' ),
+                ),
+
                 // default loop
                 'loop'      => array(
                     'blocks' => array(
@@ -476,10 +483,25 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                 'single' => array(
 	                'extend' => 'blog/default',
 	                'blocks' => array(
-		                'blog/entry-header-single',
-		                'blog/entry-thumbnail',
-		                'blog/entry-content',
-		                'blog/entry-footer',
+		                'container' => array(
+			                'extend' => 'blog/container',
+			                'blocks' => array(
+				                'blog/entry-header-single',
+				                'blog/entry-thumbnail',
+				                'blog/entry-content',
+				                'sidebar-below-post' => array(
+				                	'blocks' => array(
+				                		'blog/sidebar-below-post',
+					                ),
+					                'wrappers' => array(
+					                	array(
+					                		'classes' => 'entry-aside u-content-width'
+						                ),
+					                ),
+				                ),
+				                'blog/entry-footer',
+			                ),
+		                ),
 		                'blog/related-posts',
 	                ),
                 ),
@@ -487,10 +509,28 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                 'page' => array(
 	                'extend' => 'blog/default',
 	                'blocks' => array(
-		                'blog/entry-header-page',
-		                'blog/entry-thumbnail',
-		                'blog/entry-content',
-		                'blog/entry-footer',
+		                'container' => array(
+			                'extend' => 'blog/container',
+			                'blocks' => array(
+				                'layout' => array(
+				                	'extend' => 'blog/layout',
+				                    'blocks' => array(
+				                    	'main' => array(
+				                    	    'extend' => 'blog/main',
+						                    'blocks' => array(
+							                    'blog/entry-header-page',
+							                    'blog/entry-thumbnail',
+							                    'blog/entry-content',
+							                    'blog/entry-footer',
+						                    ),
+					                    ),
+//					                    'side' => array(
+//					                    	'extend' => 'blog/side',
+//					                    ),
+				                    ),
+				                ),
+			                ),
+		                ),
 	                ),
                 ),
             );

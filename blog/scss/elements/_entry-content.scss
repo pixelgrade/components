@@ -25,8 +25,6 @@ $meta-tags-items-font: () !default;
 }
 
 .meta__item--button {
-  @include btn;
-  padding: 1em 1.5em 0.9em 1.6em;
 }
 
 .meta__item--text:not(:last-child):after {
@@ -89,5 +87,4 @@ $meta-tags-items-font: () !default;
 
 .entry-header .cats {
   @extend .meta;
-  @include leading-map($meta-category-items-font);
 }

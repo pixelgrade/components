@@ -9,24 +9,14 @@
 		flex: 0 0 100%;
 	}
 
-  > :not(:first-child) {
-    @include spacing(margin-top, 2rem);
-  }
-
-	> :last-child,
-	> p:last-of-type {
-		margin-bottom: 0;
-	}
+	//> :last-child,
+	//> p:last-of-type {
+	//	margin-bottom: 0;
+	//}
 
 	label {
 		display: block;
-		@extend .h6 !optional;
-		@include spacing(padding-bottom, 1rem);
 	}
-}
-
-.comment-reply-title {
-	@include spacing(padding-bottom, 1rem);
 }
 
 .comment-form-author,
@@ -62,12 +52,6 @@
 .comment-form .form-submit {
 	order: 10;
 	text-align: right;
-
-	.submit {
-		@include button;
-		@include button-directional;
-		@include button-directional--right;
-	}
 }
 
 .comment-form-subscriptions {

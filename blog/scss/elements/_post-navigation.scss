@@ -12,15 +12,15 @@
 
 		a {
 			@include button;
-			@include button-directional;
+			//@include button-directional;
 		}
 
 		.nav-previous a {
-			@include button-directional--left;
+			//@include button-directional--left;
 		}
 
 		.nav-next a {
-			@include button-directional--right;
+			//@include button-directional--right;
 		}
 	}
 
@@ -43,16 +43,8 @@ $post-navigation-spacing: 4rem !default;
 
 			position: relative;
 			flex: 1 1 18em;
-			width: 20em;
+			width: 10em;
 		}
-
-    > :not(:last-child) {
-      @include spacing(margin-bottom, $post-navigation-spacing);
-
-      @include above(lap) {
-        margin-bottom: 0;
-      }
-    }
 
 		a:after {
 			content: "";
@@ -82,109 +74,14 @@ $post-navigation-spacing: 4rem !default;
 	}
 
 	.nav-links__label {
-		@include button;
-		@include button-directional;
-		@include fontsize(12px);
-
-		padding: 0;
-		border: 0;
-
-		background-color: transparent;
-
-		font-weight: normal;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-
-		transition: all .5s cubic-bezier(.18,.61,.43,.99);
-		will-change: transform;
-
-		&:before { width: 10px; }
-		&:after { border-width: 3px; }
-
-		&:before,
-		&:after {
-			opacity: 1;
-			transition:
-				transform .5s cubic-bezier(.18,.61,.43,.99),
-				opacity .5s cubic-bezier(.18,.61,.43,.99);
-			will-change: transform, opacity;
-		}
-	}
-
-	.nav-links__label.nav-links__label {
-		margin-bottom: 0;
-	}
-
-	.nav-title[class] {
-		padding-top: 0;
-		padding-bottom: 0;
-	}
-
-	.nav-links__label--previous {
-		@include button-directional--left;
-
-		@include spacing(padding-left, 2rem);
-
-		&:after { left: 0; }
-		&:before { left: 3px; }
-	}
-
-	.nav-links__label--next {
-		@include button-directional--right;
-
-		@include spacing(padding-right, 2rem);
-
-		&:after { right: 0; }
-		&:before { right: 3px; }
-	}
-
-	.nav-previous {
-		text-align: left;
-
-		&:hover {
-			.nav-title {
-				transform: translateX(-10px);
-			}
-
-			.nav-links__label {
-				padding-left: 0;
-				transform: translateX(-10px);
-
-				&:before,
-				&:after {
-					transform: translateX(-100%) translateY(-50%);
-					opacity: 0;
-				}
-			}
-		}
+		@include leading-map(map-merge($h5, (
+      spacing-top: 0,
+      spacing-bottom: 0,
+    )));
 	}
 
 	.nav-next {
 		text-align: right;
-
-		&:hover {
-			.nav-title {
-				transform: translateX(10px);
-			}
-
-			.nav-links__label {
-				padding-right: 0;
-				transform: translateX(10px);
-
-				&:before,
-				&:after {
-					transform: translateX(100%) translateY(-50%);
-					opacity: 0;
-				}
-			}
-		}
-	}
-
-	.nav-title {
-		&:after,
-		&:before {
-			content: none;
-		}
 	}
 
 	@include below(xsmall) {

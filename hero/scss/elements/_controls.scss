@@ -41,7 +41,7 @@
 }
 
 .c-controls__cursor {
-    @extend .h4;
+    @include leading-map($h4);
     position: fixed;
     top: 0;
     left: 0;

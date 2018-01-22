@@ -5,26 +5,6 @@
   @include spacing(padding, 4rem 0);
   background-color: $theme-background-color;
 
-  .c-gallery {
-    @include spacing(margin-top, -$featured-posts-vertical-spacing);
-    @include spacing(margin-left, -$featured-posts-horizontal-spacing);
-
-    max-width: none;
-    width: auto;
-    margin-bottom: 0;
-
-    & > * {
-      @include spacing(margin-top, $featured-posts-vertical-spacing);
-      @include spacing(padding-left, $featured-posts-horizontal-spacing);
-
-      @include below(lap) {
-        width: 100%;
-
-        @include spacing(margin-top, 1.5*$featured-posts-vertical-spacing);
-      }
-    }
-  }
-
   .c-card__frame img {
     @include image-fill;
   }

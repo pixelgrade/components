@@ -100,7 +100,7 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	}
 
 	if ( ! empty( $headline ) ) {
-		$headline = '<h2 class="related-posts-title  h3">' . $headline . '</h2>';
+		$headline = '<h2 class="related-posts-title  h3"><span>' . $headline . '</span></h2>';
 	}
 
 	/**

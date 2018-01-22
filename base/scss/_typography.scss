@@ -72,13 +72,9 @@ h6 {
   color: $h6-color;
 }
 
-$wrapper: &;
-
-@at-root {
-  h1, h2, h3, h4, h5, h6 {
-    #{$wrapper} & + &:not(:first-child) {
-      margin-top: 0;
-    }
+h1, h2, h3, h4, h5, h6 {
+  & + &:not(:first-child) {
+    margin-top: 0;
   }
 }
 

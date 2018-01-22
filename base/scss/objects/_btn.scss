@@ -61,17 +61,11 @@ $btn-font: () !default;
   color: $btn-color;
   background-color: $btn-background;
 
-  box-shadow: none;
   -webkit-font-smoothing: initial;
+  text-decoration: none;
 
   transition: $btn-transition;
   transition-property: color, background-color, opacity;
-
-  &,
-  body & {
-    text-decoration: none;
-    text-shadow: none;
-  }
 
   &:hover,
   &:active,
@@ -235,24 +229,25 @@ $btn-font: () !default;
 // <a class="button">		Regular Button 		</a>
 // <a class="button arrow">	Button with Arrow 	</a>
 
+a,
+input[type=submit] {
 
-#{$content-wrapper-selector} {
-  a,
-  input[type=submit] {
+  &.button {
+    @include btn;
 
-    &.button {
-      @include btn;
-    }
-
-    &.full {
-      width: 100%;
+    .u-underlined-links & {
+      text-decoration: none;
     }
   }
 
-  a {
-    &.arrow {
-      @include button-directional;
-      @include button-directional--right;
-    }
+  &.full {
+    width: 100%;
+  }
+}
+
+a {
+  &.arrow {
+    @include button-directional;
+    @include button-directional--right;
   }
 }

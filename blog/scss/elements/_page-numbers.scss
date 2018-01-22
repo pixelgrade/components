@@ -2,8 +2,7 @@ ul.page-numbers {
   @include spacing(margin-top, 5.5rem);
   @include spacing(margin-left, -1rem);
 
-  // @todo add "h5" class to the element for better consistency
-  @extend .h5 !optional;
+  @include leading-map($h5);
 
   display: flex;
   align-items: center;
@@ -38,8 +37,7 @@ ul.page-numbers {
 
   .next,
   .prev {
-    // @todo add "h3" class to the element for better consistency
-    @extend .h3 !optional;
+    @include leading-map($h3);
 
     text-transform: none;
 

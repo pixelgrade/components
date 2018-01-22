@@ -11,7 +11,7 @@ $input-background-color: #FFFFFF !default;
 $input-padding: 13px 19px 15px !default;
 $input-focus-border-color: #383838 !default;
 $input-focus-background-color: #FFFFFF !default;
-
+$input-border-radius: 0 !default;
 $input-disabled-color: #3B3B3B !default;
 $input-disabled-background-color: #EBEBEB !default;
 
@@ -66,7 +66,7 @@ $legend-font: (
   @include leading-map($input-font);
 
   color: $input-color;
-  border-radius: 0;
+  border-radius: $input-border-radius;
 
   font-family: inherit;
   -webkit-font-smoothing: initial;
@@ -129,7 +129,7 @@ $textarea-font: () !default;
   left: 0;
 
   border: 1px solid $input-border-color;
-  border-radius: 0;
+  border-radius: $input-border-radius;
 
   width: $checkbox-width !important;
   height: $checkbox-height !important;
@@ -195,7 +195,6 @@ button[type="submit"],
 button[type="button"],
 button[type="reset"] {
   @include btn;
-  @include spacing(margin-top, $input-vertical-spacing);
 }
 
 input[type="file"] {

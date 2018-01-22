@@ -299,7 +299,7 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 		$navigation = '';
 
 		$previous = get_previous_post_link(
-			'<div class="nav-previous"><span class="nav-links__label  nav-links__label--previous">' . esc_html__( 'Previous article', '__components_txtd' ) . '</span><span class="h3 nav-title  nav-title--previous">%link</span></div>',
+			'<div class="nav-previous"><span class="nav-links__label  nav-links__label--previous">' . esc_html__( 'Previous article', '__components_txtd' ) . '</span><span class="nav-title  nav-title--previous">%link</span></div>',
 			$args['prev_text'],
 			$args['in_same_term'],
 			$args['excluded_terms'],
@@ -307,7 +307,7 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 		);
 
 		$next = get_next_post_link(
-			'<div class="nav-next"><span class="nav-links__label  nav-links__label--next">' . esc_html__( 'Next article', '__components_txtd' ) . '</span><span class="h3 nav-title  nav-title--next">%link</span></div>',
+			'<div class="nav-next"><span class="nav-links__label  nav-links__label--next">' . esc_html__( 'Next article', '__components_txtd' ) . '</span><span class="nav-title  nav-title--next">%link</span></div>',
 			$args['next_text'],
 			$args['in_same_term'],
 			$args['excluded_terms'],
@@ -405,7 +405,7 @@ if ( ! function_exists( 'pixelgrade_get_the_author_info_box' ) ) {
 			$author_details .= '<p class="c-author__description" itemprop="description">' . nl2br( $user_description ) . '</p>';
 		}
 
-		$author_details .= '<footer class="c-author__footer  h6">';
+		$author_details .= '<footer class="c-author__footer">';
 
 		$author_details .= pixelgrade_get_author_bio_links( $post->ID );
 
@@ -695,7 +695,7 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 							<?php endif; ?>
 						</header><!-- .comment-meta -->
 
-						<div class="comment__content entry-content">
+						<div class="comment__content">
 							<?php comment_text(); ?>
 						</div><!-- .comment-content -->
 
