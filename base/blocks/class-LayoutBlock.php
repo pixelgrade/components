@@ -290,14 +290,6 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				$block->maybeRender( array_merge( $blocks_trail, array( $block ) ) );
 
 				/**
-				 * Fires after a child block from a layout block is maybe rendered.
-				 *
-				 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
-				 * @param array $blocks_trail The current trail of parent blocks.
-				 */
-				do_action( 'pixelgrade_after_layout_child_block', $this, $blocks_trail );
-
-				/**
 				 * Fires after a child block from a specific layout block is maybe rendered.
 				 *
 				 * The dynamic portion of the hook name, `$this->id`, refers to
@@ -307,16 +299,16 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				 * @param array $blocks_trail The current trail of parent blocks.
 				 */
 				do_action( "pixelgrade_after_layout_{$this->id}_child_block", $this, $blocks_trail );
+
+				/**
+				 * Fires after a child block from a layout block is maybe rendered.
+				 *
+				 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+				 * @param array $blocks_trail The current trail of parent blocks.
+				 */
+				do_action( 'pixelgrade_after_layout_child_block', $this, $blocks_trail );
 			}
 		}
-
-		/**
-		 * Fires after a layout block's content has been rendered.
-		 *
-		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
-		 * @param array $blocks_trail The current trail of parent blocks.
-		 */
-		do_action( 'pixelgrade_after_render_layout_block_content', $this, $blocks_trail );
 
 		/**
 		 * Fires after a specific layout block's content has been rendered.
@@ -328,6 +320,14 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
 		do_action( "pixelgrade_after_render_layout_block_{$this->id}_content", $this, $blocks_trail );
+
+		/**
+		 * Fires after a layout block's content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_layout_block_content', $this, $blocks_trail );
 	}
 
 	/**

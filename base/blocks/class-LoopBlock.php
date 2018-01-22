@@ -100,14 +100,6 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 		endwhile; // End of the loop.
 
 		/**
-		 * Fires after a loop block's content has been rendered.
-		 *
-		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
-		 * @param array $blocks_trail The current trail of parent blocks.
-		 */
-		do_action( 'pixelgrade_after_render_loop_block_content', $this, $blocks_trail );
-
-		/**
 		 * Fires after a specific loop block's content has been rendered.
 		 *
 		 * The dynamic portion of the hook name, `$this->id`, refers to
@@ -117,5 +109,13 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
 		do_action( "pixelgrade_after_render_loop_block_{$this->id}_content", $this, $blocks_trail );
+
+		/**
+		 * Fires after a loop block's content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_loop_block_content', $this, $blocks_trail );
 	}
 }

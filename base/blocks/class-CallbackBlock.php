@@ -115,14 +115,6 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 		echo call_user_func_array( $this->callback, $args );
 
 		/**
-		 * Fires after a callback block's content has been rendered.
-		 *
-		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
-		 * @param array $blocks_trail The current trail of parent blocks.
-		 */
-		do_action( 'pixelgrade_after_render_callback_block_content', $this, $blocks_trail );
-
-		/**
 		 * Fires after a specific callback block's content has been rendered.
 		 *
 		 * The dynamic portion of the hook name, `$this->id`, refers to
@@ -132,6 +124,14 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 		 * @param array $blocks_trail The current trail of parent blocks.
 		 */
 		do_action( "pixelgrade_after_render_callback_block_{$this->id}_content", $this, $blocks_trail );
+
+		/**
+		 * Fires after a callback block's content has been rendered.
+		 *
+		 * @param Pixelgrade_Block $this Pixelgrade_Block instance.
+		 * @param array $blocks_trail The current trail of parent blocks.
+		 */
+		do_action( 'pixelgrade_after_render_callback_block_content', $this, $blocks_trail );
 	}
 
 	/**
