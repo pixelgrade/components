@@ -24,12 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="c-counter hidden">
-    <span class="c-counter__current js-counter-current"></span>
-    <span class="c-counter__separator"></span>
-    <span class="c-counter__total js-counter-total"></span>
-</div>
-
 <footer <?php pixelgrade_footer_class(); ?>>
 	<div class="o-wrapper u-container-width">
 
