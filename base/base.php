@@ -50,6 +50,7 @@ require_once PIXELGRADE_BASE_PATH . 'utils/class-Config.php';
 require_once PIXELGRADE_BASE_PATH . 'abstracts/class-Singleton.php';
 require_once PIXELGRADE_BASE_PATH . 'abstracts/class-Component.php';
 require_once PIXELGRADE_BASE_PATH . 'abstracts/widget-fields/class-WidgetFields.php';
+require_once PIXELGRADE_BASE_PATH . 'abstracts/class-FeaturedPosts-BaseWidget.php';
 
 /**
  * THIRD (REALLY THIRD)
