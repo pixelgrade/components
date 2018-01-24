@@ -5,8 +5,11 @@
   align-items: center;
 }
 
+.u-header-height {
+  min-height: $header-height;
+}
+
 .c-navbar {
-  height: $header-height;
   @extend %flex-center-all;
 
   li {
@@ -27,7 +30,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
 
   &:first-child:not(:last-child),
   &:last-child:not(:first-child) {
