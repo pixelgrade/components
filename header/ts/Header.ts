@@ -26,6 +26,18 @@ export class Header extends BaseComponent {
   constructor() {
     super();
 
+    $( '.c-navbar__zone' ).each( (i, obj) => {
+      const $obj = $(obj);
+
+      if ( $obj.find( '.c-branding' ).length ) {
+        $obj.addClass( 'c-navbar__zone--branding' );
+      }
+
+      if ( $obj.find( '.jetpack-social-navigation' ).length ) {
+        $obj.addClass( 'c-navbar__zone--social' );
+      }
+    });
+
     imagesLoaded( $( '.c-navbar .c-logo' ), () => {
 
       this.bindEvents();
@@ -99,7 +111,7 @@ export class Header extends BaseComponent {
     $branding.find( 'img' ).removeClass( 'is--loading' );
 
     // Create the mobile site header
-    const $siteHeaderMobile = $( '<div class="site-header-mobile  u-header-sides-spacing"></div>' ).appendTo( '.c-navbar' );
+    const $siteHeaderMobile = $( '<div class="site-header-mobile  u-header-sides-spacing"></div>' );
 
     // Append the social menu
     const $searchTrigger = $( '.js-mobile-search-trigger' ).clone().show();
