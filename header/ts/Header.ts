@@ -95,20 +95,18 @@ export class Header extends BaseComponent {
 
     // Append the branding
     const $branding = $( '.c-branding' );
-    const $navbarZone = $( '.c-navbar__zone--right' );
-    $branding.clone().addClass('c-branding--mobile').appendTo( '.c-navbar' );
+    $branding.clone().addClass('c-branding--mobile');
     $branding.find( 'img' ).removeClass( 'is--loading' );
 
     // Create the mobile site header
-    const $siteHeaderMobile = $( '<div class="site-header-mobile u-container-sides-spacing"></div>' )
-      .appendTo( '.c-navbar' );
+    const $siteHeaderMobile = $( '<div class="site-header-mobile  u-header-sides-spacing"></div>' ).appendTo( '.c-navbar' );
 
     // Append the social menu
-    const $socialMenu = $( '.c-navbar__zone--left .jetpack-social-navigation' ).clone();
-    const $searchTrigger = $socialMenu.find('.js-search-trigger').parent().clone();
-    $navbarZone.append( $socialMenu );
-    $navbarZone.find('.js-search-trigger' ).parent().remove();
-    $siteHeaderMobile.append( $socialMenu.empty().append( $searchTrigger ) );
+    const $searchTrigger = $( '.js-mobile-search-trigger' ).clone().show();
+
+    $siteHeaderMobile.append( $branding );
+    $siteHeaderMobile.append( $searchTrigger );
+    $siteHeaderMobile.appendTo( '.c-navbar' );
 
     // Handle sub menus:
     // Make sure there are no open menu items
