@@ -129,9 +129,6 @@ export class Header extends BaseComponent {
       $( element ).addClass( 'prevent-one' );
     } );
 
-    // Replace the label text and make it visible
-    $( '.c-navbar__label-text ' ).html( $( '.js-menu-mobile-label' ).html() ).removeClass( 'screen-reader-text' );
-
     this.isMobileHeaderInitialised = true;
   }
 
