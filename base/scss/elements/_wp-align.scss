@@ -103,6 +103,11 @@ p {
 
 
 figure {
+  // avoids overflow caused by inline max-width
+  width: 100%;
+  // alternative:
+  // max-width: 100% !important;
+
 	&.alignleft,
 	&.alignright,
 	&.aligncenter,

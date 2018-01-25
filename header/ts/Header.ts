@@ -43,6 +43,7 @@ export class Header extends BaseComponent {
       this.bindEvents();
       this.eventHandlers();
       this.updateOnResize();
+      this.toggleNavStateClass();
 
     });
   }
@@ -160,10 +161,17 @@ export class Header extends BaseComponent {
     $button.parent().addClass( hoverClass );
   }
 
-  private onMenuToggleChange( e: JQuery.Event ): void {
-    const isMenuOpen = $( e.currentTarget ).prop( 'checked' );
+  private toggleNavStateClass(): boolean {
+    const isMenuOpen = this.$menuToggle.prop( 'checked' );
+
     this.$body.toggleClass( 'nav--is-open', isMenuOpen );
-    if ( !isMenuOpen ) {
+
+    return isMenuOpen;
+  }
+
+  private onMenuToggleChange( e: JQuery.Event ): void {
+
+    if ( ! this.toggleNavStateClass() ) {
       setTimeout( () => {
         // Close the open submenus in the mobile menu overlay
         this.$mainMenuItems.removeClass( 'hover' );
