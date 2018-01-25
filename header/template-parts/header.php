@@ -68,6 +68,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div><!-- .o-wrapper  .u-container-width -->
 	</div><!-- .u-header-sides-spacing -->
 </header><!-- #masthead .site-header -->
-
-<?php get_template_part( 'template-parts/toolbar' ); ?>
-<?php get_template_part( 'template-parts/search-overlay' ); ?>
