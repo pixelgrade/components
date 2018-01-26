@@ -115,10 +115,10 @@ export class Header extends BaseComponent {
     const $siteHeaderMobile = $( '<div class="site-header-mobile  u-header-sides-spacing"></div>' );
 
     // Append the social menu
-    const $searchTrigger = $( '.js-mobile-search-trigger' ).clone().show();
+    const $searchTrigger = $( '.js-mobile-search-trigger' );
 
-    $siteHeaderMobile.append( $branding );
-    $siteHeaderMobile.append( $searchTrigger );
+    $siteHeaderMobile.append( $branding.clone() );
+    $siteHeaderMobile.append( $searchTrigger.clone().show() );
     $siteHeaderMobile.appendTo( '.c-navbar' );
 
     // Handle sub menus:
