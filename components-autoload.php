@@ -17,13 +17,30 @@
 class Pixelgrade_Components_Autoloader {
     /**
      * The file extension to use. Defaults to '.php'.
+     *
+     * @var string
      */
     protected static $file_ext = '.php';
 
 	/**
 	 * The prefix to use for the instantiation function. Defaults to 'Pixelgrade_'.
+	 *
+	 * @var string
 	 */
 	protected static $prefix = 'Pixelgrade_';
+
+	/**
+	 * The directories to exclude when autoloading components.
+	 *
+	 * These are directories used for other purposes like documentation or tests.
+	 * Do not create components with these names!
+	 *
+	 * @var array
+	 */
+	protected static $excluded_dir = array(
+		'docs',
+		'tests',
+	);
 
 	/**
 	 * Load all the components available
@@ -32,6 +49,7 @@ class Pixelgrade_Components_Autoloader {
 	 * The base component needs to be present, no matter what! We will stop the loading and issue a _doing_it_wrong() notice when stuff goes south.
 	 *
 	 * @param string $path Optional. The starting path to search for components. Defaults to the directory of the autoloader class.
+	 *
 	 * @return bool True when everything went smoothly. False on error.
 	 */
 	public static function loadComponents( $path = __DIR__ ) {
@@ -43,7 +61,7 @@ class Pixelgrade_Components_Autoloader {
 
 		$iterator = new DirectoryIterator( $path );
 		foreach ( $iterator as $file_info ) {
-			if ( $file_info->isDir() && ! $file_info->isDot() && $file_info->getFilename() != 'base' ) {
+			if ( $file_info->isDir() && ! $file_info->isDot() && $file_info->getFilename() != 'base' && ! in_array( $file_info->getFilename(), self::$excluded_dir ) ) {
 				// We have found a directory, try to load the component in it
 				self::loadComponent( $file_info->getFilename(), $path );
 			}
