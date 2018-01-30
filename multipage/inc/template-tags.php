@@ -113,7 +113,7 @@ function pixelgrade_multipage_get_parent( $post = null ) {
  *
  * @return bool
  */
-function pixelgrade_multipage_the_subpage_anchor(  $post = null ) {
+function pixelgrade_multipage_the_subpage_anchor( $post = null ) {
 	$post = get_post( $post );
 
 	//bail if we don't have a post to work with

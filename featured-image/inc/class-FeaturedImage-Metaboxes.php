@@ -81,15 +81,15 @@ class Pixelgrade_FeaturedImage_Metaboxes extends Pixelgrade_Singleton {
 			'enhanced_featured_image' => array(
 				'id'         => 'enhanced_featured_image',
 				'title'      => esc_html__( 'Thumbnail', '__components_txtd' )
-				                . ' <span class="tooltip" title="<' . 'title>' // This is split is just to not get annoyed by Theme Check
-				                . esc_html__( 'Thumbnail (Featured Image)', '__components_txtd' )
-				                . '</title><p>'
-				                . esc_html__( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', '__components_txtd' )
-				                . '</p><p>'
-				                . '<strong>' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</strong>'
-				                . '</p><p>'
-				                . esc_html__( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', '__components_txtd' )
-				                . '</p>"></span>',
+								. ' <span class="tooltip" title="<' . 'title>' // This is split is just to not get annoyed by Theme Check
+								. esc_html__( 'Thumbnail (Featured Image)', '__components_txtd' )
+								. '</title><p>'
+								. esc_html__( 'The  image will be displayed on the Portfolio Grid as a thumbnail for the current project.', '__components_txtd' )
+								. '</p><p>'
+								. '<strong>' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</strong>'
+								. '</p><p>'
+								. esc_html__( 'Set an alternative background image when the mouse hovers the thumbnail. It will fill the thumbnail area and it will be vertical and horizontal centered.', '__components_txtd' )
+								. '</p>"></span>',
 				'pages'      => $component_config['post_types'], // Post types to display this metabox on
 				'context'    => 'side',
 				'priority'   => 'low',

@@ -47,11 +47,11 @@ do_action( 'pixelgrade_before_custom_loop', $location );
 		<div class="o-wrapper u-portfolio-grid-width">
 			<div <?php pixelgrade_posts_container_id( $location ); ?> <?php pixelgrade_portfolio_class( '', $location ); ?>>
 				<?php while ( $custom_query->have_posts() ) : $custom_query->the_post();
-					pixelgrade_get_component_template_part( $custom_component_slug,$post_template_part_slug, $post_template_part_name );
+					pixelgrade_get_component_template_part( $custom_component_slug, $post_template_part_slug, $post_template_part_name );
 				endwhile;
 				wp_reset_postdata(); ?>
 			</div><!-- #posts-container -->
-			<?php pixelgrade_get_component_template_part(  Pixelgrade_Portfolio::COMPONENT_SLUG, 'posts-navigation' ); ?>
+			<?php pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'posts-navigation' ); ?>
 		</div><!-- .o-wrapper .u-portfolio-grid-width -->
 	</div><!-- .u-portfolio-sides-spacing.u-content-bottom-spacing -->
 

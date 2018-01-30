@@ -50,7 +50,7 @@ if ( $child_pages->have_posts() ) {
 		pixelgrade_set_location( $new_location, false );
 
 		// Now load the template part
-		pixelgrade_get_component_template_part( Pixelgrade_Multipage::COMPONENT_SLUG,'content', 'page' );
+		pixelgrade_get_component_template_part( Pixelgrade_Multipage::COMPONENT_SLUG, 'content', 'page' );
 	endwhile;
 
 	// Restore the previous location

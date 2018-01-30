@@ -42,7 +42,7 @@ if ( ! function_exists( 'pixelgrade_get_current_action' ) ) {
 }
 
 // This function should come from Customify, but we need to do our best to make things happen
-if ( ! function_exists( 'pixelgrade_option') ) {
+if ( ! function_exists( 'pixelgrade_option' ) ) {
 	/**
 	 * Get option from the database
 	 *
@@ -64,7 +64,7 @@ if ( ! function_exists( 'pixelgrade_option') ) {
 
 			// We need to account for the case where a option has an 'active_callback' defined in it's config
 			$options_config = $pixcustomify_plugin->get_options_configs();
-			if ( ! empty( $options_config ) && ! empty( $options_config[ $option ] ) && ! empty( $options_config[ $option ]['active_callback'] ) ) {
+			if ( ! empty( $options_config ) && ! empty( $options_config[$option] ) && ! empty( $options_config[$option]['active_callback'] ) ) {
 				// This option has an active callback
 				// We need to "question" it
 				//
@@ -72,10 +72,10 @@ if ( ! function_exists( 'pixelgrade_option') ) {
 				//
 				// Be extra careful when setting up the options to not end up in a circular logic
 				// due to callbacks that get an option and that option has a callback that gets the initial option - INFINITE LOOPS :(
-				if ( is_callable( $options_config[ $option ]['active_callback'] ) ) {
+				if ( is_callable( $options_config[$option]['active_callback'] ) ) {
 					// Now we call the function and if it returns false, this means that the control is not active
 					// Hence it's saved value doesn't matter
-					$active = call_user_func( $options_config[ $option ]['active_callback'] );
+					$active = call_user_func( $options_config[$option]['active_callback'] );
 					if ( empty( $active ) ) {
 						// If we need to force the default received; we respect that
 						if ( true === $force_default && null !== $default ) {
@@ -108,7 +108,7 @@ if ( ! function_exists( 'pixelgrade_option') ) {
 			// In case there is no Customify present and we were not supposed to force the default
 			// we want to know what the default value of the option should be according to the configuration
 			// For this we will fire the all-gathering-filter that Customify uses
-			$config = apply_filters('customify_filter_fields', array() );
+			$config = apply_filters( 'customify_filter_fields', array() );
 
 			// Next we will search for this option and see if it has a default value set ('default')
 			if ( ! empty( $config['sections'] ) && is_array( $config['sections'] ) ) {
@@ -457,7 +457,7 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 	// First we will load the files in the directory
 	foreach ( $iterator as $file_info ) {
 		if ( ! $file_info->isDir() && ! $file_info->isDot() && 'php' == strtolower( $file_info->getExtension() ) ) {
-			switch( $method ) {
+			switch ( $method ) {
 				case 'require':
 					require $file_info->getPathname();
 					break;
@@ -474,14 +474,14 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 					break;
 			}
 
-			$counter++;
+			$counter ++;
 		}
 	}
 
 	// Now we load files in subdirectories if that's the case
 	if ( $depth > 0 || -1 === $depth ) {
 		if ( $depth > 0 ) {
-			$depth--;
+			$depth --;
 		}
 		$iterator->rewind();
 		foreach ( $iterator as $file_info ) {
@@ -600,9 +600,9 @@ function pixelgrade_convert_exposure_to_frac( $shutter_speed ) {
 	if ( ( 1 / $shutter_speed ) > 1 ) {
 		$frac .= "1/";
 		if ( ( number_format( ( 1 / $shutter_speed ), 1 ) ) == 1.3
-		     or number_format( ( 1 / $shutter_speed ), 1 ) == 1.5
-		     or number_format( ( 1 / $shutter_speed ), 1 ) == 1.6
-		     or number_format( ( 1 / $shutter_speed ), 1 ) == 2.5
+			 or number_format( ( 1 / $shutter_speed ), 1 ) == 1.5
+			 or number_format( ( 1 / $shutter_speed ), 1 ) == 1.6
+			 or number_format( ( 1 / $shutter_speed ), 1 ) == 2.5
 		) {
 			$frac .= number_format( ( 1 / $shutter_speed ), 1, '.', '' );
 		} else {
@@ -678,7 +678,8 @@ function pixelgrade_attachment_url_to_postid( $url ) {
 function pixelgrade_image_src( $target, $size = null ) {
 	if ( isset( $_GET[ $target ] ) && ! empty( $target ) ) {
 		return pixelgrade_get_attachment_image_src( absint( $_GET[ $target ] ), $size );
-	} else { // empty target, or no query
+	} else {
+// empty target, or no query
 		$image = pixelgrade_option( $target );
 		if ( is_numeric( $image ) ) {
 			return pixelgrade_get_attachment_image_src( $image, $size );
@@ -860,8 +861,8 @@ function pixelgrade_parse_content_tags( $content ) {
 
 	// Since we need to dd some heavy lifting, we will only do it when necessary
 	if ( false !== strpos( $content, '%first_name%') ||
-	     false !== strpos( $content, '%last_name%') ||
-	     false !== strpos( $content, '%display_name%') ) {
+		 false !== strpos( $content, '%last_name%') ||
+		 false !== strpos( $content, '%display_name%') ) {
 		$user_id = false;
 		// We need to get the current ID in more global manner
 		$current_object_id = get_queried_object_id();
@@ -875,7 +876,7 @@ function pixelgrade_parse_content_tags( $content ) {
 
 		// If we still haven't got a user ID, we will just use the first user on the site
 		if ( empty( $user_id ) ) {
-			$blogusers = get_users( array( 'role' => 'administrator', 'number' => 1, ) );
+			$blogusers = get_users( array( 'role' => 'administrator', 'number' => 1,) );
 			if ( ! empty( $blogusers ) ) {
 				$blogusers = reset( $blogusers );
 				$user_id = $blogusers->ID;

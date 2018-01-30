@@ -97,7 +97,7 @@ class Pixelgrade_Hero extends Pixelgrade_Component {
 		add_filter( 'pixelgrade_display_entry_header', array( $this, 'preventEntryHeader' ), 10, 2 );
 
 		// Add a data attribute to the menu items depending on the background color
-		add_filter('nav_menu_link_attributes', array( $this, 'menuItemColor' ), 10, 4);
+		add_filter( 'nav_menu_link_attributes', array( $this, 'menuItemColor' ), 10, 4 );
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_hero_registered_hooks' );
@@ -146,7 +146,7 @@ class Pixelgrade_Hero extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	public function menuItemColor($atts, $item, $args, $depth) {
+	public function menuItemColor( $atts, $item, $args, $depth ) {
 		$atts['data-color'] = trim( pixelgrade_hero_get_background_color( $item->object_id ) );
 
 		return $atts;

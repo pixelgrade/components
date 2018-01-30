@@ -137,19 +137,19 @@ class Pixelgrade_Wrapper {
 	public function __construct( $args = array() ) {
 		$keys = array_keys( get_object_vars( $this ) );
 		foreach ( $keys as $key ) {
-			if ( isset( $args[ $key ] ) ) {
+			if ( isset( $args[$key] ) ) {
 				// We need to sanitize and standardize things
 				switch ( $key ) {
 					case 'classes':
 						// Split inline classes and coerce to an array
-						if ( is_string( $args[ $key ] ) ) {
-							$args[ $key ] = Pixelgrade_Value::maybeSplitByWhitespace( $args[ $key ] );
+						if ( is_string( $args[$key] ) ) {
+							$args[$key] = Pixelgrade_Value::maybeSplitByWhitespace( $args[$key] );
 						}
 						break;
 					case 'checks':
 						// Make sure the checks is an array
-						if ( is_string( $args[ $key ] ) ) {
-							$args[ $key ] = array( $args[ $key ] );
+						if ( is_string( $args[$key] ) ) {
+							$args[$key] = array( $args[$key] );
 						}
 						break;
 					default:
@@ -157,7 +157,7 @@ class Pixelgrade_Wrapper {
 				}
 
 				// Save the property
-				$this->$key = $args[ $key ];
+				$this->$key = $args[$key];
 			}
 		}
 
@@ -206,94 +206,94 @@ class Pixelgrade_Wrapper {
 		return $this->getOpeningMarkup() . PHP_EOL . $content . PHP_EOL . $this->getClosingMarkup();
 	}
 
-    /**
-     * Get the fully formed opening markup.
-     *
-     * @return string
-     */
-    protected function getOpeningMarkup() {
-        // If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-        $tag = $this->getTag();
-        if ( self::isInlineMarkup( $tag ) ) {
-            return $tag;
-        }
+	/**
+	 * Get the fully formed opening markup.
+	 *
+	 * @return string
+	 */
+	protected function getOpeningMarkup() {
+		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
+		$tag = $this->getTag();
+		if ( self::isInlineMarkup( $tag ) ) {
+			return $tag;
+		}
 
-        // We will filter the markup parts to avoid gluing empty entries
-        return '<' . implode( ' ', array_filter( array(
-                $tag,
-                self::getIdMarkup( $this->id ),
-                self::getClassMarkup( $this->classes, $this ),
-                self::getAttributesMarkup( $this->attributes, $this ),
-            ) ) ) . '>';
-    }
+		// We will filter the markup parts to avoid gluing empty entries
+		return '<' . implode( ' ', array_filter( array(
+				$tag,
+				self::getIdMarkup( $this->id ),
+				self::getClassMarkup( $this->classes, $this ),
+				self::getAttributesMarkup( $this->attributes, $this ),
+			) ) ) . '>';
+	}
 
-    /**
-     * Get the fully formed closing markup.
-     *
-     * @return string
-     */
-    protected function getClosingMarkup() {
-        // If the opening tag starts with a '<' character then we will use $end_tag - no
-        $tag = $this->getTag();
-        if ( self::isInlineMarkup( $tag ) ) {
-            return $this->getEndTag();
-        }
+	/**
+	 * Get the fully formed closing markup.
+	 *
+	 * @return string
+	 */
+	protected function getClosingMarkup() {
+		// If the opening tag starts with a '<' character then we will use $end_tag - no
+		$tag = $this->getTag();
+		if ( self::isInlineMarkup( $tag ) ) {
+			return $this->getEndTag();
+		}
 
-        return "</{$tag}>";
-    }
+		return "</{$tag}>";
+	}
 
-    /**
-     * Check if a tag has inline markup (starts with <)
-     *
-     * @param string $tag
-     *
-     * @return bool
-     */
-    public static function isInlineMarkup( $tag ) {
-        // If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-        if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
-            return true;
-        }
+	/**
+	 * Check if a tag has inline markup (starts with <)
+	 *
+	 * @param string $tag
+	 *
+	 * @return bool
+	 */
+	public static function isInlineMarkup( $tag ) {
+		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
+		if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Get the opening tag or the fully formed opening markup if it's an inline tag.
-     *
-     * @return string
-     */
-    protected function getTag() {
-        $tag = $this->tag;
+	/**
+	 * Get the opening tag or the fully formed opening markup if it's an inline tag.
+	 *
+	 * @return string
+	 */
+	protected function getTag() {
+		$tag = $this->tag;
 
-        $tag = self::maybeProcessCallback( $tag );
+		$tag = self::maybeProcessCallback( $tag );
 
-        if ( ! empty( $tag ) && is_string( $tag ) ) {
-            $tag = tag_escape( $tag );
-        } else {
-            // Something is not right with the tag.
-            // Use the default tag
-            $tag = self::$default_tag;
-        }
+		if ( ! empty( $tag ) && is_string( $tag ) ) {
+			$tag = tag_escape( $tag );
+		} else {
+			// Something is not right with the tag.
+			// Use the default tag
+			$tag = self::$default_tag;
+		}
 
-        return $tag;
-    }
+		return $tag;
+	}
 
-    /**
-     * Get the fully formed closing tag (aka inline tag).
-     *
-     * @return string
-     */
-    protected function getEndTag() {
-        $tag = self::maybeProcessCallback( $this->end_tag );
+	/**
+	 * Get the fully formed closing tag (aka inline tag).
+	 *
+	 * @return string
+	 */
+	protected function getEndTag() {
+		$tag = self::maybeProcessCallback( $this->end_tag );
 
-        // Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
-        if ( empty( $tag ) ) {
-            $tag = '</' . self::$default_tag . '>';
-        }
+		// Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
+		if ( empty( $tag ) ) {
+			$tag = '</' . self::$default_tag . '>';
+		}
 
-        return $tag;
-    }
+		return $tag;
+	}
 
 	/**
 	 * Given an HTML id definition, return the full id attribute (ie. 'id="..."').
@@ -502,11 +502,11 @@ class Pixelgrade_Wrapper {
 	 *
 	 * @return bool
 	 */
-	protected function maybeProcessMasterCallback(){
+	protected function maybeProcessMasterCallback() {
 		if ( ! empty( $this->master_callback )
-		     && is_array( $this->master_callback )
-		     && ! empty( $this->master_callback['callback'] )
-		     && is_callable( $this->master_callback['callback'] ) ) {
+			 && is_array( $this->master_callback )
+			 && ! empty( $this->master_callback['callback'] )
+			 && is_callable( $this->master_callback['callback'] ) ) {
 
 			$args = array();
 			if ( ! empty( $this->master_callback['args'] ) ) {
@@ -531,8 +531,8 @@ class Pixelgrade_Wrapper {
 
 			$keys = array_keys( get_object_vars( $this ) );
 			foreach ( $keys as $key ) {
-				if ( isset( $data[ $key ] ) ) {
-					$this->$key = $data[ $key ];
+				if ( isset( $data[$key] ) ) {
+					$this->$key = $data[$key];
 				}
 			}
 		}

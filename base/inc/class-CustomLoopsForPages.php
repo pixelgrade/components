@@ -68,7 +68,7 @@ class Pixelgrade_CustomLoopsForPages {
 	 * @access protected
 	 * @since 1.0.0
 	 */
-	protected $injector_query = NULL;
+	protected $injector_query = null;
 
 	/**
 	 * @var string $validated_page_slug
@@ -147,7 +147,7 @@ class Pixelgrade_CustomLoopsForPages {
 		} else {
 			$currentPage = 1;
 		}
-		$default           = array(
+		$default = array(
 			'suppress_filters'    => true,
 			'ignore_sticky_posts' => 1,
 			'paged'               => $currentPage,
@@ -173,15 +173,15 @@ class Pixelgrade_CustomLoopsForPages {
 		$this->validatePageSlug();
 
 		if ( ! is_admin() // Only target the front end
-		     && $q->is_main_query() // Only target the main query
+			 && $q->is_main_query() // Only target the main query
 		) {
-			$page_ID = $q->get('page_id');
+			$page_ID = $q->get( 'page_id' );
 			if ( empty( $page_ID ) ) {
 				$page_ID = $q->queried_object_id;
 			}
 
 			if ( ! empty( $page_ID )
-			     && $this->validated_page_slug == get_page_template_slug( $page_ID ) // Only target our specified page
+				 && $this->validated_page_slug == get_page_template_slug( $page_ID ) // Only target our specified page
 			) {
 				// Remove the pre_get_posts action to avoid unexpected issues
 				remove_action( current_action(), array( $this, __METHOD__ ) );
@@ -204,7 +204,7 @@ class Pixelgrade_CustomLoopsForPages {
 				 *   of the $max_num_pages property which we need for pagination
 				 */
 				if (    $this->merged_args['posts_per_page']
-				        && true !== $this->merged_args['nopaging']
+						&& true !== $this->merged_args['nopaging']
 				) {
 					$q->set( 'posts_per_page', $this->merged_args['posts_per_page'] );
 				} elseif ( true === $this->merged_args['nopaging'] ) {
@@ -220,10 +220,10 @@ class Pixelgrade_CustomLoopsForPages {
 				global $paged;
 
 				$paged = 1;
-				if( get_query_var( 'paged' ) ) {
+				if ( get_query_var( 'paged' ) ) {
 					$paged = get_query_var( 'paged' );
 				}
-				if( get_query_var( 'page' ) ) {
+				if ( get_query_var( 'page' ) ) {
 					$paged = get_query_var( 'page' );
 				}
 
@@ -240,7 +240,7 @@ class Pixelgrade_CustomLoopsForPages {
 				 * post injection
 				 */
 				add_action( 'loop_start', array( $this, 'loopStart' ), 1 );
-				add_action( 'loop_end', array( $this, 'loopEnd' ),   1 );
+				add_action( 'loop_end', array( $this, 'loopEnd' ), 1 );
 
 				//we hook early to make sure that everybody has a title to work with
 				add_filter( 'document_title_parts', array( $this, 'fixTheTitle' ), 0 );
@@ -295,8 +295,9 @@ class Pixelgrade_CustomLoopsForPages {
 	 * @return int $found_posts
 	 */
 	public function foundPosts( $found_posts, $q ) {
-		if ( ! $q->is_main_query() )
-			return $found_posts;
+		if ( ! $q->is_main_query() ) {
+					return $found_posts;
+		}
 
 		remove_filter( current_filter(), array( $this, __METHOD__ ) );
 
@@ -325,8 +326,8 @@ class Pixelgrade_CustomLoopsForPages {
 	public function postLimits( $limits ) {
 		$posts_per_page = (int) $this->merged_args['posts_per_page'];
 		if (    $posts_per_page
-		        && -1   !=  $posts_per_page // Make sure that posts_per_page is not set to return all posts
-		        && true !== $this->merged_args['nopaging'] // Make sure that nopaging is not set to true
+				&& -1   !=  $posts_per_page // Make sure that posts_per_page is not set to return all posts
+				&& true !== $this->merged_args['nopaging'] // Make sure that nopaging is not set to true
 		) {
 			$limits = "LIMIT 0, $posts_per_page"; // Leave offset at 0 to avoid 404 on paged pages
 		}
@@ -349,12 +350,14 @@ class Pixelgrade_CustomLoopsForPages {
 		 * because failing to do so sets our div in the custom query output as well
 		 */
 
-		if ( ! $q->is_main_query() )
-			return;
+		if ( ! $q->is_main_query() ) {
+					return;
+		}
 
 		//Make sure that $this->injector_query actually has a value and is not NULL
-		if ( ! $this->injector_query instanceof WP_Query )
-			return;
+		if ( ! $this->injector_query instanceof WP_Query ) {
+					return;
+		}
 
 		// Setup a counter as wee need to run the custom query only once
 		static $count = 0;
@@ -390,7 +393,7 @@ class Pixelgrade_CustomLoopsForPages {
 						if ( ! empty( $this->loop_template_part['name'] ) ) {
 							$loop_template_part_name = trim( $this->loop_template_part['name'] );
 						}
-					}  else {
+					} else {
 						$loop_template_part_slug = (string) trim( $this->loop_template_part );
 					}
 					$loop_template = pixelgrade_locate_component_template_part( $this->component_slug, $loop_template_part_slug, $loop_template_part_name );
@@ -499,7 +502,7 @@ class Pixelgrade_CustomLoopsForPages {
 		}
 
 		// Update our static counter
-		$count++;
+		$count ++;
 	}
 
 	/**
@@ -516,16 +519,18 @@ class Pixelgrade_CustomLoopsForPages {
 		 * and inside a main query check, we need to redo the check here as well
 		 * because failing to do so sets our custom query into an infinite loop
 		 */
-		if ( ! $q->is_main_query() )
-			return;
+		if ( ! $q->is_main_query() ) {
+					return;
+		}
 	}
 
 	/**
 	 * Various filters for making custom page loops work with Jetpack Infinite Scroll
 	 */
 	public function jetpackInfiniteScrollHooks() {
-		if ( ! $this->injector_query instanceof WP_Query )
-			return;
+		if ( ! $this->injector_query instanceof WP_Query ) {
+					return;
+		}
 
 		add_filter( 'infinite_scroll_query_object', array( $this, 'jetpackForceInjectorQuery' ), 10, 1 );
 		add_filter( 'infinite_scroll_settings', array( $this, 'jetpackFixInfiniteScrollSettings' ), 10, 1 );
@@ -539,13 +544,13 @@ class Pixelgrade_CustomLoopsForPages {
 	 * @return WP_Query
 	 */
 	public function jetpackForceInjectorQuery( $query ) {
-		$page_ID = $query->get('page_id');
+		$page_ID = $query->get( 'page_id' );
 		if ( empty( $page_ID ) ) {
 			$page_ID = $query->queried_object_id;
 		}
 
 		if ( ! empty( $page_ID )
-		     && $this->validated_page_slug == get_page_template_slug( $page_ID ) // Only target our specified page
+			 && $this->validated_page_slug == get_page_template_slug( $page_ID ) // Only target our specified page
 		) {
 			return $this->injector_query;
 		}

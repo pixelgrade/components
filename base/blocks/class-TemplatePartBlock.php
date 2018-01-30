@@ -154,11 +154,11 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 				} elseif ( is_array( $args['templates'] ) && is_array( $extended_block_props['templates'] ) ) {
 					// First we handle templates with defined key (named templates)
 					foreach ( $extended_block_props['templates'] as $key => $template ) {
-						if ( ! is_numeric( $key ) && isset( $args['templates'][ $key ] ) ) {
+						if ( ! is_numeric( $key ) && isset( $args['templates'][$key] ) ) {
 							// We overwrite the templates in the extended props and remove named template from the $args
 							// so it retains the order established by the extended block
-							$extended_block_props['templates'][ $key ] = $args['templates'][ $key ];
-							unset( $args['templates'][ $key ] );
+							$extended_block_props['templates'][$key] = $args['templates'][$key];
+							unset( $args['templates'][$key] );
 						}
 					}
 					// We want the child block anonymous templates to come before the ones in the extended block

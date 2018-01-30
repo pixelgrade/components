@@ -85,7 +85,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	public function adminEnqueueScripts( $hook ) {
 		/* enqueue the styles and scripts specific to heroes */
 		if ( in_array( $hook, array( 'post.php', 'post-new.php', 'page-new.php', 'page.php' ) ) ) {
-			wp_enqueue_style( 'pixelgrade_hero-admin-metaboxes-style');
+			wp_enqueue_style( 'pixelgrade_hero-admin-metaboxes-style' );
 			wp_enqueue_script( 'pixelgrade_hero-admin-metaboxes-scripts' );
 			add_editor_style( array( pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Hero::COMPONENT_SLUG ) . 'css/editor-style.css' ) ) );
 
@@ -117,7 +117,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 				'show_names' => false, // Show field names on the left
 				'show_on'    => array(
 					'key'   => 'page-template',
-					'value' => array( 'default', ), //the page templates to show on ie. 'page-templates/page-builder.php'
+					'value' => array( 'default',), //the page templates to show on ie. 'page-templates/page-builder.php'
 				),
 				'show_on_page_for_posts' => true, //this is a special entry of our's to force things
 				'fields'     => array(
@@ -156,17 +156,17 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			'hero_area_content__page'     => array(
 				'id'         => 'hero_area_content__page',
 				'title'      => '&#x1f535; ' . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
-				                . ' <span class="tooltip" title="<' . 'title>'
-				                . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
-				                . '</title><p>'
-				                . wp_kses( __( 'Use this section to add a <strong>Title</strong> or a summary for this page. Get creative and add different elements like buttons, logos or other headings.', '__components_txtd' ), wp_kses_allowed_html() )
-				                . '</p><p>'
-				                . wp_kses( __( 'You can insert a title using a <strong>Heading 1</strong> element, either on the Hero Area or using a <b>Text Block</b> within the above content area.', '__components_txtd' ), wp_kses_allowed_html() )
-				                . '</p><p>'
-				                . wp_kses( __( '* Note that the <strong>Page Title</strong> written above will <u>not</u> be included automatically on the page, so you have complete freedom in choosing where you place or how it looks.', '__components_txtd' ), wp_kses_allowed_html() )
-				                . "</p><p><a href='#'>"
-				                . esc_html__( 'Learn more about Managing the Hero Area', '__components_txtd' )
-				                . '</a></p>"></span>',
+								. ' <span class="tooltip" title="<' . 'title>'
+								. esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
+								. '</title><p>'
+								. wp_kses( __( 'Use this section to add a <strong>Title</strong> or a summary for this page. Get creative and add different elements like buttons, logos or other headings.', '__components_txtd' ), wp_kses_allowed_html() )
+								. '</p><p>'
+								. wp_kses( __( 'You can insert a title using a <strong>Heading 1</strong> element, either on the Hero Area or using a <b>Text Block</b> within the above content area.', '__components_txtd' ), wp_kses_allowed_html() )
+								. '</p><p>'
+								. wp_kses( __( '* Note that the <strong>Page Title</strong> written above will <u>not</u> be included automatically on the page, so you have complete freedom in choosing where you place or how it looks.', '__components_txtd' ), wp_kses_allowed_html() )
+								. "</p><p><a href='#'>"
+								. esc_html__( 'Learn more about Managing the Hero Area', '__components_txtd' )
+								. '</a></p>"></span>',
 				'pages'      => array( 'page', ), // Post type
 				'context'    => 'normal',
 				'priority'   => 'high',
@@ -484,7 +484,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		}
 
 		// Determine the meta_keys that we should look at
-		$target_meta_keys = apply_filters( 'pixelgrade_hero_target_meta_keys_to_map_featured_image', array( '_hero_background_gallery', ) );
+		$target_meta_keys = apply_filters( 'pixelgrade_hero_target_meta_keys_to_map_featured_image', array( '_hero_background_gallery',) );
 
 		if ( ! empty( $target_meta_keys ) && is_array( $target_meta_keys ) && in_array( $meta_key, $target_meta_keys ) ) {
 			// We now need to extract an image from the $meta_value

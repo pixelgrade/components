@@ -47,7 +47,7 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 
 		$output .= $selector . ' {' . PHP_EOL .
 		           'padding-top: ' . $padding . ';' . PHP_EOL .
-		           '}'. PHP_EOL;
+		           '}' . PHP_EOL;
 
 		return $output;
 	}
@@ -197,7 +197,7 @@ function pixelgrade_blog_grid_vertical_spacing_cb( $value, $selector, $property,
 			$newValue = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+				'@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
 				'.c-gallery--blog {' . PHP_EOL .
 				'margin-top: calc(-' . $newValue . 'px);' . PHP_EOL .
 				'}' . PHP_EOL .
@@ -238,7 +238,7 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( $value, $selector, $propert
 			$newValue = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+				'@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
 				'.c-gallery--blog {' . PHP_EOL .
 				'margin-left: -' . $newValue . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .

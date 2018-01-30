@@ -213,9 +213,9 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 				// Make sure that we ignore bogus menu locations
 				if ( empty( $settings['bogus'] ) ) {
 					if ( ! empty( $settings['title'] ) ) {
-						$menus[ $id ] = $settings['title'];
+						$menus[$id] = $settings['title'];
 					} else {
-						$menus[ $id ] = $id;
+						$menus[$id] = $id;
 					}
 				}
 			}

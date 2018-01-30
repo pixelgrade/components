@@ -83,7 +83,7 @@ function pixelgrade_remove_main_category_from_list( $categories, $post_id ) {
 
 		foreach ( $categories as $key => $category ) {
 			if ( $main_category->term_id == $category->term_id ) {
-				unset( $categories[ $key ] );
+				unset( $categories[$key] );
 			}
 		}
 	}
@@ -109,10 +109,10 @@ function _pixelgrade_special_category_order( $a, $b ) {
 			return 0;
 		}
 
-		return ( $a->count > $b->count ) ? -1 : 1;
+		return ( $a->count > $b->count ) ? - 1 : 1;
 	}
 
-	return ( $a->parent < $b->parent ) ? -1 : 1;
+	return ( $a->parent < $b->parent ) ? - 1 : 1;
 }
 
 if ( ! function_exists( 'pixelgrade_search_form' ) ) :
@@ -127,7 +127,7 @@ if ( ! function_exists( 'pixelgrade_search_form' ) ) :
 		$form = '<form role="search" method="get" class="search-form" action="' . esc_attr( home_url( '/' ) ) . '" >
 		<label class="screen-reader-text">' . esc_html__( 'Search for:', '__components_txtd' ) . '</label>
 		<input type="text" placeholder="' . esc_attr__( 'Search here', '__components_txtd' ) . '" value="' . esc_attr( get_search_query() ) . '" name="s" class="search-field" />
-		<button type="submit" class="search-submit"><span>'. esc_html__( 'Search', '__components_txtd' ) .'</span></button>
+		<button type="submit" class="search-submit"><span>'. esc_html__( 'Search', '__components_txtd' ) . '</span></button>
 		</form>';
 
 		return $form;
@@ -208,7 +208,7 @@ if ( ! function_exists( 'pixelgrade_change_excerpt_more' ) ) {
 		return '..';
 	}
 }
-add_filter('excerpt_more', 'pixelgrade_change_excerpt_more', 10, 1 );
+add_filter( 'excerpt_more', 'pixelgrade_change_excerpt_more', 10, 1 );
 
 if ( ! function_exists( 'pixelgrade_custom_excerpt_length' ) ) {
 	/**

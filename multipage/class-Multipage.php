@@ -86,7 +86,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 		add_filter( 'pixelgrade_hero_show_scroll_down_arrow', array( $this, 'preventHeroScrollDownArrow' ), 10, 3 );
 
 		// We will only play with redirects and permalinks if the permalinks are active
-		if ( get_option('permalink_structure') ) {
+		if ( get_option( 'permalink_structure' ) ) {
 			// Redirect subpages to the main page with hashtag at the end (blog.com/main-page/child-page -> blog.com/main-page/#child-page
 			add_action( 'template_redirect', array( $this, 'redirectSubpages' ) );
 
@@ -219,7 +219,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 			$post = get_post( $post_id );
 
 			// Remove the trailing slash
-			$permalink = untrailingslashit( $permalink);
+			$permalink = untrailingslashit( $permalink );
 
 			//replace the subpages name with #name
 			$permalink = str_replace( '/' . $post->post_name, '/#' . $post->post_name, $permalink );
@@ -242,7 +242,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	public function modifySamplePermalink( $permalink, $post_id, $title, $name, $post ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			// Remove the trailing slash
-			$permalink[0] = untrailingslashit( $permalink[0]);
+			$permalink[0] = untrailingslashit( $permalink[0] );
 
 			// Replace the last %pagename% with #%pagename%
 			$permalink[0] = str_replace( '%pagename%', '#%pagename%', $permalink[0] );

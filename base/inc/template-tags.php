@@ -151,14 +151,14 @@ function pixelgrade_get_css_class( $class = '', $location = '', $prefix = '', $s
 		// If we have a prefix then we need to add it to every class
 		if ( ! empty( $prefix ) && is_string( $prefix ) ) {
 			foreach ( $class as $key => $value ) {
-				$class[ $key ] = $prefix . $value;
+				$class[$key] = $prefix . $value;
 			}
 		}
 
 		// If we have a suffix then we need to add it to every class
 		if ( ! empty( $suffix ) && is_string( $suffix ) ) {
 			foreach ( $class as $key => $value ) {
-				$class[ $key ] = $value . $suffix;
+				$class[$key] = $value . $suffix;
 			}
 		}
 
@@ -271,8 +271,8 @@ if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
 
 			// Returns false if the archive option or singular option is unticked.
 			if ( ( true === $opts['archive'] && ( is_home() || is_archive() || is_search() ) && ! $opts['archive-option'] )
-			     || ( true === $opts['post'] && is_single() && ! $opts['post-option'] )
-			     || ( true === $opts['page'] && is_singular() && is_page() && ! $opts['page-option'] )
+				 || ( true === $opts['post'] && is_single() && ! $opts['post-option'] )
+				 || ( true === $opts['page'] && is_singular() && is_page() && ! $opts['page-option'] )
 			) {
 				return false;
 			}
@@ -356,7 +356,7 @@ if ( ! function_exists( 'pixelgrade_get_rendered_content' ) ) :
 	 * @param bool   $strip_teaser   Optional. Strip teaser content before the more text. Default is false.
 	 * @return string
 	 */
-	function pixelgrade_get_rendered_content( $more_link_text = null, $strip_teaser = false) {
+	function pixelgrade_get_rendered_content( $more_link_text = null, $strip_teaser = false ) {
 		$content = get_the_content( $more_link_text, $strip_teaser );
 
 		/**

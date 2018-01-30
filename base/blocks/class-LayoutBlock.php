@@ -102,7 +102,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 					if ( $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id ) ) ) {
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id );
 					} elseif ( $parent instanceof Pixelgrade_Block
-					           && $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
+							   && $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
 
 						// We try and see if there is a block in the parent that matches the block ID
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id );
@@ -185,7 +185,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 
 		// Add the block instance to the child blocks list
 		if ( false !== $block && false === $skip_add_child ) {
-			$this->blocks[ $block->id ] = $block;
+			$this->blocks[$block->id] = $block;
 		}
 
 		return $block;
@@ -200,7 +200,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	public function getBlock( $id ) {
 		$key = Pixelgrade_Array::objArraySearch( $this->blocks, 'id', $id );
 		if ( false !== $key ) {
-			return $this->blocks[ $key ];
+			return $this->blocks[$key];
 		}
 
 		return false;
@@ -216,7 +216,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	public function removeBlock( $id ) {
 		$key = Pixelgrade_Array::objArraySearch( $this->blocks, 'id', $id );
 		if ( false !== $key ) {
-			unset( $this->blocks[ $key ] );
+			unset( $this->blocks[$key] );
 			return true;
 		}
 
@@ -363,7 +363,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 								// We assume we are overwriting the block in the extended block
 								// Thus we need to register a different block, not reregistering a block with the same ID (others might be using the original)
 								// So we remove the block from the extended blocks list, leaving our current one to live
-								unset( $extended_block_props['blocks'][ $namespaced_block_id ] );
+								unset( $extended_block_props['blocks'][$namespaced_block_id] );
 							}
 						}
 					}
