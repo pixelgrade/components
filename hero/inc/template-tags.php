@@ -143,7 +143,7 @@ function pixelgrade_get_hero_slider_class( $class = '', $location = '', $post = 
  * @param string|array $attribute One or more attributes to add to the attributes list.
  * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
- * @return bool
+ * @return false|null
  */
 function pixelgrade_hero_slider_attributes( $attribute = '', $post = null ) {
 	// We might be on a page set as a page for posts and the $post will be the first post in the loop

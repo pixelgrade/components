@@ -86,7 +86,7 @@ function pixelgrade_the_header( $location = '' ) {
 /**
  * Get the markup for a certain nav menu location.
  *
- * @param array $config An array with options for the wp_nav_menu() function.
+ * @param array $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
  *
  * @return false|object
