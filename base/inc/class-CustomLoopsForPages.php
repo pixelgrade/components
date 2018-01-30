@@ -203,14 +203,14 @@ class Pixelgrade_CustomLoopsForPages {
 				 *   We need the LIMIT clause because an empty limit clause inhibits the calculation
 				 *   of the $max_num_pages property which we need for pagination
 				 */
-				if (    $this->merged_args['posts_per_page']
+				if ( $this->merged_args['posts_per_page']
 						&& true !== $this->merged_args['nopaging']
 				) {
 					$q->set( 'posts_per_page', $this->merged_args['posts_per_page'] );
 				} elseif ( true === $this->merged_args['nopaging'] ) {
 					$q->set( 'posts_per_page', -1 );
 				}
-				$current_page = $q->get('page');
+				$current_page = $q->get( 'page' );
 				//since this is a page, the pagination is put into 'page', not 'paged' like in a normal loop
 				if ( ! empty( $current_page ) ) {
 					$q->set( 'paged', $current_page );
@@ -325,8 +325,8 @@ class Pixelgrade_CustomLoopsForPages {
 	 */
 	public function postLimits( $limits ) {
 		$posts_per_page = (int) $this->merged_args['posts_per_page'];
-		if (    $posts_per_page
-				&& -1   !=  $posts_per_page // Make sure that posts_per_page is not set to return all posts
+		if ( $posts_per_page
+				&& - 1 != $posts_per_page // Make sure that posts_per_page is not set to return all posts
 				&& true !== $this->merged_args['nopaging'] // Make sure that nopaging is not set to true
 		) {
 			$limits = "LIMIT 0, $posts_per_page"; // Leave offset at 0 to avoid 404 on paged pages

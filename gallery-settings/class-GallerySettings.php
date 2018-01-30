@@ -219,7 +219,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 */
 	function postGallery( $output, $attr, $gallery_instance = 0 ) {
 		// save the current instance and it's attributes
-		self::$gallery_instance                = $gallery_instance;
+		self::$gallery_instance = $gallery_instance;
 		self::$atts[self::$gallery_instance] = $attr;
 
 		return $output;
