@@ -38,6 +38,7 @@ class Pixelgrade_Components_Autoloader {
 	 * @var array
 	 */
 	protected static $excluded_dir = array(
+		'bin',
 		'docs',
 		'tests',
 	);
