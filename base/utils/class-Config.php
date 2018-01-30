@@ -285,35 +285,35 @@ class Pixelgrade_Config {
 		$checks = self::sanitizeChecks( $checks );
 
 		// Determine the relation we will use between the checks
-        $relation = 'AND';
-        if ( isset( $checks['relation'] ) ) {
-            if ( strtoupper( $checks['relation'] ) == 'OR' ) {
-                $relation = 'OR';
-            }
+		$relation = 'AND';
+		if ( isset( $checks['relation'] ) ) {
+			if ( strtoupper( $checks['relation'] ) == 'OR' ) {
+				$relation = 'OR';
+			}
 
-            // Cleanup as this entry may mess things up from here on out.
-            unset( $checks['relation'] );
-        }
+			// Cleanup as this entry may mess things up from here on out.
+			unset( $checks['relation'] );
+		}
 
-        // Process the checks, top to bottom
-        // In case of an AND relation, we stop at the first that fails (meaning returns something resembling false).
-        // In case of an OR relation, only one check needs to pass.
-        foreach ( $checks as $check ) {
-            $response = self::evaluateCheck( $check );
-            if ( empty( $response ) && 'AND' == $relation ) {
-                // One check function failed in an AND relation, return
-                return false;
-            } else if ( ! empty( $response ) && 'OR' == $relation ) {
-                // A check has passed in an OR relation, all is good
-                return true;
-            }
-        }
+		// Process the checks, top to bottom
+		// In case of an AND relation, we stop at the first that fails (meaning returns something resembling false).
+		// In case of an OR relation, only one check needs to pass.
+		foreach ( $checks as $check ) {
+			$response = self::evaluateCheck( $check );
+			if ( empty( $response ) && 'AND' == $relation ) {
+				// One check function failed in an AND relation, return
+				return false;
+			} else if ( ! empty( $response ) && 'OR' == $relation ) {
+				// A check has passed in an OR relation, all is good
+				return true;
+			}
+		}
 
-        // If we are in a OR relation, then at least one check should have passed
-        // If we have reached this far, we failed
+		// If we are in a OR relation, then at least one check should have passed
+		// If we have reached this far, we failed
 		if ( 'OR' === $relation ) {
-            return false;
-        }
+			return false;
+		}
 
 		return true;
 	}

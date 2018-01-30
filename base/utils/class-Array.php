@@ -275,12 +275,12 @@ class Pixelgrade_Array {
 	 * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
 	 * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
 	 */
-	public static function array_merge_recursive_distinct ( array &$array1, array &$array2 ) {
+	public static function array_merge_recursive_distinct( array &$array1, array &$array2 ) {
 		$merged = $array1;
 
 		foreach ( $array2 as $key => &$value ) {
-			if ( is_array ( $value ) && isset ( $merged [$key] ) && is_array ( $merged [$key] ) ) {
-				$merged [$key] = self::array_merge_recursive_distinct ( $merged [$key], $value );
+			if ( is_array( $value ) && isset ( $merged [$key] ) && is_array( $merged [$key] ) ) {
+				$merged [$key] = self::array_merge_recursive_distinct( $merged [$key], $value );
 			}
 			else {
 				$merged [$key] = $value;
@@ -301,19 +301,19 @@ class Pixelgrade_Array {
 	 */
 	public static function array_orderby() {
 		$args = func_get_args();
-		$data = array_shift($args);
-		foreach ($args as $n => $field) {
-			if (is_string($field)) {
+		$data = array_shift( $args );
+		foreach ( $args as $n => $field ) {
+			if ( is_string( $field ) ) {
 				$tmp = array();
-				foreach ($data as $key => $row)
+				foreach ( $data as $key => $row )
 					$tmp[$key] = $row[$field];
 				$args[$n] = $tmp;
 			}
 		}
 		$args[] = &$data;
-		call_user_func_array('array_multisort', $args);
+		call_user_func_array( 'array_multisort', $args );
 
-		return array_pop($args);
+		return array_pop( $args );
 	}
 }
 
