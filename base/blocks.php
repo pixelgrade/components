@@ -13,13 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define the path to the blocks root directory
-defined('PIXELGRADE_BLOCKS_PATH') or define( 'PIXELGRADE_BLOCKS_PATH', trailingslashit( __DIR__ ) . 'blocks/' );
+defined( 'PIXELGRADE_BLOCKS_PATH' ) or define( 'PIXELGRADE_BLOCKS_PATH', trailingslashit( __DIR__ ) . 'blocks/' );
 
 // Define the block ID separator used to maintain uniqueness among blocks, when the need arises
 // We will use a namespace style with forward slashes, like  'single\content\hero'
-defined('PIXELGRADE_BLOCK_ID_SEPARATOR') or define( 'PIXELGRADE_BLOCK_ID_SEPARATOR', '/' );
+defined( 'PIXELGRADE_BLOCK_ID_SEPARATOR' ) or define( 'PIXELGRADE_BLOCK_ID_SEPARATOR', '/' );
 
-defined('PIXELGRADE_BLOCK_DEBUG') or define( 'PIXELGRADE_BLOCK_DEBUG', false);
+defined( 'PIXELGRADE_BLOCK_DEBUG' ) or define( 'PIXELGRADE_BLOCK_DEBUG', false );
 
 // Include our abstract class for blocks - all blocks should extend this!!!
 require_once PIXELGRADE_BLOCKS_PATH . 'abstracts/class-Block.php';
@@ -35,7 +35,7 @@ require_once PIXELGRADE_BLOCKS_PATH . 'abstracts/class-Block.php';
  */
 function Pixelgrade_BlocksManager( $args = array() ) {
 	// Only load if we have to
-	if ( ! class_exists( 'Pixelgrade_BlocksManager') ) {
+	if ( ! class_exists( 'Pixelgrade_BlocksManager' ) ) {
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-BlocksManager.php';
 	}
 	return Pixelgrade_BlocksManager::instance( '1.0.0', $args );

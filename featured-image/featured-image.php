@@ -31,10 +31,10 @@ if ( ! function_exists( 'Pixelgrade_FeaturedImage' ) ) :
  */
 function Pixelgrade_FeaturedImage() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_FeaturedImage') ) {
+	if ( ! class_exists( 'Pixelgrade_FeaturedImage' ) ) {
 		pixelgrade_load_component_file( 'featured-image', 'class-FeaturedImage' );
 	}
-	return Pixelgrade_FeaturedImage::instance( '1.2.0');
+	return Pixelgrade_FeaturedImage::instance( '1.2.0' );
 }
 endif;
 

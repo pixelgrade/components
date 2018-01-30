@@ -80,7 +80,7 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
  * @param string $location Optional. This is a hint regarding the place/template where this header is being displayed
  */
 function pixelgrade_the_header( $location = '' ) {
-	pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'header');
+	pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'header' );
 }
 
 /**
@@ -92,7 +92,7 @@ function pixelgrade_the_header( $location = '' ) {
  * @return false|object
  */
 function pixelgrade_header_get_nav_menu( $args, $menu_location = '' ) {
-	$defaults = array( 'container' => 'nav', 'echo' => false, );
+	$defaults = array( 'container' => 'nav', 'echo' => false,);
 
 	if ( ! empty( $menu_location ) ) {
 		// Make sure we overwrite whatever is there
@@ -146,7 +146,7 @@ function pixelgrade_header_get_zones() {
 
 	// Cycle through each zone and determine the nav menu locations that will be shown - with input from others
 	foreach ( $zones as $zone_id => $zone_settings ) {
-		$zones[ $zone_id ]['menu_locations'] = array();
+		$zones[$zone_id]['menu_locations'] = array();
 		// Cycle through each defined nav menu location and determine if it is a part of the current zone
 		foreach ( $config['menu_locations'] as $menu_id => $menu_location ) {
 			// A little sanity check
@@ -164,17 +164,17 @@ function pixelgrade_header_get_zones() {
 			 * @return string
 			 */
 			if ( $zone_id == apply_filters( "pixelgrade_header_{$menu_id}_nav_menu_display_zone", $menu_location['default_zone'], $menu_location, $config['menu_locations'] ) ) {
-				$zones[ $zone_id ]['menu_locations'][ $menu_id ] = $menu_location;
+				$zones[$zone_id]['menu_locations'][$menu_id] = $menu_location;
 			}
 		}
 
 		// Also setup the classes for the zone
-		if ( empty( $zones[ $zone_id ]['classes'] ) ) {
-			$zones[ $zone_id ]['classes'] = array();
+		if ( empty( $zones[$zone_id]['classes'] ) ) {
+			$zones[$zone_id]['classes'] = array();
 		}
 
 		$default_classes = array( 'c-navbar__zone', 'c-navbar__zone--' . $zone_id );
-		$zones[ $zone_id ]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
+		$zones[$zone_id]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
 	}
 
 	// Now allow others to have a final go, maybe some need a more global view to decide (CSS classes or special ordering maybe?)
@@ -233,7 +233,7 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 
 	// Do the comparison
 	if ( $a['order'] < $b['order'] ) {
-		return -1;
+		return - 1;
 	} else if ( $a['order'] > $b['order'] ) {
 		return 1;
 	} else {

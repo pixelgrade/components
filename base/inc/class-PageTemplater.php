@@ -74,7 +74,7 @@ class Pixelgrade_PageTemplater {
 		// template assigned and return it's path
 		add_filter(
 			'template_include',
-			array( $this, 'viewTemplate')
+			array( $this, 'viewTemplate' )
 		);
 	}
 
@@ -104,7 +104,7 @@ class Pixelgrade_PageTemplater {
 		}
 
 		// New cache, therefore remove the old one
-		wp_cache_delete( $cache_key , 'themes');
+		wp_cache_delete( $cache_key, 'themes' );
 
 		// Now add our template to the list of templates by merging our templates
 		// with the existing templates array from the cache.
@@ -134,7 +134,7 @@ class Pixelgrade_PageTemplater {
 		$page_template = get_post_meta( $post->ID, '_wp_page_template', true );
 
 		// Return default template if we don't have a custom one defined
-		if ( ! isset( $this->templates[ $page_template ] ) ) {
+		if ( ! isset( $this->templates[$page_template] ) ) {
 			return $template;
 		}
 

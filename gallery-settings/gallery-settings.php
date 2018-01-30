@@ -31,7 +31,7 @@ if ( ! function_exists( 'Pixelgrade_GallerySettings' ) ) :
  */
 function Pixelgrade_GallerySettings() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_GallerySettings') ) {
+	if ( ! class_exists( 'Pixelgrade_GallerySettings' ) ) {
 		pixelgrade_load_component_file( 'gallery-settings', 'class-GallerySettings' );
 	}
 	return Pixelgrade_GallerySettings::instance( '1.2.0' );

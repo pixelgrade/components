@@ -208,7 +208,7 @@ class Pixelgrade_Config {
 						}
 					} elseif ( is_array( $checks ) ) {
 						foreach ( $checks as $component ) {
-							if ( ! class_exists( $component ) || ! call_user_func( $component .'::isActive' ) ) {
+							if ( ! class_exists( $component ) || ! call_user_func( $component . '::isActive' ) ) {
 								return false;
 							}
 						}
@@ -549,12 +549,12 @@ class Pixelgrade_Config {
 		foreach ( $original_config as $section_key => $section ) {
 			if ( ! empty( $section['options'] ) && is_array( $section['options'] ) ) {
 				foreach ( $section['options'] as $option_key => $option ) {
-					if ( is_array( $option ) && array_key_exists( 'default', $option ) && null === $option['default'] && isset( $modified_config[ $section_key ]['options'][ $option_key ] ) ) {
+					if ( is_array( $option ) && array_key_exists( 'default', $option ) && null === $option['default'] && isset( $modified_config[$section_key]['options'][$option_key] ) ) {
 						// This means we should receive a value in the modified config
-						if ( ! isset( $modified_config[ $section_key ]['options'][ $option_key ]['default'] ) ) {
+						if ( ! isset( $modified_config[$section_key]['options'][$option_key]['default'] ) ) {
 							_doing_it_wrong( __FUNCTION__,
 								sprintf( 'You need to define a default value for the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
-								( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : ''), null );
+								( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : '' ), null );
 
 							$errors = true;
 						}

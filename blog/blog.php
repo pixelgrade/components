@@ -31,7 +31,7 @@ if ( ! function_exists( 'Pixelgrade_Blog' ) ) :
  */
 function Pixelgrade_Blog() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Blog') ) {
+	if ( ! class_exists( 'Pixelgrade_Blog' ) ) {
 		pixelgrade_load_component_file( 'blog', 'class-Blog' );
 	}
 	return Pixelgrade_Blog::instance( '1.1.0' );

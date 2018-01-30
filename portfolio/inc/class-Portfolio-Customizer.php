@@ -525,9 +525,9 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 								'step' => 1,
 								'unit' => 'px',
 							),
-							'line-height'     => array( 0, 2, 0.1, '' ),           // Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
-							'text-align'      => false,                           // Disable sub-field (False by default)
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
 							'text-transform'  => true,
 							'text-decoration' => false
 						)
@@ -563,9 +563,9 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 								'step' => 1,
 								'unit' => 'px',
 							),
-							'line-height'     => array( 0, 2, 0.1, '' ),           // Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
-							'text-align'      => false,                           // Disable sub-field (False by default)
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
 							'text-transform'  => true,
 							'text-decoration' => false
 						)

@@ -31,7 +31,7 @@ if ( ! function_exists( 'Pixelgrade_Footer' ) ) :
  */
 function Pixelgrade_Footer() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Footer') ) {
+	if ( ! class_exists( 'Pixelgrade_Footer' ) ) {
 		pixelgrade_load_component_file( 'footer', 'class-Footer' );
 	}
 	return Pixelgrade_Footer::instance( '1.4.1' );

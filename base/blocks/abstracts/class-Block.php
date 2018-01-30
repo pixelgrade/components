@@ -117,8 +117,8 @@ abstract class Pixelgrade_Block {
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		$keys = array_keys( get_object_vars( $this ) );
 		foreach ( $keys as $key ) {
-			if ( isset( $args[ $key ] ) ) {
-				$this->$key = $args[ $key ];
+			if ( isset( $args[$key] ) ) {
+				$this->$key = $args[$key];
 			}
 		}
 
@@ -162,7 +162,7 @@ abstract class Pixelgrade_Block {
 				}
 			} else {
 				// This is just a shorthand for a tag
-				$new_wrappers[] = new Pixelgrade_Wrapper( array( 'tag' => $this->wrappers, ) );
+				$new_wrappers[] = new Pixelgrade_Wrapper( array( 'tag' => $this->wrappers,) );
 			}
 		} elseif ( is_array( $this->wrappers ) && isset( $this->wrappers['callback'] ) ) {
 			// If it's a callback we will treat it as the master callback for the wrapper
@@ -174,11 +174,11 @@ abstract class Pixelgrade_Block {
 			// We will save the last priority present so we can help wrappers without priority maintain their relative order
 			$default_priority = 10;
 			foreach ( $this->wrappers as $wrapper_id => $wrapper ) {
-				$new_wrappers[ $wrapper_id ] = $this->maybeProcessWrapper( $wrapper, $default_priority );
+				$new_wrappers[$wrapper_id] = $this->maybeProcessWrapper( $wrapper, $default_priority );
 
 				// Setup the new default priority
-				if ( ! empty( $new_wrappers[ $wrapper_id ]->priority ) && $default_priority <= $new_wrappers[ $wrapper_id ]->priority  ) {
-					$default_priority = $new_wrappers[ $wrapper_id ]->priority + 0.1;
+				if ( ! empty( $new_wrappers[$wrapper_id]->priority ) && $default_priority <= $new_wrappers[$wrapper_id]->priority ) {
+					$default_priority = $new_wrappers[$wrapper_id]->priority + 0.1;
 				}
 			}
 		}
@@ -621,7 +621,7 @@ abstract class Pixelgrade_Block {
 	 *
 	 * @return array
 	 */
-	public static function orderWrappers( $list, $orderby = array( 'priority' => 'DESC', 'instance_number' => 'DESC', ), $order = 'DESC', $preserve_keys = true ) {
+	public static function orderWrappers( $list, $orderby = array( 'priority' => 'DESC', 'instance_number' => 'DESC',), $order = 'DESC', $preserve_keys = true ) {
 		if ( ! is_array( $list ) ) {
 			return array();
 		}
@@ -648,14 +648,14 @@ abstract class Pixelgrade_Block {
 		if ( ! empty( $extended_block_props ) && is_array( $extended_block_props ) ) {
 			foreach ( $extended_block_props as $key => $extended_property ) {
 				// If the $args don't specify a certain property present in the extended block, simply copy it over
-				if ( ! isset( $args[ $key ] ) && property_exists( __CLASS__, $key ) ) {
+				if ( ! isset( $args[$key] ) && property_exists( __CLASS__, $key ) ) {
 					// We don't want the block ID, instance number, instance count or manager copied.
 					if ( ! in_array( $key, array( 'id', 'instance_number', 'instance_count', 'manager' ) ) ) {
-						$new_args[ $key ] = $extended_property;
+						$new_args[$key] = $extended_property;
 					}
 				} else {
 					// The entry is present in both the supplied $args and the extended block
-					switch( $key ) {
+					switch ( $key ) {
 						case 'wrappers':
 							$new_args['wrappers'] = self::extendWrappers( $args['wrappers'], $extended_property );
 							break;
@@ -710,7 +710,7 @@ abstract class Pixelgrade_Block {
 		}
 
 		// Make sure the extended wrappers are ordered ascending
-		$extended_wrappers = self::orderWrappers( $extended_wrappers, array( 'priority' => 'ASC', 'instance_number' => 'ASC', ), 'ASC' );
+		$extended_wrappers = self::orderWrappers( $extended_wrappers, array( 'priority' => 'ASC', 'instance_number' => 'ASC',), 'ASC' );
 
 		// We need to make an initial pass through the new wrappers and setup their priorities in such a way
 		// that new unnamed wrappers retain their order relative to new named wrappers
@@ -721,17 +721,17 @@ abstract class Pixelgrade_Block {
 		foreach ( $new_wrappers as $key => $new_wrapper ) {
 			if ( is_string( $key ) ) {
 				// Let first deal with the case where we just wish to not use a wrapper from the extended ones
-				if ( isset( $extended_wrappers[ $key ] ) && false === $new_wrapper ) {
-					unset( $extended_wrappers[ $key ] );
-					unset( $new_wrappers[ $key ] );
+				if ( isset( $extended_wrappers[$key] ) && false === $new_wrapper ) {
+					unset( $extended_wrappers[$key] );
+					unset( $new_wrappers[$key] );
 					continue;
 				}
 
 				// Now copy the priorities
-				if ( empty( $new_wrapper['priority'] ) && ! empty( $extended_wrappers[ $key ] ) && ! empty( $extended_wrappers[ $key ]->priority ) ) {
-					$new_wrappers[ $key ]['priority'] = $extended_wrappers[ $key ]->priority;
+				if ( empty( $new_wrapper['priority'] ) && ! empty( $extended_wrappers[$key] ) && ! empty( $extended_wrappers[$key]->priority ) ) {
+					$new_wrappers[$key]['priority'] = $extended_wrappers[$key]->priority;
 				} else {
-					$new_wrappers[ $key ]['priority'] = 10;
+					$new_wrappers[$key]['priority'] = 10;
 				}
 			}
 		}
@@ -742,81 +742,81 @@ abstract class Pixelgrade_Block {
 			if ( ! empty( $new_wrapper['priority'] ) ) {
 				// We want to go back the list, until we encounter another wrapper with a priority, and setup priorities
 				$sec_idx = 1;
-				foreach ( array_reverse( array_slice( $new_wrappers, 0, $idx , true ) ) as $k => $v ) {
-					if ( ! empty( $v[ 'priority' ] ) ) {
+				foreach ( array_reverse( array_slice( $new_wrappers, 0, $idx, true ) ) as $k => $v ) {
+					if ( ! empty( $v['priority'] ) ) {
 						break;
 					}
 
 					// We used a decreased priority
-					$new_wrappers[ $k ]['priority'] = $new_wrapper['priority'] - ( 0.01 * $sec_idx );
+					$new_wrappers[$k]['priority'] = $new_wrapper['priority'] - ( 0.01 * $sec_idx );
 
-					$sec_idx++;
+					$sec_idx ++;
 				}
 			}
 
-			$idx++;
+			$idx ++;
 		}
 		// The wrappers with no priority after the last one with a priority, will be left alone as we have no clear indication of intent there
 
 		$final_wrappers = array();
 
 		foreach ( $extended_wrappers as $extended_wrapper_key => $extended_wrapper ) {
-			if ( is_string( $extended_wrapper_key ) && isset( $new_wrappers[ $extended_wrapper_key ] ) ) {
+			if ( is_string( $extended_wrapper_key ) && isset( $new_wrappers[$extended_wrapper_key] ) ) {
 				// We have found a named wrapper in both lists
 				// Usually we just overwrite the old wrapper with the new one
 				// But if the new wrapper wants just to extend some properties, we need to create a new Pixelgrade_Wrapper instance
 
 				// If we are given a empty value for the new wrapper key, this means one wishes to discard the wrapper during extension
-				if ( false === $new_wrappers[ $extended_wrapper_key ] ) {
+				if ( false === $new_wrappers[$extended_wrapper_key] ) {
 					continue;
 				}
 
 				// Construct/extract the args
 				$args = get_object_vars( $extended_wrapper );
 
-				if ( isset( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] )
-					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] )
-					|| isset( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] ) ) {
+				if ( isset( $new_wrappers[$extended_wrapper_key]['extend_classes'] )
+					|| isset( $new_wrappers[$extended_wrapper_key]['extend_attributes'] )
+					|| isset( $new_wrappers[$extended_wrapper_key]['extend_checks'] ) ) {
 					// We need to create a new wrapper instance based on the extended one
-					if ( ! empty( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] ) ) {
-						$extend_classes = Pixelgrade_Value::maybeSplitByWhitespace( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] );
+					if ( ! empty( $new_wrappers[$extended_wrapper_key]['extend_classes'] ) ) {
+						$extend_classes = Pixelgrade_Value::maybeSplitByWhitespace( $new_wrappers[$extended_wrapper_key]['extend_classes'] );
 						$args['classes'] = array_merge( $args['classes'], $extend_classes );
-						unset( $new_wrappers[ $extended_wrapper_key ]['extend_classes'] );
+						unset( $new_wrappers[$extended_wrapper_key]['extend_classes'] );
 						// We also need to ignore any classes because one can't use both extend_classes and classes entries at the same time
-						unset( $new_wrappers[ $extended_wrapper_key ]['classes'] );
+						unset( $new_wrappers[$extended_wrapper_key]['classes'] );
 					}
 
-					if ( ! empty( $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] ) ) {
-						$args['attributes'] = array_merge( $args['attributes'], $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] );
-						unset( $new_wrappers[ $extended_wrapper_key ]['extend_attributes'] );
+					if ( ! empty( $new_wrappers[$extended_wrapper_key]['extend_attributes'] ) ) {
+						$args['attributes'] = array_merge( $args['attributes'], $new_wrappers[$extended_wrapper_key]['extend_attributes'] );
+						unset( $new_wrappers[$extended_wrapper_key]['extend_attributes'] );
 						// We also need to ignore any attributes because one can't use both extend_attributes and attributes entries at the same time
-						unset( $new_wrappers[ $extended_wrapper_key ]['attributes'] );
+						unset( $new_wrappers[$extended_wrapper_key]['attributes'] );
 					}
 
-					if ( ! empty( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] ) ) {
-						$args['checks'] = array_merge( $args['checks'], $new_wrappers[ $extended_wrapper_key ]['extend_checks'] );
-						unset( $new_wrappers[ $extended_wrapper_key ]['extend_checks'] );
+					if ( ! empty( $new_wrappers[$extended_wrapper_key]['extend_checks'] ) ) {
+						$args['checks'] = array_merge( $args['checks'], $new_wrappers[$extended_wrapper_key]['extend_checks'] );
+						unset( $new_wrappers[$extended_wrapper_key]['extend_checks'] );
 						// We also need to ignore any checks because one can't use both extend_checks and checks entries at the same time
-						unset( $new_wrappers[ $extended_wrapper_key ]['checks'] );
+						unset( $new_wrappers[$extended_wrapper_key]['checks'] );
 					}
 
 					// Merge the remaining entries, if any
-					$args = array_merge( $args, $new_wrappers[ $extended_wrapper_key ] );
+					$args = array_merge( $args, $new_wrappers[$extended_wrapper_key] );
 
 					// Create the new wrapper and add it to the list
-					$final_wrappers[ $extended_wrapper_key ] = new Pixelgrade_Wrapper( $args );
+					$final_wrappers[$extended_wrapper_key] = new Pixelgrade_Wrapper( $args );
 				} else {
 					// Merge the old wrapper entries with the new ones - a simple array merge that will replace common entries and add new ones
 					// while keeping all of the ones of the original wrapper
-					$final_wrappers[ $extended_wrapper_key ] = array_merge( $args, $new_wrappers[ $extended_wrapper_key ] );
+					$final_wrappers[$extended_wrapper_key] = array_merge( $args, $new_wrappers[$extended_wrapper_key] );
 				}
 
 				// We are done with the wrapper in the new_wrappers
-				unset( $new_wrappers[ $extended_wrapper_key ] );
+				unset( $new_wrappers[$extended_wrapper_key] );
 			} else {
 				// We are dealing with a wrapper that is either unnamed or doesn't have a corespondent in the new wrappers list
 				// Just keep it
-				$final_wrappers[ $extended_wrapper_key ] = $extended_wrapper;
+				$final_wrappers[$extended_wrapper_key] = $extended_wrapper;
 			}
 		}
 

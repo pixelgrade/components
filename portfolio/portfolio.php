@@ -31,7 +31,7 @@ if ( ! function_exists( 'Pixelgrade_Portfolio' ) ) :
  */
 function Pixelgrade_Portfolio() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Portfolio') ) {
+	if ( ! class_exists( 'Pixelgrade_Portfolio' ) ) {
 		pixelgrade_load_component_file( 'portfolio', 'class-Portfolio' );
 	}
 	return Pixelgrade_Portfolio::instance( '1.0.1' );

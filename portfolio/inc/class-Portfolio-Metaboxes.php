@@ -116,7 +116,7 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 		if ( Pixelgrade_Config::hasPageTemplate( $portfolio_page_template, $component_config ) ) {
 			// Make sure that the hero background metabox is shown on the page template also
 			if ( ! empty( $hero_metaboxes['hero_area_background__page']['show_on']['key'] )
-			     && 'page-template' === $hero_metaboxes['hero_area_background__page']['show_on']['key'] ) {
+				 && 'page-template' === $hero_metaboxes['hero_area_background__page']['show_on']['key'] ) {
 
 				// Make sure that we are dealing with an array, instead of a string
 				if ( ! is_array( $hero_metaboxes['hero_area_background__page']['show_on']['value'] ) ) {
@@ -133,7 +133,7 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 
 			// Make sure that the hero content metabox is shown on the page template also
 			if ( ! empty( $hero_metaboxes['hero_area_content__page']['show_on']['key'] )
-			     && 'page-template' === $hero_metaboxes['hero_area_content__page']['show_on']['key'] ) {
+				 && 'page-template' === $hero_metaboxes['hero_area_content__page']['show_on']['key'] ) {
 
 				// Make sure that we are dealing with an array, instead of a string
 				if ( ! is_array( $hero_metaboxes['hero_area_content__page']['show_on']['value'] ) ) {

@@ -31,7 +31,7 @@ if ( ! function_exists( 'Pixelgrade_Multipage' ) ) :
  */
 function Pixelgrade_Multipage() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Multipage') ) {
+	if ( ! class_exists( 'Pixelgrade_Multipage' ) ) {
 		pixelgrade_load_component_file( 'multipage', 'class-Multipage' );
 	}
 	return Pixelgrade_Multipage::instance( '1.1.3' );

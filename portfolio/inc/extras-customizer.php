@@ -48,8 +48,8 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 		$output = '';
 
 		$output .= $selector . ' {' . PHP_EOL .
-		           'padding-top: ' . $padding . ';' . PHP_EOL .
-		           '}'. PHP_EOL;
+				   'padding-top: ' . $padding . ';' . PHP_EOL .
+				   '}'. PHP_EOL;
 
 		return $output;
 	}
@@ -199,7 +199,7 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 			$newValue = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+				'@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
 				'.c-gallery--portfolio {' . PHP_EOL .
 				'margin-top: calc(-' . $newValue . 'px);' . PHP_EOL .
 				'}' . PHP_EOL .
@@ -240,7 +240,7 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( $value, $selector, $pr
 			$newValue = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+				'@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
 				'.c-gallery--portfolio {' . PHP_EOL .
 				'margin-left: -' . $newValue . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .

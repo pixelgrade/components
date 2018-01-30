@@ -66,8 +66,8 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	public function __construct( $version = '1.0.0', $args = array() ) {
 		$this->version = $version;
 
-		if ( ! defined(get_class( $this ) . '::COMPONENT_SLUG') ) {
-			throw new Exception('Constant COMPONENT_SLUG is not defined on subclass ' . get_class( $this ) );
+		if ( ! defined( get_class( $this ) . '::COMPONENT_SLUG' ) ) {
+			throw new Exception( 'Constant COMPONENT_SLUG is not defined on subclass ' . get_class( $this ) );
 		}
 
 		// Allow others to make changes to the arguments.
@@ -76,7 +76,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-		$args = apply_filters( "pixelgrade_{$hook_slug}_init_args", $args, constant( get_class( $this ) .'::COMPONENT_SLUG' ) );
+		$args = apply_filters( "pixelgrade_{$hook_slug}_init_args", $args, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// Get going with the initialization of the component
 		$this->init( $args );
@@ -180,7 +180,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				// First we check if the target component is active
 				// Get the component main class name
 				$component_class = Pixelgrade_Components_Autoloader::getComponentMainClass( $component_to_config_slug );
-				if ( empty( $component_class ) || ! class_exists( $component_class ) || ! call_user_func( array( $component_class, 'isActive') ) ) {
+				if ( empty( $component_class ) || ! class_exists( $component_class ) || ! call_user_func( array( $component_class, 'isActive' ) ) ) {
 					continue;
 				}
 
@@ -208,10 +208,10 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 * @return array The modified component config
 	 */
 	public function crossConfig( $component_config, $component_slug ) {
-		if ( ! empty( $this->config['cross_config'][ $component_slug ]['config'] ) ) {
+		if ( ! empty( $this->config['cross_config'][$component_slug]['config'] ) ) {
 			// Change the 'config' by merging it
 			// Thus overwriting the old with what we have changed
-			$component_config = array_replace_recursive( $component_config, $this->config['cross_config'][ $component_slug ]['config'] );
+			$component_config = array_replace_recursive( $component_config, $this->config['cross_config'][$component_slug]['config'] );
 		}
 
 		return $component_config;
@@ -224,13 +224,13 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_cross_config", $this->config, constant( get_class( $this ) .'::COMPONENT_SLUG' ) );
+		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_cross_config", $this->config, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// On cross config, another component (or others for what matters), can not modify the 'cross_config' section of the config.
 		// Not at this stage anyhow. That is to be done before the setup_cross_config, best via the "pixelgrade_{$hook_slug}_initial_config"
 		if ( ! empty( $this->config['cross_config'] ) &&
-		     ! empty( $modified_config['cross_config'] ) &&
-		     false !== Pixelgrade_Array::arrayDiffAssocRecursive( $this->config['cross_config'], $modified_config['cross_config'] ) ) {
+			 ! empty( $modified_config['cross_config'] ) &&
+			 false !== Pixelgrade_Array::arrayDiffAssocRecursive( $this->config['cross_config'], $modified_config['cross_config'] ) ) {
 			_doing_it_wrong( __METHOD__, sprintf( 'You should not modify the \'cross_config\' part of the component config through the "pixelgrade_%1$s_cross_config" dynamic filter (due to possible logic loops). Use the "pixelgrade_%1$s_initial_config" filter instead.', $hook_slug ), null );
 			return;
 		}
@@ -254,7 +254,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_config", $this->config, constant( get_class( $this ) .'::COMPONENT_SLUG' ) );
+		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_config", $this->config, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
@@ -279,7 +279,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
-		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) .'::COMPONENT_SLUG' ), $config );
+		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
 
 		// Now process the config and register any blocks we find
 		if ( ! empty( $config['blocks'] ) && is_array( $config['blocks'] ) ) {
@@ -292,7 +292,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			}
 		}
 
-		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) .'::COMPONENT_SLUG' ), $config );
+		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
 	}
 
 	/**
@@ -313,7 +313,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		 * Setup the component's custom page templates
 		 */
 		if ( ! empty( $this->config['page_templates'] ) ) {
-			$this->page_templater = self::setupPageTemplates( $this->config['page_templates'], constant( get_class( $this ) .'::COMPONENT_SLUG' ) );
+			$this->page_templater = self::setupPageTemplates( $this->config['page_templates'], constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 			// Setup the custom loop for the page templates - if there are any
 			add_action( 'parse_query', array( $this, 'setupPageCemplatesCustomLoopQuery' ) );
@@ -324,7 +324,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		 */
 		// We use a priority of 20 to make sure that we are pretty late (i.e. higher priority), but also leave room for other components to come in earlier or latter
 		if ( ! empty( $this->config['templates'] ) ) {
-			$this->templater = self::setupCustomTemplates( $this->config['templates'], constant( get_class( $this ) .'::COMPONENT_SLUG' ), 20 );
+			$this->templater = self::setupCustomTemplates( $this->config['templates'], constant( get_class( $this ) . '::COMPONENT_SLUG' ), 20 );
 		}
 	}
 
@@ -379,7 +379,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			// We can handle two types of page template definitions
 			// First the simple, more direct one
 			if ( is_string( $key ) && is_string( $page_template ) ) {
-				$to_register[ $key ] = $page_template;
+				$to_register[$key] = $page_template;
 			} elseif ( is_array( $page_template ) ) {
 				// This is the more extended way of defining things
 
@@ -391,7 +391,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				// Now we need to process the dependencies
 				// We only register the page template if all dependencies are met
 				if ( true === Pixelgrade_Config::evaluateDependencies( $page_template ) ) {
-					$to_register[ $page_template['page_template'] ] = $page_template['name'];
+					$to_register[$page_template['page_template']] = $page_template['name'];
 				}
 			}
 		}
@@ -542,7 +542,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			pixelgrade_load_component_file( Pixelgrade_Base::COMPONENT_SLUG, 'inc/class-CustomLoopsForPages' );
 
 			$new_query = new Pixelgrade_CustomLoopsForPages(
-				constant( get_class( $this ) .'::COMPONENT_SLUG' ),
+				constant( get_class( $this ) . '::COMPONENT_SLUG' ),
 				$page_template, // The page template slug we will target
 				$post_template_part, // Component template part which will be used to display posts, name should be without .php extension
 				$loop_template_part, // Component template part which will be used to display the loop, name should be without .php extension
@@ -602,6 +602,6 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 * Unserializing instances of this class is forbidden.
 	 */
 	final private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  esc_html( $this->version ) );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), esc_html( $this->version ) );
 	} // End __wakeup ()
 }

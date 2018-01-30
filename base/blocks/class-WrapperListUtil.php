@@ -108,8 +108,8 @@ class Pixelgrade_WrapperListUtil {
 
 			$matched = 0;
 			foreach ( $args as $m_key => $m_value ) {
-				if ( array_key_exists( $m_key, $to_match ) && $m_value == $to_match[ $m_key ] ) {
-					$matched++;
+				if ( array_key_exists( $m_key, $to_match ) && $m_value == $to_match[$m_key] ) {
+					$matched ++;
 				}
 			}
 
@@ -149,9 +149,9 @@ class Pixelgrade_WrapperListUtil {
 			 */
 			foreach ( $this->output as $key => $value ) {
 				if ( is_object( $value ) ) {
-					$this->output[ $key ] = $value->$field;
+					$this->output[$key] = $value->$field;
 				} else {
-					$this->output[ $key ] = $value[ $field ];
+					$this->output[$key] = $value[$field];
 				}
 			}
 			return $this->output;
@@ -165,15 +165,15 @@ class Pixelgrade_WrapperListUtil {
 		foreach ( $this->output as $value ) {
 			if ( is_object( $value ) ) {
 				if ( isset( $value->$index_key ) ) {
-					$newlist[ $value->$index_key ] = $value->$field;
+					$newlist[$value->$index_key] = $value->$field;
 				} else {
 					$newlist[] = $value->$field;
 				}
 			} else {
-				if ( isset( $value[ $index_key ] ) ) {
-					$newlist[ $value[ $index_key ] ] = $value[ $field ];
+				if ( isset( $value[$index_key] ) ) {
+					$newlist[$value[$index_key]] = $value[$field];
 				} else {
-					$newlist[] = $value[ $field ];
+					$newlist[] = $value[$field];
 				}
 			}
 		}
@@ -203,7 +203,7 @@ class Pixelgrade_WrapperListUtil {
 		}
 
 		foreach ( $orderby as $field => $direction ) {
-			$orderby[ $field ] = 'DESC' === strtoupper( $direction ) ? 'DESC' : 'ASC';
+			$orderby[$field] = 'DESC' === strtoupper( $direction ) ? 'DESC' : 'ASC';
 		}
 
 		$this->orderby = $orderby;
@@ -239,25 +239,25 @@ class Pixelgrade_WrapperListUtil {
 		$b = (array) $b;
 
 		foreach ( $this->orderby as $field => $direction ) {
-			if ( ! isset( $a[ $field ] ) || ! isset( $b[ $field ] ) ) {
+			if ( ! isset( $a[$field] ) || ! isset( $b[$field] ) ) {
 				continue;
 			}
 
 			// Before any comparison we need to maybe process any callbacks defined
-			$a[ $field ] = self::maybeProcessCallback( $a[ $field ] );
-			$b[ $field ] = self::maybeProcessCallback( $b[ $field ] );
+			$a[$field] = self::maybeProcessCallback( $a[$field] );
+			$b[$field] = self::maybeProcessCallback( $b[$field] );
 
-			if ( $a[ $field ] == $b[ $field ] ) {
+			if ( $a[$field] == $b[$field] ) {
 				continue;
 			}
 
-			$results = 'DESC' === $direction ? array( 1, -1 ) : array( -1, 1 );
+			$results = 'DESC' === $direction ? array( 1, -1 ) : array( - 1, 1 );
 
-			if ( is_numeric( $a[ $field ] ) && is_numeric( $b[ $field ] ) ) {
-				return ( $a[ $field ] < $b[ $field ] ) ? $results[0] : $results[1];
+			if ( is_numeric( $a[$field] ) && is_numeric( $b[$field] ) ) {
+				return ( $a[$field] < $b[$field] ) ? $results[0] : $results[1];
 			}
 
-			return 0 > strcmp( $a[ $field ], $b[ $field ] ) ? $results[0] : $results[1];
+			return 0 > strcmp( $a[$field], $b[$field] ) ? $results[0] : $results[1];
 		}
 
 		return 0;

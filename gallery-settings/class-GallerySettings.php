@@ -186,8 +186,8 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		} else {
 			//insert it after the Thumbnail Grid option
 			$types = array_slice( $types, 0, $key + 1, true ) +
-			         $setting +
-			         array_slice( $types, $key + 1, null, true );
+					 $setting +
+					 array_slice( $types, $key + 1, null, true );
 		}
 
 		return $types;
@@ -220,7 +220,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	function postGallery( $output, $attr, $gallery_instance = 0 ) {
 		// save the current instance and it's attributes
 		self::$gallery_instance                = $gallery_instance;
-		self::$atts[ self::$gallery_instance ] = $attr;
+		self::$atts[self::$gallery_instance] = $attr;
 
 		return $output;
 	}
@@ -253,21 +253,21 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 * @return string
 	 */
 	function galleryClasses( $out ) {
-		if ( empty( self::$atts[ self::$gallery_instance ]['spacing'] ) ) {
-			self::$atts[ self::$gallery_instance ]['spacing'] = $this->config['gallery_spacing_default'];
+		if ( empty( self::$atts[self::$gallery_instance]['spacing'] ) ) {
+			self::$atts[self::$gallery_instance]['spacing'] = $this->config['gallery_spacing_default'];
 		}
 
-		$out = str_replace( "class='gallery", "class='gallery  u-gallery-spacing--" . self::$atts[ self::$gallery_instance ]['spacing'], $out );
+		$out = str_replace( "class='gallery", "class='gallery  u-gallery-spacing--" . self::$atts[self::$gallery_instance]['spacing'], $out );
 
 		//add also the type when it is a masonry gallery
-		if ( ! empty( self::$atts[ self::$gallery_instance ]['type'] ) && 'masonry' == self::$atts[ self::$gallery_instance ]['type'] ) {
-			$out = str_replace( "class='gallery", "class='gallery  u-gallery-type--" . self::$atts[ self::$gallery_instance ]['type'], $out );
+		if ( ! empty( self::$atts[self::$gallery_instance]['type'] ) && 'masonry' == self::$atts[self::$gallery_instance]['type'] ) {
+			$out = str_replace( "class='gallery", "class='gallery  u-gallery-type--" . self::$atts[self::$gallery_instance]['type'], $out );
 		}
 
 		// We may also need to add the slideshow class since we are using our Jetpack fallback
 		if ( class_exists( 'Jetpack_Gallery_Settings_Fallback' ) ) {
-			if ( ! empty( self::$atts[ self::$gallery_instance ]['type'] ) && 'slideshow' == self::$atts[ self::$gallery_instance ]['type'] ) {
-				$out = str_replace( "class='gallery", "class='gallery  gallery--type-" . self::$atts[ self::$gallery_instance ]['type'], $out );
+			if ( ! empty( self::$atts[self::$gallery_instance]['type'] ) && 'slideshow' == self::$atts[self::$gallery_instance]['type'] ) {
+				$out = str_replace( "class='gallery", "class='gallery  gallery--type-" . self::$atts[self::$gallery_instance]['type'], $out );
 			}
 		}
 

@@ -31,7 +31,7 @@ if ( ! function_exists( 'Pixelgrade_Header' ) ) :
  */
 function Pixelgrade_Header() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Header') ) {
+	if ( ! class_exists( 'Pixelgrade_Header' ) ) {
 		pixelgrade_load_component_file( 'header', 'class-Header' );
 	}
 	return Pixelgrade_Header::instance( '1.4.1' );
