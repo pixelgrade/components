@@ -57,7 +57,7 @@ class Pixelgrade_Value {
 			return $value;
 		}
 
-		return preg_split('#[\s][\s]*#',  $value, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE );
+		return preg_split( '#[\s][\s]*#', $value, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 	}
 
 	/**

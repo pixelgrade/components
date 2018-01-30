@@ -555,8 +555,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 						if ( ! empty( $view_more_link ) && ! is_wp_error( $view_more_link ) ) {
 							echo '<div class="featured-posts__footer">' . PHP_EOL .
-							     '<a class="featured-posts__more" href="' . esc_url( $view_more_link ) . '">' . $view_more_label . '</a>' . PHP_EOL .
-							     '</div>';
+								 '<a class="featured-posts__more" href="' . esc_url( $view_more_link ) . '">' . $view_more_label . '</a>' . PHP_EOL .
+								 '</div>';
 						}
 					} ?>
 
@@ -628,8 +628,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 			if ( ! $this->isFieldDisabled( 'source' ) ) {
 				if ( ! $this->isFieldDisabled( 'source_category' )
-				     && 'category' === $instance['source']
-				     && ! empty( $instance['source_category'] )
+					 && 'category' === $instance['source']
+					 && ! empty( $instance['source_category'] )
 					 && -1 != $instance['source_category'] ) {
 					$query_args['tax_query'] = array(
 						array(
@@ -639,9 +639,9 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						),
 					);
 				} elseif ( ! $this->isFieldDisabled( 'source_tag' )
-				           && 'tag' === $instance['source']
-				           && ! empty( $instance['source_tag'] )
-				           && -1 != $instance['source_tag'] ) {
+						   && 'tag' === $instance['source']
+						   && ! empty( $instance['source_tag'] )
+						   && -1 != $instance['source_tag'] ) {
 					$query_args['tax_query'] = array(
 						array(
 							'taxonomy' => 'post_tag',
@@ -650,8 +650,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						),
 					);
 				} elseif ( ! $this->isFieldDisabled( 'post_ids' )
-				           && 'post_ids' == $instance['source']
-				           && ! empty( $instance['post_ids'] ) ) {
+						   && 'post_ids' == $instance['source']
+						   && ! empty( $instance['post_ids'] ) ) {
 
 					// If we are given a list of post_ids, then we will ignore the posts queried thus far and the ones that need to be excluded
 					// You can't have post__in and post__not_in in the same query!
@@ -661,9 +661,9 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					if ( ! empty( $post_ids ) ) {
 						foreach ( $post_ids as $key => $value ) {
 							if ( ! is_numeric( $value ) ) {
-								unset( $post_ids[ $key ] );
+								unset( $post_ids[$key] );
 							} else {
-								$post_ids[ $key ] = intval( $value );
+								$post_ids[$key] = intval( $value );
 							}
 						}
 
@@ -742,7 +742,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				'depth'             => 0,
 				'tab_index'         => 0,
 				'taxonomy'          => 'category',
-				'option_none_value' => -1,
+				'option_none_value' => - 1,
 				'value_field'       => 'slug',
 				'required'          => false,
 				'hide_if_empty'     => true,
@@ -841,7 +841,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				'class'             => 'widefat',
 				'tab_index'         => 0,
 				'taxonomy'          => 'post_tag',
-				'option_none_value' => -1,
+				'option_none_value' => - 1,
 				'value_field'       => 'slug',
 				'required'          => false,
 				'hide_if_empty'     => true,

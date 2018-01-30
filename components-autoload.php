@@ -15,12 +15,12 @@
  * @version     1.0.0
  */
 class Pixelgrade_Components_Autoloader {
-    /**
-     * The file extension to use. Defaults to '.php'.
-     *
-     * @var string
-     */
-    protected static $file_ext = '.php';
+	/**
+	 * The file extension to use. Defaults to '.php'.
+	 *
+	 * @var string
+	 */
+	protected static $file_ext = '.php';
 
 	/**
 	 * The prefix to use for the instantiation function. Defaults to 'Pixelgrade_'.
@@ -168,14 +168,14 @@ class Pixelgrade_Components_Autoloader {
 		return $class;
 	}
 
-    /**
-     * Sets the $file_ext property
-     *
-     * @param string $file_ext The file extension used for class files.  Default is ".php".
-     */
-    public static function set_file_ext( $file_ext ) {
-        static::$file_ext = $file_ext;
-    }
+	/**
+	 * Sets the $file_ext property
+	 *
+	 * @param string $file_ext The file extension used for class files.  Default is ".php".
+	 */
+	public static function set_file_ext( $file_ext ) {
+		static::$file_ext = $file_ext;
+	}
 }
 
 if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ):

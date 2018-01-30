@@ -45,7 +45,7 @@ do_action( 'pixelgrade_before_custom_loop', $location );
 		<div class="o-wrapper u-portfolio-grid-width">
 			<div <?php pixelgrade_posts_container_id( $location ); ?> <?php pixelgrade_portfolio_class( '', $location, $atts ); ?>>
 				<?php while ( $portfolio_query->have_posts() ) : $portfolio_query->the_post();
-					pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG,'content-jetpack-portfolio', 'shortcode' );
+					pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'content-jetpack-portfolio', 'shortcode' );
 				endwhile;
 				wp_reset_postdata(); ?>
 			</div><!-- #posts-container -->

@@ -1129,7 +1129,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 							'line-height'     => array( 0, 2, 0.1, '' ),
 							// Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
 							'text-align'      => false,
 							// Disable sub-field (False by default)
 							'text-transform'  => true,
@@ -1617,7 +1617,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 							'line-height'     => array( 0, 2, 0.1, '' ),
 							// Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
 							'text-align'      => false,
 							// Disable sub-field (False by default)
 							'text-transform'  => true,
@@ -1682,9 +1682,9 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 								'step' => 1,
 								'unit' => 'px',
 							),
-							'line-height'     => array( 0, 2, 0.1, '' ),           // Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
-							'text-align'      => false,                           // Disable sub-field (False by default)
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
 							'text-transform'  => true,
 							'text-decoration' => false,
 						),
@@ -1781,18 +1781,18 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			$current_object = $wp_the_query->get_queried_object();
 
 			if ( ! empty( $current_object->post_type )
-			     && ( $post_type_object = get_post_type_object( $current_object->post_type ) )
-			     && current_user_can( 'edit_post', $current_object->ID )
-			     && $post_type_object->show_ui && $post_type_object->show_in_admin_bar ) {
+				 && ( $post_type_object = get_post_type_object( $current_object->post_type ) )
+				 && current_user_can( 'edit_post', $current_object->ID )
+				 && $post_type_object->show_ui && $post_type_object->show_in_admin_bar ) {
 
 				$attributes['data-curpostid'] = $current_object->ID;
 				if ( isset( $post_type_object->labels ) && isset( $post_type_object->labels->edit_item ) ) {
 					$attributes['data-curpostedit'] = $post_type_object->labels->edit_item;
 				}
 			} elseif ( ! empty( $current_object->taxonomy )
-			           && ( $tax = get_taxonomy( $current_object->taxonomy ) )
-			           && current_user_can( $tax->cap->edit_terms )
-			           && $tax->show_ui ) {
+					   && ( $tax = get_taxonomy( $current_object->taxonomy ) )
+					   && current_user_can( $tax->cap->edit_terms )
+					   && $tax->show_ui ) {
 				$attributes['data-curpostid']   = $current_object->term_id;
 				$attributes['data-curtaxonomy'] = $current_object->taxonomy;
 

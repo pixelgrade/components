@@ -96,7 +96,7 @@ function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
 		return;
 	}
 
-	$classes = array( 'widget-area', 'widget-area--'. $sidebar_id );
+	$classes = array( 'widget-area', 'widget-area--' . $sidebar_id );
 	if ( ! empty( $sidebar_settings['container_class'] ) ) {
 		$extra_class = $sidebar_settings['container_class'];
 		if ( ! is_array( $extra_class ) ) {
@@ -122,7 +122,7 @@ function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
  * @return false|object
  */
 function pixelgrade_footer_get_nav_menu( $args, $menu_location = '' ) {
-	$defaults = array( 'container' => 'nav', 'echo' => false, );
+	$defaults = array( 'container' => 'nav', 'echo' => false,);
 
 	if ( ! empty( $menu_location ) ) {
 		// Make sure we overwrite whatever is there
@@ -175,7 +175,7 @@ function pixelgrade_footer_the_copyright() {
 		$output .= $copyright_text . PHP_EOL;
 		$hide_credits = pixelgrade_option( 'footer_hide_credits', false );
 		if ( empty( $hide_credits ) ) {
-			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>') . '</span>' . PHP_EOL;
+			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
 		}
 		$output .= '</div>' . PHP_EOL;
 	}
@@ -235,7 +235,7 @@ function pixelgrade_footer_get_zones() {
 
 	// Cycle through each zone and determine the sidebars or nav menu locations that will be shown - with input from others
 	foreach ( $zones as $zone_id => $zone_settings ) {
-		$zones[ $zone_id ]['sidebars'] = array();
+		$zones[$zone_id]['sidebars'] = array();
 		// Cycle through each defined sidebar and determine if it is a part of the current zone
 		foreach ( $config['sidebars'] as $sidebar_id => $sidebar ) {
 			// A little sanity check
@@ -257,11 +257,11 @@ function pixelgrade_footer_get_zones() {
 			 * @return string
 			 */
 			if ( $zone_id == apply_filters( "pixelgrade_footer_{$sidebar_id}_widget_area_display_zone", $sidebar['default_zone'], $sidebar, $config['sidebars'] ) ) {
-				$zones[ $zone_id ]['sidebars'][ $sidebar_id ] = $sidebar;
+				$zones[$zone_id]['sidebars'][$sidebar_id] = $sidebar;
 			}
 		}
 
-		$zones[ $zone_id ]['menu_locations'] = array();
+		$zones[$zone_id]['menu_locations'] = array();
 		// Cycle through each defined nav menu location and determine if it is a part of the current zone
 		foreach ( $config['menu_locations'] as $menu_id => $menu_location ) {
 			// A little sanity check
@@ -283,17 +283,17 @@ function pixelgrade_footer_get_zones() {
 			 * @return string
 			 */
 			if ( $zone_id == apply_filters( "pixelgrade_footer_{$menu_id}_nav_menu_display_zone", $menu_location['default_zone'], $menu_location, $config['menu_locations'] ) ) {
-				$zones[ $zone_id ]['menu_locations'][ $menu_id ] = $menu_location;
+				$zones[$zone_id]['menu_locations'][$menu_id] = $menu_location;
 			}
 		}
 
 		// Also setup the classes for the zone
-		if ( empty( $zones[ $zone_id ]['classes'] ) ) {
-			$zones[ $zone_id ]['classes'] = array();
+		if ( empty( $zones[$zone_id]['classes'] ) ) {
+			$zones[$zone_id]['classes'] = array();
 		}
 
 		$default_classes = array( 'c-footer__zone', 'c-footer__zone--' . $zone_id );
-		$zones[ $zone_id ]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
+		$zones[$zone_id]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
 	}
 
 	// Now allow others to have a final go, maybe some need a more global view to decide (CSS classes or special ordering maybe?)
@@ -374,7 +374,7 @@ function pixelgrade_footer_order_cmp( array $a, array $b ) {
 
 	// Do the comparison
 	if ( $a['order'] < $b['order'] ) {
-		return -1;
+		return - 1;
 	} else if ( $a['order'] > $b['order'] ) {
 		return 1;
 	} else {

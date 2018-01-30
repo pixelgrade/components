@@ -25,10 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Make sure our components constants are defined
  */
-defined( 'PIXELGRADE_COMPONENTS_PATH' )                 or define( 'PIXELGRADE_COMPONENTS_PATH', 'components' );
-defined( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH' )       or define( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH', 'templates' );
-defined( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH' )  or define( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH', 'page-templates' );
-defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' )  or define( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH', 'template-parts' );
+defined( 'PIXELGRADE_COMPONENTS_PATH' ) or define( 'PIXELGRADE_COMPONENTS_PATH', 'components' );
+defined( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH' ) or define( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH', 'templates' );
+defined( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH' ) or define( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH', 'page-templates' );
+defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' ) or define( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH', 'template-parts' );
 
 // Define the path to the root of this component
 defined( 'PIXELGRADE_BASE_PATH' ) or define( 'PIXELGRADE_BASE_PATH', trailingslashit( __DIR__ ) );
@@ -67,7 +67,7 @@ if ( ! function_exists( 'Pixelgrade_Base' ) ) :
  */
 function Pixelgrade_Base() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Base') ) {
+	if ( ! class_exists( 'Pixelgrade_Base' ) ) {
 		pixelgrade_load_component_file( 'base', 'class-Base' );
 	}
 	return Pixelgrade_Base::instance( '1.0.1' );

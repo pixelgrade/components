@@ -75,7 +75,7 @@ class Pixelgrade_Array {
 		}
 
 		foreach ( $array as $k => $v ) {
-			if ( isset( $v[ $key ] ) && $value == $v[ $key ] ) {
+			if ( isset( $v[$key] ) && $value == $v[$key] ) {
 				return $k;
 			}
 		}
@@ -114,18 +114,18 @@ class Pixelgrade_Array {
 	public static function arrayDiffAssocRecursive( $array1, $array2 ) {
 		foreach ( $array1 as $key => $value ) {
 			if ( is_array( $value ) ) {
-				if ( ! isset( $array2[ $key ] ) ) {
-					$difference[ $key ] = $value;
-				} elseif ( ! is_array( $array2[ $key ] ) ) {
-					$difference[ $key ] = $value;
+				if ( ! isset( $array2[$key] ) ) {
+					$difference[$key] = $value;
+				} elseif ( ! is_array( $array2[$key] ) ) {
+					$difference[$key] = $value;
 				} else {
-					$new_diff = self::arrayDiffAssocRecursive( $value, $array2[ $key ] );
+					$new_diff = self::arrayDiffAssocRecursive( $value, $array2[$key] );
 					if ( false !== $new_diff ) {
-						$difference[ $key ] = $new_diff;
+						$difference[$key] = $new_diff;
 					}
 				}
-			} elseif ( ! array_key_exists( $key, $array2 ) || $array2[ $key ] != $value ) {
-				$difference[ $key ] = $value;
+			} elseif ( ! array_key_exists( $key, $array2 ) || $array2[$key] != $value ) {
+				$difference[$key] = $value;
 			}
 		}
 
@@ -248,73 +248,73 @@ class Pixelgrade_Array {
 		return $array;
 	}
 
-    /**
-     * Great answer from here: http://be2.php.net/manual/en/function.array-merge-recursive.php#92195
-     *
-     * array_merge_recursive does indeed merge arrays, but it converts values with duplicate
-     * keys to arrays rather than overwriting the value in the first array with the duplicate
-     * value in the second array, as array_merge does. I.e., with array_merge_recursive,
-     * this happens (documented behavior):
-     *
-     * array_merge_recursive(array('key' => 'org value'), array('key' => 'new value'));
-     *     => array('key' => array('org value', 'new value'));
-     *
-     * array_merge_recursive_distinct does not change the datatypes of the values in the arrays.
-     * Matching keys' values in the second array overwrite those in the first array, as is the
-     * case with array_merge, i.e.:
-     *
-     * array_merge_recursive_distinct(array('key' => 'org value'), array('key' => 'new value'));
-     *     => array('key' => array('new value'));
-     *
-     * Parameters are passed by reference, though only for performance reasons. They're not
-     * altered by this function.
-     *
-     * @param array $array1
-     * @param array $array2
-     * @return array
-     * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
-     * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
-     */
-    public static function array_merge_recursive_distinct ( array &$array1, array &$array2 ) {
-        $merged = $array1;
+	/**
+	 * Great answer from here: http://be2.php.net/manual/en/function.array-merge-recursive.php#92195
+	 *
+	 * array_merge_recursive does indeed merge arrays, but it converts values with duplicate
+	 * keys to arrays rather than overwriting the value in the first array with the duplicate
+	 * value in the second array, as array_merge does. I.e., with array_merge_recursive,
+	 * this happens (documented behavior):
+	 *
+	 * array_merge_recursive(array('key' => 'org value'), array('key' => 'new value'));
+	 *     => array('key' => array('org value', 'new value'));
+	 *
+	 * array_merge_recursive_distinct does not change the datatypes of the values in the arrays.
+	 * Matching keys' values in the second array overwrite those in the first array, as is the
+	 * case with array_merge, i.e.:
+	 *
+	 * array_merge_recursive_distinct(array('key' => 'org value'), array('key' => 'new value'));
+	 *     => array('key' => array('new value'));
+	 *
+	 * Parameters are passed by reference, though only for performance reasons. They're not
+	 * altered by this function.
+	 *
+	 * @param array $array1
+	 * @param array $array2
+	 * @return array
+	 * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
+	 * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
+	 */
+	public static function array_merge_recursive_distinct ( array &$array1, array &$array2 ) {
+		$merged = $array1;
 
-        foreach ( $array2 as $key => &$value ) {
-            if ( is_array ( $value ) && isset ( $merged [$key] ) && is_array ( $merged [$key] ) ) {
-                $merged [$key] = self::array_merge_recursive_distinct ( $merged [$key], $value );
-            }
-            else {
-                $merged [$key] = $value;
-            }
-        }
+		foreach ( $array2 as $key => &$value ) {
+			if ( is_array ( $value ) && isset ( $merged [$key] ) && is_array ( $merged [$key] ) ) {
+				$merged [$key] = self::array_merge_recursive_distinct ( $merged [$key], $value );
+			}
+			else {
+				$merged [$key] = $value;
+			}
+		}
 
-        return $merged;
-    }
+		return $merged;
+	}
 
-    /**
-     * Orders an associative array by several keys values, each with its own order.
-     *
-     * See array_multisort() for flags.
-     *
-     * Taken from here: http://docs.php.net/manual/en/function.array-multisort.php#100534
-     *
-     * @return array
-     */
-    public static function array_orderby() {
-        $args = func_get_args();
-        $data = array_shift($args);
-        foreach ($args as $n => $field) {
-            if (is_string($field)) {
-                $tmp = array();
-                foreach ($data as $key => $row)
-                    $tmp[$key] = $row[$field];
-                $args[$n] = $tmp;
-            }
-        }
-        $args[] = &$data;
-        call_user_func_array('array_multisort', $args);
+	/**
+	 * Orders an associative array by several keys values, each with its own order.
+	 *
+	 * See array_multisort() for flags.
+	 *
+	 * Taken from here: http://docs.php.net/manual/en/function.array-multisort.php#100534
+	 *
+	 * @return array
+	 */
+	public static function array_orderby() {
+		$args = func_get_args();
+		$data = array_shift($args);
+		foreach ($args as $n => $field) {
+			if (is_string($field)) {
+				$tmp = array();
+				foreach ($data as $key => $row)
+					$tmp[$key] = $row[$field];
+				$args[$n] = $tmp;
+			}
+		}
+		$args[] = &$data;
+		call_user_func_array('array_multisort', $args);
 
-        return array_pop($args);
-    }
+		return array_pop($args);
+	}
 }
 
 endif;

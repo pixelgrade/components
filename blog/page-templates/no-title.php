@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $location = pixelgrade_set_location( 'page no-title' );
 if ( is_front_page() ) {
 	// Add some more contextual info
-	$location = pixelgrade_set_location( 'front-page');
+	$location = pixelgrade_set_location( 'front-page' );
 }
 
 pixelgrade_get_header(); ?>

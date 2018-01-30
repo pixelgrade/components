@@ -58,7 +58,7 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 				// We may accidentally trigger the end of the world!
 				setup_postdata( $post );
 
-				pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG,'content', 'page', true );
+				pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'content', 'page', true );
 
 			} // End of the page content loop. ?>
 

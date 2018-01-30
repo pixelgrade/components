@@ -252,7 +252,7 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 
 		// We have been asked for a single meta, we will return the string value; no array
 		if ( true === $single_meta_needed ) {
-			return $meta[ $key ];
+			return $meta[$key];
 		}
 
 		return $meta;
@@ -504,7 +504,7 @@ function pixelgrade_category_transient_flusher() {
 	delete_transient( 'pixelgrade_categories' );
 }
 add_action( 'edit_category', 'pixelgrade_category_transient_flusher' );
-add_action( 'save_post',     'pixelgrade_category_transient_flusher' );
+add_action( 'save_post', 'pixelgrade_category_transient_flusher' );
 
 /**
  * Get the main post category WP_Term object based on our custom logic.
@@ -744,7 +744,7 @@ if ( ! function_exists( 'pixelgrade_posts_container_id' ) ) {
 	 * @param array $location
 	 */
 	function pixelgrade_posts_container_id( $location = array() ) {
-		$posts_container_id =  pixelgrade_get_posts_container_id( $location );
+		$posts_container_id = pixelgrade_get_posts_container_id( $location );
 		if ( ! empty( $posts_container_id ) ) {
 			echo 'id="' . esc_attr( $posts_container_id ) . '"';
 		}

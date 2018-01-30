@@ -133,9 +133,9 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 					// So we need to pass the info regarding the configured templates and component slug to the function hook also
 					add_filter(
 						"{$type}_template_hierarchy",
-						array (
+						array(
 							new Pixelgrade_FilterStorage(
-								array (
+								array(
 									'type' => $type,
 									'component_slug' => $this->component,
 									'templates' => $this->templates,
@@ -368,7 +368,7 @@ if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
 			// Wrong function called.
 			throw new InvalidArgumentException(
 				sprintf( 'File: %1$s<br>Line %2$d<br>Not callable: %3$s',
-					__FILE__, __LINE__, print_r( $callback, TRUE )
+					__FILE__, __LINE__, print_r( $callback, true )
 				)
 			);
 		}

@@ -53,7 +53,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				// This is key for the component's configuration changes
 				// We will merge (not replace) this configuration with the component's
 				'config' => array(
-					'post_types' => array( 'jetpack-portfolio', ),
+					'post_types' => array( 'jetpack-portfolio',),
 				),
 			),
 		);
@@ -83,7 +83,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				'name'          => 'Portfolio Template',
 				'loop'       => array(
 					// The post type(s) that this page template's custom loop should display (it can combine multiple since WP_Query also does)
-					'post_type'      => array( 'jetpack-portfolio', ),
+					'post_type'      => array( 'jetpack-portfolio',),
 					// Optional - provide a template part (from the current component) to use for the custom loop (skip .php)
 					// You can define it as an array to allow for fallback: array( 'slug' => 'loop', 'name' => 'posts' )
 					// The search logic for the template part file is the one in pixelgrade_get_component_template_part()
@@ -185,7 +185,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					// The arguments we should pass to the check callback.
 					// Each top level array entry will be a parameter - see call_user_func_array()
 					// So if you want to pass an array as a parameter you need to double enclose it like: array(array(1,2,3))
-					'args' => array( array( 'jetpack-portfolio', ) ),
+					'args' => array( array( 'jetpack-portfolio',) ),
 				),
 				// The template(s) file(s) that we should attempt to load for this template config.
 				//
@@ -219,7 +219,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				'type' => 'taxonomy',
 				'checks' => array(
 					'function' => 'is_tax',
-					'args' => array( array( 'jetpack-portfolio-type', ) ),
+					'args' => array( array( 'jetpack-portfolio-type',) ),
 				),
 				'templates' => array(
 					array(
@@ -236,7 +236,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				'type' => 'taxonomy',
 				'checks' => array(
 					'function' => 'is_tax',
-					'args' => array( array( 'jetpack-portfolio-tag', ) ),
+					'args' => array( array( 'jetpack-portfolio-tag',) ),
 				),
 				'templates' => array(
 					array(
@@ -270,7 +270,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				'type' => 'single', // single has priority over singular, so be careful when using singular
 				'checks' => array(
 					'function' => 'is_singular',
-					'args' => array( array('jetpack-portfolio', ) ),
+					'args' => array( array( 'jetpack-portfolio',) ),
 				),
 				'templates' => array(
 					array(
@@ -364,7 +364,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 */
 	public static function siteSupportsPortfolio() {
 		// We also account for the fallback class in Pixelgrade Care > Theme Helpers
-		if  ( ! class_exists( 'Jetpack_Portfolio' ) ) {
+		if ( ! class_exists( 'Jetpack_Portfolio' ) ) {
 			return false;
 		}
 
@@ -504,7 +504,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	//
 	public function pageForProjectsSettingCallback() {
 		wp_dropdown_pages( array( 'name' => 'page_for_projects', 'echo' => 1, 'show_option_none' => esc_html__( '&mdash; Select &mdash;', '__components_txtd' ), 'option_none_value' => '0', 'selected' => get_option( 'page_for_projects' ) ) );
-		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', '__components_txtd' ) .'</p>';
+		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', '__components_txtd' ) . '</p>';
 	}
 
 	/**
@@ -523,7 +523,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 * Display a notice when editing the page for projects.
 	 */
 	function projectsPageNotice() {
-		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.','__components_txtd' ) . '</p></div>';
+		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.', '__components_txtd' ) . '</p></div>';
 	}
 
 	/**

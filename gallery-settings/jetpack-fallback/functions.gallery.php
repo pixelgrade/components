@@ -13,7 +13,7 @@ $action = pixelgrade_get_current_action();
 // Don't try and load the fallback class if we are activating a plugin
 // This way Jetpack doesn't burn us down with it's lack of checking if the class exists
 if ( ! empty( $action ) && $action == 'activate' ) {
-    return;
+	return;
 }
 
 if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Gallery_Settings_Fallback' ) ) {

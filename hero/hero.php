@@ -31,10 +31,10 @@ if ( ! function_exists( 'Pixelgrade_Hero' ) ) :
  */
 function Pixelgrade_Hero() {
 	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Hero') ) {
+	if ( ! class_exists( 'Pixelgrade_Hero' ) ) {
 		pixelgrade_load_component_file( 'hero', 'class-Hero' );
 	}
-	return Pixelgrade_Hero::instance( '1.2.3');
+	return Pixelgrade_Hero::instance( '1.2.3' );
 }
 endif;
 

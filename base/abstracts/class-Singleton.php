@@ -46,10 +46,10 @@ abstract class Pixelgrade_Singleton {
 		// @todo Clean this up when we can use PHP 5.3+
 		$called_class_name = get_called_class();
 
-		if ( ! isset( self::$instance_array[ $called_class_name ] ) ) {
-			self::$instance_array[ $called_class_name ] = new $called_class_name( $main_arg, $other_args );
+		if ( ! isset( self::$instance_array[$called_class_name] ) ) {
+			self::$instance_array[$called_class_name] = new $called_class_name( $main_arg, $other_args );
 		}
-		return self::$instance_array[ $called_class_name ];
+		return self::$instance_array[$called_class_name];
 	} // End instance ()
 
 	/**
@@ -60,7 +60,7 @@ abstract class Pixelgrade_Singleton {
 	public static function isActive() {
 		$called_class_name = get_called_class();
 
-		if ( ! is_null( self::$instance_array[ $called_class_name ] ) ) {
+		if ( ! is_null( self::$instance_array[$called_class_name] ) ) {
 			return true;
 		}
 
@@ -78,6 +78,6 @@ abstract class Pixelgrade_Singleton {
 	 * Unserializing instances of this class is forbidden.
 	 */
 	private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  null );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), null );
 	} // End __wakeup ()
 }

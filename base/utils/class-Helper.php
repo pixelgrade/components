@@ -24,7 +24,7 @@ class Pixelgrade_Helper {
 	 */
 	public static function start_timer() {
 		$time = microtime();
-		$time = explode(' ', $time);
+		$time = explode( ' ', $time );
 		$time = $time[1] + $time[0];
 		return $time;
 	}
@@ -42,11 +42,11 @@ class Pixelgrade_Helper {
 	 */
 	public static function stop_timer( $start ) {
 		$time = microtime();
-		$time = explode(' ', $time);
+		$time = explode( ' ', $time );
 		$time = $time[1] + $time[0];
 		$finish = $time;
-		$total_time = round(($finish - $start), 4);
-		return $total_time.' seconds.';
+		$total_time = round( ( $finish - $start ), 4 );
+		return $total_time . ' seconds.';
 	}
 
 	/* Function Utilities
@@ -59,7 +59,7 @@ class Pixelgrade_Helper {
 	 * @param array   $args
 	 * @return mixed
 	 */
-	public static function ob_function( $function, $args = array(null) ) {
+	public static function ob_function( $function, $args = array( null ) ) {
 		$response = null;
 		$data = null;
 
