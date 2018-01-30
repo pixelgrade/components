@@ -7,6 +7,7 @@ By [Vlad Olaru](https://github.com/vladolaru) ([@vladpotter](https://twitter.com
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pixelgrade/components/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pixelgrade/components/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/pixelgrade/components/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/pixelgrade/components/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/pixelgrade/components/badges/build.png?b=master)](https://scrutinizer-ci.com/g/pixelgrade/components/build-status/master)
+[![Build Status](https://travis-ci.org/pixelgrade/components.svg?branch=master)](https://travis-ci.org/pixelgrade/components)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/pixelgrade/components/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
 
