@@ -29,22 +29,89 @@ tools:
             standard: WordPress
     sensiolabs_security_checker: true
 
+build:
+    nodes:
+        tests: true
+        analysis:
+            tests:
+                override:
+                    -
+                        command: phpcs-run
+                        use_website_config: true
+                    - php-scrutinizer-run
+
 checks:
     php:
-        avoid_closing_tag: false
-        avoid_superglobals: false
-        coding_standard:
-          name: WordPress
-        no_exit: false
-        no_global_keyword: false
-        one_class_per_file: false
-        psr2_class_declaration: false
-        psr2_control_structure_declaration: false
-        psr2_switch_declaration: false
-        variable_existence: false
-        verify_access_scope_valid: false
-        verify_argument_usable_as_reference: false
         verify_property_names: false
+        verify_argument_usable_as_reference: true
+        verify_access_scope_valid: true
+        variable_existence: true
+        useless_calls: true
+        use_statement_alias_conflict: false
+        unused_variables: true
+        unused_properties: false
+        unused_parameters: false
+        unused_methods: false
+        unreachable_code: false
+        too_many_arguments: true
+        symfony_request_injection: false
+        switch_fallthrough_commented: false
+        sql_injection_vulnerabilities: false
+        security_vulnerabilities: false
+        return_in_constructor: true
+        require_scope_for_methods: true
+        require_php_tag_first: true
+        property_assignments: true
+        precedence_mistakes: true
+        precedence_in_conditions: true
+        parse_doc_comments: false
+        parameter_non_unique: true
+        overriding_private_members: true
+        overriding_parameter: true
+        non_commented_empty_catch_block: false
+        no_trait_type_hints: false
+        no_trailing_whitespace: true
+        no_short_open_tag: true
+        no_property_on_interface: true
+        no_non_implemented_abstract_methods: true
+        no_exit: false
+        no_eval: false
+        no_error_suppression: false
+        no_debug_code: true
+        missing_arguments: true
+        method_calls_on_non_object: true
+        instanceof_class_exists: false
+        foreach_usable_as_reference: false
+        foreach_traversable: true
+        fix_doc_comments: false
+        encourage_shallow_comparison: true
+        duplication: true
+        deprecated_code_usage: true
+        deadlock_detection_in_loops: false
+        comparison_always_same_result: true
+        code_rating: false
+        closure_use_not_conflicting: false
+        closure_use_modifiable: false
+        catch_class_exists: false
+        call_to_parent_method: true
+        avoid_superglobals: false
+        avoid_length_functions_in_loops: true
+        avoid_entity_manager_injection: false
+        avoid_duplicate_types: false
+        avoid_closing_tag: true
+        assignment_of_null_return: true
+        argument_type_checks: true
+        return_doc_comments: true
+        return_doc_comment_if_not_inferrable: true
+        parameter_doc_comments: true
+        param_doc_comment_if_not_inferrable: true
+        no_short_variable_names:
+            minimum: '3'
+        no_short_method_names:
+            minimum: '5'
+        no_long_variable_names:
+            maximum: '20'
+        fix_line_ending: true
 
 coding_style:
     php:
