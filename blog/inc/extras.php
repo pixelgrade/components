@@ -223,3 +223,22 @@ if ( ! function_exists( 'pixelgrade_custom_excerpt_length' ) ) {
 	}
 }
 add_filter( 'excerpt_length', 'pixelgrade_custom_excerpt_length', 50 );
+
+if ( ! function_exists( 'pixelgrade_wrap_archive_pre_title' ) ) {
+	/**
+	 * Wrap the archive pretitle (i.e. Category: ) in a span to allow for better styling.
+	 *
+	 * @param string $title
+	 *
+	 * @return string
+	 */
+	function pixelgrade_wrap_archive_pre_title( $title ) {
+		$marker_position = strpos( $title, ': ' );
+		if ( false !== $marker_position ) {
+			$title = '<span class="archive-title__pre-title">' . substr( $title, 0, $marker_position + 2 ) . '</span>' . substr( $title, $marker_position + 2 );
+		}
+
+		return $title;
+	}
+}
+add_filter( 'get_the_archive_title', 'pixelgrade_wrap_archive_pre_title', 10, 1 );
