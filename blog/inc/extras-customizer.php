@@ -46,8 +46,8 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 		$output = '';
 
 		$output .= $selector . ' {' . PHP_EOL .
-		           'padding-top: ' . $padding . ';' . PHP_EOL .
-		           '}' . PHP_EOL;
+				   'padding-top: ' . $padding . ';' . PHP_EOL .
+				   '}' . PHP_EOL;
 
 		return $output;
 	}
