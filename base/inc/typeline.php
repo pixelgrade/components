@@ -92,7 +92,7 @@ function typeline_negative_value_cb( $value, $selector, $property, $unit ) {
 	$output = '';
 	$output .= $selector . ' {' . PHP_EOL .
 			   $property . ': ' . ( - 1 * $value ) . $unit . ';' . PHP_EOL .
-			   '}'  . PHP_EOL;
+			   '}' . PHP_EOL;
 
 	return $output;
 }
@@ -166,7 +166,7 @@ function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 		for ( $i = 0; $i < count( $breakpoints ); $i ++ ) {
 			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / count( $breakpoints ) + 1;
 			$newValue = round( $value / $ratio );
-			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+			$output .= '@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
 					   $selector . ' {' . PHP_EOL .
 					   $property . ': ' . $newValue . $unit . ';' . PHP_EOL .
 					   '}' . PHP_EOL .
@@ -280,7 +280,7 @@ function typeline_negative_spacing_cb( $value, $selector, $property, $unit ) {
 			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / count( $breakpoints ) + 1;
 			$newValue = round( $value / $ratio );
 
-			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+			$output .= '@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
 					   $selector . ' {' . PHP_EOL .
 					   $property . ': ' . -1 * $newValue . $unit . ';' . PHP_EOL .
 					   '}' . PHP_EOL .

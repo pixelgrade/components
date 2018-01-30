@@ -630,7 +630,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				if ( ! $this->isFieldDisabled( 'source_category' )
 					 && 'category' === $instance['source']
 					 && ! empty( $instance['source_category'] )
-					 && -1 != $instance['source_category'] ) {
+					 && - 1 != $instance['source_category'] ) {
 					$query_args['tax_query'] = array(
 						array(
 							'taxonomy' => 'category',
@@ -641,7 +641,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				} elseif ( ! $this->isFieldDisabled( 'source_tag' )
 						   && 'tag' === $instance['source']
 						   && ! empty( $instance['source_tag'] )
-						   && -1 != $instance['source_tag'] ) {
+						   && - 1 != $instance['source_tag'] ) {
 					$query_args['tax_query'] = array(
 						array(
 							'taxonomy' => 'post_tag',

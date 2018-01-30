@@ -167,14 +167,14 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 								. "</p><p><a href='#'>"
 								. esc_html__( 'Learn more about Managing the Hero Area', '__components_txtd' )
 								. '</a></p>"></span>',
-				'pages'      => array( 'page', ), // Post type
+				'pages'      => array( 'page',), // Post type
 				'context'    => 'normal',
 				'priority'   => 'high',
 				'hidden'     => false, //we need this set to false so the metaboxes will work for the page for posts also
 				'show_names' => true, // Show field names on the left
 				'show_on'    => array(
 					'key'   => 'page-template',
-					'value' => array( 'default', ), //the page templates to show on ie. 'page-templates/page-builder.php'
+					'value' => array( 'default',), //the page templates to show on ie. 'page-templates/page-builder.php'
 				),
 				'show_on_page_for_posts' => true, //this is a special entry of our's to force things
 				'fields'     => array(
