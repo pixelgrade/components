@@ -676,8 +676,8 @@ function pixelgrade_attachment_url_to_postid( $url ) {
  * @return string|false
  */
 function pixelgrade_image_src( $target, $size = null ) {
-	if ( isset( $_GET[ $target ] ) && ! empty( $target ) ) {
-		return pixelgrade_get_attachment_image_src( absint( $_GET[ $target ] ), $size );
+	if ( isset( $_GET[$target] ) && ! empty( $target ) ) {
+		return pixelgrade_get_attachment_image_src( absint( $_GET[$target] ), $size );
 	} else {
 // empty target, or no query
 		$image = pixelgrade_option( $target );
@@ -852,17 +852,17 @@ function pixelgrade_parse_content_tags( $content ) {
 	$content = str_replace( '%year%', date( 'Y' ), $content );
 
 	// %site-title% or %site_title%
-	$content = str_replace( '%site-title%', get_bloginfo('name'), $content );
-	$content = str_replace( '%site_title%', get_bloginfo('name'), $content );
+	$content = str_replace( '%site-title%', get_bloginfo( 'name' ), $content );
+	$content = str_replace( '%site_title%', get_bloginfo( 'name' ), $content );
 
 	// This is a little sketchy because who is the user?
 	// It is not necessarily the logged in user, nor the Administrator user...
 	// We will go with the author for cases where we are in a post/page context
 
 	// Since we need to dd some heavy lifting, we will only do it when necessary
-	if ( false !== strpos( $content, '%first_name%') ||
-		 false !== strpos( $content, '%last_name%') ||
-		 false !== strpos( $content, '%display_name%') ) {
+	if ( false !== strpos( $content, '%first_name%' ) ||
+		 false !== strpos( $content, '%last_name%' ) ||
+		 false !== strpos( $content, '%display_name%' ) ) {
 		$user_id = false;
 		// We need to get the current ID in more global manner
 		$current_object_id = get_queried_object_id();
