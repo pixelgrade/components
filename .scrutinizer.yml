@@ -16,7 +16,11 @@ tools:
 
 build:
     nodes:
-        tests: true
+        tests:
+            before:
+                -
+                    command: .bin/install-wp-tests.sh
+                    cwd: .
         analysis:
             dependencies:
                 before:
