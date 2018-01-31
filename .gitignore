@@ -1,0 +1,15 @@
+node_modules
+bower_components
+vendor
+wordpress
+
+.DS_Store
+.sass-cache
+.svn
+.idea
+*.sublime-project
+*.sublime-workspace
+
+*.map
+
+gulpconfig.json

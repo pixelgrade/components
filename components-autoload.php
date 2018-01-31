@@ -41,6 +41,8 @@ class Pixelgrade_Components_Autoloader {
 		'bin',
 		'docs',
 		'tests',
+		'vendor',
+		'wordpress',
 	);
 
 	/**

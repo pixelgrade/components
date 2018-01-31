@@ -4,6 +4,8 @@ filter:
         - 'tests/*'
         - 'bin/*'
         - 'docs/*'
+    dependency_paths:
+        - 'wordpress/'
 tools:
     external_code_coverage: false
     php_code_sniffer:
@@ -16,6 +18,9 @@ build:
     nodes:
         tests: true
         analysis:
+            dependencies:
+                before:
+                    - composer require --dev johnpbloch/wordpress
             tests:
                 override:
                     -
