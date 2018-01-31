@@ -253,7 +253,7 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 function pixelgrade_has_custom_logo_transparent( $blog_id = 0 ) {
 	$switched_blog = false;
 
-	if ( is_multisite() && ! empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
+	if ( is_multisite() && ! empty( $blog_id ) && get_current_blog_id() !== absint( $blog_id ) ) {
 		switch_to_blog( $blog_id );
 		$switched_blog = true;
 	}
@@ -278,7 +278,7 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
 	$html          = '';
 	$switched_blog = false;
 
-	if ( is_multisite() && ! empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
+	if ( is_multisite() && ! empty( $blog_id ) && get_current_blog_id() !== absint( $blog_id ) ) {
 		switch_to_blog( $blog_id );
 		$switched_blog = true;
 	}

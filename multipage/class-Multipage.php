@@ -143,7 +143,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	function postClasses( $classes ) {
+	public function postClasses( $classes ) {
 		// we first need to know the bigger picture - the location this template part was loaded from
 		$location = pixelgrade_get_location();
 
@@ -163,7 +163,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	 *
 	 * @return bool
 	 */
-	function preventHeroScrollDownArrow( $show, $location, $post_id ) {
+	public function preventHeroScrollDownArrow( $show, $location, $post_id ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			$show = false;
 		}

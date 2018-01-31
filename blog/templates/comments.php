@@ -46,8 +46,7 @@ if ( post_password_required() ) {
 			<span class="c-comments-toggle__text">
 			<?php
 				printf( // WPCS: XSS OK.
-					esc_html( _nx( '%2$s comment', '%1$s comments', get_comments_number(), 'comments title', '__components_txtd' ) ),
-					number_format_i18n( get_comments_number() ),
+					esc_html( _nx( '%1$s comment', '%1$s comments', get_comments_number(), 'comments title', '__components_txtd' ) ),
 					number_format_i18n( get_comments_number() )
 				);
 				?>

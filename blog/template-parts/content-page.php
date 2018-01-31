@@ -95,7 +95,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					}
 					?>
 
-					<div class="u-content-bottom-spacing  <?php echo $visibility_class; ?>">
+					<div class="u-content-bottom-spacing  <?php echo esc_attr( $visibility_class ); ?>">
 						<div class="u-content-width">
 
 							<?php

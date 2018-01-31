@@ -45,7 +45,7 @@ function pixelgrade_element_attributes( $attributes = array(), $location = '' ) 
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes );
+		echo esc_attr( join( ' ', $full_attributes ) );
 	}
 }
 
@@ -115,7 +115,7 @@ function pixelgrade_body_attributes( $attributes = array() ) {
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes );
+		echo esc_attr( join( ' ', $full_attributes ) );
 	}
 } // function
 
@@ -129,7 +129,7 @@ function pixelgrade_body_attributes( $attributes = array() ) {
  */
 function pixelgrade_css_class( $class = '', $location = '', $prefix = '', $suffix = '' ) {
 	// Separates classes with a single space, collates classes for element
-	echo 'class="' . join( ' ', pixelgrade_get_css_class( $class, $location ) ) . '"';
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_css_class( $class, $location ) ) ) . '"';
 }
 
 /**
@@ -225,7 +225,8 @@ if ( ! function_exists( 'pixelgrade_get_image_aspect_ratio_type' ) ) {
 		}
 
 		// Try and get the attachment post object
-		if ( ! $image = get_post( $image ) ) {
+		$image = get_post( $image );
+		if ( ! $image ) {
 			return $default;
 		}
 
@@ -271,8 +272,8 @@ if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
 
 			// Returns false if the archive option or singular option is unticked.
 			if ( ( true === $opts['archive'] && ( is_home() || is_archive() || is_search() ) && ! $opts['archive-option'] )
-				 || ( true === $opts['post'] && is_single() && ! $opts['post-option'] )
-				 || ( true === $opts['page'] && is_singular() && is_page() && ! $opts['page-option'] )
+				|| ( true === $opts['post'] && is_single() && ! $opts['post-option'] )
+				|| ( true === $opts['page'] && is_singular() && is_page() && ! $opts['page-option'] )
 			) {
 				return false;
 			}
@@ -333,7 +334,7 @@ if ( ! function_exists( 'pixelgrade_get_the_taxonomy_dropdown' ) ) {
 
 		foreach ( $terms as $term ) {
 			$selected_attr = '';
-			if ( ! empty( $selected ) && $selected == $term->slug ) {
+			if ( ! empty( $selected ) && $selected === $term->slug ) {
 				$selected_attr = 'selected';
 			}
 			$output .= '<option value="' . esc_attr( get_term_link( intval( $term->term_id ), $taxonomy ) ) . '" ' . esc_attr( $selected_attr ) . '>' . esc_html( $term->name ) . '</option>';

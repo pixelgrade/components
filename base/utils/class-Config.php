@@ -286,7 +286,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			// Determine the relation we will use between the checks
 			$relation = 'AND';
 			if ( isset( $checks['relation'] ) ) {
-				if ( strtoupper( $checks['relation'] ) == 'OR' ) {
+				if ( 'OR' === strtoupper( $checks['relation'] ) ) {
 					$relation = 'OR';
 				}
 
@@ -299,10 +299,10 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			// In case of an OR relation, only one check needs to pass.
 			foreach ( $checks as $check ) {
 				$response = self::evaluateCheck( $check );
-				if ( empty( $response ) && 'AND' == $relation ) {
+				if ( empty( $response ) && 'AND' === $relation ) {
 					// One check function failed in an AND relation, return
 					return false;
-				} elseif ( ! empty( $response ) && 'OR' == $relation ) {
+				} elseif ( ! empty( $response ) && 'OR' === $relation ) {
 					// A check has passed in an OR relation, all is good
 					return true;
 				}
@@ -427,7 +427,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			$operator = strtoupper( $args['compare'] );
 
 			// On invalid operators, return the data to compare, but give an notice to developers
-			if ( empty( $operator ) || ! in_array( $operator, $operators ) ) {
+			if ( empty( $operator ) || ! in_array( $operator, $operators, true ) ) {
 				_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is invalid! Please check your comparison!', $operator ), null );
 				return $data;
 			}
@@ -450,22 +450,22 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			switch ( $operator ) {
 				case '=':
 					return $data == $value;
-				break;
+					break;
 				case '!=':
 					return $data != $value;
-				break;
+					break;
 				case '>':
 					return $data > $value;
-				break;
+					break;
 				case '>=':
 					return $data >= $value;
-				break;
+					break;
 				case '<':
 					return $data < $value;
-				break;
+					break;
 				case '<=':
 					return $data <= $value;
-				break;
+					break;
 				case 'IN':
 					// We will give it a try to convert the string to a list
 					if ( is_string( $value ) ) {
@@ -474,11 +474,12 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 
 					if ( ! is_array( $value ) ) {
 						_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', $operator ), null );
+
 						return $data;
 					}
 
 					return in_array( $data, $value );
-				break;
+					break;
 				case 'NOT IN':
 					// We will give it a try to convert the string to a list
 					if ( is_string( $value ) ) {
@@ -487,11 +488,12 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 
 					if ( ! is_array( $value ) ) {
 						_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', $operator ), null );
+
 						return $data;
 					}
 
 					return ! in_array( $data, $value );
-				break;
+					break;
 				default:
 					break;
 			}

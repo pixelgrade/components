@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * The main template file.
  *
  * This is the most generic template file in a WordPress theme
@@ -11,7 +10,7 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package Components
- * @since 1.0.0
+ * @since   1.0.0
  */
 
 // This is intentionally empty as this is only used to mock a WordPress theme thus allowing us to test the components.

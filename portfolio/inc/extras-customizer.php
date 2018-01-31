@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /*
- ====================================
+ * ====================================
  * THESE CALLBACKS ARE USED WIDELY
  * They should be provided by the Base component.
  * But just in case, provide a fallback here.
@@ -49,8 +49,8 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 		$output = '';
 
 		$output .= $selector . ' {' . PHP_EOL .
-				   'padding-top: ' . $padding . ';' . PHP_EOL .
-				   '}' . PHP_EOL;
+				'padding-top: ' . $padding . ';' . PHP_EOL .
+				'}' . PHP_EOL;
 
 		return $output;
 	}
@@ -108,7 +108,7 @@ endif;
 add_action( 'customize_preview_init', 'pixelgrade_aspect_ratio_cb_customizer_preview', 20 );
 
 /*
- ====================================
+ * ====================================
  * PORTFOLIO GRID CALLBACKS
  * ==================================== */
 
@@ -198,16 +198,16 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
-			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
-			$newValue = round( $value / $ratio );
+			$ratio     = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
+			$new_value = round( $value / $ratio );
 
 			$output .=
 				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 				'.c-gallery--portfolio {' . PHP_EOL .
-				'margin-top: calc(-' . $newValue . 'px);' . PHP_EOL .
+				'margin-top: calc(-' . $new_value . 'px);' . PHP_EOL .
 				'}' . PHP_EOL .
 				'.c-gallery--portfolio > * {' . PHP_EOL .
-				'margin-top: ' . $newValue . 'px;' . PHP_EOL .
+				'margin-top: ' . $new_value . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .
 				'}' . PHP_EOL;
 		}
@@ -239,19 +239,19 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( $value, $selector, $pr
 
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
-			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
-			$newValue = round( $value / $ratio );
+			$ratio     = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
+			$new_value = round( $value / $ratio );
 
 			$output .=
 				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 				'.c-gallery--portfolio {' . PHP_EOL .
-				'margin-left: -' . $newValue . 'px;' . PHP_EOL .
+				'margin-left: -' . $new_value . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .
 				'.c-gallery--portfolio > * {' . PHP_EOL .
-				'padding-left: ' . $newValue . 'px;' . PHP_EOL .
+				'padding-left: ' . $new_value . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .
 				'.c-gallery--portfolio.c-gallery--packed .c-card {' . PHP_EOL .
-				'left: ' . $newValue . 'px;' . PHP_EOL .
+				'left: ' . $new_value . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .
 				'}' . PHP_EOL;
 		}
@@ -488,7 +488,7 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( value, selector, prope
 add_action( 'customize_preview_init', 'pixelgrade_portfolio_grid_horizontal_spacing_cb_customizer_preview', 20 );
 
 /*
- ====================================
+ * ====================================
  * PORTFOLIO GRID CONTROLS CONDITIONALS
  * ==================================== */
 
@@ -500,7 +500,7 @@ add_action( 'customize_preview_init', 'pixelgrade_portfolio_grid_horizontal_spac
 function pixelgrade_portfolio_items_title_alignment_nearby_control_show() {
 	$position = pixelgrade_option( 'portfolio_items_title_position' );
 	// We hide it when displaying as overlay
-	if ( 'overlay' == $position ) {
+	if ( 'overlay' === $position ) {
 		return false;
 	}
 
@@ -515,7 +515,7 @@ function pixelgrade_portfolio_items_title_alignment_nearby_control_show() {
 function pixelgrade_portfolio_items_title_alignment_overlay_control_show() {
 	$position = pixelgrade_option( 'portfolio_items_title_position' );
 	// We hide it when not displaying as overlay
-	if ( 'overlay' != $position ) {
+	if ( 'overlay' !== $position ) {
 		return false;
 	}
 
@@ -529,8 +529,8 @@ function pixelgrade_portfolio_items_title_alignment_overlay_control_show() {
  */
 function pixelgrade_portfolio_items_aspect_ratio_control_show() {
 	$layout = pixelgrade_option( 'portfolio_grid_layout' );
-	// We hide it when not regular or mosaic layout
-	if ( ! in_array( $layout, array( 'regular', 'mosaic' ) ) ) {
+	// We hide it when not regular or mosaic layout.
+	if ( ! in_array( $layout, array( 'regular', 'mosaic' ), true ) ) {
 		return false;
 	}
 

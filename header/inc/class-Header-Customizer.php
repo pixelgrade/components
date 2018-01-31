@@ -462,16 +462,16 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		}
 
 		$header_position = pixelgrade_option( 'header_position' );
-		if ( 'sticky' == $header_position || empty( $header_position ) ) {
+		if ( 'sticky' === $header_position || empty( $header_position ) ) {
 			$classes[] = 'u-site-header-sticky';
 		}
 
 		$header_width = pixelgrade_option( 'header_width' );
-		if ( 'full' == $header_width || empty( $header_width ) ) {
+		if ( 'full' === $header_width || empty( $header_width ) ) {
 			$classes[] = 'u-site-header-full-width';
 		}
 
-		if ( 'underline' == pixelgrade_option( 'header_links_active_style' ) ) {
+		if ( 'underline' === pixelgrade_option( 'header_links_active_style' ) ) {
 			$classes[] = 'u-underlined-header-links';
 		}
 

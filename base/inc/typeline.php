@@ -91,8 +91,8 @@ function typeline_get_y( $x, $points ) {
 function typeline_negative_value_cb( $value, $selector, $property, $unit ) {
 	$output  = '';
 	$output .= $selector . ' {' . PHP_EOL .
-			   $property . ': ' . ( - 1 * $value ) . $unit . ';' . PHP_EOL .
-			   '}' . PHP_EOL;
+			$property . ': ' . ( - 1 * $value ) . $unit . ';' . PHP_EOL .
+			'}' . PHP_EOL;
 
 	return $output;
 }
@@ -153,8 +153,8 @@ function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 	}
 
 	$output .= $selector . ' {' . PHP_EOL .
-			   $property . ': ' . $value . $unit . ';' . PHP_EOL .
-			   '}' . PHP_EOL;
+			$property . ': ' . $value . $unit . ';' . PHP_EOL .
+			'}' . PHP_EOL;
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
@@ -165,13 +165,13 @@ function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 		$breakpoints    = $typeline_config['spacings']['breakpoints'];
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
-			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
-			$newValue = round( $value / $ratio );
-			$output  .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
-					   $selector . ' {' . PHP_EOL .
-					   $property . ': ' . $newValue . $unit . ';' . PHP_EOL .
-					   '}' . PHP_EOL .
-					   '}' . PHP_EOL;
+			$ratio     = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
+			$new_value = round( $value / $ratio );
+			$output   .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
+					$selector . ' {' . PHP_EOL .
+					$property . ': ' . $new_value . $unit . ';' . PHP_EOL .
+					'}' . PHP_EOL .
+					'}' . PHP_EOL;
 		}
 	}
 
@@ -267,8 +267,8 @@ add_action( 'customize_preview_init', 'typeline_spacing_cb_customizer_preview', 
 function typeline_negative_spacing_cb( $value, $selector, $property, $unit ) {
 	$output  = '';
 	$output .= $selector . ' {' . PHP_EOL .
-			   $property . ': ' . - 1 * $value . $unit . ';' . PHP_EOL .
-			   '}' . PHP_EOL;
+			$property . ': ' . - 1 * $value . $unit . ';' . PHP_EOL .
+			'}' . PHP_EOL;
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
@@ -278,14 +278,14 @@ function typeline_negative_spacing_cb( $value, $selector, $property, $unit ) {
 		$breakpoints    = $typeline_config['spacings']['breakpoints'];
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
-			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
-			$newValue = round( $value / $ratio );
+			$ratio     = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
+			$new_value = round( $value / $ratio );
 
 			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
-					   $selector . ' {' . PHP_EOL .
-					   $property . ': ' . - 1 * $newValue . $unit . ';' . PHP_EOL .
-					   '}' . PHP_EOL .
-					   '}' . PHP_EOL;
+					$selector . ' {' . PHP_EOL .
+					$property . ': ' . - 1 * $new_value . $unit . ';' . PHP_EOL .
+					'}' . PHP_EOL .
+					'}' . PHP_EOL;
 		}
 	}
 
@@ -413,7 +413,7 @@ function typeline_font_cb( $value, $font ) {
 
 		if ( ! empty( $value['font_weight'] ) ) {
 			// a little bit of sanity check - in case it's not a number
-			if ( $value['font_weight'] === 'regular' ) {
+			if ( 'regular' === $value['font_weight'] ) {
 				$value['font_weight'] = 'normal';
 			}
 		}
@@ -453,10 +453,10 @@ function typeline_font_cb( $value, $font ) {
 		$breakpoints    = $typeline_config['typography']['breakpoints'];
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
-			$ratio    = ( typeline_get_y( $value['font_size'], $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
-			$newValue = round( $value['font_size'] / $ratio );
+			$ratio     = ( typeline_get_y( $value['font_size'], $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
+			$new_value = round( $value['font_size'] / $ratio );
 
-			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . $font['selector'] . ' { font-size: ' . $newValue . $font['fields']['font-size']['unit'] . '; } }' . PHP_EOL;
+			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . $font['selector'] . ' { font-size: ' . $new_value . $font['fields']['font-size']['unit'] . '; } }' . PHP_EOL;
 		}
 	}
 

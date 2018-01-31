@@ -61,8 +61,8 @@ if ( empty( $post_id ) ) {
 			?>
 
 			<div class="c-hero__map  c-hero__layer"
-				 data-url="<?php echo esc_attr( $map_url ); ?>" <?php echo ( $map_custom_style == 'on' ) ? 'data-customstyle' : ''; ?>
-				 data-markercontent="<?php echo esc_attr( $map_marker_content ); ?>"></div>
+				data-url="<?php echo esc_attr( $map_url ); ?>" <?php echo ( 'on' === $map_custom_style ) ? 'data-customstyle' : ''; ?>
+				data-markercontent="<?php echo esc_attr( $map_marker_content ); ?>"></div>
 		</div>
 
 	</div><!-- .c-hero -->

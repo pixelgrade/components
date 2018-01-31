@@ -141,16 +141,16 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		private function mergedArgs() {
 			// Set default arguments
 			if ( get_query_var( 'paged' ) ) {
-				$currentPage = get_query_var( 'paged' );
+				$current_page = get_query_var( 'paged' );
 			} elseif ( get_query_var( 'page' ) ) {
-				$currentPage = get_query_var( 'page' );
+				$current_page = get_query_var( 'page' );
 			} else {
-				$currentPage = 1;
+				$current_page = 1;
 			}
 			$default           = array(
 				'suppress_filters'    => true,
 				'ignore_sticky_posts' => 1,
-				'paged'               => $currentPage,
+				'paged'               => $current_page,
 				'posts_per_page'      => get_option( 'posts_per_page' ), // Set posts per page here to set the LIMIT clause etc
 				'nopaging'            => false,
 			);
@@ -173,15 +173,15 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 			$this->validatePageSlug();
 
 			if ( ! is_admin() // Only target the front end
-			 && $q->is_main_query() // Only target the main query
+				&& $q->is_main_query() // Only target the main query
 			) {
-				$page_ID = $q->get( 'page_id' );
-				if ( empty( $page_ID ) ) {
-					$page_ID = $q->queried_object_id;
+				$page_id = $q->get( 'page_id' );
+				if ( empty( $page_id ) ) {
+					$page_id = $q->queried_object_id;
 				}
 
-				if ( ! empty( $page_ID )
-				 && $this->validated_page_slug == get_page_template_slug( $page_ID ) // Only target our specified page
+				if ( ! empty( $page_id )
+					&& get_page_template_slug( $page_id ) === $this->validated_page_slug // Only target our specified page.
 				) {
 					// Remove the pre_get_posts action to avoid unexpected issues
 					remove_action( current_action(), array( $this, __METHOD__ ) );
@@ -248,7 +248,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 			}
 		}
 
-		function fixTheTitle( $title ) {
+		public function fixTheTitle( $title ) {
 			// due to the fact that we set is_singular to false, the page title will not be picked up
 			// we need to help it
 			$title['title'] = single_post_title( '', false );
@@ -543,13 +543,13 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		 * @return WP_Query
 		 */
 		public function jetpackForceInjectorQuery( $query ) {
-			$page_ID = $query->get( 'page_id' );
-			if ( empty( $page_ID ) ) {
-				$page_ID = $query->queried_object_id;
+			$page_id = $query->get( 'page_id' );
+			if ( empty( $page_id ) ) {
+				$page_id = $query->queried_object_id;
 			}
 
-			if ( ! empty( $page_ID )
-			 && $this->validated_page_slug == get_page_template_slug( $page_ID ) // Only target our specified page
+			if ( ! empty( $page_id )
+				&& get_page_template_slug( $page_id ) === $this->validated_page_slug // Only target our specified page.
 			) {
 				return $this->injector_query;
 			}

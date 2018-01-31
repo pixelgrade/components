@@ -424,7 +424,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 
 				$k = 0;
 				// Search the first part in the $namespace parts
-				$key = array_search( $block_id_parts[ $k ], $namespace_parts );
+				$key = array_search( $block_id_parts[ $k ], $namespace_parts, true );
 				// If we have found the part, this is the current point of merge
 				if ( false !== $key ) {
 					// Now we need to see how many consecutive parts are common
@@ -435,7 +435,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 						// Check the next part
 						$k ++;
 						$key ++;
-					} while ( $block_id_parts[ $k ] == $namespace_parts[ $key ] );
+					} while ( $block_id_parts[ $k ] === $namespace_parts[ $key ] );
 
 					// Now we need to discard the end part of the $namespace that is not common
 					$namespace_parts = array_slice( $namespace_parts, 0, $key );

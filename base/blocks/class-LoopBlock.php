@@ -27,33 +27,6 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 	public $type = 'loop';
 
 	/**
-	 * Constructor.
-	 *
-	 * Supplied `$args` override class property defaults.
-	 *
-	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
-	 * @param string                   $id      Block ID.
-	 * @param array                    $args    {
-	 *         Optional. Arguments to override class property defaults.
-	 *
-	 *     @type int                  $instance_number Order in which this instance was created in relation
-	 *                                                 to other instances.
-	 *     @type string               $id              Block ID.
-	 *     @type int                  $priority        Order priority to load the block. Default 10.
-	 *     @type string|array         $wrappers        The block's wrappers. It can be a string or an array of Pixelgrade_BlockWrapper instances.
-	 *     @type string               $end_wrappers    The block's end wrappers if $wrappers was string.
-	 *     @type array                $checks          The checks config to determine at render time if this block should be rendered.
-	 *     @type string               $type            Block type. Core blocks include 'layout', 'template', 'callback'.
-	 *                                                 Default 'layout'.
-	 *     @type array                $blocks          Child blocks definition.
-	 * }
-	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
-	 */
-	public function __construct( $manager, $id, $args = array(), $parent = null ) {
-		parent::__construct( $manager, $id, $args, $parent );
-	}
-
-	/**
 	 * Render the loop with each child blocks group.
 	 *
 	 * Allows the content to be overridden without having to rewrite the wrapper in `$this::render()`.
@@ -88,14 +61,14 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 		do_action( "pixelgrade_before_render_loop_block_{$this->id}_content", $this, $blocks_trail );
 
 		/*
-		 =====================
+		 * =====================
 		 * Do the WordPress loop
 		 */
 		while ( have_posts() ) :
 			the_post();
 
 			/*
-			 =======================
+			 * =======================
 			 * Render the child blocks
 			 */
 			parent::renderContent( $blocks_trail );

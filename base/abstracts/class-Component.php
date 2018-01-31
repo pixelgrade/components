@@ -229,8 +229,8 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// On cross config, another component (or others for what matters), can not modify the 'cross_config' section of the config.
 		// Not at this stage anyhow. That is to be done before the setup_cross_config, best via the "pixelgrade_{$hook_slug}_initial_config"
 		if ( ! empty( $this->config['cross_config'] ) &&
-			 ! empty( $modified_config['cross_config'] ) &&
-			 false !== Pixelgrade_Array::arrayDiffAssocRecursive( $this->config['cross_config'], $modified_config['cross_config'] ) ) {
+			! empty( $modified_config['cross_config'] ) &&
+			false !== Pixelgrade_Array::arrayDiffAssocRecursive( $this->config['cross_config'], $modified_config['cross_config'] ) ) {
 			_doing_it_wrong( __METHOD__, sprintf( 'You should not modify the \'cross_config\' part of the component config through the "pixelgrade_%1$s_cross_config" dynamic filter (due to possible logic loops). Use the "pixelgrade_%1$s_initial_config" filter instead.', $hook_slug ), null );
 			return;
 		}
@@ -466,13 +466,13 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		}
 
 		// Get the current page ID
-		$page_ID = $query->get( 'page_id' );
-		if ( empty( $page_ID ) ) {
-			$page_ID = $query->queried_object_id;
+		$page_id = $query->get( 'page_id' );
+		if ( empty( $page_id ) ) {
+			$page_id = $query->queried_object_id;
 		}
 
 		// Bail if we don't have a page ID
-		if ( empty( $page_ID ) ) {
+		if ( empty( $page_id ) ) {
 			return;
 		}
 		// For each custom page template that has a custom loop for some custom post type(s), setup the queries
@@ -483,7 +483,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			}
 
 			// Allow others to short-circuit this
-			if ( true === apply_filters( 'pixelgrade_skip_custom_loops_for_page', false, $page_ID, $page_template_config ) ) {
+			if ( true === apply_filters( 'pixelgrade_skip_custom_loops_for_page', false, $page_id, $page_template_config ) ) {
 				continue;
 			}
 
@@ -497,7 +497,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			// Determine how many posts per page
 			if ( ! empty( $page_template_config['loop']['posts_per_page'] ) ) {
 				// We will process the posts_per_page config and get the value
-				$posts_per_page = intval( Pixelgrade_Config::getConfigValue( $page_template_config['loop']['posts_per_page'], $page_ID ) );
+				$posts_per_page = intval( Pixelgrade_Config::getConfigValue( $page_template_config['loop']['posts_per_page'], $page_id ) );
 			} else {
 				$posts_per_page = intval( get_option( 'posts_per_page' ) );
 			}
@@ -524,7 +524,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 
 			// Here we test to see if we need to exclude the featured projects
 			if ( ! empty( $page_template_config['loop']['post__not_in'] ) ) {
-				$query_args['post__not_in'] = Pixelgrade_Config::getConfigValue( $page_template_config['loop']['post__not_in'], $page_ID );
+				$query_args['post__not_in'] = Pixelgrade_Config::getConfigValue( $page_template_config['loop']['post__not_in'], $page_id );
 			}
 
 			// Determine the template part to use for individual posts - defaults to 'content' as in 'content.php'

@@ -64,7 +64,7 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	 *     @type string|array         $callback       The callable function definition.
 	 *     @type array                $args            The args to pass to the callable function.
 	 * }
-	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive a function, something is wrong

@@ -35,7 +35,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 		$items_primary_meta   = pixelgrade_option( 'portfolio_items_primary_meta', 'types' );
 		$items_secondary_meta = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
 
-		if ( 'category' == $items_primary_meta || 'category' == $items_secondary_meta ) {
+		if ( 'category' === $items_primary_meta || 'category' === $items_secondary_meta ) {
 			$category = '';
 
 			if ( is_page() ) {
@@ -60,7 +60,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 			$meta['category'] = $category;
 		}
 
-		if ( 'tags' == $items_primary_meta || 'tags' == $items_secondary_meta ) {
+		if ( 'tags' === $items_primary_meta || 'tags' === $items_secondary_meta ) {
 			$post_tags = get_the_terms( get_the_ID(), Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG );
 			$tags      = '';
 			if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
@@ -78,7 +78,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 
 		$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
 		if ( comments_open() ) {
-			if ( $comments_number == 0 ) {
+			if ( 0 === intval( $comments_number ) ) {
 				$comments = esc_html__( 'No Comments', '__components_txtd' );
 			} else {
 				$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
@@ -172,7 +172,7 @@ function pixelgrade_portfolio_get_project_main_type( $post_ID = null ) {
 	}
 
 	// obviously pages don't have categories
-	if ( 'page' == get_post_type( $post_ID ) ) {
+	if ( 'page' === get_post_type( $post_ID ) ) {
 		return false;
 	}
 

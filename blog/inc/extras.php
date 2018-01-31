@@ -27,12 +27,12 @@ function pixelgrade_add_cats_list( $content ) {
 	$cats_content = '';
 
 	// Hide category text for pages.
-	$add = ( 'post' == get_post_type() && is_singular( 'post' ) && is_main_query() );
+	$add = ( 'post' === get_post_type() && is_singular( 'post' ) && is_main_query() );
 	if ( apply_filters( 'pixelgrade_add_categories_to_content', $add ) ) {
 		// This is list can be filtered via 'the_category_list' and the main category be removed on single posts
 		$categories_list = get_the_category_list( ' ' );
 
-		if ( ! empty( $categories_list ) && 'Uncategorized' != $categories_list ) {
+		if ( ! empty( $categories_list ) && 'Uncategorized' !== $categories_list ) {
 			$cats_content .= '<div class="cats"><span class="cats__title">' . esc_html__( 'Categories', '__components_txtd' ) . sprintf( '</span>' . esc_html__( '%1$s', '__components_txtd' ), $categories_list ) . '</div>'; // WPCS: XSS OK.
 		}
 	}
@@ -55,7 +55,7 @@ function pixelgrade_add_tags_list( $content ) {
 	$tags_content = '';
 
 	// Hide tag text for pages.
-	$add = ( 'post' == get_post_type() && is_singular( 'post' ) && is_main_query() );
+	$add = ( 'post' === get_post_type() && is_singular( 'post' ) && is_main_query() );
 	if ( apply_filters( 'pixelgrade_add_tags_to_content', $add ) ) {
 		$tags_list = get_the_tag_list();
 
@@ -82,7 +82,7 @@ function pixelgrade_remove_main_category_from_list( $categories, $post_id ) {
 		$main_category = pixelgrade_get_main_category( $post_id );
 
 		foreach ( $categories as $key => $category ) {
-			if ( $main_category->term_id == $category->term_id ) {
+			if ( $main_category->term_id === $category->term_id ) {
 				unset( $categories[ $key ] );
 			}
 		}
@@ -157,11 +157,11 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 	/**
 	 * Determine if we are displaying the page_for_projects page
 	 *
-	 * @param int|null $page_ID
+	 * @param int|null $page_id
 	 *
 	 * @return bool
 	 */
-	function pixelgrade_is_page_for_projects( $page_ID = null ) {
+	function pixelgrade_is_page_for_projects( $page_id = null ) {
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {
@@ -170,16 +170,16 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 			return false;
 		}
 
-		if ( empty( $page_ID ) ) {
+		if ( empty( $page_id ) ) {
 			// Get the current page ID
-			$page_ID = $wp_query->get( 'page_id' );
-			if ( empty( $page_ID ) ) {
-				$page_ID = $wp_query->queried_object_id;
+			$page_id = $wp_query->get( 'page_id' );
+			if ( empty( $page_id ) ) {
+				$page_id = $wp_query->queried_object_id;
 			}
 		}
 
 		// Bail if we don't have a page ID
-		if ( empty( $page_ID ) ) {
+		if ( empty( $page_id ) ) {
 			return false;
 		}
 
@@ -188,7 +188,7 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 			return false;
 		}
 
-		if ( $page_ID == $page_for_projects ) {
+		if ( absint( $page_id ) === absint( $page_for_projects ) ) {
 			return true;
 		}
 

@@ -162,7 +162,7 @@ class Pixelgrade_Wrapper {
 			}
 		}
 
-		self::$instance_count += 1;
+		self::$instance_count ++;
 		$this->instance_number = self::$instance_count;
 	}
 
@@ -510,9 +510,9 @@ class Pixelgrade_Wrapper {
 	 */
 	protected function maybeProcessMasterCallback() {
 		if ( ! empty( $this->master_callback )
-			 && is_array( $this->master_callback )
-			 && ! empty( $this->master_callback['callback'] )
-			 && is_callable( $this->master_callback['callback'] ) ) {
+			&& is_array( $this->master_callback )
+			&& ! empty( $this->master_callback['callback'] )
+			&& is_callable( $this->master_callback['callback'] ) ) {
 
 			$args = array();
 			if ( ! empty( $this->master_callback['args'] ) ) {

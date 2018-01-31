@@ -149,7 +149,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 					);
 
 					// We will also remember non-core template types so we can trigger the above filter for them
-					if ( ! in_array( $type, self::$core_types ) ) {
+					if ( ! in_array( $type, self::$core_types, true ) ) {
 						self::$extra_types[] = $type;
 					}
 				}
@@ -230,6 +230,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 	 * @see get_query_template()
 	 *
 	 * @param array $stack
+	 * @param array $args
 	 *
 	 * @return array
 	 */
@@ -255,7 +256,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 		$templates = array_reverse( $templates );
 		foreach ( $templates as $template ) {
 			// We are only interested in the templates that have the current $type
-			if ( $template['type'] == $type ) {
+			if ( $template['type'] === $type ) {
 				// We need to process the check section of the config, if available
 				$checked = true;
 				if ( ! empty( $template['checks'] ) ) {
@@ -308,7 +309,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 						$new_template = pixelgrade_make_relative_path( $new_template );
 
 						// We need to make sure that this template hasn't been added to the stack already
-						if ( false === array_search( $new_template, $stack ) ) {
+						if ( false === array_search( $new_template, $stack, true ) ) {
 							// Now we want to add the template to the stack as low as possible
 							// This way we allow for other templates specified by core to take precedence
 							// To do this we will search for $slug-$name.php
@@ -331,7 +332,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 	}
 endif;
 
-if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
+if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) {
 	/**
 	 * Stores a value and calls any existing function with this value.
 	 *
@@ -363,7 +364,8 @@ if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
 		 * argument it will be sent as an array.
 		 *
 		 * @param  string $callback Function name
-		 * @param  array  $arguments
+		 * @param  array $arguments
+		 *
 		 * @return mixed
 		 * @throws InvalidArgumentException
 		 */
@@ -381,4 +383,4 @@ if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
 			);
 		}
 	}
-endif;
+}

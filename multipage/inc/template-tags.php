@@ -34,7 +34,7 @@ function pixelgrade_multipage_has_children( $post = null ) {
 		return false;
 	}
 
-	if ( 'page' != $post->post_type ) {
+	if ( 'page' !== $post->post_type ) {
 		return false;
 	}
 
@@ -68,7 +68,7 @@ function pixelgrade_multipage_is_child( $post = null ) {
 		return false;
 	}
 
-	if ( 'page' == $post->post_type && $post->post_parent ) {
+	if ( 'page' === $post->post_type && $post->post_parent ) {
 		// now determine if the parent is a top level page (without any parents)
 		$parent = get_post( $post->post_parent );
 		if ( ! $parent->post_parent ) {
@@ -126,7 +126,7 @@ function pixelgrade_multipage_the_subpage_anchor( $post = null ) {
 		return false;
 	}
 
-	echo '<a id="' . str_replace( '/', '.', $post->post_name ) . '"></a>';
+	echo '<a id="' . esc_attr( str_replace( '/', '.', $post->post_name ) ) . '"></a>';
 
 	return true;
 }

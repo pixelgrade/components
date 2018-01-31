@@ -9,10 +9,10 @@
  * - it is called Pixelgrade_{Component_Directory_Name} with the first letter or each word in uppercase separated by underscores
  * - the word separator is the minus sign, meaning "-" in directory name will be converted to "_"
  *
- * @see         https://pixelgrade.com
- * @author      Pixelgrade
- * @package     Components
- * @version     1.0.0
+ * @package Components
+ * @author  Pixelgrade <contact@pixelgrade.com>
+ * @see     https://pixelgrade.com
+ * @since   1.0.0
  */
 class Pixelgrade_Components_Autoloader {
 	/**

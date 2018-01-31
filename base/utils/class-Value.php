@@ -196,7 +196,7 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 		 *
 		 * @return string
 		 */
-		function toLowerAscii( $str ) {
+		public function toLowerAscii( $str ) {
 			$str   = strtolower( $str );
 			$regex = array(
 				'pattern'     => '~([^a-z\d_.-])~',
@@ -209,8 +209,12 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 
 		/**
 		 * Reduces repeated meta characters (-=+.) to one.
+		 *
+		 * @param string $str
+		 *
+		 * @return string
 		 */
-		function removeDoubles( $str ) {
+		public function removeDoubles( $str ) {
 			$regex = apply_filters(
 				'germanix_remove_doubles_regex', array(
 					'pattern'     => '~([=+.-])\\1+~',
@@ -223,8 +227,12 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 
 		/**
 		 * Replaces non-ASCII characters
+		 *
+		 * @param string $str
+		 *
+		 * @return string
 		 */
-		function translit( $str ) {
+		public function translit( $str ) {
 			$utf8 = array(
 				'Ä'  => 'Ae',
 				'ä'  => 'ae',
@@ -365,8 +373,6 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 				'…' => '...', // ellipsis
 
 				'‧' => '.', // hyphenation point
-
-				' '   => '-', // nobreak space
 
 				' '   => '-', // normal space
 				// Russian

@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function pixelgrade_footer_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for footer element
-	echo 'class="' . join( ' ', pixelgrade_get_footer_class( $class, $location, $post ) ) . '"';
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_footer_class( $class, $location, $post ) ) ) . '"';
 }
 
 /**

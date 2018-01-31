@@ -53,7 +53,7 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 *     @type string               $type            Block type. Core blocks include 'layout', 'template', 'callback'.
 	 *     @type string|array         $templates       The templates configuration.
 	 * }
-	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive any templates, something is wrong

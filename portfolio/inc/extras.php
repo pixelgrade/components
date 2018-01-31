@@ -44,7 +44,7 @@ function pixelgrade_get_portfolio_class( $class = '', $location = '', $atts = ar
 	$grid_layout = pixelgrade_option( 'portfolio_grid_layout', 'regular' );
 	$classes[]   = 'c-gallery--' . $grid_layout;
 
-	if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ) ) ) {
+	if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ), true ) ) {
 		$classes[] = 'c-gallery--cropped';
 	}
 
@@ -68,7 +68,7 @@ function pixelgrade_get_portfolio_class( $class = '', $location = '', $atts = ar
 	$title_position = pixelgrade_option( 'portfolio_items_title_position', 'regular' );
 	$classes[]      = 'c-gallery--title-' . $title_position;
 
-	if ( 'overlay' == $title_position ) {
+	if ( 'overlay' === $title_position ) {
 		$classes[] = 'c-gallery--title-' . pixelgrade_option( 'portfolio_items_title_alignment_overlay', 'bottom-left' );
 	} else {
 		$classes[] = 'c-gallery--title-' . pixelgrade_option( 'portfolio_items_title_alignment_nearby', 'left' );

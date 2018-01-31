@@ -291,7 +291,7 @@ class Pixelgrade_Footer_Customizer extends Pixelgrade_Singleton {
 			return $classes;
 		}
 
-		if ( 'stacked' == pixelgrade_option( 'footer_layout' ) ) {
+		if ( 'stacked' === pixelgrade_option( 'footer_layout' ) ) {
 			$classes[] = 'u-footer-layout-stacked';
 		}
 

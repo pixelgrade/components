@@ -113,7 +113,7 @@ abstract class Pixelgrade_Block {
 	 *     @type array                $checks          The checks config to determine at render time if this block should be rendered.
 	 *     @type string               $type            Block type. Core blocks include 'layout', 'template', 'callback'.
 	 * }
-	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		$keys = array_keys( get_object_vars( $this ) );
@@ -125,7 +125,8 @@ abstract class Pixelgrade_Block {
 
 		$this->manager         = $manager;
 		$this->id              = $id;
-		self::$instance_count += 1;
+		
+		self::$instance_count ++;
 		$this->instance_number = self::$instance_count;
 
 		// We need to check the wrappers and replace them with Pixelgrade_Wrapper instances (if they are not already)
@@ -298,7 +299,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_before_block_{$this->id}", $this, $blocks_trail );
 
 		/*
-		 ======================
+		 * ======================
 		 * Maybe do the rendering
 		 */
 		$this->maybeRender( $blocks_trail );
@@ -366,7 +367,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_before_render_block_{$this->id}", $this, $blocks_trail );
 
 		/*
-		 ======================
+		 * ======================
 		 * Do the rendering
 		 */
 		$this->render( $blocks_trail );
@@ -413,7 +414,7 @@ abstract class Pixelgrade_Block {
 		// We need to determine if the content is empty before we start wrapping it
 		// because the wrapper $display_on_empty_content refers to the actual content regardless of any wrapper!
 		$empty_content = false;
-		if ( '' == trim( $content ) ) {
+		if ( '' === trim( $content ) ) {
 			$empty_content = true;
 		}
 
@@ -492,7 +493,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_before_block_{$this->id}_content", $this, $blocks_trail );
 
 		/*
-		 =============================
+		 * =============================
 		 * Maybe do the content rendering
 		 */
 		$this->maybeRenderContent( $blocks_trail );
@@ -560,7 +561,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_before_render_block_{$this->id}_content", $this, $blocks_trail );
 
 		/*
-		 ==============================
+		 * ==============================
 		 * Do the block content rendering
 		 */
 		$this->renderContent( $blocks_trail );
@@ -668,7 +669,7 @@ abstract class Pixelgrade_Block {
 				// If the $args don't specify a certain property present in the extended block, simply copy it over
 				if ( ! isset( $args[ $key ] ) && property_exists( __CLASS__, $key ) ) {
 					// We don't want the block ID, instance number, instance count or manager copied.
-					if ( ! in_array( $key, array( 'id', 'instance_number', 'instance_count', 'manager' ) ) ) {
+					if ( ! in_array( $key, array( 'id', 'instance_number', 'instance_count', 'manager' ), true ) ) {
 						$new_args[ $key ] = $extended_property;
 					}
 				} else {

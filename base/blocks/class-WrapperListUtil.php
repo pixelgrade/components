@@ -52,7 +52,8 @@ class Pixelgrade_WrapperListUtil {
 	 * @param array $input Array to perform operations on.
 	 */
 	public function __construct( $input ) {
-		$this->output = $this->input = $input;
+		$this->output = $input;
+		$this->input  = $input;
 	}
 
 	/**
@@ -113,9 +114,9 @@ class Pixelgrade_WrapperListUtil {
 			}
 
 			if (
-				( 'AND' == $operator && $matched == $count ) ||
-				( 'OR' == $operator && $matched > 0 ) ||
-				( 'NOT' == $operator && 0 == $matched )
+				( 'AND' === $operator && $matched == $count ) ||
+				( 'OR' === $operator && $matched > 0 ) ||
+				( 'NOT' === $operator && 0 == $matched )
 			) {
 				$filtered[ $key ] = $obj;
 			}

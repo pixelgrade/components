@@ -419,15 +419,15 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	/**
 	 * Return the featured projects of a page if they are meant to be excluded from the loop
 	 *
-	 * @param int $page_ID
+	 * @param int $page_id
 	 *
 	 * @return array|bool
 	 */
-	public function excludeFeaturedProjects( $page_ID ) {
-		if ( ! empty( $page_ID ) ) {
+	public function excludeFeaturedProjects( $page_id ) {
+		if ( ! empty( $page_id ) ) {
 			// If this page has set to exclude featured projects - return them to be excluded
-			if ( 'exclude_featured' == get_post_meta( $page_ID, '_portfolio_grid_show', true ) ) {
-				return pixelgrade_hero_get_featured_projects_ids( $page_ID );
+			if ( 'exclude_featured' === get_post_meta( $page_id, '_portfolio_grid_show', true ) ) {
+				return pixelgrade_hero_get_featured_projects_ids( $page_id );
 			}
 		}
 
@@ -520,7 +520,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 * @param WP_Post $post
 	 */
 	public function handlePageForProjectsEditPage( $post ) {
-		if ( $post->ID == get_option( 'page_for_projects' ) && empty( $post->post_content ) ) {
+		if ( absint( get_option( 'page_for_projects' ) ) === $post->ID && empty( $post->post_content ) ) {
 			add_action( 'edit_form_after_title', array( $this, 'projectsPageNotice' ) );
 			remove_post_type_support( $post->post_type, 'editor' );
 		}
@@ -529,7 +529,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	/**
 	 * Display a notice when editing the page for projects.
 	 */
-	function projectsPageNotice() {
+	public function projectsPageNotice() {
 		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.', '__components_txtd' ) . '</p></div>';
 	}
 
@@ -543,23 +543,23 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	public function handlePageForProjectsQuery( $query ) {
 		// We only do this on the frontend and only for the main query
 		// Bail otherwise
-		$page_for_projects = get_option( 'page_for_projects' );
+		$page_for_projects = absint( get_option( 'page_for_projects' ) );
 		if ( is_admin() || ! $query->is_main_query() || empty( $page_for_projects ) ) {
 			return;
 		}
 
 		// Get the current page ID
-		$page_ID = $query->get( 'page_id' );
-		if ( empty( $page_ID ) ) {
-			$page_ID = $query->queried_object_id;
+		$page_id = $query->get( 'page_id' );
+		if ( empty( $page_id ) ) {
+			$page_id = $query->queried_object_id;
 		}
 
 		// Bail if we don't have a page ID
-		if ( empty( $page_ID ) ) {
+		if ( empty( $page_id ) ) {
 			return;
 		}
 
-		if ( $page_ID == $page_for_projects ) {
+		if ( absint( $page_id ) === $page_for_projects ) {
 			// This means we should set things up that we are showing the portfolio archive template
 			// Usually something like archive-jetpack-portfolio.php, with fallback to archive.php
 			$query->is_page              = false;

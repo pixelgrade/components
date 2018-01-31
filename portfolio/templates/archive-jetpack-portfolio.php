@@ -56,7 +56,7 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 			}
 			?>
 
-			<div class="u-portfolio-sides-spacing  <?php echo $visibility_class; ?>">
+			<div class="u-portfolio-sides-spacing  <?php echo esc_attr( $visibility_class ); ?>">
 				<div class="o-wrapper  u-portfolio-grid-width">
 
 					<?php

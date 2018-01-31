@@ -4,15 +4,15 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
 // Get the current request action
 $action = pixelgrade_get_current_action();
 
-// Don't try and load the fallback class if we are activating a plugin
-// This way Jetpack doesn't burn us down with it's lack of checking if the class exists
-if ( ! empty( $action ) && $action == 'activate' ) {
+// Don't try and load the fallback class if we are activating a plugin.
+// This way Jetpack doesn't burn us down with it's lack of checking if the class exists.
+if ( ! empty( $action ) && 'activate' === $action ) {
 	return;
 }
 
@@ -21,11 +21,11 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 	 * Renders extra controls in the Gallery Settings section of the new media UI.
 	 */
 	class Jetpack_Gallery_Settings_Fallback {
-		function __construct() {
+		public function __construct() {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 		}
 
-		function admin_init() {
+		public function admin_init() {
 			/**
 			 * Filter the available gallery types.
 			 *
@@ -47,7 +47,7 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 		/**
 		 * Registers/enqueues the gallery settings admin js.
 		 */
-		function wp_enqueue_media() {
+		public function wp_enqueue_media() {
 			if ( ! wp_script_is( 'jetpack-gallery-settings', 'registered' ) ) {
 				/**
 				 * This only happens if we're not in Jetpack, but on WPCOM instead.
@@ -62,7 +62,7 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 		/**
 		 * Outputs a view template which can be used with wp.media.template
 		 */
-		function print_media_templates() {
+		public function print_media_templates() {
 			/**
 			 * Filter the default gallery type.
 			 *

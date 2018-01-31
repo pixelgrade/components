@@ -93,8 +93,8 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * @return int|string|false
 		 */
 		public static function objArraySearch( $array, $property, $value ) {
-			foreach ( $array as $key => $arrayInf ) {
-				if ( property_exists( $arrayInf, $property ) && $arrayInf->{$property} == $value ) {
+			foreach ( $array as $key => $array_inf ) {
+				if ( property_exists( $array_inf, $property ) && $array_inf->{$property} == $value ) {
 					return $key;
 				}
 			}
@@ -220,7 +220,8 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * @return mixed|false
 		 */
 		public static function detach_by_value( array &$array, $value ) {
-			if ( ! $key = array_search( $value, $array ) ) {
+			$key = array_search( $value, $array );
+			if ( ! $key ) {
 				return false;
 			}
 			return self::detach( $array, $key );

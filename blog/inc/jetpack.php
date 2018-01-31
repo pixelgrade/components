@@ -50,7 +50,7 @@ function pixelgrade_get_jetpack_related_posts_ids( $post = null ) {
 		$related_posts_options = pixelgrade_get_jetpack_related_posts_options();
 
 		$related = Jetpack_RelatedPosts::init_raw()
-									   ->set_query_name( 'pixelgrade-jetpack-related-posts' ) // Optional, name can be anything
+									->set_query_name( 'pixelgrade-jetpack-related-posts' ) // Optional, name can be anything
 									->get_for_post_id(
 										$post->ID,
 										array(
@@ -75,7 +75,7 @@ function pixelgrade_get_jetpack_related_posts_ids( $post = null ) {
  *
  * @param string $default Optional. The default headline.
  *
- * @return bool|void
+ * @return bool
  */
 function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	$headline = '';
@@ -108,6 +108,8 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	 * @param string $headline Related Posts heading.
 	 */
 	echo apply_filters( 'jetpack_relatedposts_filter_headline', $headline );
+
+	return true;
 }
 
 /**

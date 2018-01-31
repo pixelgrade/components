@@ -33,8 +33,8 @@ if ( ! isset( $primary_meta ) && ! isset( $secondary_meta ) ) {
 	$secondary_meta = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
 }
 
-$primary_meta_output   = $primary_meta !== 'none' ? pixelgrade_get_post_meta( $primary_meta ) : false;
-$secondary_meta_output = $secondary_meta !== 'none' ? pixelgrade_get_post_meta( $secondary_meta ) : false;
+$primary_meta_output   = ( 'none' !== $primary_meta ) ? pixelgrade_get_post_meta( $primary_meta ) : false;
+$secondary_meta_output = ( 'none' !== $secondary_meta ) ? pixelgrade_get_post_meta( $secondary_meta ) : false;
 
 /**
  * pixelgrade_before_loop_entry hook.
@@ -69,8 +69,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						}
 					}
 
-					if ( pixelgrade_option( 'portfolio_items_title_position', 'regular' ) != 'overlay' ) {
-						echo '<span class="c-card__letter">' . mb_substr( get_the_title(), 0, 1 ) . '</span>';
+					if ( pixelgrade_option( 'portfolio_items_title_position', 'regular' ) !== 'overlay' ) {
+						echo '<span class="c-card__letter">' . esc_html( mb_substr( get_the_title(), 0, 1 ) ) . '</span>';
 					}
 					?>
 				</div><!-- .c-card__frame -->

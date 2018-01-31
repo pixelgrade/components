@@ -102,7 +102,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 					if ( $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id ) ) ) {
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id );
 					} elseif ( $parent instanceof Pixelgrade_Block
-							   && $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
+						&& $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
 
 						// We try and see if there is a block in the parent that matches the block ID
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id );
@@ -284,7 +284,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				do_action( "pixelgrade_before_layout_{$this->id}_child_block", $this, $blocks_trail );
 
 				/*
-				 ==================================
+				 * ==================================
 				 * Maybe do the child block rendering
 				 */
 				$block->maybeRender( array_merge( $blocks_trail, array( $block ) ) );

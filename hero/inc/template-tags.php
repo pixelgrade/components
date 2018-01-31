@@ -143,7 +143,7 @@ function pixelgrade_get_hero_slider_class( $class = '', $location = '', $post = 
  * @param string|array $attribute One or more attributes to add to the attributes list.
  * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
- * @return false|null
+ * @return bool
  */
 function pixelgrade_hero_slider_attributes( $attribute = '', $post = null ) {
 	// We might be on a page set as a page for posts and the $post will be the first post in the loop
@@ -186,6 +186,8 @@ function pixelgrade_hero_slider_attributes( $attribute = '', $post = null ) {
 	if ( ! empty( $full_attributes ) ) {
 		echo join( ' ', $full_attributes );
 	}
+
+	return true;
 }
 
 /**
@@ -247,7 +249,7 @@ function pixelgrade_hero_get_slider_attributes( $attribute = array(), $post = nu
  *
  * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
- * @return false|null
+ * @return bool
  */
 function pixelgrade_hero_background_color_style( $post = null ) {
 	// We might be on a page set as a page for posts and the $post will be the first post in the loop
@@ -276,6 +278,8 @@ function pixelgrade_hero_background_color_style( $post = null ) {
 	$output = apply_filters( 'pixelgrade_hero_the_background_color_style', $output, $post );
 
 	echo $output;
+
+	return true;
 }
 
 /**
@@ -989,7 +993,7 @@ function pixelgrade_hero_the_description( $content, $slide = null ) {
 	$original_post = null;
 
 	// If we have been given a slide then we need to use those details to setup the "environment" the content will be parsed in
-	// This shortcodes like [Page_title] that use the global post
+	// these shortcodes like [page_title] that use the global post
 	if ( ! empty( $slide ) ) {
 		// The slide source_post_id takes precedence for image or video slides
 		if ( in_array( $slide['type'], array( 'image', 'video', 'blank' ) ) ) {

@@ -80,6 +80,10 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 
 		/**
 		 * Adds our template to the page dropdown for v4.7+
+		 *
+		 * @param array $posts_templates
+		 *
+		 * @return array
 		 */
 		public function addNewTemplateToDropdown( $posts_templates ) {
 			$posts_templates = array_merge( $posts_templates, $this->templates );
@@ -89,6 +93,10 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 		/**
 		 * Adds our template to the pages cache in order to trick WordPress
 		 * into thinking the template file exists where it doens't really exist.
+		 *
+		 * @param array $atts
+		 *
+		 * @return array
 		 */
 		public function registerTemplates( $atts ) {
 
@@ -119,6 +127,10 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 
 		/**
 		 * Checks if the template is assigned to the page
+		 *
+		 * @param string $template
+		 *
+		 * @return string
 		 */
 		public function viewTemplate( $template ) {
 
