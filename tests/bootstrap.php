@@ -1,20 +1,38 @@
 <?php
+/**
+ * PHPUnit bootstrap file
+ *
+ * @package Components
+ */
 
-require_once dirname( dirname( __FILE__ ) ) . '/includes/functions.php';
-
-function _manually_load_environment() {
-
-	// Add your theme …
-	switch_theme('your-theme-name');
-
-	// Update array with plugins to include ...
-	$plugins_to_active = array(
-		'your-plugin/your-plugin.php'
-	);
-
-	update_option( 'active_plugins', $plugins_to_active );
-
+$_tests_dir = getenv( 'WP_TESTS_DIR' );
+if ( ! $_tests_dir ) {
+	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
-tests_add_filter( 'muplugins_loaded', '_manually_load_environment' );
 
-require dirname( dirname( __FILE__ ) ) . '/includes/bootstrap.php';
+if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
+	throw new Exception( "Could not find $_tests_dir/includes/functions.php, have you run bin/install-wp-tests.sh ?" );
+}
+
+// Give access to tests_add_filter() function.
+require_once $_tests_dir . '/includes/functions.php';
+
+function _register_theme() {
+
+	$theme_dir = dirname( dirname( __FILE__ ) );
+	$current_theme = basename( $theme_dir );
+
+	register_theme_directory( dirname( $theme_dir ) );
+
+	add_filter( 'pre_option_template', function() use ( $current_theme ) {
+		return $current_theme;
+	});
+	add_filter( 'pre_option_stylesheet', function() use ( $current_theme ) {
+		return $current_theme;
+	});
+}
+tests_add_filter( 'muplugins_loaded', '_register_theme' );
+
+
+// Start up the WP testing environment.
+require $_tests_dir . '/includes/bootstrap.php';
