@@ -281,8 +281,7 @@ class Pixelgrade_Array {
 		foreach ( $array2 as $key => &$value ) {
 			if ( is_array( $value ) && isset ( $merged [$key] ) && is_array( $merged [$key] ) ) {
 				$merged [$key] = self::array_merge_recursive_distinct( $merged [$key], $value );
-			}
-			else {
+			} else {
 				$merged [$key] = $value;
 			}
 		}
@@ -305,8 +304,9 @@ class Pixelgrade_Array {
 		foreach ( $args as $n => $field ) {
 			if ( is_string( $field ) ) {
 				$tmp = array();
-				foreach ( $data as $key => $row )
-					$tmp[$key] = $row[$field];
+				foreach ( $data as $key => $row ) {
+									$tmp[$key] = $row[$field];
+				}
 				$args[$n] = $tmp;
 			}
 		}
