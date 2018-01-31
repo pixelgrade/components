@@ -16,9 +16,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Hero
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Hero
  * @version     1.0.0
  */
 
@@ -43,13 +43,16 @@ $link_project_label = trim( get_post_meta( $post_ID, '_hero_featured_projects_vi
 	?>
 
 	<div class="c-hero__content">
-		<p class="c-hero__category"><?php
+		<p class="c-hero__category">
+		<?php
 			// We need to handle gracefully the case when Jetpack_Portfolio is missing
 			$taxonomy = 'jetpack-portfolio-type';
-			if ( class_exists( 'Jetpack_Portfolio' ) && defined( 'Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE' ) ) {
-				$taxonomy = Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE;
-			}
-			the_terms( $slide['post_id'], $taxonomy ); ?></p>
+		if ( class_exists( 'Jetpack_Portfolio' ) && defined( 'Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE' ) ) {
+			$taxonomy = Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE;
+		}
+			the_terms( $slide['post_id'], $taxonomy );
+			?>
+			</p>
 		<a class="c-hero__link" href="<?php the_permalink( $slide['post_id'] ); ?>">
 			<div class="c-hero__title-mask">
 				<h1 class="c-hero__title h0"><?php echo get_the_title( $slide['post_id'] ); ?></h1>
@@ -57,7 +60,7 @@ $link_project_label = trim( get_post_meta( $post_ID, '_hero_featured_projects_vi
 			<?php if ( ! empty( $link_project_label ) ) { ?>
 			<div class="c-hero__action">
 				<span class="link--arrow  light">
-					<?php echo $link_project_label ?>
+					<?php echo $link_project_label; ?>
 				</span>
 			</div>
 		</a>

@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Footer
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Footer
  * @version     1.1.6
  */
 
@@ -18,20 +18,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display the classes for the footer element.
  *
  * @param string|array $class One or more classes to add to the class list.
- * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param string       $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  */
 function pixelgrade_footer_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for footer element
-	echo 'class="' . join( ' ', pixelgrade_get_footer_class( $class, $location, $post ) ) . '"';
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_footer_class( $class, $location, $post ) ) ) . '"';
 }
 
 /**
  * Retrieve the classes for the footer element as an array.
  *
  * @param string|array $class One or more classes to add to the class list.
- * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param string       $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return array Array of classes.
  */
@@ -53,7 +53,7 @@ function pixelgrade_get_footer_class( $class = '', $location = '', $post = null 
 	$classes[] = 'u-container-sides-spacing';
 
 	if ( ! empty( $class ) ) {
-		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
+		$class   = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -88,7 +88,7 @@ function pixelgrade_the_footer( $location = '' ) {
  * Display the markup for a certain sidebar.
  *
  * @param string $sidebar_id The sidebar id to process.
- * @param array $sidebar_settings The sidebar settings.
+ * @param array  $sidebar_settings The sidebar settings.
  */
 function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
 	// We let others hijack this and prevent the sidebar from showing
@@ -96,7 +96,7 @@ function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
 		return;
 	}
 
-	$classes = array( 'widget-area', 'widget-area--'. $sidebar_id );
+	$classes = array( 'widget-area', 'widget-area--' . $sidebar_id );
 	if ( ! empty( $sidebar_settings['container_class'] ) ) {
 		$extra_class = $sidebar_settings['container_class'];
 		if ( ! is_array( $extra_class ) ) {
@@ -116,13 +116,16 @@ function pixelgrade_footer_the_sidebar( $sidebar_id, $sidebar_settings ) {
 /**
  * Get the markup for a certain nav menu location.
  *
- * @param array $args An array with options for the wp_nav_menu() function.
+ * @param array  $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
  *
  * @return false|object
  */
 function pixelgrade_footer_get_nav_menu( $args, $menu_location = '' ) {
-	$defaults = array( 'container' => 'nav', 'echo' => false, );
+	$defaults = array(
+		'container' => 'nav',
+		'echo'      => false,
+	);
 
 	if ( ! empty( $menu_location ) ) {
 		// Make sure we overwrite whatever is there
@@ -171,11 +174,11 @@ function pixelgrade_footer_the_copyright() {
 
 	$output = '';
 	if ( ! empty( $copyright_text ) ) {
-		$output .= '<div class="c-footer__copyright-text">' . PHP_EOL;
-		$output .= $copyright_text . PHP_EOL;
+		$output      .= '<div class="c-footer__copyright-text">' . PHP_EOL;
+		$output      .= $copyright_text . PHP_EOL;
 		$hide_credits = pixelgrade_option( 'footer_hide_credits', false );
 		if ( empty( $hide_credits ) ) {
-			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>') . '</span>' . PHP_EOL;
+			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
 		}
 		$output .= '</div>' . PHP_EOL;
 	}
@@ -292,7 +295,7 @@ function pixelgrade_footer_get_zones() {
 			$zones[ $zone_id ]['classes'] = array();
 		}
 
-		$default_classes = array( 'c-footer__zone', 'c-footer__zone--' . $zone_id );
+		$default_classes              = array( 'c-footer__zone', 'c-footer__zone--' . $zone_id );
 		$zones[ $zone_id ]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
 	}
 
@@ -310,7 +313,7 @@ function pixelgrade_footer_get_zones() {
  * Retrieve the nav menu locations of a certain zone.
  *
  * @param string $zone_id The zone's identifier.
- * @param array $zone The zone's configuration.
+ * @param array  $zone The zone's configuration.
  *
  * @return bool|array
  */
@@ -332,7 +335,7 @@ function pixelgrade_footer_get_zone_nav_menu_locations( $zone_id, $zone ) {
  * Retrieve the sidebars of a certain zone.
  *
  * @param string $zone_id The zone's identifier.
- * @param array $zone The zone's configuration.
+ * @param array  $zone The zone's configuration.
  *
  * @return bool|array
  */
@@ -374,8 +377,8 @@ function pixelgrade_footer_order_cmp( array $a, array $b ) {
 
 	// Do the comparison
 	if ( $a['order'] < $b['order'] ) {
-		return -1;
-	} else if ( $a['order'] > $b['order'] ) {
+		return - 1;
+	} elseif ( $a['order'] > $b['order'] ) {
 		return 1;
 	} else {
 		return 0;

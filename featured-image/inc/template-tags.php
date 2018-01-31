@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Featured-Image
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Featured-Image
  * @version     1.0.2
  */
 
@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Retrieve the featured hover attachment ID.
  *
- * @param int|WP_Post  $post Optional. Post ID or WP_Post object.  Default is global `$post`.
- * @param string $location Optional. This is a hint regarding the place/template where is called from.
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object.  Default is global `$post`.
+ * @param string      $location Optional. This is a hint regarding the place/template where is called from.
  *
  * @return string|int Post hover thumbnail ID or empty string.
  */

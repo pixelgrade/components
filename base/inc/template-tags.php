@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.1.1
  */
 
@@ -45,7 +45,7 @@ function pixelgrade_element_attributes( $attributes = array(), $location = '' ) 
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes );
+		echo esc_attr( join( ' ', $full_attributes ) );
 	}
 }
 
@@ -75,7 +75,7 @@ function pixelgrade_get_element_attributes( $attributes = array(), $location = '
 	 * @param string|array $location The place (template) where the attributes are needed.
 	 */
 	return apply_filters( 'pixelgrade_get_element_attributes', $final_attributes, $attributes, $location );
-} #function
+} // function
 
 /**
  * Display the attributes for the body element.
@@ -99,12 +99,12 @@ function pixelgrade_body_attributes( $attributes = array() ) {
 	foreach ( $body_attributes as $name => $value ) {
 		// We really don't want numeric keys as attributes names
 		if ( ! empty( $name ) && ! is_numeric( $name ) ) {
-			//if we get an array as value we will add them comma separated
+			// if we get an array as value we will add them comma separated
 			if ( ! empty( $value ) && is_array( $value ) ) {
 				$value = join( ', ', $value );
 			}
 
-			//if we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
+			// if we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
 			if ( empty( $value ) ) {
 				$full_attributes[] = $name;
 			} else {
@@ -115,21 +115,21 @@ function pixelgrade_body_attributes( $attributes = array() ) {
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes );
+		echo esc_attr( join( ' ', $full_attributes ) );
 	}
-} #function
+} // function
 
 /**
  * Display the classes for a element.
  *
  * @param string|array $class Optional. One or more classes to add to the class list.
  * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
- * @param string $prefix Optional. Prefix to prepend to all of the provided classes
- * @param string $suffix Optional. Suffix to append to all of the provided classes
+ * @param string       $prefix Optional. Prefix to prepend to all of the provided classes
+ * @param string       $suffix Optional. Suffix to append to all of the provided classes
  */
 function pixelgrade_css_class( $class = '', $location = '', $prefix = '', $suffix = '' ) {
 	// Separates classes with a single space, collates classes for element
-	echo 'class="' . join( ' ', pixelgrade_get_css_class( $class, $location ) ) . '"';
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_css_class( $class, $location ) ) ) . '"';
 }
 
 /**
@@ -137,8 +137,8 @@ function pixelgrade_css_class( $class = '', $location = '', $prefix = '', $suffi
  *
  * @param string|array $class Optional. One or more classes to add to the class list.
  * @param string|array $location Optional. The place (template) where the classes are displayed. This is a hint for filters.
- * @param string $prefix Optional. Prefix to prepend to all of the provided classes
- * @param string $suffix Optional. Suffix to append to all of the provided classes
+ * @param string       $prefix Optional. Prefix to prepend to all of the provided classes
+ * @param string       $suffix Optional. Suffix to append to all of the provided classes
  *
  * @return array Array of classes.
  */
@@ -182,7 +182,7 @@ function pixelgrade_get_css_class( $class = '', $location = '', $prefix = '', $s
 	$classes = apply_filters( 'pixelgrade_css_class', $classes, $class, $location, $prefix, $suffix );
 
 	return array_unique( $classes );
-} #function
+} // function
 
 if ( ! function_exists( 'pixelgrade_get_post_thumbnail_aspect_ratio_class' ) ) {
 	/**
@@ -205,14 +205,14 @@ if ( ! function_exists( 'pixelgrade_get_post_thumbnail_aspect_ratio_class' ) ) {
 		}
 
 		return pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post ), 'none' );
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_get_image_aspect_ratio_type' ) ) {
 	/**
 	 * Retrieve the aspect ratio type of an image.
 	 *
-	 * @param int|WP_Post $image The image attachment ID or the attachment object.
+	 * @param int|WP_Post          $image The image attachment ID or the attachment object.
 	 * @param bool|string Optional . The default to return in case of failure.
 	 *
 	 * @return string|bool Returns the aspect ratio type string, or false|$default, if no image is available.
@@ -225,7 +225,8 @@ if ( ! function_exists( 'pixelgrade_get_image_aspect_ratio_type' ) ) {
 		}
 
 		// Try and get the attachment post object
-		if ( ! $image = get_post( $image ) ) {
+		$image = get_post( $image );
+		if ( ! $image ) {
 			return $default;
 		}
 
@@ -256,7 +257,7 @@ if ( ! function_exists( 'pixelgrade_get_image_aspect_ratio_type' ) ) {
 		}
 
 		return apply_filters( 'pixelgrade_image_aspect_ratio_type', $type, $image );
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
@@ -271,15 +272,15 @@ if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
 
 			// Returns false if the archive option or singular option is unticked.
 			if ( ( true === $opts['archive'] && ( is_home() || is_archive() || is_search() ) && ! $opts['archive-option'] )
-			     || ( true === $opts['post'] && is_single() && ! $opts['post-option'] )
-			     || ( true === $opts['page'] && is_singular() && is_page() && ! $opts['page-option'] )
+				|| ( true === $opts['post'] && is_single() && ! $opts['post-option'] )
+				|| ( true === $opts['page'] && is_singular() && is_page() && ! $opts['page-option'] )
 			) {
 				return false;
 			}
 		}
 
 		return true;
-	} #function
+	} // function
 }
 
 function pixelgrade_the_taxonomy_dropdown( $taxonomy, $current_term = null ) {
@@ -290,7 +291,7 @@ if ( ! function_exists( 'pixelgrade_get_the_taxonomy_dropdown' ) ) {
 
 	/**
 	 * @param $taxonomy
-	 * @param null $current_term
+	 * @param null     $current_term
 	 *
 	 * @return bool|string
 	 */
@@ -333,7 +334,7 @@ if ( ! function_exists( 'pixelgrade_get_the_taxonomy_dropdown' ) ) {
 
 		foreach ( $terms as $term ) {
 			$selected_attr = '';
-			if ( ! empty( $selected ) && $selected == $term->slug ) {
+			if ( ! empty( $selected ) && $selected === $term->slug ) {
 				$selected_attr = 'selected';
 			}
 			$output .= '<option value="' . esc_attr( get_term_link( intval( $term->term_id ), $taxonomy ) ) . '" ' . esc_attr( $selected_attr ) . '>' . esc_html( $term->name ) . '</option>';
@@ -342,7 +343,7 @@ if ( ! function_exists( 'pixelgrade_get_the_taxonomy_dropdown' ) ) {
 
 		// Allow others to have a go at it
 		return apply_filters( 'pixelgrade_get_the_taxonomy_dropdown', $output, $taxonomy, $selected );
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_get_rendered_content' ) ) :
@@ -356,7 +357,7 @@ if ( ! function_exists( 'pixelgrade_get_rendered_content' ) ) :
 	 * @param bool   $strip_teaser   Optional. Strip teaser content before the more text. Default is false.
 	 * @return string
 	 */
-	function pixelgrade_get_rendered_content( $more_link_text = null, $strip_teaser = false) {
+	function pixelgrade_get_rendered_content( $more_link_text = null, $strip_teaser = false ) {
 		$content = get_the_content( $more_link_text, $strip_teaser );
 
 		/**
@@ -386,7 +387,7 @@ if ( ! function_exists( 'pixelgrade_get_header' ) ) {
 
 		// We start with the same templates as the core get_header()
 		$template_names = array();
-		$name = (string) $name;
+		$name           = (string) $name;
 		if ( '' !== $name ) {
 			$template_names[] = "header-{$name}.php";
 		}
@@ -418,7 +419,7 @@ if ( ! function_exists( 'pixelgrade_get_footer' ) ) {
 
 		// We start with the same templates as the core get_footer()
 		$template_names = array();
-		$name = (string) $name;
+		$name           = (string) $name;
 		if ( '' !== $name ) {
 			$template_names[] = "footer-{$name}.php";
 		}
@@ -450,7 +451,7 @@ if ( ! function_exists( 'pixelgrade_get_sidebar' ) ) {
 
 		// We start with the same templates as the core get_sidebar()
 		$template_names = array();
-		$name = (string) $name;
+		$name           = (string) $name;
 		if ( '' !== $name ) {
 			$template_names[] = "sidebar-{$name}.php";
 		}
@@ -479,7 +480,7 @@ if ( ! function_exists( 'pixelgrade_do_fake_loop' ) ) {
 	 */
 	function pixelgrade_do_fake_loop() {
 		// The Loop - actually a fake loop
-		while ( have_posts() ):
+		while ( have_posts() ) :
 			the_post();
 			/*
 			 * Do nothing here as we will do it via hooks

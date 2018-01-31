@@ -2,9 +2,9 @@
 /**
  * Layout Block class
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -39,9 +39,9 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 * Supplied `$args` override class property defaults.
 	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
-	 * @param string               $id      Block ID.
-	 * @param array                $args    {
-	 *     Optional. Arguments to override class property defaults.
+	 * @param string                   $id      Block ID.
+	 * @param array                    $args    {
+	 *         Optional. Arguments to override class property defaults.
 	 *
 	 *     @type int                  $instance_number Order in which this instance was created in relation
 	 *                                                 to other instances.
@@ -54,7 +54,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 *                                                 Default 'layout'.
 	 *     @type array                $blocks          Child blocks definition.
 	 * }
-	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		parent::__construct( $manager, $id, $args, $parent );
@@ -102,7 +102,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 					if ( $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id ) ) ) {
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $this->id );
 					} elseif ( $parent instanceof Pixelgrade_Block
-					           && $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
+						&& $this->manager->isRegisteredBlock( Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id ) ) ) {
 
 						// We try and see if there is a block in the parent that matches the block ID
 						$block = Pixelgrade_BlocksManager::namespaceBlockId( $block, $parent->id );
@@ -141,8 +141,8 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	 * @access public
 	 *
 	 * @param Pixelgrade_Block|string $id Block object, ID of an already registered block, or ID of an inline block if $args is not empty.
-	 * @param array $args The arguments to pass to the block instance to override the default class properties.
-	 * @param bool $skip_add_child Optional. Whether to skip adding the block instance to the child blocks.
+	 * @param array                   $args The arguments to pass to the block instance to override the default class properties.
+	 * @param bool                    $skip_add_child Optional. Whether to skip adding the block instance to the child blocks.
 	 *
 	 * @return Pixelgrade_Block|false The instance of the block that was added. False on failure.
 	 */
@@ -260,7 +260,6 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 		/** @var Pixelgrade_Block $block */
 		foreach ( $this->blocks as $block ) {
 			// Render each child block (pass the new blocks trail).
-
 			// First we need to make sure that we don't render an instance already in the blocks trail
 			// thus avoiding infinite loops.
 			if ( false === Pixelgrade_BlocksManager::isBlockInTrail( $block, $blocks_trail ) ) {
@@ -284,7 +283,8 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 				 */
 				do_action( "pixelgrade_before_layout_{$this->id}_child_block", $this, $blocks_trail );
 
-				/* ==================================
+				/*
+				 * ==================================
 				 * Maybe do the child block rendering
 				 */
 				$block->maybeRender( array_merge( $blocks_trail, array( $block ) ) );
@@ -333,7 +333,7 @@ class Pixelgrade_LayoutBlock extends Pixelgrade_Block {
 	/**
 	 * Given a set of block args and a extended block instance, merge the args.
 	 *
-	 * @param array $args
+	 * @param array            $args
 	 * @param Pixelgrade_Block $extended_block
 	 *
 	 * @return array The merged args

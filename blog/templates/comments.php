@@ -42,19 +42,21 @@ if ( post_password_required() ) {
 
 		<input type="checkbox" name="comments-toggle" id="comments-toggle" class="c-comments-toggle__checkbox" checked="checked" />
 		<label for="comments-toggle" class="c-comments-toggle__label">
-			<span class="c-comments-toggle__icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG,'svg/comments-toggle-icon' ); ?></span>
-			<span class="c-comments-toggle__text"><?php
+			<span class="c-comments-toggle__icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, 'svg/comments-toggle-icon' ); ?></span>
+			<span class="c-comments-toggle__text">
+			<?php
 				printf( // WPCS: XSS OK.
-					esc_html( _nx( '%2$s comment', '%1$s comments', get_comments_number(), 'comments title', '__components_txtd' ) ),
-					number_format_i18n( get_comments_number() ),
+					esc_html( _nx( '%1$s comment', '%1$s comments', get_comments_number(), 'comments title', '__components_txtd' ) ),
 					number_format_i18n( get_comments_number() )
 				);
-				?></span>
+				?>
+				</span>
 		</label>
 
 		<?php
 		// You can start editing here -- including this comment!
-		if ( have_comments() ) : ?>
+		if ( have_comments() ) :
+		?>
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 				<nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
@@ -70,12 +72,14 @@ if ( post_password_required() ) {
 
 			<ol class="comment-list">
 				<?php
-				wp_list_comments( array(
-					'style'      => 'ol',
-					'short_ping' => true,
-					'callback'   => 'pixelgrade_shape_comment',
-					'avatar_size' => 56
-				) );
+				wp_list_comments(
+					array(
+						'style'       => 'ol',
+						'short_ping'  => true,
+						'callback'    => 'pixelgrade_shape_comment',
+						'avatar_size' => 56,
+					)
+				);
 				?>
 			</ol><!-- .comment-list -->
 
@@ -96,19 +100,20 @@ if ( post_password_required() ) {
 
 
 		// If comments are closed and there are comments, let's leave a little note, shall we?
-		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
+		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
+		?>
 
 			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', '__components_txtd' ); ?></p>
 			<?php
 		endif;
 
 		$args = array(
-			'class_form' => 'comment-form  inputs--alt',
-			'comment_field' =>  '<p class="comment-form-comment"><label for="comment">' . esc_html_x( 'Comment', 'noun', '__components_txtd' ) .
-			                    '</label><textarea id="comment" class="comment__text" name="comment" cols="45" rows="8" aria-required="true" 
-			                    placeholder="'. esc_html__('Your comment...', '__components_txtd') .'">' .
-			                    '</textarea></p>',
-			'submit_button'  => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
+			'class_form'    => 'comment-form  inputs--alt',
+			'comment_field' => '<p class="comment-form-comment"><label for="comment">' . esc_html_x( 'Comment', 'noun', '__components_txtd' ) .
+								'</label><textarea id="comment" class="comment__text" name="comment" cols="45" rows="8" aria-required="true" 
+			                    placeholder="' . esc_html__( 'Your comment...', '__components_txtd' ) . '">' .
+								'</textarea></p>',
+			'submit_button' => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
 		);
 		comment_form( $args );
 		?>

@@ -9,21 +9,41 @@
  * - it is called Pixelgrade_{Component_Directory_Name} with the first letter or each word in uppercase separated by underscores
  * - the word separator is the minus sign, meaning "-" in directory name will be converted to "_"
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components
- * @version     1.0.0
+ * @package Components
+ * @author  Pixelgrade <contact@pixelgrade.com>
+ * @see     https://pixelgrade.com
+ * @since   1.0.0
  */
 class Pixelgrade_Components_Autoloader {
-    /**
-     * The file extension to use. Defaults to '.php'.
-     */
-    protected static $file_ext = '.php';
+	/**
+	 * The file extension to use. Defaults to '.php'.
+	 *
+	 * @var string
+	 */
+	protected static $file_ext = '.php';
 
 	/**
 	 * The prefix to use for the instantiation function. Defaults to 'Pixelgrade_'.
+	 *
+	 * @var string
 	 */
 	protected static $prefix = 'Pixelgrade_';
+
+	/**
+	 * The directories to exclude when autoloading components.
+	 *
+	 * These are directories used for other purposes like documentation or tests.
+	 * Do not create components with these names!
+	 *
+	 * @var array
+	 */
+	protected static $excluded_dir = array(
+		'bin',
+		'docs',
+		'tests',
+		'vendor',
+		'wordpress',
+	);
 
 	/**
 	 * Load all the components available
@@ -32,6 +52,7 @@ class Pixelgrade_Components_Autoloader {
 	 * The base component needs to be present, no matter what! We will stop the loading and issue a _doing_it_wrong() notice when stuff goes south.
 	 *
 	 * @param string $path Optional. The starting path to search for components. Defaults to the directory of the autoloader class.
+	 *
 	 * @return bool True when everything went smoothly. False on error.
 	 */
 	public static function loadComponents( $path = __DIR__ ) {
@@ -43,7 +64,12 @@ class Pixelgrade_Components_Autoloader {
 
 		$iterator = new DirectoryIterator( $path );
 		foreach ( $iterator as $file_info ) {
-			if ( $file_info->isDir() && ! $file_info->isDot() && $file_info->getFilename() != 'base' ) {
+			if ( $file_info->isDir()
+				 && ! $file_info->isDot()
+				 && 0 !== strpos( $file_info->getFilename(), '.' )
+				 && $file_info->getFilename() !== 'base'
+				 && ! in_array( $file_info->getFilename(), self::$excluded_dir ) ) {
+
 				// We have found a directory, try to load the component in it
 				self::loadComponent( $file_info->getFilename(), $path );
 			}
@@ -149,21 +175,21 @@ class Pixelgrade_Components_Autoloader {
 		return $class;
 	}
 
-    /**
-     * Sets the $file_ext property
-     *
-     * @param string $file_ext The file extension used for class files.  Default is ".php".
-     */
-    public static function set_file_ext( $file_ext ) {
-        static::$file_ext = $file_ext;
-    }
+	/**
+	 * Sets the $file_ext property
+	 *
+	 * @param string $file_ext The file extension used for class files.  Default is ".php".
+	 */
+	public static function set_file_ext( $file_ext ) {
+		static::$file_ext = $file_ext;
+	}
 }
 
-if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ):
+if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ) :
 	/**
 	 * Just a wrapper for our components auto-loading
 	 */
 	function Pixelgrade_Components_Autoload() {
-	Pixelgrade_Components_Autoloader::loadComponents();
-}
+		Pixelgrade_Components_Autoloader::loadComponents();
+	}
 endif;

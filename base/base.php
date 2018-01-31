@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=7PCkvCPvDXk )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -25,13 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Make sure our components constants are defined
  */
-defined( 'PIXELGRADE_COMPONENTS_PATH' )                 or define( 'PIXELGRADE_COMPONENTS_PATH', 'components' );
-defined( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH' )       or define( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH', 'templates' );
-defined( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH' )  or define( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH', 'page-templates' );
-defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' )  or define( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH', 'template-parts' );
+defined( 'PIXELGRADE_COMPONENTS_PATH' ) || define( 'PIXELGRADE_COMPONENTS_PATH', 'components' );
+defined( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH' ) || define( 'PIXELGRADE_COMPONENTS_TEMPLATES_PATH', 'templates' );
+defined( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH' ) || define( 'PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH', 'page-templates' );
+defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' ) || define( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH', 'template-parts' );
 
 // Define the path to the root of this component
-defined( 'PIXELGRADE_BASE_PATH' ) or define( 'PIXELGRADE_BASE_PATH', trailingslashit( __DIR__ ) );
+defined( 'PIXELGRADE_BASE_PATH' ) || define( 'PIXELGRADE_BASE_PATH', trailingslashit( __DIR__ ) );
 
 /**
  * FIRST (REALLY FIRST)
@@ -59,19 +59,19 @@ require_once PIXELGRADE_BASE_PATH . 'abstracts/class-FeaturedPosts-BaseWidget.ph
 require_once PIXELGRADE_BASE_PATH . 'blocks.php';
 
 if ( ! function_exists( 'Pixelgrade_Base' ) ) :
-/**
- * Returns the main instance of Pixelgrade_Base to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Base|object
- */
-function Pixelgrade_Base() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Base') ) {
-		pixelgrade_load_component_file( 'base', 'class-Base' );
+	/**
+	 * Returns the main instance of Pixelgrade_Base to prevent the need to use globals.
+	 *
+	 * @since  1.0.0
+	 * @return Pixelgrade_Base|object
+	 */
+	function Pixelgrade_Base() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_Base' ) ) {
+			pixelgrade_load_component_file( 'base', 'class-Base' );
+		}
+		return Pixelgrade_Base::instance( '1.0.1' );
 	}
-	return Pixelgrade_Base::instance( '1.0.1' );
-}
 endif;
 
 /**

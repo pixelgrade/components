@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=h4eueDYPTIg )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Featured-Image
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Featured-Image
  * @version     1.2.0
  */
 
@@ -23,24 +23,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'Pixelgrade_FeaturedImage' ) ) :
-/**
- * Returns the main instance of Pixelgrade_FeaturedImage to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_FeaturedImage|object
- */
-function Pixelgrade_FeaturedImage() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_FeaturedImage') ) {
-		pixelgrade_load_component_file( 'featured-image', 'class-FeaturedImage' );
+	/**
+	 * Returns the main instance of Pixelgrade_FeaturedImage to prevent the need to use globals.
+	 *
+	 * @since  1.0.0
+	 * @return Pixelgrade_FeaturedImage|object
+	 */
+	function Pixelgrade_FeaturedImage() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_FeaturedImage' ) ) {
+			pixelgrade_load_component_file( 'featured-image', 'class-FeaturedImage' );
+		}
+		return Pixelgrade_FeaturedImage::instance( '1.2.0' );
 	}
-	return Pixelgrade_FeaturedImage::instance( '1.2.0');
-}
 endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation
  */
 
-//Load our component's template tags
+// Load our component's template tags
 pixelgrade_load_component_file( 'featured-image', 'inc/template-tags' );

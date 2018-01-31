@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=h4eueDYPTIg )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Gallery
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Gallery
  * @version     1.2.0
  */
 
@@ -23,19 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'Pixelgrade_GallerySettings' ) ) :
-/**
- * Returns the main instance of Pixelgrade_GallerySettings to prevent the need to use globals.
- *
- * @since  1.2.0
- * @return Pixelgrade_GallerySettings|object
- */
-function Pixelgrade_GallerySettings() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_GallerySettings') ) {
-		pixelgrade_load_component_file( 'gallery-settings', 'class-GallerySettings' );
+	/**
+	 * Returns the main instance of Pixelgrade_GallerySettings to prevent the need to use globals.
+	 *
+	 * @since  1.2.0
+	 * @return Pixelgrade_GallerySettings|object
+	 */
+	function Pixelgrade_GallerySettings() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_GallerySettings' ) ) {
+			pixelgrade_load_component_file( 'gallery-settings', 'class-GallerySettings' );
+		}
+		return Pixelgrade_GallerySettings::instance( '1.2.0' );
 	}
-	return Pixelgrade_GallerySettings::instance( '1.2.0' );
-}
 endif;
 
 /**

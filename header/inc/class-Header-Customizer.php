@@ -2,9 +2,9 @@
 /**
  * This is the class that handles the Customizer behaviour of our Header component.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Header
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Header
  * @version     1.0.0
  */
 
@@ -108,7 +108,8 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 	 */
 	public function addCustomifyOptions( $options ) {
 		// Recommended Fonts List - Headings
-		$recommended_headings_fonts = apply_filters( 'pixelgrade_header_customify_recommended_headings_fonts',
+		$recommended_headings_fonts = apply_filters(
+			'pixelgrade_header_customify_recommended_headings_fonts',
 			array(
 				'Playfair Display',
 				'Oswald',
@@ -128,7 +129,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 				'Pacifico',
 				'Handlee',
 				'Satify',
-				'Pompiere'
+				'Pompiere',
 			)
 		);
 
@@ -137,7 +138,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 			'header_section' => array(
 				'title'   => esc_html__( 'Header', '__components_txtd' ),
 				'options' => array(
-					'header_options_customizer_tabs'        => array(
+					'header_options_customizer_tabs'  => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 							<a href="#section-title-header-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -147,7 +148,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] Layout
-					'header_title_layout_section'    => array(
+					'header_title_layout_section'     => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-header-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
@@ -171,7 +172,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'header_height' => array(
+					'header_height'                   => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Header Height', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the header and navigation bar height.', '__components_txtd' ),
@@ -223,7 +224,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'header_position' => array(
+					'header_position'                 => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Header Position', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose if you want a static menu or a fixed (sticky) one that stays visible no matter how much you scroll the page.', '__components_txtd' ),
@@ -233,7 +234,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							'sticky' => esc_html__( 'Sticky (fixed)', '__components_txtd' ),
 						),
 					),
-					'header_width'    => array(
+					'header_width'                    => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Header Width', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose if you want the header span to the full-browser or stay aligned with the site container width.', '__components_txtd' ),
@@ -243,7 +244,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							'container' => esc_html__( 'Container Width', '__components_txtd' ),
 						),
 					),
-					'header_sides_spacing'          => array(
+					'header_sides_spacing'            => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Header Sides Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the space separating the header and the sides of the browser.', '__components_txtd' ),
@@ -272,11 +273,11 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] COLORS
-					'header_title_colors_section'    => array(
+					'header_title_colors_section'     => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-header-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'header_navigation_links_color' => array(
+					'header_navigation_links_color'   => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Navigation Links Color', '__components_txtd' ),
 						'live'    => true,
@@ -288,7 +289,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'header_links_active_color'     => array(
+					'header_links_active_color'       => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Links Active Color', '__components_txtd' ),
 						'live'    => true,
@@ -306,7 +307,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'header_links_active_style'     => array(
+					'header_links_active_style'       => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Links Active Style', '__components_txtd' ),
 						'desc'    => esc_html__( '', '__components_txtd' ),
@@ -316,7 +317,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 							'underline' => esc_html__( 'Underline', '__components_txtd' ),
 						),
 					),
-					'header_background'             => array(
+					'header_background'               => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Header Background', '__components_txtd' ),
 						'live'    => true,
@@ -330,71 +331,71 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] FONTS
-					'header_title_fonts_section'    => array(
+					'header_title_fonts_section'      => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-header-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'header_site_title_font' => array(
-						'type'     			=> 'font',
-						'label'            => esc_html__( 'Site Title Font', '__components_txtd' ),
-						'desc'             => esc_html__( '', '__components_txtd' ),
-						'selector'         => '.site-title',
-						'callback' => 'typeline_font_cb',
+					'header_site_title_font'          => array(
+						'type'        => 'font',
+						'label'       => esc_html__( 'Site Title Font', '__components_txtd' ),
+						'desc'        => esc_html__( '', '__components_txtd' ),
+						'selector'    => '.site-title',
+						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 17,
-						//		'line-height'    => 1.29,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none'
-						//	)
-						'default'  => null,
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 17,
+						// 'line-height'    => 1.29,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none'
+						// )
+						'default'     => null,
 
 						// List of recommended fonts defined by theme
 						'recommended' => $recommended_headings_fonts,
 						// Sub Fields Configuration (optional)
-						'fields'   => array(
+						'fields'      => array(
 							'font-size'       => array(                           // Set custom values for a range slider
 								'min'  => 8,
 								'max'  => 60,
 								'step' => 1,
 								'unit' => 'px',
 							),
-							'line-height'     => array( 0, 2, 0.1, '' ),           // Short-hand version
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
-							'text-align'      => false,                           // Disable sub-field (False by default)
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
 							'text-transform'  => true,
-							'text-decoration' => false
-						)
+							'text-decoration' => false,
+						),
 					),
 
-					'header_navigation_font' => array(
-						'type'     			=> 'font',
-						'label'            => esc_html__( 'Navigation Text', '__components_txtd' ),
-						'desc'             => esc_html__( '', '__components_txtd' ),
-						'selector'         => '.c-navbar',
-						'callback' => 'typeline_font_cb',
+					'header_navigation_font'          => array(
+						'type'        => 'font',
+						'label'       => esc_html__( 'Navigation Text', '__components_txtd' ),
+						'desc'        => esc_html__( '', '__components_txtd' ),
+						'selector'    => '.c-navbar',
+						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 15,
-						//		'line-height'    => 1.3,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none'
-						//	)
-						'default'  => null,
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 15,
+						// 'line-height'    => 1.3,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none'
+						// )
+						'default'     => null,
 
 						// List of recommended fonts defined by theme
 						'recommended' => $recommended_headings_fonts,
 						// Sub Fields Configuration (optional)
-						'fields'   => array(
+						'fields'      => array(
 							'font-size'       => array(
 								'min'  => 8,
 								'max'  => 60,
@@ -402,17 +403,17 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 								'unit' => 'px',
 							),
 							'line-height'     => array( 0, 2, 0.1, '' ),
-							'letter-spacing'  => array( -1, 2, 0.01, 'em' ),
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
 							'text-align'      => false,
 							'text-transform'  => true,
-							'text-decoration' => false
-						)
+							'text-decoration' => false,
+						),
 					),
 				),
 			),
 		);
 
-		//Allow others to make changes
+		// Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_header_customify_section_options', $header_section, $options );
 
 		// Validate the config
@@ -431,12 +432,12 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		// Assign the modified config
 		$header_section = $modified_config;
 
-		//make sure we are in good working order
+		// make sure we are in good working order
 		if ( empty( $options['sections'] ) ) {
 			$options['sections'] = array();
 		}
 
-		//append the header section
+		// append the header section
 		$options['sections'] = $options['sections'] + $header_section;
 
 		return $options;
@@ -461,16 +462,16 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		}
 
 		$header_position = pixelgrade_option( 'header_position' );
-		if ( 'sticky' == $header_position || empty( $header_position ) ) {
+		if ( 'sticky' === $header_position || empty( $header_position ) ) {
 			$classes[] = 'u-site-header-sticky';
 		}
 
 		$header_width = pixelgrade_option( 'header_width' );
-		if ( 'full' == $header_width || empty( $header_width ) ) {
+		if ( 'full' === $header_width || empty( $header_width ) ) {
 			$classes[] = 'u-site-header-full-width';
 		}
 
-		if ( 'underline' == pixelgrade_option( 'header_links_active_style' ) ) {
+		if ( 'underline' === pixelgrade_option( 'header_links_active_style' ) ) {
 			$classes[] = 'u-underlined-header-links';
 		}
 

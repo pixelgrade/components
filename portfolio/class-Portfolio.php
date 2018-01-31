@@ -5,9 +5,9 @@
  *
  * Everything gets hooked up and bolted in here.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.1
  */
 
@@ -23,7 +23,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 * Pixelgrade_Portfolio constructor.
 	 *
 	 * @param string $version Optional. The current component version.
-	 * @param array $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 * @param array  $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
 	 */
 	public function __construct( $version = '1.0.0', $args = array() ) {
 		// We want the component fire_up to happen before the init action in PixTypesPlugin that has a priority of 15,
@@ -44,7 +44,6 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 		// Initialize the $config
 		// Unfortunately we are too early with the execution to be able to use object constants from Jetpack like: Jetpack_Portfolio::CUSTOM_POST_TYPE
 		// @todo Investigate if we can solve this
-
 		// This config section handles the changes we want this component to make to other components.
 		// Like configuration changes
 		$this->config['cross_config'] = array(
@@ -53,7 +52,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				// This is key for the component's configuration changes
 				// We will merge (not replace) this configuration with the component's
 				'config' => array(
-					'post_types' => array( 'jetpack-portfolio', ),
+					'post_types' => array( 'jetpack-portfolio' ),
 				),
 			),
 		);
@@ -63,40 +62,40 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 		// 'portfolio/page-templates/portfolio-page.php' => 'Portfolio Template'
 		// - an extended one, where you can define dependencies (like other components); like so:
 		// array (
-		//	'page_template' => 'portfolio/page-templates/portfolio-page.php',
-		//	'name' => 'Portfolio Template',
-		//  'loop' => array(), // Optional - mark this as having a custom loop and define the behavior
-		//	'dependencies' => array (
-		//		'components' => array(
-		//			// put here the main class of the component and we will test for existence and if the component isActive
-		//			'Pixelgrade_Hero',
-		//		),
-		//		// We can also handle dependencies like 'class_exists' or 'function_exists':
-		//		// 'class_exists' => array( 'Some_Class', 'Another_Class' ),
-		//		// 'function_exists' => array( 'some_function', 'another_function' ),
-		//	),
+		// 'page_template' => 'portfolio/page-templates/portfolio-page.php',
+		// 'name' => 'Portfolio Template',
+		// 'loop' => array(), // Optional - mark this as having a custom loop and define the behavior
+		// 'dependencies' => array (
+		// 'components' => array(
+		// put here the main class of the component and we will test for existence and if the component isActive
+		// 'Pixelgrade_Hero',
+		// ),
+		// We can also handle dependencies like 'class_exists' or 'function_exists':
+		// 'class_exists' => array( 'Some_Class', 'Another_Class' ),
+		// 'function_exists' => array( 'some_function', 'another_function' ),
+		// ),
 		// ),
 		$this->config['page_templates'] = array(
 			array(
 				// We put the component slug in front to make sure that we don't have collisions with other components or theme defined templates
 				'page_template' => trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'portfolio-page.php',
 				'name'          => 'Portfolio Template',
-				'loop'       => array(
+				'loop'          => array(
 					// The post type(s) that this page template's custom loop should display (it can combine multiple since WP_Query also does)
-					'post_type'      => array( 'jetpack-portfolio', ),
+					'post_type'          => array( 'jetpack-portfolio' ),
 					// Optional - provide a template part (from the current component) to use for the custom loop (skip .php)
 					// You can define it as an array to allow for fallback: array( 'slug' => 'loop', 'name' => 'posts' )
 					// The search logic for the template part file is the one in pixelgrade_get_component_template_part()
 					// If missing, defaults to false - meaning using an inline custom loop inside Pixelgrade_Custom_Loops_For_Pages::loop_start()
-					'loop_template_part'  => 'loop-custom',
+					'loop_template_part' => 'loop-custom',
 					// Optional - provide a template part (from the current component) to use for displaying posts in the custom loop (skip .php)
 					// You can define it as an array to allow for fallback: array( 'slug' => 'content', 'name' => 'post' )
 					// The search logic for the template part file is the one in pixelgrade_get_component_template_part()
 					// If missing, defaults to 'content'(.php)
-					'post_template_part'  => 'content-jetpack-portfolio',
+					'post_template_part' => 'content-jetpack-portfolio',
 					// Optional - define how will the posts per page be determined
 					// If missing, defaults to 10
-					'posts_per_page' => array(
+					'posts_per_page'     => array(
 						// Define where we will get the value for this
 						// You can define to use a post meta value, an option value or a callback; you can also provide a direct int value
 						// The order is important as this is the order we will test - each one falls back to the other
@@ -117,13 +116,13 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					// Optional - how to order the posts
 					// This is the same syntax as the 'orderby' in WP_Query
 					// If missing, defaults to array( 'menu_order' => 'ASC', 'date' => 'DESC', )
-					'orderby'        => array(
+					'orderby'            => array(
 						'menu_order' => 'ASC',
 						'date'       => 'DESC',
 					),
 					// Optional - exclude certain posts
 					// This is not the direct value, but rather an config array of where to get them
-					'post__not_in'   => array(
+					'post__not_in'       => array(
 						// Define where we will get the value for this
 						// You can define to use a post meta value, an option value or a callback; you can also provide a direct int value
 						// The order is important as this is the order we will test - each one falls back to the other
@@ -136,7 +135,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					// Optional - The 'fake_loop_action' determines on what action do you want the fake loop to attach to
 					// That will be the place that the posts loop will be displayed
 					// Defaults to 'pixelgrade_after_loop' with 10 priority
-					'fake_loop_action' => array(
+					'fake_loop_action'   => array(
 						'function' => 'pixelgrade_after_loop',
 						'priority' => 9,
 					),
@@ -148,7 +147,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					// 'counter_after_template_part'
 					// 'after_loop'
 					// @see Pixelgrade_Custom_Loops_For_Pages::loop_start()
-					'hooks' => array(),
+					'hooks'              => array(),
 				),
 				'dependencies'  => array(
 					'components' => array(
@@ -167,25 +166,25 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 			//
 			// However, the order in which the templates are defined matters: an earlier template has a higher priority
 			// than a latter one when both match their conditions!
-			'archive-jetpack-portfolio' => array(
+			'archive-jetpack-portfolio'      => array(
 				// The type of this template.
 				// Possible core values: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
 				// 'embed', 'home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
 				// You can use (carefully) other values as long it is to your logic's advantage (e.g. 'header').
 				// @see get_query_template() for more details.
-				'type' => 'archive',
+				'type'      => 'archive',
 				// What check(s) should the current query pass for the templates to be added to the template hierarchy stack?
 				// IMPORTANT: In case of multiple checks, it needs to pass all of them!
 				// The functions will usually be conditional tags like `is_archive`, `is_tax`.
 				// @see /wp-includes/template-loader.php for inspiration.
 				// This is optional so you can have a template always added to a query type.
 				// @see Pixelgrade_Config::evaluateChecks()
-				'checks' => array(
+				'checks'    => array(
 					'callback' => 'is_post_type_archive',
 					// The arguments we should pass to the check callback.
 					// Each top level array entry will be a parameter - see call_user_func_array()
 					// So if you want to pass an array as a parameter you need to double enclose it like: array(array(1,2,3))
-					'args' => array( array( 'jetpack-portfolio', ) ),
+					'args'     => array( array( 'jetpack-portfolio' ) ),
 				),
 				// The template(s) file(s) that we should attempt to load for this template config.
 				//
@@ -206,20 +205,20 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				// Just make sure that the defined dependencies can be reliably checked at `after_setup_theme`, priority 12
 				//
 				// 'dependencies' => array (
-				//      'components' => array(
-				//	    	// put here the main class of the component and we will test for existence and if the component isActive
-				//  		'Pixelgrade_Hero',
-				//      ),
-				//      // We can also handle dependencies like 'class_exists' or 'function_exists':
-				//      'class_exists' => array( 'Some_Class', 'Another_Class', ),
-				//      'function_exists' => array( 'some_function', 'another_function', ),
-				//  ),
+				// 'components' => array(
+				// put here the main class of the component and we will test for existence and if the component isActive
+				// 'Pixelgrade_Hero',
+				// ),
+				// We can also handle dependencies like 'class_exists' or 'function_exists':
+				// 'class_exists' => array( 'Some_Class', 'Another_Class', ),
+				// 'function_exists' => array( 'some_function', 'another_function', ),
+				// ),
 			),
 			'archive-jetpack-portfolio-type' => array(
-				'type' => 'taxonomy',
-				'checks' => array(
+				'type'      => 'taxonomy',
+				'checks'    => array(
 					'function' => 'is_tax',
-					'args' => array( array( 'jetpack-portfolio-type', ) ),
+					'args'     => array( array( 'jetpack-portfolio-type' ) ),
 				),
 				'templates' => array(
 					array(
@@ -232,11 +231,11 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					),
 				),
 			),
-			'archive-jetpack-portfolio-tag' => array(
-				'type' => 'taxonomy',
-				'checks' => array(
+			'archive-jetpack-portfolio-tag'  => array(
+				'type'      => 'taxonomy',
+				'checks'    => array(
 					'function' => 'is_tax',
-					'args' => array( array( 'jetpack-portfolio-tag', ) ),
+					'args'     => array( array( 'jetpack-portfolio-tag' ) ),
 				),
 				'templates' => array(
 					array(
@@ -249,11 +248,11 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					),
 				),
 			),
-			'home-jetpack-portfolio' => array(
-				'type' => 'home_jetpack_portfolio',
-				'checks' => array(
+			'home-jetpack-portfolio'         => array(
+				'type'      => 'home_jetpack_portfolio',
+				'checks'    => array(
 					'function' => 'pixelgrade_is_page_for_projects',
-					'args' => array(),
+					'args'     => array(),
 				),
 				'templates' => array(
 					array(
@@ -266,11 +265,11 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 					),
 				),
 			),
-			'single-jetpack-portfolio' => array(
-				'type' => 'single', // single has priority over singular, so be careful when using singular
-				'checks' => array(
+			'single-jetpack-portfolio'       => array(
+				'type'      => 'single', // single has priority over singular, so be careful when using singular
+				'checks'    => array(
 					'function' => 'is_singular',
-					'args' => array( array('jetpack-portfolio', ) ),
+					'args'     => array( array( 'jetpack-portfolio' ) ),
 				),
 				'templates' => array(
 					array(
@@ -283,7 +282,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
+		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -364,7 +363,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 */
 	public static function siteSupportsPortfolio() {
 		// We also account for the fallback class in Pixelgrade Care > Theme Helpers
-		if  ( ! class_exists( 'Jetpack_Portfolio' ) ) {
+		if ( ! class_exists( 'Jetpack_Portfolio' ) ) {
 			return false;
 		}
 
@@ -420,15 +419,15 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	/**
 	 * Return the featured projects of a page if they are meant to be excluded from the loop
 	 *
-	 * @param int $page_ID
+	 * @param int $page_id
 	 *
 	 * @return array|bool
 	 */
-	public function excludeFeaturedProjects( $page_ID ) {
-		if ( ! empty( $page_ID ) ) {
+	public function excludeFeaturedProjects( $page_id ) {
+		if ( ! empty( $page_id ) ) {
 			// If this page has set to exclude featured projects - return them to be excluded
-			if ( 'exclude_featured' == get_post_meta( $page_ID, '_portfolio_grid_show', true ) ) {
-				return pixelgrade_hero_get_featured_projects_ids( $page_ID );
+			if ( 'exclude_featured' === get_post_meta( $page_id, '_portfolio_grid_show', true ) ) {
+				return pixelgrade_hero_get_featured_projects_ids( $page_id );
 			}
 		}
 
@@ -438,7 +437,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	/**
 	 * Change the default post content of a new project
 	 *
-	 * @param string $content
+	 * @param string  $content
 	 * @param WP_Post $post
 	 *
 	 * @return string The modified default post content.
@@ -503,8 +502,16 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	// creates a checkbox true/false option. Other types are surely possible
 	//
 	public function pageForProjectsSettingCallback() {
-		wp_dropdown_pages( array( 'name' => 'page_for_projects', 'echo' => 1, 'show_option_none' => esc_html__( '&mdash; Select &mdash;', '__components_txtd' ), 'option_none_value' => '0', 'selected' => get_option( 'page_for_projects' ) ) );
-		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', '__components_txtd' ) .'</p>';
+		wp_dropdown_pages(
+			array(
+				'name'              => 'page_for_projects',
+				'echo'              => 1,
+				'show_option_none'  => esc_html__( '&mdash; Select &mdash;', '__components_txtd' ),
+				'option_none_value' => '0',
+				'selected'          => get_option( 'page_for_projects' ),
+			)
+		);
+		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', '__components_txtd' ) . '</p>';
 	}
 
 	/**
@@ -513,7 +520,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	 * @param WP_Post $post
 	 */
 	public function handlePageForProjectsEditPage( $post ) {
-		if ( $post->ID == get_option( 'page_for_projects' ) && empty( $post->post_content ) ) {
+		if ( absint( get_option( 'page_for_projects' ) ) === $post->ID && empty( $post->post_content ) ) {
 			add_action( 'edit_form_after_title', array( $this, 'projectsPageNotice' ) );
 			remove_post_type_support( $post->post_type, 'editor' );
 		}
@@ -522,8 +529,8 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	/**
 	 * Display a notice when editing the page for projects.
 	 */
-	function projectsPageNotice() {
-		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.','__components_txtd' ) . '</p></div>';
+	public function projectsPageNotice() {
+		echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'You are currently editing the page that shows your latest projects.', '__components_txtd' ) . '</p></div>';
 	}
 
 	/**
@@ -536,29 +543,29 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 	public function handlePageForProjectsQuery( $query ) {
 		// We only do this on the frontend and only for the main query
 		// Bail otherwise
-		$page_for_projects = get_option( 'page_for_projects' );
+		$page_for_projects = absint( get_option( 'page_for_projects' ) );
 		if ( is_admin() || ! $query->is_main_query() || empty( $page_for_projects ) ) {
 			return;
 		}
 
 		// Get the current page ID
-		$page_ID = $query->get( 'page_id' );
-		if ( empty( $page_ID ) ) {
-			$page_ID = $query->queried_object_id;
+		$page_id = $query->get( 'page_id' );
+		if ( empty( $page_id ) ) {
+			$page_id = $query->queried_object_id;
 		}
 
 		// Bail if we don't have a page ID
-		if ( empty( $page_ID ) ) {
+		if ( empty( $page_id ) ) {
 			return;
 		}
 
-		if ( $page_ID == $page_for_projects ) {
+		if ( absint( $page_id ) === $page_for_projects ) {
 			// This means we should set things up that we are showing the portfolio archive template
 			// Usually something like archive-jetpack-portfolio.php, with fallback to archive.php
-			$query->is_page = false;
-			$query->is_archive = false;
+			$query->is_page              = false;
+			$query->is_archive           = false;
 			$query->is_post_type_archive = true;
-			$query->is_singular = false;
+			$query->is_singular          = false;
 			// Add our own is_ type to the query so Pixelgrade_Templater can handle it
 			$query->is_home_jetpack_portfolio = true;
 			$query->set( 'post_type', 'jetpack-portfolio' );

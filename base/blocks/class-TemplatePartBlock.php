@@ -2,9 +2,9 @@
 /**
  * Template Part Block class
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -39,9 +39,9 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 * Supplied `$args` override class property defaults.
 	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
-	 * @param string               $id      Block ID.
-	 * @param array                $args    {
-	 *     Optional. Arguments to override class property defaults.
+	 * @param string                   $id      Block ID.
+	 * @param array                    $args    {
+	 *         Optional. Arguments to override class property defaults.
 	 *
 	 *     @type int                  $instance_number Order in which this instance was created in relation
 	 *                                                 to other instances.
@@ -53,7 +53,7 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 *     @type string               $type            Block type. Core blocks include 'layout', 'template', 'callback'.
 	 *     @type string|array         $templates       The templates configuration.
 	 * }
-	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive any templates, something is wrong
@@ -72,7 +72,6 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	 */
 	protected function renderContent( $blocks_trail = array() ) {
 		// @todo Pass along the blocks trail, just in case someone is interested.
-
 		/**
 		 * Fires before a template-part block's content is rendered.
 		 *
@@ -133,7 +132,7 @@ class Pixelgrade_TemplatePartBlock extends Pixelgrade_Block {
 	/**
 	 * Given a set of block args and a extended block instance, merge the args.
 	 *
-	 * @param array $args
+	 * @param array            $args
 	 * @param Pixelgrade_Block $extended_block
 	 *
 	 * @return array The merged args

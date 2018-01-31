@@ -54,4 +54,5 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 do_action( 'pixelgrade_after_primary_wrapper', $location );
 ?>
 
-<?php pixelgrade_get_footer();
+<?php
+pixelgrade_get_footer();

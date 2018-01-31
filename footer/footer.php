@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=h4eueDYPTIg )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Footer
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Footer
  * @version     1.4.1
  */
 
@@ -23,24 +23,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'Pixelgrade_Footer' ) ) :
-/**
- * Returns the main instance of Pixelgrade_Footer to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Footer|object
- */
-function Pixelgrade_Footer() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Footer') ) {
-		pixelgrade_load_component_file( 'footer', 'class-Footer' );
+	/**
+	 * Returns the main instance of Pixelgrade_Footer to prevent the need to use globals.
+	 *
+	 * @since  1.0.0
+	 * @return Pixelgrade_Footer|object
+	 */
+	function Pixelgrade_Footer() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_Footer' ) ) {
+			pixelgrade_load_component_file( 'footer', 'class-Footer' );
+		}
+		return Pixelgrade_Footer::instance( '1.4.1' );
 	}
-	return Pixelgrade_Footer::instance( '1.4.1' );
-}
 endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation
  */
 
-//Load our component's template tags
+// Load our component's template tags
 pixelgrade_load_component_file( 'footer', 'inc/template-tags' );

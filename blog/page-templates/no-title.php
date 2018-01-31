@@ -13,9 +13,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Blog
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Blog
  * @version     1.0.0
  */
 
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $location = pixelgrade_set_location( 'page no-title' );
 if ( is_front_page() ) {
 	// Add some more contextual info
-	$location = pixelgrade_set_location( 'front-page');
+	$location = pixelgrade_set_location( 'front-page' );
 }
 
 pixelgrade_get_header(); ?>

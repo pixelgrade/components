@@ -28,32 +28,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-    <?php
-    /**
-     * pixelgrade_before_footer hook.
-     *
-     * @hooked nothing() - 10 (outputs nothing)
-     */
-    do_action( 'pixelgrade_before_footer', 'main' );
-    ?>
+	<?php
+	/**
+	 * pixelgrade_before_footer hook.
+	 *
+	 * @hooked nothing() - 10 (outputs nothing)
+	 */
+	do_action( 'pixelgrade_before_footer', 'main' );
+	?>
 
-    <?php
-    /**
-     * pixelgrade_footer hook.
-     *
-     * @hooked pixelgrade_the_footer() - 10 (outputs the footer markup)
-     */
-    do_action( 'pixelgrade_footer', 'main' );
-    ?>
+	<?php
+	/**
+	 * pixelgrade_footer hook.
+	 *
+	 * @hooked pixelgrade_the_footer() - 10 (outputs the footer markup)
+	 */
+	do_action( 'pixelgrade_footer', 'main' );
+	?>
 
-    <?php
-    /**
-     * pixelgrade_after_footer hook.
-     *
-     * @hooked nothing() - 10 (outputs nothing)
-     */
-    do_action( 'pixelgrade_after_footer', 'main' );
-    ?>
+	<?php
+	/**
+	 * pixelgrade_after_footer hook.
+	 *
+	 * @hooked nothing() - 10 (outputs nothing)
+	 */
+	do_action( 'pixelgrade_after_footer', 'main' );
+	?>
 
 </div><!-- .barba-container -->
 

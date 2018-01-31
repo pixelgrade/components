@@ -4,9 +4,9 @@
  *
  * Base on WordPress WP_List_Util class, but we needed the ability to process callbacks for values when sorting.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -52,7 +52,8 @@ class Pixelgrade_WrapperListUtil {
 	 * @param array $input Array to perform operations on.
 	 */
 	public function __construct( $input ) {
-		$this->output = $this->input = $input;
+		$this->output = $input;
+		$this->input  = $input;
 	}
 
 	/**
@@ -80,7 +81,6 @@ class Pixelgrade_WrapperListUtil {
 	/**
 	 * Filters the list, based on a set of key => value arguments.
 	 *
-	 *
 	 * @param array  $args     Optional. An array of key => value arguments to match
 	 *                         against each object. Default empty array.
 	 * @param string $operator Optional. The logical operation to perform. 'AND' means
@@ -100,7 +100,7 @@ class Pixelgrade_WrapperListUtil {
 			return array();
 		}
 
-		$count = count( $args );
+		$count    = count( $args );
 		$filtered = array();
 
 		foreach ( $this->output as $key => $obj ) {
@@ -109,16 +109,16 @@ class Pixelgrade_WrapperListUtil {
 			$matched = 0;
 			foreach ( $args as $m_key => $m_value ) {
 				if ( array_key_exists( $m_key, $to_match ) && $m_value == $to_match[ $m_key ] ) {
-					$matched++;
+					$matched ++;
 				}
 			}
 
 			if (
-				( 'AND' == $operator && $matched == $count ) ||
-				( 'OR' == $operator && $matched > 0 ) ||
-				( 'NOT' == $operator && 0 == $matched )
+				( 'AND' === $operator && $matched == $count ) ||
+				( 'OR' === $operator && $matched > 0 ) ||
+				( 'NOT' === $operator && 0 == $matched )
 			) {
-				$filtered[$key] = $obj;
+				$filtered[ $key ] = $obj;
 			}
 		}
 
@@ -132,7 +132,6 @@ class Pixelgrade_WrapperListUtil {
 	 *
 	 * This has the same functionality and prototype of
 	 * array_column() (PHP 5.5) but also supports objects.
-	 *
 	 *
 	 * @param int|string $field     Field from the object to place instead of the entire object
 	 * @param int|string $index_key Optional. Field from the object to use as keys for the new array.
@@ -251,7 +250,7 @@ class Pixelgrade_WrapperListUtil {
 				continue;
 			}
 
-			$results = 'DESC' === $direction ? array( 1, -1 ) : array( -1, 1 );
+			$results = 'DESC' === $direction ? array( 1, -1 ) : array( - 1, 1 );
 
 			if ( is_numeric( $a[ $field ] ) && is_numeric( $b[ $field ] ) ) {
 				return ( $a[ $field ] < $b[ $field ] ) ? $results[0] : $results[1];

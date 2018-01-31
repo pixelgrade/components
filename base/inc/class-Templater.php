@@ -5,9 +5,9 @@
  * We will push at the top of the template stack component templates allow the core logic to still have its say.
  * For example if want archive.php from the base component to take precedence to the regular root theme archive.php.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -21,6 +21,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 
 		/**
 		 * These are template types that the WordPress core knows about.
+		 *
 		 * @see get_query_template()
 		 */
 		protected static $core_types = array();
@@ -28,6 +29,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 		/**
 		 * These are custom template types that our components decide to make use of.
 		 * We will help the components and trigger the same dynamic filters that get_query_template() fires for core types.
+		 *
 		 * @see get_query_template()
 		 */
 		protected static $extra_types = array();
@@ -55,8 +57,8 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 		 * Initializes the templater.
 		 *
 		 * @param string $component The component slug that these templates belong to.
-		 * @param array $templates The templates config.
-		 * @param int $priority The priority with which to filter the templates.
+		 * @param array  $templates The templates config.
+		 * @param int    $priority The priority with which to filter the templates.
 		 */
 		public function __construct( $component, $templates = array(), $priority = 10 ) {
 			// Initialize the core types
@@ -133,20 +135,21 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 					// So we need to pass the info regarding the configured templates and component slug to the function hook also
 					add_filter(
 						"{$type}_template_hierarchy",
-						array (
+						array(
 							new Pixelgrade_FilterStorage(
-								array (
-									'type' => $type,
+								array(
+									'type'           => $type,
 									'component_slug' => $this->component,
-									'templates' => $this->templates,
+									'templates'      => $this->templates,
 								)
 							),
-							'pixelgrade_add_configured_templates'
+							'pixelgrade_add_configured_templates',
 						),
-						$this->priority, 10 );
+						$this->priority, 10
+					);
 
 					// We will also remember non-core template types so we can trigger the above filter for them
-					if ( ! in_array( $type, self::$core_types ) ) {
+					if ( ! in_array( $type, self::$core_types, true ) ) {
 						self::$extra_types[] = $type;
 					}
 				}
@@ -157,9 +160,12 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 			 * Just like this guy https://youtu.be/GIQn8pab8Vc
 			 */
 			// We only want to hook to 'template_include' once and only once, even if this class gets instantiated multiple times
-			if ( ! empty( self::$extra_types ) && ! has_filter( 'template_include', array( 'Pixelgrade_Templater',
-					'extraTypesTemplateHierarchyFilters'
-				) ) ) {
+			if ( ! empty( self::$extra_types ) && ! has_filter(
+				'template_include', array(
+					'Pixelgrade_Templater',
+					'extraTypesTemplateHierarchyFilters',
+				)
+			) ) {
 				add_filter( 'template_include', array( 'Pixelgrade_Templater', 'extraTypesTemplateHierarchyFilters' ), 20, 1 );
 			}
 		}
@@ -224,6 +230,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 	 * @see get_query_template()
 	 *
 	 * @param array $stack
+	 * @param array $args
 	 *
 	 * @return array
 	 */
@@ -249,7 +256,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 		$templates = array_reverse( $templates );
 		foreach ( $templates as $template ) {
 			// We are only interested in the templates that have the current $type
-			if ( $template['type'] == $type ) {
+			if ( $template['type'] === $type ) {
 				// We need to process the check section of the config, if available
 				$checked = true;
 				if ( ! empty( $template['checks'] ) ) {
@@ -257,13 +264,13 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 				}
 
 				if ( true === $checked ) {
-					$new_template = '';
+					$new_template      = '';
 					$template_filename = '';
 
 					// Handle the various formats we could be receiving the template info in
 					if ( is_string( $template['templates'] ) ) {
 						// This is directly the slug of a template - locate it
-						$new_template = pixelgrade_locate_component_template( $component_slug, $template['templates'] );
+						$new_template      = pixelgrade_locate_component_template( $component_slug, $template['templates'] );
 						$template_filename = $template['templates'];
 					} elseif ( is_array( $template['templates'] ) ) {
 						// We have an array but it may be a simple array, or an array of arrays - standardize it
@@ -302,12 +309,12 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 						$new_template = pixelgrade_make_relative_path( $new_template );
 
 						// We need to make sure that this template hasn't been added to the stack already
-						if ( false === array_search( $new_template, $stack ) ) {
+						if ( false === array_search( $new_template, $stack, true ) ) {
 							// Now we want to add the template to the stack as low as possible
 							// This way we allow for other templates specified by core to take precedence
 							// To do this we will search for $slug-$name.php
 							$template_filename .= '.php';
-							$key = Pixelgrade_Array::strrArraySearch( $template_filename, $stack );
+							$key                = Pixelgrade_Array::strrArraySearch( $template_filename, $stack );
 							if ( false !== $key ) {
 								// We will insert it above the found entry
 								$stack = Pixelgrade_Array::insertBeforeKey( $stack, $key, $new_template );
@@ -325,11 +332,12 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 	}
 endif;
 
-if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
+if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) {
 	/**
 	 * Stores a value and calls any existing function with this value.
 	 *
 	 * Excellent answer from here:
+	 *
 	 * @link https://wordpress.stackexchange.com/a/45920/52726
 	 */
 	class Pixelgrade_FilterStorage {
@@ -356,7 +364,8 @@ if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
 		 * argument it will be sent as an array.
 		 *
 		 * @param  string $callback Function name
-		 * @param  array  $arguments
+		 * @param  array $arguments
+		 *
 		 * @return mixed
 		 * @throws InvalidArgumentException
 		 */
@@ -367,10 +376,11 @@ if ( ! class_exists( 'Pixelgrade_FilterStorage' ) ) :
 
 			// Wrong function called.
 			throw new InvalidArgumentException(
-				sprintf( 'File: %1$s<br>Line %2$d<br>Not callable: %3$s',
-					__FILE__, __LINE__, print_r( $callback, TRUE )
+				sprintf(
+					'File: %1$s<br>Line %2$d<br>Not callable: %3$s',
+					__FILE__, __LINE__, print_r( $callback, true )
 				)
 			);
 		}
 	}
-endif;
+}

@@ -11,9 +11,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Hero
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Hero
  * @version     1.0.6
  */
 
@@ -51,18 +51,18 @@ if ( empty( $post_id ) ) {
 		<div class="c-hero__background  c-hero__layer" <?php pixelgrade_hero_background_color_style( $post_id ); ?>>
 
 			<?php
-			//first lets get to know this page a little better
-			//get the Google Maps URL
+			// first lets get to know this page a little better
+			// get the Google Maps URL
 			$map_url = get_post_meta( $post_id, '_hero_map_url', true );
 
-			//get the custom styling and marker/pin content
+			// get the custom styling and marker/pin content
 			$map_custom_style   = get_post_meta( $post_id, '_hero_map_custom_style', true );
 			$map_marker_content = get_post_meta( $post_id, '_hero_map_marker_content', true );
 			?>
 
 			<div class="c-hero__map  c-hero__layer"
-			     data-url="<?php echo esc_attr( $map_url ); ?>" <?php echo ( $map_custom_style == 'on' ) ? 'data-customstyle' : ''; ?>
-			     data-markercontent="<?php echo esc_attr( $map_marker_content ); ?>"></div>
+				data-url="<?php echo esc_attr( $map_url ); ?>" <?php echo ( 'on' === $map_custom_style ) ? 'data-customstyle' : ''; ?>
+				data-markercontent="<?php echo esc_attr( $map_marker_content ); ?>"></div>
 		</div>
 
 	</div><!-- .c-hero -->

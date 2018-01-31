@@ -2,9 +2,9 @@
 /**
  * Wrapper class
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see        https://pixelgrade.com
+ * @author        Pixelgrade
+ * @package    Components/Base
  * @version     1.0.0
  */
 
@@ -38,6 +38,7 @@ class Pixelgrade_Wrapper {
 
 	/**
 	 * Order in which this instance was created in relation to other instances.
+	 *
 	 * @access public
 	 * @var int
 	 */
@@ -120,18 +121,18 @@ class Pixelgrade_Wrapper {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * @param array                $args    {
+	 * @param array $args {
 	 *     Optional. Arguments to override class property defaults.
 	 *
-	 *     @type string               $tag             Wrapper opening tag name (i.e. div or article).
-	 *     @type string               $end_tag         Wrapper closing tag if the provided $tag is a fully qualified HTML element opening tag (i.e. <div>).
-	 *     @type string               $id              ID to add to the wrapper.
-	 *     @type array|string         $classes         Classes to add to the wrapper.
-	 *     @type array|string         $attributes      Attributes to add to the wrapper.
-	 *     @type bool     $display_on_empty_content    Whether to display the wrapper if the content is empty.
-	 *     @type int                  $priority        Order priority to display the wrapper. Default 10.
-	 *     @type array                $checks          The checks config to determine at render time if this wrapper should be displayed.
-	 *     @type array                $master_callback A callback config that should return at render time the wrapper's attributes, overwriting the existing ones.
+	 *     @type string $tag Wrapper opening tag name (i.e. div or article).
+	 *     @type string $end_tag Wrapper closing tag if the provided $tag is a fully qualified HTML element opening tag (i.e. <div>).
+	 *     @type string $id ID to add to the wrapper.
+	 *     @type array|string $classes Classes to add to the wrapper.
+	 *     @type array|string $attributes Attributes to add to the wrapper.
+	 *     @type bool $display_on_empty_content Whether to display the wrapper if the content is empty.
+	 *     @type int $priority Order priority to display the wrapper. Default 10.
+	 *     @type array $checks The checks config to determine at render time if this wrapper should be displayed.
+	 *     @type array $master_callback A callback config that should return at render time the wrapper's attributes, overwriting the existing ones.
 	 * }
 	 */
 	public function __construct( $args = array() ) {
@@ -161,7 +162,7 @@ class Pixelgrade_Wrapper {
 			}
 		}
 
-		self::$instance_count += 1;
+		self::$instance_count ++;
 		$this->instance_number = self::$instance_count;
 	}
 
@@ -206,99 +207,103 @@ class Pixelgrade_Wrapper {
 		return $this->getOpeningMarkup() . PHP_EOL . $content . PHP_EOL . $this->getClosingMarkup();
 	}
 
-    /**
-     * Get the fully formed opening markup.
-     *
-     * @return string
-     */
-    protected function getOpeningMarkup() {
-        // If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-        $tag = $this->getTag();
-        if ( self::isInlineMarkup( $tag ) ) {
-            return $tag;
-        }
+	/**
+	 * Get the fully formed opening markup.
+	 *
+	 * @return string
+	 */
+	protected function getOpeningMarkup() {
+		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
+		$tag = $this->getTag();
+		if ( self::isInlineMarkup( $tag ) ) {
+			return $tag;
+		}
 
-        // We will filter the markup parts to avoid gluing empty entries
-        return '<' . implode( ' ', array_filter( array(
-                $tag,
-                self::getIdMarkup( $this->id ),
-                self::getClassMarkup( $this->classes, $this ),
-                self::getAttributesMarkup( $this->attributes, $this ),
-            ) ) ) . '>';
-    }
+		// We will filter the markup parts to avoid gluing empty entries
+		return '<' . implode(
+			' ', array_filter(
+				array(
+					$tag,
+					self::getIdMarkup( $this->id ),
+					self::getClassMarkup( $this->classes, $this ),
+					self::getAttributesMarkup( $this->attributes, $this ),
+				)
+			)
+		) . '>';
+	}
 
-    /**
-     * Get the fully formed closing markup.
-     *
-     * @return string
-     */
-    protected function getClosingMarkup() {
-        // If the opening tag starts with a '<' character then we will use $end_tag - no
-        $tag = $this->getTag();
-        if ( self::isInlineMarkup( $tag ) ) {
-            return $this->getEndTag();
-        }
+	/**
+	 * Get the fully formed closing markup.
+	 *
+	 * @return string
+	 */
+	protected function getClosingMarkup() {
+		// If the opening tag starts with a '<' character then we will use $end_tag - no
+		$tag = $this->getTag();
+		if ( self::isInlineMarkup( $tag ) ) {
+			return $this->getEndTag();
+		}
 
-        return "</{$tag}>";
-    }
+		return "</{$tag}>";
+	}
 
-    /**
-     * Check if a tag has inline markup (starts with <)
-     *
-     * @param string $tag
-     *
-     * @return bool
-     */
-    public static function isInlineMarkup( $tag ) {
-        // If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
-        if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
-            return true;
-        }
+	/**
+	 * Check if a tag has inline markup (starts with <)
+	 *
+	 * @param string $tag
+	 *
+	 * @return bool
+	 */
+	public static function isInlineMarkup( $tag ) {
+		// If the given tag starts with a '<' character then we will treat as inline opening markup - no processing
+		if ( is_string( $tag ) && 0 === strpos( trim( $tag ), '<' ) ) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Get the opening tag or the fully formed opening markup if it's an inline tag.
-     *
-     * @return string
-     */
-    protected function getTag() {
-        $tag = $this->tag;
+	/**
+	 * Get the opening tag or the fully formed opening markup if it's an inline tag.
+	 *
+	 * @return string
+	 */
+	protected function getTag() {
+		$tag = $this->tag;
 
-        $tag = self::maybeProcessCallback( $tag );
+		$tag = self::maybeProcessCallback( $tag );
 
-        if ( ! empty( $tag ) && is_string( $tag ) ) {
-            $tag = tag_escape( $tag );
-        } else {
-            // Something is not right with the tag.
-            // Use the default tag
-            $tag = self::$default_tag;
-        }
+		if ( ! empty( $tag ) && is_string( $tag ) ) {
+			$tag = tag_escape( $tag );
+		} else {
+			// Something is not right with the tag.
+			// Use the default tag
+			$tag = self::$default_tag;
+		}
 
-        return $tag;
-    }
+		return $tag;
+	}
 
-    /**
-     * Get the fully formed closing tag (aka inline tag).
-     *
-     * @return string
-     */
-    protected function getEndTag() {
-        $tag = self::maybeProcessCallback( $this->end_tag );
+	/**
+	 * Get the fully formed closing tag (aka inline tag).
+	 *
+	 * @return string
+	 */
+	protected function getEndTag() {
+		$tag = self::maybeProcessCallback( $this->end_tag );
 
-        // Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
-        if ( empty( $tag ) ) {
-            $tag = '</' . self::$default_tag . '>';
-        }
+		// Use the default tag, but make it inline because we are going to use this only when the opening tag is inline also
+		if ( empty( $tag ) ) {
+			$tag = '</' . self::$default_tag . '>';
+		}
 
-        return $tag;
-    }
+		return $tag;
+	}
 
 	/**
 	 * Given an HTML id definition, return the full id attribute (ie. 'id="..."').
 	 *
-	 * @param string $id
+	 * @param string                  $id
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the id belongs to.
 	 *
 	 * @return string
@@ -342,7 +347,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Given an array of class definitions, return the full class attribute (ie. 'class="..."' ).
 	 *
-	 * @param array $classes
+	 * @param array                   $classes
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the classes belong to.
 	 *
 	 * @return string
@@ -361,7 +366,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Process an array of classes definition and return the final classes as an array of strings.
 	 *
-	 * @param array $classes
+	 * @param array                   $classes
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the classes belong to.
 	 *
 	 * @return array
@@ -417,7 +422,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Process an array of attributes definition and return the final attributes as an array of strings.
 	 *
-	 * @param array $attributes
+	 * @param array                   $attributes
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the attributes belong to.
 	 *
 	 * @return string
@@ -488,6 +493,7 @@ class Pixelgrade_Wrapper {
 			if ( ! empty( $value['args'] ) ) {
 				$args = $value['args'];
 			}
+
 			return Pixelgrade_Helper::ob_function( $value['callback'], $args );
 		}
 
@@ -502,11 +508,11 @@ class Pixelgrade_Wrapper {
 	 *
 	 * @return bool
 	 */
-	protected function maybeProcessMasterCallback(){
+	protected function maybeProcessMasterCallback() {
 		if ( ! empty( $this->master_callback )
-		     && is_array( $this->master_callback )
-		     && ! empty( $this->master_callback['callback'] )
-		     && is_callable( $this->master_callback['callback'] ) ) {
+			&& is_array( $this->master_callback )
+			&& ! empty( $this->master_callback['callback'] )
+			&& is_callable( $this->master_callback['callback'] ) ) {
 
 			$args = array();
 			if ( ! empty( $this->master_callback['args'] ) ) {
@@ -521,6 +527,7 @@ class Pixelgrade_Wrapper {
 
 			if ( ! is_array( $data ) || ! is_object( $data ) ) {
 				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null );
+
 				return false;
 			}
 

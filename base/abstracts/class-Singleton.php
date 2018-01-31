@@ -2,9 +2,9 @@
 /**
  * This is the abstract class for singletons (a singleton factory).
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.1.1
  */
 
@@ -78,6 +78,6 @@ abstract class Pixelgrade_Singleton {
 	 * Unserializing instances of this class is forbidden.
 	 */
 	private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ),  null );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', '__components_txtd' ), null );
 	} // End __wakeup ()
 }

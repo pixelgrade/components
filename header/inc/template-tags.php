@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Header
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Header
  * @version     1.2.2
  */
 
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display the classes for the header element.
  *
  * @param string|array $class One or more classes to add to the class list.
- * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param string       $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  */
 function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for header element
@@ -30,8 +30,8 @@ function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
  * Retrieve the classes for the header element as an array.
  *
  * @param string|array $class One or more classes to add to the class list.
- * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param string       $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return array Array of classes.
  */
@@ -52,7 +52,7 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
 	$classes[] = 'u-header-background';
 
 	if ( ! empty( $class ) ) {
-		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
+		$class   = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -80,19 +80,22 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
  * @param string $location Optional. This is a hint regarding the place/template where this header is being displayed
  */
 function pixelgrade_the_header( $location = '' ) {
-	pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'header');
+	pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'header' );
 }
 
 /**
  * Get the markup for a certain nav menu location.
  *
- * @param array $config An array with options for the wp_nav_menu() function.
+ * @param array  $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
  *
  * @return false|object
  */
 function pixelgrade_header_get_nav_menu( $args, $menu_location = '' ) {
-	$defaults = array( 'container' => 'nav', 'echo' => false, );
+	$defaults = array(
+		'container' => 'nav',
+		'echo'      => false,
+	);
 
 	if ( ! empty( $menu_location ) ) {
 		// Make sure we overwrite whatever is there
@@ -173,7 +176,7 @@ function pixelgrade_header_get_zones() {
 			$zones[ $zone_id ]['classes'] = array();
 		}
 
-		$default_classes = array( 'c-navbar__zone', 'c-navbar__zone--' . $zone_id );
+		$default_classes              = array( 'c-navbar__zone', 'c-navbar__zone--' . $zone_id );
 		$zones[ $zone_id ]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
 	}
 
@@ -191,7 +194,7 @@ function pixelgrade_header_get_zones() {
  * Retrieve the nav menu locations of a certain zone.
  *
  * @param string $zone_id The zone's identifier.
- * @param array $zone The zone's configuration.
+ * @param array  $zone The zone's configuration.
  *
  * @return bool|array
  */
@@ -233,8 +236,8 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 
 	// Do the comparison
 	if ( $a['order'] < $b['order'] ) {
-		return -1;
-	} else if ( $a['order'] > $b['order'] ) {
+		return - 1;
+	} elseif ( $a['order'] > $b['order'] ) {
 		return 1;
 	} else {
 		return 0;
@@ -250,7 +253,7 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 function pixelgrade_has_custom_logo_transparent( $blog_id = 0 ) {
 	$switched_blog = false;
 
-	if ( is_multisite() && ! empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
+	if ( is_multisite() && ! empty( $blog_id ) && get_current_blog_id() !== absint( $blog_id ) ) {
 		switch_to_blog( $blog_id );
 		$switched_blog = true;
 	}
@@ -275,7 +278,7 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
 	$html          = '';
 	$switched_blog = false;
 
-	if ( is_multisite() && ! empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
+	if ( is_multisite() && ! empty( $blog_id ) && get_current_blog_id() !== absint( $blog_id ) ) {
 		switch_to_blog( $blog_id );
 		$switched_blog = true;
 	}
@@ -284,16 +287,20 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
 
 	// We have a logo. Logo is go.
 	if ( $custom_logo_id ) {
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
+		$html = sprintf(
+			'<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
 			esc_url( home_url( '/' ) ),
-			wp_get_attachment_image( $custom_logo_id, 'full', false, array(
-				'class'    => 'custom-logo--transparent',
-				'itemprop' => 'logo',
-			) )
+			wp_get_attachment_image(
+				$custom_logo_id, 'full', false, array(
+					'class'    => 'custom-logo--transparent',
+					'itemprop' => 'logo',
+				)
+			)
 		);
 	} // If no logo is set but we're in the Customizer, leave a placeholder (needed for the live preview).
 	elseif ( is_customize_preview() ) {
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" style="display:none;"><img class="custom-logo--transparent"/></a>',
+		$html = sprintf(
+			'<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" style="display:none;"><img class="custom-logo--transparent"/></a>',
 			esc_url( home_url( '/' ) )
 		);
 	}

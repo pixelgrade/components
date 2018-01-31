@@ -5,9 +5,9 @@
  *
  * Everything gets hooked up and bolted in here.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Multipage
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Multipage
  * @version     1.1.2
  */
 
@@ -39,7 +39,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
+		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -86,11 +86,11 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 		add_filter( 'pixelgrade_hero_show_scroll_down_arrow', array( $this, 'preventHeroScrollDownArrow' ), 10, 3 );
 
 		// We will only play with redirects and permalinks if the permalinks are active
-		if ( get_option('permalink_structure') ) {
+		if ( get_option( 'permalink_structure' ) ) {
 			// Redirect subpages to the main page with hashtag at the end (blog.com/main-page/child-page -> blog.com/main-page/#child-page
 			add_action( 'template_redirect', array( $this, 'redirectSubpages' ) );
 
-			//modify page permalinks
+			// modify page permalinks
 			// Change the sample permalink in the WP Admin to match the one used in the redirect
 			add_filter( 'page_link', array( $this, 'modifyPagePermalink' ), 10, 3 );
 
@@ -112,7 +112,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	 */
 	public function enqueueScripts() {
 		// Register the frontend styles and scripts specific to multipages
-		wp_register_script( 'pixelgrade_multipage-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Multipage::COMPONENT_SLUG ) . 'js/jquery.bully.js' ), array( 'jquery' ), $this->assets_version, true );
+		wp_register_script( 'pixelgrade_multipage-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/jquery.bully.js' ), array( 'jquery' ), $this->assets_version, true );
 
 		// See if we need to enqueue something for multipages
 		if ( is_page() && pixelgrade_multipage_has_children() ) {
@@ -127,11 +127,11 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	 */
 	public function theSubpages( $location = '' ) {
 		if ( is_page() && pixelgrade_multipage_has_children() ) {
-			//so far we are interested only in pages
+			// so far we are interested only in pages
 			if ( pixelgrade_in_location( 'page', $location ) ) {
 				// Fire up the subpages loop
 				// We will use the regular theme template parts like content-page.php
-				pixelgrade_get_component_template_part( Pixelgrade_Multipage::COMPONENT_SLUG, 'loop' );
+				pixelgrade_get_component_template_part( self::COMPONENT_SLUG, 'loop' );
 			}
 		}
 	}
@@ -143,8 +143,8 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	function postClasses( $classes ) {
-		//we first need to know the bigger picture - the location this template part was loaded from
+	public function postClasses( $classes ) {
+		// we first need to know the bigger picture - the location this template part was loaded from
 		$location = pixelgrade_get_location();
 
 		if ( is_page() && is_main_query() ) {
@@ -157,13 +157,13 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	/**
 	 * Do not allow hero scroll down arrows on subpages
 	 *
-	 * @param bool $show
+	 * @param bool         $show
 	 * @param array|string $location
-	 * @param int $post_id
+	 * @param int          $post_id
 	 *
 	 * @return bool
 	 */
-	function preventHeroScrollDownArrow( $show, $location, $post_id ) {
+	public function preventHeroScrollDownArrow( $show, $location, $post_id ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			$show = false;
 		}
@@ -208,9 +208,9 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	/**
 	 * Returns the modified page permalink
 	 *
-	 * @param string  $permalink Sample permalink.
-	 * @param int     $post_id   Post ID.
-	 * @param string  $sample    Is it a sample permalink.
+	 * @param string $permalink Sample permalink.
+	 * @param int    $post_id   Post ID.
+	 * @param string $sample    Is it a sample permalink.
 	 *
 	 * @return string
 	 */
@@ -219,9 +219,9 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 			$post = get_post( $post_id );
 
 			// Remove the trailing slash
-			$permalink = untrailingslashit( $permalink);
+			$permalink = untrailingslashit( $permalink );
 
-			//replace the subpages name with #name
+			// replace the subpages name with #name
 			$permalink = str_replace( '/' . $post->post_name, '/#' . $post->post_name, $permalink );
 		}
 
@@ -231,7 +231,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	/**
 	 * Returns the modified sample permalink
 	 *
-	 * @param array  $permalink Sample permalink.
+	 * @param array   $permalink Sample permalink.
 	 * @param int     $post_id   Post ID.
 	 * @param string  $title     Post title.
 	 * @param string  $name      Post name (slug).
@@ -242,7 +242,7 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	public function modifySamplePermalink( $permalink, $post_id, $title, $name, $post ) {
 		if ( pixelgrade_multipage_is_child( $post_id ) ) {
 			// Remove the trailing slash
-			$permalink[0] = untrailingslashit( $permalink[0]);
+			$permalink[0] = untrailingslashit( $permalink[0] );
 
 			// Replace the last %pagename% with #%pagename%
 			$permalink[0] = str_replace( '%pagename%', '#%pagename%', $permalink[0] );

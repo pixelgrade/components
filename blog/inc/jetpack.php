@@ -2,9 +2,9 @@
 /**
  * Jetpack Related Posts Logic
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Blog
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Blog
  * @version     1.0.0
  */
 
@@ -13,7 +13,7 @@
  */
 function pixelgrade_jetpackme_remove_rp() {
 	if ( class_exists( 'Jetpack_RelatedPosts' ) ) {
-		$jprp = Jetpack_RelatedPosts::init();
+		$jprp     = Jetpack_RelatedPosts::init();
 		$callback = array( $jprp, 'filter_add_target_to_dom' );
 		remove_filter( 'the_content', $callback, 40 );
 	}
@@ -37,12 +37,12 @@ add_filter( 'jetpack_relatedposts_filter_options', 'pixelgrade_jetpack_more_rela
 function pixelgrade_get_jetpack_related_posts_ids( $post = null ) {
 	$post = get_post( $post );
 
-	//bail if we don't have a post to work with
+	// bail if we don't have a post to work with
 	if ( empty( $post ) ) {
 		return false;
 	}
 
-	//Initialize
+	// Initialize
 	$related_posts = array();
 
 	if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) {
@@ -50,19 +50,19 @@ function pixelgrade_get_jetpack_related_posts_ids( $post = null ) {
 		$related_posts_options = pixelgrade_get_jetpack_related_posts_options();
 
 		$related = Jetpack_RelatedPosts::init_raw()
-		                               ->set_query_name( 'pixelgrade-jetpack-related-posts' ) // Optional, name can be anything
-		                               ->get_for_post_id(
-				$post->ID,
-				array(
-					'exclude_post_ids' => array( $post->ID ),
-					'size' => (int)$related_posts_options['size'],
-				)
-			);
+									->set_query_name( 'pixelgrade-jetpack-related-posts' ) // Optional, name can be anything
+									->get_for_post_id(
+										$post->ID,
+										array(
+											'exclude_post_ids' => array( $post->ID ),
+											'size' => (int) $related_posts_options['size'],
+										)
+									);
 
 		if ( $related ) {
 			foreach ( $related as $result ) {
 				// Get the related post IDs
-				$related_posts[] = $result[ 'id' ];
+				$related_posts[] = $result['id'];
 			}
 		}
 	}
@@ -75,7 +75,7 @@ function pixelgrade_get_jetpack_related_posts_ids( $post = null ) {
  *
  * @param string $default Optional. The default headline.
  *
- * @return bool|void
+ * @return bool
  */
 function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	$headline = '';
@@ -94,7 +94,6 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 				$headline = $default;
 			}
 		}
-
 	} elseif ( ! empty( $default ) ) {
 		$headline = $default;
 	}
@@ -109,6 +108,8 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	 * @param string $headline Related Posts heading.
 	 */
 	echo apply_filters( 'jetpack_relatedposts_filter_headline', $headline );
+
+	return true;
 }
 
 /**
@@ -153,7 +154,7 @@ add_filter( 'jetpack_related_posts_customize_options', 'pixelgrade_jetpack_relat
  * @return array
  */
 function pixelgrade_jetpack_top_posts_custom_thumb_size( $get_image_options ) {
-	$get_image_options['width'] = 405;
+	$get_image_options['width']  = 405;
 	$get_image_options['height'] = 304;
 
 	return $get_image_options;

@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//we first need to know the bigger picture - the location this template part was loaded from
+// we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( '404' );
 ?>
 
@@ -33,7 +33,8 @@ $location = pixelgrade_get_location( '404' );
 		<h2 class="page-title h3"><?php esc_html_e( 'Nothing Found', '__components_txtd' ); ?></h2>
 
 		<?php
-		if ( is_home() && current_user_can( 'publish_posts' ) ) : ?>
+		if ( is_home() && current_user_can( 'publish_posts' ) ) :
+		?>
 
 			<p><?php printf( wp_kses( __( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', '__components_txtd' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( admin_url( 'post-new.php' ) ) ); ?></p>
 
@@ -43,12 +44,15 @@ $location = pixelgrade_get_location( '404' );
 
 			<?php
 
-		else : ?>
+		else :
+		?>
 
 			<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', '__components_txtd' ); ?></p>
 
-			<?php get_search_form();
+			<?php
+			get_search_form();
 
-		endif; ?>
+		endif;
+		?>
 	</div><!-- .page-content -->
 </section><!-- .no-results -->
