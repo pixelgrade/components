@@ -675,8 +675,8 @@ function pixelgrade_attachment_url_to_postid( $url ) {
  * @return string|false
  */
 function pixelgrade_image_src( $target, $size = null ) {
-	if ( isset( $_GET[ $target ] ) && ! empty( $target ) ) {
-		return pixelgrade_get_attachment_image_src( absint( $_GET[ $target ] ), $size );
+	if ( isset( $_GET[$target] ) && ! empty( $target ) ) {
+		return pixelgrade_get_attachment_image_src( absint( $_GET[$target] ), $size );
 	} else {
 		// empty target, or no query
 		$image = pixelgrade_option( $target );
