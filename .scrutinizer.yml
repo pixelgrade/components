@@ -16,12 +16,6 @@ tools:
 
 build:
     nodes:
-        tests:
-            dependencies:
-                before:
-                    -
-                        command: .bin/install-wp-tests.sh
-                        cwd: .
         analysis:
             dependencies:
                 before:
