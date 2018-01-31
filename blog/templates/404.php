@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/404.php` or in `/templates/blog/404.php`.
+ *
  * @see pixelgrade_locate_component_template()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you

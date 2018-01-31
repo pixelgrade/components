@@ -34,7 +34,6 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 			 * @since 2.5.1
 			 *
 			 * @param array $value Array of the default thumbnail grid gallery type. Default array contains one key, 'default'.
-			 *
 			 */
 			$this->gallery_types = apply_filters( 'jetpack_gallery_types', array( 'default' => esc_html__( 'Thumbnail Grid', '__components_txtd' ) ) );
 
@@ -72,24 +71,23 @@ if ( ! class_exists( 'Jetpack_Gallery_Settings' ) && ! class_exists( 'Jetpack_Ga
 			 * @since 2.5.1
 			 *
 			 * @param string $value A string of the gallery type. Default is 'default'.
-			 *
 			 */
 			$default_gallery_type = apply_filters( 'jetpack_default_gallery_type', 'default' );
 
 			?>
-            <script type="text/html" id="tmpl-jetpack-gallery-settings">
-                <label class="setting">
-                    <span><?php esc_html_e( 'Type', '__components_txtd' ); ?></span>
-                    <select class="type" name="type" data-setting="type">
+			<script type="text/html" id="tmpl-jetpack-gallery-settings">
+				<label class="setting">
+					<span><?php esc_html_e( 'Type', '__components_txtd' ); ?></span>
+					<select class="type" name="type" data-setting="type">
 						<?php foreach ( $this->gallery_types as $value => $caption ) : ?>
-                            <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $value, $default_gallery_type ); ?>><?php echo esc_html( $caption ); ?></option>
+							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $value, $default_gallery_type ); ?>><?php echo esc_html( $caption ); ?></option>
 						<?php endforeach; ?>
-                    </select>
-                </label>
-            </script>
+					</select>
+				</label>
+			</script>
 			<?php
 		}
 	}
 
-	new Jetpack_Gallery_Settings_Fallback;
+	new Jetpack_Gallery_Settings_Fallback();
 }

@@ -21,9 +21,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Hero
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Hero
  * @version     1.0.1
  */
 
@@ -68,8 +68,9 @@ if ( empty( $slide['type'] ) ) {
 		$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide-background', $slide['type'] );
 
 		if ( $template ) {
-			include( $template );
-		} ?>
+			include $template;
+		}
+		?>
 
 		<?php
 		/**
@@ -92,9 +93,10 @@ if ( empty( $slide['type'] ) ) {
 			$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide-content', $slide['type'] );
 
 			if ( $template ) {
-				include( $template );
+				include $template;
 			}
-		} ?>
+		}
+		?>
 
 		<?php
 		/**

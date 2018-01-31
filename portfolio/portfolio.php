@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=FS4U-HAHwps )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.1
  */
 
@@ -23,27 +23,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'Pixelgrade_Portfolio' ) ) :
-/**
- * Returns the main instance of Pixelgrade_Portfolio to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Portfolio|object
- */
-function Pixelgrade_Portfolio() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Portfolio' ) ) {
-		pixelgrade_load_component_file( 'portfolio', 'class-Portfolio' );
+	/**
+	 * Returns the main instance of Pixelgrade_Portfolio to prevent the need to use globals.
+	 *
+	 * @since  1.0.0
+	 * @return Pixelgrade_Portfolio|object
+	 */
+	function Pixelgrade_Portfolio() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_Portfolio' ) ) {
+			pixelgrade_load_component_file( 'portfolio', 'class-Portfolio' );
+		}
+		return Pixelgrade_Portfolio::instance( '1.0.1' );
 	}
-	return Pixelgrade_Portfolio::instance( '1.0.1' );
-}
 endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation
  */
 
-//Load our component's template tags
+// Load our component's template tags
 pixelgrade_load_component_file( 'portfolio', 'inc/template-tags' );
 
-//Load our component's extra functionality
+// Load our component's extra functionality
 pixelgrade_load_component_file( 'portfolio', 'inc/extras' );

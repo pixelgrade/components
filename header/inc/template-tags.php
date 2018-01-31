@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Header
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Header
  * @version     1.2.2
  */
 
@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display the classes for the header element.
  *
  * @param string|array $class One or more classes to add to the class list.
- * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param string       $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  */
 function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for header element
@@ -30,8 +30,8 @@ function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
  * Retrieve the classes for the header element as an array.
  *
  * @param string|array $class One or more classes to add to the class list.
- * @param string $location The place (template) where the classes are displayed. This is a hint for filters.
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param string       $location The place (template) where the classes are displayed. This is a hint for filters.
+ * @param int|WP_Post  $post    Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return array Array of classes.
  */
@@ -52,7 +52,7 @@ function pixelgrade_get_header_class( $class = '', $location = '', $post = null 
 	$classes[] = 'u-header-background';
 
 	if ( ! empty( $class ) ) {
-		$class = Pixelgrade_Value::maybeSplitByWhitespace( $class );
+		$class   = Pixelgrade_Value::maybeSplitByWhitespace( $class );
 		$classes = array_merge( $classes, $class );
 	} else {
 		// Ensure that we always coerce class to being an array.
@@ -86,13 +86,16 @@ function pixelgrade_the_header( $location = '' ) {
 /**
  * Get the markup for a certain nav menu location.
  *
- * @param array $args An array with options for the wp_nav_menu() function.
+ * @param array  $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
  *
  * @return false|object
  */
 function pixelgrade_header_get_nav_menu( $args, $menu_location = '' ) {
-	$defaults = array( 'container' => 'nav', 'echo' => false,);
+	$defaults = array(
+		'container' => 'nav',
+		'echo'      => false,
+	);
 
 	if ( ! empty( $menu_location ) ) {
 		// Make sure we overwrite whatever is there
@@ -146,7 +149,7 @@ function pixelgrade_header_get_zones() {
 
 	// Cycle through each zone and determine the nav menu locations that will be shown - with input from others
 	foreach ( $zones as $zone_id => $zone_settings ) {
-		$zones[$zone_id]['menu_locations'] = array();
+		$zones[ $zone_id ]['menu_locations'] = array();
 		// Cycle through each defined nav menu location and determine if it is a part of the current zone
 		foreach ( $config['menu_locations'] as $menu_id => $menu_location ) {
 			// A little sanity check
@@ -164,17 +167,17 @@ function pixelgrade_header_get_zones() {
 			 * @return string
 			 */
 			if ( $zone_id == apply_filters( "pixelgrade_header_{$menu_id}_nav_menu_display_zone", $menu_location['default_zone'], $menu_location, $config['menu_locations'] ) ) {
-				$zones[$zone_id]['menu_locations'][$menu_id] = $menu_location;
+				$zones[ $zone_id ]['menu_locations'][ $menu_id ] = $menu_location;
 			}
 		}
 
 		// Also setup the classes for the zone
-		if ( empty( $zones[$zone_id]['classes'] ) ) {
-			$zones[$zone_id]['classes'] = array();
+		if ( empty( $zones[ $zone_id ]['classes'] ) ) {
+			$zones[ $zone_id ]['classes'] = array();
 		}
 
-		$default_classes = array( 'c-navbar__zone', 'c-navbar__zone--' . $zone_id );
-		$zones[$zone_id]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
+		$default_classes              = array( 'c-navbar__zone', 'c-navbar__zone--' . $zone_id );
+		$zones[ $zone_id ]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
 	}
 
 	// Now allow others to have a final go, maybe some need a more global view to decide (CSS classes or special ordering maybe?)
@@ -191,7 +194,7 @@ function pixelgrade_header_get_zones() {
  * Retrieve the nav menu locations of a certain zone.
  *
  * @param string $zone_id The zone's identifier.
- * @param array $zone The zone's configuration.
+ * @param array  $zone The zone's configuration.
  *
  * @return bool|array
  */
@@ -234,7 +237,7 @@ function pixelgrade_header_order_cmp( array $a, array $b ) {
 	// Do the comparison
 	if ( $a['order'] < $b['order'] ) {
 		return - 1;
-	} else if ( $a['order'] > $b['order'] ) {
+	} elseif ( $a['order'] > $b['order'] ) {
 		return 1;
 	} else {
 		return 0;
@@ -284,16 +287,20 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
 
 	// We have a logo. Logo is go.
 	if ( $custom_logo_id ) {
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
+		$html = sprintf(
+			'<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
 			esc_url( home_url( '/' ) ),
-			wp_get_attachment_image( $custom_logo_id, 'full', false, array(
-				'class'    => 'custom-logo--transparent',
-				'itemprop' => 'logo',
-			) )
+			wp_get_attachment_image(
+				$custom_logo_id, 'full', false, array(
+					'class'    => 'custom-logo--transparent',
+					'itemprop' => 'logo',
+				)
+			)
 		);
 	} // If no logo is set but we're in the Customizer, leave a placeholder (needed for the live preview).
 	elseif ( is_customize_preview() ) {
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" style="display:none;"><img class="custom-logo--transparent"/></a>',
+		$html = sprintf(
+			'<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" style="display:none;"><img class="custom-logo--transparent"/></a>',
 			esc_url( home_url( '/' ) )
 		);
 	}

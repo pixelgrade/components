@@ -2,9 +2,9 @@
 /**
  * Wrapper class
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see        https://pixelgrade.com
+ * @author        Pixelgrade
+ * @package    Components/Base
  * @version     1.0.0
  */
 
@@ -38,6 +38,7 @@ class Pixelgrade_Wrapper {
 
 	/**
 	 * Order in which this instance was created in relation to other instances.
+	 *
 	 * @access public
 	 * @var int
 	 */
@@ -120,36 +121,36 @@ class Pixelgrade_Wrapper {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * @param array                $args    {
+	 * @param array $args {
 	 *     Optional. Arguments to override class property defaults.
 	 *
-	 *     @type string               $tag             Wrapper opening tag name (i.e. div or article).
-	 *     @type string               $end_tag         Wrapper closing tag if the provided $tag is a fully qualified HTML element opening tag (i.e. <div>).
-	 *     @type string               $id              ID to add to the wrapper.
-	 *     @type array|string         $classes         Classes to add to the wrapper.
-	 *     @type array|string         $attributes      Attributes to add to the wrapper.
-	 *     @type bool     $display_on_empty_content    Whether to display the wrapper if the content is empty.
-	 *     @type int                  $priority        Order priority to display the wrapper. Default 10.
-	 *     @type array                $checks          The checks config to determine at render time if this wrapper should be displayed.
-	 *     @type array                $master_callback A callback config that should return at render time the wrapper's attributes, overwriting the existing ones.
+	 *     @type string $tag Wrapper opening tag name (i.e. div or article).
+	 *     @type string $end_tag Wrapper closing tag if the provided $tag is a fully qualified HTML element opening tag (i.e. <div>).
+	 *     @type string $id ID to add to the wrapper.
+	 *     @type array|string $classes Classes to add to the wrapper.
+	 *     @type array|string $attributes Attributes to add to the wrapper.
+	 *     @type bool $display_on_empty_content Whether to display the wrapper if the content is empty.
+	 *     @type int $priority Order priority to display the wrapper. Default 10.
+	 *     @type array $checks The checks config to determine at render time if this wrapper should be displayed.
+	 *     @type array $master_callback A callback config that should return at render time the wrapper's attributes, overwriting the existing ones.
 	 * }
 	 */
 	public function __construct( $args = array() ) {
 		$keys = array_keys( get_object_vars( $this ) );
 		foreach ( $keys as $key ) {
-			if ( isset( $args[$key] ) ) {
+			if ( isset( $args[ $key ] ) ) {
 				// We need to sanitize and standardize things
 				switch ( $key ) {
 					case 'classes':
 						// Split inline classes and coerce to an array
-						if ( is_string( $args[$key] ) ) {
-							$args[$key] = Pixelgrade_Value::maybeSplitByWhitespace( $args[$key] );
+						if ( is_string( $args[ $key ] ) ) {
+							$args[ $key ] = Pixelgrade_Value::maybeSplitByWhitespace( $args[ $key ] );
 						}
 						break;
 					case 'checks':
 						// Make sure the checks is an array
-						if ( is_string( $args[$key] ) ) {
-							$args[$key] = array( $args[$key] );
+						if ( is_string( $args[ $key ] ) ) {
+							$args[ $key ] = array( $args[ $key ] );
 						}
 						break;
 					default:
@@ -157,7 +158,7 @@ class Pixelgrade_Wrapper {
 				}
 
 				// Save the property
-				$this->$key = $args[$key];
+				$this->$key = $args[ $key ];
 			}
 		}
 
@@ -219,12 +220,16 @@ class Pixelgrade_Wrapper {
 		}
 
 		// We will filter the markup parts to avoid gluing empty entries
-		return '<' . implode( ' ', array_filter( array(
-				$tag,
-				self::getIdMarkup( $this->id ),
-				self::getClassMarkup( $this->classes, $this ),
-				self::getAttributesMarkup( $this->attributes, $this ),
-			) ) ) . '>';
+		return '<' . implode(
+			' ', array_filter(
+				array(
+					$tag,
+					self::getIdMarkup( $this->id ),
+					self::getClassMarkup( $this->classes, $this ),
+					self::getAttributesMarkup( $this->attributes, $this ),
+				)
+			)
+		) . '>';
 	}
 
 	/**
@@ -298,7 +303,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Given an HTML id definition, return the full id attribute (ie. 'id="..."').
 	 *
-	 * @param string $id
+	 * @param string                  $id
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the id belongs to.
 	 *
 	 * @return string
@@ -342,7 +347,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Given an array of class definitions, return the full class attribute (ie. 'class="..."' ).
 	 *
-	 * @param array $classes
+	 * @param array                   $classes
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the classes belong to.
 	 *
 	 * @return string
@@ -361,7 +366,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Process an array of classes definition and return the final classes as an array of strings.
 	 *
-	 * @param array $classes
+	 * @param array                   $classes
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the classes belong to.
 	 *
 	 * @return array
@@ -417,7 +422,7 @@ class Pixelgrade_Wrapper {
 	/**
 	 * Process an array of attributes definition and return the final attributes as an array of strings.
 	 *
-	 * @param array $attributes
+	 * @param array                   $attributes
 	 * @param Pixelgrade_Wrapper|null $wrapper Optional. The wrapper instance the attributes belong to.
 	 *
 	 * @return string
@@ -488,6 +493,7 @@ class Pixelgrade_Wrapper {
 			if ( ! empty( $value['args'] ) ) {
 				$args = $value['args'];
 			}
+
 			return Pixelgrade_Helper::ob_function( $value['callback'], $args );
 		}
 
@@ -521,6 +527,7 @@ class Pixelgrade_Wrapper {
 
 			if ( ! is_array( $data ) || ! is_object( $data ) ) {
 				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null );
+
 				return false;
 			}
 
@@ -531,8 +538,8 @@ class Pixelgrade_Wrapper {
 
 			$keys = array_keys( get_object_vars( $this ) );
 			foreach ( $keys as $key ) {
-				if ( isset( $data[$key] ) ) {
-					$this->$key = $data[$key];
+				if ( isset( $data[ $key ] ) ) {
+					$this->$key = $data[ $key ];
 				}
 			}
 		}

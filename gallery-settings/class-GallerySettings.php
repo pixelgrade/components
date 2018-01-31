@@ -66,7 +66,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
+		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -120,7 +120,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	}
 
 	function jetpackFallback() {
-		//Make sure that the Jetpack fallback functionality is loaded
+		// Make sure that the Jetpack fallback functionality is loaded
 		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'jetpack-fallback/functions.gallery' );
 	}
 
@@ -129,7 +129,6 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		 * Filter the available gallery types
 		 *
 		 * @param array $value Array of the default thumbnail grid gallery spacing.
-		 *
 		 */
 		$this->config['gallery_spacing_options'] = apply_filters( 'pixelgrade_gallery_spacing_options', $this->config['gallery_spacing_options'] );
 
@@ -140,7 +139,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		}
 
 		// Register the styles and scripts specific to this component
-//		wp_register_style( 'pixelgrade_gallery-admin-style', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/admin.css' ), array(), $this->assets_version );
+		// wp_register_style( 'pixelgrade_gallery-admin-style', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/admin.css' ), array(), $this->assets_version );
 	}
 
 	/**
@@ -162,9 +161,11 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		// Enqueue our script
 		wp_enqueue_script( 'pixelgrade-gallery-settings' );
 
-		wp_localize_script( 'pixelgrade-gallery-settings', 'pixelgradeGallerySettings', array(
-			'postType' => get_post_type(),
-		) );
+		wp_localize_script(
+			'pixelgrade-gallery-settings', 'pixelgradeGallerySettings', array(
+				'postType' => get_post_type(),
+			)
+		);
 	}
 
 	/**
@@ -177,14 +178,14 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	function addMasonryGalleryType( $types ) {
 		$setting = array( 'masonry' => esc_html__( 'Masonry', '__components_txtd' ) );
 
-		//we want to insert after the default Thumbnail Grid
+		// we want to insert after the default Thumbnail Grid
 		$key = array_search( 'default', array_keys( $types ) );
 		if ( false === $key ) {
-			//it means we haven't found the key
+			// it means we haven't found the key
 			// simply prepend the array
 			$types = $setting + $types;
 		} else {
-			//insert it after the Thumbnail Grid option
+			// insert it after the Thumbnail Grid option
 			$types = array_slice( $types, 0, $key + 1, true ) +
 					 $setting +
 					 array_slice( $types, $key + 1, null, true );
@@ -212,15 +213,15 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 * We take advantage of the newly introduced $gallery_instance parameter so we can store each gallery's attributes for later use
 	 *
 	 * @param string $output The gallery output. Default empty.
-	 * @param array $attr Attributes of the gallery shortcode.
-	 * @param int $gallery_instance Unique numeric ID of this gallery shortcode instance.
+	 * @param array  $attr Attributes of the gallery shortcode.
+	 * @param int    $gallery_instance Unique numeric ID of this gallery shortcode instance.
 	 *
 	 * @return string
 	 */
 	function postGallery( $output, $attr, $gallery_instance = 0 ) {
 		// save the current instance and it's attributes
-		self::$gallery_instance = $gallery_instance;
-		self::$atts[self::$gallery_instance] = $attr;
+		self::$gallery_instance                = $gallery_instance;
+		self::$atts[ self::$gallery_instance ] = $attr;
 
 		return $output;
 	}
@@ -228,9 +229,9 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	/**
 	 * Add our spacing attribute to the list of default gallery attributes
 	 *
-	 * @param array $out The output array of shortcode attributes.
-	 * @param array $pairs The supported attributes and their defaults.
-	 * @param array $atts The user defined shortcode attributes.
+	 * @param array  $out The output array of shortcode attributes.
+	 * @param array  $pairs The supported attributes and their defaults.
+	 * @param array  $atts The user defined shortcode attributes.
 	 * @param string $shortcode The shortcode name.
 	 *
 	 * @return array
@@ -253,21 +254,21 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 * @return string
 	 */
 	function galleryClasses( $out ) {
-		if ( empty( self::$atts[self::$gallery_instance]['spacing'] ) ) {
-			self::$atts[self::$gallery_instance]['spacing'] = $this->config['gallery_spacing_default'];
+		if ( empty( self::$atts[ self::$gallery_instance ]['spacing'] ) ) {
+			self::$atts[ self::$gallery_instance ]['spacing'] = $this->config['gallery_spacing_default'];
 		}
 
-		$out = str_replace( "class='gallery", "class='gallery  u-gallery-spacing--" . self::$atts[self::$gallery_instance]['spacing'], $out );
+		$out = str_replace( "class='gallery", "class='gallery  u-gallery-spacing--" . self::$atts[ self::$gallery_instance ]['spacing'], $out );
 
-		//add also the type when it is a masonry gallery
-		if ( ! empty( self::$atts[self::$gallery_instance]['type'] ) && 'masonry' == self::$atts[self::$gallery_instance]['type'] ) {
-			$out = str_replace( "class='gallery", "class='gallery  u-gallery-type--" . self::$atts[self::$gallery_instance]['type'], $out );
+		// add also the type when it is a masonry gallery
+		if ( ! empty( self::$atts[ self::$gallery_instance ]['type'] ) && 'masonry' == self::$atts[ self::$gallery_instance ]['type'] ) {
+			$out = str_replace( "class='gallery", "class='gallery  u-gallery-type--" . self::$atts[ self::$gallery_instance ]['type'], $out );
 		}
 
 		// We may also need to add the slideshow class since we are using our Jetpack fallback
 		if ( class_exists( 'Jetpack_Gallery_Settings_Fallback' ) ) {
-			if ( ! empty( self::$atts[self::$gallery_instance]['type'] ) && 'slideshow' == self::$atts[self::$gallery_instance]['type'] ) {
-				$out = str_replace( "class='gallery", "class='gallery  gallery--type-" . self::$atts[self::$gallery_instance]['type'], $out );
+			if ( ! empty( self::$atts[ self::$gallery_instance ]['type'] ) && 'slideshow' == self::$atts[ self::$gallery_instance ]['type'] ) {
+				$out = str_replace( "class='gallery", "class='gallery  gallery--type-" . self::$atts[ self::$gallery_instance ]['type'], $out );
 			}
 		}
 
@@ -291,9 +292,11 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 					<span><?php esc_html_e( 'Spacing', '__components_txtd' ); ?></span>
 					<select class="spacing" name="spacing" data-setting="spacing">
 
-					<?php foreach ( $this->config['gallery_spacing_options'] as $value => $caption ) {
+					<?php
+					foreach ( $this->config['gallery_spacing_options'] as $value => $caption ) {
 						echo '<option value="' . esc_attr( $value ) . '" ' . selected( $value, $default_gallery_spacing ) . '>' . esc_html( $caption ) . '</option>' . PHP_EOL;
-					} ?>
+					}
+					?>
 
 					</select>
 				</label>

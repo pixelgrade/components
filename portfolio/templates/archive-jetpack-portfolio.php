@@ -53,7 +53,8 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 			$visibility_class = '';
 			if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
 				$visibility_class = 'screen-reader-text';
-			} ?>
+			}
+			?>
 
 			<div class="u-portfolio-sides-spacing  <?php echo $visibility_class; ?>">
 				<div class="o-wrapper  u-portfolio-grid-width">
@@ -76,21 +77,24 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 								echo get_the_title( pixelgrade_get_page_for_projects() );
 							} else {
 								echo apply_filters( 'pixelgrade_default_portfolio_archives_title', esc_html__( 'Projects', '__components_txtd' ), $location );
-							} ?>
+							}
+							?>
 						</h1>
 
 						<?php
 						if ( is_post_type_archive( Jetpack_Portfolio::CUSTOM_POST_TYPE ) || is_tax( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) {
 							pixelgrade_the_taxonomy_dropdown( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE );
 							the_archive_description( '<div class="entry-description">', '</div>' );
-						} ?>
+						}
+						?>
 					</header><!-- .entry-header.c-page-header -->
 
 					<?php
 					/**
 					 * pixelgrade_after_entry_title hook.
 					 */
-					do_action( 'pixelgrade_after_entry_title', $location ); ?>
+					do_action( 'pixelgrade_after_entry_title', $location );
+					?>
 
 				</div><!-- .o-wrapper .u-portfolio-grid-width -->
 			</div><!-- .u-portfolio-sides-spacing -->
@@ -122,7 +126,8 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 							/*
 							 * Load the portfolio loop
 							 */
-							pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'loop' ); ?>
+							pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'loop' );
+							?>
 
 						</div><!-- .o-layout__main -->
 
@@ -158,4 +163,5 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 do_action( 'pixelgrade_after_primary_wrapper', $location );
 ?>
 
-<?php pixelgrade_get_footer();
+<?php
+pixelgrade_get_footer();

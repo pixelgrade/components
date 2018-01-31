@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -24,7 +24,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 		// Gather up all the meta we might need to display
 		// But first initialize please
 		$meta = array(
-			'types' => false,
+			'types'    => false,
 			'tags'     => false,
 			'author'   => false,
 			'date'     => false,
@@ -111,8 +111,9 @@ if ( ! function_exists( 'pixelgrade_portfolio_the_older_projects_button' ) ) {
 					</div>
 				</div>
 			</nav>
-		<?php endif;
-	} #function
+		<?php
+		endif;
+	} // function
 }
 
 /**
@@ -125,7 +126,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_the_older_projects_button' ) ) {
 function pixelgrade_portfolio_the_main_project_type_link( $before = '', $after = '', $type_class = '' ) {
 	echo pixelgrade_portfolio_get_project_main_type_link( $before, $after, $type_class );
 
-} #function
+} // function
 
 
 if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
@@ -153,7 +154,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
 		}
 		return $before . '<a ' . $class_markup . ' href="' . esc_url( get_term_link( $type, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" title="' . esc_attr( $type->name ) . '">' . $type->name . '</a>' . $after;
 
-	} #function
+	} // function
 }
 
 /**
@@ -165,12 +166,12 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
  */
 function pixelgrade_portfolio_get_project_main_type( $post_ID = null ) {
 
-	//use the current post ID is none given
+	// use the current post ID is none given
 	if ( empty( $post_ID ) ) {
 		$post_ID = get_the_ID();
 	}
 
-	//obviously pages don't have categories
+	// obviously pages don't have categories
 	if ( 'page' == get_post_type( $post_ID ) ) {
 		return false;
 	}

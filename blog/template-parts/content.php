@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/template-parts/content.php` or in `/template-parts/blog/content.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -43,7 +44,7 @@ $secondary_meta_output = $secondary_meta !== 'none' ? pixelgrade_get_post_meta( 
 do_action( 'pixelgrade_before_loop_entry', $location );
 ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class() ?>>
+	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 		<div class="c-card">
 
@@ -57,7 +58,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 			<?php if ( pixelgrade_display_featured_images() ) { ?>
 				<div class="c-card__aside c-card__thumbnail-background">
 					<div class="c-card__frame">
-						<?php if ( has_post_thumbnail() ) {
+						<?php
+						if ( has_post_thumbnail() ) {
 							the_post_thumbnail();
 						}
 
@@ -70,7 +72,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 			<div class="c-card__content">
 
 				<?php
-				if ( $primary_meta_output || $secondary_meta_output ) { ?>
+				if ( $primary_meta_output || $secondary_meta_output ) {
+				?>
 
 					<div class="c-card__meta c-meta">
 						<?php
@@ -84,16 +87,21 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 						if ( $secondary_meta_output ) {
 							echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
-						} ?>
+						}
+						?>
 					</div>
 
-				<?php }
+				<?php
+				}
 
-				if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) { ?>
+				if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) {
+				?>
 					<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
-				<?php }
+				<?php
+				}
 
-				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) { ?>
+				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) {
+				?>
 					<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
 				<?php } ?>
 

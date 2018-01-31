@@ -4,6 +4,7 @@
  *
  * This template can be overridden by copying it to a child theme or in the same theme
  * by putting it in `/template-parts/footer/content-footer.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -117,11 +118,9 @@ $zones = pixelgrade_footer_get_zones();
 			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
 			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
 			// And we will stop when both are empty
-
 			while ( ! empty( $sidebars ) || ! empty( $menu_locations ) ) {
 				// Compare the first sidebar and the first menu location and pick the one with the smallest order
 				// On equal orders we will favor the sidebar
-
 				$current_sidebar          = reset( $sidebars );
 				$current_sidebar_id       = key( $sidebars );
 				$current_menu_location    = reset( $menu_locations );
@@ -170,7 +169,8 @@ $zones = pixelgrade_footer_get_zones();
 					// Remove it from the menu_locations stack
 					array_shift( $menu_locations );
 				}
-			} ?>
+			}
+			?>
 
 		</div><!-- .c-footer__zone -->
 

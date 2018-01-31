@@ -3,8 +3,8 @@
  * Functions used to handle the Typeline logic, mainly with regards to Customify.
  * These functions are used by all components and by themes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
  * @package     Components
  * @version     1.0.6
  */
@@ -30,13 +30,13 @@ function typeline_get_theme_config( $path = '' ) {
 	// Allow others to change the used path
 	$path = apply_filters( 'typeline_theme_config_path', $path );
 
-	//bail if we don't have a path
+	// bail if we don't have a path
 	if ( empty( $path ) ) {
 		return false;
 	}
 
 	// Read the theme's config file - it contains a variable $typeline_config
-	include( $path );
+	include $path;
 	// If for some reason the file doens't contain the variable, bail
 	if ( ! isset( $typeline_config ) ) {
 		return false;
@@ -81,7 +81,7 @@ function typeline_get_y( $x, $points ) {
 /**
  * Returns the custom CSS rules for the negative value depending on the Customizer settings.
  *
- * @param mixed $value The value of the option.
+ * @param mixed  $value The value of the option.
  * @param string $selector The CSS selector for this option.
  * @param string $property The CSS property of the option.
  * @param string $unit The CSS unit used by this option.
@@ -89,7 +89,7 @@ function typeline_get_y( $x, $points ) {
  * @return string
  */
 function typeline_negative_value_cb( $value, $selector, $property, $unit ) {
-	$output = '';
+	$output  = '';
 	$output .= $selector . ' {' . PHP_EOL .
 			   $property . ': ' . ( - 1 * $value ) . $unit . ';' . PHP_EOL .
 			   '}' . PHP_EOL;
@@ -131,13 +131,13 @@ function typeline_negative_value_cb_customizer_preview() {
 
 	wp_add_inline_script( 'customify-previewer-scripts', $js );
 
- }
+}
 add_action( 'customize_preview_init', 'typeline_negative_value_cb_customizer_preview', 20 );
 
 /**
  * Returns the custom CSS rules for the spacing depending on the Customizer settings.
  *
- * @param mixed $value The value of the option.
+ * @param mixed  $value The value of the option.
  * @param string $selector The CSS selector for this option.
  * @param string $property The CSS property of the option.
  * @param string $unit The CSS unit used by this option.
@@ -161,13 +161,13 @@ function typeline_spacing_cb( $value, $selector, $property, $unit ) {
 
 	// Some sanity check before processing the config
 	if ( $value && ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
-		$points      = $typeline_config['spacings']['points'];
-		$breakpoints = $typeline_config['spacings']['breakpoints'];
+		$points         = $typeline_config['spacings']['points'];
+		$breakpoints    = $typeline_config['spacings']['breakpoints'];
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
 			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
 			$newValue = round( $value / $ratio );
-			$output .= '@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
+			$output  .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 					   $selector . ' {' . PHP_EOL .
 					   $property . ': ' . $newValue . $unit . ';' . PHP_EOL .
 					   '}' . PHP_EOL .
@@ -257,7 +257,7 @@ add_action( 'customize_preview_init', 'typeline_spacing_cb_customizer_preview', 
 /**
  * Returns the custom CSS rules for the spacing depending on the Customizer settings.
  *
- * @param mixed $value The value of the option.
+ * @param mixed  $value The value of the option.
  * @param string $selector The CSS selector for this option.
  * @param string $property The CSS property of the option.
  * @param string $unit The CSS unit used by this option.
@@ -265,25 +265,25 @@ add_action( 'customize_preview_init', 'typeline_spacing_cb_customizer_preview', 
  * @return string
  */
 function typeline_negative_spacing_cb( $value, $selector, $property, $unit ) {
-	$output = '';
+	$output  = '';
 	$output .= $selector . ' {' . PHP_EOL .
-			   $property . ': ' . -1 * $value . $unit . ';' . PHP_EOL .
+			   $property . ': ' . - 1 * $value . $unit . ';' . PHP_EOL .
 			   '}' . PHP_EOL;
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
 	// Some sanity check before processing the config
 	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
-		$points      = $typeline_config['spacings']['points'];
-		$breakpoints = $typeline_config['spacings']['breakpoints'];
+		$points         = $typeline_config['spacings']['points'];
+		$breakpoints    = $typeline_config['spacings']['breakpoints'];
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
 			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
 			$newValue = round( $value / $ratio );
 
-			$output .= '@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
+			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 					   $selector . ' {' . PHP_EOL .
-					   $property . ': ' . -1 * $newValue . $unit . ';' . PHP_EOL .
+					   $property . ': ' . - 1 * $newValue . $unit . ';' . PHP_EOL .
 					   '}' . PHP_EOL .
 					   '}' . PHP_EOL;
 		}
@@ -405,14 +405,14 @@ function typeline_font_cb( $value, $font ) {
 	// the font weight may also hold the italic style property, so it needs some extra care
 	if ( ! empty( $value['font_weight'] ) ) {
 
-		//determine if this is an italic font (the google fonts weight is usually like '400' or '400italic' )
+		// determine if this is an italic font (the google fonts weight is usually like '400' or '400italic' )
 		if ( strpos( $value['font_weight'], 'italic' ) !== false ) {
 			$value['font_weight'] = str_replace( 'italic', '', $value['font_weight'] );
-			$value['font_style'] = 'italic';
+			$value['font_style']  = 'italic';
 		}
 
 		if ( ! empty( $value['font_weight'] ) ) {
-			//a little bit of sanity check - in case it's not a number
+			// a little bit of sanity check - in case it's not a number
 			if ( $value['font_weight'] === 'regular' ) {
 				$value['font_weight'] = 'normal';
 			}
@@ -449,14 +449,14 @@ function typeline_font_cb( $value, $font ) {
 
 	// Some sanity check before processing the config
 	if ( ! empty( $typeline_config['typography']['points'] ) && ! empty( $typeline_config['typography']['breakpoints'] ) ) {
-		$points      = $typeline_config['typography']['points'];
-		$breakpoints = $typeline_config['typography']['breakpoints'];
+		$points         = $typeline_config['typography']['points'];
+		$breakpoints    = $typeline_config['typography']['breakpoints'];
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
 			$ratio    = ( typeline_get_y( $value['font_size'], $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
 			$newValue = round( $value['font_size'] / $ratio );
 
-			$output .= '@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . $font['selector'] . ' { font-size: ' . $newValue . $font['fields']['font-size']['unit'] . '; } }' . PHP_EOL;
+			$output .= '@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . $font['selector'] . ' { font-size: ' . $newValue . $font['fields']['font-size']['unit'] . '; } }' . PHP_EOL;
 		}
 	}
 
@@ -475,7 +475,7 @@ function typeline_font_cb_customizer_preview() {
 	// Some sanity check before processing the config
 	// There is no need for this code since we have nothing to work with
 	if ( ! empty( $typeline_config['typography']['points'] ) && ! empty( $typeline_config['typography']['breakpoints'] ) ) {
-		$points = $typeline_config['typography']['points'];
+		$points      = $typeline_config['typography']['points'];
 		$breakpoints = $typeline_config['typography']['breakpoints'];
 
 		$js .= 'var points = [[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']],
@@ -518,9 +518,9 @@ function typeline_font_cb(values, font) {
 	}" . PHP_EOL;
 	}
 
-		$js .= "
+		$js .= '
 	return css;
-}" . PHP_EOL;
+}' . PHP_EOL;
 
 	wp_add_inline_script( 'customify-previewer-scripts', $js );
 }

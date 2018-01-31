@@ -3,9 +3,9 @@
  * Loop Block class, a minor extension of the Layout block.
  * It simply displays the child blocks in a WP loop.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -32,9 +32,9 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 	 * Supplied `$args` override class property defaults.
 	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
-	 * @param string               $id      Block ID.
-	 * @param array                $args    {
-	 *     Optional. Arguments to override class property defaults.
+	 * @param string                   $id      Block ID.
+	 * @param array                    $args    {
+	 *         Optional. Arguments to override class property defaults.
 	 *
 	 *     @type int                  $instance_number Order in which this instance was created in relation
 	 *                                                 to other instances.
@@ -47,7 +47,7 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 	 *                                                 Default 'layout'.
 	 *     @type array                $blocks          Child blocks definition.
 	 * }
-	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		parent::__construct( $manager, $id, $args, $parent );
@@ -87,12 +87,15 @@ class Pixelgrade_LoopBlock extends Pixelgrade_LayoutBlock {
 		 */
 		do_action( "pixelgrade_before_render_loop_block_{$this->id}_content", $this, $blocks_trail );
 
-		/* =====================
+		/*
+		 =====================
 		 * Do the WordPress loop
 		 */
-		while ( have_posts() ) : the_post();
+		while ( have_posts() ) :
+			the_post();
 
-			/* =======================
+			/*
+			 =======================
 			 * Render the child blocks
 			 */
 			parent::renderContent( $blocks_trail );

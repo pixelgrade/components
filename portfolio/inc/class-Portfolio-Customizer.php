@@ -2,9 +2,9 @@
 /**
  * This is the class that handles the Customizer behaviour of our Portfolio component.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -101,7 +101,8 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 	 * @return array
 	 */
 	public function addCustomifyOptions( $options ) {
-		$recommended_body_fonts = apply_filters( 'customify_theme_recommended_body_fonts',
+		$recommended_body_fonts = apply_filters(
+			'customify_theme_recommended_body_fonts',
 			array(
 				'Roboto',
 				'Playfair Display',
@@ -122,7 +123,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 				'Pacifico',
 				'Handlee',
 				'Satify',
-				'Pompiere'
+				'Pompiere',
 			)
 		);
 
@@ -131,7 +132,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 			'portfolio_grid' => array(
 				'title'   => esc_html__( 'Portfolio Grid Items', '__components_txtd' ),
 				'options' => array(
-					'portfolio_grid_options_customizer_tabs'               => array(
+					'portfolio_grid_options_customizer_tabs' => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 							<a href="#section-title-portfolio-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -141,11 +142,11 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] Layout
-					'portfolio_grid_title_layout_section'    => array(
+					'portfolio_grid_title_layout_section' => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-portfolio-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
-					'portfolio_grid_width'                     => array(
+					'portfolio_grid_width'                => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Portfolio Grid Max Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the max width of the portfolio area.', '__components_txtd' ),
@@ -165,7 +166,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'portfolio_container_sides_spacing'        => array(
+					'portfolio_container_sides_spacing'   => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Container Sides Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
@@ -194,11 +195,11 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Items Grid
-					'portfolio_grid_title_items_grid_section'                  => array(
+					'portfolio_grid_title_items_grid_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label large">' . esc_html__( 'Items Grid', '__components_txtd' ) . '</span>',
 					),
-					'portfolio_grid_layout'                    => array(
+					'portfolio_grid_layout'               => array(
 						'type'    => 'radio',
 						'label'   => esc_html__( 'Grid Layout', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose whether the items display in a fixed height regular grid, or in a packed style layout.', '__components_txtd' ),
@@ -208,21 +209,21 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							'masonry' => esc_html__( 'Masonry', '__components_txtd' ),
 							'mosaic'  => esc_html__( 'Mosaic', '__components_txtd' ),
 							'packed'  => esc_html__( 'Packed', '__components_txtd' ),
-						)
+						),
 					),
-					'portfolio_items_aspect_ratio'             => array(
-						'type'        => 'range',
-						'label'       => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
-						'desc'        => esc_html__( 'Leave the images to their original ratio or crop them to get a more defined grid layout.', '__components_txtd' ),
-						'live'        => true,
-						'default'     => null, // this should be set by the theme (previously 100)
-						'input_attrs' => array(
+					'portfolio_items_aspect_ratio'        => array(
+						'type'            => 'range',
+						'label'           => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
+						'desc'            => esc_html__( 'Leave the images to their original ratio or crop them to get a more defined grid layout.', '__components_txtd' ),
+						'live'            => true,
+						'default'         => null, // this should be set by the theme (previously 100)
+						'input_attrs'     => array(
 							'min'          => 0,
 							'max'          => 200,
 							'step'         => 10,
 							'data-preview' => true,
 						),
-						'css'         => array(
+						'css'             => array(
 							array(
 								'property'        => 'dummy',
 								'selector'        => '.c-gallery--portfolio.c-gallery--regular .c-card__frame',
@@ -232,7 +233,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 						),
 						'active_callback' => 'pixelgrade_portfolio_items_aspect_ratio_control_show',
 					),
-					'portfolio_items_per_row'                  => array(
+					'portfolio_items_per_row'             => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items per Row', '__components_txtd' ),
 						'desc'        => esc_html__( 'Set the desktop-based number of columns you want and we automatically make it right for other screen sizes.', '__components_txtd' ),
@@ -251,7 +252,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'portfolio_items_vertical_spacing'                  => array(
+					'portfolio_items_vertical_spacing'    => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items Vertical Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
@@ -272,7 +273,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'portfolio_items_horizontal_spacing'                  => array(
+					'portfolio_items_horizontal_spacing'  => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items Horizontal Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
@@ -295,11 +296,11 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Items Title
-					'portfolio_grid_title_items_title_section'                 => array(
+					'portfolio_grid_title_items_title_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Title', '__components_txtd' ) . '</span>',
 					),
-					'portfolio_items_title_position'           => array(
+					'portfolio_items_title_position'      => array(
 						'type'    => 'radio',
 						'label'   => esc_html__( 'Title Position', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose whether the items titles are placed nearby the thumbnail or show as an overlay cover on  mouse over.', '__components_txtd' ),
@@ -308,29 +309,29 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							'above'   => esc_html__( 'Above', '__components_txtd' ),
 							'below'   => esc_html__( 'Below', '__components_txtd' ),
 							'overlay' => esc_html__( 'Overlay', '__components_txtd' ),
-						)
+						),
 					),
-					'portfolio_items_title_alignment_nearby'   => array(
-						'type'    => 'select',
-						'label'   => esc_html__( 'Title Alignment (Above/Below)', '__components_txtd' ),
-						'desc'    => esc_html__( 'Adjust the alignment of your title.', '__components_txtd' ),
-						'default' => null, // this should be set by the theme (previously left)
-						'choices' => array(
+					'portfolio_items_title_alignment_nearby' => array(
+						'type'            => 'select',
+						'label'           => esc_html__( 'Title Alignment (Above/Below)', '__components_txtd' ),
+						'desc'            => esc_html__( 'Adjust the alignment of your title.', '__components_txtd' ),
+						'default'         => null, // this should be set by the theme (previously left)
+						'choices'         => array(
 							'left'   => esc_html__( '← Left', '__components_txtd' ),
 							'center' => esc_html__( '↔ Center', '__components_txtd' ),
 							'right'  => esc_html__( '→ Right', '__components_txtd' ),
 						),
 						'active_callback' => 'pixelgrade_portfolio_items_title_alignment_nearby_control_show',
 					),
-					'portfolio_items_title_alignment_overlay'  => array(
-						'type'    => 'select',
-						'label'   => esc_html__( 'Title Alignment (Overlay)', '__components_txtd' ),
-						'desc'    => esc_html__( 'Adjust the alignment of your hover title.', '__components_txtd' ),
-						'default' => null, // this should be set by the theme (previously middle-center)
-						'choices' => array(
-							'top-left'   => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
-							'top-center' => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
-							'top-right'  => esc_html__( '↑ Top     → Right', '__components_txtd' ),
+					'portfolio_items_title_alignment_overlay' => array(
+						'type'            => 'select',
+						'label'           => esc_html__( 'Title Alignment (Overlay)', '__components_txtd' ),
+						'desc'            => esc_html__( 'Adjust the alignment of your hover title.', '__components_txtd' ),
+						'default'         => null, // this should be set by the theme (previously middle-center)
+						'choices'         => array(
+							'top-left'      => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
+							'top-center'    => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
+							'top-right'     => esc_html__( '↑ Top     → Right', '__components_txtd' ),
 
 							'middle-left'   => esc_html__( '↕ Middle     ← Left', '__components_txtd' ),
 							'middle-center' => esc_html__( '↕ Middle     ↔ Center', '__components_txtd' ),
@@ -345,18 +346,18 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 
 					// Title Visibility
 					// Title + Checkbox
-					'portfolio_items_title_visibility_title'   => array(
+					'portfolio_items_title_visibility_title' => array(
 						'type' => 'html',
 						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
-					'portfolio_items_title_visibility'         => array(
+					'portfolio_items_title_visibility'    => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Title', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
 					),
 
 					// [Sub Section] Items Excerpt
-					'portfolio_grid_title_items_excerpt_section'                 => array(
+					'portfolio_grid_title_items_excerpt_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Excerpt', '__components_txtd' ) . '</span>',
 					),
@@ -367,19 +368,19 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 						'type' => 'html',
 						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
-					'portfolio_items_excerpt_visibility'       => array(
+					'portfolio_items_excerpt_visibility'  => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Excerpt Text', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 0)
 					),
 
 					// [Sub Section] Items Meta
-					'portfolio_grid_title_items_meta_section'               => array(
+					'portfolio_grid_title_items_meta_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Meta', '__components_txtd' ) . '</span>',
 					),
 
-					'portfolio_items_primary_meta' => array(
+					'portfolio_items_primary_meta'        => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Primary Meta Section', '__components_txtd' ),
 						'desc'    => esc_html__( 'Set the meta info that display around the title. ', '__components_txtd' ),
@@ -394,7 +395,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'portfolio_items_secondary_meta' => array(
+					'portfolio_items_secondary_meta'      => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Secondary Meta Section', '__components_txtd' ),
 						'desc'    => '',
@@ -410,11 +411,11 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] COLORS
-					'portfolio_grid_title_colors_section'             => array(
+					'portfolio_grid_title_colors_section' => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-portfolio-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'portfolio_item_title_color'             => array(
+					'portfolio_item_title_color'          => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
 						'live'    => true,
@@ -426,7 +427,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'portfolio_item_meta_primary_color'      => array(
+					'portfolio_item_meta_primary_color'   => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Meta Primary', '__components_txtd' ),
 						'live'    => true,
@@ -438,7 +439,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'portfolio_item_meta_secondary_color'    => array(
+					'portfolio_item_meta_secondary_color' => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Meta Secondary', '__components_txtd' ),
 						'live'    => true,
@@ -450,7 +451,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'portfolio_item_thumbnail_background'    => array(
+					'portfolio_item_thumbnail_background' => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Thumbnail Background', '__components_txtd' ),
 						'live'    => true,
@@ -464,7 +465,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Thumbnail Hover
-					'portfolio_grid_title_thumbnail_hover_section'             => array(
+					'portfolio_grid_title_thumbnail_hover_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Customize the mouse over effect for your thumbnails.', '__components_txtd' ) . '</span>',
 					),
@@ -490,35 +491,35 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] FONTS
-					'portfolio_grid_title_fonts_section'               => array(
+					'portfolio_grid_title_fonts_section'  => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-portfolio-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'portfolio_item_title_font' => array(
-						'type'     => 'font',
-						'label'    => esc_html__( 'Item Title Font', '__components_txtd' ),
-						'desc'     => '',
-						'selector' => '.c-gallery--portfolio .c-card__title',
-						'callback' => 'typeline_font_cb',
+					'portfolio_item_title_font'           => array(
+						'type'        => 'font',
+						'label'       => esc_html__( 'Item Title Font', '__components_txtd' ),
+						'desc'        => '',
+						'selector'    => '.c-gallery--portfolio .c-card__title',
+						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 17,
-						//		'line-height'    => 1.5,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none'
-						//	)
-						'default'  => null,
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 17,
+						// 'line-height'    => 1.5,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none'
+						// )
+						'default'     => null,
 
 						// List of recommended fonts defined by theme
 						'recommended' => $recommended_body_fonts,
 
 						// Sub Fields Configuration (optional)
-						'fields'   => array(
+						'fields'      => array(
 							'font-size'       => array(                           // Set custom values for a range slider
 								'min'  => 8,
 								'max'  => 90,
@@ -529,34 +530,34 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
 							'text-align'      => false, // Disable sub-field (False by default)
 							'text-transform'  => true,
-							'text-decoration' => false
-						)
+							'text-decoration' => false,
+						),
 					),
 
-					'portfolio_item_meta_font' => array(
-						'type'     => 'font',
-						'label'    => esc_html__( 'Item Meta Font', '__components_txtd' ),
-						'desc'     => '',
-						'selector' => '.c-gallery--portfolio .c-meta__primary, .c-gallery--portfolio .c-meta__secondary',
-						'callback' => 'typeline_font_cb',
+					'portfolio_item_meta_font'            => array(
+						'type'        => 'font',
+						'label'       => esc_html__( 'Item Meta Font', '__components_txtd' ),
+						'desc'        => '',
+						'selector'    => '.c-gallery--portfolio .c-meta__primary, .c-gallery--portfolio .c-meta__secondary',
+						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 17,
-						//		'line-height'    => 1.5,
-						//		'letter-spacing' => '0',
-						//		'text-transform' => 'none'
-						//	)
-						'default'  => null,
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 17,
+						// 'line-height'    => 1.5,
+						// 'letter-spacing' => '0',
+						// 'text-transform' => 'none'
+						// )
+						'default'     => null,
 
 						// List of recommended fonts defined by theme
 						'recommended' => $recommended_body_fonts,
 
 						// Sub Fields Configuration (optional)
-						'fields'   => array(
+						'fields'      => array(
 							'font-size'       => array(                           // Set custom values for a range slider
 								'min'  => 8,
 								'max'  => 90,
@@ -567,14 +568,14 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
 							'text-align'      => false, // Disable sub-field (False by default)
 							'text-transform'  => true,
-							'text-decoration' => false
-						)
+							'text-decoration' => false,
+						),
 					),
 				),
 			),
 		);
 
-		//Allow others to make changes
+		// Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_portfolio_customify_grid_section_options', $portfolio_grid_section, $options );
 
 		// Validate the config
@@ -593,12 +594,12 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 		// Assign the modified config
 		$portfolio_grid_section = $modified_config;
 
-		//make sure we are in good working order
+		// make sure we are in good working order
 		if ( empty( $options['sections'] ) ) {
 			$options['sections'] = array();
 		}
 
-		//append the portfolio grid section
+		// append the portfolio grid section
 		$options['sections'] = $options['sections'] + $portfolio_grid_section;
 
 		return $options;

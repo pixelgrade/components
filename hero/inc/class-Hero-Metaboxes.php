@@ -2,9 +2,9 @@
 /**
  * This is the class that handles the metaboxes of our Hero component.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Hero
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Hero
  * @version     1.0.1
  */
 
@@ -41,7 +41,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	public function registerHooks() {
 		// Setup our metaboxes configuration
 		add_filter( 'pixelgrade_filter_metaboxes', array( $this, 'metaboxesConfig' ), 10, 1 );
-		// Since WordPres 4.7 we need to do some trickery to show metaboxes on pages marked as Page for Posts since the page template control is removed for them
+		// Since WordPress 4.7 we need to do some trickery to show metaboxes on pages marked as Page for Posts since the page template control is removed for them
 		/*
 		 * !!! This has been moved in the base component - so make sure you have that !!!
 		 */
@@ -55,7 +55,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		// By default, the component will only look at the _hero_background_gallery meta
 		// If you wish to use other meta, you need to do some filtering
 		// @see $this->saveFeaturedImageMeta()
-		add_action( "updated_post_meta", array( $this, 'saveFeaturedImageMeta' ), 20, 4 );
+		add_action( 'updated_post_meta', array( $this, 'saveFeaturedImageMeta' ), 20, 4 );
 
 		// Add custom fields to attachments
 		add_action( 'init', array( $this, '_registerAttachmentsCustomFields' ) );
@@ -89,10 +89,12 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			wp_enqueue_script( 'pixelgrade_hero-admin-metaboxes-scripts' );
 			add_editor_style( array( pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Hero::COMPONENT_SLUG ) . 'css/editor-style.css' ) ) );
 
-			wp_localize_script( 'pixelgrade_hero-admin-metaboxes-scripts', 'pixelgrade_hero_admin', array(
-				'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-				'featured_projects_ids_helper' => esc_html__( 'Here are the IDs of the selected featured projects to use elsewhere, if the need arises: ', '__components_txtd' ),
-			) );
+			wp_localize_script(
+				'pixelgrade_hero-admin-metaboxes-scripts', 'pixelgrade_hero_admin', array(
+					'ajaxurl'                      => admin_url( 'admin-ajax.php' ),
+					'featured_projects_ids_helper' => esc_html__( 'Here are the IDs of the selected featured projects to use elsewhere, if the need arises: ', '__components_txtd' ),
+				)
+			);
 		}
 	}
 
@@ -106,21 +108,21 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	public function metaboxesConfig( $metaboxes ) {
 		// These are the PixTypes configs for the metaboxes for each post type
 		$hero_metaboxes = array(
-			//The Hero Background controls - For pages
-			'hero_area_background__page'       => array(
-				'id'         => 'hero_area_background__page',
-				'title'      => esc_html__( 'Hero Area &#187; Background', '__components_txtd' ),
-				'pages'      => array( 'page' ), // Post type
-				'context'    => 'side',
-				'priority'   => 'low',
-				'hidden'     => false, //we need this set to false so the metaboxes will work for the page for posts also
-				'show_names' => false, // Show field names on the left
-				'show_on'    => array(
+			// The Hero Background controls - For pages
+			'hero_area_background__page' => array(
+				'id'                     => 'hero_area_background__page',
+				'title'                  => esc_html__( 'Hero Area &#187; Background', '__components_txtd' ),
+				'pages'                  => array( 'page' ), // Post type
+				'context'                => 'side',
+				'priority'               => 'low',
+				'hidden'                 => false, // we need this set to false so the metaboxes will work for the page for posts also
+				'show_names'             => false, // Show field names on the left
+				'show_on'                => array(
 					'key'   => 'page-template',
-					'value' => array( 'default',), //the page templates to show on ie. 'page-templates/page-builder.php'
+					'value' => array( 'default' ), // the page templates to show on ie. 'page-templates/page-builder.php'
 				),
-				'show_on_page_for_posts' => true, //this is a special entry of our's to force things
-				'fields'     => array(
+				'show_on_page_for_posts' => true, // this is a special entry of our's to force things
+				'fields'                 => array(
 					array(
 						'name' => esc_html__( 'Gallery Image', '__components_txtd' ),
 						'id'   => '_hero_background_gallery',
@@ -133,29 +135,29 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 					),
 					array(
 						'name'      => esc_html__( 'Image Opacity', '__components_txtd' ),
-						'desc'	 	=> '<strong>' . esc_html__( 'Image Opacity', '__components_txtd' ) . '</strong>',
+						'desc'      => '<strong>' . esc_html__( 'Image Opacity', '__components_txtd' ) . '</strong>',
 						'id'        => '_hero_image_opacity',
 						'type'      => 'text_range',
-						'std'   => '100',
+						'std'       => '100',
 						'html_args' => array(
 							'min' => 1,
 							'max' => 100,
-						)
+						),
 					),
 					array(
 						'name' => esc_html__( 'Background Color', '__components_txtd' ),
 						'desc' => '<strong>' . esc_html__( 'Background Color', '__components_txtd' ) . '</strong> <span class="tooltip" title="<p>' . esc_html__( 'Used as a background color during page transitions.', '__components_txtd' ) . '</p><p>' . esc_html__( 'Tip: It helps if the color matches the background color of the Hero image.', '__components_txtd' ) . '</p>"></span>',
 						'id'   => '_hero_background_color',
 						'type' => 'colorpicker',
-						'std' => '#131313',
+						'std'  => '#131313',
 					),
-				)
+				),
 			),
 
 			// The Hero Content controls - For pages
-			'hero_area_content__page'     => array(
-				'id'         => 'hero_area_content__page',
-				'title'      => '&#x1f535; ' . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
+			'hero_area_content__page'    => array(
+				'id'                     => 'hero_area_content__page',
+				'title'                  => '&#x1f535; ' . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
 								. ' <span class="tooltip" title="<' . 'title>'
 								. esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
 								. '</title><p>'
@@ -167,24 +169,24 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 								. "</p><p><a href='#'>"
 								. esc_html__( 'Learn more about Managing the Hero Area', '__components_txtd' )
 								. '</a></p>"></span>',
-				'pages'      => array( 'page',), // Post type
-				'context'    => 'normal',
-				'priority'   => 'high',
-				'hidden'     => false, //we need this set to false so the metaboxes will work for the page for posts also
-				'show_names' => true, // Show field names on the left
-				'show_on'    => array(
+				'pages'                  => array( 'page' ), // Post type
+				'context'                => 'normal',
+				'priority'               => 'high',
+				'hidden'                 => false, // we need this set to false so the metaboxes will work for the page for posts also
+				'show_names'             => true, // Show field names on the left
+				'show_on'                => array(
 					'key'   => 'page-template',
-					'value' => array( 'default',), //the page templates to show on ie. 'page-templates/page-builder.php'
+					'value' => array( 'default' ), // the page templates to show on ie. 'page-templates/page-builder.php'
 				),
-				'show_on_page_for_posts' => true, //this is a special entry of our's to force things
-				'fields'     => array(
+				'show_on_page_for_posts' => true, // this is a special entry of our's to force things
+				'fields'                 => array(
 					array(
 						'name'       => esc_html__( 'Description', '__components_txtd' ),
 						'id'         => '_hero_content_description',
 						'type'       => 'wysiwyg',
 						'show_names' => false,
 						'std'        => '<h1 class="h0">[Page Title]</h1>',
-						'desc' => '<span class="hero-editor-visibility-status">
+						'desc'       => '<span class="hero-editor-visibility-status">
 								<span class="dashicons  dashicons-visibility"></span>
 								<span class="dashicons  dashicons-hidden"></span>
 								<span class="hero-visibility-text">' . esc_html__( 'Visible Hero Area', '__components_txtd' ) . '</span>
@@ -226,12 +228,16 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 					),
 					array(
 						'name'    => esc_html__( 'Hero Content Alignment', '__components_txtd' ),
-						'desc'    => wp_kses( __( '<p>Considering the background image focal point, you can align the content to make them both more visible.</p>
+						'desc'    => wp_kses(
+							__(
+								'<p>Considering the background image focal point, you can align the content to make them both more visible.</p>
 							<ul>
 								<li>Mix it with a background color overlay to make it pop</li>
 								<li>Individual text alignments will override this option</li>
 								<li>You can align the content to make them both more visible.</li>
-							</ul>', '__components_txtd' ), wp_kses_allowed_html() ),
+							</ul>', '__components_txtd'
+							), wp_kses_allowed_html()
+						),
 						'id'      => '_hero_description_alignment',
 						'type'    => 'positions_map',
 						'options' => array(
@@ -283,10 +289,10 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 					),
 					// PAGE (Regular) Slideshow Options
 					array(
-						'name'    => '&#x1F307; &nbsp; ' . esc_html__( 'Slideshow Options', '__components_txtd' ),
-						'id'      => '_hero_slideshow_options__title',
-						'value'   => wp_kses( __( 'Add more than one image to the <strong>Hero Area &#187; Background</strong> to enable this section. ', '__components_txtd' ), wp_kses_allowed_html() ),
-						'type'    => 'title',
+						'name'  => '&#x1F307; &nbsp; ' . esc_html__( 'Slideshow Options', '__components_txtd' ),
+						'id'    => '_hero_slideshow_options__title',
+						'value' => wp_kses( __( 'Add more than one image to the <strong>Hero Area &#187; Background</strong> to enable this section. ', '__components_txtd' ), wp_kses_allowed_html() ),
+						'type'  => 'title',
 					),
 					array(
 						'name'    => esc_html__( 'Auto Play', '__components_txtd' ),
@@ -322,8 +328,8 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 				),
 			),
 
-			//for the Contact/Location Page template
-			'hero_area_map__page' => array(
+			// for the Contact/Location Page template
+			'hero_area_map__page'        => array(
 				'id'         => 'hero_area_map__page',
 				'title'      => esc_html__( 'Map Coordinates & Display Options', '__components_txtd' ),
 				'pages'      => array( 'page' ), // Post type
@@ -442,7 +448,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			$post_types = $config['post_types'];
 		}
 		if ( in_array( $current_post_type, apply_filters( 'pixelgrade_hero_post_types_to_remove_core_featured_image', $post_types ) ) ) {
-			//remove original featured image metabox
+			// remove original featured image metabox
 			remove_meta_box( 'postimagediv', $current_post_type, 'side' );
 
 			// Also add filter the Feature Image component's validation for the _thumbnail_id
@@ -484,7 +490,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		}
 
 		// Determine the meta_keys that we should look at
-		$target_meta_keys = apply_filters( 'pixelgrade_hero_target_meta_keys_to_map_featured_image', array( '_hero_background_gallery',) );
+		$target_meta_keys = apply_filters( 'pixelgrade_hero_target_meta_keys_to_map_featured_image', array( '_hero_background_gallery' ) );
 
 		if ( ! empty( $target_meta_keys ) && is_array( $target_meta_keys ) && in_array( $meta_key, $target_meta_keys ) ) {
 			// We now need to extract an image from the $meta_value
@@ -541,7 +547,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 * Adds custom fields to attachments.
 	 */
 	public function _registerAttachmentsCustomFields() {
-		//add video support for attachments
+		// add video support for attachments
 		add_filter( 'attachment_fields_to_edit', array( $this, '_addVideoUrlFieldToAttachments' ), 99999, 2 );
 		add_filter( 'attachment_fields_to_save', array( $this, '_addImageAttachmentFieldsToSave' ), 9999, 2 );
 	}
@@ -585,7 +591,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			$form_fields['link_media_to'] = array(
 				'label' => esc_html__( 'Linked To', '__components_txtd' ),
 				'input' => 'html',
-				'html'  => $select_html
+				'html'  => $select_html,
 			);
 		}
 
@@ -601,7 +607,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		if ( ! isset( $form_fields['custom_image_url'] ) && ! empty( $link_media_to_value ) && $link_media_to_value == 'custom_image_url' ) {
 			$form_fields['custom_image_url'] = array(
 				'label' => esc_html__( 'Custom Image URL', '__components_txtd' ),
-				'input' => "text", // this is default if "input" is omitted
+				'input' => 'text', // this is default if "input" is omitted
 				'value' => esc_url( get_post_meta( $post->ID, '_custom_image_url', true ) ),
 				'helps' => '<p class="desc">' . esc_html__( 'Link this image to a custom url.', '__components_txtd' ) . '</p>',
 			);
@@ -642,7 +648,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 	 * http://codex.wordpress.org/Data_Validation
 	 *
 	 * @param WP_Post $post       The $post data for the attachment
-	 * @param array $attachment The $attachment part of the form $_POST ($_POST[attachments][postID])
+	 * @param array   $attachment The $attachment part of the form $_POST ($_POST[attachments][postID])
 	 *
 	 * @return WP_Post $post
 	 */
@@ -665,7 +671,6 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 		} else {
 			update_post_meta( $post['ID'], '_video_autoplay', 'off' );
 		}
-
 
 		if ( isset( $attachment['external_url'] ) ) {
 			update_post_meta( $post['ID'], '_external_url', esc_url( $attachment['external_url'] ) );

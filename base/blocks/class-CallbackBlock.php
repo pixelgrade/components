@@ -2,9 +2,9 @@
 /**
  * Callback Block class
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -49,9 +49,9 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	 * Supplied `$args` override class property defaults.
 	 *
 	 * @param Pixelgrade_BlocksManager $manager Pixelgrade_BlocksManager instance.
-	 * @param string               $id      Block ID.
-	 * @param array                $args    {
-	 *     Optional. Arguments to override class property defaults.
+	 * @param string                   $id      Block ID.
+	 * @param array                    $args    {
+	 *         Optional. Arguments to override class property defaults.
 	 *
 	 *     @type int                  $instance_number Order in which this instance was created in relation
 	 *                                                 to other instances.
@@ -64,7 +64,7 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	 *     @type string|array         $callback       The callable function definition.
 	 *     @type array                $args            The args to pass to the callable function.
 	 * }
-	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
+	 * @param Pixelgrade_Block         $parent Optional. The block instance that contains the definition of this block (that first instantiated this block)
 	 */
 	public function __construct( $manager, $id, $args = array(), $parent = null ) {
 		// If we don't receive a function, something is wrong
@@ -111,7 +111,7 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 		// Need to make a copy of the args to avoid side effects.
 		$args = $this->args;
 		// @todo is not safe to send the blocks trail - need to find another way
-//		$args['blocks_trail'] = $blocks_trail;
+		// $args['blocks_trail'] = $blocks_trail;
 		echo call_user_func_array( $this->callback, $args );
 
 		/**
@@ -137,7 +137,7 @@ class Pixelgrade_CallbackBlock extends Pixelgrade_Block {
 	/**
 	 * Given a set of block args and a extended block instance, merge the args.
 	 *
-	 * @param array $args
+	 * @param array            $args
 	 * @param Pixelgrade_Block $extended_block
 	 *
 	 * @return array The merged args

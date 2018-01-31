@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/template-parts/content-relatedposts.php` or in `/template-parts/blog/content-relatedposts.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -23,8 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // @todo Make sure that things go smoothly in the Customizer (Jetpack uses some dummy content in its logic)
-
-//we first need to know the bigger picture - the location this template part was loaded from
+// we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_set_location( 'related-posts', true );
 
 // Get the related posts IDs from Jetpack
@@ -36,14 +36,13 @@ $args = array(
 	'no_found_rows'       => false, // a little efficiency
 );
 
-//Now query for these post IDs
+// Now query for these post IDs
 if ( ! empty( $related_posts_ids ) ) {
 	// Do a custom query for the related posts
 	$args['post__in'] = $related_posts_ids;
 	$args['orderby']  = 'post__in';
 } else {
 	// Show Recent Posts instead on failure to connect to Jetpack's server or failure to find related posts (maybe it's still thinking and indexing)
-
 	// Get the Jetpack Related Options
 	$related_posts_options = pixelgrade_get_jetpack_related_posts_options();
 
@@ -71,7 +70,8 @@ if ( $query->have_posts() ) {
 				<div class="c-gallery  c-gallery--blog  c-gallery--regular  o-grid--3col-@desk  o-grid--3col-@lap  o-grid--col-@small">
 					<?php
 					/* Start the Loop */
-					while ( $query->have_posts() ) : $query->the_post();
+					while ( $query->have_posts() ) :
+						$query->the_post();
 						/*
 						 * Include the Post-Format-specific template for the content.
 						 * If you want to override this in a child theme, then include a file
@@ -99,10 +99,12 @@ if ( $query->have_posts() ) {
 					<?php
 					endwhile;
 
-					wp_reset_postdata(); ?>
+					wp_reset_postdata();
+					?>
 				</div><!-- .c-gallery -->
 			</div><!-- .o-wrapper.u-blog-grid-width -->
 		</div>
 	</div><!-- #related-posts-container -->
 
-<?php }
+<?php
+}

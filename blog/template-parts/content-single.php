@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//we first need to know the bigger picture - the location this template part was loaded from
+// we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'post single' );
 
 // Get the class corresponding to the aspect ratio of the post featured image
@@ -113,11 +113,13 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 						<div class="entry-content  u-content-width">
 							<?php
-							the_content( sprintf(
-							/* translators: %s: Name of current post. */
-								wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', '__components_txtd' ), array( 'span' => array( 'class' => array() ) ) ),
-								the_title( '<span class="screen-reader-text">"', '"</span>', false )
-							) );
+							the_content(
+								sprintf(
+									/* translators: %s: Name of current post. */
+									wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', '__components_txtd' ), array( 'span' => array( 'class' => array() ) ) ),
+									the_title( '<span class="screen-reader-text">"', '"</span>', false )
+								)
+							);
 
 							/**
 							 * IMPORTANT NOTICE:
@@ -126,10 +128,12 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 							 * Think Jetpack Share buttons for example
 							 */
 
-							wp_link_pages( array(
-								'before' => '<div class="page-links">' . esc_html__( 'Pages:', '__components_txtd' ),
-								'after'  => '</div>',
-							) );
+							wp_link_pages(
+								array(
+									'before' => '<div class="page-links">' . esc_html__( 'Pages:', '__components_txtd' ),
+									'after'  => '</div>',
+								)
+							);
 							?>
 						</div><!-- .entry-content.u-content-width -->
 
@@ -143,7 +147,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						// If comments are open or we have at least one comment, load up the comment template.
 						if ( comments_open() || get_comments_number() ) :
 							pixelgrade_comments_template();
-						endif; ?>
+						endif;
+						?>
 
 						<?php
 						/**

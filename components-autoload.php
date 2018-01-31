@@ -9,9 +9,9 @@
  * - it is called Pixelgrade_{Component_Directory_Name} with the first letter or each word in uppercase separated by underscores
  * - the word separator is the minus sign, meaning "-" in directory name will be converted to "_"
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components
  * @version     1.0.0
  */
 class Pixelgrade_Components_Autoloader {
@@ -65,10 +65,10 @@ class Pixelgrade_Components_Autoloader {
 		$iterator = new DirectoryIterator( $path );
 		foreach ( $iterator as $file_info ) {
 			if ( $file_info->isDir()
-			     && ! $file_info->isDot()
-			     && 0 !== strpos( $file_info->getFilename(), '.' )
-			     && $file_info->getFilename() !== 'base'
-			     && ! in_array( $file_info->getFilename(), self::$excluded_dir ) ) {
+				 && ! $file_info->isDot()
+				 && 0 !== strpos( $file_info->getFilename(), '.' )
+				 && $file_info->getFilename() !== 'base'
+				 && ! in_array( $file_info->getFilename(), self::$excluded_dir ) ) {
 
 				// We have found a directory, try to load the component in it
 				self::loadComponent( $file_info->getFilename(), $path );
@@ -185,11 +185,11 @@ class Pixelgrade_Components_Autoloader {
 	}
 }
 
-if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ):
+if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ) :
 	/**
 	 * Just a wrapper for our components auto-loading
 	 */
 	function Pixelgrade_Components_Autoload() {
-	Pixelgrade_Components_Autoloader::loadComponents();
-}
+		Pixelgrade_Components_Autoloader::loadComponents();
+	}
 endif;

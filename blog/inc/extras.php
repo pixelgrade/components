@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Blog
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Blog
  * @version     1.1.0
  */
 
@@ -73,7 +73,7 @@ add_filter( 'the_content', 'pixelgrade_add_tags_list', 18 );
  * Removes the main category from the category list.
  *
  * @param array $categories
- * @param int $post_id
+ * @param int   $post_id
  *
  * @return array
  */
@@ -83,7 +83,7 @@ function pixelgrade_remove_main_category_from_list( $categories, $post_id ) {
 
 		foreach ( $categories as $key => $category ) {
 			if ( $main_category->term_id == $category->term_id ) {
-				unset( $categories[$key] );
+				unset( $categories[ $key ] );
 			}
 		}
 	}
@@ -91,8 +91,7 @@ function pixelgrade_remove_main_category_from_list( $categories, $post_id ) {
 	return $categories;
 }
 // We should leave this up the the theme
-//add_filter( 'the_category_list', 'pixelgrade_remove_main_category_from_list', 10, 2 );
-
+// add_filter( 'the_category_list', 'pixelgrade_remove_main_category_from_list', 10, 2 );
 /**
  * Compares two category objects by post count
  *
@@ -127,7 +126,7 @@ if ( ! function_exists( 'pixelgrade_search_form' ) ) :
 		$form = '<form role="search" method="get" class="search-form" action="' . esc_attr( home_url( '/' ) ) . '" >
 		<label class="screen-reader-text">' . esc_html__( 'Search for:', '__components_txtd' ) . '</label>
 		<input type="text" placeholder="' . esc_attr__( 'Search here', '__components_txtd' ) . '" value="' . esc_attr( get_search_query() ) . '" name="s" class="search-field" />
-		<button type="submit" class="search-submit"><span>'. esc_html__( 'Search', '__components_txtd' ) . '</span></button>
+		<button type="submit" class="search-submit"><span>' . esc_html__( 'Search', '__components_txtd' ) . '</span></button>
 		</form>';
 
 		return $form;
@@ -147,7 +146,8 @@ function pixelgrade_blog_hero_the_category_dropdown( $content ) {
 			<?php pixelgrade_the_taxonomy_dropdown( 'category' ); ?>
 		</div><!-- .category-dropdown -->
 
-	<?php }
+	<?php
+	}
 }
 
 add_action( 'pixelgrade_hero_after_the_description', 'pixelgrade_blog_hero_the_category_dropdown', 20, 1 );

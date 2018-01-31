@@ -4,6 +4,7 @@
  *
  * This template can be overridden by copying it to a child theme
  * or in the same theme by putting it in template-parts/portfolio/loop.php.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -22,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//we first need to know the bigger picture - the location this template part was loaded from
+// we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'portfolio jetpack' ); ?>
 
 <?php
@@ -37,13 +38,16 @@ do_action( 'pixelgrade_before_loop', $location );
 <?php if ( have_posts() ) : /* Start the Loop */ ?>
 
 	<div <?php pixelgrade_posts_container_id( $location ); ?> <?php pixelgrade_portfolio_class( '', $location ); ?>>
-		<?php while ( have_posts() ) : the_post();
+		<?php
+		while ( have_posts() ) :
+			the_post();
 			pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'content-jetpack-portfolio' );
-		endwhile; ?>
+		endwhile;
+		?>
 	</div><!-- #posts-container -->
 	<?php pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'posts-navigation' ); ?>
 
-<?php else: ?>
+<?php else : ?>
 	<?php pixelgrade_get_component_template_part( Pixelgrade_Base::COMPONENT_SLUG, 'content', 'none' ); ?>
 <?php endif; ?>
 

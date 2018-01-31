@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.2.0
  */
 
@@ -47,11 +47,11 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 	 * Get option from the database
 	 *
 	 * @param string $option The option name.
-	 * @param mixed $default Optional. The default value to return when the option was not found or saved.
-	 * @param bool $force_default Optional. When true, we will use the $default value provided for when the option was not saved at least once.
-	 *                          When false, we will let the option's default set value (in the Customify settings) kick in first, then our $default.
-	 *                          It basically, reverses the order of fallback, first the option's default, then our own.
-	 *                          This is ignored when $default is null.
+	 * @param mixed  $default Optional. The default value to return when the option was not found or saved.
+	 * @param bool   $force_default Optional. When true, we will use the $default value provided for when the option was not saved at least once.
+	 *                            When false, we will let the option's default set value (in the Customify settings) kick in first, then our $default.
+	 *                            It basically, reverses the order of fallback, first the option's default, then our own.
+	 *                            This is ignored when $default is null.
 	 *
 	 * @return mixed
 	 */
@@ -61,10 +61,9 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 
 		if ( $pixcustomify_plugin !== null ) {
 			// Customify is present so we should get the value via it
-
 			// We need to account for the case where a option has an 'active_callback' defined in it's config
 			$options_config = $pixcustomify_plugin->get_options_configs();
-			if ( ! empty( $options_config ) && ! empty( $options_config[$option] ) && ! empty( $options_config[$option]['active_callback'] ) ) {
+			if ( ! empty( $options_config ) && ! empty( $options_config[ $option ] ) && ! empty( $options_config[ $option ]['active_callback'] ) ) {
 				// This option has an active callback
 				// We need to "question" it
 				//
@@ -72,10 +71,10 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 				//
 				// Be extra careful when setting up the options to not end up in a circular logic
 				// due to callbacks that get an option and that option has a callback that gets the initial option - INFINITE LOOPS :(
-				if ( is_callable( $options_config[$option]['active_callback'] ) ) {
+				if ( is_callable( $options_config[ $option ]['active_callback'] ) ) {
 					// Now we call the function and if it returns false, this means that the control is not active
 					// Hence it's saved value doesn't matter
-					$active = call_user_func( $options_config[$option]['active_callback'] );
+					$active = call_user_func( $options_config[ $option ]['active_callback'] );
 					if ( empty( $active ) ) {
 						// If we need to force the default received; we respect that
 						if ( true === $force_default && null !== $default ) {
@@ -142,7 +141,7 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
  * Get the current location from the query var.
  *
  * @param string $default The default location to return in case the location is empty.
- * @param bool $force When true, if the location is empty, if will return the $default location and set it in the query var.
+ * @param bool   $force When true, if the location is empty, if will return the $default location and set it in the query var.
  *
  * @return array|string
  */
@@ -170,7 +169,7 @@ function pixelgrade_get_location( $default = '', $force = true ) {
  * By default, we will use a greedy tactic where we add to the location, not replace.
  *
  * @param string|array $location Optional. The location details.
- * @param bool $merge Optional. Whether to merge the provided location with the current one, or to replace it.
+ * @param bool         $merge Optional. Whether to merge the provided location with the current one, or to replace it.
  *
  * @return array|string
  */
@@ -179,7 +178,7 @@ function pixelgrade_set_location( $location = '', $merge = true ) {
 	if ( true === $merge ) {
 		// The current location is already standardized
 		$current_location = pixelgrade_get_location();
-		$location = pixelgrade_standardize_location( $location );
+		$location         = pixelgrade_standardize_location( $location );
 
 		$location = array_merge( $current_location, $location );
 	}
@@ -200,9 +199,9 @@ function pixelgrade_set_location( $location = '', $merge = true ) {
 /**
  * Searches for hints in a location string or array. If either of them is empty, returns false.
  *
- * @param string|array $search
+ * @param string|array  $search
  * @param string |array $location
- * @param bool $and Optional. Whether to make a AND search (the default) or a OR search. Anything other that 'true' means OR search.
+ * @param bool          $and Optional. Whether to make a AND search (the default) or a OR search. Anything other that 'true' means OR search.
  *
  * @return bool
  */
@@ -422,9 +421,9 @@ function pixelgrade_get_parent_theme_file_uri( $file = '' ) {
  * We do not support child themes at this time.
  *
  * @param string $path The path of the theme directory to autoload files from.
- * @param int $depth The depth to which we should go in the directory. A depth of 0 means only the files directly in that
- *                  directory. Depth of 1 means also the first level subdirectories, and so on.
- *                  A depth of -1 means load everything.
+ * @param int    $depth The depth to which we should go in the directory. A depth of 0 means only the files directly in that
+ *                     directory. Depth of 1 means also the first level subdirectories, and so on.
+ *                     A depth of -1 means load everything.
  * @param string $method The method to use to load files. Supports require, require_once, include, include_once.
  *
  * @return false|int False on failure, otherwise the number of files loaded.
@@ -598,7 +597,7 @@ function pixelgrade_convert_exposure_to_frac( $shutter_speed ) {
 	$frac = '';
 
 	if ( ( 1 / $shutter_speed ) > 1 ) {
-		$frac .= "1/";
+		$frac .= '1/';
 		if ( ( number_format( ( 1 / $shutter_speed ), 1 ) ) == 1.3
 			 or number_format( ( 1 / $shutter_speed ), 1 ) == 1.5
 			 or number_format( ( 1 / $shutter_speed ), 1 ) == 1.6
@@ -640,7 +639,7 @@ function pixelgrade_attachment_url_to_postid( $url ) {
 	// Remove the resizing details off the end of the file name
 	$path = preg_replace( '/-[0-9]{1,4}x[0-9]{1,4}\.(jpg|jpeg|png|gif|bmp)$/i', '.$1', $path );
 
-	$sql = $wpdb->prepare(
+	$sql     = $wpdb->prepare(
 		"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_attached_file' AND meta_value = %s",
 		$path
 	);
@@ -679,7 +678,7 @@ function pixelgrade_image_src( $target, $size = null ) {
 	if ( isset( $_GET[ $target ] ) && ! empty( $target ) ) {
 		return pixelgrade_get_attachment_image_src( absint( $_GET[ $target ] ), $size );
 	} else {
-// empty target, or no query
+		// empty target, or no query
 		$image = pixelgrade_option( $target );
 		if ( is_numeric( $image ) ) {
 			return pixelgrade_get_attachment_image_src( $image, $size );
@@ -691,13 +690,13 @@ function pixelgrade_image_src( $target, $size = null ) {
 /**
  * Get the attachment src attribute
  *
- * @param int $id
+ * @param int    $id
  * @param string $size Optional.
  *
  * @return string|false
  */
 function pixelgrade_get_attachment_image_src( $id, $size = null ) {
-	//bail if not given an attachment id
+	// bail if not given an attachment id
 	if ( empty( $id ) || ! is_numeric( $id ) ) {
 		return false;
 	}
@@ -718,10 +717,10 @@ function pixelgrade_get_attachment_image_src( $id, $size = null ) {
  *
  * @global WP_Rewrite $wp_rewrite
  *
- * @param string $url The relative URL that you want modified.
- * @param int $pagenum Optional. Page ID. Default 1.
- * @param bool $escape Optional. Whether to escape the URL for display, with esc_url(). Defaults to true.
- *                        Otherwise, prepares the URL with esc_url_raw().
+ * @param string   $url The relative URL that you want modified.
+ * @param int      $pagenum Optional. Page ID. Default 1.
+ * @param bool     $escape Optional. Whether to escape the URL for display, with esc_url(). Defaults to true.
+ *                            Otherwise, prepares the URL with esc_url_raw().
  * @param WP_Query $query Optional.
  *
  * @return string The full link URL for the given page number.
@@ -776,7 +775,7 @@ function pixelgrade_paginate_url( $url, $pagenum = 1, $escape = true, $query = n
 		}
 
 		if ( $pagenum > 1 ) {
-			$request = ( ( ! empty( $request ) ) ? trailingslashit( $request ) : $request ) . user_trailingslashit( $wp_rewrite->pagination_base . "/" . $pagenum, 'paged' );
+			$request = ( ( ! empty( $request ) ) ? trailingslashit( $request ) : $request ) . user_trailingslashit( $wp_rewrite->pagination_base . '/' . $pagenum, 'paged' );
 		}
 
 		$result = $base . $request . $query_string;
@@ -847,22 +846,20 @@ function pixelgrade_parse_content_tags( $content ) {
 	$content = apply_filters( 'pixelgrade_before_parse_content_tags', $content );
 
 	// Now we will replace all the supported tags with their value
-
 	// %year%
 	$content = str_replace( '%year%', date( 'Y' ), $content );
 
 	// %site-title% or %site_title%
-	$content = str_replace( '%site-title%', get_bloginfo('name'), $content );
-	$content = str_replace( '%site_title%', get_bloginfo('name'), $content );
+	$content = str_replace( '%site-title%', get_bloginfo( 'name' ), $content );
+	$content = str_replace( '%site_title%', get_bloginfo( 'name' ), $content );
 
 	// This is a little sketchy because who is the user?
 	// It is not necessarily the logged in user, nor the Administrator user...
 	// We will go with the author for cases where we are in a post/page context
-
 	// Since we need to dd some heavy lifting, we will only do it when necessary
-	if ( false !== strpos( $content, '%first_name%') ||
-		 false !== strpos( $content, '%last_name%') ||
-		 false !== strpos( $content, '%display_name%') ) {
+	if ( false !== strpos( $content, '%first_name%' ) ||
+		 false !== strpos( $content, '%last_name%' ) ||
+		 false !== strpos( $content, '%display_name%' ) ) {
 		$user_id = false;
 		// We need to get the current ID in more global manner
 		$current_object_id = get_queried_object_id();
@@ -876,10 +873,15 @@ function pixelgrade_parse_content_tags( $content ) {
 
 		// If we still haven't got a user ID, we will just use the first user on the site
 		if ( empty( $user_id ) ) {
-			$blogusers = get_users( array( 'role' => 'administrator', 'number' => 1,) );
+			$blogusers = get_users(
+				array(
+					'role'   => 'administrator',
+					'number' => 1,
+				)
+			);
 			if ( ! empty( $blogusers ) ) {
 				$blogusers = reset( $blogusers );
-				$user_id = $blogusers->ID;
+				$user_id   = $blogusers->ID;
 			}
 		}
 

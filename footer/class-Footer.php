@@ -5,9 +5,9 @@
  *
  * Everything gets hooked up and bolted in here.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Footer
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Footer
  * @version     1.3.3
  */
 
@@ -36,34 +36,34 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 	public function setupConfig() {
 		// Initialize the $config
 		$this->config = array(
-			'zones' => array(
-				'top' => array( // the zone's id
-					'order' => 10, // We will use this to establish the display order of the zones
-					'classes' => array(), //by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+			'zones'          => array(
+				'top'    => array( // the zone's id
+					'order'         => 10, // We will use this to establish the display order of the zones
+					'classes'       => array(), // by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
 					'display_blank' => false, // determines if we output markup for an empty zone
 				),
 				'middle' => array( // the zone's id
-					'order' => 20, // We will use this to establish the display order of the zones
-					'classes' => array(), //by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'order'         => 20, // We will use this to establish the display order of the zones
+					'classes'       => array(), // by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
 					'display_blank' => true, // determines if we output markup for an empty zone
 				),
 				'bottom' => array( // the zone's id
-					'order' => 30, // We will use this to establish the display order of the zones
-					'classes' => array(), //by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'order'         => 30, // We will use this to establish the display order of the zones
+					'classes'       => array(), // by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
 					'display_blank' => true, // determines if we output markup for an empty zone
 				),
 			),
 			// The bogus items can sit in either sidebars or menu_locations.
 			// It doesn't matter as long as you set their zone and order properly
-			'sidebars' => array(
+			'sidebars'       => array(
 				'sidebar-footer' => array(
-					'default_zone' => 'middle',
+					'default_zone'    => 'middle',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
-					'zone_callback' => false,
-					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'zone_callback'   => false,
+					'order'           => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'container_class' => array( 'c-gallery', 'c-footer__gallery', 'o-grid', 'o-grid--4col-@lap' ), // classes to be added to the sidebar <aside> wrapper
-					'sidebar_args' => array( // skip 'id' arg as we will force that
-						'name' => esc_html__( 'Footer', '__components_txtd' ),
+					'sidebar_args'    => array( // skip 'id' arg as we will force that
+						'name'          => esc_html__( 'Footer', '__components_txtd' ),
 						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', '__components_txtd' ),
 						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap', // in case you need some classes added to the sidebar - in the WP Admin only!!!
 						'before_widget' => '<div id="%1$s" class="c-gallery__item  widget  widget--footer  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
@@ -75,32 +75,32 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 			),
 			'menu_locations' => array(
 				'footer-back-to-top-link' => array(
-					'default_zone' => 'bottom',
+					'default_zone'  => 'bottom',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,
-					'order' => 5, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+					'order'         => 5, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
 				),
-				'footer' => array(
-					'title' => esc_html__( 'Footer', '__components_txtd' ),
-					'default_zone' => 'bottom',
+				'footer'                  => array(
+					'title'         => esc_html__( 'Footer', '__components_txtd' ),
+					'default_zone'  => 'bottom',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,
-					'order' => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'order'         => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
 					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
 						'menu_id'         => 'menu-footer',
 						'container'       => 'nav',
 						'container_class' => '',
-						'depth'           => - 1, //by default we will flatten the menu hierarchy, if there is one
+						'depth'           => - 1, // by default we will flatten the menu hierarchy, if there is one
 						'fallback_cb'     => false,
 					),
 				),
-				'footer-copyright' => array(
-					'default_zone' => 'bottom',
+				'footer-copyright'        => array(
+					'default_zone'  => 'bottom',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,
-					'order' => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+					'order'         => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
 				),
 			),
 		);
@@ -109,21 +109,20 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 		if ( apply_filters( 'pixelgrade_footer_use_jetpack_social_menu', false ) ) {
 			// Add it to the config
 			$this->config['menu_locations']['jetpack-social-menu'] = array(
-				'default_zone' => 'bottom',
+				'default_zone'  => 'bottom',
 				// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 				'zone_callback' => false,
-				'order' => 15, // We will use this to establish the display order of nav menu locations, inside a certain zone
-				'bogus' => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				'order'         => 15, // We will use this to establish the display order of nav menu locations, inside a certain zone
+				'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
 			);
 
 			// Add support for it
 			add_theme_support( 'jetpack-social-menu' );
 		}
 
-
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
+		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -200,9 +199,9 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 				// Make sure that we ignore bogus menu locations
 				if ( empty( $settings['bogus'] ) ) {
 					if ( ! empty( $settings['title'] ) ) {
-						$menus[$id] = $settings['title'];
+						$menus[ $id ] = $settings['title'];
 					} else {
-						$menus[$id] = $id;
+						$menus[ $id ] = $id;
 					}
 				}
 			}

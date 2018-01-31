@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=h4eueDYPTIg )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Header
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Header
  * @version     1.4.1
  */
 
@@ -23,19 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'Pixelgrade_Header' ) ) :
-/**
- * Returns the main instance of Pixelgrade_Header to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Header|object
- */
-function Pixelgrade_Header() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Header' ) ) {
-		pixelgrade_load_component_file( 'header', 'class-Header' );
+	/**
+	 * Returns the main instance of Pixelgrade_Header to prevent the need to use globals.
+	 *
+	 * @since  1.0.0
+	 * @return Pixelgrade_Header|object
+	 */
+	function Pixelgrade_Header() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_Header' ) ) {
+			pixelgrade_load_component_file( 'header', 'class-Header' );
+		}
+		return Pixelgrade_Header::instance( '1.4.1' );
 	}
-	return Pixelgrade_Header::instance( '1.4.1' );
-}
 endif;
 
 /**

@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in `/template-parts/footer/footer.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -34,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		do_action( 'pixelgrade_footer_before_content', 'footer' );
 		?>
 
-        <?php pixelgrade_get_component_template_part( Pixelgrade_Footer::COMPONENT_SLUG, 'content-footer' ); ?>
+		<?php pixelgrade_get_component_template_part( Pixelgrade_Footer::COMPONENT_SLUG, 'content-footer' ); ?>
 
 		<?php
 		/**

@@ -2,9 +2,9 @@
 /**
  * Custom functions for our blocks logic.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 

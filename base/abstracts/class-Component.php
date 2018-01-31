@@ -2,9 +2,9 @@
 /**
  * This is the abstract class for the main class of components. It's a singleton factory also.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.1.0
  */
 
@@ -61,7 +61,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 *
 	 * @throws Exception
 	 * @param string $version Optional. The current component version.
-	 * @param array $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 * @param array  $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
 	 */
 	public function __construct( $version = '1.0.0', $args = array() ) {
 		$this->version = $version;
@@ -76,7 +76,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-		$args = apply_filters( "pixelgrade_{$hook_slug}_init_args", $args, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+		$args      = apply_filters( "pixelgrade_{$hook_slug}_init_args", $args, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// Get going with the initialization of the component
 		$this->init( $args );
@@ -202,16 +202,16 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 *
 	 * The config changes will be merged, not replaced, using array_replace_recursive().
 	 *
-	 * @param array $component_config The component config we wish to change.
+	 * @param array  $component_config The component config we wish to change.
 	 * @param string $component_slug The slug of the component we wish to change.
 	 *
 	 * @return array The modified component config
 	 */
 	public function crossConfig( $component_config, $component_slug ) {
-		if ( ! empty( $this->config['cross_config'][$component_slug]['config'] ) ) {
+		if ( ! empty( $this->config['cross_config'][ $component_slug ]['config'] ) ) {
 			// Change the 'config' by merging it
 			// Thus overwriting the old with what we have changed
-			$component_config = array_replace_recursive( $component_config, $this->config['cross_config'][$component_slug]['config'] );
+			$component_config = array_replace_recursive( $component_config, $this->config['cross_config'][ $component_slug ]['config'] );
 		}
 
 		return $component_config;
@@ -223,7 +223,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	public function fireUpCrossConfig() {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
-		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+		$hook_slug       = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_cross_config", $this->config, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// On cross config, another component (or others for what matters), can not modify the 'cross_config' section of the config.
@@ -253,7 +253,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	public function finalConfigFilter() {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
-		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+		$hook_slug       = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_config", $this->config, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// Check/validate the modified config
@@ -361,7 +361,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	/**
 	 * Checks the configured page templates and registers them for use in the WP Admin.
 	 *
-	 * @param array $config The component's page-templates config.
+	 * @param array  $config The component's page-templates config.
 	 * @param string $component_slug The component's slug.
 	 *
 	 * @return false|Pixelgrade_PageTemplater
@@ -379,10 +379,9 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			// We can handle two types of page template definitions
 			// First the simple, more direct one
 			if ( is_string( $key ) && is_string( $page_template ) ) {
-				$to_register[$key] = $page_template;
+				$to_register[ $key ] = $page_template;
 			} elseif ( is_array( $page_template ) ) {
 				// This is the more extended way of defining things
-
 				// First some sanity check
 				if ( empty( $page_template['page_template'] ) || empty( $page_template['name'] ) ) {
 					continue;
@@ -391,7 +390,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				// Now we need to process the dependencies
 				// We only register the page template if all dependencies are met
 				if ( true === Pixelgrade_Config::evaluateDependencies( $page_template ) ) {
-					$to_register[$page_template['page_template']] = $page_template['name'];
+					$to_register[ $page_template['page_template'] ] = $page_template['name'];
 				}
 			}
 		}
@@ -410,10 +409,10 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	/**
 	 * Checks the configured custom templates and handles their logic to fit in the WordPress template hierarchy.
 	 *
-	 * @param array $config The component's templates config.
+	 * @param array  $config The component's templates config.
 	 * @param string $component_slug The component's slug.
-	 * @param int $priority The priority with which to hook into the templates hook. Higher means higher priority for the template candidates
-	 *                      because they will be added more at the top of the stack.
+	 * @param int    $priority The priority with which to hook into the templates hook. Higher means higher priority for the template candidates
+	 *                         because they will be added more at the top of the stack.
 	 *
 	 * @return false|Pixelgrade_Templater
 	 */
@@ -507,9 +506,11 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				$posts_per_page = 10;
 			}
 
-
 			// Determine the ordering
-			$orderby = array( 'menu_order' => 'ASC', 'date' => 'DESC' );
+			$orderby = array(
+				'menu_order' => 'ASC',
+				'date'       => 'DESC',
+			);
 			if ( ! empty( $page_template_config['loop']['orderby'] ) && is_array( $page_template_config['loop']['orderby'] ) ) {
 				$orderby = $page_template_config['loop']['orderby'];
 			}
@@ -552,7 +553,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 
 			// Now setup the hooks for outputting the custom loop and the wrappers
 			// First the fake loop
-			$fake_loop_action = 'pixelgrade_do_fake_loop';
+			$fake_loop_action   = 'pixelgrade_do_fake_loop';
 			$fake_loop_priority = 10;
 			if ( ! empty( $page_template_config['loop']['fake_loop_action'] ) ) {
 				if ( is_array( $page_template_config['loop']['fake_loop_action'] ) && ! empty( $page_template_config['loop']['fake_loop_action']['function'] ) ) {

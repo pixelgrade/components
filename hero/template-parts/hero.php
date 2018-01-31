@@ -11,9 +11,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Hero
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Hero
  * @version     1.1.0
  */
 
@@ -46,7 +46,8 @@ if ( empty( $post_ID ) ) {
 <?php
 // First we need to determine if we really need a hero
 // A good opportunity to halt things using the 'pixelgrade_hero_is_hero_needed' filter
-if ( pixelgrade_hero_is_hero_needed( $location, $post_ID ) ) { ?>
+if ( pixelgrade_hero_is_hero_needed( $location, $post_ID ) ) {
+?>
 
 	<div <?php pixelgrade_hero_class( '', $location, $post_ID ); ?>>
 
@@ -67,8 +68,9 @@ if ( pixelgrade_hero_is_hero_needed( $location, $post_ID ) ) { ?>
 				$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide', $slide_type );
 
 				if ( $template ) {
-					include( $template );
-				} ?>
+					include $template;
+				}
+				?>
 
 			<?php } // foreach ?>
 
@@ -76,4 +78,5 @@ if ( pixelgrade_hero_is_hero_needed( $location, $post_ID ) ) { ?>
 
 	</div><!-- .c-hero -->
 
-<?php } // if ( pixelgrade_hero_is_hero_needed() )
+<?php
+} // if ( pixelgrade_hero_is_hero_needed() )

@@ -11,9 +11,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Multipage
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Multipage
  * @version     1.0.0
  */
 
@@ -37,7 +37,8 @@ if ( $child_pages->have_posts() ) {
 	$temp_location = pixelgrade_get_location();
 
 	// Fire up the loop
-	while ( $child_pages->have_posts() ) : $child_pages->the_post();
+	while ( $child_pages->have_posts() ) :
+		$child_pages->the_post();
 		// Display the anchor for this subpage so one can "jump" at it from a menu link or such
 		pixelgrade_multipage_the_subpage_anchor();
 

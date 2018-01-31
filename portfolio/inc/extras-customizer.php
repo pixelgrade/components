@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -14,7 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-/* ====================================
+/*
+ ====================================
  * THESE CALLBACKS ARE USED WIDELY
  * They should be provided by the Base component.
  * But just in case, provide a fallback here.
@@ -24,7 +25,7 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 	/**
 	 * Returns the custom CSS rules for the aspect ratio depending on the Customizer settings.
 	 *
-	 * @param mixed $value The value of the option.
+	 * @param mixed  $value The value of the option.
 	 * @param string $selector The CSS selector for this option.
 	 * @param string $property The CSS property of the option.
 	 * @param string $unit The CSS unit used by this option.
@@ -106,14 +107,15 @@ function pixelgrade_aspect_ratio_cb( value, selector, property, unit ) {
 endif;
 add_action( 'customize_preview_init', 'pixelgrade_aspect_ratio_cb_customizer_preview', 20 );
 
-/* ====================================
+/*
+ ====================================
  * PORTFOLIO GRID CALLBACKS
  * ==================================== */
 
 /**
  * Returns the custom CSS rules for the portfolio grid spacing depending on the Customizer settings.
  *
- * @param mixed $value The value of the option.
+ * @param mixed  $value The value of the option.
  * @param string $selector The CSS selector for this option.
  * @param string $property The CSS property of the option.
  * @param string $unit The CSS unit used by this option.
@@ -135,21 +137,21 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 		$ratio = 2.275;
 
 		// from 80em
-		$columns = pixelgrade_option( 'portfolio_items_per_row', 3 );
+		$columns  = pixelgrade_option( 'portfolio_items_per_row', 3 );
 		$normal   = 'calc(' . ( 100 * $ratio / $columns . '%' ) . ' - ' . $value * $ratio . 'px);';
 		$featured = 'calc(' . ( ( 200 * $ratio / $columns . '%' ) . ' - ' . ( $value * ( 2 * $ratio - 1 ) ) ) . 'px);';
 
 		// 50em to 80em
-		$columns_at_lap = $columns >= 5 ? $columns - 1 : $columns;
-		$factor_at_lap = ( typeline_get_y( $value, $points ) - 1 ) * 1 / 3 + 1;
-		$value_at_lap = round( $value / $factor_at_lap );
+		$columns_at_lap  = $columns >= 5 ? $columns - 1 : $columns;
+		$factor_at_lap   = ( typeline_get_y( $value, $points ) - 1 ) * 1 / 3 + 1;
+		$value_at_lap    = round( $value / $factor_at_lap );
 		$normal_at_lap   = 'calc(' . ( 100 * $ratio / $columns_at_lap . '%' ) . ' - ' . $value_at_lap * $ratio . 'px);';
 		$featured_at_lap = 'calc(' . ( ( 200 * $ratio / $columns_at_lap . '%' ) . ' - ' . ( $value_at_lap * ( 2 * $ratio - 1 ) ) ) . 'px);';
 
 		// 35em to 50em
-		$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
-		$factor_at_small = ( typeline_get_y( $value, $points ) - 1 ) * 2 / 3 + 1;
-		$value_at_small = round( $value / $factor_at_small );
+		$columns_at_small  = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
+		$factor_at_small   = ( typeline_get_y( $value, $points ) - 1 ) * 2 / 3 + 1;
+		$value_at_small    = round( $value / $factor_at_small );
 		$normal_at_small   = 'calc(' . ( 100 * $ratio / $columns_at_small . '%' ) . ' - ' . $value_at_small * $ratio . 'px);';
 		$featured_at_small = 'calc(' . ( ( 200 * $ratio / $columns_at_small . '%' ) . ' - ' . ( $value_at_small * ( 2 * $ratio - 1 ) ) ) . 'px);';
 
@@ -200,7 +202,7 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 			$newValue = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
+				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 				'.c-gallery--portfolio {' . PHP_EOL .
 				'margin-top: calc(-' . $newValue . 'px);' . PHP_EOL .
 				'}' . PHP_EOL .
@@ -241,7 +243,7 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( $value, $selector, $pr
 			$newValue = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[$i] . ') {' . PHP_EOL .
+				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
 				'.c-gallery--portfolio {' . PHP_EOL .
 				'margin-left: -' . $newValue . 'px;' . PHP_EOL .
 				'}' . PHP_EOL .
@@ -297,10 +299,10 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( value, selector, propert
 
 	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 
-		$js .= "
+		$js .= '
 
 	var ratio = 2.275,
-		columns = " . pixelgrade_option( 'portfolio_items_per_row', 3 ) . ",
+		columns = ' . pixelgrade_option( 'portfolio_items_per_row', 3 ) . ",
 		normal = 'calc(' + ( (100 * ratio / columns + '%') + ' - ' + ( value * ratio ) ) + 'px);',
 		featured = 'calc(' + ( (200 * ratio / columns + '%') + ' - ' + ( value * (2 * ratio - 1) ) ) + 'px);',
 		
@@ -485,7 +487,8 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( value, selector, prope
 }
 add_action( 'customize_preview_init', 'pixelgrade_portfolio_grid_horizontal_spacing_cb_customizer_preview', 20 );
 
-/* ====================================
+/*
+ ====================================
  * PORTFOLIO GRID CONTROLS CONDITIONALS
  * ==================================== */
 

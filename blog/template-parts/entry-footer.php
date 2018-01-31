@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/template-parts/entry-footer.php` or in `/template-parts/blog/entry-footer.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you

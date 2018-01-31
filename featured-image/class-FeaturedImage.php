@@ -26,12 +26,12 @@ class Pixelgrade_FeaturedImage extends Pixelgrade_Component {
 		// It is up to other components (like the portfolio component) or the theme to "declare" (via the filters bellow)
 		// what post types should use it.
 		$this->config = array(
-			//'post_types' => array( 'post', 'jetpack-portfolio', ),
+			// 'post_types' => array( 'post', 'jetpack-portfolio', ),
 		);
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
+		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -76,8 +76,7 @@ class Pixelgrade_FeaturedImage extends Pixelgrade_Component {
 	 */
 	public function registerHooks() {
 		// Nothing to do here right now
-
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
-		do_action( "pixelgrade_portfolio_registered_hooks" );
+		do_action( 'pixelgrade_portfolio_registered_hooks' );
 	}
 }
