@@ -194,8 +194,9 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 			'margin-top: ' . $value . 'px;' . PHP_EOL .
 			'}' . PHP_EOL;
 
-		for ( $i = 0; $i < count( $breakpoints ); $i ++ ) {
-			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / count( $breakpoints ) + 1;
+		$no_breakpoints = count( $breakpoints );
+		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
+			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
 			$newValue = round( $value / $ratio );
 
 			$output .=
@@ -234,9 +235,9 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( $value, $selector, $pr
 		$points      = $typeline_config['spacings']['points'];
 		$breakpoints = $typeline_config['spacings']['breakpoints'];
 
-
-		for ( $i = 0; $i < count( $breakpoints ); $i ++ ) {
-			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / count( $breakpoints ) + 1;
+		$no_breakpoints = count( $breakpoints );
+		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
+			$ratio    = ( typeline_get_y( $value, $points ) - 1 ) * ( $i + 1 ) / $no_breakpoints + 1;
 			$newValue = round( $value / $ratio );
 
 			$output .=

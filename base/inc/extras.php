@@ -91,7 +91,7 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 			}
 
 			// Now that the option is truly active, we need to see if we are not supposed to force over the option's default value
-			if ( $default !== null && $force_default == false ) {
+			if ( $default !== null && false === $force_default ) {
 				// We will not pass the received $default here so Customify will fallback on the option's default value, if set
 				$customify_value = $pixcustomify_plugin->get_option( $option );
 

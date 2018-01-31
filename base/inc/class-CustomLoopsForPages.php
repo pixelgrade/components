@@ -296,14 +296,14 @@ class Pixelgrade_CustomLoopsForPages {
 	 */
 	public function foundPosts( $found_posts, $q ) {
 		if ( ! $q->is_main_query() ) {
-					return $found_posts;
+			return $found_posts;
 		}
 
 		remove_filter( current_filter(), array( $this, __METHOD__ ) );
 
 		// Make sure that $this->injector_query actually have a value and is not NULL
 		if ( $this->injector_query instanceof WP_Query && 0 != $this->injector_query->found_posts ) {
-			return $found_posts = $this->injector_query->found_posts;
+			return $this->injector_query->found_posts;
 		}
 
 		return $found_posts;
@@ -602,7 +602,7 @@ class Pixelgrade_CustomLoopsForPages {
 		}
 
 		$post = end( $this->injector_query->posts );
-		$orderby = isset( $this->injector_query->query_vars['orderby'] ) ? $this->injector_query->query_vars['orderby'] : '';
+//		$orderby = isset( $this->injector_query->query_vars['orderby'] ) ? $this->injector_query->query_vars['orderby'] : '';
 		$post_date = ( ! empty( $post->post_date ) ? $post->post_date : false );
 
 		// For now just return the post date; we will tackle latter the modified date and other things
