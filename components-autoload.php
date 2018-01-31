@@ -62,7 +62,12 @@ class Pixelgrade_Components_Autoloader {
 
 		$iterator = new DirectoryIterator( $path );
 		foreach ( $iterator as $file_info ) {
-			if ( $file_info->isDir() && ! $file_info->isDot() && $file_info->getFilename() != 'base' && ! in_array( $file_info->getFilename(), self::$excluded_dir ) ) {
+			if ( $file_info->isDir()
+			     && ! $file_info->isDot()
+			     && 0 !== strpos( $file_info->getFilename(), '.' )
+			     && $file_info->getFilename() !== 'base'
+			     && ! in_array( $file_info->getFilename(), self::$excluded_dir ) ) {
+
 				// We have found a directory, try to load the component in it
 				self::loadComponent( $file_info->getFilename(), $path );
 			}
