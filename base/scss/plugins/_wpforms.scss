@@ -41,7 +41,6 @@ div.wpforms-container[class] {
         @include checkbox;
         padding: 0;
 
-        &:focus,
         &:checked {
             border-color: $color-dark;
             background: url('#{$checkbox-svg}') center center no-repeat;
@@ -55,7 +54,6 @@ div.wpforms-container[class] {
         padding: 0;
         border-radius: 50%;
 
-        &:focus,
         &:checked {
             border: 7px solid $color-dark;
             outline: 0;

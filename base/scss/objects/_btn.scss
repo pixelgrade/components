@@ -8,9 +8,12 @@
 
 // Predefine the variables below in order to alter and enable specific features.
 $btn-padding: 0.75em 1.75em !default;
-$btn-background: #222222 !default;
-$btn-hover-background: #000000 !default;
-$btn-color: #FFFFFF !default;
+$btn-background: #222 !default;
+$btn-hover-background: #000 !default;
+$btn-color: #FFF !default;
+$btn-default-background: #111 !default;
+$btn-hover-background: #000 !default;
+$btn-default-color: #FFF !default;
 
 $btn-border-width: 0 !default;
 $btn-border-style: solid !default;
@@ -205,8 +208,17 @@ $btn-font: () !default;
   }
 }
 
+@mixin btn--default {
+  background-color: $btn-default-background !important;
+  color: $btn-default-color !important;
+}
+
 .c-btn {
   @include btn;
+
+  &--default {
+    @include btn--default;
+  }
 }
 
 .c-btn-directional {
@@ -228,16 +240,20 @@ $btn-font: () !default;
 // Helper Classes for Humans & Nature
 // <a class="button">		Regular Button 		</a>
 // <a class="button arrow">	Button with Arrow 	</a>
+// <a class="button default">	Button with Default Styling 	</a>
 
 a,
 input[type=submit] {
-
   &.button {
     @include btn;
 
     .u-underlined-links & {
       text-decoration: none;
     }
+  }
+
+  &.default {
+    @include btn--default;
   }
 
   &.full {

@@ -113,7 +113,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         ),
                         'main'    => array(
                             'id'         => 'main',
-                            'classes'    => 'site-main  u-content-bottom-spacing',
+                            'classes'    => 'site-main  u-content-top-spacing  u-content-bottom-spacing',
                             'attributes' => array( 'role' => 'main', ),
                             'priority'   => 20,
                         ),

@@ -176,10 +176,13 @@ table {
     border-bottom: $typography-table-border-width $typography-table-border-style $typography-table-border-color;
   }
 
-  caption,
   th,
   td {
     @include spacing(padding, $typography-table-cell-padding);
+  }
+
+  caption {
+    @include spacing(padding, $typography-table-cell-padding 0);
   }
 
   th,

@@ -180,7 +180,8 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 		);
 
 		$single_meta_needed = false;
-		if ( ! empty( $key ) && in_array( $key, array_keys( $meta ) ) ) {
+		// We do not test for $key sanity because others might introduce new keys and use the 'pixelgrade_get_post_meta' filter to fill them in.
+		if ( ! empty( $key ) ) {
 			// We have been given a valid key, we only want that
 			$meta = array( $key => false );
 			$single_meta_needed = true;
@@ -230,8 +231,8 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 					$meta['date']   = '<span class="posted-on">' . get_the_date() . '</span>';
 					break;
 				case 'comments':
-					$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
 					if ( comments_open() ) {
+						$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
 						if ( $comments_number == 0 ) {
 							$comments = esc_html__( 'No Comments', '__components_txtd' );
 						} else {
