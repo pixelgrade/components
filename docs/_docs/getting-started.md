@@ -1,7 +1,7 @@
 ---
 docid: getting-started
 title: Getting Started
-layout: docs-getting-started
+layout: docs
 permalink: /docs/getting-started
 ---
 

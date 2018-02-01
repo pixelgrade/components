@@ -1,7 +1,7 @@
 # Site settings
 permalink: /blog/:year/:month/:day/:title.html
-title: WordPress Theme Components
-tagline: A sane, secure, predictable foundation for a WordPress themes portfolio.
+title: WPComponents
+tagline: A sane, secure, predictable foundation for a solid WordPress themes portfolio.
 #description: >
 #  Add description here
 fbappid: "1615782811974223"
