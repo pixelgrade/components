@@ -65,7 +65,6 @@ $btn-font: () !default;
   background-color: $btn-background;
 
   -webkit-font-smoothing: initial;
-  text-decoration: none;
 
   transition: $btn-transition;
   transition-property: color, background-color, opacity;
@@ -78,6 +77,13 @@ $btn-font: () !default;
     opacity: 0.7;
     text-decoration: none;
     border: initial;
+  }
+
+  .u-underlined-links &,
+  .u-underlined-links &:hover,
+  .u-underlined-links &:active,
+  .u-underlined-links &:focus {
+    text-decoration: none;
   }
 
   .u-buttons-rounded & {
@@ -213,7 +219,7 @@ $btn-font: () !default;
   color: $btn-default-color !important;
 }
 
-.c-btn {
+.c-btn[class] {
   @include btn;
 
   &--default {

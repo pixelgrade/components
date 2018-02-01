@@ -27,7 +27,7 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 }
 ?>
 
-<div class="c-navbar__content">
+<div class="c-navbar__content  u-header-background">
 
 	<?php
 	$zones = pixelgrade_header_get_zones();
