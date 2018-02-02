@@ -69,29 +69,16 @@ $btn-font: () !default;
   transition: $btn-transition;
   transition-property: color, background-color, opacity;
 
-  &:hover,
-  &:active,
-  &:focus {
-    color: $btn-color;
-    background-color: $btn-hover-background;
-    opacity: 0.7;
-    text-decoration: none;
-    border: initial;
-  }
-
-  .u-underlined-links &,
-  .u-underlined-links &:hover,
-  .u-underlined-links &:active,
-  .u-underlined-links &:focus {
-    text-decoration: none;
-  }
-
   .u-buttons-rounded & {
     border-radius: 0.3em;
   }
 
   .u-buttons-pill & {
     border-radius: 999em;
+  }
+
+  .u-underlined-links & {
+    text-decoration: none;
   }
 
   .u-buttons-outline & {
@@ -102,7 +89,6 @@ $btn-font: () !default;
     &:active,
     &:focus {
       background: none;
-      color: $btn-hover-background;
     }
   }
 }
@@ -219,7 +205,7 @@ $btn-font: () !default;
   color: $btn-default-color !important;
 }
 
-.c-btn[class] {
+.c-btn {
   @include btn;
 
   &--default {
