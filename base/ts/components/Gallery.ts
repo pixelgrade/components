@@ -2,6 +2,7 @@ import * as Masonry from 'masonry-layout';
 import { BaseComponent } from '../models/DefaultComponent';
 import { JQueryExtended } from '../BaseTheme';
 import { WindowService } from '../services/window.service';
+import { GlobalService } from '../services/global.service';
 
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
@@ -21,7 +22,19 @@ export class Gallery extends BaseComponent {
       .debounce(300 )
       .takeWhile( () => this.subscriptionActive )
       .subscribe( () => {
-        this.layout();
+        if ( this.element.is( this.masonryGallerySelector ) ) {
+          this.layout();
+        }
+      } );
+
+    GlobalService
+      .onCustomizerChange()
+      .debounce( 300 )
+      .takeWhile( () => this.subscriptionActive )
+      .subscribe( () => {
+        if ( this.element.is( this.masonryGallerySelector ) ) {
+          this.layout();
+        }
       } );
   }
 

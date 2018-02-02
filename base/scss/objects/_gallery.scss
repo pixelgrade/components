@@ -286,52 +286,55 @@
   // hotfix for julia#319
   // remove hover animation on small devices
   @include above(lap) {
-    & .c-card:hover .c-card__content {
+    .c-card:hover .c-card__content {
       opacity: 1;
     }
   }
 }
 
-.c-card__content {
+[class*="c-gallery--title-top"] .c-card__content {
+  justify-content: flex-start;
+}
 
-	[class*="c-gallery--title-top"] & {
-		justify-content: flex-start;
-	}
+[class*="c-gallery--title-bottom"] .c-card__content {
+  justify-content: flex-end;
+}
 
-	[class*="c-gallery--title-bottom"] & {
-		justify-content: flex-end;
-	}
+[class*="c-gallery--title-middle"] .c-card__content {
+  justify-content: center;
+}
 
-	[class*="c-gallery--title-middle"] & {
-		justify-content: center;
-	}
+[class*="c-gallery--title"][class*="-left"] {
+  .c-card__content {
+    align-items: flex-start;
+    text-align: left;
+  }
 
-	[class*="c-gallery--title"][class*="-left"] & {
-		align-items: flex-start;
-		text-align: left;
+  .c-meta {
+    justify-content: flex-start;
+  }
+}
 
-    .c-meta {
-      justify-content: flex-start;
-    }
-	}
+[class*="c-gallery--title"][class*="-right"] {
+  .c-card__content {
+    align-items: flex-end;
+    text-align: right;
+  }
 
-	[class*="c-gallery--title"][class*="-right"] & {
-		align-items: flex-end;
-		text-align: right;
+  .c-meta {
+    justify-content: flex-end;
+  }
+}
 
-    .c-meta {
-      justify-content: flex-end;
-    }
-	}
+[class*="c-gallery--title"][class*="-center"] {
+  .c-card__content {
+    align-items: center;
+    text-align: center;
+  }
 
-	[class*="c-gallery--title"][class*="-center"] & {
-		align-items: center;
-		text-align: center;
-
-    .c-meta {
-      justify-content: center;
-    }
-	}
+  .c-meta {
+    justify-content: center;
+  }
 }
 
 .c-gallery {

@@ -429,7 +429,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_item_meta_primary_color'   => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Meta Primary', '__components_txtd' ),
+						'label'   => esc_html__( 'Meta Primary Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #222222)
 						'css'     => array(
@@ -441,7 +441,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					),
 					'portfolio_item_meta_secondary_color' => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Meta Secondary', '__components_txtd' ),
+						'label'   => esc_html__( 'Meta Secondary Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #818282)
 						'css'     => array(
