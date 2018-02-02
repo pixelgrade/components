@@ -154,6 +154,7 @@ $typography-table-border-color: $color-gray-90 !default;
 
 table {
   width: 100%;
+  float: none;
   border-collapse: collapse;
 
   &:not(:last-child) {
