@@ -433,7 +433,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 					// Add our dynamic classes
 					if ( isset( $columns ) ) {
-						$classes[] = 'columns-' . $columns;
+						$classes[] = 'o-grid--' . $columns . 'col-@small';
 					}
 					if ( isset( $image_ratio ) ) {
 						$classes[] = 'aspect-ratio-' . $image_ratio;

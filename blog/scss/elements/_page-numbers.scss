@@ -27,14 +27,6 @@ ul.page-numbers {
     }
   }
 
-  .prev {
-    @include spacing(padding-right, 3rem);
-  }
-
-  .next {
-    @include spacing(padding-left, 3rem);
-  }
-
   .next,
   .prev {
     @include leading-map($h3);

@@ -1487,13 +1487,13 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 					'blog_item_excerpt_color'             => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
+						'label'   => esc_html__( 'Item Excerpt Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #252525)
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-gallery--blog .c-card__title',
+								'selector' => '.c-gallery--blog .c-card__excerpt',
 							),
 						),
 					),
