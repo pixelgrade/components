@@ -132,7 +132,7 @@ function pixelgrade_blog_grid_vertical_spacing_cb( $value, $selector, $property,
 		$points      = $typeline_config['spacings']['points'];
 		$breakpoints = $typeline_config['spacings']['breakpoints'];
 
-		$ratio = 2.275;
+		$ratio = 1.275;
 
 		// from 80em
 		$columns  = pixelgrade_option( 'blog_items_per_row', 3 );
