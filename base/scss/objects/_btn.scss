@@ -18,7 +18,6 @@ $btn-default-color: #FFF !default;
 $btn-border-width: 0 !default;
 $btn-border-style: solid !default;
 $btn-border-color: #222222 !default;
-$btn-border-radius: 0 !default;
 
 $btn-transition: all .5s cubic-bezier(.18, .61, .43, .99) !default;
 
@@ -52,7 +51,6 @@ $btn-font: () !default;
 @mixin button-box {
   padding: $btn-padding;
   border: $btn-border-width $btn-border-style $btn-border-color;
-  border-radius: $btn-border-radius;
   margin: 0;
 }
 
@@ -201,8 +199,12 @@ $btn-font: () !default;
 }
 
 @mixin btn--default {
-  background-color: $btn-default-background !important;
-  color: $btn-default-color !important;
+  background-color: $btn-default-background;
+  color: $btn-default-color;
+
+  .u-buttons-outline & {
+    background: none;
+  }
 }
 
 .c-btn {
@@ -234,15 +236,8 @@ $btn-font: () !default;
 // <a class="button arrow">	Button with Arrow 	</a>
 // <a class="button default">	Button with Default Styling 	</a>
 
-a,
-input[type=submit] {
-  &.button {
-    @include btn;
-
-    .u-underlined-links & {
-      text-decoration: none;
-    }
-  }
+.button {
+  @include btn;
 
   &.default {
     @include btn--default;
@@ -251,9 +246,7 @@ input[type=submit] {
   &.full {
     width: 100%;
   }
-}
 
-a {
   &.arrow {
     @include button-directional;
     @include button-directional--right;
