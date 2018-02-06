@@ -6,11 +6,14 @@ import { GlobalService } from '../services/global.service';
 
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
+
   private subscriptionActive: boolean = true;
   private masonryGallerySelector: string = '.c-gallery--packed, .c-gallery--masonry';
+  private masonry;
 
   constructor( element: JQueryExtended ) {
     super();
+
     this.element = element;
 
     if ( this.element.is( this.masonryGallerySelector ) ) {
@@ -22,9 +25,15 @@ export class Gallery extends BaseComponent {
       .debounce(300 )
       .takeWhile( () => this.subscriptionActive )
       .subscribe( () => {
-        if ( this.element.is( this.masonryGallerySelector ) ) {
           this.layout();
-        }
+      } );
+
+    GlobalService
+      .onCustomizerRender()
+      .debounce( 300 )
+      .takeWhile( () => this.subscriptionActive )
+      .subscribe( () => {
+          this.layout();
       } );
 
     GlobalService
@@ -32,9 +41,7 @@ export class Gallery extends BaseComponent {
       .debounce( 300 )
       .takeWhile( () => this.subscriptionActive )
       .subscribe( () => {
-        if ( this.element.is( this.masonryGallerySelector ) ) {
           this.layout();
-        }
       } );
   }
 
@@ -61,10 +68,13 @@ export class Gallery extends BaseComponent {
       minColumnWidth = width < minColumnWidth ? width : minColumnWidth;
     } );
 
-    new Masonry( this.element.get(0), {
+    if ( this.masonry ) {
+      this.masonry.destroy();
+    }
+
+    this.masonry = new Masonry( this.element.get(0), {
       columnWidth: minColumnWidth,
       transitionDuration: 0,
     } );
   }
-
 }

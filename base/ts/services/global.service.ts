@@ -6,13 +6,25 @@ interface ExtendedWindow extends Window {
 
 export class GlobalService {
 
-  public static onCustomizerChange(): Rx.Observable<JQuery> {
+  public static onCustomizerRender(): Rx.Observable<JQuery> {
     const exWindow: ExtendedWindow = window;
 
     return Rx.Observable.create( ( observer ) => {
       if ( exWindow.wp && exWindow.wp.customize && exWindow.wp.customize.selectiveRefresh ) {
         exWindow.wp.customize.selectiveRefresh.bind( 'partial-content-rendered', (placement) => {
           observer.onNext($(placement.container));
+        });
+      }
+    });
+  }
+
+  public static onCustomizerChange(): Rx.Observable<JQuery> {
+    const exWindow: ExtendedWindow = window;
+
+    return Rx.Observable.create( ( observer ) => {
+      if ( exWindow.wp && exWindow.wp.customize && exWindow.wp.customize.selectiveRefresh ) {
+        exWindow.wp.customize.bind( 'change', ( setting ) => {
+          observer.onNext( setting );
         });
       }
     });
