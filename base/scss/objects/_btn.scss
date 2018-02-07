@@ -202,6 +202,10 @@ $btn-font: () !default;
   background-color: $btn-default-background;
   color: $btn-default-color;
 
+  &:hover {
+    color: $btn-default-color;
+  }
+
   .u-buttons-outline & {
     background: none;
   }

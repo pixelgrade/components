@@ -153,7 +153,12 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_item_class' ) ) {
 	function pixelgrade_get_blog_grid_item_class( $class = '', $location = '' ) {
 		$classes   = array();
 		$classes[] = 'c-gallery__item';
-		$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+
+		if ( has_post_thumbnail() ) {
+			$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+		} else {
+			$classes[] = 'c-gallery__item--no-image';
+		}
 
 		return array_unique( $classes );
 	}
