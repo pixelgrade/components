@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! function_exists( 'pixelgrade_load_component_file' ) ) :
+if ( ! function_exists( 'pixelgrade_load_component_file' ) ) {
 	/**
 	 * Loads a component file allowing themes and child themes to overwrite component files.
 	 *
@@ -31,7 +31,7 @@ if ( ! function_exists( 'pixelgrade_load_component_file' ) ) :
 			load_template( $template, $require_once );
 		}
 	}
-endif;
+}
 
 /**
  * Loads a component file allowing themes and child themes to overwrite component files.
@@ -47,7 +47,7 @@ function pxg_load_component_file( $component_slug, $slug, $name = '', $require_o
 	pixelgrade_load_component_file( $component_slug, $slug, $name, $require_once );
 }
 
-if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) :
+if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 	/**
 	 * Locates a component file allowing themes and child themes to overwrite component files. Return the full path for inclusion.
 	 *
@@ -174,7 +174,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) :
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_file', $template, $component_slug, $slug, $name, $lookup_theme_root );
 	}
-endif;
+}
 
 /**
  * Locates a component file allowing themes and child themes to overwrite component files.
@@ -191,7 +191,7 @@ function pxg_locate_component_file( $component_slug, $slug, $name = '' ) {
 	return pixelgrade_locate_component_file( $component_slug, $slug, $name );
 }
 
-if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) :
+if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) {
 	/**
 	 * Locates a component template file allowing themes and child themes to overwrite component files. Return the path for inclusion.
 	 *
@@ -318,9 +318,9 @@ if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) :
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name, $lookup_theme_root );
 	}
-endif;
+}
 
-if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) :
+if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 	/**
 	 * Locates a component page template file allowing themes and child themes to overwrite component files. Return the path of the file.
 	 *
@@ -402,9 +402,9 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) :
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name );
 	}
-endif;
+}
 
-if ( ! function_exists( 'pixelgrade_get_component_template_part' ) ) :
+if ( ! function_exists( 'pixelgrade_get_component_template_part' ) ) {
 	/**
 	 * Loads a component template part into a template allowing themes and child themes to overwrite component files.
 	 *
@@ -420,9 +420,9 @@ if ( ! function_exists( 'pixelgrade_get_component_template_part' ) ) :
 			load_template( $template, false );
 		}
 	}
-endif;
+}
 
-if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) :
+if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 	/**
 	 * Locates a component template part allowing themes and child themes to overwrite component files. Return the path for inclusion.
 	 *
@@ -523,9 +523,62 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) :
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_template_part', $template, $component_slug, $slug, $name );
 	}
-endif;
+}
 
-if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) :
+if ( ! function_exists( 'pixelgrade_get_template_part' ) ) {
+	/**
+	 * Get templates passing attributes and including the file.
+	 *
+	 * @access public
+	 *
+	 * @param string $template_slug
+	 * @param string $template_path Optional.
+	 * @param array $args Optional. (default: array())
+	 * @param string $template_name Optional. (default: '')
+	 * @param string $default_path Optional. (default: '')
+	 */
+	function pixelgrade_get_template_part( $template_slug, $template_path = '', $args = array(), $template_name = '', $default_path = '' ) {
+		if ( ! empty( $args ) && is_array( $args ) ) {
+			extract( $args );
+		}
+
+		$located = pixelgrade_locate_template_part( $template_slug, $template_path, $template_name, $default_path );
+
+		if ( ! file_exists( $located ) ) {
+			_doing_it_wrong( __FUNCTION__, sprintf( __( '%s does not exist.', 'pixelgrade_care' ), '<code>' . $located . '</code>' ), null );
+
+			return;
+		}
+
+		// Allow 3rd party plugins or themes to filter template file.
+		$located = apply_filters( 'pixelgrade_get_template_part', $located, $template_slug, $template_path, $args, $template_name, $default_path );
+
+		include( $located );
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_get_template_part_html' ) ) {
+	/**
+	 * Like pixelgrade_get_template_part, but returns the HTML instead of outputting.
+	 * @see pixelgrade_get_template_part
+	 *
+	 * @param string $template_slug
+	 * @param string $template_path Optional.
+	 * @param array $args Optional. (default: array())
+	 * @param string $template_name Optional. (default: '')
+	 * @param string $default_path Optional. (default: '')
+	 *
+	 * @return string
+	 */
+	function pixelgrade_get_template_part_html( $template_slug, $template_path = '', $args = array(), $template_name = '', $default_path = '' ) {
+		ob_start();
+		pixelgrade_get_template_part( $template_slug, $template_path, $args, $template_name, $default_path );
+
+		return ob_get_clean();
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) {
 	/**
 	 * Locate a template part and return the path for inclusion.
 	 *
@@ -551,10 +604,12 @@ if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) :
 	 *      $default_path   /   $slug.php
 	 *
 	 * @access public
+	 *
 	 * @param string $slug
 	 * @param string $template_path Optional. Default: ''
 	 * @param string $name Optional. Default: ''
 	 * @param string $default_path (default: '')
+	 *
 	 * @return string
 	 */
 	function pixelgrade_locate_template_part( $slug, $template_path = '', $name = '', $default_path = '' ) {
@@ -639,7 +694,7 @@ if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) :
 		// Return what we found.
 		return apply_filters( 'pixelgrade_locate_template_part', $template, $slug, $template_path, $name );
 	}
-endif;
+}
 
 /**
  * Given a path, attempt to make relative to the theme root
