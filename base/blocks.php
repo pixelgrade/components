@@ -78,7 +78,7 @@ function pixelgrade_get_rendered_block( $block ) {
 }
 
 function pixelgrade_is_block_debug() {
-	if ( true === PIXELGRADE_BLOCK_DEBUG ) {
+	if ( defined( 'PIXELGRADE_BLOCK_DEBUG' ) && true === PIXELGRADE_BLOCK_DEBUG ) {
 		return true;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Components mock functions and definitions.
+ * Components mock functions and definitions. Used only for testing the components.
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
@@ -20,7 +20,7 @@ Pixelgrade_Components_Autoload();
 /**
  * Declare support for all components to allow for proper testing.
  */
-function force_setup_all_components() {
+function components_force_setup_all_components() {
 	/*
 	 * Declare support for the Pixelgrade Components the theme uses.
 	 * Please note that some components will load regardless (like Base, Blog, Header, Footer).
@@ -36,4 +36,4 @@ function force_setup_all_components() {
 	add_theme_support( 'pixelgrade-multipage-component' );
 	add_theme_support( 'pixelgrade-portfolio-component' );
 }
-add_action( 'after_setup_theme', 'force_setup_all_components', 10 );
+add_action( 'after_setup_theme', 'components_force_setup_all_components', 10 );
