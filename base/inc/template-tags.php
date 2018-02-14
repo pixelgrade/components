@@ -115,7 +115,7 @@ function pixelgrade_body_attributes( $attributes = array() ) {
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo esc_attr( join( ' ', $full_attributes ) );
+		echo join( ' ', $full_attributes );
 	}
 } // function
 

@@ -1,6 +1,6 @@
 import * as Rx from 'rx-dom';
 
-interface ExtendedWindow extends Window {
+export interface ExtendedWindow extends Window {
   wp?: any;
 }
 
@@ -22,7 +22,7 @@ export class GlobalService {
     const exWindow: ExtendedWindow = window;
 
     return Rx.Observable.create( ( observer ) => {
-      if ( exWindow.wp && exWindow.wp.customize && exWindow.wp.customize.selectiveRefresh ) {
+      if ( exWindow.wp && exWindow.wp.customize ) {
         exWindow.wp.customize.bind( 'change', ( setting ) => {
           observer.onNext( setting );
         });
