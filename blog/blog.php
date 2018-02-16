@@ -15,7 +15,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Blog
- * @version     1.1.0
+ * @version     1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ if ( ! function_exists( 'Pixelgrade_Blog' ) ) :
 		if ( ! class_exists( 'Pixelgrade_Blog' ) ) {
 			pixelgrade_load_component_file( 'blog', 'class-Blog' );
 		}
-		return Pixelgrade_Blog::instance( '1.1.0' );
+		return Pixelgrade_Blog::instance( '1.1.1' );
 	}
 endif;
 

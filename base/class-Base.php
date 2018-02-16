@@ -45,6 +45,8 @@ class Pixelgrade_Base extends Pixelgrade_Component {
 	 * Handle everything there is to be done before the component init.
 	 */
 	public function preInitSetup() {
+		parent::preInitSetup();
+
 		// Initialize the Blocks Manager
 		Pixelgrade_BlocksManager();
 	}

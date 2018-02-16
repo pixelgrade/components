@@ -146,12 +146,9 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		/**
 		 * Since some things like register_sidebars(), register_nav_menus() need to happen before the 'init' action (priority 10) - the point at which we fireUp()
 		 * we do an extra init step, hooked to 'after_setup_theme' priority 80, by default.
-		 * We only do this if the we have the preInitSetup() method defined.
 		 */
-		if ( method_exists( $this, 'preInitSetup' ) ) {
-			$pre_init_setup_priority = ( isset( $args['init']['priorities']['preInitSetup'] ) ? absint( $args['init']['priorities']['preInitSetup'] ) : 80 );
-			add_action( 'after_setup_theme', array( $this, 'preInitSetup' ), $pre_init_setup_priority );
-		}
+		$pre_init_setup_priority = ( isset( $args['init']['priorities']['preInitSetup'] ) ? absint( $args['init']['priorities']['preInitSetup'] ) : 80 );
+		add_action( 'after_setup_theme', array( $this, 'preInitSetup' ), $pre_init_setup_priority );
 
 		// Before firing up the component's logic, we will register the blocks.
 		// By this moment, everyone should have decided on what is what.
@@ -267,41 +264,28 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	}
 
 	/**
-	 * Register the component's blocks
+	 * Load, instantiate, and hookup things that need to happen before the 'init' action (where our fire_up() is).
 	 *
-	 * We will process the component's config for blocks and register the blocks accordingly.
+	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
 	 */
-	public function registerBlocks() {
-		// Get the component's config
-		$config = $this->getConfig();
-
-		// Make the hooks dynamic and standard
-		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
-		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-
-		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
-
-		// Now process the config and register any blocks we find
-		if ( ! empty( $config['blocks'] ) && is_array( $config['blocks'] ) ) {
-			foreach ( $config['blocks'] as $block_id => $block_config ) {
-				// If the block ID is not namespaced, we will namespace it with the component's slug
-				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
-					$block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-				}
-				Pixelgrade_BlocksManager()->registerBlock( $block_id, $block_config );
-			}
+	public function preInitSetup() {
+		// Register the widget areas
+		// We hook this in preInitSetup because the `widgets_init` hooks gets fires at init priority 1.
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			add_action( 'widgets_init', array( $this, 'registerSidebars' ), 10 );
 		}
 
-		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
+		// Register the config nav menu locations, if we have any
+		$this->registerNavMenus();
+
+		// Register the config zone callbacks
+		$this->registerZoneCallbacks();
 	}
 
 	/**
 	 * Load, instantiate and hook up.
 	 *
 	 * @return void
-	 */
-	/**
-	 * Load, instantiate and hook up.
 	 */
 	public function fireUp() {
 		/**
@@ -336,26 +320,115 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	abstract public function registerHooks();
 
 	/**
-	 * Get the component's configuration.
+	 * Register the component's blocks
 	 *
-	 * @return array
+	 * We will process the component's config for blocks and register the blocks accordingly.
 	 */
-	public function getConfig() {
-		return $this->config;
+	public function registerBlocks() {
+		// Get the component's config
+		$config = $this->getConfig();
+
+		// Make the hooks dynamic and standard
+		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
+		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+
+		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
+
+		// Now process the config and register any blocks we find
+		if ( ! empty( $config['blocks'] ) && is_array( $config['blocks'] ) ) {
+			foreach ( $config['blocks'] as $block_id => $block_config ) {
+				// If the block ID is not namespaced, we will namespace it with the component's slug
+				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
+					$block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+				}
+				Pixelgrade_BlocksManager()->registerBlock( $block_id, $block_config );
+			}
+		}
+
+		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
 	}
 
 	/**
-	 * Given a string, it sanitizes and standardize it to be used for hook name parts (dynamic hooks).
+	 * Register the sidebars (widget areas) configured by the component.
 	 *
-	 * @param $string
-	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	public static function prepareStringForHooks( $string ) {
-		// We replace all the minus chars with underscores
-		$string = str_replace( '-', '_', $string );
+	public function registerSidebars() {
+		$registered_some_sidebars = false;
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			foreach ( $this->config['sidebars'] as $id => $settings ) {
+				if ( empty( $settings['sidebar_args']['id'] ) ) {
+					$settings['sidebar_args']['id'] = $id;
+				}
 
-		return $string;
+				// Register a new widget area
+				register_sidebar( $settings['sidebar_args'] );
+
+				// Remember what we've done last summer :)
+				$registered_some_sidebars = true;
+			}
+		}
+
+		// Let others know what we did.
+		return $registered_some_sidebars;
+	}
+
+	/**
+	 * Register the needed menu locations based on the current configuration.
+	 *
+	 * @return bool
+	 */
+	public function registerNavMenus() {
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			$menus = array();
+			foreach ( $this->config['menu_locations'] as $id => $settings ) {
+				// Make sure that we ignore bogus menu locations
+				if ( empty( $settings['bogus'] ) ) {
+					if ( ! empty( $settings['title'] ) ) {
+						$menus[ $id ] = $settings['title'];
+					} else {
+						$menus[ $id ] = $id;
+					}
+				}
+			}
+
+			if ( ! empty( $menus ) ) {
+				register_nav_menus( $menus );
+
+				// We registered some menu locations. Life is good. Share it.
+				return true;
+			}
+		}
+
+		// It seems that we didn't do anything. Let others know
+		return false;
+	}
+
+	/**
+	 * Register the needed zone callbacks for each widget area and nav menu location based on the current configuration.
+	 */
+	protected function registerZoneCallbacks() {
+		// Make the hooks dynamic and standard
+		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
+		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			foreach ( $this->config['sidebars'] as $sidebar_id => $sidebar_settings ) {
+				if ( ! empty( $sidebar_settings['zone_callback'] ) && is_callable( $sidebar_settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_{$hook_slug}_{$sidebar_id}_widget_area_display_zone", $sidebar_settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
+
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			foreach ( $this->config['menu_locations'] as $menu_id => $menu_settings ) {
+				if ( ! empty( $menu_settings['zone_callback'] ) && is_callable( $menu_settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_{$hook_slug}_{$menu_id}_nav_menu_display_zone", $menu_settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
 	}
 
 	/**
@@ -581,6 +654,29 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Get the component's configuration.
+	 *
+	 * @return array
+	 */
+	public function getConfig() {
+		return $this->config;
+	}
+
+	/**
+	 * Given a string, it sanitizes and standardize it to be used for hook name parts (dynamic hooks).
+	 *
+	 * @param $string
+	 *
+	 * @return mixed
+	 */
+	public static function prepareStringForHooks( $string ) {
+		// We replace all the minus chars with underscores
+		$string = str_replace( '-', '_', $string );
+
+		return $string;
 	}
 
 	/**

@@ -8,7 +8,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.3.0
+ * @version     1.3.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -124,11 +124,7 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
 	 */
 	public function preInitSetup() {
-		// Register the config menu locations
-		$this->registerNavMenus();
-
-		// Register the config zone callbacks
-		$this->registerZoneCallbacks();
+		parent::preInitSetup();
 
 		/**
 		 * Add theme support for site logo, if we are allowed to
@@ -202,51 +198,6 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_header_registered_hooks' );
-	}
-
-	/**
-	 * Register the needed menu locations based on the current configuration.
-	 *
-	 * @return bool
-	 */
-	private function registerNavMenus() {
-		if ( ! empty( $this->config['menu_locations'] ) ) {
-			$menus = array();
-			foreach ( $this->config['menu_locations'] as $id => $settings ) {
-				// Make sure that we ignore bogus menu locations
-				if ( empty( $settings['bogus'] ) ) {
-					if ( ! empty( $settings['title'] ) ) {
-						$menus[ $id ] = $settings['title'];
-					} else {
-						$menus[ $id ] = $id;
-					}
-				}
-			}
-
-			if ( ! empty( $menus ) ) {
-				register_nav_menus( $menus );
-
-				// We registered some menu locations. Life is good. Share it.
-				return true;
-			}
-		}
-
-		// It seems that we didn't do anything. Let others know
-		return false;
-	}
-
-	/**
-	 * Register the needed zone callbacks for each nav menu location based on the current configuration.
-	 */
-	private function registerZoneCallbacks() {
-		if ( ! empty( $this->config['menu_locations'] ) ) {
-			foreach ( $this->config['menu_locations'] as $menu_id => $settings ) {
-				if ( ! empty( $settings['zone_callback'] ) ) {
-					// Add the filter
-					add_filter( "pixelgrade_header_{$menu_id}_nav_menu_display_zone", $settings['zone_callback'], 10, 3 );
-				}
-			}
-		}
 	}
 
 	/**
