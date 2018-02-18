@@ -62,7 +62,8 @@ $btn-font: () !default;
   color: $btn-color;
   background-color: $btn-background;
 
-  -webkit-font-smoothing: initial;
+  // -webkit-font-smoothing: initial;
+  // Removed as it makes the font weight too thick
 
   transition: $btn-transition;
   transition-property: color, background-color, opacity;
