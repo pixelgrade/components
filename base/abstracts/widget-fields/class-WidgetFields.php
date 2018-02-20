@@ -391,7 +391,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
-			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . esc_html( $value ) . '</textarea>' . PHP_EOL;
+			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . $this->sanitize_textarea( $value, $field_name, $field_config ) . '</textarea>' . PHP_EOL;
 
 			if ( ! empty( $desc ) ) {
 				$output .= '<br />' . PHP_EOL;
@@ -981,17 +981,41 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		/**
 		 * Apply filter callbacks for field values, if they are configured (per field).
 		 *
+		 * There can be a single (callable) filter or an array of callable filters.
+		 *
 		 * @param array $instance The current widget details.
+		 * @param bool $skip_default_filters Optional. Whether to skip default filters applied to certain type of fields. These filters are applied last.
 		 *
 		 * @return array
 		 */
-		public function applyFilters( $instance ) {
+		public function applyFilters( $instance, $skip_default_filters = false ) {
 			// Make sure this is an array
 			$instance = (array) $instance;
 
 			foreach ( $this->getFields() as $field_name => $field_config ) {
-				if ( isset( $field_config['filter_callback'] ) && is_callable( $field_config['filter_callback'] ) ) {
-					$instance[ $field_name ] = call_user_func( $field_config['filter_callback'], $instance[ $field_name ] );
+				if ( isset( $field_config['filter_callbacks'] ) ) {
+					if ( is_callable( $field_config['filter_callbacks'] ) ) {
+						$instance[ $field_name ] = call_user_func( $field_config['filter_callbacks'], $instance[ $field_name ] );
+					} elseif ( is_array( $field_config['filter_callbacks'] ) ) {
+						foreach ( $field_config['filter_callbacks'] as $callback ) {
+							if ( is_callable( $callback ) ) {
+								$instance[ $field_name ] = call_user_func( $callback, $instance[ $field_name ] );
+							}
+						}
+					}
+				}
+
+				// Now for the default filters
+				if ( ! $skip_default_filters ) {
+					switch ( $field_config['type'] ) {
+						case 'text':
+						case 'textarea':
+							$instance[ $field_name ] = wptexturize( $instance[ $field_name ] );
+							$instance[ $field_name ] = convert_chars( $instance[ $field_name ] );
+							break;
+						default:
+							break;
+					}
 				}
 			}
 
@@ -1132,7 +1156,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 						),
 						'strong' => array(),
 						'b'      => array(),
+						'div'    => array(
+							'class' => array(),
+						),
 						'em'     => array(),
+						'i'      => array(),
 						'u'      => array(),
 						'span'   => array(
 							'class' => array(),
