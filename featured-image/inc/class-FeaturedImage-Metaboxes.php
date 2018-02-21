@@ -203,7 +203,7 @@ class Pixelgrade_FeaturedImage_Metaboxes extends Pixelgrade_Singleton {
 	 */
 	public function adminEnqueueScripts( $hook ) {
 		/* enqueue the styles and scripts specific to this component */
-		if ( 'edit.php' != $hook ) {
+		if ( 'post.php' === $hook ) {
 			wp_enqueue_style( 'pixelgrade_featured_image-admin-style' );
 		}
 	}
