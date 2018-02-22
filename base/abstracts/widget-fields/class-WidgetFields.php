@@ -84,6 +84,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 			}
+
+			// Add custom export logic
+			add_filter( "pixcare_sce_widget_data_export_{$id}", array( $this, 'custom_export_logic' ), 10, 3 );
 		}
 
 		/**
@@ -1437,6 +1440,21 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			<?php
 			echo $args['after_widget'];
+		}
+
+		/**
+		 * Handle various export logic specific to this widget's fields.
+		 *
+		 * @param array $widget_data The widget instance values.
+		 * @param string $widget_type The widget type.
+		 * @param array $matching_data The matching import/export data like old-new post IDs, old-new attachment IDs, etc.
+		 *
+		 * @return array The modified widget data.
+		 */
+		public function custom_export_logic( $widget_data, $widget_type, $matching_data ) {
+			// Nothing right now. Define this method in a extending class.
+
+			return $widget_data;
 		}
 	}
 

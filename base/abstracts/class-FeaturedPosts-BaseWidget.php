@@ -353,6 +353,9 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 			}
+
+			// Add custom export logic
+			add_filter( "pixcare_sce_widget_data_export_{$id}", array( $this, 'custom_export_logic' ), 10, 3 );
 		}
 
 		/**
@@ -903,6 +906,42 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 			// All is good
 			return $value;
+		}
+
+		/**
+		 * Handle various export logic specific to this widget's fields.
+		 *
+		 * @param array $widget_data The widget instance values.
+		 * @param string $widget_type The widget type.
+		 * @param array $matching_data The matching import/export data like old-new post IDs, old-new attachment IDs, etc.
+		 *
+		 * @return array The modified widget data.
+		 */
+		public function custom_export_logic( $widget_data, $widget_type, $matching_data ) {
+			// Replace the post IDs with the new ones
+			if ( ! empty( $widget_data['post_ids'] ) && ! empty( $matching_data['post_types']['post'] ) ) {
+				$post_ids = Pixelgrade_Value::maybeExplodeList( $widget_data['post_ids'] );
+				if ( ! empty( $post_ids ) ) {
+					foreach ( $post_ids as $key => $value ) {
+						if ( ! is_numeric( $value ) ) {
+							unset( $post_ids[ $key ] );
+						} else {
+							$post_ids[ $key ] = intval( $value );
+						}
+					}
+				}
+
+				foreach ( $post_ids as $key => $old_post_id ) {
+					if ( ! empty( $matching_data['post_types']['post'][ $old_post_id ] ) ) {
+						$post_ids[ $key ] = $matching_data['post_types']['post'][ $old_post_id ];
+					}
+				}
+
+				// We need to convert the post IDs back to comma separated list
+				$widget_data['post_ids'] = implode( ',', $post_ids );
+			}
+
+			return $widget_data;
 		}
 	}
 
