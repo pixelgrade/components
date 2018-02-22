@@ -119,12 +119,12 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		do_action( 'pixelgrade_gallery_registered_hooks' );
 	}
 
-	function jetpackFallback() {
+	public function jetpackFallback() {
 		// Make sure that the Jetpack fallback functionality is loaded
 		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'jetpack-fallback/functions.gallery' );
 	}
 
-	function adminInit() {
+	public function adminInit() {
 		/**
 		 * Filter the available gallery types
 		 *
@@ -145,7 +145,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	/**
 	 * Registers/enqueues the gallery settings admin js and CSS.
 	 */
-	function wpEnqueueMedia() {
+	public function wpEnqueueMedia() {
 		wp_enqueue_style( 'pixelgrade_gallery-admin-style' );
 
 		$dependecies = array( 'media-views' );
@@ -175,7 +175,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	function addMasonryGalleryType( $types ) {
+	public function addMasonryGalleryType( $types ) {
 		$setting = array( 'masonry' => esc_html__( 'Masonry', '__components_txtd' ) );
 
 		// we want to insert after the default Thumbnail Grid
@@ -201,7 +201,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	function maybeAddSlideshowGalleryType( $types ) {
+	public function maybeAddSlideshowGalleryType( $types ) {
 		if ( ! isset( $types['slideshow'] ) ) {
 			$types['slideshow'] = esc_html__( 'Slideshow', '__components_txtd' );
 		}
@@ -218,7 +218,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 *
 	 * @return string
 	 */
-	function postGallery( $output, $attr, $gallery_instance = 0 ) {
+	public function postGallery( $output, $attr, $gallery_instance = 0 ) {
 		// save the current instance and it's attributes
 		self::$gallery_instance                = $gallery_instance;
 		self::$atts[ self::$gallery_instance ] = $attr;
@@ -236,7 +236,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 *
 	 * @return array
 	 */
-	function galleryDefaultAtts( $out, $pairs, $atts, $shortcode ) {
+	public function galleryDefaultAtts( $out, $pairs, $atts, $shortcode ) {
 		if ( empty( $atts['spacing'] ) ) {
 			$out['spacing'] = $this->config['gallery_spacing_default'];
 		} else {
@@ -253,7 +253,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 *
 	 * @return string
 	 */
-	function galleryClasses( $out ) {
+	public function galleryClasses( $out ) {
 		if ( empty( self::$atts[ self::$gallery_instance ] ) || ! is_array( self::$atts[ self::$gallery_instance ] ) ) {
 			self::$atts[ self::$gallery_instance ] = array();
 		}
@@ -281,7 +281,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	/**
 	 * Outputs a view template which can be used with wp.media.template
 	 */
-	function printMediaTemplates() {
+	public function printMediaTemplates() {
 		/**
 		 * Filter the default gallery spacing.
 		 *
