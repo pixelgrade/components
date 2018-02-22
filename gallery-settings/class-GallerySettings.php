@@ -187,8 +187,8 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		} else {
 			// insert it after the Thumbnail Grid option
 			$types = array_slice( $types, 0, $key + 1, true ) +
-					 $setting +
-					 array_slice( $types, $key + 1, null, true );
+			         $setting +
+			         array_slice( $types, $key + 1, null, true );
 		}
 
 		return $types;
@@ -254,6 +254,9 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 	 * @return string
 	 */
 	function galleryClasses( $out ) {
+		if ( empty( self::$atts[ self::$gallery_instance ] ) || ! is_array( self::$atts[ self::$gallery_instance ] ) ) {
+			self::$atts[ self::$gallery_instance ] = array();
+		}
 		if ( empty( self::$atts[ self::$gallery_instance ]['spacing'] ) ) {
 			self::$atts[ self::$gallery_instance ]['spacing'] = $this->config['gallery_spacing_default'];
 		}
@@ -287,10 +290,10 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 		$default_gallery_spacing = apply_filters( 'pixelgrade_default_gallery_spacing', $this->config['gallery_spacing_default'] );
 
 		?>
-			<script type="text/html" id="tmpl-pixelgrade-gallery-settings">
-				<label class="setting">
-					<span><?php esc_html_e( 'Spacing', '__components_txtd' ); ?></span>
-					<select class="spacing" name="spacing" data-setting="spacing">
+		<script type="text/html" id="tmpl-pixelgrade-gallery-settings">
+			<label class="setting">
+				<span><?php esc_html_e( 'Spacing', '__components_txtd' ); ?></span>
+				<select class="spacing" name="spacing" data-setting="spacing">
 
 					<?php
 					foreach ( $this->config['gallery_spacing_options'] as $value => $caption ) {
@@ -298,9 +301,9 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 					}
 					?>
 
-					</select>
-				</label>
-			</script>
+				</select>
+			</label>
+		</script>
 		<?php
 	}
 }
