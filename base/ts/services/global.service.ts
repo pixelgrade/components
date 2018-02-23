@@ -2,6 +2,7 @@ import * as Rx from 'rx-dom';
 
 export interface ExtendedWindow extends Window {
   wp?: any;
+  safari?: any;
 }
 
 export class GlobalService {
