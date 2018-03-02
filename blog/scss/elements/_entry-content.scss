@@ -47,7 +47,7 @@ $meta-tags-items-font: () !default;
     }
 
     &[class] > a {
-      @extend .meta__item--button;
+      @extend .meta__item--button !optional;
 
       // add spaciing between category items
       margin-top: 5px;
