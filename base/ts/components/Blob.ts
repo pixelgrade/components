@@ -4,19 +4,20 @@ import { BaseComponent } from '../models/DefaultComponent';
 
 export class Blob extends BaseComponent {
   protected element: JQuery;
-  protected seedOffset: number;
+  protected presetOffset: number;
 
   private radius = 10;
   private sides;
-  private seed;
-  private timeline;
+  private preset;
+  private complexity = 0.84;
 
-  constructor(sides: number, seed: number, seedOffset: number = 0) {
+  constructor(sides: number, complexity: number, preset: number, presetOffset: number = 0) {
     super();
 
     this.sides = sides;
-    this.seed = seed + seedOffset;
-    this.seedOffset = seedOffset;
+    this.complexity = complexity;
+    this.preset = preset + presetOffset;
+    this.presetOffset = presetOffset;
 
     this.bindEvents();
     this.render();
@@ -31,16 +32,16 @@ export class Blob extends BaseComponent {
     polygon.setAttribute( 'points', this.generatePoints( true ) );
     svg.appendChild( polygon );
 
-    this.timeline = anime({
-      autoplay: false,
-      duration: 1000,
-      easing: 'linear',
-      offset: 0,
-      points: this.generatePoints(),
-      targets: polygon,
-    });
-
     return svg;
+  }
+
+  public morph( morphDuration: number = 300 ) {
+    anime({
+      duration: morphDuration,
+      offset: 0,
+      points: this.generatePoints( true ),
+      targets: this.element.find( 'polygon' ).get(0),
+    });
   }
 
   public render() {
@@ -53,15 +54,13 @@ export class Blob extends BaseComponent {
     this.element = $svg;
   }
 
-  public getRatio(seed: number, i: number): number {
-    const pow = Math.pow( seed, i );
+  public getRatio(preset: number, i: number): number {
+    const pow = Math.pow( preset, i );
     return ( 4 + 6 * this.getMagicDigit( pow ) / 9 ) / 10;
   }
 
-  public setSeed(seed: number) {
-    // const seeds = [17, 37, 65, 72, 91, 123, 245, 313, 381, 379];
-    // this.seed = seeds[seed - 1];
-    this.seed = seed + this.seedOffset;
+  public setPreset(preset: number) {
+    this.preset = preset + this.presetOffset;
   }
 
   public getMagicDigit( n ) {
@@ -79,7 +78,7 @@ export class Blob extends BaseComponent {
   }
 
   public setComplexity( complexity ) {
-    this.timeline.seek( complexity * 1000 );
+    this.complexity = complexity;
   }
 
   public setSides( sides ) {
@@ -93,19 +92,15 @@ export class Blob extends BaseComponent {
       // generate a regular polygon
       // we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
       const angle = 2 * Math.PI * i / this.sides - Math.PI / 2;
-      const x = this.radius * Math.cos(angle);
-      const y = this.radius * Math.sin(angle);
 
       // default ratio is 0.7 because the random one varies between 0.4 and 1
-      let ratio = 0.7;
+      const defaultRatio = 0.7;
+      const ratio = defaultRatio + ( this.getRatio(this.preset, i) - defaultRatio ) * this.complexity;
 
-      if ( random ) {
-        // apply a "random" ratio to the coordinates to create an irregular shape
-        ratio = this.getRatio(this.seed, i);
-      }
+      const x = this.radius * ( Math.cos( angle ) * ratio + 1 );
+      const y = this.radius * ( Math.sin( angle ) * ratio + 1 );
 
-      points.push(x * ratio + this.radius);
-      points.push(y * ratio + this.radius);
+      points.push( x + ',' + y );
     }
 
     return points.join(' ');
@@ -115,8 +110,8 @@ export class Blob extends BaseComponent {
     return this.element;
   }
 
-  public getSeed(): number {
-    return this.seed;
+  public getPreset(): number {
+    return this.preset;
   }
 
   public bindEvents(): void {

@@ -1,7 +1,12 @@
 .c-branding {
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+
+  @include below(lap) {
+    flex-direction: column;
+  }
 
   a,
   img {
@@ -15,9 +20,24 @@
     margin-right: auto;
     transition: filter $transition--macro ease-in-out, opacity $transition--micro ease-out;
   }
+
+  @include above(lap) {
+    .site-description {
+      flex: 1 1 80px;
+    }
+  }
+}
+
+.c-navbar__zone--branding + .c-navbar__zone--middle {
+  max-width: 60%;
+}
+
+.c-navbar__zone--branding.c-navbar__zone--middle {
+  max-width: 30%;
 }
 
 .c-navbar__zone--middle {
+
   .c-branding {
     text-align: center;
 
