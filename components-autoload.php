@@ -178,11 +178,11 @@ class Pixelgrade_Components_Autoloader {
 	}
 }
 
-if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ):
+if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ) {
 	/**
 	 * Just a wrapper for our components auto-loading
 	 */
 	function Pixelgrade_Components_Autoload() {
-	Pixelgrade_Components_Autoloader::loadComponents();
+		Pixelgrade_Components_Autoloader::loadComponents();
+	}
 }
-endif;

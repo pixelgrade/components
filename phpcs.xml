@@ -8,8 +8,11 @@
 
     <!-- Exclude folders and files from being checked. -->
     <exclude-pattern>*/tests/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
 
-    <!-- If no files or directories are specified on the command line, check all relevant files. -->
+    <!-- Check all PHP files in directory tree by default. -->
+    <arg name="extensions" value="php"/>
     <file>.</file>
 
     <!-- Use colors in output. -->
