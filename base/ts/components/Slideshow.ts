@@ -62,7 +62,7 @@ export class Slideshow extends Carousel {
   }
 
   private getDirection( slick, currentSlide: number, nextSlide: number ): number {
-    if ( nextSlide === currentSlide + 1 || ( nextSlide === 0 && currentSlide === slick.$slides.length - 1 ) ) {
+    if ( nextSlide > currentSlide ) {
       return 1;
     }
     return -1;

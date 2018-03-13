@@ -185,19 +185,11 @@ class Pixelgrade_Components_Autoloader {
 	}
 }
 
-<<<<<<< HEAD
 if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ) {
-=======
-if ( ! function_exists( 'Pixelgrade_Components_Autoload' ) ) :
->>>>>>> refs/subrepo/components/fetch
 	/**
 	 * Just a wrapper for our components auto-loading
 	 */
 	function Pixelgrade_Components_Autoload() {
 		Pixelgrade_Components_Autoloader::loadComponents();
 	}
-<<<<<<< HEAD
 }
-=======
-endif;
->>>>>>> refs/subrepo/components/fetch
