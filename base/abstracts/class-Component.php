@@ -2,9 +2,9 @@
 /**
  * This is the abstract class for the main class of components. It's a singleton factory also.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.1.0
  */
 
@@ -61,7 +61,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 *
 	 * @throws Exception
 	 * @param string $version Optional. The current component version.
-	 * @param array $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 * @param array  $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
 	 */
 	public function __construct( $version = '1.0.0', $args = array() ) {
 		$this->version = $version;
@@ -76,7 +76,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
 		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-		$args = apply_filters( "pixelgrade_{$hook_slug}_init_args", $args, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+		$args      = apply_filters( "pixelgrade_{$hook_slug}_init_args", $args, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// Get going with the initialization of the component
 		$this->init( $args );
@@ -146,12 +146,9 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		/**
 		 * Since some things like register_sidebars(), register_nav_menus() need to happen before the 'init' action (priority 10) - the point at which we fireUp()
 		 * we do an extra init step, hooked to 'after_setup_theme' priority 80, by default.
-		 * We only do this if the we have the preInitSetup() method defined.
 		 */
-		if ( method_exists( $this, 'preInitSetup' ) ) {
-			$pre_init_setup_priority = ( isset( $args['init']['priorities']['preInitSetup'] ) ? absint( $args['init']['priorities']['preInitSetup'] ) : 80 );
-			add_action( 'after_setup_theme', array( $this, 'preInitSetup' ), $pre_init_setup_priority );
-		}
+		$pre_init_setup_priority = ( isset( $args['init']['priorities']['preInitSetup'] ) ? absint( $args['init']['priorities']['preInitSetup'] ) : 80 );
+		add_action( 'after_setup_theme', array( $this, 'preInitSetup' ), $pre_init_setup_priority );
 
 		// Before firing up the component's logic, we will register the blocks.
 		// By this moment, everyone should have decided on what is what.
@@ -202,16 +199,16 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 *
 	 * The config changes will be merged, not replaced, using array_replace_recursive().
 	 *
-	 * @param array $component_config The component config we wish to change.
+	 * @param array  $component_config The component config we wish to change.
 	 * @param string $component_slug The slug of the component we wish to change.
 	 *
 	 * @return array The modified component config
 	 */
 	public function crossConfig( $component_config, $component_slug ) {
-		if ( ! empty( $this->config['cross_config'][$component_slug]['config'] ) ) {
+		if ( ! empty( $this->config['cross_config'][ $component_slug ]['config'] ) ) {
 			// Change the 'config' by merging it
 			// Thus overwriting the old with what we have changed
-			$component_config = array_replace_recursive( $component_config, $this->config['cross_config'][$component_slug]['config'] );
+			$component_config = array_replace_recursive( $component_config, $this->config['cross_config'][ $component_slug ]['config'] );
 		}
 
 		return $component_config;
@@ -223,14 +220,14 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	public function fireUpCrossConfig() {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
-		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+		$hook_slug       = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_cross_config", $this->config, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// On cross config, another component (or others for what matters), can not modify the 'cross_config' section of the config.
 		// Not at this stage anyhow. That is to be done before the setup_cross_config, best via the "pixelgrade_{$hook_slug}_initial_config"
 		if ( ! empty( $this->config['cross_config'] ) &&
-			 ! empty( $modified_config['cross_config'] ) &&
-			 false !== Pixelgrade_Array::arrayDiffAssocRecursive( $this->config['cross_config'], $modified_config['cross_config'] ) ) {
+			! empty( $modified_config['cross_config'] ) &&
+			false !== Pixelgrade_Array::arrayDiffAssocRecursive( $this->config['cross_config'], $modified_config['cross_config'] ) ) {
 			_doing_it_wrong( __METHOD__, sprintf( 'You should not modify the \'cross_config\' part of the component config through the "pixelgrade_%1$s_cross_config" dynamic filter (due to possible logic loops). Use the "pixelgrade_%1$s_initial_config" filter instead.', $hook_slug ), null );
 			return;
 		}
@@ -253,7 +250,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	public function finalConfigFilter() {
 		// Make the hooks dynamic and standard
 		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
-		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+		$hook_slug       = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_config", $this->config, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
 
 		// Check/validate the modified config
@@ -267,41 +264,28 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	}
 
 	/**
-	 * Register the component's blocks
+	 * Load, instantiate, and hookup things that need to happen before the 'init' action (where our fire_up() is).
 	 *
-	 * We will process the component's config for blocks and register the blocks accordingly.
+	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
 	 */
-	public function registerBlocks() {
-		// Get the component's config
-		$config = $this->getConfig();
-
-		// Make the hooks dynamic and standard
-		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
-		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-
-		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
-
-		// Now process the config and register any blocks we find
-		if ( ! empty( $config['blocks'] ) && is_array( $config['blocks'] ) ) {
-			foreach ( $config['blocks'] as $block_id => $block_config ) {
-				// If the block ID is not namespaced, we will namespace it with the component's slug
-				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
-					$block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
-				}
-				Pixelgrade_BlocksManager()->registerBlock( $block_id, $block_config );
-			}
+	public function preInitSetup() {
+		// Register the widget areas
+		// We hook this in preInitSetup because the `widgets_init` hooks gets fires at init priority 1.
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			add_action( 'widgets_init', array( $this, 'registerSidebars' ), 10 );
 		}
 
-		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
+		// Register the config nav menu locations, if we have any
+		$this->registerNavMenus();
+
+		// Register the config zone callbacks
+		$this->registerZoneCallbacks();
 	}
 
 	/**
 	 * Load, instantiate and hook up.
 	 *
 	 * @return void
-	 */
-	/**
-	 * Load, instantiate and hook up.
 	 */
 	public function fireUp() {
 		/**
@@ -336,32 +320,121 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	abstract public function registerHooks();
 
 	/**
-	 * Get the component's configuration.
+	 * Register the component's blocks
 	 *
-	 * @return array
+	 * We will process the component's config for blocks and register the blocks accordingly.
 	 */
-	public function getConfig() {
-		return $this->config;
+	public function registerBlocks() {
+		// Get the component's config
+		$config = $this->getConfig();
+
+		// Make the hooks dynamic and standard
+		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
+		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+
+		do_action( "pixelgrade_{$hook_slug}_before_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
+
+		// Now process the config and register any blocks we find
+		if ( ! empty( $config['blocks'] ) && is_array( $config['blocks'] ) ) {
+			foreach ( $config['blocks'] as $block_id => $block_config ) {
+				// If the block ID is not namespaced, we will namespace it with the component's slug
+				if ( ! Pixelgrade_BlocksManager::isBlockIdNamespaced( $block_id ) ) {
+					$block_id = Pixelgrade_BlocksManager::namespaceBlockId( $block_id, constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+				}
+				Pixelgrade_BlocksManager()->registerBlock( $block_id, $block_config );
+			}
+		}
+
+		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
 	}
 
 	/**
-	 * Given a string, it sanitizes and standardize it to be used for hook name parts (dynamic hooks).
+	 * Register the sidebars (widget areas) configured by the component.
 	 *
-	 * @param $string
-	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	public static function prepareStringForHooks( $string ) {
-		// We replace all the minus chars with underscores
-		$string = str_replace( '-', '_', $string );
+	public function registerSidebars() {
+		$registered_some_sidebars = false;
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			foreach ( $this->config['sidebars'] as $id => $settings ) {
+				if ( empty( $settings['sidebar_args']['id'] ) ) {
+					$settings['sidebar_args']['id'] = $id;
+				}
 
-		return $string;
+				// Register a new widget area
+				register_sidebar( $settings['sidebar_args'] );
+
+				// Remember what we've done last summer :)
+				$registered_some_sidebars = true;
+			}
+		}
+
+		// Let others know what we did.
+		return $registered_some_sidebars;
+	}
+
+	/**
+	 * Register the needed menu locations based on the current configuration.
+	 *
+	 * @return bool
+	 */
+	public function registerNavMenus() {
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			$menus = array();
+			foreach ( $this->config['menu_locations'] as $id => $settings ) {
+				// Make sure that we ignore bogus menu locations
+				if ( empty( $settings['bogus'] ) ) {
+					if ( ! empty( $settings['title'] ) ) {
+						$menus[ $id ] = $settings['title'];
+					} else {
+						$menus[ $id ] = $id;
+					}
+				}
+			}
+
+			if ( ! empty( $menus ) ) {
+				register_nav_menus( $menus );
+
+				// We registered some menu locations. Life is good. Share it.
+				return true;
+			}
+		}
+
+		// It seems that we didn't do anything. Let others know
+		return false;
+	}
+
+	/**
+	 * Register the needed zone callbacks for each widget area and nav menu location based on the current configuration.
+	 */
+	protected function registerZoneCallbacks() {
+		// Make the hooks dynamic and standard
+		// @todo When we get to using PHP 5.3+, refactor this to make use of static::COMPONENT_SLUG
+		$hook_slug = self::prepareStringForHooks( constant( get_class( $this ) . '::COMPONENT_SLUG' ) );
+
+		if ( ! empty( $this->config['sidebars'] ) ) {
+			foreach ( $this->config['sidebars'] as $sidebar_id => $sidebar_settings ) {
+				if ( ! empty( $sidebar_settings['zone_callback'] ) && is_callable( $sidebar_settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_{$hook_slug}_{$sidebar_id}_widget_area_display_zone", $sidebar_settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
+
+		if ( ! empty( $this->config['menu_locations'] ) ) {
+			foreach ( $this->config['menu_locations'] as $menu_id => $menu_settings ) {
+				if ( ! empty( $menu_settings['zone_callback'] ) && is_callable( $menu_settings['zone_callback'] ) ) {
+					// Add the filter
+					add_filter( "pixelgrade_{$hook_slug}_{$menu_id}_nav_menu_display_zone", $menu_settings['zone_callback'], 10, 3 );
+				}
+			}
+		}
 	}
 
 	/**
 	 * Checks the configured page templates and registers them for use in the WP Admin.
 	 *
-	 * @param array $config The component's page-templates config.
+	 * @param array  $config The component's page-templates config.
 	 * @param string $component_slug The component's slug.
 	 *
 	 * @return false|Pixelgrade_PageTemplater
@@ -379,10 +452,9 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			// We can handle two types of page template definitions
 			// First the simple, more direct one
 			if ( is_string( $key ) && is_string( $page_template ) ) {
-				$to_register[$key] = $page_template;
+				$to_register[ $key ] = $page_template;
 			} elseif ( is_array( $page_template ) ) {
 				// This is the more extended way of defining things
-
 				// First some sanity check
 				if ( empty( $page_template['page_template'] ) || empty( $page_template['name'] ) ) {
 					continue;
@@ -391,7 +463,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				// Now we need to process the dependencies
 				// We only register the page template if all dependencies are met
 				if ( true === Pixelgrade_Config::evaluateDependencies( $page_template ) ) {
-					$to_register[$page_template['page_template']] = $page_template['name'];
+					$to_register[ $page_template['page_template'] ] = $page_template['name'];
 				}
 			}
 		}
@@ -410,10 +482,10 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	/**
 	 * Checks the configured custom templates and handles their logic to fit in the WordPress template hierarchy.
 	 *
-	 * @param array $config The component's templates config.
+	 * @param array  $config The component's templates config.
 	 * @param string $component_slug The component's slug.
-	 * @param int $priority The priority with which to hook into the templates hook. Higher means higher priority for the template candidates
-	 *                      because they will be added more at the top of the stack.
+	 * @param int    $priority The priority with which to hook into the templates hook. Higher means higher priority for the template candidates
+	 *                         because they will be added more at the top of the stack.
 	 *
 	 * @return false|Pixelgrade_Templater
 	 */
@@ -467,13 +539,13 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		}
 
 		// Get the current page ID
-		$page_ID = $query->get( 'page_id' );
-		if ( empty( $page_ID ) ) {
-			$page_ID = $query->queried_object_id;
+		$page_id = $query->get( 'page_id' );
+		if ( empty( $page_id ) ) {
+			$page_id = $query->queried_object_id;
 		}
 
 		// Bail if we don't have a page ID
-		if ( empty( $page_ID ) ) {
+		if ( empty( $page_id ) ) {
 			return;
 		}
 		// For each custom page template that has a custom loop for some custom post type(s), setup the queries
@@ -484,7 +556,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			}
 
 			// Allow others to short-circuit this
-			if ( true === apply_filters( 'pixelgrade_skip_custom_loops_for_page', false, $page_ID, $page_template_config ) ) {
+			if ( true === apply_filters( 'pixelgrade_skip_custom_loops_for_page', false, $page_id, $page_template_config ) ) {
 				continue;
 			}
 
@@ -498,7 +570,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 			// Determine how many posts per page
 			if ( ! empty( $page_template_config['loop']['posts_per_page'] ) ) {
 				// We will process the posts_per_page config and get the value
-				$posts_per_page = intval( Pixelgrade_Config::getConfigValue( $page_template_config['loop']['posts_per_page'], $page_ID ) );
+				$posts_per_page = intval( Pixelgrade_Config::getConfigValue( $page_template_config['loop']['posts_per_page'], $page_id ) );
 			} else {
 				$posts_per_page = intval( get_option( 'posts_per_page' ) );
 			}
@@ -507,9 +579,11 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				$posts_per_page = 10;
 			}
 
-
 			// Determine the ordering
-			$orderby = array( 'menu_order' => 'ASC', 'date' => 'DESC' );
+			$orderby = array(
+				'menu_order' => 'ASC',
+				'date'       => 'DESC',
+			);
 			if ( ! empty( $page_template_config['loop']['orderby'] ) && is_array( $page_template_config['loop']['orderby'] ) ) {
 				$orderby = $page_template_config['loop']['orderby'];
 			}
@@ -523,7 +597,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 
 			// Here we test to see if we need to exclude the featured projects
 			if ( ! empty( $page_template_config['loop']['post__not_in'] ) ) {
-				$query_args['post__not_in'] = Pixelgrade_Config::getConfigValue( $page_template_config['loop']['post__not_in'], $page_ID );
+				$query_args['post__not_in'] = Pixelgrade_Config::getConfigValue( $page_template_config['loop']['post__not_in'], $page_id );
 			}
 
 			// Determine the template part to use for individual posts - defaults to 'content' as in 'content.php'
@@ -552,7 +626,7 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 
 			// Now setup the hooks for outputting the custom loop and the wrappers
 			// First the fake loop
-			$fake_loop_action = 'pixelgrade_do_fake_loop';
+			$fake_loop_action   = 'pixelgrade_do_fake_loop';
 			$fake_loop_priority = 10;
 			if ( ! empty( $page_template_config['loop']['fake_loop_action'] ) ) {
 				if ( is_array( $page_template_config['loop']['fake_loop_action'] ) && ! empty( $page_template_config['loop']['fake_loop_action']['function'] ) ) {
@@ -580,6 +654,29 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Get the component's configuration.
+	 *
+	 * @return array
+	 */
+	public function getConfig() {
+		return $this->config;
+	}
+
+	/**
+	 * Given a string, it sanitizes and standardize it to be used for hook name parts (dynamic hooks).
+	 *
+	 * @param $string
+	 *
+	 * @return mixed
+	 */
+	public static function prepareStringForHooks( $string ) {
+		// We replace all the minus chars with underscores
+		$string = str_replace( '-', '_', $string );
+
+		return $string;
 	}
 
 	/**

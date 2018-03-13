@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-    <?php
+	<?php
 	/**
 	 * pixelgrade_before_footer hook.
 	 *
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	do_action( 'pixelgrade_before_footer', 'main' );
 	?>
 
-    <?php
+	<?php
 	/**
 	 * pixelgrade_footer hook.
 	 *
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	do_action( 'pixelgrade_footer', 'main' );
 	?>
 
-    <?php
+	<?php
 	/**
 	 * pixelgrade_after_footer hook.
 	 *

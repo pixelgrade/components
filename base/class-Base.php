@@ -5,9 +5,9 @@
  *
  * Everything gets hooked up and bolted in here.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.1
  */
 
@@ -28,7 +28,7 @@ class Pixelgrade_Base extends Pixelgrade_Component {
 
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
-		$hook_slug = self::prepareStringForHooks( self::COMPONENT_SLUG );
+		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
 		$modified_config = apply_filters( "pixelgrade_{$hook_slug}_initial_config", $this->config, self::COMPONENT_SLUG );
 
 		// Check/validate the modified config
@@ -45,6 +45,8 @@ class Pixelgrade_Base extends Pixelgrade_Component {
 	 * Handle everything there is to be done before the component init.
 	 */
 	public function preInitSetup() {
+		parent::preInitSetup();
+
 		// Initialize the Blocks Manager
 		Pixelgrade_BlocksManager();
 	}
@@ -56,7 +58,6 @@ class Pixelgrade_Base extends Pixelgrade_Component {
 	 */
 	public function registerHooks() {
 		// No hooks at this point!
-
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_base_registered_hooks' );
 	}

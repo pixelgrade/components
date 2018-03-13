@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/404.php` or in `/templates/blog/404.php`.
+ *
  * @see pixelgrade_locate_component_template()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -34,14 +35,13 @@ pixelgrade_get_header(); ?>
 
 						<?php
 						$visibility_class = '';
-
 						if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
 							$visibility_class = 'screen-reader-text';
 						}
 						?>
 
 						<div class="entry-content u-content-width">
-							<h1 class="entry-title <?php echo $visibility_class; ?>"><?php esc_html_e( 'Oops! This page can&rsquo;t be found anywhere.', '__components_txtd' ); ?></h1>
+							<h1 class="entry-title <?php echo esc_attr( $visibility_class ); ?>"><?php esc_html_e( 'Oops! This page can&rsquo;t be found anywhere.', '__components_txtd' ); ?></h1>
 							<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', '__components_txtd' ); ?></p>
 							<?php get_search_form(); ?>
 						</div><!-- .entry-content -->

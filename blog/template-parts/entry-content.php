@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/template-parts/entry-content.php` or in `/template-parts/blog/entry-content.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -26,16 +27,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="entry-content  u-content-width">
 	<?php
-	the_content( sprintf(
-	/* translators: %s: Name of current post. */
-		wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', '__components_txtd' ), array( 'span' => array( 'class' => array() ) ) ),
-		the_title( '<span class="screen-reader-text">"', '"</span>', false )
-	) );
+	the_content(
+		sprintf(
+			/* translators: %s: Name of current post. */
+			wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', '__components_txtd' ), array( 'span' => array( 'class' => array() ) ) ),
+			the_title( '<span class="screen-reader-text">"', '"</span>', false )
+		)
+	);
 
-	wp_link_pages( array(
-		'before' => '<div class="page-links">' . esc_html__( 'Pages:', '__components_txtd' ),
-		'after'  => '</div>',
-	) );
+	wp_link_pages(
+		array(
+			'before' => '<div class="page-links">' . esc_html__( 'Pages:', '__components_txtd' ),
+			'after'  => '</div>',
+		)
+	);
 
 	?>
 </div><!-- .entry-content -->

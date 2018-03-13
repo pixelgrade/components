@@ -57,7 +57,7 @@ $jetpack-sharing-font: (
     display: flex;
     align-items: center;
     justify-content: center;
-
+    font: inherit;
     margin: 0;
     padding: $jetpack-sharing-padding;
     border: $jetpack-sharing-border-width solid $jetpack-sharing-border-color;

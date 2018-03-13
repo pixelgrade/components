@@ -1,9 +1,7 @@
 
-
 .related-posts-container {
   position: relative;
   @include spacing(padding, 4rem 0);
-  background-color: $theme-background-color;
 
   .c-card__frame img {
     @include image-fill;

@@ -2,9 +2,9 @@
 /**
  * This is the abstract class for singletons (a singleton factory).
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.1.1
  */
 
@@ -46,10 +46,10 @@ abstract class Pixelgrade_Singleton {
 		// @todo Clean this up when we can use PHP 5.3+
 		$called_class_name = get_called_class();
 
-		if ( ! isset( self::$instance_array[$called_class_name] ) ) {
-			self::$instance_array[$called_class_name] = new $called_class_name( $main_arg, $other_args );
+		if ( ! isset( self::$instance_array[ $called_class_name ] ) ) {
+			self::$instance_array[ $called_class_name ] = new $called_class_name( $main_arg, $other_args );
 		}
-		return self::$instance_array[$called_class_name];
+		return self::$instance_array[ $called_class_name ];
 	} // End instance ()
 
 	/**
@@ -60,7 +60,7 @@ abstract class Pixelgrade_Singleton {
 	public static function isActive() {
 		$called_class_name = get_called_class();
 
-		if ( ! is_null( self::$instance_array[$called_class_name] ) ) {
+		if ( ! is_null( self::$instance_array[ $called_class_name ] ) ) {
 			return true;
 		}
 

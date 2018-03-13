@@ -15,9 +15,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -44,10 +44,13 @@ do_action( 'pixelgrade_before_custom_loop', $location );
 	<div class="u-full-width  u-portfolio-sides-spacing  u-content-bottom-spacing">
 		<div class="o-wrapper u-portfolio-grid-width">
 			<div <?php pixelgrade_posts_container_id( $location ); ?> <?php pixelgrade_portfolio_class( '', $location, $atts ); ?>>
-				<?php while ( $portfolio_query->have_posts() ) : $portfolio_query->the_post();
+				<?php
+				while ( $portfolio_query->have_posts() ) :
+					$portfolio_query->the_post();
 					pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'content-jetpack-portfolio', 'shortcode' );
 				endwhile;
-				wp_reset_postdata(); ?>
+				wp_reset_postdata();
+				?>
 			</div><!-- #posts-container -->
 		</div><!-- .o-wrapper .u-portfolio-grid-width -->
 	</div><!-- .u-portfolio-sides-spacing.u-content-bottom-spacing -->

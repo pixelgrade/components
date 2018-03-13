@@ -5,9 +5,9 @@
  * Serves as a factory for Blocks, and
  * instantiates default Blocks.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -50,7 +50,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @throws Exception
 	 *
 	 * @param string $version The current class version.
-	 * @param array $args Optional. Various arguments for the initialization.
+	 * @param array  $args Optional. Various arguments for the initialization.
 	 */
 	public function __construct( $version = '1.0.0', $args = array() ) {
 
@@ -93,8 +93,8 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @access public
 	 *
 	 * @param Pixelgrade_Block|string $id Block object, or ID.
-	 * @param array $args The arguments to pass to the block instance to override the default class properties.
-	 * @param Pixelgrade_Block $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
+	 * @param array                   $args The arguments to pass to the block instance to override the default class properties.
+	 * @param Pixelgrade_Block        $parent Optional. The block instance that contains the definition of this block (that first instantiated this block).
 	 *
 	 * @return Pixelgrade_Block|false The instance of the block that was added. False on failure.
 	 */
@@ -103,7 +103,6 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 			$block = $id;
 		} else {
 			// We need to instantiate a new block
-
 			// We really need a valid, registered block type to be able to do our job
 			if ( empty( $args['type'] ) ) {
 				$args['type'] = self::$default_block_type;
@@ -113,16 +112,16 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 				if ( class_exists( $block_type_class ) ) {
 					// Before adding the block we need to evaluate any dependencies it has
 					if ( true === Pixelgrade_Config::evaluateDependencies( $args ) ) {
-						$args = $this->maybeExtendBlock( $args );
+						$args  = $this->maybeExtendBlock( $args );
 						$block = new $block_type_class( $this, $id, $args, $parent );
 					} else {
 						return false;
 					}
 
 					// @todo Maybe fallback on another previously registered block
-//					if ( ! empty( $block_config['fallback'] ) ) {
-//
-//					}
+					// if ( ! empty( $block_config['fallback'] ) ) {
+					//
+					// }
 				} else {
 					_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t register the block %s because the class %s doesn\'t exist.', $id, $block_type_class ), null );
 					return false;
@@ -135,7 +134,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 
 		// Add the block to the registry
 		// If the block is already registered, we will overwrite it with the new one.
-		$this->registered_blocks[$block->id] = $block;
+		$this->registered_blocks[ $block->id ] = $block;
 
 		return $block;
 	}
@@ -147,7 +146,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return bool
 	 */
 	public function isRegisteredBlock( $id ) {
-		if ( isset( $this->registered_blocks[$id] ) ) {
+		if ( isset( $this->registered_blocks[ $id ] ) ) {
 			return true;
 		}
 
@@ -161,8 +160,8 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return Pixelgrade_Block|false The block object, if set. False otherwise.
 	 */
 	public function getRegisteredBlock( $id ) {
-		if ( isset( $this->registered_blocks[$id] ) ) {
-			return $this->registered_blocks[$id];
+		if ( isset( $this->registered_blocks[ $id ] ) ) {
+			return $this->registered_blocks[ $id ];
 		}
 
 		return false;
@@ -177,7 +176,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @param string $id ID of the block.
 	 */
 	public function removeRegisteredBlock( $id ) {
-		unset( $this->registered_blocks[$id] );
+		unset( $this->registered_blocks[ $id ] );
 	}
 
 	/**
@@ -194,7 +193,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	public function registerBlockType( $type_id, $type_class ) {
 		// We will only add the type if the class exists
 		if ( class_exists( $type_class ) ) {
-			$this->registered_block_types[$type_id] = $type_class;
+			$this->registered_block_types[ $type_id ] = $type_class;
 		}
 	}
 
@@ -205,7 +204,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return bool
 	 */
 	public function isRegisteredBlockType( $id ) {
-		if ( isset( $this->registered_block_types[$id] ) ) {
+		if ( isset( $this->registered_block_types[ $id ] ) ) {
 			return true;
 		}
 
@@ -219,8 +218,8 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return string|false The block type class name, if set. False otherwise.
 	 */
 	public function getRegisteredBlockTypeClass( $id ) {
-		if ( isset( $this->registered_block_types[$id] ) ) {
-			return $this->registered_block_types[$id];
+		if ( isset( $this->registered_block_types[ $id ] ) ) {
+			return $this->registered_block_types[ $id ];
 		}
 
 		return false;
@@ -232,7 +231,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @param string $id ID of the block.
 	 */
 	public function removeRegisteredBlockType( $id ) {
-		unset( $this->registered_block_types[$id] );
+		unset( $this->registered_block_types[ $id ] );
 	}
 
 	/**
@@ -278,12 +277,13 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 */
 	public function renderBlockTemplates() {
 		// @todo This is not used right now. Decide if we need the logic for block JS templates.
-
 		foreach ( $this->registered_block_types as $block_type ) {
 			/** @var Pixelgrade_Block $block */
-			$block = new $block_type( $this, 'temp', array(
-				'settings' => array(),
-			) );
+			$block = new $block_type(
+				$this, 'temp', array(
+					'settings' => array(),
+				)
+			);
 			$block->print_template();
 		}
 		?>
@@ -337,17 +337,19 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * @return array
 	 */
 	public static function orderBlocks( $blocks ) {
-		return wp_list_sort( $blocks, array(
-			'priority'        => 'ASC',
-			'instance_number' => 'ASC',
-		), 'ASC', true );
+		return wp_list_sort(
+			$blocks, array(
+				'priority'        => 'ASC',
+				'instance_number' => 'ASC',
+			), 'ASC', true
+		);
 	}
 
 	/**
 	 * Search for a block instance in a block trail.
 	 *
 	 * @param object $block The Pixelgrade_Block instance to search for.
-	 * @param array $block_trail The block trail/list of Pixelgrade_Block instances.
+	 * @param array  $block_trail The block trail/list of Pixelgrade_Block instances.
 	 *
 	 * @return bool|int
 	 */
@@ -405,7 +407,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 *
 	 * It will treat the two namespaces as trees and it will try to find the lowest point where to merge them.
 	 *
-	 * @param mixed $block_id
+	 * @param mixed  $block_id
 	 * @param string $namespace
 	 *
 	 * @return string
@@ -417,23 +419,23 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 			// This is the case where our smart merge will kick in
 			if ( self::isBlockIdNamespaced( $block_id ) && self::isBlockIdNamespaced( $namespace ) ) {
 				// Split them by the namespace separator
-				$block_id_parts = explode( PIXELGRADE_BLOCK_ID_SEPARATOR, $block_id );
+				$block_id_parts  = explode( PIXELGRADE_BLOCK_ID_SEPARATOR, $block_id );
 				$namespace_parts = explode( PIXELGRADE_BLOCK_ID_SEPARATOR, $namespace );
 
 				$k = 0;
 				// Search the first part in the $namespace parts
-				$key = array_search( $block_id_parts[$k], $namespace_parts );
+				$key = array_search( $block_id_parts[ $k ], $namespace_parts, true );
 				// If we have found the part, this is the current point of merge
 				if ( false !== $key ) {
 					// Now we need to see how many consecutive parts are common
 					do {
 						// We remove this common part from the $block_id_parts so we don't have duplicates
-						unset( $block_id_parts[$k] );
+						unset( $block_id_parts[ $k ] );
 
 						// Check the next part
 						$k ++;
 						$key ++;
-					} while ( $block_id_parts[$k] == $namespace_parts[$key] );
+					} while ( $block_id_parts[ $k ] === $namespace_parts[ $key ] );
 
 					// Now we need to discard the end part of the $namespace that is not common
 					$namespace_parts = array_slice( $namespace_parts, 0, $key );

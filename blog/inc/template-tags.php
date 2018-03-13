@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Blog
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Blog
  * @version     1.1.1
  */
 
@@ -71,7 +71,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 		$classes = apply_filters( 'pixelgrade_blog_grid_class', $classes, $class, $location );
 
 		return array_unique( $classes );
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_get_blog_grid_layout_class' ) ) {
@@ -153,7 +153,12 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_item_class' ) ) {
 	function pixelgrade_get_blog_grid_item_class( $class = '', $location = '' ) {
 		$classes   = array();
 		$classes[] = 'c-gallery__item';
-		$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+
+		if ( has_post_thumbnail() ) {
+			$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+		} else {
+			$classes[] = 'c-gallery__item--no-image';
+		}
 
 		return array_unique( $classes );
 	}
@@ -180,9 +185,10 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 		);
 
 		$single_meta_needed = false;
-		if ( ! empty( $key ) && in_array( $key, array_keys( $meta ) ) ) {
+		// We do not test for $key sanity because others might introduce new keys and use the 'pixelgrade_get_post_meta' filter to fill them in.
+		if ( ! empty( $key ) ) {
 			// We have been given a valid key, we only want that
-			$meta = array( $key => false );
+			$meta               = array( $key => false );
 			$single_meta_needed = true;
 		}
 
@@ -227,11 +233,11 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 					$meta['author'] = '<span class="byline">' . get_the_author() . '</span>';
 					break;
 				case 'date':
-					$meta['date']   = '<span class="posted-on">' . get_the_date() . '</span>';
+					$meta['date'] = '<span class="posted-on">' . get_the_date() . '</span>';
 					break;
 				case 'comments':
-					$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
 					if ( comments_open() ) {
+						$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
 						if ( $comments_number == 0 ) {
 							$comments = esc_html__( 'No Comments', '__components_txtd' );
 						} else {
@@ -252,11 +258,11 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 
 		// We have been asked for a single meta, we will return the string value; no array
 		if ( true === $single_meta_needed ) {
-			return $meta[$key];
+			return $meta[ $key ];
 		}
 
 		return $meta;
-	} #function
+	} // function
 }
 
 
@@ -287,14 +293,16 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 	 * @return string Markup for post links.
 	 */
 	function pixelgrade_get_the_post_navigation( $args = array() ) {
-		$args = wp_parse_args( $args, array(
-			'prev_text'          => '%title',
-			'next_text'          => '%title',
-			'in_same_term'       => false,
-			'excluded_terms'     => '',
-			'taxonomy'           => 'category',
-			'screen_reader_text' => esc_html__( 'Post navigation', '__components_txtd' ),
-		) );
+		$args = wp_parse_args(
+			$args, array(
+				'prev_text'          => '%title',
+				'next_text'          => '%title',
+				'in_same_term'       => false,
+				'excluded_terms'     => '',
+				'taxonomy'           => 'category',
+				'screen_reader_text' => esc_html__( 'Post navigation', '__components_txtd' ),
+			)
+		);
 
 		$navigation = '';
 
@@ -414,7 +422,7 @@ if ( ! function_exists( 'pixelgrade_get_the_author_info_box' ) ) {
 		$author_details .= '</div><!-- .c-author -->';
 
 		return $author_details;
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
@@ -426,7 +434,7 @@ if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
 	 * @return string The HTML markup of the author bio links list.
 	 */
 	function pixelgrade_get_author_bio_links( $post_id = null ) {
-		$post = get_post( $post_id );
+		$post   = get_post( $post_id );
 		$markup = '';
 		if ( empty( $post ) ) {
 			return $markup;
@@ -438,7 +446,7 @@ if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
 		// Get link to the author archive page
 		$user_posts = get_author_posts_url( get_the_author_meta( 'ID', $post->post_author ) );
 
-		$str = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.php' );
+		$str     = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.php' );
 		$profile = unserialize( $str );
 
 		$markup .= '<span class="c-author__links">' . PHP_EOL;
@@ -459,7 +467,7 @@ if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
 		$markup .= '</span>' . PHP_EOL;
 
 		return $markup;
-	} #function
+	} // function
 }
 
 /**
@@ -470,12 +478,14 @@ if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
 function pixelgrade_categorized_blog() {
 	if ( false === ( $all_the_cool_cats = get_transient( 'pixelgrade_categories' ) ) ) {
 		// Create an array of all the categories that are attached to posts.
-		$all_the_cool_cats = get_categories( array(
-			'fields'     => 'ids',
-			'hide_empty' => 1,
-			// We only need to know if there is more than one category.
-			'number'     => 2,
-		) );
+		$all_the_cool_cats = get_categories(
+			array(
+				'fields'     => 'ids',
+				'hide_empty' => 1,
+				// We only need to know if there is more than one category.
+				'number'     => 2,
+			)
+		);
 
 		// Count the number of categories that are attached to the posts.
 		$all_the_cool_cats = count( $all_the_cool_cats );
@@ -491,7 +501,7 @@ function pixelgrade_categorized_blog() {
 	}
 
 	return apply_filters( 'pixelgrade_categorized_blog', $is_categorized );
-} #function
+} // function
 
 /**
  * Flush out the transients used in pixelgrade_categorized_blog.
@@ -550,7 +560,7 @@ function pixelgrade_get_main_category( $post_ID = null ) {
 function pixelgrade_the_main_category_link( $before = '', $after = '', $category_class = '' ) {
 	echo pixelgrade_get_main_category_link( $before, $after, $category_class );
 
-} #function
+} // function
 
 
 if ( ! function_exists( 'pixelgrade_get_main_category_link' ) ) {
@@ -578,7 +588,7 @@ if ( ! function_exists( 'pixelgrade_get_main_category_link' ) ) {
 		}
 		return $before . '<a ' . $class_markup . ' href="' . esc_url( get_category_link( $category->term_id ) ) . '" title="' . esc_attr( $category->name ) . '">' . $category->name . '</a>' . $after;
 
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_entry_header' ) ) {
@@ -600,7 +610,7 @@ if ( ! function_exists( 'pixelgrade_entry_header' ) ) {
 
 		the_date( '', '<div class="entry-date">', '</div>', true );
 
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_entry_footer' ) ) {
@@ -629,7 +639,7 @@ if ( ! function_exists( 'pixelgrade_entry_footer' ) ) {
 
 		edit_post_link(
 			sprintf(
-			/* translators: %s: Name of current post */
+				/* translators: %s: Name of current post */
 				esc_html__( 'Edit %s', '__components_txtd' ),
 				the_title( '<span class="screen-reader-text">"', '"</span>', false )
 			),
@@ -637,7 +647,7 @@ if ( ! function_exists( 'pixelgrade_entry_footer' ) ) {
 			'</div>',
 			$post_id
 		);
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
@@ -646,22 +656,22 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 	 *
 	 * Used as a callback by wp_list_comments() for displaying the comments.
 	 *
-	 *
 	 * @param WP_Comment $comment
-	 * @param array $args
-	 * @param int $depth
-	 *
+	 * @param array      $args
+	 * @param int        $depth
 	 */
 	function pixelgrade_shape_comment( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
 		switch ( $comment->comment_type ) :
-			case 'pingback' :
-			case 'trackback' : ?>
+			case 'pingback':
+			case 'trackback':
+				?>
 				<li class="post pingback">
 				<p><?php esc_html_e( 'Pingback:', '__components_txtd' ); ?><?php comment_author_link(); ?><?php edit_comment_link( esc_html__( '(Edit)', '__components_txtd' ), ' ' ); ?></p>
 				<?php
 				break;
-			default : ?>
+			default:
+				?>
 			<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 				<article id="div-comment-<?php comment_ID(); ?>" class="comment__wrapper">
 					<?php if ( 0 != $args['avatar_size'] ) : ?>
@@ -672,7 +682,8 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 							<div class="comment__author vcard">
 								<?php
 								/* translators: %s: comment author link */
-								printf( __( '%s <span class="says">says:</span>', '__components_txtd' ),
+								printf(
+									__( '%s <span class="says">says:</span>', '__components_txtd' ),
 									sprintf( '<b class="fn">%s</b>', get_comment_author_link( $comment ) )
 								);
 								?>
@@ -700,19 +711,24 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 						</div><!-- .comment-content -->
 
 						<?php
-						comment_reply_link( array_merge( $args, array(
-							'add_below' => 'div-comment',
-							'depth'     => $depth,
-							'max_depth' => $args['max_depth'],
-							'before'    => '<div class="reply">',
-							'after'     => '</div>'
-						) ) );
+						comment_reply_link(
+							array_merge(
+								$args, array(
+									'add_below' => 'div-comment',
+									'depth'     => $depth,
+									'max_depth' => $args['max_depth'],
+									'before'    => '<div class="reply">',
+									'after'     => '</div>',
+								)
+							)
+						);
 						?>
 					</div>
 				</article><!-- .comment-body -->
-				<?php break;
+				<?php
+				break;
 		endswitch;
-	} #function
+	} // function
 }
 
 if ( ! function_exists( 'pixelgrade_the_post_custom_css' ) ) {
@@ -800,14 +816,16 @@ if ( ! function_exists( 'pixelgrade_get_the_posts_pagination' ) ) {
 	 */
 	function pixelgrade_get_the_posts_pagination( $args = array() ) {
 		// Put our own defaults in place
-		$args = wp_parse_args( $args, array(
-			'end_size'           => 1,
-			'mid_size'           => 2,
-			'type'               => 'list',
-			'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
-			'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
-			'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
-		) );
+		$args = wp_parse_args(
+			$args, array(
+				'end_size'           => 1,
+				'mid_size'           => 2,
+				'type'               => 'list',
+				'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+				'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+				'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+			)
+		);
 
 		return get_the_posts_pagination( $args );
 	}
@@ -824,7 +842,8 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
 
-		$time_string = sprintf( $time_string,
+		$time_string = sprintf(
+			$time_string,
 			esc_attr( get_the_date( 'c' ) ),
 			esc_html( get_the_date() ),
 			esc_attr( get_the_modified_date( 'c' ) ),
@@ -832,7 +851,7 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 		);
 
 		$posted_on = sprintf(
-		/* translators: %s: The current post's posted date, in the post header */
+			/* translators: %s: The current post's posted date, in the post header */
 			esc_html_x( '%s', 'post date', '__components_txtd' ),
 			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
 		);
@@ -930,6 +949,6 @@ if ( ! function_exists( 'pixelgrade_has_no_thumbnail' ) ) :
 		}
 
 		return true;
-	} #function
+	} // function
 
 endif;

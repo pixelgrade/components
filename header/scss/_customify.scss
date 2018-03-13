@@ -75,7 +75,8 @@ $header-font: () !default;
 }
 
 .c-navbar {
-  a {
+
+  a, a:hover, a:active {
     color: inherit;
   }
 

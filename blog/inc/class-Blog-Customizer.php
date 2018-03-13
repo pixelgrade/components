@@ -16,6 +16,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 	/**
 	 * The main component object (the parent).
+	 *
 	 * @var     Pixelgrade_Blog
 	 * @access  public
 	 * @since     1.0.0
@@ -132,7 +133,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			),
 		);
 
-		//Allow others to make changes
+		// Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_customify_general_section_options', $general_section, $options );
 
 		// Validate the config
@@ -151,12 +152,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		// Assign the modified config
 		$general_section = $modified_config;
 
-		//make sure we are in good working order
+		// make sure we are in good working order
 		if ( empty( $options['sections'] ) ) {
 			$options['sections'] = array();
 		}
 
-		//append the general section
+		// append the general section
 		$options['sections'] = $options['sections'] + $general_section;
 
 		return $options;
@@ -171,7 +172,8 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 	 */
 	public function addCustomifyMainContentOptions( $options ) {
 		// Body
-		$recommended_body_fonts = apply_filters( 'customify_theme_recommended_body_fonts',
+		$recommended_body_fonts = apply_filters(
+			'customify_theme_recommended_body_fonts',
 			array(
 				'Roboto',
 				'Playfair Display',
@@ -201,7 +203,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			'main_content' => array(
 				'title'   => esc_html__( 'Main Content', '__components_txtd' ),
 				'options' => array(
-					'main_content_options_customizer_tabs'      => array(
+					'main_content_options_customizer_tabs' => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 							<a href="#section-title-main-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -210,11 +212,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							</nav>',
 					),
 					// [Section] Layout
-					'main_content_title_layout_section'         => array(
+					'main_content_title_layout_section'    => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-main-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
-					'main_content_container_width'              => array(
+					'main_content_container_width'         => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Container Max Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the max width of your site content area.', '__components_txtd' ),
@@ -234,7 +236,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_container_sides_spacing'      => array(
+					'main_content_container_sides_spacing' => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Container Sides Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
@@ -267,7 +269,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_container_padding'            => array(
+					'main_content_container_padding'       => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Container Padding', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the top and bottom distance between the page content and header/footer.', '__components_txtd' ),
@@ -294,7 +296,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_content_width'                => array(
+					'main_content_content_width'           => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Content Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Decrease the width of your content to create an inset area for your text. The inset size will be the space between Site Container and Content.', '__components_txtd' ),
@@ -311,12 +313,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 								'property' => 'max-width',
 								'selector' => '
 									.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote),
-									.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(blockquote)',
+									.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(blockquote):not(.mceTemp)',
 								'unit'     => 'px',
 							),
 						),
 					),
-					'main_content_border_width'                 => array(
+					'main_content_border_width'            => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Border Width', '__components_txtd' ),
 						'desc'        => '',
@@ -330,58 +332,13 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 						'css'         => array(
 							array(
-								'property' => 'margin',
-								'selector' => 'body',
-								'unit'     => 'px',
-							),
-							array(
 								'property' => 'border-width',
-								'selector' => '.c-border',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'margin-top',
-								'selector' => '.has-border:not(.u-static-header) .c-navbar, .c-navbar__label',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'margin-left',
-								'selector' => '.c-navbar__label',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'border-top-width',
-								'selector' => '.c-navbar__container',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'border-left-width',
-								'selector' => '.c-navbar__container',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'border-right-width',
-								'selector' => '.c-navbar__container',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'bottom',
-								'selector' => '.c-slider__bullets',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'margin-top',
-								'selector' => '.c-overlay__close',
-								'unit'     => 'px',
-							),
-							array(
-								'property' => 'margin-right',
-								'selector' => '.c-overlay__close',
+								'selector' => 'html',
 								'unit'     => 'px',
 							),
 						),
 					),
-					'main_content_border_color'                 => array(
+					'main_content_border_color'            => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Site Border Color', '__components_txtd' ),
 						'live'    => true,
@@ -389,17 +346,17 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'border-color',
-								'selector' => '.c-border',
+								'selector' => 'html, .u-site-header-sticky .site-header',
 							),
 						),
 					),
 
 					// [Section] COLORS
-					'main_content_title_colors_section'         => array(
+					'main_content_title_colors_section'    => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-main-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'main_content_page_title_color'             => array(
+					'main_content_page_title_color'        => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Page Title Color', '__components_txtd' ),
 						'live'    => true,
@@ -411,7 +368,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_body_text_color'              => array(
+					'main_content_body_text_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Text Color', '__components_txtd' ),
 						'live'    => true,
@@ -423,7 +380,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_body_link_color'              => array(
+					'main_content_body_link_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Link Color', '__components_txtd' ),
 						'live'    => true,
@@ -435,7 +392,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_body_link_active_color'       => array(
+					'main_content_body_link_active_color'  => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Link Active Color', '__components_txtd' ),
 						'live'    => true,
@@ -447,7 +404,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_underlined_body_links'        => array(
+					'main_content_underlined_body_links'   => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Underlined Body Links', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
@@ -457,7 +414,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Headings Color', '__components_txtd' ) . '</span>',
 					),
-					'main_content_heading_1_color'              => array(
+					'main_content_heading_1_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 1', '__components_txtd' ),
 						'live'    => true,
@@ -469,7 +426,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_2_color'              => array(
+					'main_content_heading_2_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 2', '__components_txtd' ),
 						'live'    => true,
@@ -481,7 +438,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_3_color'              => array(
+					'main_content_heading_3_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 3', '__components_txtd' ),
 						'live'    => true,
@@ -493,7 +450,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_4_color'              => array(
+					'main_content_heading_4_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 4', '__components_txtd' ),
 						'live'    => true,
@@ -505,7 +462,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_5_color'              => array(
+					'main_content_heading_5_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 5', '__components_txtd' ),
 						'live'    => true,
@@ -517,7 +474,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_6_color'              => array(
+					'main_content_heading_6_color'         => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 6', '__components_txtd' ),
 						'live'    => true,
@@ -531,11 +488,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Backgrounds
-					'main_content_title_backgrounds_section'    => array(
+					'main_content_title_backgrounds_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Backgrounds', '__components_txtd' ) . '</span>',
 					),
-					'main_content_content_background_color'     => array(
+					'main_content_content_background_color' => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Content Background Color', '__components_txtd' ),
 						'live'    => true,
@@ -549,12 +506,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] FONTS
-					'main_content_title_fonts_section'          => array(
+					'main_content_title_fonts_section'     => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-main-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'main_content_page_title_font' => array(
+					'main_content_page_title_font'         => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Page Title Font', '__components_txtd' ),
 						'desc'        => '',
@@ -563,19 +520,18 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 72,
-						//		'line-height'    => 1.11,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	),
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 72,
+						// 'line-height'    => 1.11,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// ),
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
 						'recommended' => $recommended_body_fonts,
-
 
 						// Sub Fields Configuration (optional)
 						'fields'      => array(
@@ -595,7 +551,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_body_text_font' => array(
+					'main_content_body_text_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Body Text Font', '__components_txtd' ),
 						'desc'        => '',
@@ -604,14 +560,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 17,
-						//		'line-height'    => 1.52,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 17,
+						// 'line-height'    => 1.52,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -635,7 +591,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_paragraph_text_font' => array(
+					'main_content_paragraph_text_font'     => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Content Text Font', '__components_txtd' ),
 						'desc'        => '',
@@ -644,14 +600,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 17,
-						//		'line-height'    => 1.52,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 17,
+						// 'line-height'    => 1.52,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -675,7 +631,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_quote_block_font'             => array(
+					'main_content_quote_block_font'        => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Quote Block Font', '__components_txtd' ),
 						'desc'        => '',
@@ -684,14 +640,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => "Roboto",
-						//		'font-weight'    => '300',
-						//		'font-size'      => 40,
-						//		'line-height'    => 1.325,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => "Roboto",
+						// 'font-weight'    => '300',
+						// 'font-size'      => 40,
+						// 'line-height'    => 1.325,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -721,7 +677,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Headings Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'main_content_heading_1_font' => array(
+					'main_content_heading_1_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 1', '__components_txtd' ),
 						'desc'        => '',
@@ -730,14 +686,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 40,
-						//		'line-height'    => 1.25,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 40,
+						// 'line-height'    => 1.25,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -760,7 +716,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_2_font' => array(
+					'main_content_heading_2_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 2', '__components_txtd' ),
 						'desc'        => '',
@@ -769,14 +725,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 30,
-						//		'line-height'    => 1.33,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 30,
+						// 'line-height'    => 1.33,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -800,7 +756,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_3_font' => array(
+					'main_content_heading_3_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 3', '__components_txtd' ),
 						'desc'        => '',
@@ -809,15 +765,15 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '400',
-						//		'font-size'      => 24,
-						//		'line-height'    => 1.41,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//		'text-decoration' => 'underline',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '400',
+						// 'font-size'      => 24,
+						// 'line-height'    => 1.41,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// 'text-decoration' => 'underline',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -841,7 +797,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_4_font' => array(
+					'main_content_heading_4_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 4', '__components_txtd' ),
 						'desc'        => '',
@@ -850,14 +806,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '300',
-						//		'font-size'      => 20,
-						//		'line-height'    => 1.5,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '300',
+						// 'font-size'      => 20,
+						// 'line-height'    => 1.5,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -881,7 +837,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_5_font' => array(
+					'main_content_heading_5_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 5', '__components_txtd' ),
 						'desc'        => '',
@@ -890,14 +846,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => '400',
-						//		'font-size'      => 17,
-						//		'line-height'    => 1.17,
-						//		'letter-spacing' => 0.28,
-						//		'text-transform' => 'uppercase',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => '400',
+						// 'font-size'      => 17,
+						// 'line-height'    => 1.17,
+						// 'letter-spacing' => 0.28,
+						// 'text-transform' => 'uppercase',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -921,7 +877,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_6_font' => array(
+					'main_content_heading_6_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 6', '__components_txtd' ),
 						'desc'        => '',
@@ -930,14 +886,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 14,
-						//		'line-height'    => 1.181,
-						//		'letter-spacing' => 0.17,
-						//		'text-transform' => 'uppercase',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 14,
+						// 'line-height'    => 1.181,
+						// 'letter-spacing' => 0.17,
+						// 'text-transform' => 'uppercase',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -964,7 +920,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			),
 		);
 
-		//Allow others to make changes
+		// Allow others to make changes
 		$modified_config = apply_filters( 'pixelgrade_customify_main_content_section_options', $main_content_section, $options );
 
 		// Validate the config
@@ -983,12 +939,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		// Assign the modified config
 		$main_content_section = $modified_config;
 
-		//make sure we are in good working order
+		// make sure we are in good working order
 		if ( empty( $options['sections'] ) ) {
 			$options['sections'] = array();
 		}
 
-		//append the main content section
+		// append the main content section
 		$options['sections'] = $options['sections'] + $main_content_section;
 
 		return $options;
@@ -1026,7 +982,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously regular)
 						'choices' => array(
-							'solid' => esc_html__( 'Solid', '__components_txtd' ),
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
 							'outline' => esc_html__( 'Outline', '__components_txtd' ),
 						),
 					),
@@ -1035,16 +991,16 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'label'   => esc_html__( 'Buttons Shape', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously regular)
 						'choices' => array(
-							'square' => esc_html__( 'Square', '__components_txtd' ),
+							'square'  => esc_html__( 'Square', '__components_txtd' ),
 							'rounded' => esc_html__( 'Rounded', '__components_txtd' ),
-							'pill' => esc_html__( 'Pill', '__components_txtd' ),
+							'pill'    => esc_html__( 'Pill', '__components_txtd' ),
 						),
 					),
 					'buttons_title_colors_section' => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-buttons-layout" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'buttons_color'                   => array(
+					'buttons_color'                => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Button Color', '__components_txtd' ),
 						'live'    => true,
@@ -1072,7 +1028,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'buttons_text_color'                   => array(
+					'buttons_text_color'           => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Button Text Color', '__components_txtd' ),
 						'live'    => true,
@@ -1082,6 +1038,8 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 								'property' => 'color',
 								'selector' => '
 									.c-btn,
+									.c-btn:hover,
+									.c-btn:active,
 									button[type=button],
 									button[type=reset],
 									button[type=submit],
@@ -1094,33 +1052,33 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type' => 'html',
 						'html' => '<span id="section-title-buttons-layout" class="separator section label large">&#x1f4dd; ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
-					'buttons_font' => array(
-						'type'        => 'font',
-						'label'       => esc_html__( 'Button Font', '__components_txtd' ),
-						'desc'        => '',
-						'selector'    => '
+					'buttons_font'                 => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Button Font', '__components_txtd' ),
+						'desc'     => '',
+						'selector' => '
 							.c-btn,
 							button[type=button],
 							button[type=reset],
 							button[type=submit],
 							input[type=button],
 							input[type=submit]',
-						'callback'    => 'typeline_font_cb',
+						'callback' => 'typeline_font_cb',
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 15,
-						//		'line-height'    => 1.5,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
-						'default'     => null,
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 15,
+						// 'line-height'    => 1.5,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
+						'default'  => null,
 
 						// Sub Fields Configuration (optional)
-						'fields'      => array(
+						'fields'   => array(
 							'font-size'       => array(                           // Set custom values for a range slider
 								'min'  => 8,
 								'max'  => 90,
@@ -1179,7 +1137,8 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 	 */
 	public function addCustomifyBlogGridOptions( $options ) {
 		// Body
-		$recommended_body_fonts = apply_filters( 'customify_theme_recommended_body_fonts',
+		$recommended_body_fonts = apply_filters(
+			'customify_theme_recommended_body_fonts',
 			array(
 				'Roboto',
 				'Playfair Display',
@@ -1209,7 +1168,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			'blog_grid' => array(
 				'title'   => esc_html__( 'Blog Grid Items', '__components_txtd' ),
 				'options' => array(
-					'blog_grid_options_customizer_tabs'     => array(
+					'blog_grid_options_customizer_tabs'   => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 								<a href="#section-title-blog-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -1219,11 +1178,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] Layout
-					'blog_grid_title_layout_section'        => array(
+					'blog_grid_title_layout_section'      => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-blog-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
-					'blog_grid_width'                       => array(
+					'blog_grid_width'                     => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Blog Grid Max Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the max width of the blog area.', '__components_txtd' ),
@@ -1243,7 +1202,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_container_sides_spacing'          => array(
+					'blog_container_sides_spacing'        => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Container Sides Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
@@ -1272,11 +1231,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Items Grid
-					'blog_grid_title_items_grid_section'    => array(
+					'blog_grid_title_items_grid_section'  => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label large">' . esc_html__( 'Items Grid', '__components_txtd' ) . '</span>',
 					),
-					'blog_grid_layout'                      => array(
+					'blog_grid_layout'                    => array(
 						'type'    => 'radio',
 						'label'   => esc_html__( 'Grid Layout', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose whether the items display in a fixed height regular grid, or in a packed style layout.', '__components_txtd' ),
@@ -1288,7 +1247,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							'packed'  => esc_html__( 'Packed', '__components_txtd' ),
 						),
 					),
-					'blog_items_aspect_ratio'               => array(
+					'blog_items_aspect_ratio'             => array(
 						'type'            => 'range',
 						'label'           => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
 						'desc'            => esc_html__( 'Change the images ratio from landscape to portrait.', '__components_txtd' ),
@@ -1310,7 +1269,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 						'active_callback' => 'pixelgrade_blog_items_aspect_ratio_control_show',
 					),
-					'blog_items_per_row'                    => array(
+					'blog_items_per_row'                  => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items per Row', '__components_txtd' ),
 						'desc'        => esc_html__( 'Set the desktop-based number of columns you want and we automatically make it right for other screen sizes.', '__components_txtd' ),
@@ -1329,7 +1288,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_items_vertical_spacing'           => array(
+					'blog_items_vertical_spacing'         => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items Vertical Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
@@ -1350,7 +1309,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_items_horizontal_spacing'         => array(
+					'blog_items_horizontal_spacing'       => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items Horizontal Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
@@ -1373,11 +1332,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Items Title
-					'blog_grid_title_items_title_section'   => array(
+					'blog_grid_title_items_title_section' => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Title', '__components_txtd' ) . '</span>',
 					),
-					'blog_items_title_position'             => array(
+					'blog_items_title_position'           => array(
 						'type'    => 'radio',
 						'label'   => esc_html__( 'Title Position', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose whether the items titles are placed nearby the thumbnail or show as an overlay cover on  mouse over.', '__components_txtd' ),
@@ -1388,7 +1347,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							'overlay' => esc_html__( 'Overlay', '__components_txtd' ),
 						),
 					),
-					'blog_items_title_alignment_nearby'     => array(
+					'blog_items_title_alignment_nearby'   => array(
 						'type'            => 'select',
 						'label'           => esc_html__( 'Title Alignment (Above/Below)', '__components_txtd' ),
 						'desc'            => esc_html__( 'Adjust the alignment of your title.', '__components_txtd' ),
@@ -1400,15 +1359,15 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 						'active_callback' => 'pixelgrade_blog_items_title_alignment_nearby_control_show',
 					),
-					'blog_items_title_alignment_overlay'    => array(
+					'blog_items_title_alignment_overlay'  => array(
 						'type'            => 'select',
 						'label'           => esc_html__( 'Title Alignment (Overlay)', '__components_txtd' ),
 						'desc'            => esc_html__( 'Adjust the alignment of your hover title.', '__components_txtd' ),
 						'default'         => null, // this should be set by the theme (previously middle-center)
 						'choices'         => array(
-							'top-left'   => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
-							'top-center' => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
-							'top-right'  => esc_html__( '↑ Top     → Right', '__components_txtd' ),
+							'top-left'      => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
+							'top-center'    => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
+							'top-right'     => esc_html__( '↑ Top     → Right', '__components_txtd' ),
 
 							'middle-left'   => esc_html__( '↕ Middle     ← Left', '__components_txtd' ),
 							'middle-center' => esc_html__( '↕ Middle     ↔ Center', '__components_txtd' ),
@@ -1423,11 +1382,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 					// Title Visiblity
 					// Title + Checkbox
-					'blog_items_title_visibility_title'     => array(
+					'blog_items_title_visibility_title'   => array(
 						'type' => 'html',
 						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
-					'blog_items_title_visibility'           => array(
+					'blog_items_title_visibility'         => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Title', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
@@ -1441,23 +1400,23 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 					// Excerpt Visiblity
 					// Title + Checkbox
-					'blog_items_excerpt_visibility_title'   => array(
+					'blog_items_excerpt_visibility_title' => array(
 						'type' => 'html',
 						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
-					'blog_items_excerpt_visibility'         => array(
+					'blog_items_excerpt_visibility'       => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Excerpt Text', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
 					),
 
 					// [Sub Section] Items Meta
-					'blog_grid_title_items_meta_section'    => array(
+					'blog_grid_title_items_meta_section'  => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Meta', '__components_txtd' ) . '</span>',
 					),
 
-					'blog_items_primary_meta' => array(
+					'blog_items_primary_meta'             => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Primary Meta Section', '__components_txtd' ),
 						'desc'    => esc_html__( 'Set the meta info that display around the title. ', '__components_txtd' ),
@@ -1472,7 +1431,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_items_secondary_meta'               => array(
+					'blog_items_secondary_meta'           => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Secondary Meta Section', '__components_txtd' ),
 						'desc'    => '',
@@ -1488,11 +1447,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] COLORS
-					'blog_grid_title_colors_section'          => array(
+					'blog_grid_title_colors_section'      => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-blog-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'blog_item_title_color'                   => array(
+					'blog_item_title_color'               => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
 						'live'    => true,
@@ -1504,9 +1463,9 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_meta_primary_color'            => array(
+					'blog_item_meta_primary_color'        => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Meta Primary', '__components_txtd' ),
+						'label'   => esc_html__( 'Meta Primary Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #3B3B3B)
 						'css'     => array(
@@ -1516,9 +1475,9 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_meta_secondary_color'          => array(
+					'blog_item_meta_secondary_color'      => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Meta Secondary', '__components_txtd' ),
+						'label'   => esc_html__( 'Meta Secondary Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #818282)
 						'css'     => array(
@@ -1528,19 +1487,19 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_excerpt_color'                   => array(
+					'blog_item_excerpt_color'             => array(
 						'type'    => 'color',
-						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
+						'label'   => esc_html__( 'Item Excerpt Color', '__components_txtd' ),
 						'live'    => true,
 						'default' => null, // this should be set by the theme (previously #252525)
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.c-gallery--blog .c-card__title',
+								'selector' => '.c-gallery--blog .c-card__excerpt',
 							),
 						),
 					),
-					'blog_item_thumbnail_background'          => array(
+					'blog_item_thumbnail_background'      => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Thumbnail Background', '__components_txtd' ),
 						'live'    => true,
@@ -1558,7 +1517,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Customize the mouse over effect for your thumbnails.', '__components_txtd' ) . '</span>',
 					),
-					'blog_item_thumbnail_hover_opacity'       => array(
+					'blog_item_thumbnail_hover_opacity'   => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Thumbnail Background Opacity', '__components_txtd' ),
 						'desc'        => '',
@@ -1580,12 +1539,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] FONTS
-					'blog_grid_title_fonts_section'           => array(
+					'blog_grid_title_fonts_section'       => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-blog-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'blog_item_title_font' => array(
+					'blog_item_title_font'                => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Item Title Font', '__components_txtd' ),
 						'desc'        => '',
@@ -1594,14 +1553,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 24,
-						//		'line-height'    => 1.25,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 24,
+						// 'line-height'    => 1.25,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -1625,7 +1584,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_item_meta_font' => array(
+					'blog_item_meta_font'                 => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Item Meta Font', '__components_txtd' ),
 						'desc'        => '',
@@ -1634,14 +1593,14 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 						// This should be set by the theme
 						// Previously:
-						//	array(
-						//		'font-family'    => 'Roboto',
-						//		'font-weight'    => 'regular',
-						//		'font-size'      => 15,
-						//		'line-height'    => 1.5,
-						//		'letter-spacing' => 0,
-						//		'text-transform' => 'none',
-						//	)
+						// array(
+						// 'font-family'    => 'Roboto',
+						// 'font-weight'    => 'regular',
+						// 'font-size'      => 15,
+						// 'line-height'    => 1.5,
+						// 'letter-spacing' => 0,
+						// 'text-transform' => 'none',
+						// )
 						'default'     => null,
 
 						// List of recommended fonts defined by theme
@@ -1665,7 +1624,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_item_excerpt_font' => array(
+					'blog_item_excerpt_font'              => array(
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Excerpt Font', '__components_txtd' ),
 						'desc'     => '',
@@ -1747,10 +1706,10 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		}
 
 		$buttons_style = pixelgrade_option( 'buttons_style', true );
-		$classes[] = 'u-buttons-' . $buttons_style;
+		$classes[]     = 'u-buttons-' . $buttons_style;
 
 		$buttons_shape = pixelgrade_option( 'buttons_shape', true );
-		$classes[] = 'u-buttons-' . $buttons_shape;
+		$classes[]     = 'u-buttons-' . $buttons_shape;
 
 		return $classes;
 	}

@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -24,7 +24,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 		// Gather up all the meta we might need to display
 		// But first initialize please
 		$meta = array(
-			'types' => false,
+			'types'    => false,
 			'tags'     => false,
 			'author'   => false,
 			'date'     => false,
@@ -35,7 +35,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 		$items_primary_meta   = pixelgrade_option( 'portfolio_items_primary_meta', 'types' );
 		$items_secondary_meta = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
 
-		if ( 'category' == $items_primary_meta || 'category' == $items_secondary_meta ) {
+		if ( 'category' === $items_primary_meta || 'category' === $items_secondary_meta ) {
 			$category = '';
 
 			if ( is_page() ) {
@@ -60,7 +60,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 			$meta['category'] = $category;
 		}
 
-		if ( 'tags' == $items_primary_meta || 'tags' == $items_secondary_meta ) {
+		if ( 'tags' === $items_primary_meta || 'tags' === $items_secondary_meta ) {
 			$post_tags = get_the_terms( get_the_ID(), Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG );
 			$tags      = '';
 			if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
@@ -78,7 +78,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 
 		$comments_number = get_comments_number(); // get_comments_number returns only a numeric value
 		if ( comments_open() ) {
-			if ( $comments_number == 0 ) {
+			if ( 0 === intval( $comments_number ) ) {
 				$comments = esc_html__( 'No Comments', '__components_txtd' );
 			} else {
 				$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
@@ -111,8 +111,9 @@ if ( ! function_exists( 'pixelgrade_portfolio_the_older_projects_button' ) ) {
 					</div>
 				</div>
 			</nav>
-		<?php endif;
-	} #function
+		<?php
+		endif;
+	} // function
 }
 
 /**
@@ -125,7 +126,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_the_older_projects_button' ) ) {
 function pixelgrade_portfolio_the_main_project_type_link( $before = '', $after = '', $type_class = '' ) {
 	echo pixelgrade_portfolio_get_project_main_type_link( $before, $after, $type_class );
 
-} #function
+} // function
 
 
 if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
@@ -153,7 +154,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
 		}
 		return $before . '<a ' . $class_markup . ' href="' . esc_url( get_term_link( $type, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" title="' . esc_attr( $type->name ) . '">' . $type->name . '</a>' . $after;
 
-	} #function
+	} // function
 }
 
 /**
@@ -165,13 +166,13 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
  */
 function pixelgrade_portfolio_get_project_main_type( $post_ID = null ) {
 
-	//use the current post ID is none given
+	// use the current post ID is none given
 	if ( empty( $post_ID ) ) {
 		$post_ID = get_the_ID();
 	}
 
-	//obviously pages don't have categories
-	if ( 'page' == get_post_type( $post_ID ) ) {
+	// obviously pages don't have categories
+	if ( 'page' === get_post_type( $post_ID ) ) {
 		return false;
 	}
 

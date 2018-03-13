@@ -118,6 +118,7 @@ var requirejs, require, define;
                     // as an ID it is less than ideal. In larger point
                     // releases, may be better to just kick out an error.
                     if (i === 0 || (i === 1 && name[2] === '..') || name[i - 1] === '..') {
+                        // noinspection UnnecessaryContinueJS
                         continue;
                     } else if (i > 0) {
                         name.splice(i - 1, 2);
@@ -1341,7 +1342,7 @@ S2.define('select2/selection/base',[
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" role="combobox" ' +
+      '<span class="select2-selection" role="comvascox" ' +
       ' aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );

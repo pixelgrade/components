@@ -4,6 +4,7 @@
  *
  * This template can be overridden by copying it to a child theme or in the same theme
  * by putting it in `/template-parts/footer/content-footer.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -67,11 +68,11 @@ $zones = pixelgrade_footer_get_zones();
 				// We have something special to show - bogus things
 				// Better check if they output anything
 				$output = '';
-				if ( 'footer-back-to-top-link' == $id ) {
+				if ( 'footer-back-to-top-link' === $id ) {
 					$output = pixelgrade_footer_get_back_to_top_link();
-				} elseif ( 'footer-copyright' == $id ) {
+				} elseif ( 'footer-copyright' === $id ) {
 					$output = pixelgrade_footer_get_copyright_content();
-				} elseif ( 'jetpack-social-menu' == $id && has_nav_menu( 'jetpack-social-menu' ) ) {
+				} elseif ( 'jetpack-social-menu' === $id && has_nav_menu( 'jetpack-social-menu' ) ) {
 					$is_empty = false;
 				}
 
@@ -89,11 +90,11 @@ $zones = pixelgrade_footer_get_zones();
 				// We have something special to show - bogus things
 				// Better check if they output anything
 				$output = '';
-				if ( 'footer-back-to-top-link' == $id ) {
+				if ( 'footer-back-to-top-link' === $id ) {
 					$output = pixelgrade_footer_get_back_to_top_link();
-				} elseif ( 'footer-copyright' == $id ) {
+				} elseif ( 'footer-copyright' === $id ) {
 					$output = pixelgrade_footer_get_copyright_content();
-				} elseif ( 'jetpack-social-menu' == $id && has_nav_menu( 'jetpack-social-menu' ) ) {
+				} elseif ( 'jetpack-social-menu' === $id && has_nav_menu( 'jetpack-social-menu' ) ) {
 					$is_empty = false;
 				}
 
@@ -117,11 +118,9 @@ $zones = pixelgrade_footer_get_zones();
 			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
 			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
 			// And we will stop when both are empty
-
 			while ( ! empty( $sidebars ) || ! empty( $menu_locations ) ) {
 				// Compare the first sidebar and the first menu location and pick the one with the smallest order
 				// On equal orders we will favor the sidebar
-
 				$current_sidebar          = reset( $sidebars );
 				$current_sidebar_id       = key( $sidebars );
 				$current_menu_location    = reset( $menu_locations );
@@ -130,11 +129,11 @@ $zones = pixelgrade_footer_get_zones();
 				if ( empty( $current_menu_location['order'] ) || ( ! empty( $current_sidebar['order'] ) && $current_sidebar['order'] >= $current_menu_location['order'] ) ) {
 					if ( ! empty( $current_sidebar['bogus'] ) ) {
 						// We have something special to show
-						if ( 'footer-back-to-top-link' == $current_sidebar_id ) {
+						if ( 'footer-back-to-top-link' === $current_sidebar_id ) {
 							pixelgrade_footer_the_back_to_top_link();
-						} elseif ( 'footer-copyright' == $current_sidebar_id ) {
+						} elseif ( 'footer-copyright' === $current_sidebar_id ) {
 							pixelgrade_footer_the_copyright();
-						} elseif ( 'jetpack-social-menu' == $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
+						} elseif ( 'jetpack-social-menu' === $current_sidebar_id && function_exists( 'jetpack_social_menu' ) ) {
 							jetpack_social_menu();
 						}
 					} else {
@@ -147,11 +146,11 @@ $zones = pixelgrade_footer_get_zones();
 				} else {
 					if ( ! empty( $current_menu_location['bogus'] ) ) {
 						// We have something special to show
-						if ( 'footer-back-to-top-link' == $current_menu_location_id ) {
+						if ( 'footer-back-to-top-link' === $current_menu_location_id ) {
 							pixelgrade_footer_the_back_to_top_link();
-						} elseif ( 'footer-copyright' == $current_menu_location_id ) {
+						} elseif ( 'footer-copyright' === $current_menu_location_id ) {
 							pixelgrade_footer_the_copyright();
-						} elseif ( 'jetpack-social-menu' == $current_menu_location_id && function_exists( 'jetpack_social_menu' ) ) {
+						} elseif ( 'jetpack-social-menu' === $current_menu_location_id && function_exists( 'jetpack_social_menu' ) ) {
 							jetpack_social_menu();
 						}
 					} else {
@@ -170,7 +169,8 @@ $zones = pixelgrade_footer_get_zones();
 					// Remove it from the menu_locations stack
 					array_shift( $menu_locations );
 				}
-			} ?>
+			}
+			?>
 
 		</div><!-- .c-footer__zone -->
 

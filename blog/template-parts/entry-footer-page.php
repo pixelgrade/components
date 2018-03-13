@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/template-parts/entry-footer-page.php` or in `/template-parts/blog/entry-footer-page.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -25,11 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <?php if ( get_edit_post_link() ) : ?>
-    <footer class="entry-footer  u-content-width">
-        <?php
+	<footer class="entry-footer  u-content-width">
+		<?php
 		edit_post_link(
 			sprintf(
-			/* translators: %s: Name of current post */
+				/* translators: %s: Name of current post */
 				esc_html__( 'Edit %s', '__components_txtd' ),
 				the_title( '<span class="screen-reader-text">"', '"</span>', false )
 			),
@@ -37,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'</div>'
 		);
 		?>
-    </footer><!-- .entry-footer -->
+	</footer><!-- .entry-footer -->
 <?php endif; ?>
 
 <?php

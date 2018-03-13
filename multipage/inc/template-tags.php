@@ -4,9 +4,9 @@
  *
  * Eventually, some of the functionality here could be replaced by core features.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Multipage
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Multipage
  * @version     1.0.1
  */
 
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function pixelgrade_multipage_has_children( $post = null ) {
 	$post = get_post( $post );
 
-	//bail if we don't have a post to work with
+	// bail if we don't have a post to work with
 	if ( empty( $post ) ) {
 		return false;
 	}
@@ -34,11 +34,11 @@ function pixelgrade_multipage_has_children( $post = null ) {
 		return false;
 	}
 
-	if ( 'page' != $post->post_type ) {
+	if ( 'page' !== $post->post_type ) {
 		return false;
 	}
 
-	//we only allow this logic for top level pages, so pages without parents
+	// we only allow this logic for top level pages, so pages without parents
 	if ( $post->post_parent ) {
 		return false;
 	}
@@ -58,7 +58,7 @@ function pixelgrade_multipage_has_children( $post = null ) {
 function pixelgrade_multipage_is_child( $post = null ) {
 	$post = get_post( $post );
 
-	//bail if we don't have a post to work with
+	// bail if we don't have a post to work with
 	if ( empty( $post ) ) {
 		return false;
 	}
@@ -68,8 +68,8 @@ function pixelgrade_multipage_is_child( $post = null ) {
 		return false;
 	}
 
-	if ( 'page' == $post->post_type && $post->post_parent ) {
-		//now determine if the parent is a top level page (without any parents)
+	if ( 'page' === $post->post_type && $post->post_parent ) {
+		// now determine if the parent is a top level page (without any parents)
 		$parent = get_post( $post->post_parent );
 		if ( ! $parent->post_parent ) {
 			return true;
@@ -89,7 +89,7 @@ function pixelgrade_multipage_is_child( $post = null ) {
 function pixelgrade_multipage_get_parent( $post = null ) {
 	$post = get_post( $post );
 
-	//bail if we don't have a post to work with
+	// bail if we don't have a post to work with
 	if ( empty( $post ) ) {
 		return false;
 	}
@@ -116,7 +116,7 @@ function pixelgrade_multipage_get_parent( $post = null ) {
 function pixelgrade_multipage_the_subpage_anchor( $post = null ) {
 	$post = get_post( $post );
 
-	//bail if we don't have a post to work with
+	// bail if we don't have a post to work with
 	if ( empty( $post ) ) {
 		return false;
 	}
@@ -126,7 +126,7 @@ function pixelgrade_multipage_the_subpage_anchor( $post = null ) {
 		return false;
 	}
 
-	echo '<a id="' . str_replace( '/', '.', $post->post_name ) . '"></a>';
+	echo '<a id="' . esc_attr( str_replace( '/', '.', $post->post_name ) ) . '"></a>';
 
 	return true;
 }

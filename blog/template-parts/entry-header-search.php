@@ -4,6 +4,7 @@
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
  * by putting it in the root `/template-parts/entry-header-search.php` or in `/template-parts/blog/entry-header-search.php`.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -25,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <header class="entry-header">
-	<h2 class="entry-title  u-page-title-color  h2"><?php printf( esc_html__( 'Search Results for: %s', 'components_txtd' ), '<span>' . get_search_query() . '</span>' ); ?></h2>
-	<?php get_search_form(); ?>
+	<h2 class="entry-title  u-page-title-color  h2">
+		<?php printf( '<span class="archive-title__pre-title">' . esc_html__( 'Search Results for: %s', 'components_txtd' ), '</span><span>' . get_search_query() . '</span>' ); ?>
+	</h2>
 </header><!-- .entry-header -->

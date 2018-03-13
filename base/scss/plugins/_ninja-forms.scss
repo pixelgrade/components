@@ -16,6 +16,7 @@
     .nf-field-element input[type="checkbox"] {
         width: $checkbox-width !important;
         margin-right: $input-horizontal-spacing !important;
+        margin-top: 0;
     }
 
     .list-radio-wrap .nf-field-element li label,
@@ -23,6 +24,7 @@
         padding-bottom: 0;
         line-height: 1.5;
         font-weight: map-get($input-font, font-weight);
+        margin-left: 0;
 
         &:before {
             margin-bottom: 0;

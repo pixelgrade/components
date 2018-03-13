@@ -51,9 +51,10 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 			$visibility_class = '';
 			if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
 				$visibility_class = 'screen-reader-text';
-			} ?>
+			}
+			?>
 
-			<div class="u-portfolio-sides-spacing  <?php echo $visibility_class; ?>">
+			<div class="u-portfolio-sides-spacing  <?php echo esc_attr( $visibility_class ); ?>">
 				<div class="o-wrapper  u-portfolio-grid-width">
 
 					<?php
@@ -77,7 +78,8 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 					 *
 					 * @hooked nothing() - 10 (outputs nothing)
 					 */
-					do_action( 'pixelgrade_after_entry_title', $location ); ?>
+					do_action( 'pixelgrade_after_entry_title', $location );
+					?>
 
 				</div><!-- .o-wrapper .u-portfolio-grid-width -->
 			</div><!-- .u-portfolio-sides-spacing -->
@@ -109,7 +111,8 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 							/*
 							 * Load the portfolio loop
 							 */
-							pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'loop' ); ?>
+							pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'loop' );
+							?>
 
 						</div><!-- .o-layout__main -->
 
@@ -145,4 +148,5 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 do_action( 'pixelgrade_after_primary_wrapper', $location );
 ?>
 
-<?php pixelgrade_get_footer();
+<?php
+pixelgrade_get_footer();

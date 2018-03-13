@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//we first need to know the bigger picture - the location this template part was loaded from
+// we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'page' );
 
 // Here get the content width class
@@ -45,7 +45,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 ?>
 <!-- pixelgrade_before_loop_entry -->
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( "u-content-bottom-spacing" ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'u-content-bottom-spacing' ); ?>>
 
 	<?php
 	/**
@@ -92,16 +92,18 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					$visibility_class = '';
 					if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
 						$visibility_class = 'screen-reader-text';
-					} ?>
+					}
+					?>
 
-					<div class="u-content-bottom-spacing  <?php echo $visibility_class; ?>">
+					<div class="u-content-bottom-spacing  <?php echo esc_attr( $visibility_class ); ?>">
 						<div class="u-content-width">
 
 							<?php
 							/**
 							 * pixelgrade_before_entry_title hook.
 							 */
-							do_action( 'pixelgrade_before_entry_title', $location ); ?>
+							do_action( 'pixelgrade_before_entry_title', $location );
+							?>
 
 							<header class="entry-header">
 								<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
@@ -124,10 +126,12 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 							<?php
 							the_content();
 
-							wp_link_pages( array(
-								'before' => '<div class="page-links">' . esc_html__( 'Pages:', '__components_txtd' ),
-								'after'  => '</div>',
-							) );
+							wp_link_pages(
+								array(
+									'before' => '<div class="page-links">' . esc_html__( 'Pages:', '__components_txtd' ),
+									'after'  => '</div>',
+								)
+							);
 							?>
 						</div><!-- .entry-content.u-content-width -->
 

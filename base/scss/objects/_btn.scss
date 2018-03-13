@@ -8,16 +8,18 @@
 
 // Predefine the variables below in order to alter and enable specific features.
 $btn-padding: 0.75em 1.75em !default;
-$btn-background: #222222 !default;
-$btn-hover-background: #000000 !default;
-$btn-color: #FFFFFF !default;
+$btn-background: #222 !default;
+$btn-hover-background: #000 !default;
+$btn-color: #FFF !default;
+$btn-default-background: #111 !default;
+$btn-hover-background: #000 !default;
+$btn-default-color: #FFF !default;
 
 $btn-border-width: 0 !default;
 $btn-border-style: solid !default;
 $btn-border-color: #222222 !default;
-$btn-border-radius: 0 !default;
 
-$btn-transition: all .5s cubic-bezier(.18, .61, .43, .99) !default;
+$btn-transition: all .2s cubic-bezier(0, 0, 0.58, 1) !default;
 
 $btn-font: () !default;
 
@@ -42,14 +44,13 @@ $btn-font: () !default;
   vertical-align: middle; /* [2] */
   //font: inherit; /* [3] */
   text-align: center; /* [4] */
-  margin: 0; /* [4] */
+  //margin: 0; /* [4] */
   cursor: pointer; /* [5] */
 }
 
 @mixin button-box {
   padding: $btn-padding;
   border: $btn-border-width $btn-border-style $btn-border-color;
-  border-radius: $btn-border-radius;
   margin: 0;
 }
 
@@ -61,21 +62,10 @@ $btn-font: () !default;
   color: $btn-color;
   background-color: $btn-background;
 
-  -webkit-font-smoothing: initial;
-  text-decoration: none;
-
   transition: $btn-transition;
-  transition-property: color, background-color, opacity;
 
-  &:hover,
-  &:active,
-  &:focus {
-    color: $btn-color;
-    background-color: $btn-hover-background;
-    opacity: 0.7;
-    text-decoration: none;
-    border: initial;
-  }
+  // -webkit-font-smoothing: initial;
+  // Removed as it makes the font weight too thick
 
   .u-buttons-rounded & {
     border-radius: 0.3em;
@@ -83,6 +73,10 @@ $btn-font: () !default;
 
   .u-buttons-pill & {
     border-radius: 999em;
+  }
+
+  .u-underlined-links & {
+    text-decoration: none;
   }
 
   .u-buttons-outline & {
@@ -93,7 +87,6 @@ $btn-font: () !default;
     &:active,
     &:focus {
       background: none;
-      color: $btn-hover-background;
     }
   }
 }
@@ -205,8 +198,25 @@ $btn-font: () !default;
   }
 }
 
+@mixin btn--default {
+  background-color: $btn-default-background;
+  color: $btn-default-color;
+
+  &:hover {
+    color: $btn-default-color;
+  }
+
+  .u-buttons-outline & {
+    background: none;
+  }
+}
+
 .c-btn {
   @include btn;
+
+  &--default {
+    @include btn--default;
+  }
 }
 
 .c-btn-directional {
@@ -228,24 +238,19 @@ $btn-font: () !default;
 // Helper Classes for Humans & Nature
 // <a class="button">		Regular Button 		</a>
 // <a class="button arrow">	Button with Arrow 	</a>
+// <a class="button default">	Button with Default Styling 	</a>
 
-a,
-input[type=submit] {
+.button {
+  @include btn;
 
-  &.button {
-    @include btn;
-
-    .u-underlined-links & {
-      text-decoration: none;
-    }
+  &.default {
+    @include btn--default;
   }
 
   &.full {
     width: 100%;
   }
-}
 
-a {
   &.arrow {
     @include button-directional;
     @include button-directional--right;

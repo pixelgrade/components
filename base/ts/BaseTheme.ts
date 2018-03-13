@@ -30,7 +30,7 @@ export class BaseTheme {
   public bindEvents(): void {
     GlobalService.onReady().take(1).subscribe(this.onReadyAction.bind(this));
     WindowService.onLoad().take(1).subscribe(this.onLoadAction.bind(this));
-    WindowService.onResize().debounce(300).subscribe(this.onResizeAction.bind(this));
+    WindowService.onResize().debounce(500).subscribe(this.onResizeAction.bind(this));
     WindowService.onScroll().subscribe(this.onScrollAction.bind(this));
 
     // Leave comments area visible by default and

@@ -12,9 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=-nbq6Ur103Q )
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Hero
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Hero
  * @version     1.2.3
  */
 
@@ -23,24 +23,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'Pixelgrade_Hero' ) ) :
-/**
- * Returns the main instance of Pixelgrade_Hero to prevent the need to use globals.
- *
- * @since  1.0.0
- * @return Pixelgrade_Hero|object
- */
-function Pixelgrade_Hero() {
-	//only load if we have to
-	if ( ! class_exists( 'Pixelgrade_Hero' ) ) {
-		pixelgrade_load_component_file( 'hero', 'class-Hero' );
+	/**
+	 * Returns the main instance of Pixelgrade_Hero to prevent the need to use globals.
+	 *
+	 * @since  1.0.0
+	 * @return Pixelgrade_Hero|object
+	 */
+	function Pixelgrade_Hero() {
+		// only load if we have to
+		if ( ! class_exists( 'Pixelgrade_Hero' ) ) {
+			pixelgrade_load_component_file( 'hero', 'class-Hero' );
+		}
+		return Pixelgrade_Hero::instance( '1.2.3' );
 	}
-	return Pixelgrade_Hero::instance( '1.2.3' );
-}
 endif;
 
 /**
  * Load other files that this component needs loaded before the actual class instantiation
  */
 
-//Load our component's template tags
+// Load our component's template tags
 pixelgrade_load_component_file( 'hero', 'inc/template-tags' );

@@ -27,7 +27,7 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 }
 ?>
 
-<div class="c-navbar__content">
+<div class="c-navbar__content  u-header-background">
 
 	<?php
 	$zones = pixelgrade_header_get_zones();
@@ -54,9 +54,9 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 				foreach ( $menu_locations as $menu_id => $menu_location ) {
 					if ( ! empty( $menu_location['bogus'] ) ) {
 						// We have something special to show
-						if ( 'header-branding' == $menu_id ) {
+						if ( 'header-branding' === $menu_id ) {
 							pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'branding' );
-						} elseif ( 'jetpack-social-menu' == $menu_id && function_exists( 'jetpack_social_menu' ) ) {
+						} elseif ( 'jetpack-social-menu' === $menu_id && function_exists( 'jetpack_social_menu' ) ) {
 							jetpack_social_menu();
 						}
 					} else {

@@ -2,9 +2,9 @@
 /**
  * This is the class that handles the metaboxes of our Blog component.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Blog
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Blog
  * @version     1.0.0
  */
 
@@ -16,6 +16,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 
 	/**
 	 * The main component object (the parent).
+	 *
 	 * @var     Pixelgrade_Blog
 	 * @access  public
 	 * @since     1.0.0
@@ -45,7 +46,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 
 		// Setup our metaboxes configuration
 		add_filter( 'pixelgrade_filter_metaboxes', array( $this, 'metaboxesConfig' ), 10, 1 );
-		// Since WordPres 4.7 we need to do some trickery to show metaboxes on pages marked as Page for Posts since the page template control is removed for them
+		// Since WordPress 4.7 we need to do some trickery to show metaboxes on pages marked as Page for Posts since the page template control is removed for them
 		add_filter( 'cmb_show_on', array( $this, 'pixtypesShowOnMetaboxes' ), 10, 2 );
 		add_filter( 'pixtypes_cmb_metabox_show_on', array( $this, 'pixtypesPreventShowOnFields' ), 10, 2 );
 
@@ -74,10 +75,10 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 	 */
 	public function metaboxesConfig( $metaboxes ) {
 		$component_metaboxes = array(
-			'base_custom_css_style'               => array(
+			'base_custom_css_style' => array(
 				'id'         => 'base_custom_css_style',
 				'title'      => esc_html__( 'Custom CSS Styles', '__components_txtd' ),
-				'pages'      => array( 'page',), // Post type
+				'pages'      => array( 'page' ), // Post type
 				'context'    => 'normal',
 				'priority'   => 'low',
 				'hidden'     => false,
@@ -112,7 +113,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 	/**
 	 * Force a metabox to be shown on the page for posts (the Home page set in WP Dashboard > Reading)
 	 *
-	 * @param bool $show
+	 * @param bool  $show
 	 * @param array $metabox
 	 *
 	 * @return bool
@@ -127,7 +128,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 			}
 
 			// If this page is set as the Page for Posts
-			if ( ! empty( $post_id ) && $post_id == get_option( 'page_for_posts' ) ) {
+			if ( ! empty( $post_id ) && absint( get_option( 'page_for_posts' ) ) === $post_id ) {
 				return true;
 			}
 		}
@@ -140,7 +141,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 	 * This way we prevent WordPress's core logic from wrongfully hiding them.
 	 * We do this for metaboxes that need to be shown on the page for posts (that is missing the page template select starting with WP 4.7).
 	 *
-	 * @param bool $show
+	 * @param bool  $show
 	 * @param array $metabox
 	 *
 	 * @return bool
@@ -155,7 +156,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 			}
 
 			// If this page is set as the Page for Posts
-			if ( ! empty( $post_id ) && $post_id == get_option( 'page_for_posts' ) ) {
+			if ( ! empty( $post_id ) && absint( get_option( 'page_for_posts' ) ) === $post_id ) {
 				return false;
 			}
 		}
@@ -177,7 +178,7 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 		if ( Pixelgrade_Config::hasPageTemplate( $fullwidth_page_template, $component_config ) ) {
 			// Make sure that the hero background metabox is shown on the component's page template also
 			if ( ! empty( $hero_metaboxes['hero_area_background__page']['show_on']['key'] )
-				 && 'page-template' === $hero_metaboxes['hero_area_background__page']['show_on']['key'] ) {
+				&& 'page-template' === $hero_metaboxes['hero_area_background__page']['show_on']['key'] ) {
 
 				// Make sure that we are dealing with an array, instead of a string
 				if ( ! is_array( $hero_metaboxes['hero_area_background__page']['show_on']['value'] ) ) {
@@ -189,12 +190,13 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 					$hero_metaboxes['hero_area_background__page']['show_on']['value'],
 					array(
 						$fullwidth_page_template,
-					) );
+					)
+				);
 			}
 
 			// Make sure that the hero content metabox is shown on the page template also
 			if ( ! empty( $hero_metaboxes['hero_area_content__page']['show_on']['key'] )
-				 && 'page-template' === $hero_metaboxes['hero_area_content__page']['show_on']['key'] ) {
+				&& 'page-template' === $hero_metaboxes['hero_area_content__page']['show_on']['key'] ) {
 
 				// Make sure that we are dealing with an array, instead of a string
 				if ( ! is_array( $hero_metaboxes['hero_area_content__page']['show_on']['value'] ) ) {
@@ -206,7 +208,8 @@ class Pixelgrade_Blog_Metaboxes extends Pixelgrade_Singleton {
 					$hero_metaboxes['hero_area_content__page']['show_on']['value'],
 					array(
 						$fullwidth_page_template,
-					) );
+					)
+				);
 			}
 		}
 

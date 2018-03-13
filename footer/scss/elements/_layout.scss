@@ -27,10 +27,6 @@ $footer-zone-items-spacing: 1rem !default;
   &:empty {
     display: none;
   }
-
-  &:not(:empty) + & {
-    @include spacing(margin-top, $footer-zone-spacing);
-  }
 }
 
 .c-footer__zone--bottom {

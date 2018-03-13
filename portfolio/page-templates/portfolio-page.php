@@ -11,9 +11,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -60,7 +60,8 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 
 				pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'content', 'page', true );
 
-			} // End of the page content loop. ?>
+			} // End of the page content loop.
+			?>
 
 			<?php
 			/**
@@ -82,4 +83,5 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 do_action( 'pixelgrade_after_primary_wrapper', $location );
 ?>
 
-<?php pixelgrade_get_footer();
+<?php
+pixelgrade_get_footer();

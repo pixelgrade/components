@@ -4,6 +4,7 @@
  *
  * This template can be overridden by copying it to a child theme
  * or in the same theme by putting it in template-parts/portfolio/content-jetpack-portfolio.php.
+ *
  * @see pixelgrade_locate_component_template_part()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -12,9 +13,9 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.0
  */
 
@@ -22,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//we first need to know the bigger picture - the location this template part was loaded from
+// we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'portfolio jetpack jetpack-portfolio' );
 
 // Let's deal with the meta keys, if they are not already defined.. by higher powers
@@ -32,8 +33,8 @@ if ( ! isset( $primary_meta ) && ! isset( $secondary_meta ) ) {
 	$secondary_meta = pixelgrade_option( 'portfolio_items_secondary_meta', 'date' );
 }
 
-$primary_meta_output   = $primary_meta !== 'none' ? pixelgrade_get_post_meta( $primary_meta ) : false;
-$secondary_meta_output = $secondary_meta !== 'none' ? pixelgrade_get_post_meta( $secondary_meta ) : false;
+$primary_meta_output   = ( 'none' !== $primary_meta ) ? pixelgrade_get_post_meta( $primary_meta ) : false;
+$secondary_meta_output = ( 'none' !== $secondary_meta ) ? pixelgrade_get_post_meta( $secondary_meta ) : false;
 
 /**
  * pixelgrade_before_loop_entry hook.
@@ -43,12 +44,13 @@ $secondary_meta_output = $secondary_meta !== 'none' ? pixelgrade_get_post_meta( 
 do_action( 'pixelgrade_before_loop_entry', $location );
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class() ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="c-card">
 		<?php if ( pixelgrade_display_featured_images() ) { ?>
 			<div class="c-card__aside c-card__thumbnail-background">
 				<div class="c-card__frame">
-					<?php if ( has_post_thumbnail() ) {
+					<?php
+					if ( has_post_thumbnail() ) {
 						the_post_thumbnail();
 					}
 
@@ -56,17 +58,19 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					// Make sure that we have the Featured Image component loaded
 					if ( function_exists( 'pixelgrade_featured_image_get_hover_id' ) ) {
 						$hover_image_id = pixelgrade_featured_image_get_hover_id();
-						if ( ! empty( $hover_image_id ) ) { ?>
+						if ( ! empty( $hover_image_id ) ) {
+											?>
 
-							<div class="c-card__frame-hover">
-								<?php echo wp_get_attachment_image( $hover_image_id, 'full' ); ?>
+												<div class="c-card__frame-hover">
+													<?php echo wp_get_attachment_image( $hover_image_id, 'full' ); ?>
 							</div>
 
-						<?php }
+						<?php
+						}
 					}
 
-					if ( pixelgrade_option( 'portfolio_items_title_position', 'regular' ) != 'overlay' ) {
-						echo '<span class="c-card__letter">' . mb_substr( get_the_title(), 0, 1 ) . '</span>';
+					if ( pixelgrade_option( 'portfolio_items_title_position', 'regular' ) !== 'overlay' ) {
+						echo '<span class="c-card__letter">' . esc_html( mb_substr( get_the_title(), 0, 1 ) ) . '</span>';
 					}
 					?>
 				</div><!-- .c-card__frame -->
@@ -76,7 +80,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 		<div class="c-card__content">
 
 			<?php
-			if ( $primary_meta_output || $secondary_meta_output ) { ?>
+			if ( $primary_meta_output || $secondary_meta_output ) {
+			?>
 
 				<div class='c-card__meta'>
 
@@ -91,17 +96,22 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 					if ( $secondary_meta_output ) {
 						echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
-					} ?>
+					}
+					?>
 
 				</div><!-- .c-card__meta -->
 
-			<?php }
+			<?php
+			}
 
-			if ( pixelgrade_option( 'portfolio_items_title_visibility', true ) ) { ?>
+			if ( pixelgrade_option( 'portfolio_items_title_visibility', true ) ) {
+			?>
 				<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
-			<?php }
+			<?php
+			}
 
-			if ( pixelgrade_option( 'portfolio_items_excerpt_visibility', true ) ) { ?>
+			if ( pixelgrade_option( 'portfolio_items_excerpt_visibility', true ) ) {
+			?>
 				<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
 			<?php } ?>
 

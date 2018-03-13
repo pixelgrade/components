@@ -4,9 +4,9 @@
  * Extend this class and make it your own.
  * You can use it as it is but it will work as the Featured Posts - Grid widget.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Base
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Base
  * @version     1.0.0
  */
 
@@ -35,7 +35,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			'before_title'  => '<h4 class="widgettitle">',
 			'after_title'   => '</h4>',
 			'before_widget' => '<div class="widget-wrap">',
-			'after_widget'  => '</div></div>'
+			'after_widget'  => '</div></div>',
 		);
 
 		/**
@@ -56,43 +56,43 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 *
 		 * @param string $id
 		 * @param string $name
-		 * @param array $widget_ops
-		 * @param array $config
+		 * @param array  $widget_ops
+		 * @param array  $config
 		 */
 		public function __construct( $id = 'pixelgrade-featured-posts', $name = '', $widget_ops = array(), $config = array() ) {
 			// Set up the default config
 			$default_config = array(
-				'fields_sections' => array(
+				'fields_sections'        => array(
 					'default' => array(
-						'title' => '',
+						'title'    => '',
 						'priority' => 1, // This section should really be the first as it is not part of the accordion
 					),
 					'content' => array(
-						'title' => esc_html__( 'Content', '__theme_txtd' ),
+						'title'         => esc_html__( 'Content', '__theme_txtd' ),
 						'default_state' => 'open',
-						'priority' => 10,
+						'priority'      => 10,
 					),
-					'layout' => array(
-						'title' => esc_html__( 'Layout', '__theme_txtd' ),
+					'layout'  => array(
+						'title'    => esc_html__( 'Layout', '__theme_txtd' ),
 						'priority' => 20,
 					),
 					'display' => array(
-						'title' => esc_html__( 'Display', '__theme_txtd' ),
+						'title'    => esc_html__( 'Display', '__theme_txtd' ),
 						'priority' => 30,
 					),
-					'others' => array(
-						'title' => esc_html__( 'Others', '__theme_txtd' ),
+					'others'  => array(
+						'title'    => esc_html__( 'Others', '__theme_txtd' ),
 						'priority' => 40,
 					),
 				),
-				'fields' => array(
+				'fields'                 => array(
 
 					// Title Section
 					'title'                   => array(
 						'type'     => 'text',
 						'label'    => esc_html__( 'Section Title:', '__theme_txtd' ),
 						'default'  => esc_html__( 'My Featured Posts', '__theme_txtd' ),
-						'section' => 'default',
+						'section'  => 'default',
 						'priority' => 10,
 					),
 
@@ -107,45 +107,45 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							'post_ids' => esc_html__( 'Selected Posts', '__theme_txtd' ),
 						),
 						'default'  => 'recent',
-						'section' => 'content',
+						'section'  => 'content',
 						'priority' => 10,
 					),
 					'source_category'         => array(
-						'type'       => 'select',
-						'label'      => esc_html__( 'Category:', '__theme_txtd' ),
-						'callback'   => array( $this, 'categoriesDropdown' ),
+						'type'              => 'select',
+						'label'             => esc_html__( 'Category:', '__theme_txtd' ),
+						'callback'          => array( $this, 'categoriesDropdown' ),
 						'sanitize_callback' => array( $this, 'sanitizeCategory' ), // We need to do custom sanitization for custom generated selects.
-						'default'    => 0,
-						'display_on' => array(
+						'default'           => 0,
+						'display_on'        => array(
 							'display' => true,
 							'on'      => array(
 								'field' => 'source',
 								'value' => 'category',
 							),
 						),
-						'section' => 'content',
-						'priority'   => 20,
+						'section'           => 'content',
+						'priority'          => 20,
 					),
 					'source_tag'              => array(
-						'type'       => 'select',
-						'label'      => esc_html__( 'Tag:', '__theme_txtd' ),
-						'callback'   => array( $this, 'tagsDropdown' ),
+						'type'              => 'select',
+						'label'             => esc_html__( 'Tag:', '__theme_txtd' ),
+						'callback'          => array( $this, 'tagsDropdown' ),
 						'sanitize_callback' => array( $this, 'sanitizeTag' ), // We need to do custom sanitization for custom generated selects.
-						'default'    => 0,
-						'display_on' => array(
+						'default'           => 0,
+						'display_on'        => array(
 							'display' => true,
 							'on'      => array(
 								'field' => 'source',
 								'value' => 'tag',
 							),
 						),
-						'section' => 'content',
-						'priority'   => 30,
+						'section'           => 'content',
+						'priority'          => 30,
 					),
 					'post_ids'                => array(
 						'type'       => 'text',
 						'label'      => esc_html__( 'Post IDs:', '__theme_txtd' ),
-						'desc'     => esc_html__( 'Use Posts IDs, separated by commas, to show only a set of specific posts.', '__theme_txtd' ),
+						'desc'       => esc_html__( 'Use Posts IDs, separated by commas, to show only a set of specific posts.', '__theme_txtd' ),
 						'default'    => '',
 						'display_on' => array(
 							'display' => true,
@@ -154,10 +154,10 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 								'value' => 'post_ids',
 							),
 						),
-						'section' => 'content',
+						'section'    => 'content',
 						'priority'   => 40,
 					),
-					'orderby' => array(
+					'orderby'                 => array(
 						'type'       => 'select',
 						'label'      => esc_html__( 'Order by:', '__theme_txtd' ),
 						'options'    => array(
@@ -175,7 +175,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'section'    => 'content',
 						'priority'   => 50,
 					),
-					'number'  => array(
+					'number'                  => array(
 						'type'              => 'number',
 						'label'             => esc_html__( 'Number of posts:', '__theme_txtd' ),
 						'sanitize_callback' => array( $this, 'sanitize_positive_int' ),
@@ -195,7 +195,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'label'    => esc_html__( 'Prevent Duplicate Posts', '__theme_txtd' ),
 						'desc'     => esc_html__( 'The posts displayed by this widget won\'t show up in the next widgets.', '__theme_txtd' ),
 						'default'  => true,
-						'section' => 'content',
+						'section'  => 'content',
 						'priority' => 70,
 					),
 
@@ -210,7 +210,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							'4' => esc_html__( '4 Columns', '__theme_txtd' ),
 						),
 						'default'  => '3',
-						'section' => 'layout',
+						'section'  => 'layout',
 						'priority' => 10,
 					),
 					'image_ratio'             => array(
@@ -222,7 +222,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							'landscape' => esc_html__( 'Landscape', '__theme_txtd' ),
 						),
 						'default'  => 'portrait',
-						'section' => 'layout',
+						'section'  => 'layout',
 						'priority' => 20,
 					),
 
@@ -231,14 +231,14 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'type'     => 'checkbox',
 						'label'    => esc_html__( 'Show Excerpt', '__theme_txtd' ),
 						'default'  => true,
-						'section' => 'display',
+						'section'  => 'display',
 						'priority' => 10,
 					),
 					'show_readmore'           => array(
 						'type'     => 'checkbox',
 						'label'    => esc_html__( 'Show "Read More" Link', '__theme_txtd' ),
 						'default'  => true,
-						'section' => 'display',
+						'section'  => 'display',
 						'priority' => 20,
 					),
 					'primary_meta'            => array(
@@ -253,7 +253,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							'comments' => esc_html__( 'Comments', '__theme_txtd' ),
 						),
 						'default'  => 'category',
-						'section' => 'display',
+						'section'  => 'display',
 						'priority' => 30,
 					),
 					'secondary_meta'          => array(
@@ -268,7 +268,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							'comments' => esc_html__( 'Comments', '__theme_txtd' ),
 						),
 						'default'  => 'none',
-						'section' => 'display',
+						'section'  => 'display',
 						'priority' => 40,
 					),
 					'show_view_more'          => array(
@@ -282,7 +282,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 								'value' => 'post_ids',
 							),
 						),
-						'section' => 'display',
+						'section'    => 'display',
 						'priority'   => 50,
 					),
 					'view_more_label'         => array(
@@ -296,13 +296,13 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 								'value' => true,
 							),
 						),
-						'section' => 'display',
+						'section'    => 'display',
 						'priority'   => 60,
 					),
 
 					// Others Section
 				),
-				'posts'    => array(
+				'posts'                  => array(
 					'classes'   => array( 'featured-posts-grid' ),
 					// You can have multiple templates here (array of arrays) and we will use the first one that passes processing and is found
 					// @see Pixelgrade_Config::evaluateTemplateParts()
@@ -325,11 +325,13 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			}
 
 			// Set up the widget options - merge them with our defaults
-			$widget_ops = wp_parse_args( $widget_ops, array(
-				'classname'                   => 'widget_featured_posts',
-				'description'                 => esc_html__( 'Your featured posts.', '__theme_txtd' ),
-				'customize_selective_refresh' => false,
-			) );
+			$widget_ops = wp_parse_args(
+				$widget_ops, array(
+					'classname'                   => 'widget_featured_posts',
+					'description'                 => esc_html__( 'Your featured posts.', '__theme_txtd' ),
+					'customize_selective_refresh' => false,
+				)
+			);
 
 			// The default widget name - as it will be shown in the WordPress admin
 			if ( empty( $name ) ) {
@@ -337,10 +339,12 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			}
 
 			// Initialize the widget
-			parent::__construct( $id,
+			parent::__construct(
+				$id,
 				apply_filters( 'pixelgrade_featured_posts_widget_name', $name ),
 				$widget_ops,
-				$default_config );
+				$default_config
+			);
 
 			// Set up an alternate widget options name
 			$this->alt_option_name = 'widget_featured_entries';
@@ -349,6 +353,9 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 			}
+
+			// Add custom export logic
+			add_filter( "pixcare_sce_widget_data_export_{$id}", array( $this, 'custom_export_logic' ), 10, 3 );
 		}
 
 		/**
@@ -429,7 +436,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 					// Add our dynamic classes
 					if ( isset( $columns ) ) {
-						$classes[] = 'columns-' . $columns;
+						$classes[] = 'o-grid--' . $columns . 'col-@small';
 					}
 					if ( isset( $image_ratio ) ) {
 						$classes[] = 'aspect-ratio-' . $image_ratio;
@@ -490,7 +497,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						 */
 						do_action( 'pixelgrade_featured_posts_before_loop' . $this->id, $instance, $args );
 
-						while ( $posts->have_posts() ) : $posts->the_post();
+						while ( $posts->have_posts() ) :
+							$posts->the_post();
 							// We want to count from 1 since the current_post starts at 0
 							$post_index = $posts->current_post + 1;
 
@@ -508,7 +516,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							do_action( 'pixelgrade_featured_posts_widget_before_post' . $this->id, $post_index, $posts );
 
 							// We use include so the template parts gets access to all the variables defined above
-							include( $found_template );
+							include $found_template;
 
 							/**
 							 * Fires after the widget post
@@ -526,7 +534,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 					</div>
 
-					<?php if ( ! empty( $show_view_more ) && ! empty( $view_more_label ) ) {
+					<?php
+					if ( ! empty( $show_view_more ) && ! empty( $view_more_label ) ) {
 						// We need a View More button linking to the appropriate archive, depending on the posts source
 						$view_more_link = false;
 
@@ -558,7 +567,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 								 '<a class="featured-posts__more" href="' . esc_url( $view_more_link ) . '">' . $view_more_label . '</a>' . PHP_EOL .
 								 '</div>';
 						}
-					} ?>
+					}
+					?>
 
 					<?php
 
@@ -612,7 +622,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			$query_args = array(
 				'posts_per_page'      => 10, // a decent default
 				'no_found_rows'       => true, // extra performance
-				'post_status'         => 'publish', //only published posts in featured posts widgets
+				'post_status'         => 'publish', // only published posts in featured posts widgets
 				'ignore_sticky_posts' => true, // we don't deal with sticky posts in featured posts widgets
 				'order'               => 'desc',
 			);
@@ -655,21 +665,20 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 					// If we are given a list of post_ids, then we will ignore the posts queried thus far and the ones that need to be excluded
 					// You can't have post__in and post__not_in in the same query!
-
 					// Transform and sanitize the ids
 					$post_ids = Pixelgrade_Value::maybeExplodeList( $instance['post_ids'] );
 					if ( ! empty( $post_ids ) ) {
 						foreach ( $post_ids as $key => $value ) {
 							if ( ! is_numeric( $value ) ) {
-								unset( $post_ids[$key] );
+								unset( $post_ids[ $key ] );
 							} else {
-								$post_ids[$key] = intval( $value );
+								$post_ids[ $key ] = intval( $value );
 							}
 						}
 
 						$query_args['post__in']       = $post_ids;
 						$query_args['posts_per_page'] = count( $post_ids );
-						$query_args['orderby'] = 'post__in';
+						$query_args['orderby']        = 'post__in';
 					}
 				}
 			}
@@ -700,7 +709,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 *
 		 * @param string $selected The current selected value.
 		 * @param string $field_name The field ID.
-		 * @param array $field_config The field config.
+		 * @param array  $field_config The field config.
 		 *
 		 * @return string The select HTML.
 		 */
@@ -725,8 +734,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
-			$args = array(
-				'show_option_all'  => esc_html__( 'All', '__theme_txtd' ),
+			$args         = array(
+				'show_option_all'   => esc_html__( 'All', '__theme_txtd' ),
 				'orderby'           => 'id',
 				'order'             => 'ASC',
 				'show_count'        => 1,
@@ -770,19 +779,21 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 *
 		 * @param string $value
 		 * @param string $field_name
-		 * @param array $field_config
+		 * @param array  $field_config
 		 *
 		 * @return bool
 		 */
 		public function sanitizeCategory( $value, $field_name, $field_config ) {
 			// Get all the categories shown in the dropdown
-			$categories = get_terms( 'category', array(
-				'hide_empty'        => 1,
-				'child_of'          => 0,
-				'exclude'           => '',
-				'hierarchical'      => 1,
-				'fields'            => 'id=>slug',
-			) );
+			$categories = get_terms(
+				'category', array(
+					'hide_empty'   => 1,
+					'child_of'     => 0,
+					'exclude'      => '',
+					'hierarchical' => 1,
+					'fields'       => 'id=>slug',
+				)
+			);
 
 			if ( ! in_array( $value, $categories ) ) {
 				// Fallback on the default value
@@ -802,7 +813,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 *
 		 * @param string $selected The current selected value.
 		 * @param string $field_name The field ID.
-		 * @param array $field_config The field config.
+		 * @param array  $field_config The field config.
 		 *
 		 * @return string The select HTML.
 		 */
@@ -827,8 +838,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
 			}
 
-			$args = array(
-				'show_option_all'  => esc_html__( 'All', '__theme_txtd' ),
+			$args         = array(
+				'show_option_all'   => esc_html__( 'All', '__theme_txtd' ),
 				'orderby'           => 'id',
 				'order'             => 'ASC',
 				'show_count'        => 1,
@@ -869,18 +880,20 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 *
 		 * @param string $value
 		 * @param string $field_name
-		 * @param array $field_config
+		 * @param array  $field_config
 		 *
 		 * @return bool
 		 */
 		public function sanitizeTag( $value, $field_name, $field_config ) {
 			// Get all the tags shown in the dropdown
-			$tags = get_terms( 'post_tag', array(
-				'hide_empty'        => 0,
-				'exclude'           => '',
-				'hierarchical'      => 0,
-				'fields'            => 'id=>slug',
-			) );
+			$tags = get_terms(
+				'post_tag', array(
+					'hide_empty'   => 0,
+					'exclude'      => '',
+					'hierarchical' => 0,
+					'fields'       => 'id=>slug',
+				)
+			);
 
 			if ( ! in_array( $value, $tags ) ) {
 				// Fallback on the default value
@@ -893,6 +906,42 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 			// All is good
 			return $value;
+		}
+
+		/**
+		 * Handle various export logic specific to this widget's fields.
+		 *
+		 * @param array $widget_data The widget instance values.
+		 * @param string $widget_type The widget type.
+		 * @param array $matching_data The matching import/export data like old-new post IDs, old-new attachment IDs, etc.
+		 *
+		 * @return array The modified widget data.
+		 */
+		public function custom_export_logic( $widget_data, $widget_type, $matching_data ) {
+			// Replace the post IDs with the new ones
+			if ( ! empty( $widget_data['post_ids'] ) && ! empty( $matching_data['post_types']['post'] ) ) {
+				$post_ids = Pixelgrade_Value::maybeExplodeList( $widget_data['post_ids'] );
+				if ( ! empty( $post_ids ) ) {
+					foreach ( $post_ids as $key => $value ) {
+						if ( ! is_numeric( $value ) ) {
+							unset( $post_ids[ $key ] );
+						} else {
+							$post_ids[ $key ] = intval( $value );
+						}
+					}
+				}
+
+				foreach ( $post_ids as $key => $old_post_id ) {
+					if ( ! empty( $matching_data['post_types']['post'][ $old_post_id ] ) ) {
+						$post_ids[ $key ] = $matching_data['post_types']['post'][ $old_post_id ];
+					}
+				}
+
+				// We need to convert the post IDs back to comma separated list
+				$widget_data['post_ids'] = implode( ',', $post_ids );
+			}
+
+			return $widget_data;
 		}
 	}
 

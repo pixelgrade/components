@@ -2,9 +2,9 @@
 /**
  * This is the class that handles the metaboxes of our Portfolio component.
  *
- * @see 	    https://pixelgrade.com
- * @author 		Pixelgrade
- * @package 	Components/Portfolio
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
+ * @package     Components/Portfolio
  * @version     1.0.1
  */
 
@@ -55,7 +55,6 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 
 		// In general components, should hook in early to allow for the main theme to come later
 		// Also to not leave the order of execution to chance :)
-
 		// Add the featured projects fields to the needed hero metaboxes
 		add_filter( 'pixelgrade_hero_metaboxes_config', array( $this, 'heroFeaturedProjectsMetaboxes' ), 5, 1 );
 
@@ -96,7 +95,8 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 				$base_metaboxes['base_custom_css_style']['pages'],
 				array(
 					Jetpack_Portfolio::CUSTOM_POST_TYPE,
-				) );
+				)
+			);
 		}
 
 		return $base_metaboxes;
@@ -116,7 +116,7 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 		if ( Pixelgrade_Config::hasPageTemplate( $portfolio_page_template, $component_config ) ) {
 			// Make sure that the hero background metabox is shown on the page template also
 			if ( ! empty( $hero_metaboxes['hero_area_background__page']['show_on']['key'] )
-				 && 'page-template' === $hero_metaboxes['hero_area_background__page']['show_on']['key'] ) {
+				&& 'page-template' === $hero_metaboxes['hero_area_background__page']['show_on']['key'] ) {
 
 				// Make sure that we are dealing with an array, instead of a string
 				if ( ! is_array( $hero_metaboxes['hero_area_background__page']['show_on']['value'] ) ) {
@@ -128,12 +128,13 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 					$hero_metaboxes['hero_area_background__page']['show_on']['value'],
 					array(
 						$portfolio_page_template,
-					) );
+					)
+				);
 			}
 
 			// Make sure that the hero content metabox is shown on the page template also
 			if ( ! empty( $hero_metaboxes['hero_area_content__page']['show_on']['key'] )
-				 && 'page-template' === $hero_metaboxes['hero_area_content__page']['show_on']['key'] ) {
+				&& 'page-template' === $hero_metaboxes['hero_area_content__page']['show_on']['key'] ) {
 
 				// Make sure that we are dealing with an array, instead of a string
 				if ( ! is_array( $hero_metaboxes['hero_area_content__page']['show_on']['value'] ) ) {
@@ -145,7 +146,8 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 					$hero_metaboxes['hero_area_content__page']['show_on']['value'],
 					array(
 						$portfolio_page_template,
-					) );
+					)
+				);
 			}
 		}
 
@@ -166,9 +168,9 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 		 */
 		$featured_projects_fields = array(
 			array(
-				'name'       => '&#x1F48E; ' . esc_html__( 'Featured Projects Options', '__components_txtd' ),
-				'id'         => '_hero_featured_projects_title',
-				'type'       => 'title',
+				'name' => '&#x1F48E; ' . esc_html__( 'Featured Projects Options', '__components_txtd' ),
+				'id'   => '_hero_featured_projects_title',
+				'type' => 'title',
 			),
 			array(
 				'name'            => esc_html__( 'Selected Projects', '__components_txtd' ),
@@ -184,11 +186,11 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 				'sanitization_cb' => 'pw_select2_v2_sanitise',
 			),
 			array(
-				'name'       => esc_html__( '"View Project" Button Label', '__components_txtd' ),
-				'id'         => '_hero_featured_projects_view_more_label',
-				'desc'       => esc_html__( 'Adjust the label for the single project button, displayed on each slide. Empty it if you want to hide the button.', '__components_txtd' ),
-				'type'       => 'text_medium',
-				'std'        => esc_html__( 'View project', '__components_txtd' ),
+				'name' => esc_html__( '"View Project" Button Label', '__components_txtd' ),
+				'id'   => '_hero_featured_projects_view_more_label',
+				'desc' => esc_html__( 'Adjust the label for the single project button, displayed on each slide. Empty it if you want to hide the button.', '__components_txtd' ),
+				'type' => 'text_medium',
+				'std'  => esc_html__( 'View project', '__components_txtd' ),
 			),
 		);
 
@@ -235,11 +237,11 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 				),
 			),
 			array(
-				'name'    => esc_html__( 'Projects List Visibility', '__components_txtd' ),
-				'id'      => '_portfolio_grid_show',
-				'desc'    => esc_html__( 'Select which projects to be shown in the Portfolio Grid section.', '__components_txtd' ),
-				'type'    => 'select',
-				'options' => array(
+				'name'       => esc_html__( 'Projects List Visibility', '__components_txtd' ),
+				'id'         => '_portfolio_grid_show',
+				'desc'       => esc_html__( 'Select which projects to be shown in the Portfolio Grid section.', '__components_txtd' ),
+				'type'       => 'select',
+				'options'    => array(
 					array(
 						'name'  => esc_html__( 'Show All Projects', '__components_txtd' ),
 						'value' => 'all',
@@ -253,7 +255,7 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 						'value' => 'none',
 					),
 				),
-				'std'     => 'all',
+				'std'        => 'all',
 				'display_on' => array(
 					'display' => true,
 					'on'      => array(
@@ -284,15 +286,14 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 	/**
 	 * Filter the list of CSS classes for the portfolio wrapper.
 	 *
-	 * @param array $classes An array of header classes.
-	 * @param array $class   An array of additional classes added to the portfolio wrapper.
+	 * @param array        $classes An array of header classes.
+	 * @param array        $class   An array of additional classes added to the portfolio wrapper.
 	 * @param string|array $location   The place (template) where the classes are displayed.
 	 *
 	 * @return array
 	 */
 	public function addClassesToPortfolioWrapper( $classes, $class, $location ) {
 		// None right now
-
 		return $classes;
 	}
 
@@ -300,12 +301,12 @@ class Pixelgrade_Portfolio_Metaboxes extends Pixelgrade_Singleton {
 	 * Forces the portfolio page template to skip the loop
 	 *
 	 * @param bool $skip
-	 * @param int $page_ID
+	 * @param int  $page_id
 	 *
 	 * @return bool
 	 */
-	public function skipPortfolioCustomPageTemplateLoop( $skip, $page_ID ) {
-		if ( 'none' === get_post_meta( $page_ID, '_portfolio_grid_show', true ) ) {
+	public function skipPortfolioCustomPageTemplateLoop( $skip, $page_id ) {
+		if ( 'none' === get_post_meta( $page_id, '_portfolio_grid_show', true ) ) {
 			return true;
 		}
 

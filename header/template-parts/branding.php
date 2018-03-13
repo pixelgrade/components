@@ -11,7 +11,6 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- *
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Header
@@ -29,31 +28,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php if ( has_custom_logo() || pixelgrade_has_custom_logo_transparent() ) { ?>
 
-		<div class="c-logo">
-			<?php if ( has_custom_logo() ) { ?>
-				<div class="c-logo__default">
-					<?php the_custom_logo(); ?>
-				</div>
-			<?php } ?>
+			<div class="c-logo">
+				<?php if ( has_custom_logo() ) { ?>
+					<div class="c-logo__default">
+						<?php the_custom_logo(); ?>
+					</div>
+				<?php } ?>
 
-			<?php if ( pixelgrade_has_custom_logo_transparent() ) { ?>
-				<div class="c-logo__inverted">
-					<?php pixelgrade_the_custom_logo_transparent(); ?>
-				</div>
-			<?php } ?>
-		</div>
+				<?php if ( pixelgrade_has_custom_logo_transparent() ) { ?>
+					<div class="c-logo__inverted">
+						<?php pixelgrade_the_custom_logo_transparent(); ?>
+					</div>
+				<?php } ?>
+			</div>
 
 		<?php } ?>
 
-	    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php if ( is_front_page() && is_home() ) : ?>
-	            <h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
+				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 			<?php else : ?>
-	            <p class="site-title"><?php bloginfo( 'name' ); ?></p>
+				<p class="site-title"><?php bloginfo( 'name' ); ?></p>
 			<?php endif; ?>
-	    </a>
+		</a>
 
-       <p class="site-description site-description-text"><?php bloginfo( 'description' ) /* WPCS: xss ok. */ ?></p>
+		<p class="site-description site-description-text"><?php bloginfo( 'description' ); /* WPCS: xss ok. */ ?></p>
 
 	</div><!-- .c-branding -->
 
