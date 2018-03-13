@@ -87,6 +87,9 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 		 * A look at these core classes (that are used by Customify) might also reveal valuable insights
 		 * @see WP_Customize_Setting
 		 * @see WP_Customize_Control
+		 * Please note that due to the fact that right now Customify "holds" the setting and control configuration
+		 * under the same array entry some deduction might be made upon fields registration
+		 * (e.g. the 'type' refers to the control type, but not the setting 'type' - that is under 'setting_type').
 		 */
 
 		// Setup our portfolio Customify options
