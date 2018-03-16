@@ -10,4 +10,24 @@
   .c-card__excerpt > *:last-child {
     margin-bottom: 0;
   }
+
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 100%;
+    width: calc(50vw - 50%);
+    height: 100%;
+    background-color: inherit;
+    z-index: 1;
+  }
+
+  &:after {
+    left: 100%;
+  }
+
+  &:before {
+    right: 100%;
+  }
 }
