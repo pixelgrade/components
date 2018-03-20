@@ -5,12 +5,43 @@
  * @package Components
  */
 
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamWrapper;
+use org\bovigo\vfs\visitor\vfsStreamPrintVisitor;
+
 /**
  * Test base component core functions.
  *
  * @group base
  */
 class CP_Tests_CoreFunctions extends WP_UnitTestCase {
+
+	private $root;
+
+	private $theme_folder;
+
+	public function setUp() {
+		$theme_folder_path = get_template_directory();
+		if ( '.' === $theme_folder_path[0] ) {
+			$theme_folder_path = substr( $theme_folder_path, 1 );
+		}
+		vfsStream::setup();
+		$this->root = vfsStreamWrapper::setRoot( vfsStream::newDirectory( $theme_folder_path ) );
+		// We will "copy" the components into the virtual file system
+		if ( '/' === $theme_folder_path[0] ) {
+			$theme_folder_path = substr( $theme_folder_path, 1 );
+		}
+		$theme_folder = $this->root->getChild( substr( $theme_folder_path, strpos( $theme_folder_path, '/' ) + 1 ) );
+		$this->theme_folder = $theme_folder;
+//		vfsStream::copyFromFileSystem( get_template_directory(), $this->theme_folder );
+
+		add_filter( 'stylesheet_directory', function() use ( $theme_folder ) {
+			return $theme_folder->url();
+		} );
+		add_filter( 'template_directory', function() use ( $theme_folder ) {
+			return $theme_folder->url();
+		} );
+	}
 
 	/**
 	 * @covers ::pixelgrade_locate_component_file
@@ -27,19 +58,38 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 
 		// Check if the mock component folder is already there.
 		if ( ! file_exists( $the_component_real_folder ) ) {
-			mkdir( $the_component_real_folder );
-			$clean_mock_component = true;
+//			mkdir( $the_component_real_folder );
+//			$clean_mock_component = true;
 		}
 
-		file_put_contents( $the_component_real_file,
-			'<?php
-			// Pure silence for the ' . $the_component_slug . ' mock component.'
-		);
+		$structure = [
+			$the_component_slug => [
+				'cpfile.php' => '<?php
+					// Pure silence for the ' . $the_component_slug . ' mock component.',
+				'cpfile-name.php' => '<?php
+					// Pure silence (with name) for the ' . $the_component_slug . ' mock component.',
+			],
+		];
+		vfsStream::create( $structure, $this->theme_folder );
 
-		file_put_contents( $the_component_real_file_with_name,
-			'<?php
-			// Pure silence (with name) for the ' . $the_component_slug . ' mock component.'
-		);
+
+
+//		file_put_contents( $the_component_real_file,
+//			'<?php
+//			// Pure silence for the ' . $the_component_slug . ' mock component.'
+//		);
+//
+//		file_put_contents( $the_component_real_file_with_name,
+//			'<?php
+//			// Pure silence (with name) for the ' . $the_component_slug . ' mock component.'
+//		);
+
+		vfsStream::inspect(new vfsStreamPrintVisitor());
+
+
+		var_dump(STYLESHEETPATH . '/', $the_component_slug );
+		var_dump(STYLESHEETPATH . '/' . 'cp1/cpfile.php', file_exists(STYLESHEETPATH . '/' . 'cp1/cpfile.php'));
+		var_dump(file_exists('/app/public/wp-content/themes/components/cp1/cpfile.php'));
 
 		// Target the component file without any "higher priority" files in the theme root
 		$this->assertEquals( $the_component_real_file, pixelgrade_locate_component_file( $the_component_slug, 'cpfile' ) );
@@ -98,7 +148,7 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 
 		// Cleanup mock inc component folder.
 		if ( isset( $clean_inc ) ) {
-			self::delTree( $the_inc_path );
+			$this->rmdir( $the_inc_path );
 		}
 
 		$this->assertEquals( $the_component_real_file, pixelgrade_locate_component_file( $the_component_slug, 'cpfile' ) );
@@ -114,7 +164,7 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 
 		// Cleanup mock component folder
 		if ( isset( $clean_mock_component ) ) {
-			self::delTree( $the_component_real_folder );
+			$this->rmdir( $the_component_real_folder );
 		}
 	}
 
@@ -163,11 +213,14 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 
 	}
 
-	public static function delTree($dir) {
-		$files = array_diff(scandir($dir), array('.','..'));
-		foreach ($files as $file) {
-			(is_dir("$dir/$file")) ? self::delTree("$dir/$file") : unlink("$dir/$file");
+	function rmdir( $dir ) {
+
+		foreach ( scandir( $dir ) as $file ) {
+			if ( is_dir( $file ) )
+				continue;
+			else unlink( "$dir/$file" );
 		}
-		return rmdir($dir);
+		rmdir( $dir );
+
 	}
 }
