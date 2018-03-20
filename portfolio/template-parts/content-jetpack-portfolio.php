@@ -51,18 +51,17 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 				<div class="c-card__frame">
 					<?php
 					if ( has_post_thumbnail() ) {
-						the_post_thumbnail();
+						the_post_thumbnail( 'pixelgrade_single_landscape' );
 					}
 
 					// Also output the markup for the hover image if we have it
 					// Make sure that we have the Featured Image component loaded
 					if ( function_exists( 'pixelgrade_featured_image_get_hover_id' ) ) {
 						$hover_image_id = pixelgrade_featured_image_get_hover_id();
-						if ( ! empty( $hover_image_id ) ) {
-											?>
+						if ( ! empty( $hover_image_id ) ) { ?>
 
-												<div class="c-card__frame-hover">
-													<?php echo wp_get_attachment_image( $hover_image_id, 'full' ); ?>
+							<div class="c-card__frame-hover">
+								<?php echo wp_get_attachment_image( $hover_image_id, 'pixelgrade_single_landscape' ); ?>
 							</div>
 
 						<?php
