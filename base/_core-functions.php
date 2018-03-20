@@ -63,6 +63,8 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 	 *      yourtheme   /   inc             /   components      /   $component_slug /   $slug.php
 	 *      yourtheme   /   components      /   $component_slug /   $slug.php
 	 *
+	 * Please note that the actual components path (yourtheme/components above) is controlled by the PIXELGRADE_COMPONENTS_PATH constant.
+	 *
 	 * @param string $component_slug
 	 * @param string $slug
 	 * @param string $name Optional. (default: '')
