@@ -454,14 +454,21 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 	function test_pixelgrade_locate_template_part() {
 		// Create a mock component with a mock template part file.
 		$the_component_slug = 'cp5';
-		$template_parts_path = '';
+
+		// Since this function can handle the case when the components directory constant was not defined, we need to do the same and default.
+		$components_path = 'components/';
+		if ( defined( 'PIXELGRADE_COMPONENTS_PATH' ) && '' != PIXELGRADE_COMPONENTS_PATH ) {
+			$components_path = trailingslashit( PIXELGRADE_COMPONENTS_PATH );
+		}
+		$template_parts_path = 'template-parts/';
 		if ( defined( 'PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH' ) && '' != PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH ) {
 			$template_parts_path = trailingslashit( PIXELGRADE_COMPONENTS_TEMPLATE_PARTS_PATH );
 		}
+
 		$the_template_part = 'some_templatepart';
 		$the_template_part_name = 'name';
 		$the_components_path = get_template_directory();
-		$the_component_real_folder = trailingslashit( $the_components_path ) . $the_component_slug;
+		$the_component_real_folder = trailingslashit( $the_components_path ) . $components_path . $the_component_slug;
 		$the_component_template_parts_real_folder = trailingslashit( $the_component_real_folder ) . $template_parts_path;
 		$the_component_real_template_part = trailingslashit( $the_component_template_parts_real_folder ) . $the_template_part . '.php';
 		$the_component_real_template_part_with_name = trailingslashit( $the_component_template_parts_real_folder ) . $the_template_part .'-' . $the_template_part_name . '.php';
@@ -482,18 +489,18 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 
 		$this->assertEquals( '', pixelgrade_locate_template_part( 'bogustemplate' ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part ) );
-		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, 'bogus/path' ) );
+		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path' ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', '', $the_components_path ) );
-		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, '/', 'bogusname' ) );
+		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, '', 'bogusname' ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, '', 'bogusname', $the_components_path ) );
-		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, 'bogus/path', 'bogusname' ) );
-		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, 'bogus/path', 'bogusname', 'bogus/default/path' ) );
+		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', 'bogusname' ) );
+		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', 'bogusname', 'bogus/default/path' ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', 'bogusname', $the_components_path ) );
-		$this->assertEquals( $the_theme_root_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, '/', $the_template_part_name ) );
-		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, '', $the_template_part_name ) );
+		$this->assertEquals( $the_theme_root_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, '', $the_template_part_name ) );
+		$this->assertEquals( $the_theme_root_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, '', $the_template_part_name ) );
 		$this->assertEquals( $the_theme_root_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', $the_template_part_name, $the_components_path ) );
-		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, 'bogus/path', $the_template_part_name ) );
-		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, 'bogus/path', $the_template_part_name, 'bogus/default/path' ) );
+		$this->assertEquals( $the_theme_root_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', $the_template_part_name ) );
+		$this->assertEquals( $the_theme_root_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', $the_template_part_name, 'bogus/default/path' ) );
 
 		// Introduce a template-parts/subdir/ file that should take precedence
 		$the_template_parts_path = trailingslashit( $the_components_path ) . $template_parts_path;
@@ -526,7 +533,7 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part  ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path'  ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', '', $the_components_path ) );
-		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, '/', 'bogusname' ) );
+		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, '', 'bogusname' ) );
 		$this->assertEquals( $the_theme_root_real_file, pixelgrade_locate_template_part( $the_template_part, $the_template_parts_subdir_path  ) );
 		$this->assertEquals( $the_template_parts_subdir_real_file, pixelgrade_locate_template_part( $the_template_part, $the_template_parts_subdir_name  ) );
 		$this->assertEquals( $the_template_parts_subdir_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, $the_template_parts_subdir_name, $the_template_part_name ) );
@@ -556,6 +563,16 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 		$this->assertEquals( $the_template_parts_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, 'bogus/path', $the_template_part_name ) );
 		$this->assertEquals( $the_template_parts_subdir_real_file_with_name, pixelgrade_locate_template_part( $the_template_part, $the_template_parts_subdir_name, $the_template_part_name ) );
 
+		// Cleanup mock template parts folder since it takes precedence to components folder.
+		if ( isset( $clean_template_parts ) ) {
+			self::delTree( $the_template_parts_path );
+		}
+
+		// Check if the 'components' folder is already there.
+		if ( ! file_exists( trailingslashit( $the_components_path ) . $components_path ) ) {
+			mkdir( trailingslashit( $the_components_path ) . $components_path, 0777, true );
+			$clean_components = true;
+		}
 		// Check if the mock component folder is already there.
 		if ( ! file_exists( $the_component_real_folder ) ) {
 			mkdir( $the_component_real_folder, 0777, true );
@@ -576,41 +593,20 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 		);
 
 		// Target the component file without any "higher priority" files in the template parts root or other places.
+		$this->assertEquals( '', pixelgrade_locate_template_part( 'bogustemplatepart', $the_component_slug ) );
 		$this->assertEquals( $the_component_real_template_part, pixelgrade_locate_template_part( $the_template_part, $the_component_slug ) );
+		$this->assertEquals( '', pixelgrade_locate_template_part( $the_template_part, 'boguscpslug' ) );
 		$this->assertEquals( $the_component_real_template_part, pixelgrade_locate_template_part( $the_template_part, $the_component_slug, 'bogusname' ) );
 		$this->assertEquals( $the_component_real_template_part_with_name, pixelgrade_locate_template_part( $the_template_part, $the_component_slug, $the_template_part_name ) );
-
-
-
-		// Try the template parts root lookup.
-		$the_template_parts_root_real_file = trailingslashit( $the_template_parts_path ) . $the_template_part . '.php';
-		$the_template_parts_root_real_file_with_name = trailingslashit( $the_template_parts_path ) . $the_template_part .'-' . $the_template_part_name . '.php';
-
-		file_put_contents( $the_template_parts_root_real_file,
-			'<?php
-			// Pure silence for the theme root ' . $the_component_slug . ' mock file(s).'
-		);
-
-		file_put_contents( $the_template_parts_root_real_file_with_name,
-			'<?php
-			// Pure silence (with name) for theme root ' . $the_component_slug . ' mock file.'
-		);
-
-		$this->assertEquals( $the_component_real_template_part, pixelgrade_locate_template_part( $the_component_slug, $the_template_part ) );
-		$this->assertEquals( $the_template_parts_root_real_file, pixelgrade_locate_template_part( $the_component_slug, $the_template_part, '', true ) );
-		$this->assertEquals( $the_component_real_template_part, pixelgrade_locate_template_part( $the_component_slug, $the_template_part, 'bogusname' ) );
-		$this->assertEquals( $the_template_parts_root_real_file, pixelgrade_locate_template_part( $the_component_slug, $the_template_part, 'bogusname', true ) );
-		$this->assertEquals( $the_component_real_template_part_with_name, pixelgrade_locate_template_part( $the_component_slug, $the_template_part, $the_template_part_name ) );
-		$this->assertEquals( $the_template_parts_root_real_file_with_name, pixelgrade_locate_template_part( $the_component_slug, $the_template_part, $the_template_part_name, true ) );
-
-		// Cleanup mock template parts folder.
-		if ( isset( $clean_template_parts ) ) {
-			self::delTree( $the_template_parts_path );
-		}
 
 		// Cleanup mock component folder
 		if ( isset( $clean_mock_component ) ) {
 			self::delTree( $the_component_real_folder );
+		}
+
+		// Cleanup components folder
+		if ( isset( $clean_components ) ) {
+			self::delTree( trailingslashit( $the_components_path ) . $components_path );
 		}
 	}
 
@@ -618,9 +614,14 @@ class CP_Tests_CoreFunctions extends WP_UnitTestCase {
 	 * @covers ::pixelgrade_make_relative_path
 	 */
 	function test_pixelgrade_make_relative_path() {
-		// Replace this with some actual testing code.
-		$this->assertTrue( true );
+		$the_components_path = trailingslashit( get_template_directory() );
 
+		$this->assertEquals('', pixelgrade_make_relative_path( '' ) );
+		$this->assertEquals('', pixelgrade_make_relative_path( false ) );
+		$this->assertEquals('some/path', pixelgrade_make_relative_path( $the_components_path ) . 'some/path' );
+		$this->assertEquals('some/path/file.ext', pixelgrade_make_relative_path( $the_components_path ) . 'some/path/file.ext' );
+		$this->assertEquals('/', pixelgrade_make_relative_path( $the_components_path ) . '/' );
+		$this->assertEquals('file.ext', pixelgrade_make_relative_path( $the_components_path ) . 'file.ext' );
 	}
 
 	public static function delTree($dir) {
