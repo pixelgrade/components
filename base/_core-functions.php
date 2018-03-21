@@ -120,7 +120,10 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 				}
 			}
 
-			$template_names[] = $component_slug_path . "{$slug}-{$name}.php";
+			// If the $components_path is empty there is no point in introducing this rule because it would block the rest.
+			if ( ! empty( $components_path ) ) {
+				$template_names[] = $component_slug_path . "{$slug}-{$name}.php";
+			}
 			$template_names[] = 'inc/' . $components_path . $component_slug_path . "{$slug}-{$name}.php";
 			$template_names[] = $components_path . $component_slug_path . "{$slug}-{$name}.php";
 
@@ -159,7 +162,10 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 				}
 			}
 
-			$template_names[] = $component_slug_path . "{$slug}.php";
+			// If the $components_path is empty there is no point in introducing this rule because it would block the rest.
+			if ( ! empty( $components_path ) ) {
+				$template_names[] = $component_slug_path . "{$slug}.php";
+			}
 			$template_names[] = 'inc/' . $components_path . $component_slug_path . "{$slug}.php";
 			$template_names[] = $components_path . $component_slug_path . "{$slug}.php";
 
@@ -342,7 +348,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 	 * @return string
 	 */
 	function pixelgrade_locate_component_page_template( $component_slug, $slug, $name = '' ) {
-		$template = '';
+		$page_template = '';
 
 		// Setup our partial path (mainly trailingslashit)
 		// Make sure we only trailingslashit non-empty strings
@@ -382,11 +388,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 			$template_names[] = $page_templates_path . $component_slug_path . "{$slug}-{$name}.php";
 			$template_names[] = $components_path . $component_slug_path . $page_templates_path . "{$slug}-{$name}.php";
 
-			$template = locate_template( $template_names, false );
+			$page_template = locate_template( $template_names, false );
 		}
 
 		// If we haven't found a template with the name, use just the slug.
-		if ( empty( $template ) ) {
+		if ( empty( $page_template ) ) {
 			// If the slug includes the .php extension by any chance, remove it
 			if ( false !== $pos = stripos( $slug, '.php' ) ) {
 				$slug = substr( $slug, 0, $pos );
@@ -398,11 +404,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 			$template_names[] = $page_templates_path . $component_slug_path . "{$slug}.php";
 			$template_names[] = $components_path . $component_slug_path . $page_templates_path . "{$slug}.php";
 
-			$template = locate_template( $template_names, false );
+			$page_template = locate_template( $template_names, false );
 		}
 
 		// Allow others to filter this
-		return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name );
+		return apply_filters( 'pixelgrade_locate_component_page_template', $page_template, $component_slug, $slug, $name );
 	}
 }
 
@@ -491,8 +497,6 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 			}
 			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
 
-			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
-
 			$template = locate_template( $template_names, false );
 		}
 
@@ -510,8 +514,6 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 				// We need to look in the /template-parts/ root also
 				$template_names[] = $template_parts_path . "{$slug}.php";
 			}
-			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
-
 			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
 
 			$template = locate_template( $template_names, false );

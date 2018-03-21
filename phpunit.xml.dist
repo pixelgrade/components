@@ -7,16 +7,21 @@
 	convertWarningsToExceptions="true"
     verbose="true"
     syntaxCheck="false"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false"
 	>
 	<testsuites>
 		<testsuite name="base">
-			<directory prefix="test_" suffix=".php">./tests/php/base/</directory>
+			<directory prefix="test_" suffix=".php">./tests/php/base</directory>
 		</testsuite>
         <!-- The suite below HAS to be last to run,
 		as it includes a test that sets some const and would contaminate
 		the other tests as well. -->
         <testsuite name="last">
-            <directory prefix="testX_" suffix=".php">./tests/php/</directory>
+            <directory prefix="testX_" suffix=".php">./tests/php</directory>
+            <exclude>./tests/php/vendor</exclude>
         </testsuite>
 	</testsuites>
     <groups>
