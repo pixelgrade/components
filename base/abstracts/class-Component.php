@@ -269,6 +269,12 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 	 * You should refrain from putting things here that are not absolutely necessary because these are murky waters.
 	 */
 	public function preInitSetup() {
+		// Add theme support(s), if any are configured.
+		$this->addThemeSupport();
+
+		// Add image size(s), if any are configured.
+		$this->addImageSizes();
+
 		// Register the widget areas
 		// We hook this in preInitSetup because the `widgets_init` hooks gets fires at init priority 1.
 		if ( ! empty( $this->config['sidebars'] ) ) {
@@ -346,6 +352,67 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 		}
 
 		do_action( "pixelgrade_{$hook_slug}_after_register_blocks", constant( get_class( $this ) . '::COMPONENT_SLUG' ), $config );
+	}
+
+	/**
+	 * Add theme support(s), if any are configured.
+	 *
+	 * @return bool
+	 */
+	public function addThemeSupport() {
+		$added_theme_support = false;
+		if ( ! empty( $this->config['theme_support'] ) ) {
+			foreach ( $this->config['theme_support'] as $theme_support ) {
+				if ( ! is_string( $theme_support ) ) {
+					continue;
+				}
+
+				// Add new theme support.
+				add_theme_support( $theme_support );
+
+				// Remember what we've done last summer :)
+				$added_theme_support = true;
+			}
+		}
+
+		// Let others know what we did.
+		return $added_theme_support;
+	}
+
+	/**
+	 * Add image size(s), if any are configured.
+	 *
+	 * @return bool
+	 */
+	public function addImageSizes() {
+		$added_image_sizes = false;
+		if ( ! empty( $this->config['image_sizes'] ) ) {
+			foreach ( $this->config['image_sizes'] as $name => $image_size_attrs ) {
+				if ( ! is_string( $name ) || ! is_array( $image_size_attrs ) || ! isset( $image_size_attrs['width'] ) || ! isset( $image_size_attrs['height'] ) ) {
+					continue;
+				}
+
+				// Sanitize the values
+				$image_size_attrs['width'] = absint( $image_size_attrs['width'] );
+				$image_size_attrs['height'] = absint( $image_size_attrs['height'] );
+
+				if ( ! isset( $image_size_attrs['crop'] ) ) {
+					// By default we don't crop.
+					$image_size_attrs['crop'] = false;
+				} else {
+					$image_size_attrs['crop'] = filter_var( $image_size_attrs['crop'], FILTER_VALIDATE_BOOLEAN );
+				}
+
+				// Add the image size.
+				add_image_size( $name, $image_size_attrs['width'], $image_size_attrs['height'], $image_size_attrs['crop'] );
+
+				// Remember what we've done last summer :)
+				$added_image_sizes = true;
+			}
+		}
+
+		// Let others know what we did.
+		return $added_image_sizes;
 	}
 
 	/**

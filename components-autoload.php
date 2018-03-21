@@ -102,7 +102,7 @@ class Pixelgrade_Components_Autoloader {
 					if ( function_exists( $function ) ) {
 						/**
 						 * Fires before the first instantiation of a component.
-						 * This is a good chance to hook to various pre_init filters in a clean way (e.g. "pixelgrade_{$hook_slug}_init_args" )
+						 * This is a good chance to hook to various pre_init filters in a clean way (e.g. "pixelgrade_{$slug}_init_args" )
 						 */
 						do_action( "pixelgrade_before_{$slug}_instantiation" );
 

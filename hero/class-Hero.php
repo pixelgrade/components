@@ -38,6 +38,15 @@ class Pixelgrade_Hero extends Pixelgrade_Component {
 			'post_types' => array( 'page' ), // By default we will only use heroes for pages
 		);
 
+		// Configure the image sizes that the blog component uses
+		$this->config['image_sizes'] = array(
+			'pixelgrade_hero_image' => array(
+				'width' => 2000,
+				'height' => 9999,
+				'crop' => false,
+			),
+		);
+
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
 		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
