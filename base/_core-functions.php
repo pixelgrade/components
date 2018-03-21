@@ -179,6 +179,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 			$template = locate_template( $template_names, false );
 		}
 
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
+		}
+
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_file', $template, $component_slug, $slug, $name, $lookup_theme_root );
 	}
@@ -323,6 +328,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) {
 			$template = locate_template( $template_names, false );
 		}
 
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
+		}
+
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name, $lookup_theme_root );
 	}
@@ -405,6 +415,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 			$template_names[] = $components_path . $component_slug_path . $page_templates_path . "{$slug}.php";
 
 			$page_template = locate_template( $template_names, false );
+		}
+
+		// Make sure we have no double slashing.
+		if ( ! empty( $page_template ) ) {
+			$page_template = str_replace( '//', '/', $page_template );
 		}
 
 		// Allow others to filter this
@@ -522,6 +537,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 		// If we haven't found a template part and $component_slug is not 'blog' we will try and locate the template in the blog.
 		if ( empty( $template ) && class_exists( 'Pixelgrade_Blog' ) && Pixelgrade_Blog::COMPONENT_SLUG !== $component_slug ) {
 			$template = pixelgrade_locate_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, $slug, $name );
+		}
+
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
 		}
 
 		// Allow others to filter this
@@ -695,6 +715,11 @@ if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) {
 			}
 		}
 
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
+		}
+
 		// Return what we found.
 		return apply_filters( 'pixelgrade_locate_template_part', $template, $slug, $template_path, $name );
 	}
@@ -716,7 +741,7 @@ function pixelgrade_make_relative_path( $path ) {
 		return '';
 	}
 
-	$stylesheet_path = trailingslashit( get_stylesheet_uri() );
+	$stylesheet_path = trailingslashit( get_stylesheet_directory_uri() );
 	$template_path   = trailingslashit( get_template_directory() );
 
 	if ( 0 === strpos( $path, $stylesheet_path ) ) {
