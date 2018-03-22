@@ -306,7 +306,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 				if ( is_string( $field ) ) {
 					$tmp = array();
 					foreach ( $data as $key => $row ) {
-									$tmp[ $key ] = $row[ $field ];
+						$tmp[ $key ] = $row[ $field ];
 					}
 					$args[ $n ] = $tmp;
 				}
