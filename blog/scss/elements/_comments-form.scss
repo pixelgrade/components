@@ -16,6 +16,7 @@
 
 	label {
 		display: block;
+		@include spacing(margin-bottom, 1rem);
 	}
 }
 
