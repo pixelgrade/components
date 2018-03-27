@@ -78,12 +78,12 @@ $h6: () !default;
   }
 }
 
-html {
-  border: 0 solid transparent;
+.site {
+  border: solid transparent;
 }
 
 @if ( $content-border-width != 0 ) {
-  html {
+  .site {
     border-width: $content-border-width;
     border-color: $content-border-color;
   }
