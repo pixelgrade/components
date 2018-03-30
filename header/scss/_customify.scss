@@ -39,11 +39,6 @@ $header-font: () !default;
   background-color: $header-background-color;
 }
 
-.site-header {
-  transition: $transition--default;
-  transition-property: background-color;
-}
-
 .site-header-sticky {
   background-color: $header-sticky-background-color;
 

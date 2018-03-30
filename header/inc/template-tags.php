@@ -291,7 +291,7 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
 			'<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
 			esc_url( home_url( '/' ) ),
 			wp_get_attachment_image(
-				$custom_logo_id, 'full', false, array(
+				$custom_logo_id, 'large', false, array(
 					'class'    => 'custom-logo--transparent',
 					'itemprop' => 'logo',
 				)

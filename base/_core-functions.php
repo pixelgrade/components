@@ -63,6 +63,8 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 	 *      yourtheme   /   inc             /   components      /   $component_slug /   $slug.php
 	 *      yourtheme   /   components      /   $component_slug /   $slug.php
 	 *
+	 * Please note that the actual components path (yourtheme/components above) is controlled by the PIXELGRADE_COMPONENTS_PATH constant.
+	 *
 	 * @param string $component_slug
 	 * @param string $slug
 	 * @param string $name Optional. (default: '')
@@ -118,7 +120,10 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 				}
 			}
 
-			$template_names[] = $component_slug_path . "{$slug}-{$name}.php";
+			// If the $components_path is empty there is no point in introducing this rule because it would block the rest.
+			if ( ! empty( $components_path ) ) {
+				$template_names[] = $component_slug_path . "{$slug}-{$name}.php";
+			}
 			$template_names[] = 'inc/' . $components_path . $component_slug_path . "{$slug}-{$name}.php";
 			$template_names[] = $components_path . $component_slug_path . "{$slug}-{$name}.php";
 
@@ -157,7 +162,10 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 				}
 			}
 
-			$template_names[] = $component_slug_path . "{$slug}.php";
+			// If the $components_path is empty there is no point in introducing this rule because it would block the rest.
+			if ( ! empty( $components_path ) ) {
+				$template_names[] = $component_slug_path . "{$slug}.php";
+			}
 			$template_names[] = 'inc/' . $components_path . $component_slug_path . "{$slug}.php";
 			$template_names[] = $components_path . $component_slug_path . "{$slug}.php";
 
@@ -169,6 +177,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 			}
 
 			$template = locate_template( $template_names, false );
+		}
+
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
 		}
 
 		// Allow others to filter this
@@ -315,6 +328,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) {
 			$template = locate_template( $template_names, false );
 		}
 
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
+		}
+
 		// Allow others to filter this
 		return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name, $lookup_theme_root );
 	}
@@ -340,7 +358,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 	 * @return string
 	 */
 	function pixelgrade_locate_component_page_template( $component_slug, $slug, $name = '' ) {
-		$template = '';
+		$page_template = '';
 
 		// Setup our partial path (mainly trailingslashit)
 		// Make sure we only trailingslashit non-empty strings
@@ -380,11 +398,11 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 			$template_names[] = $page_templates_path . $component_slug_path . "{$slug}-{$name}.php";
 			$template_names[] = $components_path . $component_slug_path . $page_templates_path . "{$slug}-{$name}.php";
 
-			$template = locate_template( $template_names, false );
+			$page_template = locate_template( $template_names, false );
 		}
 
 		// If we haven't found a template with the name, use just the slug.
-		if ( empty( $template ) ) {
+		if ( empty( $page_template ) ) {
 			// If the slug includes the .php extension by any chance, remove it
 			if ( false !== $pos = stripos( $slug, '.php' ) ) {
 				$slug = substr( $slug, 0, $pos );
@@ -396,11 +414,16 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 			$template_names[] = $page_templates_path . $component_slug_path . "{$slug}.php";
 			$template_names[] = $components_path . $component_slug_path . $page_templates_path . "{$slug}.php";
 
-			$template = locate_template( $template_names, false );
+			$page_template = locate_template( $template_names, false );
+		}
+
+		// Make sure we have no double slashing.
+		if ( ! empty( $page_template ) ) {
+			$page_template = str_replace( '//', '/', $page_template );
 		}
 
 		// Allow others to filter this
-		return apply_filters( 'pixelgrade_locate_component_template', $template, $component_slug, $slug, $name );
+		return apply_filters( 'pixelgrade_locate_component_page_template', $page_template, $component_slug, $slug, $name );
 	}
 }
 
@@ -489,8 +512,6 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 			}
 			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
 
-			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}-{$name}.php";
-
 			$template = locate_template( $template_names, false );
 		}
 
@@ -510,14 +531,17 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 			}
 			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
 
-			$template_names[] = $components_path . $component_slug_path . $template_parts_path . "{$slug}.php";
-
 			$template = locate_template( $template_names, false );
 		}
 
 		// If we haven't found a template part and $component_slug is not 'blog' we will try and locate the template in the blog.
 		if ( empty( $template ) && class_exists( 'Pixelgrade_Blog' ) && Pixelgrade_Blog::COMPONENT_SLUG !== $component_slug ) {
 			$template = pixelgrade_locate_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, $slug, $name );
+		}
+
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
 		}
 
 		// Allow others to filter this
@@ -691,6 +715,11 @@ if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) {
 			}
 		}
 
+		// Make sure we have no double slashing.
+		if ( ! empty( $template ) ) {
+			$template = str_replace( '//', '/', $template );
+		}
+
 		// Return what we found.
 		return apply_filters( 'pixelgrade_locate_template_part', $template, $slug, $template_path, $name );
 	}
@@ -712,7 +741,7 @@ function pixelgrade_make_relative_path( $path ) {
 		return '';
 	}
 
-	$stylesheet_path = trailingslashit( get_stylesheet_uri() );
+	$stylesheet_path = trailingslashit( get_stylesheet_directory_uri() );
 	$template_path   = trailingslashit( get_template_directory() );
 
 	if ( 0 === strpos( $path, $stylesheet_path ) ) {

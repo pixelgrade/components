@@ -90,7 +90,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
 						'menu_id'         => 'menu-footer',
 						'container'       => 'nav',
-						'container_class' => '',
+						'container_class' => 'menu-footer-menu-container',
 						'depth'           => - 1, // by default we will flatten the menu hierarchy, if there is one
 						'fallback_cb'     => false,
 					),

@@ -711,6 +711,35 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			),
 		);
 
+		// Configure the image sizes that the blog component uses
+		$this->config['image_sizes'] = array(
+			'pixelgrade_card_image' => array(
+				'width' => 450,
+				'height' => 9999,
+				'crop' => false,
+			),
+			'pixelgrade_slide_image' => array(
+				'width' => 9999,
+				'height' => 800,
+				'crop' => false,
+			),
+			'pixelgrade_single_landscape' => array(
+				'width' => 1200,
+				'height' => 9999,
+				'crop' => false,
+			),
+			'pixelgrade_single_portrait' => array(
+				'width' => 800,
+				'height' => 9999,
+				'crop' => false,
+			),
+		);
+
+		// Configure the theme support(s) that the blog component declares.
+		$this->config['theme_support'] = array(
+			'post-thumbnails',
+		);
+
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
 		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );

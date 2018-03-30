@@ -847,16 +847,16 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			$imageurl = '';
 			if ( ! empty( $value ) ) {
-				$image_details = wp_get_attachment_image_src( $value, 'full' );
+				$image_details = wp_get_attachment_image_src( $value, 'large' );
 				if ( ! empty( $image_details ) ) {
 					$imageurl = $instance['imageurl'] = reset( $image_details );
 				}
 
-				$image_srcset = wp_get_attachment_image_srcset( $value, 'full' );
+				$image_srcset = wp_get_attachment_image_srcset( $value, 'large' );
 				if ( $image_srcset ) {
 					$instance['srcset'] = $image_srcset;
 
-					$image_sizes = wp_get_attachment_image_sizes( $value, 'full' );
+					$image_sizes = wp_get_attachment_image_sizes( $value, 'large' );
 					if ( $image_sizes ) {
 						$instance['sizes'] = $image_sizes;
 					}
@@ -864,7 +864,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			if ( $value > 0 ) {
-				$output .= wp_get_attachment_image( $value, 'full' ) . PHP_EOL;
+				$output .= wp_get_attachment_image( $value, 'large' ) . PHP_EOL;
 			}
 
 			$output .= '</div>' . PHP_EOL;

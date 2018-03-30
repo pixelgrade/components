@@ -5,7 +5,7 @@ $card-letter-hover-opacity: 0.7 !default;
 $card-separator-color: currentColor !default;
 $card-letter-font: () !default;
 
-$card-gutter: 2.5rem !default;
+$card-gutter: 1.7857rem !default;
 $card-content-spacing: 1.5rem !default;
 
 // Cards
@@ -59,7 +59,7 @@ $card-content-spacing: 1.5rem !default;
   }
 
   > :not(:last-child) {
-    @include spacing(padding-bottom, $card-content-spacing);
+    @include spacing(margin-bottom, $card-content-spacing);
   }
 }
 
