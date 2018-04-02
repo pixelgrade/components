@@ -41,12 +41,14 @@ export class Helper {
         const $p = $image.closest( 'p' );
         const $figure = $( '<figure />' ).attr( 'class', className );
 
+        console.log($figure, $p, $.trim( $p.text() ).length);
+
         if ( $.trim( $p.text() ).length ) {
           return;
         }
 
-        $figure.append( $image.removeAttr( 'class' ) );
-        $p.replaceWith( $figure );
+        $figure.append( $image.removeAttr( 'class' ) ).insertAfter( $p );
+        $p.remove();
       } );
   }
 
