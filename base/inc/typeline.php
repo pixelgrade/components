@@ -31,13 +31,13 @@ function typeline_get_theme_config( $path = '' ) {
 	$path = apply_filters( 'typeline_theme_config_path', $path );
 
 	// bail if we don't have a path
-	if ( empty( $path ) ) {
-		return false;
+	if ( empty( $path ) || ! file_exists( $path ) ) {
+		return apply_filters( 'typeline_theme_config', false );
 	}
 
 	// Read the theme's config file - it contains a variable $typeline_config
 	include $path;
-	// If for some reason the file doens't contain the variable, bail
+	// If for some reason the file doesn't contain the variable, bail
 	if ( ! isset( $typeline_config ) ) {
 		return false;
 	}
@@ -47,7 +47,7 @@ function typeline_get_theme_config( $path = '' ) {
 
 	// bail on failure to decode
 	if ( empty( $config ) ) {
-		return false;
+		return apply_filters( 'typeline_theme_config', false );
 	}
 
 	// Now we need to do some sanitizing
@@ -56,7 +56,7 @@ function typeline_get_theme_config( $path = '' ) {
 		$config = $config['typeline-config'];
 	}
 
-	return $config;
+	return apply_filters( 'typeline_theme_config', $config );
 }
 
 /**

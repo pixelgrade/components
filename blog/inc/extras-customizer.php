@@ -534,3 +534,23 @@ function pixelgrade_blog_items_aspect_ratio_control_show() {
 
 	return true;
 }
+
+function pixelgrade_prefix_solid_buttons( $value ) {
+	return '.u-buttons-solid ' . $value;
+}
+
+function pixelgrade_suffix_hover_buttons( $value ) {
+	return '.u-buttons-solid ' . $value . ':hover';
+}
+
+function pixelgrade_suffix_active_buttons( $value ) {
+	return '.u-buttons-solid ' . $value . ':active';
+}
+
+function pixelgrade_suffix_focus_buttons( $value ) {
+	return '.u-buttons-solid ' . $value . ':focus';
+}
+
+function pixelgrade_prefix_outline_buttons( $value ) {
+	return '.u-buttons-outline ' . $value;
+}

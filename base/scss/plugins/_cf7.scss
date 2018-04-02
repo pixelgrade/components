@@ -69,6 +69,7 @@ span.wpcf7-list-item {
 
         > label, > label.checkbox, > label.radio {
             display: flex;
+            align-items: center;
         }
 
         > label > input[type="checkbox"],

@@ -64,10 +64,11 @@ $post-navigation-spacing: 4rem !default;
 	.nav-title {
 		display: block;
 
-		word-break: break-word;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		// Why do we need to truncate the titles? (George cc Alexandra)
+		// word-break: break-word;
+		// white-space: nowrap;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
 
 		transition: transform .5s cubic-bezier(.18,.61,.43,.99);
 		will-change: transform;

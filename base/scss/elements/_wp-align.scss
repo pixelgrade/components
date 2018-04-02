@@ -4,6 +4,8 @@ $wp-align-image-horizontal-padding: 4rem !default;
 $wp-align-wrapped-image-vertical-padding: 3rem !default;
 $wp-align-wrapped-image-horizontal-padding: 3rem !default;
 
+$wp-align-image-size: 50% !default;
+
 $wp-align-caption-font: (
   font-size: 14px,
   spacing-top: 1rem
@@ -79,7 +81,7 @@ p {
 
 .alignleft.alignleft,
 .alignright.alignright {
-	max-width: 50%;
+	max-width: $wp-align-image-size;
 }
 
 .alignleft {
@@ -112,7 +114,7 @@ figure {
 	&.alignright,
 	&.aligncenter,
 	&.alignnone {
-		@include spacing(margin-top, 1rem);
+		@include spacing(margin-top, $wp-align-image-vertical-padding);
 	}
 }
 
