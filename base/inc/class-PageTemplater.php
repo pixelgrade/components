@@ -92,7 +92,7 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 
 		/**
 		 * Adds our template to the pages cache in order to trick WordPress
-		 * into thinking the template file exists where it doens't really exist.
+		 * into thinking the template file exists where it doesn't really exist.
 		 *
 		 * @param array $atts
 		 *
