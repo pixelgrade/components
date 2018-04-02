@@ -89,7 +89,8 @@ $slick-dot-size: 10px !default;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  list-style: none; 
+  list-style: none;
+  padding-left: 0;
 
   // %widget-posts adds flex-basis: 33% to all it's children and needs overwritten
   .featured-posts-carousel > & {
