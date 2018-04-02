@@ -244,7 +244,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         'priority' => 320,
                         'tag' => 'aside',
                         'id' => 'secondary',
-                        'classes'  => array( 'o-layout__side  widget-area  widget-area--side' ),
+                        'classes'  => array( 'o-layout__side  widget-area  widget-area--side entry-aside' ),
                         'attributes' => array(
                         	'role' => 'complementary',
                         ),

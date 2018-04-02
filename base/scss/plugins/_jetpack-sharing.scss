@@ -19,6 +19,8 @@ $jetpack-sharing-button-color: inherit !default;
 $jetpack-sharing-padding: 12px 15px 12px 17px !default;
 $jetpack-sharing-spacing: 10px !default;
 
+$jetpack-sharing-icon-bg: #222 !default;
+
 $jetpack-sharing-font: (
   font-size: 14px,
   line-height: (18/14),
@@ -52,13 +54,9 @@ $jetpack-sharing-font: (
     padding-top: $jetpack-sharing-spacing;
     padding-left: $jetpack-sharing-spacing;
 
-      a {
-        transition: all 0.2s ease;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
+    a {
+      transition: all 0.2s ease;
+    }
   }
 
   .sd-button {
@@ -90,7 +88,7 @@ $jetpack-sharing-font: (
        a.sd-button {
          border: none;
          border-radius: 50%;
-         background: $theme-accent-color;
+         background: $jetpack-sharing-icon-bg;
 
          &:before {
            color: #fff;
