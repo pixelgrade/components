@@ -617,11 +617,21 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				// 'function_exists' => array( 'some_function', 'another_function', ),
 				// ),
 			),
-			'home'    => array(
-				'type'      => array( 'frontpage', 'home' ),
+			'frontpage'    => array(
+				'type'      => array( 'frontpage' ),
 				'checks'    => array(
-					'callback' => 'is_home',
-					'args'     => array(),
+					array(
+						'callback' => 'is_front_page',
+					),
+				),
+				'templates' => 'front-page',
+			),
+			'home'    => array(
+				'type'      => array( 'home' ),
+				'checks'    => array(
+					array(
+						'callback' => 'is_home',
+					),
 				),
 				'templates' => 'home',
 			),
@@ -634,7 +644,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'templates' => 'single',
 			),
 			'page'    => array(
-				'type'      => 'page',
+				'type'      => array( 'page' ),
 				'checks'    => array(
 					'callback' => 'is_page',
 					'args'     => array(),
@@ -661,7 +671,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			// Add our index at the end to be sure that it is used.
 			// We use it as fallback for all the templates above, much in the same way the WordPress core does it.
 			'index'   => array(
-				'type'      => array( 'frontpage', 'home', 'single', 'page', 'archive', 'search', 'index' ),
+				// @todo Need to think about this since it is troublesome (for example a static page as a frontpage).
+//				'type'      => array( 'frontpage', 'home', 'single', 'page', 'archive', 'search', 'index' ),
+				'type'      => array( 'index' ),
 				'templates' => 'index',
 			),
 
