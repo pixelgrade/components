@@ -924,7 +924,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			$classes[] = 'has-sidebar';
 		}
 
-		if ( is_single() || is_page() ) {
+		if ( ( is_single() || is_page() ) && pixelgrade_show_thumbnail() ) {
 			$image_orientation = pixelgrade_get_post_thumbnail_aspect_ratio_class();
 
 			if ( ! empty( $image_orientation ) ) {
