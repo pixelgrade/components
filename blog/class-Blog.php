@@ -924,11 +924,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			$classes[] = 'has-sidebar';
 		}
 
-		if ( ( is_single() || is_page() ) && pixelgrade_show_thumbnail() ) {
+		if ( is_single() || is_page() ) {
 			$image_orientation = pixelgrade_get_post_thumbnail_aspect_ratio_class();
 
 			if ( ! empty( $image_orientation ) ) {
-				$classes[] = 'entry-image--' . pixelgrade_get_post_thumbnail_aspect_ratio_class();
+				$classes[] = 'entry-image--' . $image_orientation;
 			}
 		}
 
