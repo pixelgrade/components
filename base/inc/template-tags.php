@@ -274,7 +274,7 @@ if ( ! function_exists( 'pixelgrade_has_no_thumbnail' ) ) {
 		$post = get_post( $post_id );
 
 		// Bail if we shouldn't show the post thumbnail.
-		if ( ! pixelgrade_show_thumbnail( $post ) ) {
+		if ( pixelgrade_show_thumbnail( $post ) ) {
 			return false;
 		}
 
