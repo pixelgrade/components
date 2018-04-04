@@ -79,7 +79,7 @@ $h6: () !default;
 }
 
 .site {
-  border: solid transparent;
+  border: 0 solid transparent;
 }
 
 @if ( $content-border-width != 0 ) {

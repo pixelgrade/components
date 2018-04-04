@@ -739,7 +739,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'crop' => false,
 			),
 			'pixelgrade_single_landscape' => array(
-				'width' => 1200,
+				'width' => 1360,
 				'height' => 9999,
 				'crop' => false,
 			),
