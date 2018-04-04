@@ -18,9 +18,7 @@
 	}
 }
 
-.o-grid,
-[class^="o-grid--"],
-[class*=" o-grid--"] {
+.o-grid {
 	@include grid;
 	@include grid-spacing( 3rem );
 }

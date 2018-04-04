@@ -113,6 +113,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_column_class' ) ) {
 		$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
 
 		$column_classes   = array();
+		$column_classes[] = 'o-grid';
 		$column_classes[] = 'o-grid--' . $columns_at_desk . 'col-@desk';
 		$column_classes[] = 'o-grid--' . $columns_at_lap . 'col-@lap';
 		$column_classes[] = 'o-grid--' . $columns_at_small . 'col-@small';

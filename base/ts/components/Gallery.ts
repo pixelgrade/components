@@ -15,10 +15,7 @@ export class Gallery extends BaseComponent {
     super();
 
     this.element = element;
-
-    if ( this.element.is( this.masonryGallerySelector ) ) {
-      this.layout();
-    }
+    this.layout();
 
     WindowService
       .onResize()
@@ -57,7 +54,7 @@ export class Gallery extends BaseComponent {
     const $items = this.element.children();
     let minColumnWidth;
 
-    if ( ! $items.length ) {
+    if ( ! $items.length || ! this.element.is( this.masonryGallerySelector ) ) {
       return;
     }
 
