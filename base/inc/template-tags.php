@@ -45,7 +45,7 @@ function pixelgrade_element_attributes( $attributes = array(), $location = '' ) 
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo esc_attr( join( ' ', $full_attributes ) );
+		echo join( ' ', $full_attributes );
 	}
 }
 
