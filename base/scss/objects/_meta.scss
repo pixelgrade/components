@@ -20,8 +20,14 @@ $meta-spacing: 0.5rem !default;
 		display: none;
 	}
 
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
 	li {
 		display: inline-block;
+		margin-bottom: 0; // Overwrite Default Lists Style 
 
 		&:not(:last-child):after {
 			content: ", ";

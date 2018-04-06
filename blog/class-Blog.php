@@ -137,8 +137,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
             // sidebar
             'sidebar'   => array(
-                'type'     => 'callback',
-                'callback' => 'pixelgrade_get_sidebar',
+	            'type'     => 'callback',
+	            'callback' => 'pixelgrade_get_sidebar',
             ),
 
             // sidebar
@@ -567,7 +567,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			//
 			// However, the order in which the templates are defined matters: an earlier template has a higher priority
 			// than a latter one when both match their conditions!
-			'404'     => array(
+
+			// Note - The _ in front of the key is intentional to bypass PHP's automagical key casting to integer if it is a numerical representation of a number.
+			'_404'     => array(
 				// The type of this template.
 				// Possible core values: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
 				// 'embed', home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
@@ -615,11 +617,21 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				// 'function_exists' => array( 'some_function', 'another_function', ),
 				// ),
 			),
-			'home'    => array(
-				'type'      => 'home',
+			'frontpage'    => array(
+				'type'      => array( 'frontpage' ),
 				'checks'    => array(
-					'callback' => 'is_home',
-					'args'     => array(),
+					array(
+						'callback' => 'is_front_page',
+					),
+				),
+				'templates' => 'front-page',
+			),
+			'home'    => array(
+				'type'      => array( 'home' ),
+				'checks'    => array(
+					array(
+						'callback' => 'is_home',
+					),
 				),
 				'templates' => 'home',
 			),
@@ -632,7 +644,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'templates' => 'single',
 			),
 			'page'    => array(
-				'type'      => 'page',
+				'type'      => array( 'page' ),
 				'checks'    => array(
 					'callback' => 'is_page',
 					'args'     => array(),
@@ -656,14 +668,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'templates' => 'search',
 			),
 
-			// Add our index at the end to be sure that it is used
+			// Add our index at the end to be sure that it is used.
+			// We use it as fallback for all the templates above, much in the same way the WordPress core does it.
 			'index'   => array(
-				'type'      => 'index',
-				'templates' => array(
-					'slug' => 'index',
-					'name' => 'blog',
-					// We need this so we can overcome the limitation of WordPress wanting a index.php in the theme root
-				),
+				// @todo Need to think about this since it is troublesome (for example a static page as a frontpage).
+//				'type'      => array( 'frontpage', 'home', 'single', 'page', 'archive', 'search', 'index' ),
+				'type'      => array( 'index' ),
+				'templates' => 'index',
 			),
 
 			// Now for some of our own "types" that we use to handle pseudo-templates like `header.php`, `footer.php`
@@ -675,6 +686,10 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			'footer'  => array(
 				'type'      => 'footer',
 				'templates' => 'footer',
+			),
+			'sidebar-below-post' => array(
+				'type'      => 'sidebar',
+				'templates' => 'sidebar-below-post',
 			),
 			'sidebar' => array(
 				'type'      => 'sidebar',
@@ -913,7 +928,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			$image_orientation = pixelgrade_get_post_thumbnail_aspect_ratio_class();
 
 			if ( ! empty( $image_orientation ) ) {
-				$classes[] = 'entry-image--' . pixelgrade_get_post_thumbnail_aspect_ratio_class();
+				$classes[] = 'entry-image--' . $image_orientation;
 			}
 		}
 

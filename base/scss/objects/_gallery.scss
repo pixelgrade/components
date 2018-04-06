@@ -189,11 +189,15 @@
 	.c-gallery__item {
 		width: auto;
 		padding-right: 0;
+	}
 
-    @include below(lap) {
+  @include below(lap) {
+    margin-left: 0;
+
+    .c-gallery__item {
       width: 100%;
     }
-	}
+  }
 }
 
 @each $name, $value in $breakpoints {

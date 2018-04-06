@@ -73,7 +73,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 				'date',
 				'embed',
 				'home',
-				'front_page',
+				'frontpage',
 				'page',
 				'paged',
 				'search',
@@ -108,7 +108,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 		 * so we know to what "{$type}_template_hierarchy" filters we need to hook
 		 *
 		 * Possible values for `$type` include: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
-		 * 'embed', 'home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
+		 * 'embed', 'home', 'front_page', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
 		 *
 		 * @see get_query_template()
 		 */
@@ -120,7 +120,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 					continue;
 				}
 
-				$types[] = $template['type'];
+				$types = array_merge( $types, $template['type'] );
 			}
 
 			// Make sure that we have each type only once
@@ -245,6 +245,9 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 			return $stack;
 		}
 
+		// Initialize the bottom stack that will hold component templates not matched with an existing stack template
+		$bottom_stack = array();
+
 		// Extract our args
 		extract( $args );
 		/** @var string $type */
@@ -256,7 +259,7 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 		$templates = array_reverse( $templates );
 		foreach ( $templates as $template ) {
 			// We are only interested in the templates that have the current $type
-			if ( $template['type'] === $type ) {
+			if ( in_array( $type, $template['type'], true ) ) {
 				// We need to process the check section of the config, if available
 				$checked = true;
 				if ( ! empty( $template['checks'] ) ) {
@@ -269,8 +272,8 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 
 					// Handle the various formats we could be receiving the template info in
 					if ( is_string( $template['templates'] ) ) {
-						// This is directly the slug of a template - locate it
-						$new_template      = pixelgrade_locate_component_template( $component_slug, $template['templates'] );
+						// This is directly the slug of a template - locate it (we handle the index template differently)
+						$new_template      = pixelgrade_locate_component_template( $component_slug, $template['templates'], '', ( 'index' === $template['templates'] ? false : true ) );
 						$template_filename = $template['templates'];
 					} elseif ( is_array( $template['templates'] ) ) {
 						// We have an array but it may be a simple array, or an array of arrays - standardize it
@@ -288,7 +291,8 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 									$item['name'] = '';
 								}
 
-								$new_template = pixelgrade_locate_component_template( $component_slug, $item['slug'], $item['name'] );
+								// Locate the template (we handle the index template differently)
+								$new_template = pixelgrade_locate_component_template( $component_slug, $item['slug'], $item['name'], ( 'index' === $item['slug'] && empty( $item['name'] ) ? false : true ) );
 
 								// If we found a template, we stop since upper templates get precedence over lower ones
 								if ( ! empty( $new_template ) ) {
@@ -319,14 +323,17 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 								// We will insert it above the found entry
 								$stack = Pixelgrade_Array::insertBeforeKey( $stack, $key, $new_template );
 							} else {
-								// We will simply put it at the top if nothing was found
-								array_unshift( $stack, $new_template );
+								// We will add it to the bottom of the stack (bottom_stack) if nothing was found, but at the top of the bottom_stack so we maintain template precedence
+								array_unshift( $bottom_stack, $new_template );
 							}
 						}
 					}
 				}
 			}
 		}
+
+		// Add the bottom stack, well, at the bottom of the stack
+		$stack = array_merge( array_values( $stack ), array_values( $bottom_stack ) );
 
 		return $stack;
 	}
