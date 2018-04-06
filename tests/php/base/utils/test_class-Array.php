@@ -126,7 +126,26 @@ class CP_Tests_Class_Array extends WP_UnitTestCase {
 	 * @covers Pixelgrade_Array::objArraySearch
 	 */
 	function test_objArraySearch() {
+		$object1 = (object) [
+			'propertyOne' => 'foo1',
+			'propertyTwo' => 1,
+		];
+		$object2 = (object) [
+			'propertyOne' => 'foo2',
+			'propertyTwo' => 2,
+		];
+		$object3 = (object) [
+			'propertyOne' => 'foo3',
+			'propertyTwo' => 3,
+		];
+		$object_array = [ $object1, $object2, $object3 ];
 
+		$this->assertEquals( 0, Pixelgrade_Array::objArraySearch( $object_array, 'propertyOne', 'foo1' ) );
+		$this->assertEquals( 1, Pixelgrade_Array::objArraySearch( $object_array, 'propertyOne', 'foo2' ) );
+		$this->assertEquals( 1, Pixelgrade_Array::objArraySearch( $object_array, 'propertyTwo', 2 ) );
+		$this->assertEquals( 1, Pixelgrade_Array::objArraySearch( $object_array, 'propertyTwo', '2' ) );
+		$this->assertEquals( false, Pixelgrade_Array::objArraySearch( $object_array, 'bogus', '2' ) );
+		$this->assertEquals( false, Pixelgrade_Array::objArraySearch( $object_array, 'propertyOne', 'bogus' ) );
 	}
 
 	/**
