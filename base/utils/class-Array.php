@@ -112,6 +112,10 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * @return bool|array
 		 */
 		public static function arrayDiffAssocRecursive( $array1, $array2 ) {
+			if ( empty( $array1 ) || ! is_array( $array1 ) ) {
+				return false;
+			}
+
 			foreach ( $array1 as $key => $value ) {
 				if ( is_array( $value ) ) {
 					if ( ! isset( $array2[ $key ] ) ) {
@@ -133,7 +137,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		}
 
 		/**
-		 * Searches for an array entry that partially matches the needle and returns the first found key
+		 * Searches for an array entry that partially matches the needle and returns the first found key.
 		 *
 		 * @param string $needle
 		 * @param array  $haystack
@@ -141,7 +145,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * @return bool|int|string The first key whose value matched the partial needle. False on failure or invalid input.
 		 */
 		public static function strArraySearch( $needle, $haystack ) {
-			if ( empty( $haystack ) ) {
+			if ( empty( $haystack ) || empty( $needle ) ) {
 				return false;
 			}
 
@@ -151,7 +155,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 
 			foreach ( $haystack as $key => $value ) {
 				if ( ! is_string( $value ) ) {
-					return false;
+					continue;
 				}
 
 				if ( false !== strpos( $value, $needle ) ) {
@@ -163,7 +167,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		}
 
 		/**
-		 * Searches in reverse order for an array entry that partially matches the needle and returns the first found key
+		 * Searches in reverse order for an array entry that partially matches the needle and returns the first found key.
 		 *
 		 * @param string $needle
 		 * @param array  $haystack
@@ -171,7 +175,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * @return bool|int|string The first key whose value matched the partial needle. False on failure or invalid input.
 		 */
 		public static function strrArraySearch( $needle, $haystack ) {
-			if ( empty( $haystack ) ) {
+			if ( empty( $haystack ) || empty( $needle ) ) {
 				return false;
 			}
 
@@ -183,7 +187,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 
 			foreach ( $haystack as $key => $value ) {
 				if ( ! is_string( $value ) ) {
-					return false;
+					continue;
 				}
 
 				if ( false !== strpos( $value, $needle ) ) {
@@ -219,9 +223,9 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 *
 		 * @return mixed|false
 		 */
-		public static function detach_by_value( array &$array, $value ) {
+		public static function detachByValue( array &$array, $value ) {
 			$key = array_search( $value, $array );
-			if ( ! $key ) {
+			if ( false === $key ) {
 				return false;
 			}
 			return self::detach( $array, $key );
@@ -230,13 +234,22 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		/**
 		 * Moves an item from one position in an array to another position in the array.
 		 *
-		 * @param $array
-		 * @param $old_index
-		 * @param $new_index
+		 * If the $old_index doesn't exist, the array will be returned unchanged.
+		 * If the $new_index doesn't exist, the item at $old_index will be moved at the end.
 		 *
-		 * @return mixed
+		 * Notice: It doesn't keep the assoc array keys for the moved items. It is best not to be used on associative arrays.
+		 *
+		 * @param array $array
+		 * @param int $old_index
+		 * @param int $new_index
+		 *
+		 * @return array|false The reordered array.
 		 */
 		public static function reorder( $array, $old_index, $new_index ) {
+			if ( ! is_array( $array ) || ! is_int( $old_index ) || ! is_int( $new_index ) ) {
+				return false;
+			}
+
 			array_splice(
 				$array,
 				$new_index,
@@ -246,6 +259,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 					array_slice( $array, $new_index, count( $array ) )
 				)
 			);
+
 			return $array;
 		}
 
