@@ -552,7 +552,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 * @return bool
 		 */
 		public static function validateCustomizerSectionConfig( $modified_config, $original_config ) {
-			if ( ! is_array( $modified_config ) || ! is_array( $original_config ) ) {
+			if ( ! is_array( $modified_config ) || ! is_array( $original_config ) || empty( $modified_config ) ) {
 				return false;
 			}
 
@@ -564,11 +564,13 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 						// We will not check for default values being not null as that is done via Pixelgrade_Config::validateCustomizerSectionConfigDefaults().
 						// Check if the option has a type - it should have and it usually ends up without one with poorly configured arrays (like defining a default value for an option that doesn't exist).
 						if ( is_array( $option ) && ! array_key_exists( 'type', $option ) ) {
-							_doing_it_wrong(
-								__FUNCTION__,
-								sprintf( 'There is something wrong with the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
-								' The option has no TYPE defined! Maybe it doesn\'t even exist.', null
-							);
+							if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+								_doing_it_wrong(
+									__METHOD__,
+									sprintf( 'There is something wrong with the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
+									' The option has no TYPE defined! Maybe it doesn\'t even exist.', null
+								);
+							}
 
 							$errors = true;
 						}
@@ -601,11 +603,13 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 						if ( is_array( $option ) && array_key_exists( 'default', $option ) && null === $option['default'] && isset( $modified_config[ $section_key ]['options'][ $option_key ] ) ) {
 							// This means we should receive a value in the modified config.
 							if ( ! isset( $modified_config[ $section_key ]['options'][ $option_key ]['default'] ) ) {
-								_doing_it_wrong(
-									__FUNCTION__,
-									sprintf( 'You need to define a default value for the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
-									( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : '' ), null
-								);
+								if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+									_doing_it_wrong(
+										__METHOD__,
+										sprintf( 'You need to define a default value for the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
+										( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : '' ), null
+									);
+								}
 
 								$errors = true;
 							}

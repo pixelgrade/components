@@ -20,11 +20,15 @@ class CP_Tests_Class_Config extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		// Do something
+
+		// Suppress the doing_it_wrong error.
+		add_filter( 'doing_it_wrong_trigger_error', '__return_false' );
 	}
 
 	public function tearDown() {
-		// Do something
+		// Reenable the doing_it_wrong error.
+		remove_filter( 'doing_it_wrong_trigger_error', '__return_false' );
+
 		parent::tearDown();
 	}
 
@@ -847,19 +851,269 @@ class CP_Tests_Class_Config extends \WP_UnitTestCase {
 	 * @covers \Pixelgrade_Config::validateCustomizerSectionConfig
 	 */
 	function test_validateCustomizerSectionConfig() {
+		$this->assertEquals( false, \Pixelgrade_Config::validateCustomizerSectionConfig( '', '' ) );
 
+		$config = array(
+			'buttons' => array(
+				'title'   => esc_html__( 'Buttons', '__components_txtd' ),
+				'options' => array(
+					'buttons_customizer_tabs'      => array(
+						'type' => 'html',
+						'html' => '',
+					),
+					'buttons_style'                => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Buttons Style', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
+						'default' => null,
+						'choices' => array(
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
+							'outline' => esc_html__( 'Outline', '__components_txtd' ),
+						),
+					),
+				),
+			),
+		);
+		$this->assertEquals( false, \Pixelgrade_Config::validateCustomizerSectionConfig( $config, [] ) );
+
+		$config = array(
+			'buttons' => array(
+				'title'   => esc_html__( 'Buttons', '__components_txtd' ),
+				'options' => array(
+					'buttons_customizer_tabs'      => array(
+						'html' => '',
+					),
+					'buttons_style'                => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Buttons Style', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
+						'default' => null,
+						'choices' => array(
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
+							'outline' => esc_html__( 'Outline', '__components_txtd' ),
+						),
+					),
+				),
+			),
+		);
+		$this->setExpectedIncorrectUsage('Pixelgrade_Config::validateCustomizerSectionConfig');
+		$this->assertEquals( true, \Pixelgrade_Config::validateCustomizerSectionConfig( $config, [] ) );
 	}
 
 	/**
 	 * @covers \Pixelgrade_Config::validateCustomizerSectionConfigDefaults
 	 */
 	function test_validateCustomizerSectionConfigDefaults() {
+		$this->assertEquals( false, \Pixelgrade_Config::validateCustomizerSectionConfigDefaults( '', '' ) );
+
+		$modified_config = array(
+			'buttons' => array(
+				'title'   => esc_html__( 'Buttons', '__components_txtd' ),
+				'options' => array(
+					'buttons_customizer_tabs'      => array(
+						'type' => 'html',
+						'html' => '',
+					),
+					'buttons_style'                => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Buttons Style', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
+						'default' => 'something',
+						'choices' => array(
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
+							'outline' => esc_html__( 'Outline', '__components_txtd' ),
+						),
+					),
+				),
+			),
+		);
+		$original_config = array(
+			'buttons' => array(
+				'title'   => esc_html__( 'Buttons', '__components_txtd' ),
+				'options' => array(
+					'buttons_customizer_tabs'      => array(
+						'type' => 'html',
+						'html' => '',
+					),
+					'buttons_style'                => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Buttons Style', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
+						'default' => null,
+						'choices' => array(
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
+							'outline' => esc_html__( 'Outline', '__components_txtd' ),
+						),
+					),
+				),
+			),
+		);
+		$this->assertEquals( false, \Pixelgrade_Config::validateCustomizerSectionConfigDefaults( $modified_config, $original_config ) );
+
+		$modified_config = array(
+			'buttons' => array(
+				'title'   => esc_html__( 'Buttons', '__components_txtd' ),
+				'options' => array(
+					'buttons_customizer_tabs'      => array(
+						'type' => 'html',
+						'html' => '',
+					),
+					'buttons_style'                => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Buttons Style', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
+						'default' => null,
+						'choices' => array(
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
+							'outline' => esc_html__( 'Outline', '__components_txtd' ),
+						),
+					),
+				),
+			),
+		);
+		$original_config = array(
+			'buttons' => array(
+				'title'   => esc_html__( 'Buttons', '__components_txtd' ),
+				'options' => array(
+					'buttons_customizer_tabs'      => array(
+						'type' => 'html',
+						'html' => '',
+					),
+					'buttons_style'                => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Buttons Style', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose the default button style.', '__components_txtd' ),
+						'default' => null,
+						'choices' => array(
+							'solid'   => esc_html__( 'Solid', '__components_txtd' ),
+							'outline' => esc_html__( 'Outline', '__components_txtd' ),
+						),
+					),
+				),
+			),
+		);
+		$this->setExpectedIncorrectUsage('Pixelgrade_Config::validateCustomizerSectionConfigDefaults');
+		$this->assertEquals( true, \Pixelgrade_Config::validateCustomizerSectionConfigDefaults( $modified_config, $original_config ) );
 	}
 
 	/**
 	 * @covers \Pixelgrade_Config::merge
 	 */
 	function test_merge() {
+		$original = [];
+		$changes = [];
+		$this->assertEquals( [], \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			1,2,3
+		];
+		$changes = [];
+		$this->assertEquals( [1,2,3], \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			1,2,3
+		];
+		$changes = [ 4,5 ];
+		$this->assertEquals( [4,5,3], \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			1,2,3
+		];
+		$changes = [ 1,2,4,5 ];
+		$this->assertEquals( [1,2,4,5], \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			'one' => [
+				'uno' => 'old',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$changes = [
+			'one' => [
+				'uno' => 'new',
+			],
+			'two' => [
+				'due' => 'new',
+			]
+		];
+		$this->assertEquals( $changes, \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			'one' => [
+				'uno' => 'old',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$changes = [
+			'one' => [
+				'uno' => 'new',
+			],
+		];
+		$merged = [
+			'one' => [
+				'uno' => 'new',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$this->assertEquals( $merged, \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			'one' => [
+				'uno' => 'old',
+				'yet' => 'another',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$changes = [
+			'one' => [
+				'uno' => 'new',
+			],
+		];
+		$merged = [
+			'one' => [
+				'uno' => 'new',
+				'yet' => 'another',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$this->assertEquals( $merged, \Pixelgrade_Config::merge( $original, $changes ) );
+
+		$original = [
+			'one' => [
+				'uno' => 'old',
+				'yet' => 'another',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$changes = [
+			'one' => [
+				'uno' => 'new',
+				'new' => 'one',
+			],
+		];
+		$merged = [
+			'one' => [
+				'uno' => 'new',
+				'yet' => 'another',
+				'new' => 'one',
+			],
+			'two' => [
+				'due' => 'old',
+			]
+		];
+		$this->assertEquals( $merged, \Pixelgrade_Config::merge( $original, $changes ) );
 	}
 
 	public static function delTree($dir) {
