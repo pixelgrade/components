@@ -16,13 +16,13 @@ use SebastianBergmann\CodeCoverage\Node\Directory as DirectoryNode;
 /**
  * Renders a directory node.
  */
-final class Directory extends Renderer
+class Directory extends Renderer
 {
     /**
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @param DirectoryNode $node
+     * @param string        $file
      */
-    public function render(DirectoryNode $node, string $file): void
+    public function render(DirectoryNode $node, $file)
     {
         $template = new \Text_Template($this->templatePath . 'directory.html', '{{', '}}');
 
@@ -48,7 +48,13 @@ final class Directory extends Renderer
         $template->renderTo($file);
     }
 
-    protected function renderItem(Node $node, bool $total = false): string
+    /**
+     * @param Node $node
+     * @param bool $total
+     *
+     * @return string
+     */
+    protected function renderItem(Node $node, $total = false)
     {
         $data = [
             'numClasses'                   => $node->getNumClassesAndTraits(),

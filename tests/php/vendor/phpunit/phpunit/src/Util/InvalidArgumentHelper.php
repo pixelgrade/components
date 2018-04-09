@@ -15,9 +15,16 @@ use PHPUnit\Framework\Exception;
  * Factory for PHPUnit\Framework\Exception objects that are used to describe
  * invalid arguments passed to a function or method.
  */
-final class InvalidArgumentHelper
+class InvalidArgumentHelper
 {
-    public static function factory(int $argument, string $type, $value = null): Exception
+    /**
+     * @param int    $argument
+     * @param string $type
+     * @param mixed  $value
+     *
+     * @return Exception
+     */
+    public static function factory($argument, $type, $value = null)
     {
         $stack = \debug_backtrace();
 

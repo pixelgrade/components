@@ -18,48 +18,60 @@ use PHPUnit\Framework\Error\Warning;
 /**
  * Error handler that converts PHP errors and warnings to exceptions.
  */
-final class ErrorHandler
+class ErrorHandler
 {
-    private static $errorStack = [];
+    protected static $errorStack = [];
 
     /**
      * Returns the error stack.
+     *
+     * @return array
      */
-    public static function getErrorStack(): array
+    public static function getErrorStack()
     {
         return self::$errorStack;
     }
 
-    public static function handleError(int $errorNumber, string $errorString, string $errorFile, int $errorLine): bool
+    /**
+     * @param int    $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param int    $errline
+     *
+     * @return false
+     *
+     * @throws Error
+     */
+    public static function handleError($errno, $errstr, $errfile, $errline)
     {
-        if (!($errorNumber & \error_reporting())) {
+        if (!($errno & \error_reporting())) {
             return false;
         }
 
-        self::$errorStack[] = [$errorNumber, $errorString, $errorFile, $errorLine];
+        self::$errorStack[] = [$errno, $errstr, $errfile, $errline];
 
         $trace = \debug_backtrace();
         \array_shift($trace);
 
         foreach ($trace as $frame) {
-            if ($frame['function'] === '__toString') {
+            if ($frame['function'] == '__toString') {
                 return false;
             }
         }
 
-        if ($errorNumber === E_NOTICE || $errorNumber === E_USER_NOTICE || $errorNumber === E_STRICT) {
+        if ($errno == E_NOTICE || $errno == E_USER_NOTICE || $errno == E_STRICT) {
             if (Notice::$enabled !== true) {
                 return false;
             }
 
             $exception = Notice::class;
-        } elseif ($errorNumber === E_WARNING || $errorNumber === E_USER_WARNING) {
+        } elseif ($errno == E_WARNING || $errno == E_USER_WARNING) {
             if (Warning::$enabled !== true) {
                 return false;
             }
 
             $exception = Warning::class;
-        } elseif ($errorNumber === E_DEPRECATED || $errorNumber === E_USER_DEPRECATED) {
+        } elseif ($errno == E_DEPRECATED || $errno == E_USER_DEPRECATED) {
             if (Deprecated::$enabled !== true) {
                 return false;
             }
@@ -69,7 +81,7 @@ final class ErrorHandler
             $exception = Error::class;
         }
 
-        throw new $exception($errorString, $errorNumber, $errorFile, $errorLine);
+        throw new $exception($errstr, $errno, $errfile, $errline);
     }
 
     /**
@@ -78,29 +90,28 @@ final class ErrorHandler
      *
      * @param int $severity PHP predefined error constant
      *
+     * @return \Closure
+     *
      * @throws \Exception if event of specified severity is emitted
      */
-    public static function handleErrorOnce($severity = E_WARNING): callable
+    public static function handleErrorOnce($severity = E_WARNING)
     {
         $terminator = function () {
             static $expired = false;
-
             if (!$expired) {
                 $expired = true;
-
+                // cleans temporary error handler
                 return \restore_error_handler();
             }
         };
 
-        \set_error_handler(
-            function ($errorNumber, $errorString) use ($severity) {
-                if ($errorNumber === $severity) {
-                    return;
-                }
-
-                return false;
+        \set_error_handler(function ($errno, $errstr) use ($severity) {
+            if ($errno === $severity) {
+                return;
             }
-        );
+
+            return false;
+        });
 
         return $terminator;
     }

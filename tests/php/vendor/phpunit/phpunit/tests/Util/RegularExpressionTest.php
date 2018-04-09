@@ -20,7 +20,7 @@ class RegularExpressionTest extends TestCase
           ['#valid regexp#', 'valid regexp', 1],
           [';val.*xp;', 'valid regexp', 1],
           ['/val.*xp/i', 'VALID REGEXP', 1],
-          ['/a val.*p/', 'valid regexp', 0],
+          ['/a val.*p/','valid regexp', 0],
         ];
     }
 
@@ -35,29 +35,16 @@ class RegularExpressionTest extends TestCase
 
     /**
      * @dataProvider validRegexpProvider
-     *
-     * @param mixed $pattern
-     * @param mixed $subject
-     * @param mixed $return
-     *
-     * @throws \Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public function testValidRegex($pattern, $subject, $return): void
+    public function testValidRegex($pattern, $subject, $return)
     {
         $this->assertEquals($return, RegularExpression::safeMatch($pattern, $subject));
     }
 
     /**
      * @dataProvider invalidRegexpProvider
-     *
-     * @param mixed $pattern
-     * @param mixed $subject
-     *
-     * @throws \Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public function testInvalidRegex($pattern, $subject): void
+    public function testInvalidRegex($pattern, $subject)
     {
         $this->assertFalse(RegularExpression::safeMatch($pattern, $subject));
     }

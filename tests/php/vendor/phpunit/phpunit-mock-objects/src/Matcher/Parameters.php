@@ -60,7 +60,7 @@ class Parameters extends StatelessInvocation
     /**
      * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         $text = 'with parameter';
 
@@ -78,9 +78,9 @@ class Parameters extends StatelessInvocation
     /**
      * @param BaseInvocation $invocation
      *
-     * @throws \Exception
-     *
      * @return bool
+     *
+     * @throws \Exception
      */
     public function matches(BaseInvocation $invocation)
     {
@@ -103,9 +103,9 @@ class Parameters extends StatelessInvocation
      * does the matcher will get the invoked() method called which should check
      * if an expectation is met.
      *
-     * @throws ExpectationFailedException
-     *
      * @return bool
+     *
+     * @throws ExpectationFailedException
      */
     public function verify()
     {
@@ -150,9 +150,9 @@ class Parameters extends StatelessInvocation
     }
 
     /**
-     * @throws ExpectationFailedException
-     *
      * @return bool
+     *
+     * @throws ExpectationFailedException
      */
     private function guardAgainstDuplicateEvaluationOfParameterConstraints()
     {

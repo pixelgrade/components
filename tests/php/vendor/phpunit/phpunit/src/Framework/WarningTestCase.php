@@ -48,24 +48,29 @@ class WarningTestCase extends TestCase
         parent::__construct('Warning');
     }
 
-    public function getMessage(): string
+    /**
+     * @throws Exception
+     */
+    protected function runTest()
+    {
+        throw new Warning($this->message);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
     {
         return $this->message;
     }
 
     /**
      * Returns a string representation of the test case.
+     *
+     * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         return 'Warning';
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function runTest(): void
-    {
-        throw new Warning($this->message);
     }
 }

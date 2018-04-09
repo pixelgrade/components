@@ -15,9 +15,9 @@ use ErrorException;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\SyntheticError;
 use PHPUnit\Framework\Test;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestFailure;
 use PHPUnit\Framework\TestResult;
+use PHPUnit\Util\InvalidArgumentHelper;
 use SebastianBergmann\Environment\Runtime;
 
 /**
@@ -55,66 +55,78 @@ abstract class AbstractPhpProcess
      */
     protected $timeout = 0;
 
-    public static function factory(): self
-    {
-        if (DIRECTORY_SEPARATOR === '\\') {
-            return new WindowsPhpProcess;
-        }
-
-        return new DefaultPhpProcess;
-    }
-
+    /**
+     * Creates internal Runtime instance.
+     */
     public function __construct()
     {
-        $this->runtime = new Runtime;
+        $this->runtime = new Runtime();
     }
 
     /**
      * Defines if should use STDERR redirection or not.
      *
      * Then $stderrRedirection is TRUE, STDERR is redirected to STDOUT.
+     *
+     * @throws Exception
+     *
+     * @param bool $stderrRedirection
      */
-    public function setUseStderrRedirection(bool $stderrRedirection): void
+    public function setUseStderrRedirection($stderrRedirection)
     {
+        if (!\is_bool($stderrRedirection)) {
+            throw InvalidArgumentHelper::factory(1, 'boolean');
+        }
+
         $this->stderrRedirection = $stderrRedirection;
     }
 
     /**
      * Returns TRUE if uses STDERR redirection or FALSE if not.
+     *
+     * @return bool
      */
-    public function useStderrRedirection(): bool
+    public function useStderrRedirection()
     {
         return $this->stderrRedirection;
     }
 
     /**
      * Sets the input string to be sent via STDIN
+     *
+     * @param string $stdin
      */
-    public function setStdin(string $stdin): void
+    public function setStdin($stdin)
     {
-        $this->stdin = $stdin;
+        $this->stdin = (string) $stdin;
     }
 
     /**
      * Returns the input string to be sent via STDIN
+     *
+     * @return string
      */
-    public function getStdin(): string
+    public function getStdin()
     {
         return $this->stdin;
     }
 
     /**
      * Sets the string of arguments to pass to the php job
+     *
+     * @param string $args
      */
-    public function setArgs(string $args): void
+    public function setArgs($args)
     {
-        $this->args = $args;
+        $this->args = (string) $args;
     }
 
     /**
      * Returns the string of arguments to pass to the php job
+     *
+     * @retrun string
      */
-    public function getArgs(): string
+    public function getArgs()
     {
         return $this->args;
     }
@@ -124,41 +136,63 @@ abstract class AbstractPhpProcess
      *
      * @param array<string, string> $env
      */
-    public function setEnv(array $env): void
+    public function setEnv(array $env)
     {
         $this->env = $env;
     }
 
     /**
      * Returns the array of environment variables to start the child process with
+     *
+     * @return array<string, string>
      */
-    public function getEnv(): array
+    public function getEnv()
     {
         return $this->env;
     }
 
     /**
      * Sets the amount of seconds to wait before timing out
+     *
+     * @param int $timeout
      */
-    public function setTimeout(int $timeout): void
+    public function setTimeout($timeout)
     {
-        $this->timeout = $timeout;
+        $this->timeout = (int) $timeout;
     }
 
     /**
      * Returns the amount of seconds to wait before timing out
+     *
+     * @return int
      */
-    public function getTimeout(): int
+    public function getTimeout()
     {
         return $this->timeout;
     }
 
     /**
+     * @return AbstractPhpProcess
+     */
+    public static function factory()
+    {
+        if (DIRECTORY_SEPARATOR == '\\') {
+            return new WindowsPhpProcess;
+        }
+
+        return new DefaultPhpProcess;
+    }
+
+    /**
      * Runs a single test in a separate PHP process.
      *
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @param string     $job
+     * @param Test       $test
+     * @param TestResult $result
+     *
+     * @throws Exception
      */
-    public function runTestJob(string $job, Test $test, TestResult $result): void
+    public function runTestJob($job, Test $test, TestResult $result)
     {
         $result->startTest($test);
 
@@ -174,13 +208,18 @@ abstract class AbstractPhpProcess
 
     /**
      * Returns the command based into the configurations.
+     *
+     * @param array       $settings
+     * @param string|null $file
+     *
+     * @return string
      */
-    public function getCommand(array $settings, string $file = null): string
+    public function getCommand(array $settings, $file = null)
     {
         $command = $this->runtime->getBinary();
         $command .= $this->settingsToParameters($settings);
 
-        if (PHP_SAPI === 'phpdbg') {
+        if ('phpdbg' === PHP_SAPI) {
             $command .= ' -qrr ';
 
             if ($file) {
@@ -196,7 +235,7 @@ abstract class AbstractPhpProcess
             $command .= ' -- ' . $this->args;
         }
 
-        if ($this->stderrRedirection === true) {
+        if (true === $this->stderrRedirection) {
             $command .= ' 2>&1';
         }
 
@@ -205,10 +244,22 @@ abstract class AbstractPhpProcess
 
     /**
      * Runs a single job (PHP code) using a separate PHP process.
+     *
+     * @param string $job
+     * @param array  $settings
+     *
+     * @return array
+     *
+     * @throws Exception
      */
-    abstract public function runJob(string $job, array $settings = []): array;
+    abstract public function runJob($job, array $settings = []);
 
-    protected function settingsToParameters(array $settings): string
+    /**
+     * @param array $settings
+     *
+     * @return string
+     */
+    protected function settingsToParameters(array $settings)
     {
         $buffer = '';
 
@@ -222,9 +273,12 @@ abstract class AbstractPhpProcess
     /**
      * Processes the TestResult object from an isolated process.
      *
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @param Test       $test
+     * @param TestResult $result
+     * @param string     $stdout
+     * @param string     $stderr
      */
-    private function processChildResult(Test $test, TestResult $result, string $stdout, string $stderr): void
+    private function processChildResult(Test $test, TestResult $result, $stdout, $stderr)
     {
         $time = 0;
 
@@ -235,7 +289,7 @@ abstract class AbstractPhpProcess
                 $time
             );
         } else {
-            \set_error_handler(function ($errno, $errstr, $errfile, $errline): void {
+            \set_error_handler(function ($errno, $errstr, $errfile, $errline) {
                 throw new ErrorException($errstr, $errno, $errno, $errfile, $errline);
             });
 
@@ -261,8 +315,6 @@ abstract class AbstractPhpProcess
                 if (!empty($childResult['output'])) {
                     $output = $childResult['output'];
                 }
-
-                /* @var TestCase $test */
 
                 $test->setResult($childResult['testResult']);
                 $test->addToAssertionCount($childResult['numAssertions']);
@@ -334,9 +386,13 @@ abstract class AbstractPhpProcess
     /**
      * Gets the thrown exception from a PHPUnit\Framework\TestFailure.
      *
-     * @see https://github.com/sebastianbergmann/phpunit/issues/74
+     * @param TestFailure $error
+     *
+     * @return Exception
+     *
+     * @see    https://github.com/sebastianbergmann/phpunit/issues/74
      */
-    private function getException(TestFailure $error): Exception
+    private function getException(TestFailure $error)
     {
         $exception = $error->thrownException();
 

@@ -20,6 +20,11 @@ abstract class GroupFilterIterator extends RecursiveFilterIterator
      */
     protected $groupTests = [];
 
+    /**
+     * @param RecursiveIterator $iterator
+     * @param array             $groups
+     * @param TestSuite         $suite
+     */
     public function __construct(RecursiveIterator $iterator, array $groups, TestSuite $suite)
     {
         parent::__construct($iterator);
@@ -38,7 +43,10 @@ abstract class GroupFilterIterator extends RecursiveFilterIterator
         }
     }
 
-    public function accept(): bool
+    /**
+     * @return bool
+     */
+    public function accept()
     {
         $test = $this->getInnerIterator()->current();
 
@@ -49,5 +57,5 @@ abstract class GroupFilterIterator extends RecursiveFilterIterator
         return $this->doAccept(\spl_object_hash($test));
     }
 
-    abstract protected function doAccept(string $hash);
+    abstract protected function doAccept($hash);
 }

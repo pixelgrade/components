@@ -21,8 +21,16 @@ use PHPUnit\Framework\MockObject\Matcher\Invocation;
 interface PHPUnit_Framework_MockObject_MockObject /*extends Verifiable*/
 {
     /**
-     * @param mixed $originalObject
+     * Registers a new expectation in the mock object and returns the match
+     * object which can be infused with further details.
      *
+     * @param Invocation $matcher
+     *
+     * @return InvocationMocker
+     */
+    public function expects(Invocation $matcher);
+
+    /**
      * @return InvocationMocker
      */
     public function __phpunit_setOriginalObject($originalObject);
@@ -44,16 +52,4 @@ interface PHPUnit_Framework_MockObject_MockObject /*extends Verifiable*/
      * @return bool
      */
     public function __phpunit_hasMatchers();
-
-    public function __phpunit_setReturnValueGeneration(bool $returnValueGeneration);
-
-    /**
-     * Registers a new expectation in the mock object and returns the match
-     * object which can be infused with further details.
-     *
-     * @param Invocation $matcher
-     *
-     * @return InvocationMocker
-     */
-    public function expects(Invocation $matcher);
 }

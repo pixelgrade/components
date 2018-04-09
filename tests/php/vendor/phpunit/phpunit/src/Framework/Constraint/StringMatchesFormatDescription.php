@@ -20,25 +20,28 @@ class StringMatchesFormatDescription extends RegularExpression
     /**
      * @var string
      */
-    private $string;
+    protected $string;
 
-    public function __construct(string $string)
+    /**
+     * @param string $string
+     */
+    public function __construct($string)
     {
-        parent::__construct(
-            $this->createPatternFromFormat(
-                \preg_replace('/\r\n/', "\n", $string)
-            )
+        parent::__construct($string);
+
+        $this->pattern = $this->createPatternFromFormat(
+            \preg_replace('/\r\n/', "\n", $string)
         );
 
         $this->string = $string;
     }
 
-    protected function failureDescription($other): string
+    protected function failureDescription($other)
     {
         return 'string matches format description';
     }
 
-    protected function additionalFailureDescription($other): string
+    protected function additionalFailureDescription($other)
     {
         $from = \preg_split('(\r\n|\r|\n)', $this->string);
         $to   = \preg_split('(\r\n|\r|\n)', $other);
@@ -61,24 +64,24 @@ class StringMatchesFormatDescription extends RegularExpression
         return $differ->diff($this->string, $other);
     }
 
-    private function createPatternFromFormat(string $string): string
+    protected function createPatternFromFormat($string)
     {
-        $string = \preg_replace(
+        $string = \str_replace(
             [
-                '/(?<!%)%e/',
-                '/(?<!%)%s/',
-                '/(?<!%)%S/',
-                '/(?<!%)%a/',
-                '/(?<!%)%A/',
-                '/(?<!%)%w/',
-                '/(?<!%)%i/',
-                '/(?<!%)%d/',
-                '/(?<!%)%x/',
-                '/(?<!%)%f/',
-                '/(?<!%)%c/'
+                '%e',
+                '%s',
+                '%S',
+                '%a',
+                '%A',
+                '%w',
+                '%i',
+                '%d',
+                '%x',
+                '%f',
+                '%c'
             ],
             [
-                \str_replace('\\', '\\\\', '\\' . DIRECTORY_SEPARATOR),
+                '\\' . DIRECTORY_SEPARATOR,
                 '[^\r\n]+',
                 '[^\r\n]*',
                 '.+',
@@ -92,8 +95,6 @@ class StringMatchesFormatDescription extends RegularExpression
             ],
             \preg_quote($string, '/')
         );
-
-        $string = \str_replace('%%', '%', $string);
 
         return '/^' . $string . '$/s';
     }

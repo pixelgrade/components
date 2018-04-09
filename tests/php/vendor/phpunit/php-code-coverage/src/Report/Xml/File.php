@@ -28,7 +28,23 @@ class File
         $this->contextNode = $context;
     }
 
-    public function getTotals(): Totals
+    /**
+     * @return \DOMElement
+     */
+    protected function getContextNode()
+    {
+        return $this->contextNode;
+    }
+
+    /**
+     * @return \DOMDocument
+     */
+    protected function getDomDocument()
+    {
+        return $this->dom;
+    }
+
+    public function getTotals()
     {
         $totalsContainer = $this->contextNode->firstChild;
 
@@ -44,7 +60,7 @@ class File
         return new Totals($totalsContainer);
     }
 
-    public function getLineCoverage(string $line): Coverage
+    public function getLineCoverage($line)
     {
         $coverage = $this->contextNode->getElementsByTagNameNS(
             'http://schema.phpunit.de/coverage/1.0',
@@ -68,15 +84,5 @@ class File
         );
 
         return new Coverage($lineNode, $line);
-    }
-
-    protected function getContextNode(): \DOMElement
-    {
-        return $this->contextNode;
-    }
-
-    protected function getDomDocument(): \DOMDocument
-    {
-        return $this->dom;
     }
 }

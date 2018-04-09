@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class GetoptTest extends TestCase
 {
-    public function testItIncludeTheLongOptionsAfterTheArgument(): void
+    public function testItIncludeTheLongOptionsAfterTheArgument()
     {
         $args = [
             'command',
@@ -39,7 +39,7 @@ class GetoptTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItIncludeTheShortOptionsAfterTheArgument(): void
+    public function testItIncludeTheShortOptionsAfterTheArgument()
     {
         $args = [
             'command',
@@ -63,7 +63,7 @@ class GetoptTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testShortOptionUnrecognizedException(): void
+    public function testShortOptionUnrecognizedException()
     {
         $args = [
             'command',
@@ -77,7 +77,7 @@ class GetoptTest extends TestCase
         Getopt::getopt($args, '');
     }
 
-    public function testShortOptionRequiresAnArgumentException(): void
+    public function testShortOptionRequiresAnArgumentException()
     {
         $args = [
             'command',
@@ -91,7 +91,7 @@ class GetoptTest extends TestCase
         Getopt::getopt($args, 'f:');
     }
 
-    public function testShortOptionHandleAnOptionalValue(): void
+    public function testShortOptionHandleAnOptionalValue()
     {
         $args = [
             'command',
@@ -113,7 +113,7 @@ class GetoptTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testLongOptionIsAmbiguousException(): void
+    public function testLongOptionIsAmbiguousException()
     {
         $args = [
             'command',
@@ -126,7 +126,7 @@ class GetoptTest extends TestCase
         Getopt::getopt($args, '', ['columns', 'colors']);
     }
 
-    public function testLongOptionUnrecognizedException(): void
+    public function testLongOptionUnrecognizedException()
     {
         // the exception 'unrecognized option --option' is not thrown
         // if the there are not defined extended options
@@ -141,7 +141,7 @@ class GetoptTest extends TestCase
         Getopt::getopt($args, '', ['colors']);
     }
 
-    public function testLongOptionRequiresAnArgumentException(): void
+    public function testLongOptionRequiresAnArgumentException()
     {
         $args = [
             'command',
@@ -154,7 +154,7 @@ class GetoptTest extends TestCase
         Getopt::getopt($args, '', ['foo=']);
     }
 
-    public function testLongOptionDoesNotAllowAnArgumentException(): void
+    public function testLongOptionDoesNotAllowAnArgumentException()
     {
         $args = [
             'command',
@@ -167,7 +167,7 @@ class GetoptTest extends TestCase
         Getopt::getopt($args, '', ['foo']);
     }
 
-    public function testItHandlesLongParametesWithValues(): void
+    public function testItHandlesLongParametesWithValues()
     {
         $command = 'command parameter-0 --exec parameter-1 --conf config.xml --optn parameter-2 --optn=content-of-o parameter-n';
         $args    = \explode(' ', $command);
@@ -190,7 +190,7 @@ class GetoptTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItHandlesShortParametesWithValues(): void
+    public function testItHandlesShortParametesWithValues()
     {
         $command = 'command parameter-0 -x parameter-1 -c config.xml -o parameter-2 -ocontent-of-o parameter-n';
         $args    = \explode(' ', $command);

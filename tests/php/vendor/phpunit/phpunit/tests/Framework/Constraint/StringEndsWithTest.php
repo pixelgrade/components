@@ -15,33 +15,33 @@ use PHPUnit\Framework\TestFailure;
 
 class StringEndsWithTest extends ConstraintTestCase
 {
-    public function testConstraintStringEndsWithCorrectValueAndReturnResult(): void
+    public function testConstraintStringEndsWithCorrectValueAndReturnResult()
     {
         $constraint = new StringEndsWith('suffix');
         $this->assertTrue($constraint->evaluate('foosuffix', '', true));
     }
 
-    public function testConstraintStringEndsWithNotCorrectValueAndReturnResult(): void
+    public function testConstraintStringEndsWithNotCorrectValueAndReturnResult()
     {
         $constraint = new StringEndsWith('suffix');
         $this->assertFalse($constraint->evaluate('suffixerror', '', true));
     }
 
-    public function testConstraintStringEndsWithToStringMethod(): void
+    public function testConstraintStringEndsWithToStringMethod()
     {
         $constraint = new StringEndsWith('suffix');
 
         $this->assertEquals('ends with "suffix"', $constraint->toString());
     }
 
-    public function testConstraintStringEndsWithCountMethod(): void
+    public function testConstraintStringEndsWithCountMethod()
     {
         $constraint = new StringEndsWith('suffix');
 
         $this->assertCount(1, $constraint);
     }
 
-    public function testConstraintStringEndsWithNotCorrectValueAndExpectation(): void
+    public function testConstraintStringEndsWithNotCorrectValueAndExpectation()
     {
         $constraint = new StringEndsWith('suffix');
 
@@ -63,7 +63,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintStringEndsWithNotCorrectValueExceptionAndCustomMessage(): void
+    public function testConstraintStringEndsWithNotCorrectValueExceptionAndCustomMessage()
     {
         $constraint = new StringEndsWith('suffix');
 

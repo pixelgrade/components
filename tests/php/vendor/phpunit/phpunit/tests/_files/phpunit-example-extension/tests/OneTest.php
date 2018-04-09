@@ -8,6 +8,6 @@ class OneTest extends TestCase
 
     public function testOne()
     {
-        $this->assertTrue(true);
+        $this->assertExampleExtensionInitialized();
     }
 }

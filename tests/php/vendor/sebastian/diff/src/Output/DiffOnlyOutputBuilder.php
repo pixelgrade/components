@@ -7,10 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff\Output;
-
-use SebastianBergmann\Diff\Differ;
 
 /**
  * Builds a diff string representation in a loose unified diff format
@@ -40,11 +37,11 @@ final class DiffOnlyOutputBuilder implements DiffOutputBuilderInterface
         }
 
         foreach ($diff as $diffEntry) {
-            if ($diffEntry[1] === Differ::ADDED) {
+            if ($diffEntry[1] === 1 /* ADDED */) {
                 \fwrite($buffer, '+' . $diffEntry[0]);
-            } elseif ($diffEntry[1] === Differ::REMOVED) {
+            } elseif ($diffEntry[1] === 2 /* REMOVED */) {
                 \fwrite($buffer, '-' . $diffEntry[0]);
-            } elseif ($diffEntry[1] === Differ::DIFF_LINE_END_WARNING) {
+            } elseif ($diffEntry[1] === 3 /* WARNING */) {
                 \fwrite($buffer, ' ' . $diffEntry[0]);
 
                 continue; // Warnings should not be tested for line break, it will always be there

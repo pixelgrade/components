@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class FileExistsTest extends ConstraintTestCase
 {
-    public function testConstraintFileExists(): void
+    public function testConstraintFileExists()
     {
         $constraint = new FileExists();
 
@@ -41,7 +41,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintFileExists2(): void
+    public function testConstraintFileExists2()
     {
         $constraint = new FileExists();
 

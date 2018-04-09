@@ -17,7 +17,7 @@ class MockBuilderTest extends TestCase
     {
         $mock = $this->getMockBuilder(Mockable::class)->getMock();
 
-        $this->assertInstanceOf(Mockable::class, $mock);
+        $this->assertTrue($mock instanceof Mockable);
     }
 
     public function testByDefaultMocksAllMethods()
@@ -71,7 +71,7 @@ class MockBuilderTest extends TestCase
                      ->setMockClassName('ACustomClassName')
                      ->getMock();
 
-        $this->assertInstanceOf(ACustomClassName::class, $mock);
+        $this->assertTrue($mock instanceof ACustomClassName);
     }
 
     public function testConstructorArgumentsCanBeSpecified()
@@ -124,6 +124,6 @@ class MockBuilderTest extends TestCase
                      ->disableOriginalClone()
                      ->disableAutoload();
 
-        $this->assertInstanceOf(MockBuilder::class, $spec);
+        $this->assertTrue($spec instanceof MockBuilder);
     }
 }

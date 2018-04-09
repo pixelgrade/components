@@ -10,6 +10,7 @@
 
 namespace PHPUnit\Util\PHP;
 
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
 class AbstractPhpProcessTest extends TestCase
@@ -19,36 +20,38 @@ class AbstractPhpProcessTest extends TestCase
      */
     private $phpProcess;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->phpProcess = $this->getMockForAbstractClass(AbstractPhpProcess::class);
     }
 
-    protected function tearDown(): void
-    {
-        $this->phpProcess = null;
-    }
-
-    public function testShouldNotUseStderrRedirectionByDefault(): void
+    public function testShouldNotUseStderrRedirectionByDefault()
     {
         $this->assertFalse($this->phpProcess->useStderrRedirection());
     }
 
-    public function testShouldDefinedIfUseStderrRedirection(): void
+    public function testShouldDefinedIfUseStderrRedirection()
     {
         $this->phpProcess->setUseStderrRedirection(true);
 
         $this->assertTrue($this->phpProcess->useStderrRedirection());
     }
 
-    public function testShouldDefinedIfDoNotUseStderrRedirection(): void
+    public function testShouldDefinedIfDoNotUseStderrRedirection()
     {
         $this->phpProcess->setUseStderrRedirection(false);
 
         $this->assertFalse($this->phpProcess->useStderrRedirection());
     }
 
-    public function testShouldUseGivenSettingsToCreateCommand(): void
+    public function testShouldThrowsExceptionWhenStderrRedirectionVariableIsNotABoolean()
+    {
+        $this->expectException(Exception::class);
+
+        $this->phpProcess->setUseStderrRedirection(null);
+    }
+
+    public function testShouldUseGivenSettingsToCreateCommand()
     {
         $settings = [
             'allow_url_fopen=1',
@@ -62,7 +65,7 @@ class AbstractPhpProcessTest extends TestCase
         $this->assertStringMatchesFormat($expectedCommandFormat, $actualCommand);
     }
 
-    public function testShouldRedirectStderrToStdoutWhenDefined(): void
+    public function testShouldRedirectStderrToStdoutWhenDefined()
     {
         $this->phpProcess->setUseStderrRedirection(true);
 
@@ -72,7 +75,7 @@ class AbstractPhpProcessTest extends TestCase
         $this->assertStringMatchesFormat($expectedCommandFormat, $actualCommand);
     }
 
-    public function testShouldUseArgsToCreateCommand(): void
+    public function testShouldUseArgsToCreateCommand()
     {
         $this->phpProcess->setArgs('foo=bar');
 
@@ -82,7 +85,7 @@ class AbstractPhpProcessTest extends TestCase
         $this->assertStringMatchesFormat($expectedCommandFormat, $actualCommand);
     }
 
-    public function testShouldHaveFileToCreateCommand(): void
+    public function testShouldHaveFileToCreateCommand()
     {
         $argumentEscapingCharacter = DIRECTORY_SEPARATOR === '\\' ? '"' : '\'';
         $expectedCommandFormat     = \sprintf('%%s -%%c %1$sfile.php%1$s', $argumentEscapingCharacter);
@@ -91,28 +94,28 @@ class AbstractPhpProcessTest extends TestCase
         $this->assertStringMatchesFormat($expectedCommandFormat, $actualCommand);
     }
 
-    public function testStdinGetterAndSetter(): void
+    public function testStdinGetterAndSetter()
     {
         $this->phpProcess->setStdin('foo');
 
         $this->assertEquals('foo', $this->phpProcess->getStdin());
     }
 
-    public function testArgsGetterAndSetter(): void
+    public function testArgsGetterAndSetter()
     {
         $this->phpProcess->setArgs('foo=bar');
 
         $this->assertEquals('foo=bar', $this->phpProcess->getArgs());
     }
 
-    public function testEnvGetterAndSetter(): void
+    public function testEnvGetterAndSetter()
     {
         $this->phpProcess->setEnv(['foo' => 'bar']);
 
         $this->assertEquals(['foo' => 'bar'], $this->phpProcess->getEnv());
     }
 
-    public function testTimeoutGetterAndSetter(): void
+    public function testTimeoutGetterAndSetter()
     {
         $this->phpProcess->setTimeout(30);
 

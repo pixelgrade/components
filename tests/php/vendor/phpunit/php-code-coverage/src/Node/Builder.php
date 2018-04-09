@@ -12,9 +12,14 @@ namespace SebastianBergmann\CodeCoverage\Node;
 
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 
-final class Builder
+class Builder
 {
-    public function build(CodeCoverage $coverage): Directory
+    /**
+     * @param CodeCoverage $coverage
+     *
+     * @return Directory
+     */
+    public function build(CodeCoverage $coverage)
     {
         $files      = $coverage->getData();
         $commonPath = $this->reducePaths($files);
@@ -33,7 +38,13 @@ final class Builder
         return $root;
     }
 
-    private function addItems(Directory $root, array $items, array $tests, bool $cacheTokens): void
+    /**
+     * @param Directory $root
+     * @param array     $items
+     * @param array     $tests
+     * @param bool      $cacheTokens
+     */
+    private function addItems(Directory $root, array $items, array $tests, $cacheTokens)
     {
         foreach ($items as $key => $value) {
             if (\substr($key, -2) == '/f') {
@@ -88,8 +99,12 @@ final class Builder
      *         )
      * )
      * </code>
+     *
+     * @param array $files
+     *
+     * @return array
      */
-    private function buildDirectoryStructure(array $files): array
+    private function buildDirectoryStructure($files)
     {
         $result = [];
 
@@ -99,10 +114,10 @@ final class Builder
             $max     = \count($path);
 
             for ($i = 0; $i < $max; $i++) {
-                $type = '';
-
                 if ($i == ($max - 1)) {
                     $type = '/f';
+                } else {
+                    $type = '';
                 }
 
                 $pointer = &$pointer[$path[$i] . $type];
@@ -150,8 +165,12 @@ final class Builder
      *         )
      * )
      * </code>
+     *
+     * @param array $files
+     *
+     * @return string
      */
-    private function reducePaths(array &$files): string
+    private function reducePaths(&$files)
     {
         if (empty($files)) {
             return '.';
@@ -160,7 +179,7 @@ final class Builder
         $commonPath = '';
         $paths      = \array_keys($files);
 
-        if (\count($files) === 1) {
+        if (\count($files) == 1) {
             $commonPath                  = \dirname($paths[0]) . '/';
             $files[\basename($paths[0])] = $files[$paths[0]];
 
@@ -175,7 +194,7 @@ final class Builder
             // strip phar:// prefixes
             if (\strpos($paths[$i], 'phar://') === 0) {
                 $paths[$i] = \substr($paths[$i], 7);
-                $paths[$i] = \str_replace('/', DIRECTORY_SEPARATOR, $paths[$i]);
+                $paths[$i] = \strtr($paths[$i], '/', DIRECTORY_SEPARATOR);
             }
             $paths[$i] = \explode(DIRECTORY_SEPARATOR, $paths[$i]);
 

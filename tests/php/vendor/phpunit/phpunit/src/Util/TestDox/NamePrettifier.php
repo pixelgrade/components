@@ -13,31 +13,45 @@ namespace PHPUnit\Util\TestDox;
 /**
  * Prettifies class and method names for use in TestDox documentation.
  */
-final class NamePrettifier
+class NamePrettifier
 {
+    /**
+     * @var string
+     */
+    protected $prefix = 'Test';
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Test';
+
     /**
      * @var array
      */
-    private $strings = [];
+    protected $strings = [];
 
     /**
      * Prettifies the name of a test class.
+     *
+     * @param string $name
+     *
+     * @return string
      */
-    public function prettifyTestClass(string $name): string
+    public function prettifyTestClass($name)
     {
         $title = $name;
 
-        if (\substr($name, -1 * \strlen('Test')) === 'Test') {
-            $title = \substr($title, 0, \strripos($title, 'Test'));
+        if ($this->suffix !== null &&
+            $this->suffix == \substr($name, -1 * \strlen($this->suffix))) {
+            $title = \substr($title, 0, \strripos($title, $this->suffix));
         }
 
-        if (\strpos($name, 'Tests') === 0) {
-            $title = \substr($title, \strlen('Tests'));
-        } elseif (\strpos($name, 'Test') === 0) {
-            $title = \substr($title, \strlen('Test'));
+        if ($this->prefix !== null &&
+            $this->prefix == \substr($name, 0, \strlen($this->prefix))) {
+            $title = \substr($title, \strlen($this->prefix));
         }
 
-        if ($title[0] === '\\') {
+        if (\substr($title, 0, 1) == '\\') {
             $title = \substr($title, 1);
         }
 
@@ -46,12 +60,16 @@ final class NamePrettifier
 
     /**
      * Prettifies the name of a test method.
+     *
+     * @param string $name
+     *
+     * @return string
      */
-    public function prettifyTestMethod(string $name): string
+    public function prettifyTestMethod($name)
     {
         $buffer = '';
 
-        if (!\is_string($name) || $name === '') {
+        if (!\is_string($name) || \strlen($name) == 0) {
             return $buffer;
         }
 
@@ -59,15 +77,15 @@ final class NamePrettifier
 
         if (\in_array($string, $this->strings)) {
             $name = $string;
-        } elseif ($count === 0) {
+        } elseif ($count == 0) {
             $this->strings[] = $string;
         }
 
-        if (\strpos($name, 'test') === 0) {
+        if (\substr($name, 0, 4) == 'test') {
             $name = \substr($name, 4);
         }
 
-        if ($name === '') {
+        if (\strlen($name) == 0) {
             return $buffer;
         }
 
@@ -100,5 +118,25 @@ final class NamePrettifier
         }
 
         return $buffer;
+    }
+
+    /**
+     * Sets the prefix of test names.
+     *
+     * @param string $prefix
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
+     * Sets the suffix of test names.
+     *
+     * @param string $suffix
+     */
+    public function setSuffix($suffix)
+    {
+        $this->suffix = $suffix;
     }
 }

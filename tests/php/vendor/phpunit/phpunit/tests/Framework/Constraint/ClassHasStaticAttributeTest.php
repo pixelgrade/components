@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class ClassHasStaticAttributeTest extends ConstraintTestCase
 {
-    public function testConstraintClassHasStaticAttribute(): void
+    public function testConstraintClassHasStaticAttribute()
     {
         $constraint = new ClassHasStaticAttribute('privateStaticAttribute');
 
@@ -42,7 +42,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintClassHasStaticAttribute2(): void
+    public function testConstraintClassHasStaticAttribute2()
     {
         $constraint = new ClassHasStaticAttribute('foo');
 

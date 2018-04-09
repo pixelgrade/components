@@ -12,7 +12,7 @@ namespace PHPUnit\Framework\Constraint;
 
 class StringMatchesFormatDescriptionTest extends ConstraintTestCase
 {
-    public function testConstraintStringMatches(): void
+    public function testConstraintStringMatches()
     {
         $constraint = new StringMatchesFormatDescription('*%c*');
 
@@ -22,7 +22,7 @@ class StringMatchesFormatDescriptionTest extends ConstraintTestCase
         $this->assertCount(1, $constraint);
     }
 
-    public function testConstraintStringMatches2(): void
+    public function testConstraintStringMatches2()
     {
         $constraint = new StringMatchesFormatDescription('*%s*');
 
@@ -32,7 +32,7 @@ class StringMatchesFormatDescriptionTest extends ConstraintTestCase
         $this->assertCount(1, $constraint);
     }
 
-    public function testConstraintStringMatches3(): void
+    public function testConstraintStringMatches3()
     {
         $constraint = new StringMatchesFormatDescription('*%i*');
 
@@ -42,7 +42,7 @@ class StringMatchesFormatDescriptionTest extends ConstraintTestCase
         $this->assertCount(1, $constraint);
     }
 
-    public function testConstraintStringMatches4(): void
+    public function testConstraintStringMatches4()
     {
         $constraint = new StringMatchesFormatDescription('*%d*');
 
@@ -52,7 +52,7 @@ class StringMatchesFormatDescriptionTest extends ConstraintTestCase
         $this->assertCount(1, $constraint);
     }
 
-    public function testConstraintStringMatches5(): void
+    public function testConstraintStringMatches5()
     {
         $constraint = new StringMatchesFormatDescription('*%x*');
 
@@ -62,7 +62,7 @@ class StringMatchesFormatDescriptionTest extends ConstraintTestCase
         $this->assertCount(1, $constraint);
     }
 
-    public function testConstraintStringMatches6(): void
+    public function testConstraintStringMatches6()
     {
         $constraint = new StringMatchesFormatDescription('*%f*');
 

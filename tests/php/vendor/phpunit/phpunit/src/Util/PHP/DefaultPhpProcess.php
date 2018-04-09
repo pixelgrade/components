@@ -22,13 +22,23 @@ class DefaultPhpProcess extends AbstractPhpProcess
     protected $tempFile;
 
     /**
+     * @var bool
+     */
+    protected $useTempFile = false;
+
+    /**
      * Runs a single job (PHP code) using a separate PHP process.
+     *
+     * @param string $job
+     * @param array  $settings
+     *
+     * @return array<string, string>
      *
      * @throws Exception
      */
-    public function runJob(string $job, array $settings = []): array
+    public function runJob($job, array $settings = [])
     {
-        if ($this->useTemporaryFile() || $this->stdin) {
+        if ($this->useTempFile || $this->stdin) {
             if (!($this->tempFile = \tempnam(\sys_get_temp_dir(), 'PHPUnit')) ||
                 \file_put_contents($this->tempFile, $job) === false) {
                 throw new Exception(
@@ -44,8 +54,10 @@ class DefaultPhpProcess extends AbstractPhpProcess
 
     /**
      * Returns an array of file handles to be used in place of pipes
+     *
+     * @return array
      */
-    protected function getHandles(): array
+    protected function getHandles()
     {
         return [];
     }
@@ -53,9 +65,14 @@ class DefaultPhpProcess extends AbstractPhpProcess
     /**
      * Handles creating the child process and returning the STDOUT and STDERR
      *
+     * @param string $job
+     * @param array  $settings
+     *
+     * @return array<string, string>
+     *
      * @throws Exception
      */
-    protected function runProcess(string $job, array $settings): array
+    protected function runProcess($job, $settings)
     {
         $handles = $this->getHandles();
 
@@ -113,8 +130,7 @@ class DefaultPhpProcess extends AbstractPhpProcess
 
                 if ($n === false) {
                     break;
-                }
-                if ($n === 0) {
+                } elseif ($n === 0) {
                     \proc_terminate($process, 9);
 
                     throw new Exception(
@@ -123,13 +139,12 @@ class DefaultPhpProcess extends AbstractPhpProcess
                             $this->timeout
                         )
                     );
-                }
-                if ($n > 0) {
+                } elseif ($n > 0) {
                     foreach ($r as $pipe) {
                         $pipeOffset = 0;
 
                         foreach ($pipes as $i => $origPipe) {
-                            if ($pipe === $origPipe) {
+                            if ($pipe == $origPipe) {
                                 $pipeOffset = $i;
 
                                 break;
@@ -142,12 +157,12 @@ class DefaultPhpProcess extends AbstractPhpProcess
 
                         $line = \fread($pipe, 8192);
 
-                        if ($line === '') {
+                        if (\strlen($line) == 0) {
                             \fclose($pipes[$pipeOffset]);
 
                             unset($pipes[$pipeOffset]);
                         } else {
-                            if ($pipeOffset === 1) {
+                            if ($pipeOffset == 1) {
                                 $stdout .= $line;
                             } else {
                                 $stderr .= $line;
@@ -197,20 +212,21 @@ class DefaultPhpProcess extends AbstractPhpProcess
         return ['stdout' => $stdout, 'stderr' => $stderr];
     }
 
-    protected function process($pipe, string $job): void
+    /**
+     * @param resource $pipe
+     * @param string   $job
+     *
+     * @throws Exception
+     */
+    protected function process($pipe, $job)
     {
         \fwrite($pipe, $job);
     }
 
-    protected function cleanup(): void
+    protected function cleanup()
     {
         if ($this->tempFile) {
             \unlink($this->tempFile);
         }
-    }
-
-    protected function useTemporaryFile(): bool
-    {
-        return false;
     }
 }

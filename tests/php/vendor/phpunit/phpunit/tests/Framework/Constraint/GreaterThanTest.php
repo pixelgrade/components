@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class GreaterThanTest extends ConstraintTestCase
 {
-    public function testConstraintGreaterThan(): void
+    public function testConstraintGreaterThan()
     {
         $constraint = new GreaterThan(1);
 
@@ -42,7 +42,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintGreaterThan2(): void
+    public function testConstraintGreaterThan2()
     {
         $constraint = new GreaterThan(1);
 

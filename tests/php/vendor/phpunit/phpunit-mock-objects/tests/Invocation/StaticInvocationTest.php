@@ -96,19 +96,4 @@ class StaticInvocationTest extends TestCase
 
         $this->assertSame($expectedReturnType, $invocation->getReturnType());
     }
-
-    public function testToStringWillReturnEmptyString()
-    {
-        $expectedReturnType = 'string';
-
-        $invocation = new StaticInvocation(
-            'FooClass',
-            '__toString',
-            [],
-            ''
-        );
-
-        $this->assertSame($expectedReturnType, $invocation->getReturnType());
-        $this->assertSame('', $invocation->generateReturnValue());
-    }
 }

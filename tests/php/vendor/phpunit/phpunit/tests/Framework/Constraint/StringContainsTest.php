@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class StringContainsTest extends ConstraintTestCase
 {
-    public function testConstraintStringContains(): void
+    public function testConstraintStringContains()
     {
         $constraint = new StringContains('foo');
 
@@ -42,7 +42,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintStringContainsWhenIgnoreCase(): void
+    public function testConstraintStringContainsWhenIgnoreCase()
     {
         $constraint = new StringContains('oryginał', true);
 
@@ -57,7 +57,7 @@ EOF
         $constraint->evaluate('oryginal');
     }
 
-    public function testConstraintStringContainsForUtf8StringWhenNotIgnoreCase(): void
+    public function testConstraintStringContainsForUtf8StringWhenNotIgnoreCase()
     {
         $constraint = new StringContains('oryginał', false);
 
@@ -72,7 +72,7 @@ EOF
         $constraint->evaluate('oryginal');
     }
 
-    public function testConstraintStringContains2(): void
+    public function testConstraintStringContains2()
     {
         $constraint = new StringContains('foo');
 

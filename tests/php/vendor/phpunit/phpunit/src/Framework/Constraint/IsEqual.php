@@ -10,13 +10,14 @@
 namespace PHPUnit\Framework\Constraint;
 
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Util\InvalidArgumentHelper;
 use SebastianBergmann;
 
 /**
  * Constraint that checks if one value is equal to another.
  *
  * Equality is checked with PHP's == operator, the operator is explained in
- * detail at {@url https://php.net/manual/en/types.comparisons.php}.
+ * detail at {@url http://www.php.net/manual/en/types.comparisons.php}.
  * Two values are equal if they have the same value disregarding type.
  *
  * The expected value is passed in the constructor.
@@ -26,36 +27,61 @@ class IsEqual extends Constraint
     /**
      * @var mixed
      */
-    private $value;
+    protected $value;
 
     /**
      * @var float
      */
-    private $delta = 0.0;
+    protected $delta = 0.0;
 
     /**
      * @var int
      */
-    private $maxDepth = 10;
+    protected $maxDepth = 10;
 
     /**
      * @var bool
      */
-    private $canonicalize = false;
+    protected $canonicalize = false;
 
     /**
      * @var bool
      */
-    private $ignoreCase = false;
+    protected $ignoreCase = false;
 
     /**
      * @var SebastianBergmann\Comparator\ComparisonFailure
      */
-    private $lastFailure;
+    protected $lastFailure;
 
-    public function __construct($value, float $delta = 0.0, int $maxDepth = 10, bool $canonicalize = false, bool $ignoreCase = false)
+    /**
+     * @param mixed $value
+     * @param float $delta
+     * @param int   $maxDepth
+     * @param bool  $canonicalize
+     * @param bool  $ignoreCase
+     *
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function __construct($value, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
     {
         parent::__construct();
+
+        if (!\is_numeric($delta)) {
+            throw InvalidArgumentHelper::factory(2, 'numeric');
+        }
+
+        if (!\is_int($maxDepth)) {
+            throw InvalidArgumentHelper::factory(3, 'integer');
+        }
+
+        if (!\is_bool($canonicalize)) {
+            throw InvalidArgumentHelper::factory(4, 'boolean');
+        }
+
+        if (!\is_bool($ignoreCase)) {
+            throw InvalidArgumentHelper::factory(5, 'boolean');
+        }
 
         $this->value        = $value;
         $this->delta        = $delta;
@@ -74,13 +100,13 @@ class IsEqual extends Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        value or object to evaluate
+     * @param mixed  $other        Value or object to evaluate.
      * @param string $description  Additional information about the test
      * @param bool   $returnResult Whether to return a result or throw an exception
      *
-     * @throws ExpectationFailedException
-     *
      * @return mixed
+     *
+     * @throws ExpectationFailedException
      */
     public function evaluate($other, $description = '', $returnResult = false)
     {
@@ -123,9 +149,9 @@ class IsEqual extends Constraint
     /**
      * Returns a string representation of the constraint.
      *
-     * @throws SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         $delta = '';
 

@@ -46,7 +46,7 @@ class ReturnValueMap implements Stub
         return;
     }
 
-    public function toString(): string
+    public function toString()
     {
         return 'return value from a map';
     }

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 final class LogicalXorTest extends TestCase
 {
-    public function testFromConstraintsReturnsConstraint(): void
+    public function testFromConstraintsReturnsConstraint()
     {
         $other = 'Foo';
         $count = 5;

@@ -12,14 +12,18 @@ namespace PHPUnit\Util;
 
 use PHPUnit\Framework\Exception;
 
-final class Json
+class Json
 {
     /**
      * Prettify json string
      *
+     * @param string $json
+     *
+     * @return string
+     *
      * @throws \PHPUnit\Framework\Exception
      */
-    public static function prettify(string $json): string
+    public static function prettify(string $json)
     {
         $decodedJson = \json_decode($json, true);
 
@@ -39,9 +43,9 @@ final class Json
      * to indicate an error decoding the json.  This is used to avoid ambiguity
      * with JSON strings consisting entirely of 'null' or 'false'.
      */
-    public static function canonicalize(string $json): array
+    public static function canonicalize(string $json)
     {
-        $decodedJson = \json_decode($json);
+        $decodedJson = \json_decode($json, true);
 
         if (\json_last_error()) {
             return [true, null];
@@ -59,20 +63,10 @@ final class Json
      * Sort all array keys to ensure both the expected and actual values have
      * their keys in the same order.
      */
-    private static function recursiveSort(&$json): void
+    private static function recursiveSort(&$json)
     {
-        if (\is_array($json) === false) {
-            // If the object is not empty, change it to an associative array
-            // so we can sort the keys (and we will still re-encode it
-            // correctly, since PHP encodes associative arrays as JSON objects.)
-            // But EMPTY objects MUST remain empty objects. (Otherwise we will
-            // re-encode it as a JSON array rather than a JSON object.)
-            // See #2919.
-            if (\is_object($json) && \count((array) $json) > 0) {
-                $json = (array) $json;
-            } else {
-                return;
-            }
+        if (false === \is_array($json)) {
+            return;
         }
 
         \ksort($json);

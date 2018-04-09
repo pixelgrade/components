@@ -10,7 +10,7 @@
 
 namespace SebastianBergmann\CodeCoverage;
 
-final class InvalidArgumentException extends \InvalidArgumentException implements Exception
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {
     /**
      * @param int    $argument
@@ -19,7 +19,7 @@ final class InvalidArgumentException extends \InvalidArgumentException implement
      *
      * @return InvalidArgumentException
      */
-    public static function create($argument, $type, $value = null): self
+    public static function create($argument, $type, $value = null)
     {
         $stack = \debug_backtrace(0);
 

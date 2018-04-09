@@ -15,7 +15,7 @@ namespace PHPUnit\Framework\MockObject;
 interface Invocation
 {
     /**
-     * @return mixed mocked return value
+     * @return mixed Mocked return value.
      */
     public function generateReturnValue();
 

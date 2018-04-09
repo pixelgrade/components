@@ -16,13 +16,15 @@ use SebastianBergmann\CodeCoverage\Node\Directory as DirectoryNode;
 /**
  * Renders the dashboard for a directory node.
  */
-final class Dashboard extends Renderer
+class Dashboard extends Renderer
 {
     /**
+     * @param DirectoryNode $node
+     * @param string        $file
+     *
      * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      */
-    public function render(DirectoryNode $node, string $file)
+    public function render(DirectoryNode $node, $file)
     {
         $classes  = $node->getClassesAndTraits();
         $template = new \Text_Template(
@@ -57,8 +59,13 @@ final class Dashboard extends Renderer
 
     /**
      * Returns the data for the Class/Method Complexity charts.
+     *
+     * @param array  $classes
+     * @param string $baseLink
+     *
+     * @return array
      */
-    protected function complexity(array $classes, string $baseLink): array
+    protected function complexity(array $classes, $baseLink)
     {
         $result = ['class' => [], 'method' => []];
 
@@ -98,8 +105,12 @@ final class Dashboard extends Renderer
 
     /**
      * Returns the data for the Class / Method Coverage Distribution chart.
+     *
+     * @param array $classes
+     *
+     * @return array
      */
-    protected function coverageDistribution(array $classes): array
+    protected function coverageDistribution(array $classes)
     {
         $result = [
             'class' => [
@@ -164,8 +175,13 @@ final class Dashboard extends Renderer
 
     /**
      * Returns the classes / methods with insufficient coverage.
+     *
+     * @param array  $classes
+     * @param string $baseLink
+     *
+     * @return array
      */
-    protected function insufficientCoverage(array $classes, string $baseLink): array
+    protected function insufficientCoverage(array $classes, $baseLink)
     {
         $leastTestedClasses = [];
         $leastTestedMethods = [];
@@ -202,7 +218,7 @@ final class Dashboard extends Renderer
         }
 
         foreach ($leastTestedMethods as $methodName => $coverage) {
-            [$class, $method] = \explode('::', $methodName);
+            list($class, $method) = \explode('::', $methodName);
 
             $result['method'] .= \sprintf(
                 '       <tr><td><a href="%s"><abbr title="%s">%s</abbr></a></td><td class="text-right">%d%%</td></tr>' . "\n",
@@ -218,8 +234,13 @@ final class Dashboard extends Renderer
 
     /**
      * Returns the project risks according to the CRAP index.
+     *
+     * @param array  $classes
+     * @param string $baseLink
+     *
+     * @return array
      */
-    protected function projectRisks(array $classes, string $baseLink): array
+    protected function projectRisks(array $classes, $baseLink)
     {
         $classRisks  = [];
         $methodRisks = [];
@@ -227,11 +248,12 @@ final class Dashboard extends Renderer
 
         foreach ($classes as $className => $class) {
             foreach ($class['methods'] as $methodName => $method) {
-                if ($method['coverage'] < $this->highLowerBound && $method['ccn'] > 1) {
-                    $key = $methodName;
-
+                if ($method['coverage'] < $this->highLowerBound &&
+                    $method['ccn'] > 1) {
                     if ($className !== '*') {
                         $key = $className . '::' . $methodName;
+                    } else {
+                        $key = $methodName;
                     }
 
                     $methodRisks[$key] = $method['crap'];
@@ -257,7 +279,7 @@ final class Dashboard extends Renderer
         }
 
         foreach ($methodRisks as $methodName => $crap) {
-            [$class, $method] = \explode('::', $methodName);
+            list($class, $method) = \explode('::', $methodName);
 
             $result['method'] .= \sprintf(
                 '       <tr><td><a href="%s"><abbr title="%s">%s</abbr></a></td><td class="text-right">%d</td></tr>' . "\n",
@@ -271,7 +293,7 @@ final class Dashboard extends Renderer
         return $result;
     }
 
-    protected function getActiveBreadcrumb(AbstractNode $node): string
+    protected function getActiveBreadcrumb(AbstractNode $node)
     {
         return \sprintf(
             '        <li><a href="index.html">%s</a></li>' . "\n" .

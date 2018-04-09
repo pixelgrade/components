@@ -12,8 +12,4 @@ PHPUnit\TextUI\Command::main();
 PHPUnit %s by Sebastian Bergmann and contributors.
 
 DummyBar
- ✔ Bar equals bar
-
-Time: %s, Memory: %s
-
-OK (1 test, 1 assertion)
+ [x] Bar equals bar

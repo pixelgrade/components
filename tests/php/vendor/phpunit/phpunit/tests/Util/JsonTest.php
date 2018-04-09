@@ -16,17 +16,10 @@ class JsonTest extends TestCase
 {
     /**
      * @dataProvider canonicalizeProvider
-     *
-     * @param mixed $actual
-     * @param mixed $expected
-     * @param mixed $expectError
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testCanonicalize($actual, $expected, $expectError): void
+    public function testCanonicalize($actual, $expected, $expectError)
     {
-        [$error, $canonicalized] = Json::canonicalize($actual);
+        list($error, $canonicalized) = Json::canonicalize($actual);
         $this->assertEquals($expectError, $error);
         if (!$expectError) {
             $this->assertEquals($expected, $canonicalized);
@@ -47,15 +40,8 @@ class JsonTest extends TestCase
 
     /**
      * @dataProvider prettifyProvider
-     *
-     * @param mixed $actual
-     * @param mixed $expected
-     *
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testPrettify($actual, $expected): void
+    public function testPrettify($actual, $expected)
     {
         $this->assertEquals($expected, Json::prettify($actual));
     }
@@ -74,10 +60,8 @@ class JsonTest extends TestCase
      * @dataProvider prettifyExceptionProvider
      * @expectedException \PHPUnit\Framework\Exception
      * @expectedExceptionMessage Cannot prettify invalid json
-     *
-     * @param mixed $json
      */
-    public function testPrettifyException($json): void
+    public function testPrettifyException($json)
     {
         Json::prettify($json);
     }

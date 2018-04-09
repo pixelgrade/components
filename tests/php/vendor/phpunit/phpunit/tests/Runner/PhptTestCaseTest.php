@@ -15,7 +15,7 @@ use PHPUnit\Util\PHP\AbstractPhpProcess;
 
 class PhptTestCaseTest extends TestCase
 {
-    private const EXPECT_CONTENT = <<<EOF
+    const EXPECT_CONTENT = <<<EOF
 --TEST--
 EXPECT test
 --FILE--
@@ -24,7 +24,7 @@ EXPECT test
 Hello PHPUnit!
 EOF;
 
-    private const EXPECTF_CONTENT = <<<EOF
+    const EXPECTF_CONTENT = <<<EOF
 --TEST--
 EXPECTF test
 --FILE--
@@ -33,7 +33,7 @@ EXPECTF test
 Hello %s!
 EOF;
 
-    private const EXPECTREGEX_CONTENT = <<<EOF
+    const EXPECTREGEX_CONTENT = <<<EOF
 --TEST--
 EXPECTREGEX test
 --FILE--
@@ -42,7 +42,7 @@ EXPECTREGEX test
 Hello [HPU]{4}[nit]{3}!
 EOF;
 
-    private const FILE_SECTION = <<<EOF
+    const FILE_SECTION = <<<EOF
 <?php echo "Hello PHPUnit!"; ?>
 
 EOF;
@@ -67,7 +67,7 @@ EOF;
      */
     private $phpProcess;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->dirname  = \sys_get_temp_dir();
         $this->filename = $this->dirname . '/phpunit.phpt';
@@ -77,15 +77,44 @@ EOF;
         $this->testCase   = new PhptTestCase($this->filename, $this->phpProcess);
     }
 
-    protected function tearDown(): void
+    protected function tearDown()
     {
         @\unlink($this->filename);
 
-        $this->phpProcess = null;
-        $this->testCase   = null;
+        $this->filename = null;
+        $this->testCase = null;
     }
 
-    public function testShouldRunFileSectionAsTest(): void
+    /**
+     * Defines the content of the current PHPT test.
+     *
+     * @param string $content
+     */
+    private function setPhpContent($content)
+    {
+        \file_put_contents($this->filename, $content);
+    }
+
+    /**
+     * Ensures the correct line ending is used for comparison
+     *
+     * @param string $content
+     *
+     * @return string
+     */
+    private function ensureCorrectEndOfLine($content)
+    {
+        return \strtr(
+            $content,
+            [
+                "\r\n" => PHP_EOL,
+                "\r"   => PHP_EOL,
+                "\n"   => PHP_EOL
+            ]
+        );
+    }
+
+    public function testShouldRunFileSectionAsTest()
     {
         $this->setPhpContent($this->ensureCorrectEndOfLine(self::EXPECT_CONTENT));
 
@@ -100,7 +129,7 @@ EOF;
         $this->testCase->run();
     }
 
-    public function testRenderFileSection(): void
+    public function testRenderFileSection()
     {
         $this->setPhpContent($this->ensureCorrectEndOfLine(
             <<<EOF
@@ -124,7 +153,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testRenderSkipifSection(): void
+    public function testRenderSkipifSection()
     {
         $phptContent = self::EXPECT_CONTENT . PHP_EOL;
         $phptContent .= '--SKIPIF--' . PHP_EOL;
@@ -143,7 +172,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldRunSkipifSectionWhenExists(): void
+    public function testShouldRunSkipifSectionWhenExists()
     {
         $skipifSection = '<?php /** Nothing **/ ?>' . PHP_EOL;
 
@@ -162,7 +191,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldNotRunTestSectionIfSkipifSectionReturnsOutputWithSkipWord(): void
+    public function testShouldNotRunTestSectionIfSkipifSectionReturnsOutputWithSkipWord()
     {
         $skipifSection = '<?php echo "skip: Reason"; ?>' . PHP_EOL;
 
@@ -181,7 +210,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldRunCleanSectionWhenDefined(): void
+    public function testShouldRunCleanSectionWhenDefined()
     {
         $cleanSection = '<?php unlink("/tmp/something"); ?>' . PHP_EOL;
 
@@ -199,7 +228,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldThrowsAnExceptionWhenPhptFileIsEmpty(): void
+    public function testShouldThrowsAnExceptionWhenPhptFileIsEmpty()
     {
         $this->setPhpContent('');
 
@@ -209,7 +238,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldThrowsAnExceptionWhenFileSectionIsMissing(): void
+    public function testShouldThrowsAnExceptionWhenFileSectionIsMissing()
     {
         $this->setPhpContent(
             <<<EOF
@@ -226,7 +255,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldThrowsAnExceptionWhenThereIsNoExpecOrExpectifOrExpecregexSectionInPhptFile(): void
+    public function testShouldThrowsAnExceptionWhenThereIsNoExpecOrExpectifOrExpecregexSectionInPhptFile()
     {
         $this->setPhpContent(
             <<<EOF
@@ -245,7 +274,7 @@ EOF
         $this->testCase->run();
     }
 
-    public function testShouldValidateExpectSession(): void
+    public function testShouldValidateExpectSession()
     {
         $this->setPhpContent(self::EXPECT_CONTENT);
 
@@ -260,7 +289,7 @@ EOF
         $this->assertTrue($result->wasSuccessful());
     }
 
-    public function testShouldValidateExpectfSession(): void
+    public function testShouldValidateExpectfSession()
     {
         $this->setPhpContent(self::EXPECTF_CONTENT);
 
@@ -275,7 +304,7 @@ EOF
         $this->assertTrue($result->wasSuccessful());
     }
 
-    public function testShouldValidateExpectregexSession(): void
+    public function testShouldValidateExpectregexSession()
     {
         $this->setPhpContent(self::EXPECTREGEX_CONTENT);
 
@@ -288,34 +317,5 @@ EOF
         $result = $this->testCase->run();
 
         $this->assertTrue($result->wasSuccessful());
-    }
-
-    /**
-     * Defines the content of the current PHPT test.
-     *
-     * @param string $content
-     */
-    private function setPhpContent($content): void
-    {
-        \file_put_contents($this->filename, $content);
-    }
-
-    /**
-     * Ensures the correct line ending is used for comparison
-     *
-     * @param string $content
-     *
-     * @return string
-     */
-    private function ensureCorrectEndOfLine($content)
-    {
-        return \strtr(
-            $content,
-            [
-                "\r\n" => PHP_EOL,
-                "\r"   => PHP_EOL,
-                "\n"   => PHP_EOL
-            ]
-        );
     }
 }

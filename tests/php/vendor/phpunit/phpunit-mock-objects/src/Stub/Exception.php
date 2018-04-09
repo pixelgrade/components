@@ -30,7 +30,7 @@ class Exception implements Stub
         throw $this->exception;
     }
 
-    public function toString(): string
+    public function toString()
     {
         $exporter = new Exporter;
 

@@ -22,7 +22,55 @@ class TestListenerTest extends TestCase implements TestListener
     protected $result;
     protected $startCount;
 
-    protected function setUp(): void
+    public function addError(Test $test, \Exception $e, $time)
+    {
+        $this->errorCount++;
+    }
+
+    public function addWarning(Test $test, Warning $e, $time)
+    {
+        $this->warningCount++;
+    }
+
+    public function addFailure(Test $test, AssertionFailedError $e, $time)
+    {
+        $this->failureCount++;
+    }
+
+    public function addIncompleteTest(Test $test, \Exception $e, $time)
+    {
+        $this->notImplementedCount++;
+    }
+
+    public function addRiskyTest(Test $test, \Exception $e, $time)
+    {
+        $this->riskyCount++;
+    }
+
+    public function addSkippedTest(Test $test, \Exception $e, $time)
+    {
+        $this->skippedCount++;
+    }
+
+    public function startTestSuite(TestSuite $suite)
+    {
+    }
+
+    public function endTestSuite(TestSuite $suite)
+    {
+    }
+
+    public function startTest(Test $test)
+    {
+        $this->startCount++;
+    }
+
+    public function endTest(Test $test, $time)
+    {
+        $this->endCount++;
+    }
+
+    protected function setUp()
     {
         $this->result = new TestResult;
         $this->result->addListener($this);
@@ -35,55 +83,7 @@ class TestListenerTest extends TestCase implements TestListener
         $this->startCount          = 0;
     }
 
-    public function addError(Test $test, \Throwable $t, float $time): void
-    {
-        $this->errorCount++;
-    }
-
-    public function addWarning(Test $test, Warning $e, float $time): void
-    {
-        $this->warningCount++;
-    }
-
-    public function addFailure(Test $test, AssertionFailedError $e, float $time): void
-    {
-        $this->failureCount++;
-    }
-
-    public function addIncompleteTest(Test $test, \Throwable $t, float $time): void
-    {
-        $this->notImplementedCount++;
-    }
-
-    public function addRiskyTest(Test $test, \Throwable $t, float $time): void
-    {
-        $this->riskyCount++;
-    }
-
-    public function addSkippedTest(Test $test, \Throwable $t, float $time): void
-    {
-        $this->skippedCount++;
-    }
-
-    public function startTestSuite(TestSuite $suite): void
-    {
-    }
-
-    public function endTestSuite(TestSuite $suite): void
-    {
-    }
-
-    public function startTest(Test $test): void
-    {
-        $this->startCount++;
-    }
-
-    public function endTest(Test $test, float $time): void
-    {
-        $this->endCount++;
-    }
-
-    public function testError(): void
+    public function testError()
     {
         $test = new \TestError;
         $test->run($this->result);
@@ -92,7 +92,7 @@ class TestListenerTest extends TestCase implements TestListener
         $this->assertEquals(1, $this->endCount);
     }
 
-    public function testFailure(): void
+    public function testFailure()
     {
         $test = new \Failure;
         $test->run($this->result);
@@ -101,7 +101,7 @@ class TestListenerTest extends TestCase implements TestListener
         $this->assertEquals(1, $this->endCount);
     }
 
-    public function testStartStop(): void
+    public function testStartStop()
     {
         $test = new \Success;
         $test->run($this->result);

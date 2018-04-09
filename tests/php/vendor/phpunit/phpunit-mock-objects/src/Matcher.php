@@ -37,7 +37,7 @@ class Matcher implements MatcherInvocation
     /**
      * @var mixed
      */
-    private $afterMatchBuilderId;
+    private $afterMatchBuilderId = null;
 
     /**
      * @var bool
@@ -47,17 +47,17 @@ class Matcher implements MatcherInvocation
     /**
      * @var MethodName
      */
-    private $methodNameMatcher;
+    private $methodNameMatcher = null;
 
     /**
      * @var Parameters
      */
-    private $parametersMatcher;
+    private $parametersMatcher = null;
 
     /**
      * @var Stub
      */
-    private $stub;
+    private $stub = null;
 
     /**
      * @param MatcherInvocation $invocationMatcher
@@ -115,11 +115,11 @@ class Matcher implements MatcherInvocation
     /**
      * @param Invocation $invocation
      *
+     * @return mixed
+     *
      * @throws \Exception
      * @throws RuntimeException
      * @throws ExpectationFailedException
-     *
-     * @return mixed
      */
     public function invoked(Invocation $invocation)
     {
@@ -183,10 +183,10 @@ class Matcher implements MatcherInvocation
     /**
      * @param Invocation $invocation
      *
+     * @return bool
+     *
      * @throws RuntimeException
      * @throws ExpectationFailedException
-     *
-     * @return bool
      */
     public function matches(Invocation $invocation)
     {
@@ -292,7 +292,7 @@ class Matcher implements MatcherInvocation
     /**
      * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         $list = [];
 

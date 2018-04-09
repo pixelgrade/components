@@ -14,7 +14,7 @@ class BankAccountTest extends TestCase
 {
     private $ba;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->ba = new BankAccount;
     }

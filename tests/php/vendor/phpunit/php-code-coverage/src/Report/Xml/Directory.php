@@ -10,6 +10,6 @@
 
 namespace SebastianBergmann\CodeCoverage\Report\Xml;
 
-final class Directory extends Node
+class Directory extends Node
 {
 }

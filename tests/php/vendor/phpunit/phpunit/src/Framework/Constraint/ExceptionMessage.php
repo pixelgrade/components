@@ -12,24 +12,18 @@ namespace PHPUnit\Framework\Constraint;
 class ExceptionMessage extends Constraint
 {
     /**
-     * @var string
+     * @var int
      */
-    private $expectedMessage;
+    protected $expectedMessage;
 
-    public function __construct(string $expected)
+    /**
+     * @param string $expected
+     */
+    public function __construct($expected)
     {
         parent::__construct();
 
         $this->expectedMessage = $expected;
-    }
-
-    public function toString(): string
-    {
-        if ($this->expectedMessage === '') {
-            return 'exception message is empty';
-        }
-
-        return 'exception message contains ';
     }
 
     /**
@@ -37,8 +31,10 @@ class ExceptionMessage extends Constraint
      * constraint is met, false otherwise.
      *
      * @param \Throwable $other
+     *
+     * @return bool
      */
-    protected function matches($other): bool
+    protected function matches($other)
     {
         if ($this->expectedMessage === '') {
             return $other->getMessage() === '';
@@ -53,9 +49,11 @@ class ExceptionMessage extends Constraint
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param mixed $other evaluated value or object
+     * @param mixed $other Evaluated value or object.
+     *
+     * @return string
      */
-    protected function failureDescription($other): string
+    protected function failureDescription($other)
     {
         if ($this->expectedMessage === '') {
             return \sprintf(
@@ -69,5 +67,17 @@ class ExceptionMessage extends Constraint
             $other->getMessage(),
             $this->expectedMessage
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        if ($this->expectedMessage === '') {
+            return 'exception message is empty';
+        }
+
+        return 'exception message contains ';
     }
 }

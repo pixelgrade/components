@@ -10,7 +10,7 @@
 
 namespace SebastianBergmann\CodeCoverage\Report\Xml;
 
-final class Tests
+class Tests
 {
     private $contextNode;
 
@@ -29,7 +29,7 @@ final class Tests
         $this->contextNode = $context;
     }
 
-    public function addTest(string $test, array $result): void
+    public function addTest($test, array $result)
     {
         $node = $this->contextNode->appendChild(
             $this->contextNode->ownerDocument->createElementNS(

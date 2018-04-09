@@ -21,16 +21,20 @@ use SebastianBergmann\Comparator\ComparisonFailure;
 class ArraySubset extends Constraint
 {
     /**
-     * @var iterable
+     * @var array|\Traversable
      */
-    private $subset;
+    protected $subset;
 
     /**
      * @var bool
      */
-    private $strict;
+    protected $strict;
 
-    public function __construct(iterable $subset, bool $strict = false)
+    /**
+     * @param array|\Traversable $subset
+     * @param bool               $strict Check for object identity
+     */
+    public function __construct($subset, $strict = false)
     {
         parent::__construct();
 
@@ -48,14 +52,13 @@ class ArraySubset extends Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        value or object to evaluate
+     * @param mixed  $other        Value or object to evaluate.
      * @param string $description  Additional information about the test
      * @param bool   $returnResult Whether to return a result or throw an exception
      *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
      * @return mixed
+     *
+     * @throws ExpectationFailedException
      */
     public function evaluate($other, $description = '', $returnResult = false)
     {
@@ -91,9 +94,9 @@ class ArraySubset extends Constraint
     /**
      * Returns a string representation of the constraint.
      *
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         return 'has the subset ' . $this->exporter->export($this->subset);
     }
@@ -104,16 +107,21 @@ class ArraySubset extends Constraint
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param mixed $other evaluated value or object
+     * @param mixed $other Evaluated value or object.
      *
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @return string
      */
-    protected function failureDescription($other): string
+    protected function failureDescription($other)
     {
         return 'an array ' . $this->toString();
     }
 
-    private function toArray(iterable $other): array
+    /**
+     * @param array|\Traversable $other
+     *
+     * @return array
+     */
+    private function toArray($other)
     {
         if (\is_array($other)) {
             return $other;

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class IsEmptyTest extends ConstraintTestCase
 {
-    public function testConstraintIsEmpty(): void
+    public function testConstraintIsEmpty()
     {
         $constraint = new IsEmpty();
 
@@ -44,7 +44,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintIsEmpty2(): void
+    public function testConstraintIsEmpty2()
     {
         $constraint = new IsEmpty();
 

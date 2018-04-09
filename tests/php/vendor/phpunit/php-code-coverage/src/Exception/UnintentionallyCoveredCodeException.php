@@ -13,7 +13,7 @@ namespace SebastianBergmann\CodeCoverage;
 /**
  * Exception that is raised when code is unintentionally covered.
  */
-final class UnintentionallyCoveredCodeException extends RuntimeException
+class UnintentionallyCoveredCodeException extends RuntimeException
 {
     /**
      * @var array
@@ -33,7 +33,7 @@ final class UnintentionallyCoveredCodeException extends RuntimeException
     /**
      * @return array
      */
-    public function getUnintentionallyCoveredUnits(): array
+    public function getUnintentionallyCoveredUnits()
     {
         return $this->unintentionallyCoveredUnits;
     }
@@ -41,7 +41,7 @@ final class UnintentionallyCoveredCodeException extends RuntimeException
     /**
      * @return string
      */
-    private function toString(): string
+    private function toString()
     {
         $message = '';
 

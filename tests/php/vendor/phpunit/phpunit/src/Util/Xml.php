@@ -17,7 +17,10 @@ use DOMText;
 use PHPUnit\Framework\Exception;
 use ReflectionClass;
 
-final class Xml
+/**
+ * XML helpers.
+ */
+class Xml
 {
     /**
      * Load an $actual document into a DOMDocument.  This is called
@@ -33,15 +36,15 @@ final class Xml
      * not a string as it currently does.  To load a file into a
      * DOMDocument, use loadFile() instead.
      *
-     * @param DOMDocument|string $actual
+     * @param string|DOMDocument $actual
      * @param bool               $isHtml
      * @param string             $filename
      * @param bool               $xinclude
      * @param bool               $strict
      *
-     * @throws Exception
+     * @return DOMDocument
      */
-    public static function load($actual, bool $isHtml = false, string $filename = '', bool $xinclude = false, bool $strict = false): DOMDocument
+    public static function load($actual, $isHtml = false, $filename = '', $xinclude = false, $strict = false)
     {
         if ($actual instanceof DOMDocument) {
             return $actual;
@@ -68,8 +71,8 @@ final class Xml
         $message   = '';
         $reporting = \error_reporting(0);
 
-        if ($filename !== '') {
-            // Required for XInclude
+        if ('' !== $filename) {
+            // Necessary for xinclude
             $document->documentURI = $filename;
         }
 
@@ -100,7 +103,7 @@ final class Xml
                     \sprintf(
                         'Could not load "%s".%s',
                         $filename,
-                        $message !== '' ? "\n" . $message : ''
+                        $message != '' ? "\n" . $message : ''
                     )
                 );
             }
@@ -118,13 +121,17 @@ final class Xml
     /**
      * Loads an XML (or HTML) file into a DOMDocument object.
      *
-     * @throws Exception
+     * @param string $filename
+     * @param bool   $isHtml
+     * @param bool   $xinclude
+     * @param bool   $strict
+     *
+     * @return DOMDocument
      */
-    public static function loadFile(string $filename, bool $isHtml = false, bool $xinclude = false, bool $strict = false): DOMDocument
+    public static function loadFile($filename, $isHtml = false, $xinclude = false, $strict = false)
     {
         $reporting = \error_reporting(0);
         $contents  = \file_get_contents($filename);
-
         \error_reporting($reporting);
 
         if ($contents === false) {
@@ -139,7 +146,10 @@ final class Xml
         return self::load($contents, $isHtml, $filename, $xinclude, $strict);
     }
 
-    public static function removeCharacterDataNodes(DOMNode $node): void
+    /**
+     * @param DOMNode $node
+     */
+    public static function removeCharacterDataNodes(DOMNode $node)
     {
         if ($node->hasChildNodes()) {
             for ($i = $node->childNodes->length - 1; $i >= 0; $i--) {
@@ -152,26 +162,31 @@ final class Xml
 
     /**
      * Escapes a string for the use in XML documents
-     *
      * Any Unicode character is allowed, excluding the surrogate blocks, FFFE,
      * and FFFF (not even as character reference).
+     * See http://www.w3.org/TR/xml/#charsets
      *
-     * @see https://www.w3.org/TR/xml/#charsets
+     * @param string $string
+     *
+     * @return string
      */
-    public static function prepareString(string $string): string
+    public static function prepareString($string)
     {
         return \preg_replace(
             '/[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]/',
             '',
             \htmlspecialchars(
                 self::convertToUtf8($string),
-                ENT_QUOTES
+                ENT_QUOTES,
+                'UTF-8'
             )
         );
     }
 
     /**
      * "Convert" a DOMElement object into a PHP variable.
+     *
+     * @param DOMElement $element
      *
      * @return mixed
      */
@@ -226,7 +241,7 @@ final class Xml
                 break;
 
             case 'boolean':
-                $variable = $element->textContent === 'true';
+                $variable = $element->textContent == 'true';
 
                 break;
 
@@ -243,34 +258,52 @@ final class Xml
         return $variable;
     }
 
-    private static function convertToUtf8(string $string): string
+    /**
+     * Converts a string to UTF-8 encoding.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    private static function convertToUtf8($string)
     {
         if (!self::isUtf8($string)) {
-            $string = \mb_convert_encoding($string, 'UTF-8');
+            if (\function_exists('mb_convert_encoding')) {
+                return \mb_convert_encoding($string, 'UTF-8');
+            }
+
+            return \utf8_encode($string);
         }
 
         return $string;
     }
 
-    private static function isUtf8(string $string): bool
+    /**
+     * Checks a string for UTF-8 encoding.
+     *
+     * @param string $string
+     *
+     * @return bool
+     */
+    private static function isUtf8($string)
     {
         $length = \strlen($string);
 
         for ($i = 0; $i < $length; $i++) {
             if (\ord($string[$i]) < 0x80) {
                 $n = 0;
-            } elseif ((\ord($string[$i]) & 0xE0) === 0xC0) {
+            } elseif ((\ord($string[$i]) & 0xE0) == 0xC0) {
                 $n = 1;
-            } elseif ((\ord($string[$i]) & 0xF0) === 0xE0) {
+            } elseif ((\ord($string[$i]) & 0xF0) == 0xE0) {
                 $n = 2;
-            } elseif ((\ord($string[$i]) & 0xF0) === 0xF0) {
+            } elseif ((\ord($string[$i]) & 0xF0) == 0xF0) {
                 $n = 3;
             } else {
                 return false;
             }
 
             for ($j = 0; $j < $n; $j++) {
-                if ((++$i === $length) || ((\ord($string[$i]) & 0xC0) !== 0x80)) {
+                if ((++$i == $length) || ((\ord($string[$i]) & 0xC0) != 0x80)) {
                     return false;
                 }
             }

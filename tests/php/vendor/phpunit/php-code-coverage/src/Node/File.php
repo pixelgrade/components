@@ -10,10 +10,12 @@
 
 namespace SebastianBergmann\CodeCoverage\Node;
 
+use SebastianBergmann\CodeCoverage\InvalidArgumentException;
+
 /**
  * Represents a file in the code coverage information tree.
  */
-final class File extends AbstractNode
+class File extends AbstractNode
 {
     /**
      * @var array
@@ -58,7 +60,7 @@ final class File extends AbstractNode
     /**
      * @var int
      */
-    private $numClasses;
+    private $numClasses = null;
 
     /**
      * @var int
@@ -68,7 +70,7 @@ final class File extends AbstractNode
     /**
      * @var int
      */
-    private $numTraits;
+    private $numTraits = null;
 
     /**
      * @var int
@@ -78,17 +80,17 @@ final class File extends AbstractNode
     /**
      * @var int
      */
-    private $numMethods;
+    private $numMethods = null;
 
     /**
      * @var int
      */
-    private $numTestedMethods;
+    private $numTestedMethods = null;
 
     /**
      * @var int
      */
-    private $numTestedFunctions;
+    private $numTestedFunctions = null;
 
     /**
      * @var array
@@ -105,8 +107,26 @@ final class File extends AbstractNode
      */
     private $cacheTokens;
 
-    public function __construct(string $name, AbstractNode $parent, array $coverageData, array $testData, bool $cacheTokens)
+    /**
+     * Constructor.
+     *
+     * @param string       $name
+     * @param AbstractNode $parent
+     * @param array        $coverageData
+     * @param array        $testData
+     * @param bool         $cacheTokens
+     *
+     * @throws InvalidArgumentException
+     */
+    public function __construct($name, AbstractNode $parent, array $coverageData, array $testData, $cacheTokens)
     {
+        if (!\is_bool($cacheTokens)) {
+            throw InvalidArgumentException::create(
+                1,
+                'boolean'
+            );
+        }
+
         parent::__construct($name, $parent);
 
         $this->coverageData = $coverageData;
@@ -118,80 +138,100 @@ final class File extends AbstractNode
 
     /**
      * Returns the number of files in/under this node.
+     *
+     * @return int
      */
-    public function count(): int
+    public function count()
     {
         return 1;
     }
 
     /**
      * Returns the code coverage data of this node.
+     *
+     * @return array
      */
-    public function getCoverageData(): array
+    public function getCoverageData()
     {
         return $this->coverageData;
     }
 
     /**
      * Returns the test data of this node.
+     *
+     * @return array
      */
-    public function getTestData(): array
+    public function getTestData()
     {
         return $this->testData;
     }
 
     /**
      * Returns the classes of this node.
+     *
+     * @return array
      */
-    public function getClasses(): array
+    public function getClasses()
     {
         return $this->classes;
     }
 
     /**
      * Returns the traits of this node.
+     *
+     * @return array
      */
-    public function getTraits(): array
+    public function getTraits()
     {
         return $this->traits;
     }
 
     /**
      * Returns the functions of this node.
+     *
+     * @return array
      */
-    public function getFunctions(): array
+    public function getFunctions()
     {
         return $this->functions;
     }
 
     /**
      * Returns the LOC/CLOC/NCLOC of this node.
+     *
+     * @return array
      */
-    public function getLinesOfCode(): array
+    public function getLinesOfCode()
     {
         return $this->linesOfCode;
     }
 
     /**
      * Returns the number of executable lines.
+     *
+     * @return int
      */
-    public function getNumExecutableLines(): int
+    public function getNumExecutableLines()
     {
         return $this->numExecutableLines;
     }
 
     /**
      * Returns the number of executed lines.
+     *
+     * @return int
      */
-    public function getNumExecutedLines(): int
+    public function getNumExecutedLines()
     {
         return $this->numExecutedLines;
     }
 
     /**
      * Returns the number of classes.
+     *
+     * @return int
      */
-    public function getNumClasses(): int
+    public function getNumClasses()
     {
         if ($this->numClasses === null) {
             $this->numClasses = 0;
@@ -212,16 +252,20 @@ final class File extends AbstractNode
 
     /**
      * Returns the number of tested classes.
+     *
+     * @return int
      */
-    public function getNumTestedClasses(): int
+    public function getNumTestedClasses()
     {
         return $this->numTestedClasses;
     }
 
     /**
      * Returns the number of traits.
+     *
+     * @return int
      */
-    public function getNumTraits(): int
+    public function getNumTraits()
     {
         if ($this->numTraits === null) {
             $this->numTraits = 0;
@@ -242,16 +286,20 @@ final class File extends AbstractNode
 
     /**
      * Returns the number of tested traits.
+     *
+     * @return int
      */
-    public function getNumTestedTraits(): int
+    public function getNumTestedTraits()
     {
         return $this->numTestedTraits;
     }
 
     /**
      * Returns the number of methods.
+     *
+     * @return int
      */
-    public function getNumMethods(): int
+    public function getNumMethods()
     {
         if ($this->numMethods === null) {
             $this->numMethods = 0;
@@ -278,8 +326,10 @@ final class File extends AbstractNode
 
     /**
      * Returns the number of tested methods.
+     *
+     * @return int
      */
-    public function getNumTestedMethods(): int
+    public function getNumTestedMethods()
     {
         if ($this->numTestedMethods === null) {
             $this->numTestedMethods = 0;
@@ -308,16 +358,20 @@ final class File extends AbstractNode
 
     /**
      * Returns the number of functions.
+     *
+     * @return int
      */
-    public function getNumFunctions(): int
+    public function getNumFunctions()
     {
         return \count($this->functions);
     }
 
     /**
      * Returns the number of tested functions.
+     *
+     * @return int
      */
-    public function getNumTestedFunctions(): int
+    public function getNumTestedFunctions()
     {
         if ($this->numTestedFunctions === null) {
             $this->numTestedFunctions = 0;
@@ -333,7 +387,10 @@ final class File extends AbstractNode
         return $this->numTestedFunctions;
     }
 
-    private function calculateStatistics(): void
+    /**
+     * Calculates coverage statistics for the file.
+     */
+    protected function calculateStatistics()
     {
         $classStack = $functionStack = [];
 
@@ -532,9 +589,13 @@ final class File extends AbstractNode
         }
     }
 
-    private function processClasses(\PHP_Token_Stream $tokens): void
+    /**
+     * @param \PHP_Token_Stream $tokens
+     */
+    protected function processClasses(\PHP_Token_Stream $tokens)
     {
         $classes = $tokens->getClasses();
+        unset($tokens);
 
         $link = $this->getId() . '.html#';
 
@@ -568,9 +629,13 @@ final class File extends AbstractNode
         }
     }
 
-    private function processTraits(\PHP_Token_Stream $tokens): void
+    /**
+     * @param \PHP_Token_Stream $tokens
+     */
+    protected function processTraits(\PHP_Token_Stream $tokens)
     {
         $traits = $tokens->getTraits();
+        unset($tokens);
 
         $link = $this->getId() . '.html#';
 
@@ -600,9 +665,13 @@ final class File extends AbstractNode
         }
     }
 
-    private function processFunctions(\PHP_Token_Stream $tokens): void
+    /**
+     * @param \PHP_Token_Stream $tokens
+     */
+    protected function processFunctions(\PHP_Token_Stream $tokens)
     {
         $functions = $tokens->getFunctions();
+        unset($tokens);
 
         $link = $this->getId() . '.html#';
 
@@ -624,10 +693,19 @@ final class File extends AbstractNode
         }
     }
 
-    private function crap(int $ccn, float $coverage): string
+    /**
+     * Calculates the Change Risk Anti-Patterns (CRAP) index for a unit of code
+     * based on its cyclomatic complexity and percentage of code coverage.
+     *
+     * @param int   $ccn
+     * @param float $coverage
+     *
+     * @return string
+     */
+    protected function crap($ccn, $coverage)
     {
-        if ($coverage === 0) {
-            return (string) ($ccn ** 2 + $ccn);
+        if ($coverage == 0) {
+            return (string) (\pow($ccn, 2) + $ccn);
         }
 
         if ($coverage >= 95) {
@@ -636,11 +714,18 @@ final class File extends AbstractNode
 
         return \sprintf(
             '%01.2F',
-            $ccn ** 2 * (1 - $coverage / 100) ** 3 + $ccn
+            \pow($ccn, 2) * \pow(1 - $coverage / 100, 3) + $ccn
         );
     }
 
-    private function newMethod(string $methodName, array $method, string $link): array
+    /**
+     * @param string $methodName
+     * @param array  $method
+     * @param string $link
+     *
+     * @return array
+     */
+    private function newMethod($methodName, array $method, $link)
     {
         return [
             'methodName'      => $methodName,

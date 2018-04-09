@@ -10,7 +10,7 @@
 namespace PHPUnit\Runner;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Util\FileLoader;
+use PHPUnit\Util\Fileloader;
 use PHPUnit\Util\Filesystem;
 use ReflectionClass;
 
@@ -20,10 +20,14 @@ use ReflectionClass;
 class StandardTestSuiteLoader implements TestSuiteLoader
 {
     /**
+     * @param string $suiteClassName
+     * @param string $suiteClassFile
+     *
+     * @return ReflectionClass
+     *
      * @throws Exception
-     * @throws \PHPUnit\Framework\Exception
      */
-    public function load(string $suiteClassName, string $suiteClassFile = ''): ReflectionClass
+    public function load($suiteClassName, $suiteClassFile = '')
     {
         $suiteClassName = \str_replace('.php', '', $suiteClassName);
 
@@ -36,7 +40,7 @@ class StandardTestSuiteLoader implements TestSuiteLoader
         if (!\class_exists($suiteClassName, false)) {
             $loadedClasses = \get_declared_classes();
 
-            $filename = FileLoader::checkAndLoad($suiteClassFile);
+            $filename = Fileloader::checkAndLoad($suiteClassFile);
 
             $loadedClasses = \array_values(
                 \array_diff(\get_declared_classes(), $loadedClasses)
@@ -104,7 +108,12 @@ class StandardTestSuiteLoader implements TestSuiteLoader
         );
     }
 
-    public function reload(ReflectionClass $aClass): ReflectionClass
+    /**
+     * @param ReflectionClass $aClass
+     *
+     * @return ReflectionClass
+     */
+    public function reload(ReflectionClass $aClass)
     {
         return $aClass;
     }

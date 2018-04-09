@@ -17,12 +17,12 @@ final class NamedConstraint extends Constraint
         return $instance;
     }
 
-    public function matches($other): bool
+    public function matches($other)
     {
         return true;
     }
 
-    public function toString(): string
+    public function toString()
     {
         return $this->name;
     }

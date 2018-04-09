@@ -44,7 +44,7 @@ class ConsecutiveCalls implements Stub
         return $this->value;
     }
 
-    public function toString(): string
+    public function toString()
     {
         $exporter = new Exporter;
 

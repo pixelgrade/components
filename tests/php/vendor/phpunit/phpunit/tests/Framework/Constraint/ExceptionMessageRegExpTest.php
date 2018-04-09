@@ -18,7 +18,7 @@ class ExceptionMessageRegExpTest extends TestCase
      * @expectedException \Exception
      * @expectedExceptionMessageRegExp /^A polymorphic \w+ message/
      */
-    public function testRegexMessage(): void
+    public function testRegexMessage()
     {
         throw new \Exception('A polymorphic exception message');
     }
@@ -27,7 +27,7 @@ class ExceptionMessageRegExpTest extends TestCase
      * @expectedException \Exception
      * @expectedExceptionMessageRegExp /^a poly[a-z]+ [a-zA-Z0-9_]+ me(s){2}age$/i
      */
-    public function testRegexMessageExtreme(): void
+    public function testRegexMessageExtreme()
     {
         throw new \Exception('A polymorphic exception message');
     }
@@ -38,7 +38,7 @@ class ExceptionMessageRegExpTest extends TestCase
      * @expectedException \Exception
      * @expectedExceptionMessageRegExp #Screaming preg_match#
      */
-    public function testMessageXdebugScreamCompatibility(): void
+    public function testMessageXdebugScreamCompatibility()
     {
         \ini_set('xdebug.scream', '1');
 
@@ -49,7 +49,7 @@ class ExceptionMessageRegExpTest extends TestCase
      * @expectedException \Exception variadic
      * @expectedExceptionMessageRegExp /^A variadic \w+ message/
      */
-    public function testSimultaneousLiteralAndRegExpExceptionMessage(): void
+    public function testSimultaneousLiteralAndRegExpExceptionMessage()
     {
         throw new \Exception('A variadic exception message');
     }

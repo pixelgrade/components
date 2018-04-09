@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class IsEqualTest extends ConstraintTestCase
 {
-    public function testConstraintIsEqual(): void
+    public function testConstraintIsEqual()
     {
         $constraint = new IsEqual(1);
 
@@ -44,12 +44,8 @@ EOF
 
     /**
      * @dataProvider isEqualProvider
-     *
-     * @param mixed $expected
-     * @param mixed $actual
-     * @param mixed $message
      */
-    public function testConstraintIsEqual2($expected, $actual, $message): void
+    public function testConstraintIsEqual2($expected, $actual, $message)
     {
         $constraint = new IsEqual($expected);
 
@@ -136,16 +132,9 @@ Failed asserting that two strings are equal.
  'a\\n
 -b\\n
 +p\\n
- c\\n
- d\\n
- e\\n
 @@ @@
- g\\n
- h\\n
- i\\n
 -j\\n
 +w\\n
- k'
 
 EOF
             ],
@@ -167,7 +156,6 @@ Failed asserting that two arrays are equal.
  Array (
 -    0 => 0
 +    0 => 1
- )
 
 EOF
             ],
@@ -179,7 +167,6 @@ Failed asserting that two arrays are equal.
  Array (
 -    0 => true
 +    0 => 'true'
- )
 
 EOF
             ],
@@ -193,10 +180,6 @@ Failed asserting that two arrays are equal.
      1 => Array (
 -        0 => 1
 +        0 => 4
-     )
-     2 => Array (...)
-     3 => 3
- )
 
 EOF
             ],
@@ -217,7 +200,6 @@ Failed asserting that two objects are equal.
 @@ @@
  stdClass Object (
 -    'foo' => 'bar'
- )
 
 EOF
             ],
@@ -235,29 +217,12 @@ Failed asserting that two objects are equal.
          1 => Array (
 -            0 => 1
 +            0 => 4
-         )
-         2 => Array (...)
-         3 => 3
 @@ @@
-     )
-     'related' => stdClass Object (
-         'foo' => 'a\\n
 -        b\\n
 +        p\\n
-         c\\n
-         d\\n
-         e\\n
 @@ @@
-         g\\n
-         h\\n
-         i\\n
 -        j\\n
 +        w\\n
-         k'
-     )
-     'self' => stdClass Object (...)
-     'c' => stdClass Object (...)
- )
 
 EOF
             ],
@@ -302,10 +267,6 @@ Failed asserting that two objects are equal.
 -    '$bhash' => Array &1 (
 +SplObjectStorage Object &$storage2hash (
 +    '$bhash' => Array &0 (
-         'obj' => stdClass Object &$bhash ()
-         'inf' => null
-     )
- )
 
 EOF
             ],

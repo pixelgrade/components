@@ -10,12 +10,12 @@
 
 namespace PHPUnit\Util;
 
-final class ConfigurationGenerator
+class ConfigurationGenerator
 {
     /**
      * @var string
      */
-    private const TEMPLATE = <<<EOT
+    private $defaultTemplate = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/{phpunit_version}/phpunit.xsd"
@@ -25,11 +25,9 @@ final class ConfigurationGenerator
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true">
-    <testsuites>
-        <testsuite name="default">
-            <directory suffix="Test.php">{tests_directory}</directory>
-        </testsuite>
-    </testsuites>
+    <testsuite name="default">
+        <directory suffix="Test.php">{tests_directory}</directory>
+    </testsuite>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
@@ -40,7 +38,15 @@ final class ConfigurationGenerator
 
 EOT;
 
-    public function generateDefaultConfiguration(string $phpunitVersion, string $bootstrapScript, string $testsDirectory, string $srcDirectory): string
+    /**
+     * @param string $phpunitVersion
+     * @param string $bootstrapScript
+     * @param string $testsDirectory
+     * @param string $srcDirectory
+     *
+     * @return string
+     */
+    public function generateDefaultConfiguration($phpunitVersion, $bootstrapScript, $testsDirectory, $srcDirectory)
     {
         return \str_replace(
             [
@@ -55,7 +61,7 @@ EOT;
                 $testsDirectory,
                 $srcDirectory
             ],
-            self::TEMPLATE
+            $this->defaultTemplate
         );
     }
 }

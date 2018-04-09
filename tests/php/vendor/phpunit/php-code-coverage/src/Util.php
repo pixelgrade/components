@@ -13,12 +13,17 @@ namespace SebastianBergmann\CodeCoverage;
 /**
  * Utility methods.
  */
-final class Util
+class Util
 {
     /**
+     * @param float $a
+     * @param float $b
+     * @param bool  $asString
+     * @param bool  $fixedWidth
+     *
      * @return float|int|string
      */
-    public static function percent(float $a, float $b, bool $asString = false, bool $fixedWidth = false)
+    public static function percent($a, $b, $asString = false, $fixedWidth = false)
     {
         if ($asString && $b == 0) {
             return '';

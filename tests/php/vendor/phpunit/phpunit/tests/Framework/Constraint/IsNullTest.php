@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class IsNullTest extends ConstraintTestCase
 {
-    public function testConstraintIsNull(): void
+    public function testConstraintIsNull()
     {
         $constraint = new IsNull();
 
@@ -42,7 +42,7 @@ EOF
         $this->fail();
     }
 
-    public function testConstraintIsNull2(): void
+    public function testConstraintIsNull2()
     {
         $constraint = new IsNull();
 

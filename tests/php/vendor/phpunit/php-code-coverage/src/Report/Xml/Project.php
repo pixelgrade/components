@@ -10,20 +10,47 @@
 
 namespace SebastianBergmann\CodeCoverage\Report\Xml;
 
-final class Project extends Node
+class Project extends Node
 {
-    public function __construct(string $directory)
+    /**
+     * @param string $directory
+     */
+    public function __construct($directory)
     {
         $this->init();
         $this->setProjectSourceDirectory($directory);
     }
 
-    public function getProjectSourceDirectory(): string
+    private function init()
+    {
+        $dom = new \DOMDocument();
+        $dom->loadXML('<?xml version="1.0" ?><phpunit xmlns="http://schema.phpunit.de/coverage/1.0"><build/><project/></phpunit>');
+
+        $this->setContextNode(
+            $dom->getElementsByTagNameNS(
+                'http://schema.phpunit.de/coverage/1.0',
+                'project'
+            )->item(0)
+        );
+    }
+
+    private function setProjectSourceDirectory($name)
+    {
+        $this->getContextNode()->setAttribute('source', $name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getProjectSourceDirectory()
     {
         return $this->getContextNode()->getAttribute('source');
     }
 
-    public function getBuildInformation(): BuildInformation
+    /**
+     * @return BuildInformation
+     */
+    public function getBuildInformation()
     {
         $buildNode = $this->getDom()->getElementsByTagNameNS(
             'http://schema.phpunit.de/coverage/1.0',
@@ -42,7 +69,7 @@ final class Project extends Node
         return new BuildInformation($buildNode);
     }
 
-    public function getTests(): Tests
+    public function getTests()
     {
         $testsNode = $this->getContextNode()->getElementsByTagNameNS(
             'http://schema.phpunit.de/coverage/1.0',
@@ -61,26 +88,8 @@ final class Project extends Node
         return new Tests($testsNode);
     }
 
-    public function asDom(): \DOMDocument
+    public function asDom()
     {
         return $this->getDom();
-    }
-
-    private function init(): void
-    {
-        $dom = new \DOMDocument;
-        $dom->loadXML('<?xml version="1.0" ?><phpunit xmlns="http://schema.phpunit.de/coverage/1.0"><build/><project/></phpunit>');
-
-        $this->setContextNode(
-            $dom->getElementsByTagNameNS(
-                'http://schema.phpunit.de/coverage/1.0',
-                'project'
-            )->item(0)
-        );
-    }
-
-    private function setProjectSourceDirectory(string $name): void
-    {
-        $this->getContextNode()->setAttribute('source', $name);
     }
 }

@@ -10,7 +10,6 @@
 
 namespace SebastianBergmann\CodeCoverage;
 
-use SebastianBergmann\CodeCoverage\Driver\Driver;
 use SebastianBergmann\CodeCoverage\Driver\PHPDBG;
 use SebastianBergmann\CodeCoverage\Driver\Xdebug;
 
@@ -103,31 +102,63 @@ class CodeCoverageTest extends TestCase
         $this->assertSame($filter, $coverage->filter());
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testCannotStartWithInvalidArgument()
+    {
+        $this->coverage->start(null, null);
+    }
+
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testCannotStopWithInvalidFirstArgument()
+    {
+        $this->coverage->stop(null);
+    }
+
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
     public function testCannotStopWithInvalidSecondArgument()
     {
-        $this->expectException(Exception::class);
-
         $this->coverage->stop(true, null);
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
     public function testCannotAppendWithInvalidArgument()
     {
-        $this->expectException(Exception::class);
-
         $this->coverage->append([], null);
+    }
+
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetCacheTokensThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setCacheTokens(null);
     }
 
     public function testSetCacheTokens()
     {
         $this->coverage->setCacheTokens(true);
-
         $this->assertAttributeEquals(true, 'cacheTokens', $this->coverage);
+    }
+
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetCheckForUnintentionallyCoveredCodeThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setCheckForUnintentionallyCoveredCode(null);
     }
 
     public function testSetCheckForUnintentionallyCoveredCode()
     {
         $this->coverage->setCheckForUnintentionallyCoveredCode(true);
-
         $this->assertAttributeEquals(
             true,
             'checkForUnintentionallyCoveredCode',
@@ -135,10 +166,17 @@ class CodeCoverageTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetForceCoversAnnotationThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setForceCoversAnnotation(null);
+    }
+
     public function testSetCheckForMissingCoversAnnotation()
     {
         $this->coverage->setCheckForMissingCoversAnnotation(true);
-
         $this->assertAttributeEquals(
             true,
             'checkForMissingCoversAnnotation',
@@ -146,10 +184,17 @@ class CodeCoverageTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetCheckForMissingCoversAnnotationThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setCheckForMissingCoversAnnotation(null);
+    }
+
     public function testSetForceCoversAnnotation()
     {
         $this->coverage->setForceCoversAnnotation(true);
-
         $this->assertAttributeEquals(
             true,
             'forceCoversAnnotation',
@@ -157,10 +202,17 @@ class CodeCoverageTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetCheckForUnexecutedCoveredCodeThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setCheckForUnexecutedCoveredCode(null);
+    }
+
     public function testSetCheckForUnexecutedCoveredCode()
     {
         $this->coverage->setCheckForUnexecutedCoveredCode(true);
-
         $this->assertAttributeEquals(
             true,
             'checkForUnexecutedCoveredCode',
@@ -168,10 +220,17 @@ class CodeCoverageTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetAddUncoveredFilesFromWhitelistThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setAddUncoveredFilesFromWhitelist(null);
+    }
+
     public function testSetAddUncoveredFilesFromWhitelist()
     {
         $this->coverage->setAddUncoveredFilesFromWhitelist(true);
-
         $this->assertAttributeEquals(
             true,
             'addUncoveredFilesFromWhitelist',
@@ -179,10 +238,17 @@ class CodeCoverageTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetProcessUncoveredFilesFromWhitelistThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setProcessUncoveredFilesFromWhitelist(null);
+    }
+
     public function testSetProcessUncoveredFilesFromWhitelist()
     {
         $this->coverage->setProcessUncoveredFilesFromWhitelist(true);
-
         $this->assertAttributeEquals(
             true,
             'processUncoveredFilesFromWhitelist',
@@ -193,12 +259,19 @@ class CodeCoverageTest extends TestCase
     public function testSetIgnoreDeprecatedCode()
     {
         $this->coverage->setIgnoreDeprecatedCode(true);
-
         $this->assertAttributeEquals(
             true,
             'ignoreDeprecatedCode',
             $this->coverage
         );
+    }
+
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\Exception
+     */
+    public function testSetIgnoreDeprecatedCodeThrowsExceptionForInvalidArgument()
+    {
+        $this->coverage->setIgnoreDeprecatedCode(null);
     }
 
     public function testClear()
@@ -215,7 +288,7 @@ class CodeCoverageTest extends TestCase
         $coverage = $this->getCoverageForBankAccount();
 
         $this->assertEquals(
-            $this->getExpectedDataArrayForBankAccount2(),
+            $this->getExpectedDataArrayForBankAccount(),
             $coverage->getData()
         );
 
@@ -244,14 +317,14 @@ class CodeCoverageTest extends TestCase
     public function testMerge2()
     {
         $coverage = new CodeCoverage(
-            $this->createMock(Driver::class),
+            $this->createMock(Xdebug::class),
             new Filter
         );
 
         $coverage->merge($this->getCoverageForBankAccount());
 
         $this->assertEquals(
-            $this->getExpectedDataArrayForBankAccount2(),
+            $this->getExpectedDataArrayForBankAccount(),
             $coverage->getData()
         );
     }
@@ -426,6 +499,9 @@ class CodeCoverageTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException
+     */
     public function testAppendThrowsExceptionIfCoveredCodeWasNotExecuted()
     {
         $this->coverage->filter()->addDirectoryToWhitelist(TEST_FILES_PATH);
@@ -447,11 +523,12 @@ class CodeCoverageTest extends TestCase
 
         $linesToBeUsed = [];
 
-        $this->expectException(CoveredCodeNotExecutedException::class);
-
         $this->coverage->append($data, 'File1.php', true, $linesToBeCovered, $linesToBeUsed);
     }
 
+    /**
+     * @expectedException SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException
+     */
     public function testAppendThrowsExceptionIfUsedCodeWasNotExecuted()
     {
         $this->coverage->filter()->addDirectoryToWhitelist(TEST_FILES_PATH);
@@ -477,8 +554,6 @@ class CodeCoverageTest extends TestCase
                 24
             ]
         ];
-
-        $this->expectException(CoveredCodeNotExecutedException::class);
 
         $this->coverage->append($data, 'File1.php', true, $linesToBeCovered, $linesToBeUsed);
     }

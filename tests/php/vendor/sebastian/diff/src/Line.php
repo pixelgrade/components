@@ -12,9 +12,9 @@ namespace SebastianBergmann\Diff;
 
 final class Line
 {
-    public const ADDED     = 1;
-    public const REMOVED   = 2;
-    public const UNCHANGED = 3;
+    const ADDED     = 1;
+    const REMOVED   = 2;
+    const UNCHANGED = 3;
 
     /**
      * @var int

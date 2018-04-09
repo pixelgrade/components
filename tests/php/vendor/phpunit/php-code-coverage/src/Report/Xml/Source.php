@@ -14,7 +14,7 @@ use TheSeer\Tokenizer\NamespaceUri;
 use TheSeer\Tokenizer\Tokenizer;
 use TheSeer\Tokenizer\XMLSerializer;
 
-final class Source
+class Source
 {
     /** @var \DOMElement */
     private $context;
@@ -27,7 +27,10 @@ final class Source
         $this->context = $context;
     }
 
-    public function setSourceCode(string $source): void
+    /**
+     * @param string $source
+     */
+    public function setSourceCode(string $source)
     {
         $context = $this->context;
 

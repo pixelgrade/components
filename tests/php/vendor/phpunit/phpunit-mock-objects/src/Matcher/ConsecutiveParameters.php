@@ -57,7 +57,7 @@ class ConsecutiveParameters extends StatelessInvocation
     /**
      * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         return 'with consecutive parameters';
     }
@@ -65,9 +65,9 @@ class ConsecutiveParameters extends StatelessInvocation
     /**
      * @param BaseInvocation $invocation
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     *
      * @return bool
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function matches(BaseInvocation $invocation)
     {

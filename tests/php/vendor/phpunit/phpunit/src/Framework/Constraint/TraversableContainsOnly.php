@@ -20,17 +20,18 @@ class TraversableContainsOnly extends Constraint
     /**
      * @var Constraint
      */
-    private $constraint;
+    protected $constraint;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
-     * @throws \PHPUnit\Framework\Exception
+     * @param string $type
+     * @param bool   $isNativeType
      */
-    public function __construct(string $type, bool $isNativeType = true)
+    public function __construct($type, $isNativeType = true)
     {
         parent::__construct();
 
@@ -55,14 +56,13 @@ class TraversableContainsOnly extends Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param mixed  $other        value or object to evaluate
+     * @param mixed  $other        Value or object to evaluate.
      * @param string $description  Additional information about the test
      * @param bool   $returnResult Whether to return a result or throw an exception
      *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
      * @return mixed
+     *
+     * @throws ExpectationFailedException
      */
     public function evaluate($other, $description = '', $returnResult = false)
     {
@@ -87,8 +87,10 @@ class TraversableContainsOnly extends Constraint
 
     /**
      * Returns a string representation of the constraint.
+     *
+     * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         return 'contains only values of type "' . $this->type . '"';
     }

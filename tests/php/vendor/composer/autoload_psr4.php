@@ -6,9 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'phpmock\\phpunit\\' => array($vendorDir . '/php-mock/php-mock-phpunit/classes'),
+    'phpmock\\integration\\' => array($vendorDir . '/php-mock/php-mock-integration/classes'),
+    'phpmock\\' => array($vendorDir . '/php-mock/php-mock/classes', $vendorDir . '/php-mock/php-mock/tests'),
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
-    'WP_Mock\\' => array($vendorDir . '/10up/wp_mock/php/WP_Mock'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

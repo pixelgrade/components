@@ -15,7 +15,7 @@ namespace SebastianBergmann\Diff;
  */
 final class TimeEfficientImplementationTest extends LongestCommonSubsequenceTest
 {
-    protected function createImplementation(): LongestCommonSubsequenceCalculator
+    protected function createImplementation()
     {
         return new TimeEfficientLongestCommonSubsequenceCalculator;
     }

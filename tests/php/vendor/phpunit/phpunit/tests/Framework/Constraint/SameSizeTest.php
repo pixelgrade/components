@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestFailure;
 
 class SameSizeTest extends ConstraintTestCase
 {
-    public function testConstraintSameSizeWithAnArray(): void
+    public function testConstraintSameSizeWithAnArray()
     {
         $constraint = new SameSize([1, 2, 3, 4, 5]);
 
@@ -23,7 +23,7 @@ class SameSizeTest extends ConstraintTestCase
         $this->assertFalse($constraint->evaluate([1, 2, 3, 4], '', true));
     }
 
-    public function testConstraintSameSizeWithAnIteratorWhichDoesNotImplementCountable(): void
+    public function testConstraintSameSizeWithAnIteratorWhichDoesNotImplementCountable()
     {
         $constraint = new SameSize(new \TestIterator([1, 2, 3, 4, 5]));
 
@@ -31,7 +31,7 @@ class SameSizeTest extends ConstraintTestCase
         $this->assertFalse($constraint->evaluate(new \TestIterator([1, 2, 3, 4]), '', true));
     }
 
-    public function testConstraintSameSizeWithAnObjectImplementingCountable(): void
+    public function testConstraintSameSizeWithAnObjectImplementingCountable()
     {
         $constraint = new SameSize(new \ArrayObject([1, 2, 3, 4, 5]));
 
@@ -39,7 +39,7 @@ class SameSizeTest extends ConstraintTestCase
         $this->assertFalse($constraint->evaluate(new \ArrayObject([1, 2, 3, 4]), '', true));
     }
 
-    public function testConstraintSameSizeFailing(): void
+    public function testConstraintSameSizeFailing()
     {
         $constraint = new SameSize([1, 2, 3, 4, 5]);
 

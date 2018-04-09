@@ -14,6 +14,20 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 class ArraySubsetTest extends ConstraintTestCase
 {
+    /**
+     * @param bool               $expected
+     * @param array|\Traversable $subset
+     * @param array|\Traversable $other
+     * @param bool               $strict
+     * @dataProvider evaluateDataProvider
+     */
+    public function testEvaluate($expected, $subset, $other, $strict)
+    {
+        $constraint = new ArraySubset($subset, $strict);
+
+        $this->assertSame($expected, $constraint->evaluate($other, '', true));
+    }
+
     public static function evaluateDataProvider()
     {
         return [
@@ -44,24 +58,7 @@ class ArraySubsetTest extends ConstraintTestCase
         ];
     }
 
-    /**
-     * @param bool               $expected
-     * @param array|\Traversable $subset
-     * @param array|\Traversable $other
-     * @param bool               $strict
-     *
-     * @throws ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @dataProvider evaluateDataProvider
-     */
-    public function testEvaluate($expected, $subset, $other, $strict): void
-    {
-        $constraint = new ArraySubset($subset, $strict);
-
-        $this->assertSame($expected, $constraint->evaluate($other, '', true));
-    }
-
-    public function testEvaluateWithArrayAccess(): void
+    public function testEvaluateWithArrayAccess()
     {
         $arrayAccess = new \ArrayAccessible(['foo' => 'bar']);
 
@@ -70,7 +67,7 @@ class ArraySubsetTest extends ConstraintTestCase
         $this->assertTrue($constraint->evaluate($arrayAccess, '', true));
     }
 
-    public function testEvaluateFailMessage(): void
+    public function testEvaluateFailMessage()
     {
         $constraint = new ArraySubset(['foo' => 'bar']);
 
