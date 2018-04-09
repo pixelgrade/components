@@ -1,5 +1,6 @@
 {
   "require-dev": {
-    "mikey179/vfsStream": "~1"
+    "mikey179/vfsStream": "~1",
+    "10up/wp_mock": "0.3.0"
   }
 }
