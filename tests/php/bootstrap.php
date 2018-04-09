@@ -16,9 +16,6 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 
 require __DIR__ . '/vendor/autoload.php';
 
-// Now call the bootstrap method of WP Mock
-WP_Mock::bootstrap();
-
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
