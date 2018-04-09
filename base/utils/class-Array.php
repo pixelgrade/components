@@ -62,20 +62,20 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * array( array( 'two' => 'value1' ), array( 'two' => 'value2' ) )
 		 * you can search for the key of the subarray containing the 'two' key with the 'value2', that is 1
 		 *
-		 * @param array  $array The array in which to search
-		 * @param string $key The key to search for
-		 * @param mixed  $value The value to search for
+		 * @param array  $array The array in which to search.
+		 * @param string $key The key to search for.
+		 * @param mixed  $value The value to search for.
 		 *
 		 * @return mixed|false
 		 */
 		public static function findSubarrayByKeyValue( $array, $key, $value ) {
-			// Bail if it's not array
+			// Bail if it's not array.
 			if ( ! is_array( $array ) ) {
 				return false;
 			}
 
 			foreach ( $array as $k => $v ) {
-				if ( isset( $v[ $key ] ) && $value == $v[ $key ] ) {
+				if ( is_array( $v ) && isset( $v[ $key ] ) && $value == $v[ $key ] ) {
 					return $k;
 				}
 			}
