@@ -104,6 +104,13 @@ class CP_Tests_Class_Array extends WP_UnitTestCase {
 	 * @covers Pixelgrade_Array::findSubarrayByKeyValue
 	 */
 	function test_findSubarrayByKeyValue() {
+		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ 'first' , 'second', 'third', 'fourth' ], 0, 'first' ) );
+		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ 'first' , 'second', 'third', 'fourth' ], 0, '' ) );
+		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ 'first' , 'second', 'third', 'fourth' ], 'bogus', 'first' ) );
+		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ 'first' => 'firstv' , 'second' => 'secondv', 'third' => 'thirdv', 'fourth' => 'fourthv' ], 0, 'firstv' ) );
+		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ 'first' => 'firstv' , 'second' => 'secondv', 'third' => 'thirdv', 'fourth' => 'fourthv' ], 'bogus', 'firstv' ) );
+		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ 'first' => 'firstv' , 'second' => 'secondv', 'third' => 'thirdv', 'fourth' => 'fourthv' ], 'bogus', '' ) );
+
 		$this->assertEquals( 0, Pixelgrade_Array::findSubarrayByKeyValue( [ [ 'first' ], [ 'second' ], [ 'third' ], [ 'fourth' ] ], 0, 'first' ) );
 		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ [ 'first' ], [ 'second' ], [ 'third' ], [ 'fourth' ] ], 0, 'fifth' ) );
 		$this->assertEquals( false, Pixelgrade_Array::findSubarrayByKeyValue( [ [ 'first' ], [ 'second' ], [ 'third' ], [ 'fourth' ] ], 1, 'first' ) );
