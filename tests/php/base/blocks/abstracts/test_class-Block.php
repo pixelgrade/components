@@ -1,19 +1,19 @@
 <?php
 /**
- * Class CP_Tests_Class_Wrapper
+ * Class CP_Tests_Class_Block
  *
  * @package Components
  */
 
 /**
- * Test base component Wrapper class.
+ * Test base component Block abstract class.
  *
  * @group base
  */
-class CP_Tests_Class_Wrapper extends WP_UnitTestCase {
+class CP_Tests_Class_Block extends WP_UnitTestCase {
 
 	/**
-	 * @covers Pixelgrade_Wrapper::evaluateChecks
+	 * @covers Pixelgrade_Block::evaluateChecks
 	 */
 	public function test_evaluateChecks() {
 	}

@@ -1,20 +1,15 @@
 <?php
 /**
- * Class CP_Tests_Class_BlocksManager
+ * Class CP_Tests_Class_LoopBlock
  *
  * @package Components
  */
 
 /**
- * Test base component BlocksManager class.
+ * Test base component LoopBlock class.
  *
  * @group base
  */
-class CP_Tests_Class_BlocksManager extends WP_UnitTestCase {
+class CP_Tests_Class_LoopBlock extends WP_UnitTestCase {
 
-	/**
-	 * @covers Pixelgrade_BlocksManager::registerBlock
-	 */
-	public function test_registerBlock() {
-	}
 }

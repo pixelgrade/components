@@ -1,20 +1,20 @@
 <?php
 /**
- * Class CP_Tests_Class_BlocksManager
+ * Class CP_Tests_Class_LayoutBlock
  *
  * @package Components
  */
 
 /**
- * Test base component BlocksManager class.
+ * Test base component LayoutBlock class.
  *
  * @group base
  */
-class CP_Tests_Class_BlocksManager extends WP_UnitTestCase {
+class CP_Tests_Class_LayoutBlock extends WP_UnitTestCase {
 
 	/**
-	 * @covers Pixelgrade_BlocksManager::registerBlock
+	 * @covers Pixelgrade_LayoutBlock::addBlock
 	 */
-	public function test_registerBlock() {
+	public function test_addBlock() {
 	}
 }
