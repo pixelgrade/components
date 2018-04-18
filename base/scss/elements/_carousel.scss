@@ -109,10 +109,19 @@ $slick-dot-size: 10px !default;
     border: 0;
     border-radius: 0;
     border-bottom: 1px solid transparent;
-    background: transparent !important;
-    color: inherit;
     font-size: 1rem;
     outline: 0;
+
+    // Use it for numbered pagination
+    @include above(lap) {
+      background: transparent !important;
+    }
+  }
+
+  &[class][class] button {
+    &, &:focus {
+      color: inherit;
+    }
   }
 
   .slick-active {
