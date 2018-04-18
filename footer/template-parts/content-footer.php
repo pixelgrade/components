@@ -20,10 +20,10 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
-// bail if we have no zones or no menu locations and no sidebars to show, even bogus ones
+// bail if we have no zones or no menu locations and no sidebars to show, even bogus ones.
 if ( ! pixelgrade_footer_is_valid_config() ) {
 	return;
 }
@@ -35,7 +35,7 @@ $zones = pixelgrade_footer_get_zones();
 
 	<?php
 
-	// Cycle through each zone and display the nav menus, sidebars or other "bogus" things
+	// Cycle through each zone and display the nav menus, sidebars or other "bogus" things.
 	foreach ( $zones as $zone_id => $zone ) {
 
 		if ( empty( $zone['menu_locations'] ) && empty( $zone['sidebars'] ) && empty( $zone['display_blank'] ) ) {
@@ -48,25 +48,25 @@ $zones = pixelgrade_footer_get_zones();
 		 * the location received act accordingly.
 		 */
 
-		// Get the sidebars in the current zone
+		// Get the sidebars in the current zone.
 		$sidebars = pixelgrade_footer_get_zone_sidebars( $zone_id, $zone );
 		if ( empty( $sidebars ) ) {
 			$sidebars = array();
 		}
-		// Get the menu_locations in the current zone
+		// Get the menu_locations in the current zone.
 		$menu_locations = pixelgrade_footer_get_zone_nav_menu_locations( $zone_id, $zone );
 		if ( empty( $menu_locations ) ) {
 			$menu_locations = array();
 		}
 
-		// We want to make sure that we know for real if a certain footer is empty or not
+		// We want to make sure that we know for real if a certain footer is empty or not.
 		$is_empty = true;
 
-		// Check the menu locations for emptiness
+		// Check the menu locations for emptiness.
 		foreach ( $menu_locations as $id => $settings ) {
 			if ( ! empty( $settings['bogus'] ) ) {
-				// We have something special to show - bogus things
-				// Better check if they output anything
+				// We have something special to show - bogus things.
+				// Better check if they output anything.
 				$output = '';
 				if ( 'footer-back-to-top-link' === $id ) {
 					$output = pixelgrade_footer_get_back_to_top_link();
@@ -84,11 +84,11 @@ $zones = pixelgrade_footer_get_zones();
 			}
 		}
 
-		// Check the sidebars for emptiness
+		// Check the sidebars for emptiness.
 		foreach ( $sidebars as $id => $settings ) {
 			if ( ! empty( $settings['bogus'] ) ) {
-				// We have something special to show - bogus things
-				// Better check if they output anything
+				// We have something special to show - bogus things.
+				// Better check if they output anything.
 				$output = '';
 				if ( 'footer-back-to-top-link' === $id ) {
 					$output = pixelgrade_footer_get_back_to_top_link();
@@ -106,7 +106,7 @@ $zones = pixelgrade_footer_get_zones();
 			}
 		}
 
-		// If this footer zone is empty and we were told not to display anything when this is the case, oblige
+		// If this footer zone is empty and we were told not to display anything when this is the case, oblige.
 		if ( $is_empty && empty( $zone['display_blank'] ) ) {
 			continue;
 		}
@@ -115,12 +115,12 @@ $zones = pixelgrade_footer_get_zones();
 		<div <?php pixelgrade_css_class( $zone['classes'], array( 'footer', 'zone', $zone_id ) ); ?>>
 
 			<?php
-			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order
-			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks
-			// And we will stop when both are empty
+			// We will do a parallel processing of the $sidebars and $menu_locations array because we need to respect the common order.
+			// We will rely on the fact that they are each ordered ascending - so we will treat them as stacks.
+			// And we will stop when both are empty.
 			while ( ! empty( $sidebars ) || ! empty( $menu_locations ) ) {
-				// Compare the first sidebar and the first menu location and pick the one with the smallest order
-				// On equal orders we will favor the sidebar
+				// Compare the first sidebar and the first menu location and pick the one with the smallest order.
+				// On equal orders we will favor the sidebar.
 				$current_sidebar          = reset( $sidebars );
 				$current_sidebar_id       = key( $sidebars );
 				$current_menu_location    = reset( $menu_locations );
@@ -128,7 +128,7 @@ $zones = pixelgrade_footer_get_zones();
 
 				if ( empty( $current_menu_location['order'] ) || ( ! empty( $current_sidebar['order'] ) && $current_sidebar['order'] >= $current_menu_location['order'] ) ) {
 					if ( ! empty( $current_sidebar['bogus'] ) ) {
-						// We have something special to show
+						// We have something special to show.
 						if ( 'footer-back-to-top-link' === $current_sidebar_id ) {
 							pixelgrade_footer_the_back_to_top_link();
 						} elseif ( 'footer-copyright' === $current_sidebar_id ) {
@@ -137,11 +137,11 @@ $zones = pixelgrade_footer_get_zones();
 							jetpack_social_menu();
 						}
 					} else {
-						// We will display the current sidebar
+						// We will display the current sidebar.
 						pixelgrade_footer_the_sidebar( $current_sidebar_id, $current_sidebar );
 					}
 
-					// Remove it from the sidebars stack
+					// Remove it from the sidebars stack.
 					array_shift( $sidebars );
 				} else {
 					if ( ! empty( $current_menu_location['bogus'] ) ) {
@@ -154,16 +154,13 @@ $zones = pixelgrade_footer_get_zones();
 							jetpack_social_menu();
 						}
 					} else {
-						// We will display the current menu
-						// Make sure we have some nav_menu args
+						// We will display the current menu.
+						// Make sure we have some nav_menu args.
 						if ( empty( $current_menu_location['nav_menu_args'] ) ) {
 							$current_menu_location['nav_menu_args'] = array();
 						}
-						$nav_menu = pixelgrade_footer_get_nav_menu( $current_menu_location['nav_menu_args'], $current_menu_location_id );
 
-						if ( ! empty( $nav_menu ) ) {
-							echo $nav_menu;
-						}
+						pixelgrade_footer_the_nav_menu( $current_menu_location['nav_menu_args'], $current_menu_location_id );
 					}
 
 					// Remove it from the menu_locations stack
