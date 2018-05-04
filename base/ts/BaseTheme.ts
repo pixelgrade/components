@@ -14,6 +14,7 @@ export interface JQueryExtended extends JQuery {
 export class BaseTheme {
 
   public $body: JQuery = $( 'body' );
+  public $window: JQuery = $( window );
   public $html: JQuery = $( 'html' );
   public ev: JQuery = $( {} );
   public frameRendered: boolean = false;
@@ -38,7 +39,7 @@ export class BaseTheme {
     if ( window.location.href.indexOf( '#comment' ) === -1 ) {
       $( '.trigger-comments' ).removeAttr( 'checked' );
     }
-    $( window ).on( 'beforeunload', this.fadeOut.bind(this) );
+    this.$window.on( 'beforeunload', this.fadeOut.bind(this) );
 
     this.ev.on( 'render', this.update.bind(this) );
   }
