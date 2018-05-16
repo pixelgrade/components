@@ -102,7 +102,11 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) {
 				?>
-					<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
+					<div class="c-card__excerpt">
+						<?php do_action( 'pixelgrade_before_excerpt', $location ); ?>
+						<?php the_excerpt(); ?>
+						<?php do_action( 'pixelgrade_after_excerpt', $location ); ?>
+					</div>
 				<?php } ?>
 
 				<div class="c-card__footer">
