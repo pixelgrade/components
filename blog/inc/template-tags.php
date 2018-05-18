@@ -113,6 +113,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_column_class' ) ) {
 		$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
 
 		$column_classes   = array();
+		$column_classes[] = 'o-grid';
 		$column_classes[] = 'o-grid--' . $columns_at_desk . 'col-@desk';
 		$column_classes[] = 'o-grid--' . $columns_at_lap . 'col-@lap';
 		$column_classes[] = 'o-grid--' . $columns_at_small . 'col-@small';
@@ -865,90 +866,3 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 
 	}
 }
-
-if ( ! function_exists( 'pixelgrade_has_portrait_thumbnail' ) ) :
-	/**
-	 * Determine if a post thumbnail should be shown and it has a portrait aspect ratio.
-	 *
-	 * @param int|WP_Post $post_id Optional. Post ID or post object. Defaults to the current post.
-	 *
-	 * @return bool
-	 */
-	function pixelgrade_has_portrait_thumbnail( $post_id = null ) {
-		$post = get_post( $post_id );
-
-		$jetpack_show_single_featured_image = get_option( 'jetpack_content_featured_images_post', true );
-
-		// Bail if no post or the image is hidden from Jetpack's content options
-		if ( empty( $post ) || empty( $jetpack_show_single_featured_image ) || ! has_post_thumbnail( $post ) ) {
-			return false;
-		}
-
-		$image_type = pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post ) );
-
-		if ( 'portrait' === $image_type ) {
-			return true;
-		}
-
-		return false;
-	}
-
-endif;
-
-if ( ! function_exists( 'pixelgrade_has_landscape_thumbnail' ) ) :
-	/**
-	 * Determine if a post thumbnail should be shown and it has a landscape aspect ratio.
-	 *
-	 * @param int|WP_Post $post_id Optional. Post ID or post object. Defaults to the current post.
-	 *
-	 * @return bool
-	 */
-	function pixelgrade_has_landscape_thumbnail( $post_id = null ) {
-		$post = get_post( $post_id );
-
-		$jetpack_show_single_featured_image = get_option( 'jetpack_content_featured_images_post', true );
-
-		// Bail if no post or the image is hidden from Jetpack's content options
-		if ( empty( $post ) || empty( $jetpack_show_single_featured_image ) || ! has_post_thumbnail( $post ) ) {
-			return false;
-		}
-
-		$image_type = pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post ) );
-
-		if ( 'landscape' === $image_type ) {
-			return true;
-		}
-
-		return false;
-	}
-
-endif;
-
-if ( ! function_exists( 'pixelgrade_has_no_thumbnail' ) ) :
-	/**
-	 * Determine if a post thumbnail is missing or should not be shown.
-	 *
-	 * Notice: Please note the reverse logic this template tag uses!!!
-	 *
-	 * @param int|WP_Post $post_id Optional. Post ID or post object. Defaults to the current post.
-	 *
-	 * @return bool
-	 */
-	function pixelgrade_has_no_thumbnail( $post_id = null ) {
-		$post = get_post( $post_id );
-
-		$jetpack_show_single_featured_image = get_option( 'jetpack_content_featured_images_post', true );
-
-		// Bail if no post or the image is hidden from Jetpack's content options
-		if ( empty( $post ) || empty( $jetpack_show_single_featured_image ) ) {
-			return true;
-		}
-
-		if ( has_post_thumbnail( $post ) ) {
-			return false;
-		}
-
-		return true;
-	} // function
-
-endif;

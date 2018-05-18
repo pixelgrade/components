@@ -41,7 +41,7 @@ abstract class Pixelgrade_Singleton {
 	 * @return object
 	 */
 	final public static function instance( $main_arg, $other_args = null ) {
-		// We use PHP 5.3's late binding feature, but we provide a fallback function for when we are using PHP 5.2
+		// We use PHP 5.3's late binding feature, but we provide a fallback function for when we are using PHP 5.2.
 		// @see /base/_core-functions.php
 		// @todo Clean this up when we can use PHP 5.3+
 		$called_class_name = get_called_class();

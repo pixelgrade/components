@@ -25,7 +25,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 	abstract class Pixelgrade_FeaturedPosts_BaseWidget extends Pixelgrade_WidgetFields {
 
 		/**
-		 * These are the widget args
+		 * These are the widget args.
 		 *
 		 * @access public
 		 *
@@ -60,12 +60,12 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 * @param array  $config
 		 */
 		public function __construct( $id = 'pixelgrade-featured-posts', $name = '', $widget_ops = array(), $config = array() ) {
-			// Set up the default config
+			// Set up the default config.
 			$default_config = array(
 				'fields_sections'        => array(
 					'default' => array(
 						'title'    => '',
-						'priority' => 1, // This section should really be the first as it is not part of the accordion
+						'priority' => 1, // This section should really be the first as it is not part of the accordion.
 					),
 					'content' => array(
 						'title'         => esc_html__( 'Content', '__theme_txtd' ),
@@ -87,7 +87,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				),
 				'fields'                 => array(
 
-					// Title Section
+					// Title Section.
 					'title'                   => array(
 						'type'     => 'text',
 						'label'    => esc_html__( 'Section Title:', '__theme_txtd' ),
@@ -96,7 +96,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'priority' => 10,
 					),
 
-					// Content Section
+					// Content Section.
 					'source'                  => array(
 						'type'     => 'radio_group',
 						'label'    => esc_html__( 'Posts Source:', '__theme_txtd' ),
@@ -199,7 +199,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'priority' => 70,
 					),
 
-					// Layout Section
+					// Layout Section.
 					'columns'                 => array(
 						'type'     => 'select',
 						'label'    => esc_html__( 'Number of columns:', '__theme_txtd' ),
@@ -226,7 +226,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'priority' => 20,
 					),
 
-					// Display Section
+					// Display Section.
 					'show_excerpt'            => array(
 						'type'     => 'checkbox',
 						'label'    => esc_html__( 'Show Excerpt', '__theme_txtd' ),
@@ -300,11 +300,11 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'priority'   => 60,
 					),
 
-					// Others Section
+					// Others Section.
 				),
 				'posts'                  => array(
 					'classes'   => array( 'featured-posts-grid' ),
-					// You can have multiple templates here (array of arrays) and we will use the first one that passes processing and is found
+					// You can have multiple templates here (array of arrays) and we will use the first one that passes processing and is found.
 					// @see Pixelgrade_Config::evaluateTemplateParts()
 					'templates' => array(
 						'component_slug'    => Pixelgrade_Blog::COMPONENT_SLUG,
@@ -319,12 +319,12 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				),
 			);
 
-			// If we are given a config, merge it with the default config
+			// If we are given a config, merge it with the default config.
 			if ( ! empty( $config ) ) {
 				$default_config = Pixelgrade_Array::array_merge_recursive_distinct( $default_config, $config );
 			}
 
-			// Set up the widget options - merge them with our defaults
+			// Set up the widget options - merge them with our defaults.
 			$widget_ops = wp_parse_args(
 				$widget_ops, array(
 					'classname'                   => 'widget_featured_posts',
@@ -333,12 +333,12 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				)
 			);
 
-			// The default widget name - as it will be shown in the WordPress admin
+			// The default widget name - as it will be shown in the WordPress admin.
 			if ( empty( $name ) ) {
 				$name = esc_html__( 'Featured Posts', '__theme_txtd' );
 			}
 
-			// Initialize the widget
+			// Initialize the widget.
 			parent::__construct(
 				$id,
 				apply_filters( 'pixelgrade_featured_posts_widget_name', $name ),
@@ -346,15 +346,15 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				$default_config
 			);
 
-			// Set up an alternate widget options name
+			// Set up an alternate widget options name.
 			$this->alt_option_name = 'widget_featured_entries';
 
-			// Enqueue the frontend styles and scripts, if that is the case
+			// Enqueue the frontend styles and scripts, if that is the case.
 			if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 			}
 
-			// Add custom export logic
+			// Add custom export logic.
 			add_filter( "pixcare_sce_widget_data_export_{$id}", array( $this, 'custom_export_logic' ), 10, 3 );
 		}
 
@@ -364,7 +364,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 * @access public
 		 */
 		public function enqueueScripts() {
-			// Nothing right now. Override by extending the class
+			// Nothing right now. Override by extending the class.
 		}
 
 		/**
@@ -373,7 +373,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 * @access public
 		 */
 		public function enqueueAdminScripts() {
-			// Nothing right now. Override by extending the class
+			// Nothing right now. Override by extending the class.
 		}
 
 		/**
@@ -393,22 +393,22 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			}
 
 			// There is no point in doing anything of we don't have a template part to display with.
-			// So first try and find a template part to use
+			// So first try and find a template part to use.
 			$found_template = false;
 			if ( ! empty( $this->config['posts']['templates'] ) ) {
 				$found_template = Pixelgrade_Config::evaluateTemplateParts( $this->config['posts']['templates'] );
 			}
 			if ( ! empty( $found_template ) ) {
-				// Make sure that we have the defaults in place, where there entry is missing
+				// Make sure that we have the defaults in place, where there entry is missing.
 				$instance = wp_parse_args( $instance, $this->getDefaults() );
 
-				// Make sure that we have properly sanitized values (although they should be sanitized on save/update)
+				// Make sure that we have properly sanitized values (although they should be sanitized on save/update).
 				$instance = $this->sanitizeFields( $instance );
 
-				// Make every instance entry a variable in the current symbol table (scope in plain English)
+				// Make every instance entry a variable in the current symbol table (scope in plain English).
 				foreach ( $instance as $k => $v ) {
 					if ( ! $this->isFieldDisabled( $k ) ) {
-						// Add the variable
+						// Add the variable.
 						$$k = $v;
 					}
 				}
@@ -424,9 +424,9 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				 */
 				$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
-				// Get the query for the posts we should shown in this widget
+				// Get the query for the posts we should shown in this widget.
 				$posts = $this->getPostsQuery( $instance );
-				// Do the loop
+				// Do the loop.
 				if ( $posts->have_posts() ) {
 
 					$classes = array();
@@ -434,16 +434,17 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						$classes = array_merge( $classes, (array) $this->config['posts']['classes'] );
 					}
 
-					// Add our dynamic classes
+					// Add our dynamic classes.
 					if ( isset( $columns ) ) {
+						$classes[] = 'o-grid';
 						$classes[] = 'o-grid--' . $columns . 'col-@small';
 					}
 					if ( isset( $image_ratio ) ) {
 						$classes[] = 'aspect-ratio-' . $image_ratio;
 					}
 
-					// By controlling the display of the excerpt and read more button from CSS we can show them on smaller screens
-					// (for "weird widgets like 5 Cards, 6 Cards)
+					// By controlling the display of the excerpt and read more button from CSS we can show them on smaller screens.
+					// (for "weird widgets like 5 Cards, 6 Cards).
 					if ( ! empty( $show_excerpt ) ) {
 						$classes[] = 'featured-posts--show-excerpt';
 					}
@@ -452,11 +453,11 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						$classes[] = 'featured-posts--show-readmore';
 					}
 
-					// Allow others (maybe other widgets that extend this) to change the classes
+					// Allow others (maybe other widgets that extend this) to change the classes.
 					$classes = apply_filters( 'pixelgrade_featured_posts_widget_classes' . $this->id, $classes, $instance, $posts );
 					$classes = apply_filters( 'pixelgrade_featured_posts_widget_classes', $classes );
 
-					// Allow others (maybe other widgets that extend this) to change the attributes
+					// Allow others (maybe other widgets that extend this) to change the attributes.
 					$attributes = apply_filters( 'pixelgrade_featured_posts_widget_attributes' . $this->id, array(), $instance, $posts );
 
 					/**
@@ -492,41 +493,41 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						<?php
 
 						/**
-						 * Fires before the featured posts widget loop
+						 * Fires before the featured posts widget loop.
 						 * This is a dynamic action specific to each widget instance.
 						 */
 						do_action( 'pixelgrade_featured_posts_before_loop' . $this->id, $instance, $args );
 
 						while ( $posts->have_posts() ) :
 							$posts->the_post();
-							// We want to count from 1 since the current_post starts at 0
+							// We want to count from 1 since the current_post starts at 0.
 							$post_index = $posts->current_post + 1;
 
-							// Also allow others to introduce variables in the widget's template scope, for each post in the loop
-							// extract() overwrites the variable value if it already exists
+							// Also allow others to introduce variables in the widget's template scope, for each post in the loop.
+							// extract() overwrites the variable value if it already exists.
 							$extra_vars = apply_filters( 'pixelgrade_featured_posts_widget_loop_extra_vars' . $this->id, array(), get_the_ID(), $posts, $instance );
 							if ( ! empty( $extra_vars ) ) {
 								extract( $extra_vars );
 							}
 
 							/**
-							 * Fires before the widget post
+							 * Fires before the widget post.
 							 * This is a dynamic action specific to each widget instance.
 							 */
 							do_action( 'pixelgrade_featured_posts_widget_before_post' . $this->id, $post_index, $posts );
 
-							// We use include so the template parts gets access to all the variables defined above
+							// We use include so the template parts gets access to all the variables defined above.
 							include $found_template;
 
 							/**
-							 * Fires after the widget post
+							 * Fires after the widget post.
 							 * This is a dynamic action specific to each widget instance.
 							 */
 							do_action( 'pixelgrade_featured_posts_widget_after_post' . $this->id, $post_index, $posts );
 						endwhile;
 
 						/**
-						 * Fires after the featured posts widget loop
+						 * Fires after the featured posts widget loop.
 						 * This is a dynamic action specific to each widget instance.
 						 */
 						do_action( 'pixelgrade_featured_posts_after_loop' . $this->id, $instance, $args );
@@ -536,17 +537,17 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 					<?php
 					if ( ! empty( $show_view_more ) && ! empty( $view_more_label ) ) {
-						// We need a View More button linking to the appropriate archive, depending on the posts source
+						// We need a View More button linking to the appropriate archive, depending on the posts source.
 						$view_more_link = false;
 
 						switch ( $instance['source'] ) {
 							case 'recent':
-								// link to the posts home page
+								// link to the posts home page.
 								$view_more_link = get_post_type_archive_link( 'post' );
 								break;
 							case 'category':
 								if ( empty( $instance['source_category'] ) || -1 == $instance['source_category'] ) {
-									// link to the posts home page
+									// link to the posts home page.
 									$view_more_link = get_post_type_archive_link( 'post' );
 								} else {
 									$view_more_link = get_term_link( $instance['source_category'], 'category' );
@@ -554,7 +555,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 								break;
 							case 'tag':
 								if ( empty( $instance['source_tag'] ) || -1 == $instance['source_tag'] ) {
-									// link to the posts home page
+									// link to the posts home page.
 									$view_more_link = get_post_type_archive_link( 'post' );
 								} else {
 									$view_more_link = get_term_link( $instance['source_tag'], 'post_tag' );
@@ -596,17 +597,17 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					 */
 					do_action( 'pixelgrade_widget_after_' . $this->id, $args, $instance );
 
-					// Reset the global $the_post as this query will have stomped on it
+					// Reset the global $the_post as this query will have stomped on it.
 					wp_reset_postdata();
 
-					// If this widget wants to prevent post duplication we need to add the queried posts to the static property
+					// If this widget wants to prevent post duplication we need to add the queried posts to the static property.
 					if ( ! empty( $prevent_duplicate_posts ) ) {
 						$queried_post_ids    = wp_list_pluck( $posts->posts, 'ID' );
 						self::$exclude_posts = array_merge( self::$exclude_posts, $queried_post_ids );
 					}
 				}
 			} else {
-				// Let the developers know that something is amiss
+				// Let the developers know that something is amiss.
 				_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t find a template part to use for displaying widget posts in the %s widget!', $this->name ), null );
 			}
 		}
@@ -663,9 +664,9 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						   && 'post_ids' == $instance['source']
 						   && ! empty( $instance['post_ids'] ) ) {
 
-					// If we are given a list of post_ids, then we will ignore the posts queried thus far and the ones that need to be excluded
+					// If we are given a list of post_ids, then we will ignore the posts queried thus far and the ones that need to be excluded.
 					// You can't have post__in and post__not_in in the same query!
-					// Transform and sanitize the ids
+					// Transform and sanitize the ids.
 					$post_ids = Pixelgrade_Value::maybeExplodeList( $instance['post_ids'] );
 					if ( ! empty( $post_ids ) ) {
 						foreach ( $post_ids as $key => $value ) {
@@ -685,7 +686,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 			// If we don't have specific post IDs, we can exclude posts.
 			if ( empty( $query_args['post__in'] ) && ! empty( self::$exclude_posts ) ) {
-				// We need to exclude the posts that gathered thus far in the $exclude_posts static variable
+				// We need to exclude the posts that gathered thus far in the $exclude_posts static variable.
 				$query_args['post__not_in'] = self::$exclude_posts;
 			}
 
@@ -716,7 +717,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		public function categoriesDropdown( $selected, $field_name, $field_config ) {
 			$output = '';
 
-			// Now for attributes
+			// Now for attributes.
 			$label = '';
 			if ( ! empty( $field_config['label'] ) ) {
 				$label = $field_config['label'];
@@ -727,7 +728,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				$desc = $field_config['desc'];
 			}
 
-			// Lets generate the markup
+			// Lets generate the markup.
 			$output .= '<p class="pixelgrade-featured-posts-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -784,7 +785,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 * @return bool
 		 */
 		public function sanitizeCategory( $value, $field_name, $field_config ) {
-			// Get all the categories shown in the dropdown
+			// Get all the categories shown in the dropdown.
 			$categories = get_terms(
 				'category', array(
 					'hide_empty'   => 1,
@@ -796,7 +797,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			);
 
 			if ( ! in_array( $value, $categories ) ) {
-				// Fallback on the default value
+				// Fallback on the default value.
 				if ( isset( $field_config['default'] ) ) {
 					return $field_config['default'];
 				} else {
@@ -804,7 +805,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				}
 			}
 
-			// All is good
+			// All is good.
 			return $value;
 		}
 
@@ -820,7 +821,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		public function tagsDropdown( $selected, $field_name, $field_config ) {
 			$output = '';
 
-			// Now for attributes
+			// Now for attributes.
 			$label = '';
 			if ( ! empty( $field_config['label'] ) ) {
 				$label = $field_config['label'];
@@ -831,7 +832,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				$desc = $field_config['desc'];
 			}
 
-			// Lets generate the markup
+			// Lets generate the markup.
 			$output .= '<p class="pixelgrade-featured-posts-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -885,7 +886,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 * @return bool
 		 */
 		public function sanitizeTag( $value, $field_name, $field_config ) {
-			// Get all the tags shown in the dropdown
+			// Get all the tags shown in the dropdown.
 			$tags = get_terms(
 				'post_tag', array(
 					'hide_empty'   => 0,
@@ -896,7 +897,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			);
 
 			if ( ! in_array( $value, $tags ) ) {
-				// Fallback on the default value
+				// Fallback on the default value.
 				if ( isset( $field_config['default'] ) ) {
 					return $field_config['default'];
 				} else {
@@ -904,7 +905,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				}
 			}
 
-			// All is good
+			// All is good.
 			return $value;
 		}
 
@@ -918,7 +919,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 		 * @return array The modified widget data.
 		 */
 		public function custom_export_logic( $widget_data, $widget_type, $matching_data ) {
-			// Replace the post IDs with the new ones
+			// Replace the post IDs with the new ones.
 			if ( ! empty( $widget_data['post_ids'] ) && ! empty( $matching_data['post_types']['post'] ) ) {
 				$post_ids = Pixelgrade_Value::maybeExplodeList( $widget_data['post_ids'] );
 				if ( ! empty( $post_ids ) ) {
@@ -937,7 +938,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					}
 				}
 
-				// We need to convert the post IDs back to comma separated list
+				// We need to convert the post IDs back to comma separated list.
 				$widget_data['post_ids'] = implode( ',', $post_ids );
 			}
 

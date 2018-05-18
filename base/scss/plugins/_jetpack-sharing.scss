@@ -13,11 +13,13 @@ $jetpack-sharing-colors: (
 ) !default;
 
 $jetpack-sharing-border-width: 1px !default;
-$jetpack-sharing-border-color: #DBDBDB !default;
+$jetpack-sharing-border-color: rgba(0,0,0,0.1) !default;
 $jetpack-sharing-border-radius: 0 !default;
 $jetpack-sharing-button-color: inherit !default;
 $jetpack-sharing-padding: 12px 15px 12px 17px !default;
 $jetpack-sharing-spacing: 10px !default;
+
+$jetpack-sharing-icon-bg: #222 !default;
 
 $jetpack-sharing-font: (
   font-size: 14px,
@@ -51,11 +53,15 @@ $jetpack-sharing-font: (
     margin: 0;
     padding-top: $jetpack-sharing-spacing;
     padding-left: $jetpack-sharing-spacing;
+
+    a {
+      transition: all 0.2s ease;
+    }
   }
 
   .sd-button {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
     font: inherit;
     margin: 0;
@@ -71,34 +77,32 @@ $jetpack-sharing-font: (
   }
 
   .sd-button > span {
-    font: inherit !important;
+    // font: inherit;
+  }
+
+  // Variations
+  // Button style: Icon only
+  .sd-social-icon {
+   .sd-content.sd-content {
+     ul li[class*='share-'] {
+       a.sd-button {
+         border: none;
+         border-radius: 50%;
+         background: $jetpack-sharing-icon-bg;
+
+         &:before {
+           color: #fff;
+           width: 18px;
+           height: 18px;
+           background-color: transparent;
+         }
+       }
+
+       a, a:hover, div.option a {
+         padding: 9px;
+       }
+     }
+   }
   }
 }
 
-// Variations
-// Button style: Icon only
-//.sd-social-icon {
-//  .sd-content.sd-content {
-//    ul li[class*='share-'] {
-//      a.sd-button {
-//        border: none;
-//        border-radius: 50%;
-//
-//        &:before {
-//          color: #fff;
-//        }
-//
-//        &.share-print,
-//        &.share-reddit {
-//          &:before {
-//            color: $color-dark;
-//          }
-//        }
-//      }
-//
-//      a, a:hover, div.option a {
-//        padding: 9px;
-//      }
-//    }
-//  }
-//}

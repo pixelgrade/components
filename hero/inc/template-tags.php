@@ -894,7 +894,7 @@ function pixelgrade_hero_the_background_image( $slide = null, $opacity = 100 ) {
 	$output = '';
 
 	$image_meta      = get_post_meta( $slide['post_id'], '_wp_attachment_metadata', true );
-	$image_full_size = wp_get_attachment_image_src( $slide['post_id'], 'full-size' );
+	$image_full_size = wp_get_attachment_image_src( $slide['post_id'], 'pixelgrade_hero_image' );
 
 	// the responsive image
 	$image_markup = '<img class="c-hero__image" itemprop="image" src="' . esc_url( $image_full_size[0] ) . '" alt="' . esc_attr( pixelgrade_hero_get_img_alt( $slide['post_id'] ) ) . '" ' . $opacity . '>';
@@ -947,7 +947,7 @@ function pixelgrade_hero_the_background_video( $slide = null, $opacity = 100, $i
 
 		$attachment_fields = get_post_custom( $slide['post_id'] );
 		$image_meta        = get_post_meta( $slide['post_id'], '_wp_attachment_metadata', true );
-		$image_full_size   = wp_get_attachment_image_src( $slide['post_id'], 'full-size' );
+		$image_full_size   = wp_get_attachment_image_src( $slide['post_id'], 'pixelgrade_hero_image' );
 
 		// prepare the attachment fields
 		if ( ! isset( $attachment_fields['_wp_attachment_image_alt'] ) ) {

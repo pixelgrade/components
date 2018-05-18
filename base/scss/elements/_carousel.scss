@@ -89,6 +89,9 @@ $slick-dot-size: 10px !default;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
+  list-style: none;
+  padding-left: 0;
+  margin: 0 auto; // center
 
   // %widget-posts adds flex-basis: 33% to all it's children and needs overwritten
   .featured-posts-carousel > & {
@@ -106,10 +109,19 @@ $slick-dot-size: 10px !default;
     border: 0;
     border-radius: 0;
     border-bottom: 1px solid transparent;
-    background: transparent;
-    color: inherit;
     font-size: 1rem;
     outline: 0;
+
+    // Use it for numbered pagination
+    @include above(lap) {
+      background: transparent !important;
+    }
+  }
+
+  &[class][class] button {
+    &, &:focus {
+      color: inherit;
+    }
   }
 
   .slick-active {
@@ -138,6 +150,7 @@ $slick-dot-size: 10px !default;
 }
 
 .widget_featured_posts_carousel {
+
   .u-widget-title-sideways & {
     @include below( 'lap' ) {
       padding-left: 0;
@@ -153,6 +166,22 @@ $slick-dot-size: 10px !default;
 
       @include below( 'lap' ) {
         display: none;
+      }
+    }
+  }
+
+  .slick-arrow {
+    overflow: hidden;
+  }
+
+  ul.slick-dots {
+    li button {
+      color: inherit;
+      opacity: 0.6;
+
+      &:hover {
+        color: inherit;
+        opacity: 1;
       }
     }
   }
@@ -213,6 +242,12 @@ $slick-dot-size: 10px !default;
         }
       }
     }
+  }
+}
+
+.slick-slider .slick-list {
+  @include below(lap) {
+    margin-top: 0;
   }
 }
 

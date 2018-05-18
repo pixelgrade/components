@@ -111,7 +111,7 @@ $btn-font: () !default;
   // The stick
   &:before {
 
-    @include spacing(width, 20px);
+    @include spacing(width, 35px);
     height: 1px;
 
     background-color: currentColor;
@@ -236,12 +236,13 @@ $btn-font: () !default;
 }
 
 // Helper Classes for Humans & Nature
-// <a class="button">		Regular Button 		</a>
-// <a class="button arrow">	Button with Arrow 	</a>
-// <a class="button default">	Button with Default Styling 	</a>
+// <a class="button">		        Regular Button 		            </a>
+// <a class="button arrow">	    Button with Arrow 	          </a>
+// <a class="button default">	  Button with Default Styling 	</a>
 
 .button {
   @include btn;
+  text-decoration: none;
 
   &.default {
     @include btn--default;

@@ -328,7 +328,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 			$this->page_templater = self::setupPageTemplates( $this->config['page_templates'], self::COMPONENT_SLUG );
 
 			// Setup the custom loop for the page templates - if there are any
-			add_action( 'parse_query', array( $this, 'setupPageCemplatesCustomLoopQuery' ) );
+			add_action( 'parse_query', array( $this, 'setupPageTemplatesCustomLoopQuery' ) );
 		}
 
 		/**
