@@ -73,7 +73,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 				'date',
 				'embed',
 				'home',
-				'front_page',
+				'frontpage',
 				'page',
 				'paged',
 				'search',
@@ -105,34 +105,34 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 		 * Register our filters
 		 *
 		 * We will pass through the templates and gather their types
-		 * so we know to what "{$type}_template_hierarchy" filters we need to hook
+		 * so we know to what "{$type}_template_hierarchy" filters we need to hook.
 		 *
 		 * Possible values for `$type` include: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
-		 * 'embed', 'home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
+		 * 'embed', 'home', 'front_page', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
 		 *
 		 * @see get_query_template()
 		 */
 		protected function registerHooks() {
-			// Gather the used types
+			// Gather the used types.
 			$types = array();
 			foreach ( $this->templates as $template ) {
 				if ( empty( $template['type'] ) ) {
 					continue;
 				}
 
-				$types[] = $template['type'];
+				$types = array_merge( $types, $template['type'] );
 			}
 
-			// Make sure that we have each type only once
+			// Make sure that we have each type only once.
 			$types = array_unique( $types );
 
 			if ( ! empty( $types ) ) {
 				// Hook to each dynamic filter
 				foreach ( $types as $type ) {
 					// We will use a helper class to store the type so we don't have to have individual function hooks
-					// for each possible value of $type
-					// But this forces us to use a function, not a class method as the callback (in would complicate things too much)
-					// So we need to pass the info regarding the configured templates and component slug to the function hook also
+					// for each possible value of $type.
+					// But this forces us to use a function, not a class method as the callback (in would complicate things too much).
+					// So we need to pass the info regarding the configured templates and component slug to the function hook also.
 					add_filter(
 						"{$type}_template_hierarchy",
 						array(
@@ -148,7 +148,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 						$this->priority, 10
 					);
 
-					// We will also remember non-core template types so we can trigger the above filter for them
+					// We will also remember non-core template types so we can trigger the above filter for them.
 					if ( ! in_array( $type, self::$core_types, true ) ) {
 						self::$extra_types[] = $type;
 					}
@@ -159,7 +159,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 			 * Now to handle our non-core template types and make sure that "I believe I can fly" works for them too (we know the truth :) )
 			 * Just like this guy https://youtu.be/GIQn8pab8Vc
 			 */
-			// We only want to hook to 'template_include' once and only once, even if this class gets instantiated multiple times
+			// We only want to hook to 'template_include' once and only once, even if this class gets instantiated multiple times.
 			if ( ! empty( self::$extra_types ) && ! has_filter(
 				'template_include', array(
 					'Pixelgrade_Templater',
@@ -236,28 +236,31 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 	 */
 	function pixelgrade_add_configured_templates( $stack, $args ) {
 		// Since we have called this from our Pixelgrade_Filter_Storage helper class,
-		// the params are all arrays, even if they were already arrays
-		// We need to fix this
+		// the params are all arrays, even if they were already arrays.
+		// We need to fix this.
 		$stack = reset( $stack );
 
-		// We have nothing to do here if we don't have the information needed
+		// We have nothing to do here if we don't have the information needed.
 		if ( empty( $args ) || empty( $args['type'] ) || empty( $args['component_slug'] ) || empty( $args['templates'] ) || ! is_array( $args['templates'] ) ) {
 			return $stack;
 		}
 
-		// Extract our args
+		// Initialize the bottom stack that will hold component templates not matched with an existing stack template.
+		$bottom_stack = array();
+
+		// Extract our args.
 		extract( $args );
 		/** @var string $type */
 		/** @var string $component_slug */
 		/** @var array $templates */
 
 		// We will reverse the templates array so we can push in front of the filtered templates list (treat it like a stack)
-		// and still keep our promise that the order in the config reflects the priority, descending
+		// and still keep our promise that the order in the config reflects the priority, descending.
 		$templates = array_reverse( $templates );
 		foreach ( $templates as $template ) {
-			// We are only interested in the templates that have the current $type
-			if ( $template['type'] === $type ) {
-				// We need to process the check section of the config, if available
+			// We are only interested in the templates that have the current $type.
+			if ( in_array( $type, $template['type'], true ) ) {
+				// We need to process the check section of the config, if available.
 				$checked = true;
 				if ( ! empty( $template['checks'] ) ) {
 					$checked = Pixelgrade_Config::evaluateChecks( $template['checks'] );
@@ -267,30 +270,31 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 					$new_template      = '';
 					$template_filename = '';
 
-					// Handle the various formats we could be receiving the template info in
+					// Handle the various formats we could be receiving the template info in.
 					if ( is_string( $template['templates'] ) ) {
-						// This is directly the slug of a template - locate it
-						$new_template      = pixelgrade_locate_component_template( $component_slug, $template['templates'] );
+						// This is directly the slug of a template - locate it (we handle the index template differently).
+						$new_template      = pixelgrade_locate_component_template( $component_slug, $template['templates'], '', ( 'index' === $template['templates'] ? false : true ) );
 						$template_filename = $template['templates'];
 					} elseif ( is_array( $template['templates'] ) ) {
-						// We have an array but it may be a simple array, or an array of arrays - standardize it
+						// We have an array but it may be a simple array, or an array of arrays - standardize it.
 						if ( isset( $template['templates']['slug'] ) ) {
-							// We have a simple array
+							// We have a simple array.
 							$template['templates'] = array( $template['templates'] );
 						}
 
-						// We respect our promise to process the templates according to their priority, descending
-						// So we will stop at the first found template
+						// We respect our promise to process the templates according to their priority, descending.
+						// So we will stop at the first found template.
 						foreach ( $template['templates'] as $item ) {
 							if ( ! empty( $item['slug'] ) ) {
-								// We have a simple array
+								// We have a simple array.
 								if ( empty( $item['name'] ) ) {
 									$item['name'] = '';
 								}
 
-								$new_template = pixelgrade_locate_component_template( $component_slug, $item['slug'], $item['name'] );
+								// Locate the template (we handle the index template differently).
+								$new_template = pixelgrade_locate_component_template( $component_slug, $item['slug'], $item['name'], ( 'index' === $item['slug'] && empty( $item['name'] ) ? false : true ) );
 
-								// If we found a template, we stop since upper templates get precedence over lower ones
+								// If we found a template, we stop since upper templates get precedence over lower ones.
 								if ( ! empty( $new_template ) ) {
 									$template_filename = $item['slug'];
 									if ( ! empty( $item['name'] ) && false !== strrpos( $new_template, '-' . $item['name'] . '.php' ) ) {
@@ -302,31 +306,34 @@ if ( ! function_exists( 'pixelgrade_add_configured_templates' ) ) :
 						}
 					}
 
-					// We have found a template - let's add it to the stack
+					// We have found a template - let's add it to the stack.
 					if ( ! empty( $new_template ) ) {
 						// We have received a full path to the template, but since we are filtering the templates
-						// in get_query_template(), we need to give a path relative to the theme root
+						// in get_query_template(), we need to give a path relative to the theme root.
 						$new_template = pixelgrade_make_relative_path( $new_template );
 
-						// We need to make sure that this template hasn't been added to the stack already
+						// We need to make sure that this template hasn't been added to the stack already.
 						if ( false === array_search( $new_template, $stack, true ) ) {
-							// Now we want to add the template to the stack as low as possible
-							// This way we allow for other templates specified by core to take precedence
-							// To do this we will search for $slug-$name.php
+							// Now we want to add the template to the stack as low as possible.
+							// This way we allow for other templates specified by core to take precedence.
+							// To do this we will search for $slug-$name.php.
 							$template_filename .= '.php';
 							$key                = Pixelgrade_Array::strrArraySearch( $template_filename, $stack );
 							if ( false !== $key ) {
-								// We will insert it above the found entry
+								// We will insert it above the found entry.
 								$stack = Pixelgrade_Array::insertBeforeKey( $stack, $key, $new_template );
 							} else {
-								// We will simply put it at the top if nothing was found
-								array_unshift( $stack, $new_template );
+								// We will add it to the bottom of the stack (bottom_stack) if nothing was found, but at the top of the bottom_stack so we maintain template precedence.
+								array_unshift( $bottom_stack, $new_template );
 							}
 						}
 					}
 				}
 			}
 		}
+
+		// Add the bottom stack, well, at the bottom of the stack.
+		$stack = array_merge( array_values( $stack ), array_values( $bottom_stack ) );
 
 		return $stack;
 	}

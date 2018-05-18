@@ -181,7 +181,7 @@ class Pixelgrade_Components_Autoloader {
 	 * @param string $file_ext The file extension used for class files.  Default is ".php".
 	 */
 	public static function set_file_ext( $file_ext ) {
-		static::$file_ext = $file_ext;
+		self::$file_ext = $file_ext;
 	}
 }
 

@@ -9,6 +9,9 @@
     position: absolute;
     top: 0;
     right: 0;
+
+    opacity: 0;
+    transition: all .5s ease;
   }
 
   .children {
@@ -43,6 +46,12 @@
 .comment__wrapper {
   display: flex;
   align-items: flex-start;
+
+  &:hover {
+      .edit-link {
+        opacity: 1;
+      }
+  }
 }
 
 .comment__body {
@@ -76,6 +85,20 @@
 .reply a {
   @include spacing(margin-bottom, 1rem);
   display: block;
+}
+
+
+// Fade out the H6 Style
+.comment__metadata a,
+.reply.reply a {
+    opacity: 0.5;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    transition: all .2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
 }
 
 .pingback,

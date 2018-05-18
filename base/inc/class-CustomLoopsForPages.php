@@ -183,26 +183,26 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 				if ( ! empty( $page_id )
 					&& get_page_template_slug( $page_id ) === $this->validated_page_slug // Only target our specified page.
 				) {
-					// Remove the pre_get_posts action to avoid unexpected issues
+					// Remove the pre_get_posts action to avoid unexpected issues.
 					remove_action( current_action(), array( $this, __METHOD__ ) );
 
 					// METHODS:
-					// Initialize our merged_args() method
+					// Initialize our merged_args() method.
 					$this->mergedArgs();
-					// Initialize our custom query method
+					// Initialize our custom query method.
 					$this->injectorQuery();
 
 					/**
-				 * We need to alter a couple of things here in order for this to work
-				 * - Set posts_per_page to the user set value in order for the query to
-				 *   to properly calculate the $max_num_pages property for pagination
-				 * - Set the $found_posts property of the main query to the $found_posts
-				 *   property of our custom query we will be using to inject posts
-				 * - Set the LIMIT clause to the SQL query. By default, on pages, `is_singular`
-				 *   returns true on pages which removes the LIMIT clause from the SQL query.
-				 *   We need the LIMIT clause because an empty limit clause inhibits the calculation
-				 *   of the $max_num_pages property which we need for pagination
-				 */
+					 * We need to alter a couple of things here in order for this to work
+					 * - Set posts_per_page to the user set value in order for the query to
+					 *   to properly calculate the $max_num_pages property for pagination
+					 * - Set the $found_posts property of the main query to the $found_posts
+					 *   property of our custom query we will be using to inject posts
+					 * - Set the LIMIT clause to the SQL query. By default, on pages, `is_singular`
+					 *   returns true on pages which removes the LIMIT clause from the SQL query.
+					 *   We need the LIMIT clause because an empty limit clause inhibits the calculation
+					 *   of the $max_num_pages property which we need for pagination
+					 */
 					if ( $this->merged_args['posts_per_page']
 						&& true !== $this->merged_args['nopaging']
 					) {
@@ -211,12 +211,12 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 						$q->set( 'posts_per_page', -1 );
 					}
 					$current_page = $q->get( 'page' );
-					// since this is a page, the pagination is put into 'page', not 'paged' like in a normal loop
+					// Since this is a page, the pagination is put into 'page', not 'paged' like in a normal loop.
 					if ( ! empty( $current_page ) ) {
 						$q->set( 'paged', $current_page );
 					}
 
-					// also fix the globals regarding pagination
+					// Also fix the globals regarding pagination.
 					global $paged;
 
 					$paged = 1;
@@ -233,34 +233,34 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 
 					// ACTIONS:
 					/**
-				 * We can now add all our actions that we will be using to inject our custom
-				 * posts into the main query. We will not be altering the main query or the
-				 * main query's $posts property as we would like to keep full integrity of the
-				 * $post, $posts globals as well as $wp_query->post. For this reason we will use
-				 * post injection
-				 */
+					 * We can now add all our actions that we will be using to inject our custom
+					 * posts into the main query. We will not be altering the main query or the
+					 * main query's $posts property as we would like to keep full integrity of the
+					 * $post, $posts globals as well as $wp_query->post. For this reason we will use
+					 * post injection.
+					 */
 					add_action( 'loop_start', array( $this, 'loopStart' ), 1 );
 					add_action( 'loop_end', array( $this, 'loopEnd' ), 1 );
 
-					// we hook early to make sure that everybody has a title to work with
+					// We hook early to make sure that everybody has a title to work with.
 					add_filter( 'document_title_parts', array( $this, 'fixTheTitle' ), 0 );
 				}
 			}
 		}
 
 		public function fixTheTitle( $title ) {
-			// due to the fact that we set is_singular to false, the page title will not be picked up
-			// we need to help it
+			// Due to the fact that we set is_singular to false, the page title will not be picked up.
+			// We need to help it.
 			$title['title'] = single_post_title( '', false );
 
 			return $title;
 		}
 
 		/**
-		 * Public method injector_query
+		 * Public method injector_query.
 		 *
 		 * This will be the method which will handle our custom
-		 * query which will be used to
+		 * query which will be used to:
 		 * - return the posts that should be injected into the main
 		 *   query according to the arguments passed
 		 * - alter the $found_posts property of the main query to make
@@ -271,10 +271,10 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		 * @return WP_Query $this->injector_query
 		 */
 		public function injectorQuery() {
-			// Define our custom query
+			// Define our custom query.
 			$injector_query = new WP_Query( $this->merged_args );
 
-			// Update the thumbnail cache
+			// Update the thumbnail cache.
 			update_post_thumbnail_cache( $injector_query );
 
 			$this->injector_query = $injector_query;
@@ -283,14 +283,14 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		}
 
 		/**
-		 * Public callback method found_posts()
+		 * Public callback method found_posts().
 		 *
 		 * We need to set found_posts in the main query to the $found_posts
 		 * property of the custom query in order for the main query to correctly
-		 * calculate $max_num_pages for pagination
+		 * calculate $max_num_pages for pagination.
 		 *
-		 * @param string   $found_posts Passed by reference by the filter
-		 * @param WP_Query $q The current query object passed by refence
+		 * @param string   $found_posts Passed by reference by the filter.
+		 * @param WP_Query $q The current query object passed by reference.
 		 * @since 1.0.0
 		 * @return int $found_posts
 		 */
@@ -301,7 +301,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 
 			remove_filter( current_filter(), array( $this, __METHOD__ ) );
 
-			// Make sure that $this->injector_query actually have a value and is not NULL
+			// Make sure that $this->injector_query actually have a value and is not NULL.
 			if ( $this->injector_query instanceof WP_Query && 0 != $this->injector_query->found_posts ) {
 				return $this->injector_query->found_posts;
 			}
@@ -310,77 +310,77 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		}
 
 		/**
-		 * Public callback method post_limits()
+		 * Public callback method post_limits().
 		 *
 		 * We need to set the LIMIT clause as it it is removed on pages due to
 		 * is_singular returning true. Witout the limit clause, $max_num_pages stays
 		 * set 0 which avoids pagination.
 		 *
 		 * We will also leave the offset part of the LIMIT cluase to 0 to avoid paged
-		 * pages returning 404's
+		 * pages returning 404's.
 		 *
-		 * @param string $limits Passed by reference in the filter
+		 * @param string $limits Passed by reference in the filter.
 		 * @since 1.0.0
 		 * @return int $limits
 		 */
 		public function postLimits( $limits ) {
 			$posts_per_page = (int) $this->merged_args['posts_per_page'];
 			if ( $posts_per_page
-				&& - 1 != $posts_per_page // Make sure that posts_per_page is not set to return all posts
-				&& true !== $this->merged_args['nopaging'] // Make sure that nopaging is not set to true
+				&& - 1 != $posts_per_page // Make sure that posts_per_page is not set to return all posts.
+				&& true !== $this->merged_args['nopaging'] // Make sure that nopaging is not set to true.
 			) {
-				$limits = "LIMIT 0, $posts_per_page"; // Leave offset at 0 to avoid 404 on paged pages
+				$limits = "LIMIT 0, $posts_per_page"; // Leave offset at 0 to avoid 404 on paged pages.
 			}
 
 			return $limits;
 		}
 
 		/**
-		 * Public callback method loop_start()
+		 * Public callback method loop_start().
 		 *
-		 * Callback function which will be hooked to the loop_start action hook
+		 * Callback function which will be hooked to the loop_start action hook.
 		 *
-		 * @param WP_Query $q Query object passed by reference
+		 * @param WP_Query $q Query object passed by reference.
 		 * @since 1.0.0
 		 */
 		public function loopStart( $q ) {
 			/**
-		 * Although we run this action inside our preGetPosts methods and
-		 * and inside a main query check, we need to redo the check here as well
-		 * because failing to do so sets our div in the custom query output as well
-		 */
+			 * Although we run this action inside our preGetPosts methods and
+			 * and inside a main query check, we need to redo the check here as well
+			 * because failing to do so sets our div in the custom query output as well.
+			 */
 
 			if ( ! $q->is_main_query() ) {
 					return;
 			}
 
-			// Make sure that $this->injector_query actually has a value and is not NULL
+			// Make sure that $this->injector_query actually has a value and is not NULL.
 			if ( ! $this->injector_query instanceof WP_Query ) {
 					return;
 			}
 
-			// Setup a counter as wee need to run the custom query only once
+			// Setup a counter as wee need to run the custom query only once.
 			static $count = 0;
 
 			/**
-		 * Only run the custom query on the first run of the loop. Any consecutive
-		 * runs (like if the user runs the loop again), the custom posts won't show.
-		 */
+			 * Only run the custom query on the first run of the loop. Any consecutive
+			 * runs (like if the user runs the loop again), the custom posts won't show.
+			 */
 			if ( 0 === (int) $count ) {
-				// We will now add our custom posts on loop_end
+				// We will now add our custom posts on loop_end.
 				$this->injector_query->rewind_posts();
 
-				// Create our loop
+				// Create our loop.
 				if ( $this->injector_query->have_posts() ) {
 
-					// If we have been given a loop template part, we will use that instead of our inline loop
+					// If we have been given a loop template part, we will use that instead of our inline loop.
 					if ( ! empty( $this->loop_template_part ) ) {
 						// These will be available to the loop template part to do stuff like the_post() and so on.
 						$custom_query              = $this->injector_query;
 						$custom_component_slug     = $this->component_slug;
 						$custom_post_template_part = $this->post_template_part;
 
-						// Now we need to include the loop template (maybe a theme overrides the default one?)
+						// Now we need to include the loop template (maybe a theme overrides the default one?).
 						$loop_template_part_slug = '';
 						$loop_template_part_name = '';
 						if ( is_array( $this->loop_template_part ) ) {
@@ -417,18 +417,18 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 								$post_template_part_slug = (string) trim( $this->post_template_part );
 							}
 
-							// Include the loop template part
+							// Include the loop template part.
 							include $loop_template;
 						}
 					} else {
 
 						/**
-					 * Fires before the loop to add stuff like pagination.
-					 *
-					 * @since 1.0.0
-					 *
-					 * @param \stdClass $this ->injector_query Current object (passed by reference).
-					 */
+						 * Fires before the loop to add stuff like pagination.
+						 *
+						 * @since 1.0.0
+						 *
+						 * @param \stdClass $this ->injector_query Current object (passed by reference).
+						 */
 						do_action( 'pixelgrade_custom_loops_for_pages_before_loop', $this->injector_query );
 
 						// Add a static counter for those who need it
@@ -438,25 +438,25 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							$this->injector_query->the_post();
 
 							/**
-						 * Fires before pixelgrade_get_component_template_part.
-						 *
-						 * @since 1.0.0
-						 *
-						 * @param int $counter (passed by reference).
-						 */
+							 * Fires before pixelgrade_get_component_template_part.
+							 *
+							 * @since 1.0.0
+							 *
+							 * @param int $counter (passed by reference).
+							 */
 							do_action( 'pixelgrade_custom_loops_for_pages_counter_before_template_part', $counter );
 
 							/**
-						 * Fires before pixelgrade_get_component_template_part.
-						 *
-						 * @since 1.0.0
-						 *
-						 * @param \stdClass $this ->injector_query-post Current post object (passed by reference).
-						 * @param \stdClass $this ->injector_query Current object (passed by reference).
-						 */
+							 * Fires before pixelgrade_get_component_template_part.
+							 *
+							 * @since 1.0.0
+							 *
+							 * @param \stdClass $this ->injector_query-post Current post object (passed by reference).
+							 * @param \stdClass $this ->injector_query Current object (passed by reference).
+							 */
 							do_action( 'pixelgrade_custom_loops_for_pages_current_post_and_object', $this->injector_query->post, $this->injector_query );
 
-							// Now we need to display the post template part (maybe a theme overrides the default one?)
+							// Now we need to display the post template part (maybe a theme overrides the default one?).
 							$post_template_part_slug = '';
 							$post_template_part_name = '';
 							if ( is_array( $this->post_template_part ) ) {
@@ -475,56 +475,56 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							pixelgrade_get_component_template_part( $this->component_slug, $post_template_part_slug, $post_template_part_name );
 
 							/**
-						 * Fires after pixelgrade_get_component_template_part.
-						 *
-						 * @since 1.0.0
-						 *
-						 * @param int $counter (passed by reference).
-						 */
+							 * Fires after pixelgrade_get_component_template_part.
+							 *
+							 * @since 1.0.0
+							 *
+							 * @param int $counter (passed by reference).
+							 */
 							do_action( 'pixelgrade_custom_loops_for_pages_counter_after_template_part', $counter );
 
-							$counter ++; // Update the counter
+							$counter ++; // Update the counter.
 						}
 
 						wp_reset_postdata();
 
 						/**
-					 * Fires after the loop to add stuff like pagination.
-					 *
-					 * @since 1.0.0
-					 *
-					 * @param \stdClass $this ->injector_query Current object (passed by reference).
-					 */
+						 * Fires after the loop to add stuff like pagination.
+						 *
+						 * @since 1.0.0
+						 *
+						 * @param \stdClass $this ->injector_query Current object (passed by reference).
+						 */
 						do_action( 'pixelgrade_custom_loops_for_pages_after_loop', $this->injector_query );
 					}
 				}
 			}
 
-			// Update our static counter
+			// Update our static counter.
 			$count ++;
 		}
 
 		/**
-		 * Public callback method loop_end()
+		 * Public callback method loop_end().
 		 *
-		 * Callback function which will be hooked to the loop_end action hook
+		 * Callback function which will be hooked to the loop_end action hook.
 		 *
-		 * @param WP_Query $q Query object passed by reference
+		 * @param WP_Query $q Query object passed by reference.
 		 * @since 1.0.0
 		 */
 		public function loopEnd( $q ) {
 			/**
-		 * Although we run this action inside our preGetPosts methods and
-		 * and inside a main query check, we need to redo the check here as well
-		 * because failing to do so sets our custom query into an infinite loop
-		 */
+			 * Although we run this action inside our preGetPosts methods and
+			 * and inside a main query check, we need to redo the check here as well
+			 * because failing to do so sets our custom query into an infinite loop.
+			 */
 			if ( ! $q->is_main_query() ) {
 					return;
 			}
 		}
 
 		/**
-		 * Various filters for making custom page loops work with Jetpack Infinite Scroll
+		 * Various filters for making custom page loops work with Jetpack Infinite Scroll.
 		 */
 		public function jetpackInfiniteScrollHooks() {
 			if ( ! $this->injector_query instanceof WP_Query ) {
@@ -537,7 +537,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		}
 
 		/**
-		 * Filter the query object used when loading infinite scroll posts
+		 * Filter the query object used when loading infinite scroll posts.
 		 *
 		 * @param WP_Query $query
 		 * @return WP_Query
@@ -558,7 +558,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		}
 
 		/**
-		 * Filter the jetpack infinite scroll settings used when loading infinite scroll posts
+		 * Filter the jetpack infinite scroll settings used when loading infinite scroll posts.
 		 *
 		 * @param array $settings
 		 * @return array
@@ -570,14 +570,14 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 		}
 
 		/**
-		 * Filter the jetpack infinite scroll JS settings (the localized JS var) used when loading infinite scroll posts
+		 * Filter the jetpack infinite scroll JS settings (the localized JS var) used when loading infinite scroll posts.
 		 *
 		 * @param array $settings
 		 * @return array
 		 */
 		public function jetpackFixInfiniteScrollJsSettings( $settings ) {
-			// This is what Jetpack Infinite Scroll uses so it makes extra sure that it brings older posts
-			// But only when loading at scroll
+			// This is what Jetpack Infinite Scroll uses so it makes extra sure that it brings older posts.
+			// But only when loading at scroll.
 			$settings['last_post_date'] = $this->getLastPostDate();
 
 			return $settings;
@@ -604,7 +604,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 			// $orderby = isset( $this->injector_query->query_vars['orderby'] ) ? $this->injector_query->query_vars['orderby'] : '';
 			$post_date = ( ! empty( $post->post_date ) ? $post->post_date : false );
 
-			// For now just return the post date; we will tackle latter the modified date and other things
+			// For now just return the post date; we will tackle latter the modified date and other things.
 			return $post_date;
 		}
 	}

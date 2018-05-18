@@ -60,7 +60,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					<div class="c-card__frame">
 						<?php
 						if ( has_post_thumbnail() ) {
-							the_post_thumbnail();
+							the_post_thumbnail( 'pixelgrade_card_image' );
 						}
 
 						echo '<span class="c-card__letter">' . esc_html( mb_substr( get_the_title(), 0, 1 ) ) . '</span>';
@@ -106,7 +106,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 				<?php } ?>
 
 				<div class="c-card__footer">
-					<div class="c-card__action"><?php esc_html_e( 'Read More', '__components_txtd' ); ?></div>
+					<a href="<?php the_permalink(); ?>" class="c-card__action"><?php esc_html_e( 'Read More', '__components_txtd' ); ?></a>
 				</div>
 
 			</div>

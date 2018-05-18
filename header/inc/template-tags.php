@@ -84,7 +84,41 @@ function pixelgrade_the_header( $location = '' ) {
 }
 
 /**
+ * Display the markup for a certain nav menu location.
+ *
+ * @param array  $args An array with options for the wp_nav_menu() function.
+ * @param string $menu_location Optional. The menu location id (slug) to process.
+ *
+ * @return false|void
+ */
+function pixelgrade_header_the_nav_menu( $args, $menu_location = '' ) {
+	$defaults = array(
+		'container' => 'nav',
+		'echo'      => true,
+	);
+
+	if ( ! empty( $menu_location ) ) {
+		// Make sure we overwrite whatever is there
+		$args['theme_location'] = $menu_location;
+	}
+
+	// Parse the sent arguments
+	$args = wp_parse_args( $args, $defaults );
+
+	// Allow others to have a say
+	$args = apply_filters( 'pixelgrade_header_nav_menu_args', $args, $menu_location );
+
+	// Returns false if there are no items or no menu was found.
+	return wp_nav_menu( $args );
+}
+
+/**
  * Get the markup for a certain nav menu location.
+ *
+ * @deprecated Use pixelgrade_header_the_nav_menu() instead.
+ *
+ * If we are not echo-ing, we are not playing nice with the selective refresh in the Customizer.
+ * @see WP_Customize_Nav_Menus::filter_wp_nav_menu_args().
  *
  * @param array  $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
@@ -291,7 +325,7 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
 			'<a href="%1$s" class="custom-logo-link  custom-logo-link--inversed" rel="home" itemprop="url">%2$s</a>',
 			esc_url( home_url( '/' ) ),
 			wp_get_attachment_image(
-				$custom_logo_id, 'full', false, array(
+				$custom_logo_id, 'large', false, array(
 					'class'    => 'custom-logo--transparent',
 					'itemprop' => 'logo',
 				)

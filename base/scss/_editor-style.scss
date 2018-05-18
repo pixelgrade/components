@@ -30,7 +30,7 @@ html {
 
     .alignleft,
     .alignright {
-      max-width: 50%;
+      max-width: 40%;
     }
   }
 
@@ -48,5 +48,17 @@ body {
   max-width: $content-width;
   margin-left: auto;
   margin-right: auto;
+  
+  // Buttons: Edit State
+  .button[data-mce-selected] {
+    padding-top: 1.1em;
+    padding-bottom: 1.1em;
+    padding-left: 1.75em;
+    padding-right: 1.75em;
+
+    &.arrow {
+      padding-right: 6.5em;
+    }
+  }
 }
 
