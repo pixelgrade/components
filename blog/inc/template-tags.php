@@ -866,3 +866,17 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 
 	}
 }
+
+if ( ! function_exists( 'pixelgrade_comments_toggle_checked_attribute' ) ) {
+	function pixelgrade_comments_toggle_checked_attribute() {
+		echo pixelgrade_get_comments_toggle_checked_attribute();
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_get_comments_toggle_checked_attribute' ) ) {
+	function pixelgrade_get_comments_toggle_checked_attribute() {
+		$string = 'checked="checked"';
+		$string = apply_filters( 'pixelgrade_get_comments_toggle_checked_attribute', $string );
+		return $string;
+	}
+}
