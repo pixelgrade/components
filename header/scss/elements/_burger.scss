@@ -17,17 +17,17 @@ $burger-transition-function:    ease-in-out                                    !
 
     display: block;
 
-    width: $burger-line-width * 1em / $burger-width;
-    margin-top: $burger-translateY;
-    margin-bottom: $burger-translateY;
+    width: $burger-width;
+    margin-top: to-fixed($burger-translateY);
+    margin-bottom: to-fixed($burger-translateY);
 
     font-size: $burger-width;
 }
 
 .c-burger__slice {
     display: block;
-    width: $burger-line-width * 1em / $burger-width;
-    height: to-fixed($burger-line-height * 1em / $burger-width, 3);
+    width: $burger-line-width;
+    height: $burger-line-height;
     background: $burger-color;
 }
 
