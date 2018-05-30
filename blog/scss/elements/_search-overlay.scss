@@ -127,7 +127,7 @@ body.show-search-overlay {
     }
 
     @include below(lap) {
-        grid-column: 2 / 3;
+        grid-column: 2 / 4;
         grid-row: 2 / 3;
         background: $theme-border-color;
         color: $theme-accent-light-color;
