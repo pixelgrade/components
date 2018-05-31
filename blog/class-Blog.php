@@ -482,6 +482,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
             'single' => array(
                 'extend' => 'blog/default',
+                'type' => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
                 'blocks' => array(
 	                'container' => array(
 		                'extend' => 'blog/container',
@@ -508,6 +509,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
             'page' => array(
                 'extend' => 'blog/default',
+                'type' => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
                 'blocks' => array(
 	                'container' => array(
 		                'extend' => 'blog/container',
