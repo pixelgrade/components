@@ -31,6 +31,7 @@
     -->
     <rule ref="WordPress-Extra">
         <!-- Do not check for proper WordPress file names. -->
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
     </rule>
 
@@ -56,8 +57,8 @@
 
     <rule ref="PEAR.Functions.FunctionCallSignature">
         <properties>
-            <property name="requiredSpacesAfterOpen" value="0" />
-            <property name="requiredSpacesBeforeClose" value="0"/>
+            <property name="requiredSpacesAfterOpen" value="1" />
+            <property name="requiredSpacesBeforeClose" value="1"/>
         </properties>
     </rule>
 

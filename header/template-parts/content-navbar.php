@@ -18,10 +18,10 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
-// bail if we have no zones or no menu locations to show, even bogus ones
+// bail if we have no zones or no menu locations to show, even bogus ones.
 if ( ! pixelgrade_header_is_valid_config() ) {
 	return;
 }
@@ -32,7 +32,7 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 	<?php
 	$zones = pixelgrade_header_get_zones();
 
-	// Cycle through each zone and display the nav menus or other "bogus" things
+	// Cycle through each zone and display the nav menus or other "bogus" things.
 	foreach ( $zones as $zone_id => $zone ) {
 		if ( empty( $zone['menu_locations'] ) && empty( $zone['display_blank'] ) ) {
 			continue;
@@ -47,29 +47,26 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 
 		<div <?php pixelgrade_css_class( $zone['classes'], array( 'header', 'navbar', 'zone', $zone_id ) ); ?>>
 			<?php
-			// Get the menu_locations in the current zone
+			// Get the menu_locations in the current zone.
 			$menu_locations = pixelgrade_header_get_zone_nav_menu_locations( $zone_id, $zone );
 
 			if ( ! empty( $menu_locations ) ) {
 				foreach ( $menu_locations as $menu_id => $menu_location ) {
 					if ( ! empty( $menu_location['bogus'] ) ) {
-						// We have something special to show
+						// We have something special to show.
 						if ( 'header-branding' === $menu_id ) {
 							pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'branding' );
 						} elseif ( 'jetpack-social-menu' === $menu_id && function_exists( 'jetpack_social_menu' ) ) {
 							jetpack_social_menu();
 						}
 					} else {
-						// We have a nav menu location that we need to show
-						// Make sure we have some nav_menu args
+						// We have a nav menu location that we need to show.
+						// Make sure we have some nav_menu args.
 						if ( empty( $menu_location['nav_menu_args'] ) ) {
 							$menu_location['nav_menu_args'] = array();
 						}
-						$nav_menu = pixelgrade_header_get_nav_menu( $menu_location['nav_menu_args'], $menu_id );
 
-						if ( ! empty( $nav_menu ) ) {
-							echo $nav_menu;
-						}
+						pixelgrade_header_the_nav_menu( $menu_location['nav_menu_args'], $menu_id );
 					}
 				}
 			}

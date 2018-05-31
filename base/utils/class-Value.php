@@ -46,10 +46,10 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 		}
 
 		/**
-		 * Attempt to split a string by whitespaces and return the parts array.
-		 * If not string or no whitespaces present, just returns the value.
+		 * Attempt to split a string by whitespaces and return the parts as an array.
+		 * If not a string or no whitespaces present, just returns the value.
 		 *
-		 * @param $value
+		 * @param mixed $value
 		 *
 		 * @return array|false|string[]
 		 */
@@ -64,7 +64,7 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 		/**
 		 * Given a string, treat it as a (comma separated by default) list and return the array with the items
 		 *
-		 * @param string $str
+		 * @param mixed $str
 		 * @param string $delimiter Optional. The delimiter to user.
 		 *
 		 * @return array
@@ -120,7 +120,11 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 				unset( $item );
 			} elseif ( ! empty( $value ) ) {
 				// Coerce the $value to a string
-				$value = $prefix . (string) $value;
+				$value = (string) $value;
+				// We will not add the prefix if the string is already prefixed
+				if ( 0 !== strpos( $value, $prefix ) ) {
+					$value = $prefix . $value;
+				}
 			}
 
 			return $value;
@@ -148,12 +152,16 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 
 			if ( is_array( $value ) || is_object( $value ) ) {
 				foreach ( $value as &$item ) {
-					$item = self::maybePrefix( $item, $suffix );
+					$item = self::maybeSuffix( $item, $suffix );
 				}
 				unset( $item );
 			} elseif ( ! empty( $value ) ) {
 				// Coerce the $value to a string
-				$value = (string) $value . $suffix;
+				$value = (string) $value;
+				// We will not add the suffix if it is already there
+				if ( strrpos( $value, $suffix ) !== strlen( $value ) - strlen( $suffix ) ) {
+					$value = (string) $value . $suffix;
+				}
 			}
 
 			return $value;
@@ -183,7 +191,10 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 				unset( $item );
 			} elseif ( ! empty( $value ) ) {
 				// Coerce the $value to a string
-				$value = $prefix . (string) $value . $suffix;
+				$value = (string) $value;
+
+				$value = self::maybePrefix( $value, $prefix );
+				$value = self::maybeSuffix( $value, $suffix );
 			}
 
 			return $value;
@@ -196,7 +207,7 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 		 *
 		 * @return string
 		 */
-		public function toLowerAscii( $str ) {
+		public static function toLowerAscii( $str ) {
 			$str   = strtolower( $str );
 			$regex = array(
 				'pattern'     => '~([^a-z\d_.-])~',
@@ -214,7 +225,7 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 		 *
 		 * @return string
 		 */
-		public function removeDoubles( $str ) {
+		public static function removeDoubles( $str ) {
 			$regex = apply_filters(
 				'germanix_remove_doubles_regex', array(
 					'pattern'     => '~([=+.-])\\1+~',
@@ -232,7 +243,7 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 		 *
 		 * @return string
 		 */
-		public function translit( $str ) {
+		public static function translit( $str ) {
 			$utf8 = array(
 				'Ä'  => 'Ae',
 				'ä'  => 'ae',
