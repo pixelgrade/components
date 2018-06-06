@@ -291,10 +291,6 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 								'property' => 'color',
 								'selector' => '.c-navbar, .c-navbar li',
 							),
-							array(
-								'property' => 'background-color',
-								'selector' => '.menu--primary .sub-menu:after',
-							),
 						),
 					),
 					'header_links_active_color'       => array(
