@@ -14,8 +14,13 @@
 	//	margin-bottom: 0;
 	//}
 
+  input[type="checkbox"] {
+    position: static;
+    margin-bottom: 0.25em;
+    vertical-align: middle;
+  }
+
 	label {
-		display: block;
 		@include spacing(margin-bottom, 1rem);
 	}
 }
