@@ -89,6 +89,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 							echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
 						}
 						?>
+						<!-- ToDo: Move it into theme (NOTO) -->
+						<div class="c-meta__decoration"></div>
 					</div>
 
 				<?php
