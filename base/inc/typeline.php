@@ -210,7 +210,7 @@ function getY( x ) {
 	$js .= "
 function typeline_spacing_cb( value, selector, property, unit ) {
     var css = '',
-        style = document.getElementById('typeline_range_negative_style_tag'),
+        style = document.getElementById('typeline_range_style_tag'),
         head = document.head || document.getElementsByTagName('head')[0];
 
     css += selector + ' {' +
@@ -237,7 +237,7 @@ function typeline_spacing_cb( value, selector, property, unit ) {
 	        style.innerHTML = css;
     } else {
         style = document.createElement('style');
-        style.setAttribute('id', 'typeline_range_negative_style_tag');
+        style.setAttribute('id', 'typeline_range_style_tag');
 
         style.type = 'text/css';
         if ( style.styleSheet ) {
