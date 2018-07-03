@@ -97,14 +97,12 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 				<?php
 				}
 
-				if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) {
-				?>
+				if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) { ?>
 					<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
 				<?php
 				}
 
-				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) {
-				?>
+				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) { ?>
 					<div class="c-card__excerpt">
 						<?php do_action( 'pixelgrade_before_excerpt', $location ); ?>
 						<?php the_excerpt(); ?>
