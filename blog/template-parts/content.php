@@ -77,6 +77,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 					<div class="c-card__meta c-meta">
 						<?php
+						do_action( 'pixelgrade_before_card_meta', $location );
+
 						if ( $primary_meta_output ) {
 							echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>';
 							// Add a separator if we also have secondary meta
@@ -88,9 +90,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						if ( $secondary_meta_output ) {
 							echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
 						}
-						?>
-						<!-- ToDo: Move it into theme (NOTO) -->
-						<div class="c-meta__decoration"></div>
+
+						do_action( 'pixelgrade_after_card_meta', $location ); ?>
 					</div>
 
 				<?php
