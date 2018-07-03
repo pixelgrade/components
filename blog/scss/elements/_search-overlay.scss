@@ -105,9 +105,7 @@ body.show-search-overlay {
 }
 
 .search-trigger[class] {
-    height: 54px;
-
-    grid-column: 30 / span 3;
+    grid-column: 29 / span 3;
     grid-row: 1 / span 1;
 
     z-index: 200;
