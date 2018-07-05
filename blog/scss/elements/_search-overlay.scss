@@ -105,13 +105,14 @@ body.show-search-overlay {
 }
 
 .search-trigger[class] {
-    grid-column: 30 / span 3;
+    grid-column: 31 / span 3;
     grid-row: 1 / span 1;
 
     z-index: 200;
     color: $theme-accent-light-color;
 
     svg {
+        display: block;
         width: 20px;
         height: 21px;
     }
@@ -125,9 +126,20 @@ body.show-search-overlay {
     }
 
     @include below(lap) {
-        grid-column: 2 / 4;
-        grid-row: 1 / 2;
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+
         background: $theme-border-color;
         color: $theme-accent-light-color;
+
+        .c-noto--header & {
+            display: none;
+        }
+    }
+
+    @include above(lap) {
+        .c-noto--body & {
+            display: none;
+        }
     }
 }
