@@ -884,7 +884,9 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 6', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => 'h6, .h6',
+						'selector'    => 'h6, .h6,
+											.comment-reply-title a, .comment__metadata a, 
+											.edit-link a, .logged-in-as a, .reply a',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
