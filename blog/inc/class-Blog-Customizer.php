@@ -559,7 +559,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'label'       => esc_html__( 'Body Text Font', '__components_txtd' ),
 						'desc'        => '',
 						'selector'    => 'body',
-						'callback'    => 'typeline_font_cb',
+						'callback'    => 'typeline_body_font_cb',
 
 						// This should be set by the theme
 						// Previously:
@@ -599,7 +599,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'label'       => esc_html__( 'Content Text Font', '__components_txtd' ),
 						'desc'        => '',
 						'selector'    => '.entry-content',
-						'callback'    => 'typeline_font_cb',
+						'callback'    => 'typeline_body_font_cb',
 
 						// This should be set by the theme
 						// Previously:
