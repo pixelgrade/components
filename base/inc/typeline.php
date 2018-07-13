@@ -634,7 +634,7 @@ function typeline_body_font_cb_customizer_preview() {
 		$breakpoints = $typeline_config['body_type']['breakpoints'];
 
 		$js .= 'var points = [[' . $points[0][0] . ', ' . $points[0][1] . '], [' . $points[1][0] . ', ' . $points[1][1] . '], [' . $points[2][0] . ', ' . $points[2][1] . ']],
-	breakpoints = ["' . $breakpoints[0] . '", "' . $breakpoints[1] . '", "' . $breakpoints[2] . '"];
+	breakpoints = ["' . $breakpoints[0] . '"' . ( isset($breakpoints[1]) ? ', "' . $breakpoints[1] . '"' : '' ) . ( isset( $breakpoints[2] ) ? ', "' . $breakpoints[2] . '"' : '' ) . '];
 
 	function getY(x) {
 		if (x < points[1][0]) {
@@ -671,6 +671,7 @@ function typeline_body_font_cb(values, font) {
 				font['selector'] + ' {' + 'font-size: ' + newValue + font['fields']['font-size']['unit'] + ';' + '}' +
 			'}\\n';
 	}" . PHP_EOL;
+
 	}
 
 	$js .= '
