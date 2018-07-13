@@ -199,6 +199,15 @@ table {
   }
 }
 
+// Links
+a {
+  text-decoration: none;
+
+  .u-underlined-links & {
+    text-decoration: underline;
+  }
+}
+
 
 // HR
 $typography-hr-width: 100% !default;

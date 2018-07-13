@@ -188,8 +188,11 @@ $blog-card-meta-secondary-font: () !default;
 }
 
 .c-card__title {
-  color: $blog-card-title-color;
   @include leading-map($blog-card-title-font);
+
+  @if ( $blog-card-title-color ) {
+    color: $blog-card-title-color;
+  }
 }
 
 .c-card__excerpt {
@@ -197,17 +200,26 @@ $blog-card-meta-secondary-font: () !default;
 }
 
 .c-meta__primary {
-  color: $blog-primary-meta-color;
   @include leading-map($blog-card-meta-primary-font);
+
+  @if ( $blog-primary-meta-color ) {
+    color: $blog-primary-meta-color;
+  }
 }
 
 .c-meta__secondary {
-  color: $blog-secondary-meta-color;
   @include leading-map($blog-card-meta-secondary-font);
+
+  @if ( $blog-primary-meta-color ) {
+    color: $blog-secondary-meta-color;
+  }
 }
 
 .c-meta__separator {
-  color: $blog-secondary-meta-color;
+
+  @if ( $blog-primary-meta-color ) {
+    color: $blog-secondary-meta-color;
+  }
 }
 
 .c-card__thumbnail-background {

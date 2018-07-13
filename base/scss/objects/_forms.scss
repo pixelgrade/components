@@ -7,6 +7,7 @@ $color-white: #FFFFFF !default;
 $input-font: () !default;
 $input-color: #3B3B3B !default;
 $input-border-color: #E0E0E0 !default;
+$input-border-width: 1px !default;
 $input-background-color: #FFFFFF !default;
 $input-padding: 13px 19px 15px !default;
 $input-focus-border-color: #383838 !default;
@@ -43,26 +44,26 @@ $label-font: (
   font-weight: 500,
   letter-spacing: 1px,
   text-transform: uppercase,
-);
+) !default;
 
 $input-font: (
   font-size: 17px,
   line-height: 1.5,
   font-weight: 400,
-);
+) !default;
 
 
 $legend-font: (
   font-size: 12px,
   text-transform: uppercase,
   font-weight: 500,
-);
+) !default;
 
 @mixin field {
   width: 100%;
   max-width: 100%;
   @include spacing(padding, $input-padding);
-  border: 1px solid $input-border-color;
+  border: $input-border-width solid $input-border-color;
 
   @include leading-map($input-font);
 
@@ -127,13 +128,18 @@ $textarea-font: () !default;
   color: $label-color;
   @include spacing(padding-bottom, $input-vertical-spacing);
   margin: 0;
+
+  cursor: pointer;
 }
 
 @mixin checkbox {
   position: relative;
   left: 0;
 
-  border: 1px solid $input-border-color;
+  float: left;
+  clear: left;
+
+  border: $input-border-width solid $input-border-color;
   border-radius: $input-border-radius;
 
   width: $checkbox-width !important;
