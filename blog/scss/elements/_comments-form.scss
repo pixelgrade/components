@@ -9,15 +9,19 @@
 		flex: 0 0 100%;
 	}
 
-	//> :last-child,
-	//> p:last-of-type {
-	//	margin-bottom: 0;
-	//}
+	p:not(:last-child) {
+		margin-bottom: $input-vertical-spacing * 2;
+	}
 
 	label {
 		display: block;
-		@include spacing(margin-bottom, 1rem);
+		font-size: 90%;
+		@include label;
 	}
+}
+
+.comment-notes {
+	font-size: 85%;
 }
 
 .comment-form-author,
@@ -90,4 +94,11 @@ label.subscribe-label.subscribe-label {
 
 .subscribe-label {
 	display: inline-block !important;
+}
+
+.comment-form-cookies-consent,
+.wpgdprc-checkbox {
+	label {
+		font-weight: normal;
+	}
 }

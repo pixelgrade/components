@@ -866,3 +866,23 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 
 	}
 }
+
+if ( ! function_exists( 'pixelgrade_comments_toggle_checked_attribute' ) ) {
+	/**
+	 * Print the comment show/hide control's checked HTML attribute.
+	 */
+	function pixelgrade_comments_toggle_checked_attribute() {
+		echo pixelgrade_get_comments_toggle_checked_attribute();
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_get_comments_toggle_checked_attribute' ) ) {
+	/**
+	 * Return the comment show/hide control's checked HTML attribute.
+	 *
+	 * @return string
+	 */
+	function pixelgrade_get_comments_toggle_checked_attribute() {
+		return apply_filters( 'pixelgrade_get_comments_toggle_checked_attribute', 'checked="checked"' );
+	}
+}

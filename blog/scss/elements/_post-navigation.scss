@@ -74,13 +74,6 @@ $post-navigation-spacing: 4rem !default;
 		will-change: transform;
 	}
 
-	.nav-links__label {
-		@include leading-map(map-merge($h5, (
-      spacing-top: 0,
-      spacing-bottom: 0,
-    )));
-	}
-
 	.nav-next {
 		text-align: right;
 	}

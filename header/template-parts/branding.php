@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php } ?>
 
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+		<a class="c-logo__title" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php if ( is_front_page() || is_home() ) : ?>
 				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 			<?php else : ?>
