@@ -127,7 +127,7 @@
 .c-comments-toggle__label {
   @include btn;
   display: block;
-  background-color: $theme-text-color;
+  background-color: $sm-dark-secondary;
 }
 
 .comment__content {
@@ -166,7 +166,7 @@
   color: inherit;
 
   .comment__author {
-    color: $theme-accent-color;
+    color: $sm-color-secondary;
   }
 }
 

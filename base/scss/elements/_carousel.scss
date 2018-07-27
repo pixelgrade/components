@@ -1,5 +1,6 @@
 $slick-arrow-width: 25px;
 $slick-dot-size: 10px !default;
+$theme-background-color: #FFF !default;
 
 .slick-slide {
 
@@ -125,7 +126,7 @@ $slick-dot-size: 10px !default;
   }
 
   .slick-active {
-    color: $theme-accent-color;
+    color: $sm-color-secondary;
 
     button {
       border-bottom-color: currentColor;
