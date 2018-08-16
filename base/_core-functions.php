@@ -147,7 +147,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 			$template_names = array();
 
 			if ( true === $lookup_theme_root ) {
-				// We need to look first in the theme root
+				// We need to look first in the theme root.
 				// But we have a problem with the way locate_template() works:
 				// it looks in the /wp-includes/theme-compat/ directory as a last resort!
 				// This prevents using the rest of the template candidates when there actually is a file there (like header.php).
