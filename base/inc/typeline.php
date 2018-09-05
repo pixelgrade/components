@@ -381,6 +381,12 @@ add_action( 'customize_preview_init', 'typeline_negative_spacing_cb_customizer_p
  * @return string
  */
 function typeline_font_cb( $value, $font ) {
+
+	// Standardize font_size value
+	if ( ! empty( $value['font_size']['value'] ) ) {
+		$value['font_size'] = $value['font_size']['value'];
+	}
+
 	// Account for fonts with multiple variants
 	if ( empty( $value['font_weight'] ) && ! empty( $value['selected_variants'] ) ) {
 		$value['font_weight'] = $value['selected_variants'];
