@@ -1,0 +1,110 @@
+.wp-block-separator.is-style-dots:before {
+    color: inherit;
+}
+
+.wp-block-separator {
+    border-bottom-color: currentColor;
+    margin: 1.5em auto;
+
+    &[class][class][class]:not([class*="is-style"]) {
+        max-width: 100px;
+        justify-self: center;
+    }
+}
+
+.wp-block-audio[class] {
+    margin-left: 0;
+    margin-right: 0;
+
+    audio {
+        width: 100%;
+    }
+}
+
+.wp-block-cover[class][class] {
+    display: flex;
+    margin-top: 1.125em;
+    margin-bottom: 1.125em;
+
+    p {
+        position: relative;
+        transform: none;
+        margin-bottom: 0;
+    }
+}
+
+p.wp-block-subhead {
+    color: inherit;
+}
+
+.wp-block-code,
+.wp-block-preformatted pre,
+.wp-block-verse pre,
+pre.wp-block-verse {
+    color: inherit;
+}
+
+.editor-block-list__layout .editor-block-list__block[data-align=left] .editor-block-list__block-edit {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.wp-block-image .alignleft,
+.editor-block-list__layout .editor-block-list__block[data-align=left] .editor-block-list__block-edit > * {
+    margin-top: 3em;
+    margin-bottom: 3em;
+
+    @media only screen and (min-width: 899px) {
+        margin-right: 3em;
+        width: auto;
+    }
+}
+
+.editor-block-list__layout .editor-block-list__block[data-align=right] .editor-block-list__block-edit {
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.wp-block-image .alignright,
+.editor-block-list__layout .editor-block-list__block[data-align=right] .editor-block-list__block-edit > * {
+    margin-top: 3em;
+    margin-bottom: 3em;
+
+    @media only screen and (min-width: 899px) {
+        margin-left: 3em;
+        width: auto;
+    }
+}
+
+.wp-block-image .aligncenter > figcaption {
+    display: block;
+}
+
+figure.wp-block-pullquote {
+    border: 0;
+    padding: 0;
+}
+
+.wp-block-pullquote[class] p {
+    font: inherit;
+}
+
+.wp-block-quote__citation[class],
+.wp-block-quote[class] cite,
+.wp-block-quote[class] footer {
+    color: inherit;
+    text-align: center;
+}
+
+.wp-block-image .aligncenter > figcaption,
+.wp-block-image .alignleft > figcaption,
+.wp-block-image .alignright > figcaption,
+.wp-block-image.is-resized > figcaption {
+    display: block;
+}
+
+@at-root {
+    .u-underlined-links .wp-block-button__link {
+        text-decoration: none;
+    }
+}
