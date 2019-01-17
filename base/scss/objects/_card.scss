@@ -121,9 +121,12 @@ $card-content-spacing: 1.5rem !default;
   display: block;
 }
 
-.c-card__content a {
-  position: relative;
-  z-index: 100;
+.c-card__content,
+.c-card__frame {
+  a {
+    position: relative;
+    z-index: 100;
+  }
 }
 
 // Card Meta

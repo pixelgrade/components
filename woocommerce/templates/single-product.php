@@ -26,6 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 pixelgrade_get_header();
 
-pixelgrade_get_template_part( 'content-single' );
+pixelgrade_render_block( 'blog/single-product' );
 
 pixelgrade_get_footer();

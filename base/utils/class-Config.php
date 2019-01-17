@@ -298,8 +298,8 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *      'args' => array(
 		 *          'jetpack-portfolio',
 		 *      ),
-		 *      'value' => some value
-		 *      'compare' => '>'
+		 *      'value' => some value,
+		 *      'compare' => '>', // see Pixelgrade_Config::maybeEvaluateComparison() for available operators
 		 *  ),
 		 *  // Simple check - just the function name
 		 *  'is_404',
@@ -358,8 +358,8 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *      'args' => array(
 		 *          'jetpack-portfolio',
 		 *      ),
-		 *      'value' => some value
-		 *      'compare' => '>'
+		 *      'value' => some value,
+		 *      'compare' => '>', // see Pixelgrade_Config::maybeEvaluateComparison() for available operators
 		 *  ),
 		 *  // Simple check - just the function name
 		 *  'is_404',
@@ -449,7 +449,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			}
 
 			// Initialize the comparison operator.
-			$operator = false;
+			$operator = strtoupper( $args['compare'] );
 			// Initialize the value to compare with.
 			$value = null;
 
@@ -464,8 +464,6 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 				'NOT IN',
 				'NOT',
 			);
-
-			$operator = strtoupper( $args['compare'] );
 
 			// On invalid operators, return the data to compare, but give an notice to developers.
 			if ( empty( $operator ) || ! in_array( $operator, $operators, true ) ) {

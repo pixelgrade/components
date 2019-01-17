@@ -1,0 +1,455 @@
+
+// remove max width from product archive shortcode
+// used $content-selector in order to have a selector with greater specificity
+#{$content-selector}.woocommerce {
+    max-width: none;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    > * {
+        flex: 1 0 100%;
+    }
+
+    > .woocommerce-result-count,
+    > .woocommerce-ordering {
+        flex: 0 0 auto;
+    }
+}
+
+// woocommerce product archive card styles
+.c-card__badge--woocommerce {
+    display: block;
+    width: auto;
+    height: auto;
+
+    @include spacing(top, 1rem);
+    @include spacing(left, 1rem);
+    right: auto;
+
+    &:before,
+    &:after {
+        content: none;
+    }
+
+    .c-btn {
+        pointer-events: none;
+    }
+}
+
+.c-card__add-to-cart {
+    position: absolute;
+    @include spacing(left, 1rem);
+    @include spacing(right, 1rem);
+    @include spacing(bottom, 1rem);
+    opacity: 0;
+    transition: $transition--default;
+
+    .c-card:hover & {
+        opacity: 1;
+    }
+
+    .added_to_cart {
+        display: none;
+    }
+
+    .add_to_cart_button {
+        display: block;
+    }
+}
+
+.c-btn--sale-flash {
+    position: absolute;
+    @include spacing(top, 1rem);
+    @include spacing(left, 1rem);
+    z-index: 10;
+    padding: 0.6em 1.1em 0.7em 1.2em;
+
+    // avoid hover styles inherited from .c-btn
+    pointer-events: none;
+}
+
+.entry-title--woocommerce {
+    text-align: center;
+}
+
+// woocommerce pagination reset
+.woocommerce nav.woocommerce-pagination ul {
+    border: 0;
+    margin: 0;
+
+    li {
+        border: 0;
+        float: none;
+        overflow: visible;
+
+        a,
+        span {
+            padding: 0;
+            min-width: 0;
+            font: inherit;
+        }
+
+        a:focus,
+        a:hover,
+        span.current {
+            background-color: transparent;
+        }
+    }
+}
+
+// overwrite woocommerce buttons styles
+.woocommerce .button {
+    @include specific(3) {
+        @include btn;
+    }
+}
+
+// single-product - product-gallery spacing
+.woocommerce-product-gallery {
+
+    // increase specificity to override woocommerce selectors
+    @include specific(3) {
+        margin-bottom: 0;
+
+        .flex-viewport + .flex-control-thumbs {
+            @include spacing(margin-top, 1rem);
+        }
+
+        .flex-control-thumbs {
+            @include spacing(margin-left, -1rem);
+
+            > * {
+                @include spacing(padding-left, 1rem);
+            }
+        }
+    }
+}
+
+.woocommerce-product-gallery__image a {
+    display: block;
+    padding: 0;
+    background-color: transparent;
+}
+
+// single product - entry-summary styling
+.woocommerce form.cart {
+    display: flex;
+    align-items: stretch;
+
+    .qty {
+        @include btn;
+        height: 100%;
+        width: 4em;
+        padding-left: 1em;
+        padding-right: 0.3em;
+    }
+
+    > .button {
+        flex-grow: 1;
+    }
+}
+
+// single product - tabs styling
+.wc-tabs-wrapper {
+    clear: both;
+    // contain ::before margins
+    overflow: hidden;
+}
+
+.wc-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding-left: 0;
+    list-style: none;
+
+    @include spacing(margin-left, -3rem);
+
+    > * {
+        @include spacing(margin-left, 3rem);
+    }
+
+    > :not(.active) a {
+        text-decoration: none;
+    }
+
+    > .active a {
+        text-decoration: underline;
+        color: $sm-color-secondary;
+    }
+}
+
+.woocommerce-product-gallery,
+.entry-summary {
+    // @include spacing(margin-bottom, 4rem*10/7); // magic number for 80px
+    @include spacing(margin-bottom, 6rem);
+}
+
+.wc-tabs-wrapper,
+.related.products,
+.upsells.products {
+
+    &:before {
+        content: "";
+        display: block;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.2;
+
+        // @include spacing(margin-bottom, 4rem*10/7); // magic number for 80px
+        @include spacing(margin-top, 6rem);
+        @include spacing(margin-bottom, 6rem);
+    }
+}
+
+.related.products > h2,
+.upsells.products > h2 {
+    text-align: center;
+}
+
+// unstyle price
+.woocommerce[class] .product .price {
+    font: inherit;
+    color: inherit;
+
+    del {
+        opacity: 1;
+    }
+
+    ins {
+        font-weight: inherit;
+        text-decoration: none;
+    }
+}
+
+// content layout adjustments
+.c-product-main,
+.wc-tabs-wrapper > *,
+.related.products > *,
+.upsells.products > * {
+    max-width: 1056px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.c-product-main {
+    position: relative;
+    display: flex;
+
+    > .woocommerce-product-gallery {
+        float: none;
+        width: auto;
+        flex-basis: 55%;
+    }
+
+    > .entry-summary {
+        float: none;
+        width: auto;
+        flex-basis: 35%;
+        @include spacing(margin-left, 8rem);
+    }
+}
+
+// cart
+.c-mini-cart {
+    position: fixed;
+    @include wp-offset(top, 0);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+
+    .widget_shopping_cart {
+
+        &:before {
+            content: "";
+            display: block;
+            height: 10px;
+            opacity: 0.2;
+
+            box-shadow: inset 0 10px 10px -10px currentColor;
+        }
+    }
+
+    .woocommerce-mini-cart[class] {
+        padding: 40px;
+    }
+
+    .woocommerce-mini-cart__total {
+        display: flex;
+        flex-wrap: wrap;
+
+        @include specific(2) {
+            border-top: 0;
+            padding-top: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        &:before {
+            content: "";
+            display: block;
+            height: 10px;
+            margin-left: -20px;
+            margin-right: -20px;
+            margin-bottom: 20px;
+            flex: 1 0 100%;
+            opacity: 0.2;
+
+            box-shadow: inset 0 -10px 10px -10px currentColor;
+        }
+
+        .amount {
+            margin-left: auto;
+        }
+    }
+
+    .woocommerce-mini-cart__buttons {
+        padding: 20px;
+        padding-top: 0;
+
+        @include specific(4) {
+            > a {
+                display: block;
+            }
+
+            > a + a {
+                margin-top: 10px;
+            }
+        }
+    }
+}
+
+.c-mini-cart__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background: #000000;
+    opacity: 0.2;
+}
+
+.c-mini-cart__flyout {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 270px;
+    background: #FFFFFF;
+
+    // stretch elements vertically
+    &,
+    .widget_shopping_cart,
+    .widget_shopping_cart_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .widget_shopping_cart,
+    .widget_shopping_cart_content,
+    .woocommerce-mini-cart {
+        flex-grow: 1;
+    }
+}
+
+.c-mini-cart[class] {
+
+    .cart_list,
+    .product_list_widget {
+
+        li {
+            padding: 0;
+        }
+
+        li + li {
+            margin-top: 30px;
+        }
+
+        // put the image on its own row and remove woocommerce styles
+        a:not(.remove) {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+
+            @include leading-map(map-merge($h3, (
+                spacing-top: false,
+                spacing-bottom: false
+            )));
+        }
+
+        // move the remove button to bottom right next to quantity
+        a.remove[class] {
+            top: auto;
+            left: auto;
+            bottom: 0.25em;
+            right: 0;
+
+            // restyle remove button
+            background: none;
+
+            @include close(10px, 1px, false);
+
+            // woocommerce thinks this should be important
+            color: inherit !important;
+        }
+
+        img {
+            display: block;
+            float: none;
+            width: auto;
+            margin: 0;
+            margin-top: 6px;
+            // reverse image and title order
+            order: 10;
+        }
+
+        .quantity {
+            @include leading-map(map-merge($h4, (
+                spacing-top: false,
+                spacing-bottom: false
+            )));
+        }
+    }
+}
+
+.c-mini-cart__header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.c-mini-cart__title[class] {
+    margin-bottom: 0;
+}
+
+.c-mini-cart__close {
+    @include close(18px);
+    margin-left: auto;
+    cursor: pointer;
+}
+
+// show / hide for c-mini-cart
+.c-mini-cart__overlay,
+.c-mini-cart__flyout {
+    transition: $transition--default;
+}
+
+.c-mini-cart:not(.c-mini-cart--visible) {
+    pointer-events: none;
+
+    .c-mini-cart__overlay {
+        opacity: 0;
+    }
+
+    .c-mini-cart__flyout {
+        transform: translate3d(100%,0,0);
+    }
+}
