@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying all single products.
+ * The template for displaying all product archives.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
@@ -26,6 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 pixelgrade_get_header();
 
-pixelgrade_render_block( 'woocommerce/single-product' );
+pixelgrade_render_block( 'woocommerce/archive-product' );
 
 pixelgrade_get_footer();

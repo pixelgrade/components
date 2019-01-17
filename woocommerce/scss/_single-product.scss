@@ -1,0 +1,145 @@
+
+// single-product - product-gallery spacing
+.woocommerce-product-gallery {
+
+    // increase specificity to override woocommerce selectors
+    @include specific(3) {
+        margin-bottom: 0;
+
+        .flex-viewport + .flex-control-thumbs {
+            @include spacing(margin-top, 1rem);
+        }
+
+        .flex-control-thumbs {
+            @include spacing(margin-left, -1rem);
+
+            > * {
+                @include spacing(padding-left, 1rem);
+            }
+        }
+    }
+}
+
+.woocommerce-product-gallery__image a {
+    display: block;
+    padding: 0;
+    background-color: transparent;
+}
+
+// single product - entry-summary styling
+.woocommerce form.cart {
+    display: flex;
+    align-items: stretch;
+
+    .qty {
+        @include btn;
+        height: 100%;
+        width: 4em;
+        padding-left: 1em;
+        padding-right: 0.3em;
+    }
+
+    > .button {
+        flex-grow: 1;
+    }
+}
+
+// single product - tabs styling
+.c-woo-tabs {
+    clear: both;
+    // contain ::before margins
+    overflow: hidden;
+}
+
+.wc-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    padding-left: 0;
+    list-style: none;
+
+    @include spacing(margin-left, -3rem);
+
+    > * {
+        @include spacing(margin-left, 3rem);
+    }
+
+    > :not(.active) a {
+        text-decoration: none;
+    }
+
+    > .active a {
+        text-decoration: underline;
+        color: $sm-color-secondary;
+    }
+}
+
+.woocommerce-product-gallery,
+.entry-summary {
+    // @include spacing(margin-bottom, 4rem*10/7); // magic number for 80px
+    @include spacing(margin-bottom, 6rem);
+}
+
+.c-woo-section {
+
+    &:before {
+        content: "";
+        display: block;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.2;
+
+        // @include spacing(margin-bottom, 4rem*10/7); // magic number for 80px
+        @include spacing(margin-top, 6rem);
+        @include spacing(margin-bottom, 6rem);
+    }
+}
+
+.related.products > h2,
+.upsells.products > h2 {
+    text-align: center;
+}
+
+// unstyle price
+.woocommerce[class] .product .price {
+    font: inherit;
+    color: inherit;
+
+    del {
+        opacity: 1;
+    }
+
+    ins {
+        font-weight: inherit;
+        text-decoration: none;
+    }
+}
+
+// content layout adjustments
+.c-product-main,
+.wc-tabs-wrapper,
+.related.products,
+.upsells.products {
+    max-width: 1056px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.c-product-main {
+    position: relative;
+    display: flex;
+
+    > .woocommerce-product-gallery {
+        float: none;
+        width: auto;
+        flex-basis: 55%;
+    }
+
+    > .entry-summary {
+        float: none;
+        width: auto;
+        flex-basis: 35%;
+        @include spacing(margin-left, 8rem);
+    }
+}

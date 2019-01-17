@@ -1,0 +1,40 @@
+// woocommerce product archive card styles
+.c-card__badge--woocommerce {
+    display: block;
+    width: auto;
+    height: auto;
+
+    @include spacing(top, 1rem);
+    @include spacing(left, 1rem);
+    right: auto;
+
+    &:before,
+    &:after {
+        content: none;
+    }
+
+    .c-btn {
+        pointer-events: none;
+    }
+}
+
+.c-card__add-to-cart {
+    position: absolute;
+    @include spacing(left, 1rem);
+    @include spacing(right, 1rem);
+    @include spacing(bottom, 1rem);
+    opacity: 0;
+    transition: $transition--default;
+
+    .c-card:hover & {
+        opacity: 1;
+    }
+
+    .added_to_cart {
+        display: none;
+    }
+
+    .add_to_cart_button {
+        display: block;
+    }
+}

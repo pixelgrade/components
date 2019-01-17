@@ -86,10 +86,13 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 		/**
 		 * Load and instantiate various classes
 		 */
-
 		// The class that handles the Customizer experience
 		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-Woocommerce-Customizer' );
 		Pixelgrade_Woocommerce_Customizer::instance( $this );
+
+		// The class that handles markup and layout changes
+		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-Woocommerce-Layout' );
+		Pixelgrade_Woocommerce_Layout::instance( $this );
 
 		/**
 		 * Register our actions and filters
