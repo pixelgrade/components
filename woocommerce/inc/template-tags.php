@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Woocommerce
- * @version     1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
