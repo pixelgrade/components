@@ -8,7 +8,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Footer
- * @version     1.3.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -178,12 +177,20 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 		 * Hook-up to various places where we need to output things
 		 */
 
+		// Delay attaching the output hook, to allow others to short-circuit it based on query vars.
+		add_action( 'wp', array( $this, 'outputHookUp'), 10 );
+
+		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
+		do_action( 'pixelgrade_footer_registered_hooks' );
+	}
+
+	/**
+	 * Attach the template tag that outputs the markup.
+	 */
+	public function outputHookUp() {
 		// Output the primary footer markup, but allow others to short-circuit this
 		if ( true === apply_filters( 'pixelgrade_footer_auto_output_footer', true ) ) {
 			add_action( 'pixelgrade_footer', 'pixelgrade_the_footer', 10, 1 );
 		}
-
-		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
-		do_action( 'pixelgrade_footer_registered_hooks' );
 	}
 }

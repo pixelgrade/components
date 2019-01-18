@@ -24,7 +24,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Hero
- * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

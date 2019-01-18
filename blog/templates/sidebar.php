@@ -17,7 +17,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
- * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,9 +29,7 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 
 // Let the template parts know about our location
 $location = pixelgrade_get_location( 'sidebar' );
-?>
 
-<?php
 /**
  * pixelgrade_before_entry_side hook.
  */
@@ -40,9 +37,8 @@ do_action( 'pixelgrade_before_entry_side', $location );
 ?>
 <!-- pixelgrade_before_entry_side -->
 
-<?php dynamic_sidebar( 'sidebar-1' ); ?>
+<?php dynamic_sidebar( 'sidebar-1' );
 
-<?php
 /**
  * pixelgrade_after_entry_side hook.
  */

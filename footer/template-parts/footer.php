@@ -16,13 +16,18 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Footer
- * @version    1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+/**
+ * pixelgrade_before_footer hook.
+ *
+ * @hooked nothing() - 10 (outputs nothing)
+ */
+do_action( 'pixelgrade_before_footer', 'main' );
 ?>
 
 <footer <?php pixelgrade_footer_class(); ?>>
@@ -45,3 +50,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		?>
 	</div><!-- .o-wrapper.u-container-width.content-area -->
 </footer>
+
+<?php
+/**
+ * pixelgrade_after_footer hook.
+ *
+ * @hooked nothing() - 10 (outputs nothing)
+ */
+do_action( 'pixelgrade_after_footer', 'main' );

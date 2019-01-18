@@ -21,7 +21,9 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	 * Pixelgrade_Woocommerce constructor.
 	 *
 	 * @param string $version Optional. The current component version.
-	 * @param array  $args Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 * @param array  $args    Optional. Various arguments for the component initialization (like different priorities for the init hooks).
+	 *
+	 * @throws Exception
 	 */
 	public function __construct( $version = '1.0.0', $args = array() ) {
 		// We want the component fire_up to happen before the init action in PixTypesPlugin that has a priority of 15,

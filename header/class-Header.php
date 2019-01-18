@@ -8,7 +8,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.3.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -191,13 +190,21 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 		 * Hook-up to various places where we need to output things
 		 */
 
+		// Delay attaching the output hook, to allow others to short-circuit it based on query vars.
+		add_action( 'wp', array( $this, 'outputHookUp'), 10 );
+
+		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
+		do_action( 'pixelgrade_header_registered_hooks' );
+	}
+
+	/**
+	 * Attach the template tag that outputs the markup.
+	 */
+	public function outputHookUp() {
 		// Output the primary header markup, but allow others to short-circuit this
 		if ( true === apply_filters( 'pixelgrade_header_auto_output_header', true ) ) {
 			add_action( 'pixelgrade_header', 'pixelgrade_the_header', 10, 1 );
 		}
-
-		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
-		do_action( 'pixelgrade_header_registered_hooks' );
 	}
 
 	/**

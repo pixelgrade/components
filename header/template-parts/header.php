@@ -20,6 +20,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+
+/**
+ * pixelgrade_before_header hook.
+ *
+ * @hooked nothing() - 10 (outputs nothing)
+ */
+do_action( 'pixelgrade_before_header', 'main' );
 ?>
 
 <header id="masthead" <?php pixelgrade_header_class(); ?> role="banner">
@@ -68,3 +75,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div><!-- .o-wrapper  .u-container-width -->
 	</div><!-- .u-header-sides-spacing -->
 </header><!-- #masthead .site-header -->
+
+<?php
+/**
+ * pixelgrade_after_header hook.
+ *
+ * @hooked nothing() - 10 (outputs nothing)
+ */
+do_action( 'pixelgrade_after_header', 'main' );

@@ -14,7 +14,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Hero
- * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -41,9 +40,8 @@ if ( pixelgrade_is_page_for_projects() ) {
 // Get the global post if we have none so far
 if ( empty( $post_ID ) ) {
 	$post_ID = get_the_ID();
-} ?>
+}
 
-<?php
 // First we need to determine if we really need a hero
 // A good opportunity to halt things using the 'pixelgrade_hero_is_hero_needed' filter
 if ( pixelgrade_hero_is_hero_needed( $location, $post_ID ) ) {

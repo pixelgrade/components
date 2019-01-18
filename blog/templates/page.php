@@ -22,7 +22,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
- * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,23 +35,18 @@ if ( is_front_page() ) {
 	$location = pixelgrade_set_location( 'front-page' );
 }
 
-pixelgrade_get_header(); ?>
+pixelgrade_get_header();
 
-<?php
 /**
  * pixelgrade_before_primary_wrapper hook.
  */
 do_action( 'pixelgrade_before_primary_wrapper', $location );
-?>
 
-<?php pixelgrade_render_block( 'blog/page' ); ?>
+pixelgrade_render_block( 'blog/page' );
 
-<?php
 /**
  * pixelgrade_after_primary_wrapper hook.
  */
 do_action( 'pixelgrade_after_primary_wrapper', $location );
-?>
 
-<?php
 pixelgrade_get_footer();

@@ -28,7 +28,8 @@ if (!ini_get('date.timezone')) {
 }
 
 foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
-    if (file_exists($file)) {
+    var_dump( $file);
+	if (file_exists($file)) {
         define('PHPUNIT_COMPOSER_INSTALL', $file);
 
         break;

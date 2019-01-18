@@ -22,7 +22,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
- * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,25 +31,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Let the template parts know about our location
 $location = pixelgrade_set_location( 'index' );
 
-pixelgrade_get_header(); ?>
+pixelgrade_get_header();
 
-<?php
 /**
  * pixelgrade_before_primary_wrapper hook.
  *
  * @hooked nothing() - 10 (outputs nothing)
  */
 do_action( 'pixelgrade_before_primary_wrapper', $location );
-?>
 
-<?php pixelgrade_render_block( 'blog/index' ); ?>
+pixelgrade_render_block( 'blog/index' );
 
-<?php
 /**
  * pixelgrade_after_primary_wrapper hook.
  */
 do_action( 'pixelgrade_after_primary_wrapper', $location );
-?>
 
-<?php
 pixelgrade_get_footer();

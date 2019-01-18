@@ -16,7 +16,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
- * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
