@@ -1,0 +1,85 @@
+
+.woocommerce-cart {
+
+    @include specific(2) {
+        .entry-title {
+            max-width: none;
+        }
+
+        .entry-header {
+            @include spacing(padding-bottom, 2rem);
+        }
+    }
+}
+
+.woocommerce-cart table.cart {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+
+    @include spacing(margin-bottom, 9rem);
+
+    th {
+        @include leading-map(map-merge($h4, (
+            spacing-bottom: 0,
+            spacing-top: 0,
+        )));
+    }
+
+    td {
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+    }
+
+    td.product-name {
+        @include leading-map(map-merge($h2, (
+            spacing-bottom: 0,
+            spacing-top: 0,
+        )));
+
+        a {
+            border-bottom: 0;
+            text-decoration: none;
+        }
+    }
+
+    td:first-child {
+        padding-left: 0;
+    }
+
+    td:last-child {
+        padding-right: 0;
+    }
+
+    .product-thumbnail a {
+        box-shadow: none;
+        border-bottom: 0;
+        background: none;
+    }
+
+    .product-remove a {
+        @include close(18px);
+        color: inherit !important;
+        background: none;
+    }
+
+    a {
+        display: block;
+    }
+
+    img {
+        display: block;
+        width: 150px;
+    }
+
+    .coupon {
+        display: flex;
+    }
+}
+
+.woocommerce-cart #content table.cart[class] .coupon {
+    .input-text {
+        width: 200px;
+    }
+}

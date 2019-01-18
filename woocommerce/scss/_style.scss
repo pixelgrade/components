@@ -8,7 +8,10 @@
 @import "sale-flash";
 @import "mini-cart";
 
-.entry-title--woocommerce {
+@import "cart";
+
+.entry-title--woocommerce,
+.woocommerce-products-header__title {
     text-align: center;
 }
 

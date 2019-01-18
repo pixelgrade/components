@@ -27,9 +27,18 @@
 }
 
 // single product - entry-summary styling
+.woocommerce div.product div.summary {
+    margin-bottom: 0;
+}
+
 .woocommerce form.cart {
     display: flex;
     align-items: stretch;
+    flex-wrap: wrap;
+
+    .group_table {
+        flex-basis: 100%;
+    }
 
     .qty {
         @include btn;
@@ -42,6 +51,30 @@
     > .button {
         flex-grow: 1;
     }
+
+    @include specific(2) {
+
+        .group_table {
+
+            &,
+            tbody,
+            tr:last-child {
+                border-bottom: 0;
+            }
+
+            td {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    .woocommerce-grouped-product-list-item__price {
+        text-align: right;
+    }
+}
+
+.woocommerce-product-details__short-description {
+    @include spacing(margin-bottom, 3rem);
 }
 
 // single product - tabs styling
@@ -83,7 +116,7 @@
 
 .c-woo-section {
 
-    &:before {
+    &:not(:empty):before {
         content: "";
         display: block;
         height: 1px;

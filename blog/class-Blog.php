@@ -147,46 +147,54 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                 'args'     => array( 'below-post' ),
             ),
 
+            'grid-item' => array(
+	            'type'      => 'template_part',
+	            'templates' => array(
+		            array(
+			            'component_slug' => self::COMPONENT_SLUG,
+			            'slug'           => 'content'
+		            ),
+	            ),
+            ),
+
+            'loop-posts' => array(
+	            'wrappers' => array(
+		            array(
+			            'id' => array(
+				            'callback' => 'pixelgrade_get_posts_container_id',
+			            ),
+			            'classes'  => array(
+				            'callback' => 'pixelgrade_get_blog_grid_class',
+			            ),
+			            'priority' => 220,
+		            ),
+	            ),
+            ),
+
+            'loop-pagination' => array(
+	            'type' => 'callback',
+	            'callback' => 'pixelgrade_the_posts_pagination',
+	            'args' =>array(
+		            'end_size'           => 1,
+		            'mid_size'           => 2,
+		            'type'               => 'list',
+		            'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+		            'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+		            'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+	            ),
+            ),
+
             // default loop
-            'loop'      => array(
+            'loop' => array(
                 'blocks' => array(
-                	'loop-posts' => array(
-	                    'type'     => 'loop',
-	                    'wrappers' => array(
-		                    array(
-		                    	'id' => array(
-		                    		'callback' => 'pixelgrade_get_posts_container_id',
-			                    ),
-			                    'classes'  => array(
-				                    'callback' => 'pixelgrade_get_blog_grid_class',
-			                    ),
-			                    'priority' => 220,
-		                    ),
-	                    ),
-	                    'blocks'   => array(
-		                    'grid-item' => array(
-			                    'type'      => 'template_part',
-			                    'templates' => array(
-				                    array(
-					                    'component_slug' => self::COMPONENT_SLUG,
-					                    'slug'           => 'content'
-				                    ),
-			                    ),
-		                    ),
-	                    ),
-                    ),
-                    'loop-pagination' => array(
-                    	'type' => 'callback',
-	                    'callback' => 'pixelgrade_the_posts_pagination',
-	                    'args' =>array(
-		                    'end_size'           => 1,
-		                    'mid_size'           => 2,
-		                    'type'               => 'list',
-		                    'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
-		                    'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
-		                    'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
-	                    ),
-                    ),
+                	'posts' => array(
+                		'type' => 'loop',
+                		'extend' => 'blog/loop-posts',
+		                'blocks' => array(
+							'blog/grid-item'
+		                ),
+	                ),
+					'blog/loop-pagination',
                 ),
                 'checks' => array(
                     array(
