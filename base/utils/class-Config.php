@@ -358,6 +358,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *      'args' => array(
 		 *          'jetpack-portfolio',
 		 *      ),
+		 *      'relation' => 'OR'
 		 *      'value' => some value
 		 *      'compare' => '>'
 		 *  ),
