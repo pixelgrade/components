@@ -76,6 +76,10 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		// before and after related (priority 20)
 		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_start_wrapper_before_related' ), 19 );
 		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_end_wrapper_after_related' ), 21 );
+
+		//
+		add_filter( 'pixelgrade_footer_auto_output_footer', array( $this, 'remove_footer_from_checkout' ), 10 );
+		add_filter( 'pixelgrade_header_auto_output_header', array( $this, 'remove_header_from_checkout' ), 10 );
 	}
 
 	public function add_template_part_paths( $template, $slug, $name ) {
@@ -182,4 +186,17 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		<?php echo ob_get_clean();
 	}
 
+	public function remove_header_from_checkout( $allow ) {
+		if ( is_checkout() ) {
+			$allow = false;
+		}
+		return $allow;
+	}
+
+	public function remove_footer_from_checkout( $allow ) {
+		if ( is_checkout() ) {
+			$allow = false;
+		}
+		return $allow;
+	}
 }

@@ -236,30 +236,3 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 }
 
 add_action( 'pixelgrade_blog_after_register_blocks', 'pixelgrade_woocommerce_change_blog_component_config', 30 );
-
-function remove_header_and_footer_on_checkout() {
-	if ( is_checkout() ) {
-		remove_action( 'pixelgrade_header', 'pixelgrade_the_header', 10 );
-		remove_action( 'pixelgrade_footer', 'pixelgrade_the_footer', 10 );
-	}
-}
-add_action( 'init', 'remove_header_and_footer_on_checkout', 30 );
-
-function remove_header_from_checkout( $output ) {
-	if ( is_checkout() ) {
-		$output = false;
-	}
-	return $output;
-}
-add_filter( 'pixelgrade_header_auto_output_header', 'remove_header_from_checkout', 30 );
-
-function remove_footer_from_checkout( $output ) {
-	if ( is_checkout() ) {
-		$output = false;
-	}
-	return $output;
-}
-add_filter( 'pixelgrade_footer_auto_output_footer', 'remove_footer_from_checkout', 30 );
-
-
-
