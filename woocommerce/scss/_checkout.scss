@@ -1,0 +1,120 @@
+.woocommerce-checkout {
+
+    .col2-set {
+        .col-1,
+        .col-2 {
+            float: none;
+            width: auto;
+        }
+    }
+
+    .col2-set {
+        float: left;
+        width: 55%;
+        padding-left: 5.25%;
+        padding-right: 8.75%;
+    }
+
+    [id="order_review_heading"],
+    .woocommerce-checkout-review-order {
+        float: right;
+        clear: right;
+        width: 45%;
+        padding-left: 3.5%;
+        padding-right: 5.25%;
+    }
+
+    .woocommerce-checkout {
+        position: relative;
+
+        &:before {
+            display: block;
+
+            content: "";
+            position: absolute;
+            top: -9999vh;
+            right: -100vw;
+            bottom: -9999vh;
+            left: 55%;
+            pointer-events: none;
+
+            opacity: 0.02;
+        }
+
+        &:after {
+            content: " ";
+            display: table;
+            clear: both;
+        }
+
+        > * {
+            position: relative;
+            z-index: 20;
+        }
+    }
+
+    table.shop_table {
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+        border-radius: 0;
+        margin-right: 0;
+
+        tbody,
+        tfoot,
+        thead {
+            border: 0;
+        }
+
+        td, th {
+            padding-top: 24px;
+            padding-bottom: 24px;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+                text-align: right;
+            }
+        }
+    }
+
+    #shipping_method[id] li {
+        margin-bottom: 0;
+
+        + li {
+            margin-top: 20px;
+        }
+    }
+
+    #payment #place_order {
+        float: none;
+
+        display: block;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    form .form-row {
+        padding: 0;
+        margin-bottom: 24px;
+
+        label {
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        input.input-text,
+        textarea {
+            line-height: inherit;
+        }
+    }
+
+    .woocommerce-form-coupon-toggle,
+    .woocommerce-form-coupon {
+        position: relative;
+        z-index: 20;
+    }
+}

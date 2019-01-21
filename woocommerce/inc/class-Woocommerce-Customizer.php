@@ -93,6 +93,76 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 
 		// Setup our WooCommerce Customify options
 		add_filter( 'customify_filter_fields', array( $this, 'addCustomifyOptions' ), 60, 1 );
+
+		add_filter( 'pixelgrade_customify_main_content_section_options', array( $this, 'alterContentOptions' ), 30, 2 );
+		add_filter( 'pixelgrade_header_customify_section_options', array( $this, 'alterHeaderOptions' ), 10, 2 );
+	}
+
+	public function alterContentOptions( $section_options, $options ) {
+
+		$new_section_options = array(
+			'main_content' => array(
+				'options' => array(
+					'main_content_heading_1_font' => array(
+						'selector' => $section_options['main_content']['options']['main_content_heading_1_font']['selector'] . ',
+							.woocommerce-checkout .order-total .woocommerce-Price-amount 
+						'
+					),
+					'main_content_heading_2_font' => array(
+						'selector' => $section_options['main_content']['options']['main_content_heading_2_font']['selector'] . ', 
+							[id="order_review_heading"],
+							.woocommerce-billing-fields > h3
+						'
+					),
+					'main_content_heading_3_font' => array(
+						'selector' => $section_options['main_content']['options']['main_content_heading_3_font']['selector'] . ',
+							table.shop_table td.product-name'
+					),
+					'main_content_heading_4_font' => array(
+						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
+							.woocommerce-checkout form .form-row label,
+							table.shop_table tr,
+							[id="ship-to-different-address"]
+						'
+					),
+					'main_content_body_text_color' => array(
+						'css' => array(
+							array(
+								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
+								'property' => 'background-color'
+							),
+						),
+					),
+				),
+			),
+		);
+
+		// Now we merge the modified config with the original one
+		// Thus overwriting what we have changed
+		$section_options = Pixelgrade_Config::merge( $section_options, $new_section_options );
+
+		return $section_options;
+
+	}
+
+	public function alterHeaderOptions( $section_options, $options ) {
+
+		$new_section_options = array(
+			'header_section' => array(
+				'options' => array(
+					'header_background' => array(
+
+					),
+				),
+			),
+		);
+
+		// Now we merge the modified config with the original one
+		// Thus overwriting what we have changed
+		$section_options = Pixelgrade_Config::merge( $section_options, $new_section_options );
+
+		return $section_options;
+
 	}
 
 	/**

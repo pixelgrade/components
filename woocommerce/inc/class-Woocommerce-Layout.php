@@ -56,6 +56,9 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		// This theme doesn't have a traditional sidebar. We use BLOCKS to build stuff.
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 
+		remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+		add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_coupon_form', 10 );
+
 		add_filter( 'body_class', array( $this, 'remove_sidebar_class' ), 30 );
 		add_filter( 'components_entry_header_classes', array( $this, 'alter_entry_header_classes' ), 30, 1 );
 

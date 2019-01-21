@@ -186,7 +186,6 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 					'main' => array(
 						'extend' => 'blog/main',
 						'blocks' => array(
-							'blog/entry-header-page',
 							'blog/entry-content',
 						),
 					),
