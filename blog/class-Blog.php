@@ -444,6 +444,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
                         'name' => 'single',
                     ),
                 ),
+	            'wrappers' => array(
+	            	array(
+	            		'classes' => 'entry-content u-content-width'
+		            ),
+	            ),
             ),
 
             'entry-footer' => array(

@@ -96,6 +96,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 
 		add_filter( 'pixelgrade_customify_main_content_section_options', array( $this, 'alterContentOptions' ), 30, 2 );
 		add_filter( 'pixelgrade_header_customify_section_options', array( $this, 'alterHeaderOptions' ), 10, 2 );
+		add_filter( 'pixelgrade_button_selectors_array', array( $this, 'alterButtonsSelectors' ), 10, 2 );
 	}
 
 	public function alterContentOptions( $section_options, $options ) {
@@ -193,5 +194,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		$options['sections'] = $options['sections'] + $woocommerce_section;
 
 		return $options;
+	}
+
+	public function alterButtonsSelectors( $array = array() ) {
+		$array[] = '.woocommerce .button[class][class][class]';
+		return $array;
 	}
 }

@@ -1,0 +1,12 @@
+@mixin font-face($name, $filename, $weight: null) {
+    @font-face {
+        font-family: $name;
+
+        @if $weight != null {
+            font-weight: $weight;
+        }
+
+        src: url(unquote($filename) + '.woff2') format('woff2'), /* Super Modern Browsers */
+        url(unquote($filename) + '.woff') format('woff'); /* Pretty Modern Browsers */
+    }
+}
