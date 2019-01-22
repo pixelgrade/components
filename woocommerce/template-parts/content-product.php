@@ -60,8 +60,13 @@ endif;
                     ?>
 
                     <div class="c-card__add-to-cart">
-                        <?php woocommerce_template_loop_add_to_cart( array(
-                                'class' => 'c-btn  add_to_cart_button  ajax_add_to_cart'
+                        <?php
+                        $class = 'c-btn  add_to_cart_button';
+                        if ( $product->is_type( 'simple' ) ) {
+                            $class .= '  ajax_add_to_cart';
+                        }
+                        woocommerce_template_loop_add_to_cart( array(
+                            'class' => $class
                         ) ); ?>
                     </div>
                 </div>

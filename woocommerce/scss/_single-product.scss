@@ -71,6 +71,10 @@
     .woocommerce-grouped-product-list-item__price {
         text-align: right;
     }
+
+    .added_to_cart {
+        display: none;
+    }
 }
 
 .woocommerce-product-details__short-description {
@@ -104,7 +108,6 @@
 
     > .active a {
         text-decoration: underline;
-        color: $sm-color-secondary;
     }
 }
 

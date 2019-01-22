@@ -112,10 +112,7 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 								),
 								'wrappers' => array(
 									array(
-										'classes' => 'u-content-width'
-									),
-									array(
-										'classes' => 'woocommerce'
+										'classes' => 'woocommerce-product-archive'
 									),
 								),
 							),

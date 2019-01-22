@@ -83,7 +83,15 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		//
 		add_filter( 'pixelgrade_footer_auto_output_footer', array( $this, 'remove_footer_from_checkout' ), 10 );
 		add_filter( 'pixelgrade_header_auto_output_header', array( $this, 'remove_header_from_checkout' ), 10 );
+
+		add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'output_ajax_add_to_cart_button' ) );
 	}
+
+	public function output_ajax_add_to_cart_button() {
+		woocommerce_template_loop_add_to_cart( array(
+			'class' => 'c-btn  add_to_cart_button  ajax_add_to_cart'
+		) );
+    }
 
 	public function add_template_part_paths( $template, $slug, $name ) {
 		$located = pixelgrade_locate_template_part( $slug, 'woocommerce', $name );
@@ -175,18 +183,20 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function output_mini_cart() {
-		ob_start(); ?>
-		<div class="c-mini-cart">
-			<div class="c-mini-cart__overlay"></div>
-			<div class="c-mini-cart__flyout">
-				<div class="c-mini-cart__header">
-					<h5 class="c-mini-cart__title"><?php echo esc_html__( 'Your cart', '__theme_txtd' ); ?></h5>
-					<div class="c-mini-cart__close"></div>
-				</div>
-				<?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
-			</div>
-		</div>
-		<?php echo ob_get_clean();
+	    if ( ! is_cart() ) {
+            ob_start(); ?>
+            <div class="c-mini-cart">
+                <div class="c-mini-cart__overlay"></div>
+                <div class="c-mini-cart__flyout">
+                    <div class="c-mini-cart__header">
+                        <h5 class="c-mini-cart__title"><?php echo esc_html__( 'Your cart', '__theme_txtd' ); ?></h5>
+                        <div class="c-mini-cart__close"></div>
+                    </div>
+                    <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
+                </div>
+            </div>
+            <?php echo ob_get_clean();
+        }
 	}
 
 	public function remove_header_from_checkout( $allow ) {

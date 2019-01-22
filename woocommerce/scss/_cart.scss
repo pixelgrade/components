@@ -20,24 +20,12 @@
 
     @include spacing(margin-bottom, 9rem);
 
-    th {
-        @include leading-map(map-merge($h4, (
-            spacing-bottom: 0,
-            spacing-top: 0,
-        )));
-    }
-
     td {
         padding-top: 1.5em;
         padding-bottom: 1.5em;
     }
 
     td.product-name {
-        @include leading-map(map-merge($h2, (
-            spacing-bottom: 0,
-            spacing-top: 0,
-        )));
-
         a {
             border-bottom: 0;
             text-decoration: none;

@@ -151,7 +151,15 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	 * Register our actions and filters
 	 */
 	public function registerHooks() {
+		// Enqueue the frontend assets
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_woocommerce_registered_hooks' );
+	}
+
+	public function enqueueScripts() {
+		wp_enqueue_script( 'pixelgrade-woocommerce-component-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/scripts.js' ), array( 'jquery' ), '1.0.0' );
+		wp_enqueue_style( 'pixelgrade-woocommerce-component-styles', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/style.css' ), array(), '1.0.0' );
 	}
 }

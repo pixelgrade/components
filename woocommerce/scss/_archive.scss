@@ -1,6 +1,8 @@
 // remove max width from product archive shortcode
 // used $content-selector in order to have a selector with greater specificity
-#{$content-selector}.woocommerce {
+
+// #{$content-selector}.woocommerce {
+.woocommerce-product-archive {
     max-width: none;
 
     display: flex;
