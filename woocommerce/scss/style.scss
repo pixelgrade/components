@@ -17,10 +17,3 @@
 .woocommerce-products-header__title {
     text-align: center;
 }
-
-// overwrite woocommerce buttons styles
-.woocommerce .button {
-    @include specific(3) {
-        @include btn;
-    }
-}

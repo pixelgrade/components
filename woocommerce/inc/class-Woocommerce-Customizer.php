@@ -117,20 +117,35 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					),
 					'main_content_heading_3_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_3_font']['selector'] . ',
-							table.shop_table td.product-name'
+							table.shop_table td.product-name,
+							.c-mini-cart[class] .cart_list a:not(.remove), 
+							.c-mini-cart[class] .product_list_widget a:not(.remove)'
 					),
 					'main_content_heading_4_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
 							.woocommerce-checkout form .form-row label,
+							.woocommerce-mini-cart__empty-message,
 							table.shop_table tr,
-							[id="ship-to-different-address"]
+							[id="ship-to-different-address"],
+							.c-mini-cart[class] .cart_list .quantity, 
+							.c-mini-cart[class] .product_list_widget .quantity,
+							.c-mini-cart .woocommerce-mini-cart__total,
+							.wc_payment_method label
 						'
 					),
 					'main_content_body_text_color' => array(
 						'css' => array(
 							array(
 								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
-								'property' => 'background-color'
+								'property' => 'background-color',
+							),
+						),
+					),
+					'main_content_body_link_active_color' => array(
+						'css' => array(
+							array(
+								'selector' => 'input[type=radio]:checked',
+								'property' => 'border-color',
 							),
 						),
 					),
@@ -197,7 +212,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 	}
 
 	public function alterButtonsSelectors( $array = array() ) {
-		$array[] = '.woocommerce .button[class][class][class]';
+		$array[] = '.woocommerce-support .button[class][class][class]';
 		return $array;
 	}
 }

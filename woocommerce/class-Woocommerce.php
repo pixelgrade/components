@@ -156,6 +156,14 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_woocommerce_registered_hooks' );
+
+		// add classes
+		add_filter( 'body_class', array( $this, 'bodyClasses' ) );
+	}
+
+	public function bodyClasses( $classes ) {
+		$classes[] = 'woocommerce-support';
+		return $classes;
 	}
 
 	public function enqueueScripts() {

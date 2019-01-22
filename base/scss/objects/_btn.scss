@@ -52,3 +52,9 @@
     @include button-directional--right;
   }
 }
+
+.woocommerce-support .button {
+  @include specific(3) {
+    @include btn;
+  }
+}

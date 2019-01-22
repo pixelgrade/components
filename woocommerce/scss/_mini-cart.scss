@@ -60,16 +60,46 @@
         padding: 20px;
         padding-top: 0;
 
+        display: flex;
+        flex-direction: column-reverse;;
+
         @include specific(4) {
             > a {
                 display: block;
             }
 
-            > a + a {
+            > a:not(:last-child) {
                 margin-top: 10px;
             }
         }
+
+        .wc-forward:not(.checkout)[class][class][class] {
+            position: relative;
+            background: none;
+            color: inherit;
+
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                border-radius: inherit;
+                border: 2px solid;
+                pointer-events: none;
+            }
+
+            &:hover {
+                color: inherit;
+            }
+        }
     }
+}
+
+.woocommerce-mini-cart__empty-message {
+    padding: 20px;
 }
 
 .c-mini-cart__overlay {
