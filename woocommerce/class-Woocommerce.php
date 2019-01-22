@@ -159,7 +159,7 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	}
 
 	public function enqueueScripts() {
-		wp_enqueue_script( 'pixelgrade-woocommerce-component-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/scripts.js' ), array( 'jquery' ), '1.0.0' );
-		wp_enqueue_style( 'pixelgrade-woocommerce-component-styles', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/style.css' ), array(), '1.0.0' );
+		wp_enqueue_script( 'pixelgrade-woocommerce-component-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/scripts.js' ), array( 'jquery' ), $this->assets_version );
+		wp_enqueue_style( 'pixelgrade-woocommerce-component-styles', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/style.css' ), array(), $this->assets_version );
 	}
 }
