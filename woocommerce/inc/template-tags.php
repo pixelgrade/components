@@ -14,5 +14,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function is_woo_archive() {
-	return is_shop() || is_product_taxonomy();
+	return ( function_exists('is_shop') && is_shop() ) || ( function_exists('is_product_taxonomy') && is_product_taxonomy() );
 }
