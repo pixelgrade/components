@@ -130,7 +130,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.c-mini-cart[class] .cart_list .quantity, 
 							.c-mini-cart[class] .product_list_widget .quantity,
 							.c-mini-cart .woocommerce-mini-cart__total,
-							.wc_payment_method label
+							.wc_payment_method label,
+							.woocommerce-result-count,
+							.woocommerce-ordering select,
+							.woocommerce-categories
 						'
 					),
 					'main_content_body_text_color' => array(
@@ -146,6 +149,18 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							array(
 								'selector' => 'input[type=radio]:checked',
 								'property' => 'border-color',
+							),
+						),
+					),
+					'main_content_body_link_active_color' => array(
+						'css' => array(
+							array(
+								'property' => 'color',
+								'selector' => '
+									.woocommerce-categories a:hover,
+									.woocommerce-categories a:active,
+									.woocommerce-categories .active
+									'
 							),
 						),
 					),

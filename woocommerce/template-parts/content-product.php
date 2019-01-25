@@ -38,6 +38,10 @@ if ( $terms && ! is_wp_error( $terms ) ) :
     }
 endif;
 
+if ( ! $product ) {
+    return;
+}
+
 ?>
 
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

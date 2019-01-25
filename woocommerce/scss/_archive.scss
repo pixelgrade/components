@@ -19,3 +19,29 @@
         flex: 0 0 auto;
     }
 }
+
+.woocommerce-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+    @include spacing(margin-left, -20px);
+    list-style: none;
+
+    > * {
+        @include spacing(margin-left, 20px);
+    }
+
+    .u-underlined-links & a {
+        text-decoration: none;
+    }
+
+    a:hover,
+    .active {
+        text-decoration: underline;
+    }
+}
+
+.woocommerce-header {
+    @include spacing(margin-bottom, 20px);
+}

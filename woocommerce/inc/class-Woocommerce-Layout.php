@@ -39,15 +39,15 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	 */
 	public function registerHooks() {
 
-		add_filter( 'wc_get_template_part', array( $this, 'add_template_part_paths' ), 30, 3 );
-		add_filter( 'wc_get_template', array( $this, 'add_template_paths' ), 30, 5 );
+		add_filter( 'wc_get_template_part', array( $this, 'addTemplatePartPaths' ), 30, 3 );
+		add_filter( 'wc_get_template', array( $this, 'addTemplatePaths' ), 30, 5 );
 
-		add_filter( 'woocommerce_template_loader_files', array( $this, 'add_template_loader_files' ), 30, 2 );
-		add_filter( 'woocommerce_product_loop_start', array( $this, 'alter_loop_start' ), 30, 1 );
-		add_filter( 'woocommerce_product_loop_end', array( $this, 'alter_loop_end' ), 30, 1 );
-		add_filter( 'woocommerce_comment_pagination_args', array( $this, 'alter_pagination_args' ), 30, 1 );
-		add_filter( 'woocommerce_pagination_args', array( $this, 'alter_pagination_args' ), 30, 1 );
-		add_filter( 'woocommerce_sale_flash', array( $this, 'change_sale_flash_markup' ), 3, 30 );
+		add_filter( 'woocommerce_template_loader_files', array( $this, 'addTemplateLoaderFiles' ), 30, 2 );
+		add_filter( 'woocommerce_product_loop_start', array( $this, 'alterLoopStart' ), 30, 1 );
+		add_filter( 'woocommerce_product_loop_end', array( $this, 'alterLoopEnd' ), 30, 1 );
+		add_filter( 'woocommerce_comment_pagination_args', array( $this, 'alterPaginationArgs' ), 30, 1 );
+		add_filter( 'woocommerce_pagination_args', array( $this, 'alterPaginationArgs' ), 30, 1 );
+		add_filter( 'woocommerce_sale_flash', array( $this, 'changeSaleFlashMarkup' ), 3, 30 );
 
 		// hide tabs content titles
 		add_filter( 'woocommerce_product_description_heading', '__return_false', 30 );
@@ -55,45 +55,44 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 
 		// This theme doesn't have a traditional sidebar. We use BLOCKS to build stuff.
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
-
 		remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 		add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_coupon_form', 10 );
 
-		add_filter( 'body_class', array( $this, 'remove_sidebar_class' ), 30 );
-		add_filter( 'components_entry_header_classes', array( $this, 'alter_entry_header_classes' ), 30, 1 );
+		add_filter( 'body_class', array( $this, 'removeSidebarClass' ), 30 );
+		add_filter( 'components_entry_header_classes', array( $this, 'alterEntryHeaderClassList' ), 30, 1 );
 
-		add_action( 'woocommerce_before_single_product_summary', array( $this, 'add_start_wrapper_before_single_product_summary' ), 1 );
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_end_wrapper_after_single_product_summary' ), 1 );
-		add_action( 'pixelgrade_before_header', array( $this, 'output_mini_cart' ), 1 );
+		add_action( 'woocommerce_before_single_product_summary', array( $this, 'addStartWrapperBeforeSingleProductSummary' ), 1 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addEndWrapperAfterSingleProductSummary' ), 1 );
+		add_action( 'pixelgrade_before_header', array( $this, 'outputMiniCart' ), 1 );
 
 		// add various opening and closing tags to wrap upsells and related products
 
 		// before and after upsells (priority 10)
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_start_wrapper_before_tabs' ), 9 );
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_end_wrapper_after_tabs' ), 11 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addStartWrapperBeforeTabs' ), 9 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addEndWrapperAfterTabs' ), 11 );
 
 		// before and after upsells (priority 15)
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_start_wrapper_before_upsells' ), 14 );
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_end_wrapper_after_upsells' ), 16 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addStartWrapperBeforeUpsells' ), 14 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addEndWrapperAfterUpsells' ), 16 );
 
 		// before and after related (priority 20)
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_start_wrapper_before_related' ), 19 );
-		add_action( 'woocommerce_after_single_product_summary', array( $this, 'add_end_wrapper_after_related' ), 21 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addStartWrapperBeforeRelated' ), 19 );
+		add_action( 'woocommerce_after_single_product_summary', array( $this, 'addEndWrapperAfterRelated' ), 21 );
 
 		//
-		add_filter( 'pixelgrade_footer_auto_output_footer', array( $this, 'remove_footer_from_checkout' ), 10 );
-		add_filter( 'pixelgrade_header_auto_output_header', array( $this, 'remove_header_from_checkout' ), 10 );
+		add_filter( 'pixelgrade_footer_auto_output_footer', array( $this, 'removeFooterFromCheckout' ), 10 );
+		add_filter( 'pixelgrade_header_auto_output_header', array( $this, 'removeHeaderFromCheckout' ), 10 );
 
-		add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'output_ajax_add_to_cart_button' ) );
+		add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'outputAjaxAddToCartButton' ) );
 	}
 
-	public function output_ajax_add_to_cart_button() {
+	public function outputAjaxAddToCartButton() {
 		woocommerce_template_loop_add_to_cart( array(
 			'class' => 'c-btn  add_to_cart_button  ajax_add_to_cart'
 		) );
     }
 
-	public function add_template_part_paths( $template, $slug, $name ) {
+	public function addTemplatePartPaths( $template, $slug, $name ) {
 		$located = pixelgrade_locate_template_part( $slug, 'woocommerce', $name );
 		if ( $located ) {
 			return $located;
@@ -101,7 +100,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		return $template;
 	}
 
-	public function add_template_paths( $located, $template_name, $args, $template_path, $default_path ) {
+	public function addTemplatePaths( $located, $template_name, $args, $template_path, $default_path ) {
 		$located_components = pixelgrade_locate_template_part( $template_name, 'woocommerce' );
 		if ( $located_components ) {
 			return $located_components;
@@ -109,80 +108,86 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		return $located;
 	}
 
-	public function add_template_loader_files( $templates, $default_file ) {
+	public function addTemplateLoaderFiles( $templates, $default_file ) {
 		if ( is_singular( 'product' ) ) {
 			$templates[] = 'components/woocommerce/templates/single-product.php';
-		} elseif ( is_post_type_archive( 'product' ) ) {
+		} elseif ( is_woo_archive() ) {
 			$templates[] = 'components/woocommerce/templates/archive-product.php';
 		}
 		return $templates;
 	}
 
-	public function alter_loop_start( $loop_start ) {
+	public function alterLoopStart( $loop_start ) {
 		return '<div class="' . join( ' ', pixelgrade_get_blog_grid_class() ) . '">';
 	}
 
-	public function alter_loop_end( $loop_end ) {
+	public function alterLoopEnd( $loop_end ) {
 		return '</div>';
 	}
 
-	public function alter_pagination_args( $args ) {
+	public function alterPaginationArgs( $args ) {
 		$args['prev_text'] = esc_html_x( '&laquo; Previous', 'previous set of posts', '__theme_txtd' );
 		$args['next_text'] = esc_html_x( 'Next &raquo;', 'next set of posts', '__theme_txtd' );
 		return $args;
 	}
 
-	public function change_sale_flash_markup( $sale_flash, $post, $product ) {
+	public function changeSaleFlashMarkup( $sale_flash, $post, $product ) {
 		return '<span class="c-btn  c-btn--sale-flash">' . esc_html__( 'Sale!', '__theme_txtd' ) . '</span>';
 	}
 
-	public function alter_entry_header_classes( $classes ) {
+	public function alterEntryHeaderClassList( $classes ) {
 		if ( is_woo_archive() ) {
 			$classes[] = 'entry-title--woocommerce';
 		}
+
+		if ( is_cart() ) {
+			$classes = array_diff( $classes, array( 'h0' ) );
+			$classes[] = 'h1';
+        }
+
 		return $classes;
 	}
 
-	public function remove_sidebar_class( $classes ) {
+	public function removeSidebarClass( $classes ) {
 		if ( is_product() ) {
 			$classes = array_diff( $classes, array( 'has-sidebar' ) );
 		}
 		return $classes;
 	}
 
-	public function add_start_wrapper_before_single_product_summary() {
+	public function addStartWrapperBeforeSingleProductSummary() {
 		echo '<div class="c-product-main">';
 	}
 
-	public function add_end_wrapper_after_single_product_summary() {
+	public function addEndWrapperAfterSingleProductSummary() {
 		echo '</div>';
 	}
 
-	public function add_start_wrapper_before_tabs() {
+	public function addStartWrapperBeforeTabs() {
 		echo '<div class="c-woo-section  c-woo-tabs">';
 	}
 
-	public function add_end_wrapper_after_tabs() {
+	public function addEndWrapperAfterTabs() {
 		echo '</div>';
 	}
 
-	public function add_start_wrapper_before_upsells() {
+	public function addStartWrapperBeforeUpsells() {
 		echo '<div class="c-woo-section  c-woo-upsells">';
 	}
 
-	public function add_end_wrapper_after_upsells() {
+	public function addEndWrapperAfterUpsells() {
 		echo '</div>';
 	}
 
-	public function add_start_wrapper_before_related() {
+	public function addStartWrapperBeforeRelated() {
 		echo '<div class="c-woo-section  c-woo-related">';
 	}
 
-	public function add_end_wrapper_after_related() {
+	public function addEndWrapperAfterRelated() {
 		echo '</div>';
 	}
 
-	public function output_mini_cart() {
+	public function outputMiniCart() {
 	    if ( ! is_cart() ) {
             ob_start(); ?>
             <div class="c-mini-cart">
@@ -199,14 +204,14 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
         }
 	}
 
-	public function remove_header_from_checkout( $allow ) {
+	public function removeHeaderFromCheckout( $allow ) {
 		if ( is_checkout() ) {
 			$allow = false;
 		}
 		return $allow;
 	}
 
-	public function remove_footer_from_checkout( $allow ) {
+	public function removeFooterFromCheckout( $allow ) {
 		if ( is_checkout() ) {
 			$allow = false;
 		}

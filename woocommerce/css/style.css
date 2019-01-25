@@ -29,6 +29,65 @@
         -ms-flex: 0 0 auto;
             flex: 0 0 auto; }
 
+.woocommerce-categories {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-left: 0;
+  margin-left: -20px;
+  list-style: none; }
+  @media only screen and (max-width: 1360px) {
+    .woocommerce-categories {
+      margin-left: -16px; } }
+  @media only screen and (max-width: 1024px) {
+    .woocommerce-categories {
+      margin-left: -13.33333px; } }
+  @media only screen and (max-width: 768px) {
+    .woocommerce-categories {
+      margin-left: -11.42857px; } }
+  @media only screen and (max-width: 320px) {
+    .woocommerce-categories {
+      margin-left: -10px; } }
+  .woocommerce-categories > * {
+    margin-left: 20px; }
+    @media only screen and (max-width: 1360px) {
+      .woocommerce-categories > * {
+        margin-left: 16px; } }
+    @media only screen and (max-width: 1024px) {
+      .woocommerce-categories > * {
+        margin-left: 13.33333px; } }
+    @media only screen and (max-width: 768px) {
+      .woocommerce-categories > * {
+        margin-left: 11.42857px; } }
+    @media only screen and (max-width: 320px) {
+      .woocommerce-categories > * {
+        margin-left: 10px; } }
+  .u-underlined-links .woocommerce-categories a {
+    text-decoration: none; }
+  .woocommerce-categories a:hover,
+  .woocommerce-categories .active {
+    text-decoration: underline; }
+
+.woocommerce-header {
+  margin-bottom: 20px; }
+  @media only screen and (max-width: 1360px) {
+    .woocommerce-header {
+      margin-bottom: 16px; } }
+  @media only screen and (max-width: 1024px) {
+    .woocommerce-header {
+      margin-bottom: 13.33333px; } }
+  @media only screen and (max-width: 768px) {
+    .woocommerce-header {
+      margin-bottom: 11.42857px; } }
+  @media only screen and (max-width: 320px) {
+    .woocommerce-header {
+      margin-bottom: 10px; } }
+
 .c-card__badge--woocommerce {
   display: block;
   width: auto;

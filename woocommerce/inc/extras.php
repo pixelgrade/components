@@ -106,6 +106,18 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 		),
 	) );
 
+	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/entry-header-cart', array(
+		'extend' => 'blog/entry-header',
+		'type'      => 'template_part',
+		'templates' => array(
+			array(
+				'component_slug' => 'woocommerce',
+				'slug' => 'entry-header',
+				'name' => 'cart',
+			),
+		),
+	) );
+
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/archive-product', array(
 		'extend' => 'woocommerce/container',
 		'blocks' => array(
@@ -171,7 +183,7 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 					'main' => array(
 						'extend' => 'blog/main',
 						'blocks' => array(
-							'blog/entry-header-page',
+							'woocommerce/entry-header-cart',
 							'woocommerce/entry-content',
 						),
 					),
