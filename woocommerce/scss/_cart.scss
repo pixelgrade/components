@@ -66,8 +66,60 @@
     }
 }
 
+.shop_table {
+
+    @include specific(2) {
+        border: 0;
+        margin-bottom: 0;
+
+        td, th {
+            padding-top: 1.5em;
+            padding-bottom: 1.5em;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+    }
+
+    &[class] #shipping_method li {
+        margin-bottom: 20px;
+    }
+
+    .cart-subtotal,
+    .order-total {
+        td:last-child {
+            text-align: right;
+        }
+    }
+}
+
+.cart_totals .checkout-button {
+    @include specific(3) {
+        display: block;
+    }
+}
+
+.woocommerce-cart .wc-proceed-to-checkout {
+    padding: 0;
+}
+
 .woocommerce-cart #content table.cart[class] .coupon {
     .input-text {
         width: 200px;
+    }
+}
+
+.shipping-calculator-button {
+    opacity: 0.5;
+
+    @include specific(2) {
+        &:after {
+            content: none;
+        }
     }
 }

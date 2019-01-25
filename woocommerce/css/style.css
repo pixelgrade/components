@@ -825,8 +825,37 @@
     display: -ms-flexbox;
     display: flex; }
 
+.shop_table[class][class] {
+  border: 0;
+  margin-bottom: 0; }
+  .shop_table[class][class] td, .shop_table[class][class] th {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em; }
+    .shop_table[class][class] td:first-child, .shop_table[class][class] th:first-child {
+      padding-left: 0; }
+    .shop_table[class][class] td:last-child, .shop_table[class][class] th:last-child {
+      padding-right: 0; }
+
+.shop_table[class] #shipping_method li {
+  margin-bottom: 20px; }
+
+.shop_table .cart-subtotal td:last-child,
+.shop_table .order-total td:last-child {
+  text-align: right; }
+
+.cart_totals .checkout-button[class][class][class] {
+  display: block; }
+
+.woocommerce-cart .wc-proceed-to-checkout {
+  padding: 0; }
+
 .woocommerce-cart #content table.cart[class] .coupon .input-text {
   width: 200px; }
+
+.shipping-calculator-button {
+  opacity: 0.5; }
+  .shipping-calculator-button[class][class]:after {
+    content: none; }
 
 .woocommerce-checkout .col2-set .col-1,
 .woocommerce-checkout .col2-set .col-2 {

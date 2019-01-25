@@ -106,13 +106,15 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 				'options' => array(
 					'main_content_heading_1_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_1_font']['selector'] . ',
-							.woocommerce-checkout .order-total .woocommerce-Price-amount 
+							.woocommerce-checkout .order-total .woocommerce-Price-amount,
+							.cart_totals h2 
 						'
 					),
 					'main_content_heading_2_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_2_font']['selector'] . ', 
 							[id="order_review_heading"],
-							.woocommerce-billing-fields > h3
+							.woocommerce-billing-fields > h3,
+							.cart_totals .order-total .woocommerce-Price-amount
 						'
 					),
 					'main_content_heading_3_font' => array(
@@ -147,20 +149,16 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'main_content_body_link_active_color' => array(
 						'css' => array(
 							array(
-								'selector' => 'input[type=radio]:checked',
-								'property' => 'border-color',
-							),
-						),
-					),
-					'main_content_body_link_active_color' => array(
-						'css' => array(
-							array(
 								'property' => 'color',
 								'selector' => '
 									.woocommerce-categories a:hover,
 									.woocommerce-categories a:active,
 									.woocommerce-categories .active
 									'
+							),
+							array(
+								'selector' => 'input[type=radio]:checked',
+								'property' => 'border-color',
 							),
 						),
 					),
