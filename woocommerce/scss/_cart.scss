@@ -13,10 +13,6 @@
 }
 
 .woocommerce-cart table.cart {
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
 
     @include spacing(margin-bottom, 9rem);
 
@@ -30,14 +26,6 @@
             border-bottom: 0;
             text-decoration: none;
         }
-    }
-
-    td:first-child {
-        padding-left: 0;
-    }
-
-    td:last-child {
-        padding-right: 0;
     }
 
     .product-thumbnail a {
@@ -68,26 +56,39 @@
 
 .shop_table {
 
-    @include specific(2) {
+    tr {
         border: 0;
+    }
+
+    @include specific(3) {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+
         margin-bottom: 0;
+
+        .cart-collaterals & {
+            border-bottom: 0;
+        }
 
         td, th {
             padding-top: 1.5em;
             padding-bottom: 1.5em;
 
-            &:first-child {
-                padding-left: 0;
-            }
+            @include above( $woocommerce-mobile-breakpoint ) {
+                &:first-child {
+                    padding-left: 0;
+                }
 
-            &:last-child {
-                padding-right: 0;
+                &:last-child {
+                    padding-right: 0;
+                }
             }
         }
     }
 
     &[class] #shipping_method li {
-        margin-bottom: 20px;
+        @include spacing( margin-bottom, 20px );
     }
 
     .cart-subtotal,
@@ -121,5 +122,44 @@
         &:after {
             content: none;
         }
+    }
+}
+
+.woocommerce-cart-form + .cart-collaterals {
+    @include spacing( margin-top, 120px );
+}
+
+.woocommerce-cart .actions .coupon {
+
+    @include specific(2) {
+        display: flex;
+        margin-left: -10px;
+
+        > .input-text,
+        > .button {
+            margin-left: 10px;
+        }
+
+        > .input-text {
+            flex-grow: 1;
+            margin-right: auto;
+        }
+    }
+}
+
+// avoid text clipping caused by explicit width set by woocommerce CSS
+.woocommerce .quantity .qty {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.shop_table .shipping [data-title]:before {
+    @include spacing( margin-bottom, 20px );
+
+    @include below( $woocommerce-mobile-breakpoint ) {
+        float: none;
+        display: block;
+        text-align: left;
+        margin-bottom: 20px;
     }
 }

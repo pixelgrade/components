@@ -760,10 +760,6 @@
       padding-bottom: 15.42169px; } }
 
 .woocommerce-cart table.cart {
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-radius: 0;
   margin-bottom: 144px; }
   @media only screen and (max-width: 1360px) {
     .woocommerce-cart table.cart {
@@ -783,10 +779,6 @@
   .woocommerce-cart table.cart td.product-name a {
     border-bottom: 0;
     text-decoration: none; }
-  .woocommerce-cart table.cart td:first-child {
-    padding-left: 0; }
-  .woocommerce-cart table.cart td:last-child {
-    padding-right: 0; }
   .woocommerce-cart table.cart .product-thumbnail a {
     -webkit-box-shadow: none;
             box-shadow: none;
@@ -825,19 +817,39 @@
     display: -ms-flexbox;
     display: flex; }
 
-.shop_table[class][class] {
-  border: 0;
+.shop_table tr {
+  border: 0; }
+
+.shop_table[class][class][class] {
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
   margin-bottom: 0; }
-  .shop_table[class][class] td, .shop_table[class][class] th {
+  .cart-collaterals .shop_table[class][class][class] {
+    border-bottom: 0; }
+  .shop_table[class][class][class] td, .shop_table[class][class][class] th {
     padding-top: 1.5em;
     padding-bottom: 1.5em; }
-    .shop_table[class][class] td:first-child, .shop_table[class][class] th:first-child {
-      padding-left: 0; }
-    .shop_table[class][class] td:last-child, .shop_table[class][class] th:last-child {
-      padding-right: 0; }
+    @media only screen and (min-width: 768px) {
+      .shop_table[class][class][class] td:first-child, .shop_table[class][class][class] th:first-child {
+        padding-left: 0; }
+      .shop_table[class][class][class] td:last-child, .shop_table[class][class][class] th:last-child {
+        padding-right: 0; } }
 
 .shop_table[class] #shipping_method li {
   margin-bottom: 20px; }
+  @media only screen and (max-width: 1360px) {
+    .shop_table[class] #shipping_method li {
+      margin-bottom: 16px; } }
+  @media only screen and (max-width: 1024px) {
+    .shop_table[class] #shipping_method li {
+      margin-bottom: 13.33333px; } }
+  @media only screen and (max-width: 768px) {
+    .shop_table[class] #shipping_method li {
+      margin-bottom: 11.42857px; } }
+  @media only screen and (max-width: 320px) {
+    .shop_table[class] #shipping_method li {
+      margin-bottom: 10px; } }
 
 .shop_table .cart-subtotal td:last-child,
 .shop_table .order-total td:last-child {
@@ -856,6 +868,60 @@
   opacity: 0.5; }
   .shipping-calculator-button[class][class]:after {
     content: none; }
+
+.woocommerce-cart-form + .cart-collaterals {
+  margin-top: 120px; }
+  @media only screen and (max-width: 1360px) {
+    .woocommerce-cart-form + .cart-collaterals {
+      margin-top: 85.33333px; } }
+  @media only screen and (max-width: 1024px) {
+    .woocommerce-cart-form + .cart-collaterals {
+      margin-top: 66.2069px; } }
+  @media only screen and (max-width: 768px) {
+    .woocommerce-cart-form + .cart-collaterals {
+      margin-top: 54.08451px; } }
+  @media only screen and (max-width: 320px) {
+    .woocommerce-cart-form + .cart-collaterals {
+      margin-top: 45.71429px; } }
+
+.woocommerce-cart .actions .coupon[class][class] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: -10px; }
+  .woocommerce-cart .actions .coupon[class][class] > .input-text,
+  .woocommerce-cart .actions .coupon[class][class] > .button {
+    margin-left: 10px; }
+  .woocommerce-cart .actions .coupon[class][class] > .input-text {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    margin-right: auto; }
+
+.woocommerce .quantity .qty {
+  padding-left: 0;
+  padding-right: 0; }
+
+.shop_table .shipping [data-title]:before {
+  margin-bottom: 20px; }
+  @media only screen and (max-width: 1360px) {
+    .shop_table .shipping [data-title]:before {
+      margin-bottom: 16px; } }
+  @media only screen and (max-width: 1024px) {
+    .shop_table .shipping [data-title]:before {
+      margin-bottom: 13.33333px; } }
+  @media only screen and (max-width: 768px) {
+    .shop_table .shipping [data-title]:before {
+      margin-bottom: 11.42857px; } }
+  @media only screen and (max-width: 320px) {
+    .shop_table .shipping [data-title]:before {
+      margin-bottom: 10px; } }
+  @media not screen and (min-width: 768px) {
+    .shop_table .shipping [data-title]:before {
+      float: none;
+      display: block;
+      text-align: left;
+      margin-bottom: 20px; } }
 
 .woocommerce-checkout .col2-set .col-1,
 .woocommerce-checkout .col2-set .col-2 {

@@ -1,6 +1,8 @@
 @import "../../base/scss/tools/all";
 @import "../../base/scss/mixins/all";
 
+$woocommerce-mobile-breakpoint: 768px;
+
 @import "archive";
 @import "card";
 @import "pagination";
