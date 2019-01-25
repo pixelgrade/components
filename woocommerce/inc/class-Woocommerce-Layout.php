@@ -84,6 +84,9 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		add_filter( 'pixelgrade_header_auto_output_header', array( $this, 'removeHeaderFromCheckout' ), 10 );
 
 		add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'outputAjaxAddToCartButton' ) );
+
+		remove_action( 'woocommerce_before_subcategory', 'woocommerce_template_loop_category_link_open', 10 );
+		add_action( 'woocommerce_after_subcategory', array( $this, 'woocommerceTemplateLoopCategoryLinkOpen' ), 5 );
 	}
 
 	public function outputAjaxAddToCartButton() {
@@ -216,5 +219,9 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 			$allow = false;
 		}
 		return $allow;
+	}
+
+	public function woocommerceTemplateLoopCategoryLinkOpen( $category ) {
+		echo '<a class="c-card__link" href="' . esc_url( get_term_link( $category, 'product_cat' ) ) . '">';
 	}
 }

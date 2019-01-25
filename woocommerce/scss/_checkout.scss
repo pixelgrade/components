@@ -8,7 +8,7 @@
         }
     }
 
-    @include above(1000px) {
+    @include above(62.5em) {
 
         .col2-set {
             float: left;
@@ -102,11 +102,14 @@
 
     form .form-row {
         padding: 0;
-        margin-bottom: 24px;
+
+        &:not(:last-child) {
+            @include spacing( margin-bottom, 24px );
+        }
 
         label {
             font-weight: 700;
-            margin-bottom: 12px;
+            @include spacing( margin-bottom, 12px );
         }
 
         input.input-text,
@@ -119,6 +122,45 @@
     .woocommerce-form-coupon {
         position: relative;
         z-index: 20;
+    }
+
+    .woocommerce-form-coupon {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        margin-left: -20px;
+
+        > p:not([class]) {
+            flex-basis: 100%;
+            margin-bottom: 20px;
+        }
+
+        > p {
+            width: auto;
+            padding-left: 20px;
+        }
+
+        button {
+            height: 100%;
+        }
+
+        .form-row-first {
+            flex-grow: 1;
+        }
+    }
+
+    .clear {
+        display: none;
+    }
+
+    .woocommerce-info {
+        margin-bottom: 20px;
+    }
+
+    @include below(62.5em) {
+        .site-content {
+            padding-top: 0;
+        }
     }
 }
 
@@ -198,42 +240,6 @@
                 margin-right: 10px;
             }
         }
-    }
-}
-
-.woocommerce-checkout {
-
-    .woocommerce-form-coupon {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: stretch;
-        margin-left: -20px;
-
-        > p:not([class]) {
-            flex-basis: 100%;
-            margin-bottom: 20px;
-        }
-
-        > p {
-            width: auto;
-            padding-left: 20px;
-        }
-
-        button {
-            height: 100%;
-        }
-
-        .form-row-first {
-            flex-grow: 1;
-        }
-    }
-
-    .clear {
-        display: none;
-    }
-
-    .woocommerce-info {
-        margin-bottom: 20px;
     }
 }
 

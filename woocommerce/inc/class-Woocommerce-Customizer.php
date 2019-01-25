@@ -135,7 +135,9 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.wc_payment_method label,
 							.woocommerce-result-count,
 							.woocommerce-ordering select,
-							.woocommerce-categories
+							.woocommerce-categories,
+							.add_to_cart_inline del,
+							.add_to_cart_inline ins
 						'
 					),
 					'main_content_body_text_color' => array(
@@ -153,7 +155,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								'selector' => '
 									.woocommerce-categories a:hover,
 									.woocommerce-categories a:active,
-									.woocommerce-categories .active
+									.woocommerce-categories .active,
+									.wc-tabs > .active a
 									'
 							),
 							array(

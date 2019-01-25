@@ -45,3 +45,27 @@
 .woocommerce-header {
     @include spacing(margin-bottom, 20px);
 }
+
+.entry-content {
+    > .woocommerce {
+        @include spacing(margin-bottom, 40px);
+    }
+}
+
+.c-card__title mark {
+    background: none;
+    color: inherit;
+}
+
+.add_to_cart_inline {
+
+    .button {
+        @include specific(3) {
+            @include spacing(margin-left, 10px);
+        }
+    }
+
+    ins {
+        text-decoration: none;
+    }
+}

@@ -44,90 +44,90 @@ if ( ! $product ) {
 
 ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-		<div class="c-card">
+    <div class="c-card">
 
-			<?php
-			/**
-			 * pixelgrade_after_entry_start hook.
-			 */
-			do_action( 'pixelgrade_after_entry_start', $location );
-			?>
+        <?php
+        /**
+         * pixelgrade_after_entry_start hook.
+         */
+        do_action( 'pixelgrade_after_entry_start', $location );
+        ?>
 
-            <div class="c-card__aside c-card__thumbnail-background">
-                <div class="c-card__frame">
+        <div class="c-card__aside c-card__thumbnail-background">
+            <div class="c-card__frame">
+                <?php
+                    if ( has_post_thumbnail() ) {
+                        the_post_thumbnail( 'pixelgrade_card_image' );
+                    }
+                ?>
+
+                <div class="c-card__add-to-cart">
                     <?php
-                        if ( has_post_thumbnail() ) {
-                            the_post_thumbnail( 'pixelgrade_card_image' );
-                        }
-                    ?>
-
-                    <div class="c-card__add-to-cart">
-                        <?php
-                        $class = 'c-btn  add_to_cart_button';
-                        if ( $product->is_type( 'simple' ) ) {
-                            $class .= '  ajax_add_to_cart';
-                        }
-                        woocommerce_template_loop_add_to_cart( array(
-                            'class' => $class
-                        ) ); ?>
-                    </div>
+                    $class = 'c-btn  add_to_cart_button';
+                    if ( $product->is_type( 'simple' ) ) {
+                        $class .= '  ajax_add_to_cart';
+                    }
+                    woocommerce_template_loop_add_to_cart( array(
+                        'class' => $class
+                    ) ); ?>
                 </div>
             </div>
+        </div>
 
-			<div class="c-card__content">
+        <div class="c-card__content">
 
-				<?php
-				if ( $primary_meta_output || $secondary_meta_output ) {
-					?>
+            <?php
+            if ( $primary_meta_output || $secondary_meta_output ) {
+                ?>
 
-					<div class="c-card__meta c-meta">
-						<?php
-						do_action( 'pixelgrade_before_card_meta', $location );
+                <div class="c-card__meta c-meta">
+                    <?php
+                    do_action( 'pixelgrade_before_card_meta', $location );
 
-						if ( $primary_meta_output ) {
-							echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>';
-							// Add a separator if we also have secondary meta
-							if ( $secondary_meta_output ) {
-								echo '<div class="c-meta__separator js-card-meta-separator"></div>';
-							}
-						}
+                    if ( $primary_meta_output ) {
+                        echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>';
+                        // Add a separator if we also have secondary meta
+                        if ( $secondary_meta_output ) {
+                            echo '<div class="c-meta__separator js-card-meta-separator"></div>';
+                        }
+                    }
 
-						if ( $secondary_meta_output ) {
-							echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
-						}
+                    if ( $secondary_meta_output ) {
+                        echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
+                    }
 
-						do_action( 'pixelgrade_after_card_meta', $location ); ?>
-					</div>
-
-					<?php
-				}
-
-				if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) { ?>
-					<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
-                <?php } ?>
-
-                <div class="c-card__excerpt">
-                    <div class="h4"><?php woocommerce_template_loop_price(); ?></div>
+                    do_action( 'pixelgrade_after_card_meta', $location ); ?>
                 </div>
 
-			</div>
+                <?php
+            }
 
-			<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
+            if ( pixelgrade_option( 'blog_items_title_visibility', true ) && get_the_title() ) { ?>
+                <h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
+            <?php } ?>
 
-            <?php woocommerce_show_product_loop_sale_flash(); ?>
+            <div class="c-card__excerpt">
+                <div class="h4"><?php woocommerce_template_loop_price(); ?></div>
+            </div>
 
-			<?php
-			/**
-			 * pixelgrade_before_entry_end hook.
-			 */
-			do_action( 'pixelgrade_before_entry_end', $location );
-			?>
+        </div>
 
-		</div>
+        <a class="c-card__link" href="<?php the_permalink(); ?>"></a>
 
-	</article>
+        <?php woocommerce_show_product_loop_sale_flash(); ?>
+
+        <?php
+        /**
+         * pixelgrade_before_entry_end hook.
+         */
+        do_action( 'pixelgrade_before_entry_end', $location );
+        ?>
+
+    </div>
+
+</article>
 
 <?php
 /**
