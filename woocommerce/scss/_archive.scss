@@ -32,13 +32,15 @@
         @include spacing(margin-left, 20px);
     }
 
-    .u-underlined-links & a {
-        text-decoration: none;
-    }
+    .u-underlined-links & {
+        a {
+            text-decoration: none;
+        }
 
-    a:hover,
-    .active {
-        text-decoration: underline;
+        a:hover,
+        .active {
+            text-decoration: underline;
+        }
     }
 }
 
@@ -55,17 +57,4 @@
 .c-card__title mark {
     background: none;
     color: inherit;
-}
-
-.add_to_cart_inline {
-
-    .button {
-        @include specific(3) {
-            @include spacing(margin-left, 10px);
-        }
-    }
-
-    ins {
-        text-decoration: none;
-    }
 }

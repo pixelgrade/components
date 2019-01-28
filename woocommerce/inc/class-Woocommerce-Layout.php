@@ -87,6 +87,8 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 
 		remove_action( 'woocommerce_before_subcategory', 'woocommerce_template_loop_category_link_open', 10 );
 		add_action( 'woocommerce_after_subcategory', array( $this, 'woocommerceTemplateLoopCategoryLinkOpen' ), 5 );
+
+		add_filter( 'wp_nav_menu_items', array( $this, 'appendCartIconToMenu' ), 10, 2 );
 	}
 
 	public function outputAjaxAddToCartButton() {
@@ -223,5 +225,23 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 
 	public function woocommerceTemplateLoopCategoryLinkOpen( $category ) {
 		echo '<a class="c-card__link" href="' . esc_url( get_term_link( $category, 'product_cat' ) ) . '">';
+	}
+
+	public function appendCartIconToMenu( $items, $args ) {
+		$cart_item_count = WC()->cart->get_cart_contents_count();
+		$cart_count_span = '';
+
+		if ( $cart_item_count ) {
+			$cart_count_span = '<div class="cart-count"><span>' . $cart_item_count . '</span></div>';
+		}
+
+		$cart_link = '<li class="menu-item menu-item--cart"><a href="' . get_permalink( wc_get_page_id( 'cart' ) ) . '">' . esc_html( 'My Cart', '__theme_txtd' ) . $cart_count_span . '</a></li>';
+
+		// Add the cart link to the end of the menu.
+		if ( $args->theme_location === 'primary-left' ) {
+            $items = $items . $cart_link;
+		}
+
+		return $items;
 	}
 }

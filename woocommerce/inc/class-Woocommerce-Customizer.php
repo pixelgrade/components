@@ -121,7 +121,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'selector' => $section_options['main_content']['options']['main_content_heading_3_font']['selector'] . ',
 							table.shop_table td.product-name,
 							.c-mini-cart[class] .cart_list a:not(.remove), 
-							.c-mini-cart[class] .product_list_widget a:not(.remove)'
+							.c-mini-cart[class] .product_list_widget a:not(.remove),
+							.product .entry-summary .price[class]'
 					),
 					'main_content_heading_4_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
@@ -137,7 +138,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.woocommerce-ordering select,
 							.woocommerce-categories,
 							.add_to_cart_inline del,
-							.add_to_cart_inline ins
+							.add_to_cart_inline ins,
+							.variations .label
 						'
 					),
 					'main_content_body_text_color' => array(
@@ -145,6 +147,14 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							array(
 								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
 								'property' => 'background-color',
+							),
+						),
+					),
+					'main_content_content_background_color' => array(
+						'css' => array(
+							array(
+								'selector' => '.cart-count',
+								'property' => 'color',
 							),
 						),
 					),
@@ -158,6 +168,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 									.woocommerce-categories .active,
 									.wc-tabs > .active a
 									'
+							),
+							array(
+								'property' => 'background-color',
+								'selector' => '.cart-count'
 							),
 							array(
 								'selector' => 'input[type=radio]:checked',
@@ -229,6 +243,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 
 	public function alterButtonsSelectors( $array = array() ) {
 		$array[] = '.woocommerce-support .button[class][class][class]';
+		$array[] = '.product .cart .qty[class][class][class]';
 		return $array;
 	}
 }

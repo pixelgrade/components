@@ -20,6 +20,18 @@
     }
 }
 
+.woocommerce-product-gallery__wrapper {
+    @include spacing(margin-left, -1rem);
+
+    > * {
+        @include spacing(padding-left, 1rem);
+    }
+
+    > :nth-child(n+2) {
+        @include spacing(margin-top, 1rem);
+    }
+}
+
 .woocommerce-product-gallery__image a {
     display: block;
     padding: 0;
@@ -48,10 +60,6 @@
         padding-right: 0.3em;
     }
 
-    > .button {
-        flex-grow: 1;
-    }
-
     @include specific(2) {
 
         .group_table {
@@ -78,7 +86,7 @@
 }
 
 .woocommerce-product-details__short-description {
-    @include spacing(margin-bottom, 3rem);
+    @include spacing(margin-bottom, 20px);
 }
 
 // single product - tabs styling
@@ -139,8 +147,8 @@
 
 // unstyle price
 .woocommerce[class] .product .price {
-    font: inherit;
     color: inherit;
+    @include spacing(margin-bottom, 30px);
 
     del {
         opacity: 1;
@@ -177,5 +185,91 @@
         width: auto;
         flex-basis: 35%;
         @include spacing(margin-left, 8rem);
+    }
+}
+
+.woocommerce .cart {
+
+    .ajax_add_to_cart + .single_add_to_cart_button[class] {
+        display: none;
+    }
+}
+
+.variations {
+    &,
+    tbody,
+    tr,
+    th,
+    td {
+        display: block;
+    }
+
+    @include specific(5) {
+        td,
+        th {
+            padding: 0;
+            line-height: inherit;
+        }
+    }
+
+    &,
+    tbody,
+    tr {
+        border: 0;
+    }
+
+    .label {
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+}
+
+.reset_variations {
+    visibility: visible;
+    display: none;
+}
+
+.woocommerce .product .cart .quantity[class] {
+    float: none;
+}
+
+.add_to_cart_inline {
+
+    .button {
+        @include specific(3) {
+            @include spacing(margin-left, 10px);
+        }
+    }
+
+    ins {
+        text-decoration: none;
+    }
+}
+
+.single_variation_wrap {
+    width: 100%;
+}
+
+.variations_button {
+    display: flex;
+}
+
+.entry-summary {
+    .button,
+    .ajax_add_to_cart {
+        flex-grow: 1;
+    }
+}
+
+.product_meta {
+    font-size: 0.875em;
+
+    > span {
+        display: block;
+
+        a {
+            text-decoration: none;
+            opacity: 0.5;
+        }
     }
 }
