@@ -2,8 +2,6 @@ ul.page-numbers {
   @include spacing(margin-top, 5.5rem);
   @include spacing(margin-left, -1rem);
 
-  @include leading-map($h5);
-
   display: flex;
   align-items: center;
 
@@ -11,7 +9,7 @@ ul.page-numbers {
     @include spacing(padding-left, 1rem);
   }
 
-  &.page-numbers li {
+  li {
     margin-bottom: 0;
   }
 

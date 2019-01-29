@@ -73,26 +73,28 @@
             }
         }
 
-        .wc-forward:not(.checkout)[class][class][class] {
-            position: relative;
-            background: none;
-            color: inherit;
-
-            &:after {
-                content: "";
-                display: block;
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                border-radius: inherit;
-                border: 2px solid;
-                pointer-events: none;
-            }
-
-            &:hover {
+        .wc-forward:not(.checkout) {
+            @include specific(4) {
+                position: relative;
+                background: none;
                 color: inherit;
+
+                &:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    border-radius: inherit;
+                    border: 2px solid;
+                    pointer-events: none;
+                }
+
+                &:hover {
+                    color: inherit;
+                }
             }
         }
     }

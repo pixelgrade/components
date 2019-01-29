@@ -1,0 +1,137 @@
+.woocommerce-Reviews {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .commentlist {
+        padding-left: 0;
+    }
+
+    .form-submit {
+        flex: 0 0 100%;
+
+        input#submit {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .star-rating {
+        width: 6.4em;
+        height: 1.5em;
+        letter-spacing: 0.2em;
+        line-height: 1.5;
+    }
+
+    #comments + #review_form_wrapper {
+        @include spacing( margin-top, 2rem );
+    }
+
+    .woocommerce-Reviews-title,
+    .comment-reply-title {
+        display: block;
+        @include spacing( margin-bottom, 0.5rem );
+    }
+
+    .woocommerce-noreviews {
+        opacity: 0.5;
+    }
+
+    .comment-notes {
+        font: inherit;
+        opacity: 0.5;
+    }
+}
+
+.comment-form > :not(:first-child) {
+    @include spacing( padding-top, 30px );
+}
+
+.woocommerce #reviews #comments {
+
+    ol.commentlist {
+
+        li {
+            .comment_container {
+                display: flex;
+                align-items: flex-start;
+
+                img.avatar {
+                    position: static;
+                    width: auto;
+                    border: 0;
+                    padding: 0;
+                    float: none;
+                    flex-shrink: 0;
+                }
+            }
+
+            .meta {
+                @include specific(2) {
+                    color: inherit;
+                    font: inherit;
+                }
+            }
+
+            .woocommerce-review__published-date {
+                opacity: 0.5;
+            }
+
+            .comment-text {
+                border: 0;
+                padding: 0;
+                @include spacing( margin-left, 30px );
+            }
+        }
+    }
+}
+
+.comment-form-rating {
+    display: flex;
+    align-items: center;
+
+    @include spacing( margin-left, -14px );
+
+    label,
+    .woocommerce #review_form #respond & p.stars {
+        @include spacing( margin-left, 14px );
+    }
+
+    label {
+        padding-bottom: 0;
+    }
+
+    .stars span {
+        display: flex;
+        margin-left: -0.2em;
+
+        > a {
+            padding-left: 0.2em;
+            width: 1.2em;
+
+            &:before {
+                left: 0.2em;
+            }
+        }
+    }
+}
+
+.woocommerce #review_form #respond {
+
+    p {
+        margin-bottom: 0;
+    }
+
+    p.stars {
+        font-size: 1.5em;
+    }
+
+    textarea {
+        display: block;
+    }
+}
+
+.woocommerce-review__dash {
+    opacity: 0.5;
+    margin: 0 0.3em;
+}

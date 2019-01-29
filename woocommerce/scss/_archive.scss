@@ -45,7 +45,7 @@
 }
 
 .woocommerce-header {
-    @include spacing(margin-bottom, 20px);
+    @include spacing(padding-bottom, 20px);
 }
 
 .entry-content {

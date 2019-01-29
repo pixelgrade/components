@@ -89,12 +89,22 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		add_action( 'woocommerce_after_subcategory', array( $this, 'woocommerceTemplateLoopCategoryLinkOpen' ), 5 );
 
 		add_filter( 'wp_nav_menu_items', array( $this, 'appendCartIconToMenu' ), 10, 2 );
+		add_filter( 'woocommerce_review_gravatar_size', array( $this, 'changeReviewAvatarSize' ), 10 );
+
+		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductCategory' ), 4 );
+
+		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductHeaderStart' ), 3 );
+		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductHeaderEnd' ), 11 );
 	}
 
 	public function outputAjaxAddToCartButton() {
-		woocommerce_template_loop_add_to_cart( array(
-			'class' => 'c-btn  add_to_cart_button  ajax_add_to_cart'
-		) );
+	    global $product;
+
+		if ( $product->is_type( 'simple' ) ) {
+			woocommerce_template_loop_add_to_cart( array(
+				'class' => 'c-btn  add_to_cart_button  ajax_add_to_cart'
+			) );
+		}
     }
 
 	public function addTemplatePartPaths( $template, $slug, $name ) {
@@ -244,4 +254,25 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 
 		return $items;
 	}
+
+	public function changeReviewAvatarSize( $size ) {
+	    $size = 80;
+	    return $size;
+    }
+
+    public function singleProductCategory() {
+	    global $product;
+
+	    echo '<div class="woocommerce-product-category c-meta__primary">';
+	    echo wc_get_product_category_list( $product->get_id(), ' / ' );
+	    echo '</div>';
+    }
+
+    public function singleProductHeaderStart() {
+	    echo '<div class="woocommerce-product-header">';
+    }
+
+    public function singleProductHeaderEnd() {
+	    echo '</div>';
+    }
 }

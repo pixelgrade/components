@@ -8,7 +8,7 @@
         }
     }
 
-    @include above(62.5em) {
+    @include above( $woocommerce-mobile-breakpoint ) {
 
         .col2-set {
             float: left;

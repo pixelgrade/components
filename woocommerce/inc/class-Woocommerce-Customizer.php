@@ -114,7 +114,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'selector' => $section_options['main_content']['options']['main_content_heading_2_font']['selector'] . ', 
 							[id="order_review_heading"],
 							.woocommerce-billing-fields > h3,
-							.cart_totals .order-total .woocommerce-Price-amount
+							.cart_totals .order-total .woocommerce-Price-amount,
+							.comment-reply-title
 						'
 					),
 					'main_content_heading_3_font' => array(
@@ -139,12 +140,13 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.woocommerce-categories,
 							.add_to_cart_inline del,
 							.add_to_cart_inline ins,
-							.variations .label
+							.variations .label,
+							.comment-form label
 						'
 					),
 					'main_content_body_text_color' => array(
 						'css' => array(
-							array(
+							'xyz1' => array(
 								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
 								'property' => 'background-color',
 							),
@@ -152,7 +154,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					),
 					'main_content_content_background_color' => array(
 						'css' => array(
-							array(
+							'xyz1' => array(
 								'selector' => '.cart-count',
 								'property' => 'color',
 							),
@@ -160,20 +162,22 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					),
 					'main_content_body_link_active_color' => array(
 						'css' => array(
-							array(
+							'xyz1' => array(
 								'property' => 'color',
 								'selector' => '
 									.woocommerce-categories a:hover,
 									.woocommerce-categories a:active,
 									.woocommerce-categories .active,
-									.wc-tabs > .active a
+									.wc-tabs > .active a,
+									.star-rating,
+									.woocommerce p.stars a::before
 									'
 							),
-							array(
+							'xyz2' => array(
 								'property' => 'background-color',
 								'selector' => '.cart-count'
 							),
-							array(
+							'xyz3' => array(
 								'selector' => 'input[type=radio]:checked',
 								'property' => 'border-color',
 							),
@@ -242,8 +246,9 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 	}
 
 	public function alterButtonsSelectors( $array = array() ) {
-		$array[] = '.woocommerce-support .button[class][class][class]';
+		$array[] = '.button[class][class][class][class][class]';
 		$array[] = '.product .cart .qty[class][class][class]';
+		$array[] = '#respond input#submit[id]';
 		return $array;
 	}
 }

@@ -34,6 +34,11 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 
 		parent::__construct( $version, $args );
 
+		add_theme_support( 'woocommerce' );
+		add_theme_support( 'wc-product-gallery-zoom' );
+		add_theme_support( 'wc-product-gallery-lightbox' );
+		add_theme_support( 'wc-product-gallery-slider' );
+
 		$this->assets_version = '1.0.0';
 	}
 

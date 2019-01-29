@@ -36,25 +36,21 @@
 // <a class="button default">	  Button with Default Styling 	</a>
 
 .button {
-  @include btn;
-  text-decoration: none;
-
-  &.default {
-    @include btn--default;
-  }
-
-  &.full {
-    width: 100%;
-  }
-
-  &.arrow {
-    @include button-directional;
-    @include button-directional--right;
-  }
-}
-
-.woocommerce-support .button {
-  @include specific(3) {
+  @include specific(5) {
     @include btn;
+    text-decoration: none;
+
+    &.default {
+      @include btn--default;
+    }
+
+    &.full {
+      width: 100%;
+    }
+
+    &.arrow {
+      @include button-directional;
+      @include button-directional--right;
+    }
   }
 }
