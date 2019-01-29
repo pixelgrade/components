@@ -345,3 +345,50 @@
         flex-grow: 1;
     }
 }
+
+.shop_attributes {
+
+    @include specific(3) {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        border-top: 0;
+        border-bottom: 0;
+
+        tr:last-child {
+            &, th, td {
+                border-bottom: 0;
+            }
+        }
+
+        tbody, tfoot, thead {
+            border-bottom: 0;
+        }
+
+        tr {
+            border-bottom-style: dashed;
+        }
+
+        th, td {
+            background: none;
+        }
+
+        td {
+            font: inherit;
+            font-style: inherit;
+        }
+
+        th {
+            width: 40%;
+            padding: 12px;
+
+            font-size: inherit;
+            line-height: inherit;
+            text-align: right;
+        }
+
+        td p {
+            padding: 12px;
+        }
+    }
+}

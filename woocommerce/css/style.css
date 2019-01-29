@@ -707,6 +707,32 @@
         -ms-flex-positive: 1;
             flex-grow: 1; }
 
+.shop_attributes[class][class][class] {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 0;
+  border-bottom: 0; }
+  .shop_attributes[class][class][class] tr:last-child, .shop_attributes[class][class][class] tr:last-child th, .shop_attributes[class][class][class] tr:last-child td {
+    border-bottom: 0; }
+  .shop_attributes[class][class][class] tbody, .shop_attributes[class][class][class] tfoot, .shop_attributes[class][class][class] thead {
+    border-bottom: 0; }
+  .shop_attributes[class][class][class] tr {
+    border-bottom-style: dashed; }
+  .shop_attributes[class][class][class] th, .shop_attributes[class][class][class] td {
+    background: none; }
+  .shop_attributes[class][class][class] td {
+    font: inherit;
+    font-style: inherit; }
+  .shop_attributes[class][class][class] th {
+    width: 40%;
+    padding: 12px;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: right; }
+  .shop_attributes[class][class][class] td p {
+    padding: 12px; }
+
 .woocommerce-Reviews {
   max-width: 600px;
   margin-left: auto;
