@@ -942,20 +942,6 @@
   @media only screen and (max-width: 320px) {
     .c-btn--sale-flash {
       left: 10.58201px; } }
-  .c-product-main .c-btn--sale-flash {
-    left: 32px; }
-    @media only screen and (max-width: 1360px) {
-      .c-product-main .c-btn--sale-flash {
-        left: 25.22167px; } }
-    @media only screen and (max-width: 1024px) {
-      .c-product-main .c-btn--sale-flash {
-        left: 20.81301px; } }
-    @media only screen and (max-width: 768px) {
-      .c-product-main .c-btn--sale-flash {
-        left: 17.71626px; } }
-    @media only screen and (max-width: 320px) {
-      .c-product-main .c-btn--sale-flash {
-        left: 15.42169px; } }
 
 .c-mini-cart {
   position: fixed;
