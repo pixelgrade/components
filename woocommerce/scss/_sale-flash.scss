@@ -7,8 +7,4 @@
 
     // avoid hover styles inherited from .c-btn
     pointer-events: none;
-
-    .c-product-main & {
-        @include spacing(left, 2rem);
-    }
 }
