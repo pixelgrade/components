@@ -1,43 +1,38 @@
 ul.page-numbers {
-  @include spacing(margin-top, 5.5rem);
-  @include spacing(margin-left, -1rem);
+  @include specific(2) {
+    display: flex;
+    align-items: center;
 
-  display: flex;
-  align-items: center;
+    list-style: none;
+    padding-left: 0;
 
-  & > * {
-    @include spacing(padding-left, 1rem);
-  }
+    @include spacing(margin-top, 5.5rem);
+    @include spacing(margin-left, -1rem);
 
-  li {
-    margin-bottom: 0;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-
-    &:before,
-    &:after {
-      content: none;
+    & > * {
+      @include spacing(padding-left, 1rem);
     }
-  }
 
-  .next,
-  .prev {
-    @include leading-map($h3);
-
-    text-transform: none;
-
-    &:after {
-      padding: 0;
+    li {
+      margin-bottom: 0;
     }
-  }
-}
 
-ul.page-numbers.page-numbers a {
-  &:before,
-  &:after {
-    content: none;
+    a {
+      text-decoration: none;
+
+      &:before,
+      &:after {
+        content: none;
+      }
+    }
+
+    .next,
+    .prev {
+      text-transform: none;
+
+      &:after {
+        padding: 0;
+      }
+    }
   }
 }
