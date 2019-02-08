@@ -24,7 +24,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Hero
- * @version     1.0.1
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -49,7 +49,6 @@ if ( empty( $slide['source_post_id'] ) ) {
 if ( empty( $slide['type'] ) ) {
 	$slide['type'] = 'blank';
 }
-
 ?>
 
 <div class="c-hero__slide">
@@ -61,32 +60,24 @@ if ( empty( $slide['type'] ) ) {
 		 * pixelgrade_hero_before_background_wrapper hook.
 		 */
 		do_action( 'pixelgrade_hero_before_background_wrapper', $location, $slide, $slide_index );
-		?>
 
-		<?php
 		// Locate and load the appropriate template for the slide background in line with the slide type
 		$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide-background', $slide['type'] );
 
 		if ( $template ) {
 			include $template;
 		}
-		?>
 
-		<?php
 		/**
 		 * pixelgrade_hero_after_background_wrapper hook.
 		 */
 		do_action( 'pixelgrade_hero_after_background_wrapper', $location, $slide, $slide_index );
-		?>
 
-		<?php
 		/**
 		 * pixelgrade_hero_before_content_wrapper hook.
 		 */
 		do_action( 'pixelgrade_hero_before_content_wrapper', $location, $slide, $slide_index );
-		?>
 
-		<?php
 		// We only show the hero content on the first slide AND for slides that are **not featured projects** - for these we always show the content
 		if ( 0 === $slide_index || 'featured-project' === $slide['type'] ) {
 			// Locate and load the appropriate template for the slide content in line with the slide type
@@ -96,9 +87,7 @@ if ( empty( $slide['type'] ) ) {
 				include $template;
 			}
 		}
-		?>
 
-		<?php
 		/**
 		 * pixelgrade_hero_after_content hook.
 		 */

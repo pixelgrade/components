@@ -5,7 +5,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
- * @version    1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -57,7 +56,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		 * 'panel'          => $panel_id,
 		 * 'capability'     => 'edit_theme_options', // what capabilities the current logged in user needs to be able to see this section
 		 * 'theme_supports' => '', // if the theme needs to declare some theme-supports for this section to be shown
-		 * 'title'          => __( 'Title Section is required', '' ),
+		 * 'title'          => esc_html__( 'Title Section is required', '' ),
 		 * 'description'    => '',
 		 * 'type'           => 'default',
 		 * 'description_hidden' => false, // If the description should be hidden behind a (?) bubble
@@ -315,8 +314,8 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							array(
 								'property' => 'max-width',
 								'selector' => '
-									.u-content-width > :not([class*="align"]):not([class*="gallery"]):not(blockquote),
-									.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(blockquote):not(.mceTemp)',
+									.u-content-width > :not([class*="align"]):not([class*="gallery"]),
+									.mce-content-body:not([class*="page-template-full-width"]) > :not([class*="align"]):not([data-wpview-type*="gallery"]):not(.mceTemp)',
 								'unit'     => 'px',
 							),
 						),
@@ -560,7 +559,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'label'       => esc_html__( 'Body Text Font', '__components_txtd' ),
 						'desc'        => '',
 						'selector'    => 'body',
-						'callback'    => 'typeline_font_cb',
+						'callback'    => 'typeline_body_font_cb',
 
 						// This should be set by the theme
 						// Previously:
@@ -600,7 +599,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'label'       => esc_html__( 'Content Text Font', '__components_txtd' ),
 						'desc'        => '',
 						'selector'    => '.entry-content',
-						'callback'    => 'typeline_font_cb',
+						'callback'    => 'typeline_body_font_cb',
 
 						// This should be set by the theme
 						// Previously:
@@ -885,7 +884,9 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 6', '__components_txtd' ),
 						'desc'        => '',
-						'selector'    => 'h6, .h6',
+						'selector'    => 'h6, .h6,
+											.comment-reply-title a, .comment__metadata a, 
+											.edit-link a, .logged-in-as a, .reply a',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -1704,7 +1705,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			$classes[] = 'has-border';
 		}
 
-		$underline_links = pixelgrade_option( 'main_content_underlined_body_links', true );
+		$underline_links = pixelgrade_option( 'main_content_underlined_body_links', false );
 		if ( ! empty( $underline_links ) ) {
 			$classes[] = 'u-underlined-links';
 		}

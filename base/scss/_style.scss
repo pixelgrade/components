@@ -1,6 +1,7 @@
 @import "defaults";
 
 @import "tools/all";
+@import "mixins/all";
 
 @import "generic/normalize";
 @import "generic/reset";
@@ -36,3 +37,4 @@ a {
 @import "elements/screen-reader-text";
 @import "elements/two-column";
 @import "elements/carousel";
+@import "elements/edit-link";

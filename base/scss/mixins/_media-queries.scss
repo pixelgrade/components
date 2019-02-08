@@ -1,0 +1,22 @@
+// shorthand media queries for defined breakpoints
+$breakpoints: () !default;
+
+@mixin above($bpname) {
+    $breakpoint: map-get($breakpoints, $bpname);
+    @if $breakpoint == null {
+        $breakpoint: $bpname;
+    }
+    @media only screen and (min-width: $breakpoint) {
+        @content;
+    }
+}
+
+@mixin below($bpname) {
+    $breakpoint: map-get($breakpoints, $bpname);
+    @if $breakpoint == null {
+        $breakpoint: $bpname;
+    }
+    @media not screen and (min-width: $breakpoint) {
+        @content;
+    }
+}

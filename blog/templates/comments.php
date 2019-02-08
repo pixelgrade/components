@@ -40,8 +40,8 @@ if ( post_password_required() ) {
 <div id="comments" class="comments-area  o-wrapper  u-container-width">
 	<div class="u-content-width">
 
-		<input type="checkbox" name="comments-toggle" id="comments-toggle" class="c-comments-toggle__checkbox" checked="checked" />
-		<label for="comments-toggle" class="c-comments-toggle__label">
+		<input type="checkbox" name="comments-toggle" id="comments-toggle" class="c-comments-toggle__checkbox" <?php pixelgrade_comments_toggle_checked_attribute(); ?> />
+		<label for="comments-toggle" class="c-btn c-comments-toggle__label">
 			<span class="c-comments-toggle__icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, 'svg/comments-toggle-icon' ); ?></span>
 			<span class="c-comments-toggle__text">
 			<?php
@@ -110,7 +110,7 @@ if ( post_password_required() ) {
 		$args = array(
 			'class_form'    => 'comment-form  inputs--alt',
 			'comment_field' => '<p class="comment-form-comment"><label for="comment">' . esc_html_x( 'Comment', 'noun', '__components_txtd' ) .
-								'</label><textarea id="comment" class="comment__text" name="comment" cols="45" rows="8" aria-required="true" 
+								'</label><textarea id="comment" class="comment__text" name="comment" cols="45" rows="8" aria-required="true"
 			                    placeholder="' . esc_html__( 'Your comment...', '__components_txtd' ) . '">' .
 								'</textarea></p>',
 			'submit_button' => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',

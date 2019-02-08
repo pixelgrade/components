@@ -21,7 +21,7 @@ $transition--default: all 0.3s ease-in-out !default;
 $transition--micro: 0.15s !default;
 $transition--macro: 0.3s !default;
 
-$content-selector: '.u-content-width > :not(.wp-block-image):not([class*="align"]):not([class*="gallery"]):not(blockquote)' !default;
+$content-selector: '.u-content-width > :not([class*="align"]):not([class*="gallery"])' !default;
 $content-wrapper-selector: '.entry-content' !default;
 
 $color-white:   #FFFFFF !default;

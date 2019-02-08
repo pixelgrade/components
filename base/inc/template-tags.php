@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -584,5 +583,28 @@ if ( ! function_exists( 'pixelgrade_do_fake_loop' ) ) {
 			 * @see Pixelgrade_Custom_Loops_For_Pages
 			 */
 		endwhile;
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_is_active_sidebar' ) ) {
+	/**
+	 * Determines whether a sidebar is in use.
+	 *
+	 * This is a modified version of the core template tag is_active_sidebar() due to the fact that it conflicted with
+	 * the Customizer logic for displaying available widget areas. See WP_Customize_Widgets::tally_sidebars_via_is_active_sidebar_calls()
+	 *
+	 * Also see this discussion: https://core.trac.wordpress.org/ticket/39087#comment:12
+	 *
+	 * @param string|int $index Sidebar name, id or number to check.
+	 *
+	 * @return bool true if the sidebar is in use, false otherwise.
+	 */
+	function pixelgrade_is_active_sidebar( $index ) {
+		$index             = ( is_int( $index ) ) ? "sidebar-$index" : sanitize_title( $index );
+		$sidebars_widgets  = wp_get_sidebars_widgets();
+		$is_active_sidebar = ! empty( $sidebars_widgets[ $index ] );
+
+		// We have simply omitted to apply the "is_active_sidebar" filter.
+		return $is_active_sidebar;
 	}
 }

@@ -5,7 +5,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Portfolio
- * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

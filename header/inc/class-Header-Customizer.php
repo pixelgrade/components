@@ -5,7 +5,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -54,7 +53,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		 * 'panel'          => $panel_id,
 		 * 'capability'     => 'edit_theme_options', // what capabilities the current logged in user needs to be able to see this section
 		 * 'theme_supports' => '', // if the theme needs to declare some theme-supports for this section to be shown
-		 * 'title'          => __( 'Title Section is required', '' ),
+		 * 'title'          => esc_html__( 'Title Section is required', '' ),
 		 * 'description'    => '',
 		 * 'type'           => 'default',
 		 * 'description_hidden' => false, // If the description should be hidden behind a (?) bubble
@@ -204,7 +203,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 						'type'        => 'range',
 						'label'       => esc_html__( 'Navigation Link Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your navigation.', '__components_txtd' ),
-						'live'        => false,
+						'live'        => true,
 						'default'     => null, // this should be set by the theme (previously 40)
 						'input_attrs' => array(
 							'min'          => 12,
@@ -218,6 +217,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 								'selector'        => '.c-navbar ul',
 								'unit'            => 'px',
 								'callback_filter' => 'typeline_negative_spacing_cb',
+								'negative_value'  => true,
 							),
 							array(
 								'property'        => 'margin-left',

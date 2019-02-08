@@ -7,7 +7,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Featured-Image
- * @version    1.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

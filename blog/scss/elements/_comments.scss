@@ -18,13 +18,18 @@
     @include spacing(margin-left, 3rem);
     @include spacing(margin-top, 2rem);
 
-    @include below(lap) {
+    .children {
       margin-left: 0;
+    }
+
+    @include below(lap) {
+      margin-left: 20px;
     }
   }
 }
 
 .comment-list {
+  @include spacing(margin, 4rem 0);
 
   &, ul, ol {
     list-style: none;
@@ -57,11 +62,12 @@
 .comment__body {
 
   > * + * {
-    @include spacing(padding-top, 1rem);
+    @include spacing(padding-top, 0.5rem);
   }
 }
 
 .comment__avatar {
+  margin-right: 20px;
   flex: 0 0 auto;
   border-radius: 50%;
   overflow: hidden;
@@ -69,6 +75,26 @@
   .avatar {
     display: block;
     margin: 0;
+  }
+
+  @include below(lap) {
+    max-width: 32px;
+  }
+}
+
+// Should be in Customizer under H6 field
+.comment__metadata,
+.comment-reply-title,
+.edit-link,
+.reply,
+.logged-in-as {
+  a {
+    @include leading-map($h6);
+    opacity: 0.6;
+
+    .u-underlined-links & {
+      text-decoration: none;
+    }
   }
 }
 
@@ -91,9 +117,6 @@
 // Fade out the H6 Style
 .comment__metadata a,
 .reply.reply a {
-    opacity: 0.5;
-    font-weight: normal;
-    letter-spacing: 0.1em;
     transition: all .2s ease;
 
     &:hover {
@@ -101,23 +124,58 @@
     }
 }
 
+//.c-comments-toggle__label {
+//  @include btn;
+//  display: block;
+//  background-color: $theme-text-color;
+//}
+
+.comment__content {
+  @include leading-map((
+    font-size: 15px,
+    line-height: (25/15)
+  ));
+}
+
+.comment-reply-title[class] {
+  @include spacing(margin-bottom, 0.5rem);
+}
+
+.comment-reply-title {
+  small {
+    font: inherit;
+
+  }
+}
+
 .pingback,
 .trackback {
 }
 
 .comment__author {
+  @include leading-map(map-merge($h4, (
+    spacing-bottom: false
+  )));
+
+  .u-underlined-links & a {
+    text-decoration: none;
+  }
 }
 
 .bypostauthor {
   color: inherit;
+
+  .comment__author {
+    color: $theme-accent-color;
+  }
 }
 
 .says {
   display: none;
 }
 
-@include below(lap) {
 
+@include below(lap) {
   .c-author {
     text-align: center;
   }
@@ -127,3 +185,5 @@
     margin-right: auto;
   }
 }
+
+

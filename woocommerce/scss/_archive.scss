@@ -1,0 +1,60 @@
+// remove max width from product archive shortcode
+// used $content-selector in order to have a selector with greater specificity
+
+// #{$content-selector}.woocommerce {
+.woocommerce-product-archive {
+    max-width: none;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    > * {
+        flex: 1 0 100%;
+    }
+
+    > .woocommerce-result-count,
+    > .woocommerce-ordering {
+        flex: 0 0 auto;
+    }
+}
+
+.woocommerce-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 0;
+    @include spacing(margin-left, -20px);
+    list-style: none;
+
+    > * {
+        @include spacing(margin-left, 20px);
+    }
+
+    .u-underlined-links & {
+        a {
+            text-decoration: none;
+        }
+
+        a:hover,
+        .active {
+            text-decoration: underline;
+        }
+    }
+}
+
+.woocommerce-header {
+    @include spacing(padding-bottom, 20px);
+}
+
+.entry-content {
+    > .woocommerce {
+        @include spacing(margin-bottom, 40px);
+    }
+}
+
+.c-card__title mark {
+    background: none;
+    color: inherit;
+}

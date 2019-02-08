@@ -9,6 +9,7 @@ export interface JQueryExtended extends JQuery {
   masonry?( options?: any, elements?: any, isStill?: boolean );
   select2?( params?: any );
   slick?( params?: any );
+  splice?( start?: any, end?: any );
 }
 
 export class BaseTheme {

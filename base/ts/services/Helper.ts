@@ -215,9 +215,9 @@ export class Helper {
   public static fitText( $el: JQuery ) {
     const currentFontSize = parseFloat( $el.css( 'fontSize' ) );
     const currentLineHeight = parseFloat( $el.css( 'lineHeight' ) );
-    const parentHeight = $el.parent().outerHeight() || 1;
+    const height = $el.outerHeight() || currentLineHeight;
 
-    $el.css( 'fontSize', currentFontSize * parentHeight / currentLineHeight );
+    $el.css( 'fontSize', currentFontSize * height / currentLineHeight );
   }
 
 }

@@ -1,0 +1,10 @@
+.c-btn--sale-flash {
+    position: absolute;
+    @include spacing(top, 1rem);
+    @include spacing(left, 1rem);
+    z-index: 10;
+    padding: 0.6em 1.1em 0.7em 1.2em;
+
+    // avoid hover styles inherited from .c-btn
+    pointer-events: none;
+}

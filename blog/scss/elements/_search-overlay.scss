@@ -1,0 +1,145 @@
+$toolbar-width: 100px !default;
+$header-mobile-height: 100px !default;
+
+.c-search-overlay {
+    padding: 24px;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: map_get($zindex, modal) + 200;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition--macro ease-in-out;
+
+    @include wp-offset();
+
+    .show-search-overlay & {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &__close-button {
+        @include button-reset;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: $header-mobile-height;
+        height: $header-mobile-height;
+
+        cursor: pointer;
+        color: inherit;
+
+        &:before,
+        &:after {
+            content: "";
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 2em;
+            height: 2em;
+
+            margin-top: -1em;
+            margin-left: -1em;
+
+            transform: rotate(45deg);
+            background-color: currentColor;
+        }
+
+        &:before {
+            height: 2px;
+            margin-top: -1px;
+        }
+
+        &:after {
+            width: 2px;
+            margin-left: -1px;
+        }
+    }
+
+    .search-field {
+        padding: 0;
+        border: 0;
+
+        color: $page-title-color;
+        background-color: transparent;
+    }
+
+    @include placeholder {
+        font: inherit;
+        color: inherit;
+        opacity: 1;
+    }
+
+    .search-submit {
+        display: none;
+    }
+
+    @include above(lap) {
+        padding: 8rem;
+
+        &__description {
+            font-size: 20px;
+        }
+
+        .search-field[class] {
+            font-size: 100px;
+        }
+    }
+}
+
+body.show-search-overlay {
+    overflow: hidden;
+}
+
+.search-trigger[class] {
+    grid-column: 31 / span 3;
+    grid-row: 1 / span 1;
+
+    z-index: 200;
+    color: $theme-accent-light-color;
+
+    svg {
+        display: block;
+        width: 20px;
+        height: 21px;
+    }
+
+    button {
+        padding: 0;
+        border: 0;
+        margin: 0;
+        background: none;
+        color: inherit;
+    }
+
+    @include below(lap) {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+
+        background: $theme-border-color;
+        color: $theme-accent-light-color;
+
+        .c-noto--header & {
+            display: none;
+        }
+    }
+
+    @include above(lap) {
+        .c-noto--body & {
+            display: none;
+        }
+    }
+}

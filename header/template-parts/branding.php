@@ -14,7 +14,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Header
- * @version    1.0.1
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php } ?>
 
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+		<a class="c-logo__title" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php if ( is_front_page() || is_home() ) : ?>
 				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
 			<?php else : ?>

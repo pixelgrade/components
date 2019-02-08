@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Footer
- * @version     1.1.6
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -194,7 +193,7 @@ function pixelgrade_footer_the_back_to_top_link() {
 function pixelgrade_footer_get_back_to_top_link() {
 	$option = pixelgrade_option( 'footer_hide_back_to_top_link', false );
 	if ( empty( $option ) ) {
-		return '<a class="back-to-top" href="#">' . esc_html__( 'Back to Top', '__components_txtd' ) . '</a>';
+		return '';
 	}
 
 	return '';
@@ -203,41 +202,8 @@ function pixelgrade_footer_get_back_to_top_link() {
 /**
  * Display the footer copyright.
  */
-function pixelgrade_footer_the_copyright() {
-	$copyright_text = pixelgrade_footer_get_copyright_content();
-
-	$output = '';
-	if ( ! empty( $copyright_text ) ) {
-		$output      .= '<div class="c-footer__copyright-text">' . PHP_EOL;
-		$output      .= $copyright_text . PHP_EOL;
-		$hide_credits = pixelgrade_option( 'footer_hide_credits', false );
-		if ( empty( $hide_credits ) ) {
-			$output .= '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
-		}
-		$output .= '</div>' . PHP_EOL;
-	}
-
-	echo apply_filters( 'pixelgrade_footer_the_copyright', $output );
-}
-
-/**
- * Get the footer copyright content (HTML or simple text).
- * It already has do_shortcode applied.
- *
- * @return bool|string
- */
 function pixelgrade_footer_get_copyright_content() {
-	$copyright_text = pixelgrade_option( 'copyright_text', esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ) );
-
-	if ( ! empty( $copyright_text ) ) {
-		// We need to parse any tags present
-		$copyright_text = pixelgrade_parse_content_tags( $copyright_text );
-
-		// Finally process any shortcodes that might be in there
-		return do_shortcode( $copyright_text );
-	}
-
-	return '';
+	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/?utm_source=felt-lite-clients&utm_medium=footer&utm_campaign=felt-lite" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
 }
 
 /**

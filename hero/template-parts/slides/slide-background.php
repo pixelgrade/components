@@ -24,7 +24,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Hero
- * @version     1.0.0
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -40,18 +40,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 * pixelgrade_hero_before_background hook.
 	 */
 	do_action( 'pixelgrade_hero_before_background', $location, $slide, $slide_index );
-	?>
 
-	<?php
 	// Get the background image opacity meta value
 	$hero_image_opacity = get_post_meta( $slide['source_post_id'], '_hero_image_opacity', true );
 
 	// Output the background of the slide
 	// For featured projects, it can only handle the featured image of each project
 	pixelgrade_hero_the_slide_background( $slide, $hero_image_opacity );
-	?>
 
-	<?php
 	/**
 	 * pixelgrade_hero_after_background hook.
 	 */

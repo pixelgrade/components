@@ -1,16 +1,8 @@
 .screen-reader-text {
-  clip: rect(1px, 1px, 1px, 1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
   clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-
-  overflow: hidden;
-
-  padding: 0 !important;
-  border: 0 !important;
-  margin: 0 !important;
-
-  position: absolute;
-
-  word-wrap: normal !important;
+  padding: 0!important;
+  border: 0!important;
+  margin: 0!important;
 }

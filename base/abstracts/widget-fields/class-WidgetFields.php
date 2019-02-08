@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -58,8 +57,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 *
 		 * @param string $id The widget id.
 		 * @param string $name The widget name.
-		 * @param array  $widget_ops The widget options.
-		 * @param array  $config The widget config.
+		 * @param array $widget_ops The widget options.
+		 * @param array $config The widget config.
 		 */
 		public function __construct( $id, $name = '', $widget_ops = array(), $config = array() ) {
 			if ( ! empty( $config ) ) {
@@ -123,12 +122,19 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			if ( $this->isFieldTypeUsed( 'select2' ) ) {
 				wp_enqueue_script( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/js/select2.min.js' ), array( 'jquery' ), '4.0.5' );
-				wp_enqueue_script( 'select2-sortable', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2v4-sortable/select2-sortable.js' ), array( 'jquery', 'select2' ), '4.0.5' );
+				wp_enqueue_script( 'select2-sortable', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2v4-sortable/select2-sortable.js' ), array(
+					'jquery',
+					'select2'
+				), '4.0.5' );
 				wp_enqueue_style( 'select2', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/vendor/select2/css/select2.min.css' ), array(), 20171111 );
 			}
 
 			// Enqueue the needed admin scripts.
-			wp_enqueue_script( 'pixelgrade-widget-fields-js', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/widget-fields.js' ), array( 'jquery', 'media-upload', 'media-views' ), 20171111 );
+			wp_enqueue_script( 'pixelgrade-widget-fields-js', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( Pixelgrade_Base::COMPONENT_SLUG ) . 'abstracts/widget-fields/widget-fields.js' ), array(
+				'jquery',
+				'media-upload',
+				'media-views'
+			), 20171111 );
 
 			wp_localize_script(
 				'pixelgrade-widget-fields-js', 'pixelgradeWidgetFields', array(
@@ -220,7 +226,10 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 							$state_field_name = "widget-section-state[{$section_id}]";
 							$state_value      = $this->getSectionDefaultState( $section_id );
 							// In case this is a AJAX request (like when saving the widget) - keep the current state so we don't confuse the user.
-							if ( wp_doing_ajax() && isset( $_REQUEST['widget-section-state'][ $section_id ] ) && in_array( $_REQUEST['widget-section-state'][ $section_id ], array( 'open', 'closed' ) ) ) {
+							if ( wp_doing_ajax() && isset( $_REQUEST['widget-section-state'][ $section_id ] ) && in_array( $_REQUEST['widget-section-state'][ $section_id ], array(
+									'open',
+									'closed'
+								) ) ) {
 								$state_value = $_REQUEST['widget-section-state'][ $section_id ];
 							}
 
@@ -332,8 +341,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the text field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -356,7 +365,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output  = '';
+			$output = '';
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -379,8 +388,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the textarea field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -408,7 +417,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output  = '';
+			$output = '';
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -432,8 +441,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the number field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -471,7 +480,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output  = '';
+			$output = '';
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -494,8 +503,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the range field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -533,7 +542,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output  = '';
+			$output = '';
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -557,8 +566,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the checkbox field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -581,7 +590,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output  = '';
+			$output = '';
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			$output .= '<input class="checkbox" type="checkbox" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" value="1" ' . checked( $value, 1, false ) . '" />' . PHP_EOL;
@@ -604,8 +613,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the select field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -620,7 +629,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// If we have been given a callback we will rely on it to generate the markup.
 			if ( ! empty( $field_config['callback'] ) && is_callable( $field_config['callback'] ) ) {
-				$output = call_user_func_array( $field_config['callback'], array( $value, $field_name, $field_config ) );
+				$output = call_user_func_array( $field_config['callback'], array(
+					$value,
+					$field_name,
+					$field_config
+				) );
 			} else {
 
 				// Now for attributes.
@@ -681,8 +694,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the select2 field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -697,7 +710,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// If we have been given a callback we will rely on it to generate the markup.
 			if ( ! empty( $field_config['callback'] ) && is_callable( $field_config['callback'] ) ) {
-				$output = call_user_func_array( $field_config['callback'], array( $value, $field_name, $field_config ) );
+				$output = call_user_func_array( $field_config['callback'], array(
+					$value,
+					$field_name,
+					$field_config
+				) );
 			} else {
 
 				// Now for attributes.
@@ -758,8 +775,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the radio group field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -774,7 +791,11 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// If we have been given a callback we will rely on it to generate the markup.
 			if ( ! empty( $field_config['callback'] ) && is_callable( $field_config['callback'] ) ) {
-				$output = call_user_func_array( $field_config['callback'], array( $value, $field_name, $field_config ) );
+				$output = call_user_func_array( $field_config['callback'], array(
+					$value,
+					$field_name,
+					$field_config
+				) );
 			} else {
 
 				// Now for attributes.
@@ -818,8 +839,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Generate the image field markup.
 		 *
 		 * @param string $field_name The name if the field.
-		 * @param array  $field_config The field config.
-		 * @param array  $instance The current widget instance details.
+		 * @param array $field_config The field config.
+		 * @param array $instance The current widget instance details.
 		 *
 		 * @return string The field HTML markup.
 		 */
@@ -854,7 +875,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$id_prefix = $this->get_field_id( $field_name );
 
 			// Lets generate the markup.
-			$output  = '';
+			$output = '';
 			$output .= '<div class="pixelgrade_image_field pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
 
 			if ( ! empty( $label ) ) {
@@ -911,7 +932,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Get the field class when a field uses the display_on logic.
 		 *
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return string
 		 */
@@ -928,7 +949,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * Get the field attributes when a field uses the display_on logic.
 		 *
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return string
 		 */
@@ -970,6 +991,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * @param array $new_instance New settings for this instance as input by the user via
 		 *                            WP_Widget::form().
 		 * @param array $old_instance Old settings for this instance.
+		 *
 		 * @return array Updated settings to save.
 		 */
 		public function update( $new_instance, $old_instance ) {
@@ -1120,9 +1142,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		/**
 		 * Sanitize a checkbox field value.
 		 *
-		 * @param mixed  $value
+		 * @param mixed $value
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return bool
 		 */
@@ -1133,9 +1155,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		/**
 		 * Sanitize a positive int.
 		 *
-		 * @param mixed  $value
+		 * @param mixed $value
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return int
 		 */
@@ -1146,9 +1168,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		/**
 		 * Sanitize a text field.
 		 *
-		 * @param mixed  $value
+		 * @param mixed $value
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return string
 		 */
@@ -1159,9 +1181,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		/**
 		 * Sanitize a textarea field.
 		 *
-		 * @param mixed  $value
+		 * @param mixed $value
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return string
 		 */
@@ -1209,9 +1231,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		/**
 		 * Sanitize a select field.
 		 *
-		 * @param mixed  $value
+		 * @param mixed $value
 		 * @param string $field_name
-		 * @param array  $field_config
+		 * @param array $field_config
 		 *
 		 * @return mixed
 		 */
@@ -1260,8 +1282,9 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * like in the case for multiple selects or select2 with multiple.
 		 *
 		 * @param mixed $selected One or more of the values to compare
-		 * @param mixed $current  (true) The other value to compare if not just true
-		 * @param bool  $echo     Whether to echo or just return the string
+		 * @param mixed $current (true) The other value to compare if not just true
+		 * @param bool $echo Whether to echo or just return the string
+		 *
 		 * @return string html attribute or empty string
 		 */
 		public function selected( $selected, $current = true, $echo = true ) {
@@ -1319,7 +1342,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * We check the $config and determine if this field type is used by any active field.
 		 *
 		 * @param string $field_type
-		 * @param array  $fields
+		 * @param array $fields
 		 *
 		 * @return bool
 		 */
@@ -1449,18 +1472,19 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 * @param array $instance The widget instance data.
 		 */
 		public function sidebarNotSupportedMessage( $args, $instance ) {
-			echo $args['before_widget'];
-			?>
 
-			<div class="c-alert  c-alert--danger">
-				<h4 class="c-alert__title"><?php esc_html_e( '🤦 Widget Type Not Supported Here', '__theme_txtd' ); ?></h4>
-				<div class="c-alert__body">
-					<p><?php printf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic. You can try to move it to another section or just replace it.', '__theme_txtd' ), '<em>' . $args['widget_name'] . '</em>' ); ?></p>
-				</div>
-			</div>
+			$html_message = '<div class="c-alert  c-alert--danger">
+                    <h4 class="c-alert__title">'. esc_html__( '🤦 Widget Type Not Supported Here', '__theme_txtd' ) . '</h4>
+                    <div class="c-alert__body">
+                        <p>'.  sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__theme_txtd' ), '<em>' . $args['widget_name'] . '</em>' ) .'</p>
+                    </div>
+                </div>';
 
-			<?php
-			echo $args['after_widget'];
+			// Let others change this message depending on widget args and instance.
+			$html_message = apply_filters( 'pixelgrade_sidebar_not_supported_message', $html_message, $args, $instance );
+
+			echo $args['before_widget'] . $html_message . $args['after_widget'];
+
 		}
 
 		/**

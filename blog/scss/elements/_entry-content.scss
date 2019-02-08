@@ -24,9 +24,6 @@ $meta-tags-items-font: () !default;
   flex-basis: 100%;
 }
 
-.meta__item--button {
-}
-
 .meta__item--text:not(:last-child):after {
   content: ",";
 }

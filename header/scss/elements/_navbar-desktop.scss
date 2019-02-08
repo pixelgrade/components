@@ -8,7 +8,6 @@
 .u-header-height {
   height: $header-height;
 }
-
 .c-navbar {
   @extend %flex-center-all;
 
@@ -30,11 +29,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  &:first-child:not(:last-child),
-  &:last-child:not(:first-child) {
-    flex: 1 1 0;
-  }
 
   .c-navbar > & {
     display: none;

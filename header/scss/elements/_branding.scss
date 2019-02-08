@@ -1,11 +1,12 @@
 // Set if the Logo + Title + Description are laying out horizontally (eg. Vasco) or vertically (eg. Julia)
-$branding-horizontal: true !default; 
+$branding-horizontal: false !default;
 
 .c-branding {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  flex-direction: column;
 
   @if $branding-horizontal {
 

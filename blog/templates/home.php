@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * The template for displaying blog page.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
@@ -28,25 +27,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Let the template parts know about our location
 $location = pixelgrade_set_location( 'page blog' );
 
-pixelgrade_get_header(); ?>
+pixelgrade_get_header();
 
-<?php
 /**
  * pixelgrade_before_primary_wrapper hook.
  *
  * @hooked nothing() - 10 (outputs nothing)
  */
 do_action( 'pixelgrade_before_primary_wrapper', $location );
-?>
 
-<?php pixelgrade_render_block( 'blog/home' ); ?>
+pixelgrade_render_block( 'blog/home' );
 
-<?php
 /**
  * pixelgrade_after_primary_wrapper hook.
  */
 do_action( 'pixelgrade_after_primary_wrapper', $location );
-?>
 
-<?php
 pixelgrade_get_footer();

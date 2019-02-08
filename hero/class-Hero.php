@@ -8,7 +8,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Hero
- * @version     1.2.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

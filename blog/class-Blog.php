@@ -8,7 +8,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
- * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -100,442 +99,463 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		 * - if you define unnamed wrappers before a named wrapper in an extending block, we will keep the relative order
 		 *   by calculating the priority for the unnamed wrappers.
 		 */
-	    $this->config['blocks'] = array(
+		$this->config['blocks'] = array(
 
-            // default wrappers
-            'default' => array(
-                'type'     => 'layout',
-                'wrappers' => array(
-                    'primary' => array(
-                        'id'       => 'primary',
-                        'classes'  => 'content-area',
-                        'priority' => 10,
-                    ),
-                    'main'    => array(
-                        'id'         => 'main',
-                        'classes'    => 'site-main  u-content-top-spacing  u-content-bottom-spacing',
-                        'attributes' => array( 'role' => 'main', ),
-                        'priority'   => 20,
-                    ),
-                ),
-            ),
+			// default wrappers
+			'default'            => array(
+				'type'     => 'layout',
+				'wrappers' => array(
+					'primary' => array(
+						'id'       => 'primary',
+						'classes'  => 'content-area',
+						'priority' => 10,
+					),
+					'main'    => array(
+						'id'         => 'main',
+						'classes'    => 'site-main  u-content-top-spacing  u-content-bottom-spacing',
+						'attributes' => array( 'role' => 'main', ),
+						'priority'   => 20,
+					),
+				),
+			),
 
-            // Default container wrappers
-            'container' => array(
-                'type'     => 'layout',
-                'wrappers' => array(
-                    'sides-spacing' => array(
-                        'classes'  => 'u-container-sides-spacing',
-                        'priority' => 110,
-                    ),
-                    'wrapper'       => array(
-                        'classes'  => 'o-wrapper u-container-width',
-                        'priority' => 120,
-                    ),
-                ),
-            ),
+			// Default container wrappers
+			'container'          => array(
+				'type'     => 'layout',
+				'wrappers' => array(
+					'sides-spacing' => array(
+						'classes'  => 'u-container-sides-spacing',
+						'priority' => 110,
+					),
+					'wrapper'       => array(
+						'classes'  => 'o-wrapper u-container-width',
+						'priority' => 120,
+					),
+				),
+			),
 
-            // sidebar
-            'sidebar'   => array(
-	            'type'     => 'callback',
-	            'callback' => 'pixelgrade_get_sidebar',
-            ),
+			// sidebar
+			'sidebar'            => array(
+				'type'     => 'callback',
+				'callback' => 'pixelgrade_get_sidebar',
+			),
 
-            // sidebar
-            'sidebar-below-post'   => array(
-                'type'     => 'callback',
-                'callback' => 'pixelgrade_get_sidebar',
-                'args'     => array( 'below-post' ),
-            ),
+			// sidebar
+			'sidebar-below-post' => array(
+				'type'     => 'callback',
+				'callback' => 'pixelgrade_get_sidebar',
+				'args'     => array( 'below-post' ),
+			),
 
-            // default loop
-            'loop'      => array(
-                'blocks' => array(
-                	'loop-posts' => array(
-	                    'type'     => 'loop',
-	                    'wrappers' => array(
-		                    array(
-		                    	'id' => array(
-		                    		'callback' => 'pixelgrade_get_posts_container_id',
-			                    ),
-			                    'classes'  => array(
-				                    'callback' => 'pixelgrade_get_blog_grid_class',
-			                    ),
-			                    'priority' => 220,
-		                    ),
-	                    ),
-	                    'blocks'   => array(
-		                    'grid-item' => array(
-			                    'type'      => 'template_part',
-			                    'templates' => array(
-				                    array(
-					                    'component_slug' => self::COMPONENT_SLUG,
-					                    'slug'           => 'content'
-				                    ),
-			                    ),
-		                    ),
-	                    ),
-                    ),
-                    'loop-pagination' => array(
-                    	'type' => 'callback',
-	                    'callback' => 'pixelgrade_the_posts_pagination',
-	                    'args' =>array(
-		                    'end_size'           => 1,
-		                    'mid_size'           => 2,
-		                    'type'               => 'list',
-		                    'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
-		                    'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
-		                    'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
-	                    ),
-                    ),
-                ),
-                'checks' => array(
-                    array(
-	                    'callback' => 'have_posts',
-	                    'args'     => array(),
-                    ),
-                ),
-            ),
+			'grid-item' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'content'
+					),
+				),
+			),
 
-            // Default for no posts in loop
-            'loop-none'      => array(
-                'type'      => 'template_part',
-                'templates' => array(
-	                array(
-		                'component_slug' => self::COMPONENT_SLUG,
-		                'slug'           => 'content',
-		                'name'           => 'none',
-	                ),
-                ),
-                'checks' => array(
-	                array(
-		                'callback' => 'have_posts',
-		                'args'     => array(),
-		                'compare'  => 'NOT',
-	                ),
-                ),
-            ),
+			'loop-posts' => array(
+				'wrappers' => array(
+					array(
+						'id'       => array(
+							'callback' => 'pixelgrade_get_posts_container_id',
+						),
+						'classes'  => array(
+							'callback' => 'pixelgrade_get_blog_grid_class',
+						),
+						'priority' => 220,
+					),
+				),
+			),
 
-            // layout
-            'layout' => array(
-                'type'     => 'layout',
-                'wrappers' => array(
-                    'layout' => array(
-                        'priority' => 210,
-                        'classes'  => array( 'o-layout' ),
-                    ),
-                ),
-            ),
+			'loop-pagination' => array(
+				'type'     => 'callback',
+				'callback' => 'pixelgrade_the_posts_pagination',
+				'args'     => array(
+					'end_size'           => 1,
+					'mid_size'           => 2,
+					'type'               => 'list',
+					'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+					'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+					'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+				),
+			),
 
-            'main'   => array(
-                'type'     => 'layout',
-                'wrappers' => array(
-                    'main' => array(
-                        'priority' => 310,
-                        'classes'  => array( 'o-layout__main' ),
-                    ),
-                ),
-            ),
+			// default loop
+			'loop'            => array(
+				'blocks' => array(
+					'posts' => array(
+						'type'   => 'loop',
+						'extend' => 'blog/loop-posts',
+						'blocks' => array(
+							'blog/grid-item'
+						),
+					),
+					'blog/loop-pagination',
+				),
+				'checks' => array(
+					array(
+						'callback' => 'have_posts',
+						'args'     => array(),
+					),
+				),
+			),
 
-            'side'   => array(
-                'type'     => 'layout',
-                'wrappers' => array(
-                    'side' => array(
-                        'priority' => 320,
-                        'tag' => 'aside',
-                        'id' => 'secondary',
-                        'classes'  => array( 'o-layout__side  widget-area  widget-area--side' ),
-                        'attributes' => array(
-                        	'role' => 'complementary',
-                        ),
-                    ),
-                ),
-                'checks' => array(
-                    'callback' => 'is_active_sidebar',
-                    'args' => array(
-                        'sidebar-1'
-                    ),
-                ),
-            ),
+			// Default for no posts in loop
+			'loop-none'       => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'content',
+						'name'           => 'none',
+					),
+				),
+				'checks'    => array(
+					array(
+						'callback' => 'have_posts',
+						'args'     => array(),
+						'compare'  => 'NOT',
+					),
+				),
+			),
 
-            'entry-header' => array(
-                'wrappers' => array(
-	                'header' => array(
-		                'tag'     => 'header',
-		                'classes' => 'entry-header',
-	                ),
-                ),
-            ),
+			// layout
+			'layout'          => array(
+				'type'     => 'layout',
+				'wrappers' => array(
+					'layout' => array(
+						'priority' => 210,
+						'classes'  => array( 'o-layout' ),
+					),
+				),
+			),
 
-            'entry-header-single' => array(
-                'extend' => 'blog/entry-header',
-                'type'      => 'template_part',
-                'templates' => array(
-	                array(
-		                'component_slug' => self::COMPONENT_SLUG,
-		                'slug' => 'entry-header',
-		                'name' => 'single',
-	                ),
-                ),
-            ),
+			'main' => array(
+				'type'     => 'layout',
+				'wrappers' => array(
+					'main' => array(
+						'priority' => 310,
+						'classes'  => array( 'o-layout__main' ),
+					),
+				),
+			),
 
-            'entry-header-page' => array(
-                'extend' => 'blog/entry-header',
-                'type'      => 'template_part',
-                'templates' => array(
-	                array(
-		                'component_slug' => self::COMPONENT_SLUG,
-		                'slug' => 'entry-header',
-		                'name' => 'page',
-	                ),
-                ),
-                'wrappers' => array(
-	                'header' => array(
-		                'extend_classes' => 'u-content-width',
-	                ),
-                ),
-            ),
+			'side' => array(
+				'type'     => 'layout',
+				'wrappers' => array(
+					'side' => array(
+						'priority'   => 320,
+						'tag'        => 'aside',
+						'id'         => 'secondary',
+						'classes'    => array( 'o-layout__side  widget-area  widget-area--side' ),
+						'attributes' => array(
+							'role' => 'complementary',
+						),
+					),
+				),
+				'checks'   => array(
+					array(
+						'callback' => 'pixelgrade_is_active_sidebar',
+						'args'     => array(
+							'sidebar-1'
+						),
+					),
+				),
+			),
 
-            'entry-header-archive' => array(
-                'type'      => 'template_part',
-                'templates' => array(
-	                array(
-		                'component_slug' => self::COMPONENT_SLUG,
-		                'slug' => 'entry-header',
-		                'name' => 'archive',
-	                ),
-                ),
-            ),
+			'entry-header' => array(
+				'wrappers' => array(
+					'header' => array(
+						'tag'     => 'header',
+						'classes' => 'entry-header',
+					),
+				),
+			),
 
-            'entry-header-search' => array(
-                'type'      => 'template_part',
-                'templates' => array(
-	                array(
-		                'component_slug' => self::COMPONENT_SLUG,
-		                'slug' => 'entry-header',
-		                'name' => 'search',
-	                ),
-                ),
-            ),
+			'entry-header-single' => array(
+				'extend'    => 'blog/entry-header',
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'entry-header',
+						'name'           => 'single',
+					),
+				),
+			),
 
-            'index' => array(
-                'extend'   => 'blog/default',
-                'wrappers' => array(
-                    'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
-                    'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
-                ),
-                'blocks'   => array(
-                    'layout' => array(
-                        'extend' => 'blog/layout',
-                        'wrappers' => array(
-                        	'layout' => array(
-                        		'extend_classes' => 'o-layout--blog',
-                            ),
-                        ),
-                        'blocks' => array(
-                            'main' => array(
-                                'extend' => 'blog/main',
-                                'blocks' => array(
-                                	'blog/loop', // These two are mutually exclusive
-                                    'blog/loop-none',
-                                ),
-                            ),
-                            'side' => array(
-                                'extend' => 'blog/side',
-                                'blocks' => array( 'blog/sidebar' ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
+			'entry-header-page' => array(
+				'extend'    => 'blog/entry-header',
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'entry-header',
+						'name'           => 'page',
+					),
+				),
+				'wrappers'  => array(
+					'header' => array(
+						'extend_classes' => 'u-content-width',
+					),
+				),
+			),
 
-            'home' => array(
-                'extend' => 'blog/index',
-            ),
+			'entry-header-archive' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'entry-header',
+						'name'           => 'archive',
+					),
+				),
+			),
 
-            'archive' => array(
-                'extend'   => 'blog/default',
-                'wrappers' => array(
-	                'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
-	                'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
-                ),
-                'blocks'   => array(
-	                'layout' => array(
-		                'extend' => 'blog/layout',
-		                'wrappers' => array(
-			                'layout' => array(
-				                'extend_classes' => 'o-layout--blog'
-			                ),
-		                ),
-		                'blocks' => array(
-			                'main' => array(
-				                'extend' => 'blog/main',
-				                'blocks' => array(
-					                'blog/entry-header-archive',
-					                'blog/loop', // These two are mutually exclusive
-					                'blog/loop-none',
-				                ),
-			                ),
-			                'side' => array(
-				                'extend' => 'blog/side',
-				                'blocks' => array( 'blog/sidebar' ),
-			                ),
-		                ),
-	                ),
-                ),
-            ),
+			'entry-header-search' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'entry-header',
+						'name'           => 'search',
+					),
+				),
+			),
 
-            'search' => array(
-                'extend'   => 'blog/default',
-                'wrappers' => array(
-	                'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
-	                'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
-                ),
-                'blocks'   => array(
-	                'layout' => array(
-		                'extend' => 'blog/layout',
-		                'wrappers' => array(
-			                'layout' => array(
-				                'extend_classes' => 'o-layout--blog',
-			                ),
-		                ),
-		                'blocks' => array(
-			                'main' => array(
-				                'extend' => 'blog/main',
-				                'blocks' => array(
-				                	'blog/entry-header-search',
-					                'blog/loop', // These two are mutually exclusive
-					                'blog/loop-none',
-				                ),
-			                ),
-			                'side' => array(
-				                'extend' => 'blog/side',
-				                'blocks' => array( 'blog/sidebar' ),
-			                ),
-		                ),
-	                ),
-                ),
-            ),
+			'index' => array(
+				'extend'   => 'blog/default',
+				'wrappers' => array(
+					'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
+					'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
+				),
+				'blocks'   => array(
+					'layout' => array(
+						'extend'   => 'blog/layout',
+						'wrappers' => array(
+							'layout' => array(
+								'extend_classes' => 'o-layout--blog',
+							),
+						),
+						'blocks'   => array(
+							'main' => array(
+								'extend' => 'blog/main',
+								'blocks' => array(
+									'blog/loop', // These two are mutually exclusive
+									'blog/loop-none',
+								),
+							),
+							'side' => array(
+								'extend' => 'blog/side',
+								'blocks' => array( 'blog/sidebar' ),
+							),
+						),
+					),
+				),
+			),
 
-            'entry-thumbnail' => array(
-                'type'      => 'template_part',
-                'templates' => array(
-                    array(
-                        'component_slug' => self::COMPONENT_SLUG,
-                        'slug' => 'entry-thumbnail',
-                        'name' => 'single',
-                    ),
-                ),
-            ),
+			'home' => array(
+				'extend' => 'blog/index',
+			),
 
-            'entry-content'   => array(
-                'type'      => 'template_part',
-                'templates' => array(
-                    array(
-                        'component_slug' => self::COMPONENT_SLUG,
-                        'slug' => 'entry-content',
-                        'name' => 'single',
-                    ),
-                ),
-            ),
+			'archive' => array(
+				'extend'   => 'blog/default',
+				'wrappers' => array(
+					'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
+					'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
+				),
+				'blocks'   => array(
+					'layout' => array(
+						'extend'   => 'blog/layout',
+						'wrappers' => array(
+							'layout' => array(
+								'extend_classes' => 'o-layout--blog'
+							),
+						),
+						'blocks'   => array(
+							'main' => array(
+								'extend' => 'blog/main',
+								'blocks' => array(
+									'blog/entry-header-archive',
+									'blog/loop', // These two are mutually exclusive
+									'blog/loop-none',
+								),
+							),
+							'side' => array(
+								'extend' => 'blog/side',
+								'blocks' => array( 'blog/sidebar' ),
+							),
+						),
+					),
+				),
+			),
 
-            'entry-footer' => array(
-                'blocks' => array(
-                    'single' => array(
-                        'type'      => 'template_part',
-                        'templates' => array(
-                            array(
-                                'component_slug' => self::COMPONENT_SLUG,
-                                'slug' => 'entry-footer',
-                                'name' => 'single',
-                            ),
-                        ),
-                        'checks' => array(
-                            'callback' => 'is_single',
-                        )
-                    ),
-                    'page' => array(
-                        'type'      => 'template_part',
-                        'templates' => array(
-                            array(
-                                'component_slug' => self::COMPONENT_SLUG,
-                                'slug' => 'entry-footer',
-                                'name' => 'page',
-                            ),
-                        ),
-                        'checks' => array(
-                            'callback' => 'is_page',
-                        ),
-                    ),
-                ),
-            ),
+			'search' => array(
+				'extend'   => 'blog/default',
+				'wrappers' => array(
+					'sides-spacing' => array( 'classes' => 'u-blog-sides-spacing' ),
+					'wrapper'       => array( 'classes' => 'o-wrapper u-blog-grid-width' ),
+				),
+				'blocks'   => array(
+					'layout' => array(
+						'extend'   => 'blog/layout',
+						'wrappers' => array(
+							'layout' => array(
+								'extend_classes' => 'o-layout--blog',
+							),
+						),
+						'blocks'   => array(
+							'main' => array(
+								'extend' => 'blog/main',
+								'blocks' => array(
+									'blog/entry-header-search',
+									'blog/loop', // These two are mutually exclusive
+									'blog/loop-none',
+								),
+							),
+							'side' => array(
+								'extend' => 'blog/side',
+								'blocks' => array( 'blog/sidebar' ),
+							),
+						),
+					),
+				),
+			),
 
-            'related-posts' => array(
-                'type' => 'template_part',
-                'templates' => array(
-                    array(
-                        'component_slug' => self::COMPONENT_SLUG,
-                        'slug' => 'content-relatedposts',
-                    ),
-                ),
-            ),
+			'entry-thumbnail' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'entry-thumbnail',
+						'name'           => 'single',
+					),
+				),
+			),
 
-            'single' => array(
-                'extend' => 'blog/default',
-                'type' => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
-                'blocks' => array(
-	                'container' => array(
-		                'extend' => 'blog/container',
-		                'blocks' => array(
-			                'blog/entry-header-single',
-			                'blog/entry-thumbnail',
-			                'blog/entry-content',
-			                'sidebar-below-post' => array(
-			                	'blocks' => array(
-			                		'blog/sidebar-below-post',
-				                ),
-				                'wrappers' => array(
-				                	array(
-				                		'classes' => 'entry-aside u-content-width'
-					                ),
-				                ),
-			                ),
-			                'blog/entry-footer',
-		                ),
-	                ),
-	                'blog/related-posts',
-                ),
-            ),
+			'entry-content' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'entry-content',
+						'name'           => 'single',
+					),
+				),
+				'wrappers'  => array(
+					array(
+						'classes' => 'entry-content u-content-width'
+					),
+				),
+			),
 
-            'page' => array(
-                'extend' => 'blog/default',
-                'type' => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
-                'blocks' => array(
-	                'container' => array(
-		                'extend' => 'blog/container',
-		                'blocks' => array(
-			                'layout' => array(
-			                	'extend' => 'blog/layout',
-			                    'blocks' => array(
-			                    	'main' => array(
-			                    	    'extend' => 'blog/main',
-					                    'blocks' => array(
-						                    'blog/entry-header-page',
-						                    'blog/entry-thumbnail',
-						                    'blog/entry-content',
-						                    'blog/entry-footer',
-					                    ),
-				                    ),
-				                    // 'side' => array(
-				                    // 	'extend' => 'blog/side',
-				                    // ),
-			                    ),
-			                ),
-		                ),
-	                ),
-                ),
-            ),
-        );
+			'entry-footer' => array(
+				'blocks' => array(
+					'single' => array(
+						'type'      => 'template_part',
+						'templates' => array(
+							array(
+								'component_slug' => self::COMPONENT_SLUG,
+								'slug'           => 'entry-footer',
+								'name'           => 'single',
+							),
+						),
+						'checks'    => array(
+							'callback' => 'is_single',
+						)
+					),
+					'page'   => array(
+						'type'      => 'template_part',
+						'templates' => array(
+							array(
+								'component_slug' => self::COMPONENT_SLUG,
+								'slug'           => 'entry-footer',
+								'name'           => 'page',
+							),
+						),
+						'checks'    => array(
+							'callback' => 'is_page',
+						),
+					),
+				),
+			),
+
+			'related-posts' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => self::COMPONENT_SLUG,
+						'slug'           => 'content-relatedposts',
+					),
+				),
+				'checks'    => array(
+					array(
+						'callback' => 'pixelgrade_user_has_access',
+						'args'     => array( 'pro-features' )
+					)
+				)
+			),
+
+			'single' => array(
+				'extend' => 'blog/default',
+				'type'   => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
+				'blocks' => array(
+					'container' => array(
+						'extend' => 'blog/container',
+						'blocks' => array(
+							'blog/entry-header-single',
+							'blog/entry-thumbnail',
+							'blog/entry-content',
+							'sidebar-below-post' => array(
+								'blocks'   => array(
+									'blog/sidebar-below-post',
+								),
+								'wrappers' => array(
+									array(
+										'classes' => 'entry-aside u-content-width'
+									),
+								),
+							),
+							'blog/entry-footer',
+						),
+					),
+					'blog/related-posts',
+				),
+			),
+
+			'page' => array(
+				'extend' => 'blog/default',
+				'type'   => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
+				'blocks' => array(
+					'container' => array(
+						'extend' => 'blog/container',
+						'blocks' => array(
+							'layout' => array(
+								'extend' => 'blog/layout',
+								'blocks' => array(
+									'main' => array(
+										'extend' => 'blog/main',
+										'blocks' => array(
+											'blog/entry-header-page',
+											'blog/entry-thumbnail',
+											'blog/entry-content',
+											'blog/entry-footer',
+										),
+									),
+									'side' => array(
+										'extend' => 'blog/side',
+									),
+								),
+							),
+						),
+					),
+				),
+			),
+		);
 
 		/*
 		 * For custom page templates, we can handle two formats:
@@ -571,7 +591,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			// than a latter one when both match their conditions!
 
 			// Note - The _ in front of the key is intentional to bypass PHP's automagical key casting to integer if it is a numerical representation of a number.
-			'_404'     => array(
+			'_404'               => array(
 				// The type of this template.
 				// Possible core values: 'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date',
 				// 'embed', home', 'frontpage', 'page', 'paged', 'search', 'single', 'singular', and 'attachment'.
@@ -619,7 +639,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				// 'function_exists' => array( 'some_function', 'another_function', ),
 				// ),
 			),
-			'frontpage'    => array(
+			'frontpage'          => array(
 				'type'      => array( 'frontpage' ),
 				'checks'    => array(
 					array(
@@ -628,7 +648,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				),
 				'templates' => 'front-page',
 			),
-			'home'    => array(
+			'home'               => array(
 				'type'      => array( 'home' ),
 				'checks'    => array(
 					array(
@@ -637,7 +657,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				),
 				'templates' => 'home',
 			),
-			'single'  => array(
+			'single'             => array(
 				'type'      => 'single',
 				'checks'    => array(
 					'callback' => 'is_single',
@@ -645,7 +665,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				),
 				'templates' => 'single',
 			),
-			'page'    => array(
+			'page'               => array(
 				'type'      => array( 'page' ),
 				'checks'    => array(
 					'callback' => 'is_page',
@@ -653,7 +673,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				),
 				'templates' => 'page',
 			),
-			'archive' => array(
+			'archive'            => array(
 				'type'      => 'archive',
 				'checks'    => array(
 					'callback' => 'is_archive',
@@ -661,7 +681,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				),
 				'templates' => 'archive',
 			),
-			'search'  => array(
+			'search'             => array(
 				'type'      => 'search',
 				'checks'    => array(
 					'callback' => 'is_search',
@@ -672,7 +692,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 			// Add our index at the end to be sure that it is used.
 			// We use it as fallback for all the templates above, much in the same way the WordPress core does it.
-			'index'   => array(
+			'index'              => array(
 				// @todo Need to think about this since it is troublesome (for example a static page as a frontpage).
 //				'type'      => array( 'frontpage', 'home', 'single', 'page', 'archive', 'search', 'index' ),
 				'type'      => array( 'index' ),
@@ -681,11 +701,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 			// Now for some of our own "types" that we use to handle pseudo-templates like `header.php`, `footer.php`
 			// in a standard way
-			'header'  => array(
+			'header'             => array(
 				'type'      => 'header',
 				'templates' => 'header',
 			),
-			'footer'  => array(
+			'footer'             => array(
 				'type'      => 'footer',
 				'templates' => 'footer',
 			),
@@ -693,7 +713,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'type'      => 'sidebar',
 				'templates' => 'sidebar-below-post',
 			),
-			'sidebar' => array(
+			'sidebar'            => array(
 				'type'      => 'sidebar',
 				'templates' => 'sidebar',
 			),
@@ -702,53 +722,60 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		);
 
 		// Configure the sidebars (widget areas) that the blog component uses
-		$this->config['sidebars'] = array(
-			'sidebar-1' => array(
+		$this->config['sidebars']['sidebar-1'] = array(
 				'sidebar_args' => array(
 					'name'          => esc_html__( 'Sidebar', '__components_txtd' ),
-					'id'            => 'sidebar-1', // You can skip this and we will use the sidebar config key as ID
-					'class'         => '', // In case you need some classes added to the sidebar - in the WP Admin only!!!
+					'id'            => 'sidebar-1',
+					// You can skip this and we will use the sidebar config key as ID
+					'class'         => '',
+					// In case you need some classes added to the sidebar - in the WP Admin only!!!
 					'description'   => esc_html__( 'Add widgets here.', '__components_txtd' ),
 					'before_widget' => '<section id="%1$s" class="widget widget--side %2$s">',
 					'after_widget'  => '</section>',
 					'before_title'  => '<h2 class="widget__title h3"><span>',
 					'after_title'   => '</span></h2>',
 				),
-			),
-			'sidebar-2' => array(
-				'sidebar_args' => array(
-					'name'          => esc_html__( 'Below Post', '__components_txtd' ),
-					'id'            => 'sidebar-2',
-					'description'   => esc_html__( 'Add widgets here.', '__components_txtd' ),
-					'before_widget' => '<section id="%1$s" class="widget widget--content %2$s">',
-					'after_widget'  => '</section>',
-					'before_title'  => '<h2 class="widget__title h3"><span>',
-					'after_title'   => '</span></h2>',
-				),
-			),
 		);
+
+		/**
+		 * Add Below Post sidebar in the Pro version of the theme.
+		 */
+		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+
+			$this->config['sidebars']['sidebar-2'] = array(
+					'sidebar_args' => array(
+						'name'          => esc_html__( 'Below Post', '__theme_txtd' ),
+						'id'            => 'sidebar-2',
+						'description'   => esc_html__( 'Add widgets here.', '__theme_txtd' ),
+						'before_widget' => '<section id="%1$s" class="widget widget--content %2$s">',
+						'after_widget'  => '</section>',
+						'before_title'  => '<h2 class="widget__title h3"><span>',
+						'after_title'   => '</span></h2>',
+					),
+			);
+		}
 
 		// Configure the image sizes that the blog component uses
 		$this->config['image_sizes'] = array(
-			'pixelgrade_card_image' => array(
-				'width' => 450,
+			'pixelgrade_card_image'       => array(
+				'width'  => 450,
 				'height' => 9999,
-				'crop' => false,
+				'crop'   => false,
 			),
-			'pixelgrade_slide_image' => array(
-				'width' => 9999,
+			'pixelgrade_slide_image'      => array(
+				'width'  => 9999,
 				'height' => 800,
-				'crop' => false,
+				'crop'   => false,
 			),
 			'pixelgrade_single_landscape' => array(
-				'width' => 1360,
+				'width'  => 1360,
 				'height' => 9999,
-				'crop' => false,
+				'crop'   => false,
 			),
-			'pixelgrade_single_portrait' => array(
-				'width' => 800,
+			'pixelgrade_single_portrait'  => array(
+				'width'  => 800,
 				'height' => 9999,
-				'crop' => false,
+				'crop'   => false,
 			),
 		);
 
@@ -765,6 +792,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
 			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+
 			return;
 		}
 
@@ -912,8 +940,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		// Add a class to the body for the full width page templates
 		// @todo We should account for the actual component config - e.g. if the page templates actually exist
 		if ( is_page() &&
-			 ( is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width.php' ) ||
-			   is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' ) )
+		     ( is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width.php' ) ||
+		       is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' ) )
 		) {
 			$classes[] = 'full-width';
 		}
@@ -922,7 +950,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			$classes[] = 'singular';
 		}
 
-		if ( is_single() && is_active_sidebar( 'sidebar-1' ) ) {
+		if ( is_single() && pixelgrade_is_active_sidebar( 'sidebar-1' ) ) {
 			$classes[] = 'has-sidebar';
 		}
 
@@ -1005,7 +1033,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	 * @see get_the_title()
 	 *
 	 * @param string $title The current post title.
-	 * @param int    $id The current post ID.
+	 * @param int $id The current post ID.
 	 *
 	 * @return string
 	 */
@@ -1014,8 +1042,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		// @see the_title()
 		// @todo is_page_template() doesn't have a post ID parameter - maybe we should introduce the logic here and use get_page_template_slug() directly.
 		if ( ! is_admin() && is_page( $id ) &&
-			 ( is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'no-title.php' ) ||
-			   is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' ) )
+		     ( is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'no-title.php' ) ||
+		       is_page_template( trailingslashit( self::COMPONENT_SLUG ) . trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) . 'full-width-no-title.php' ) )
 		) {
 			$title = '';
 		}

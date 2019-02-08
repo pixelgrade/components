@@ -8,7 +8,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Multipage
- * @version     1.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,0 +1,25 @@
+
+// woocommerce pagination reset
+.woocommerce nav.woocommerce-pagination ul {
+    border: 0;
+    margin: 0;
+
+    li {
+        border: 0;
+        float: none;
+        overflow: visible;
+
+        a,
+        span {
+            padding: 0;
+            min-width: 0;
+            font: inherit;
+        }
+
+        a:focus,
+        a:hover,
+        span.current {
+            background-color: transparent;
+        }
+    }
+}

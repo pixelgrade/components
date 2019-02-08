@@ -35,7 +35,7 @@ pixelgrade_get_header(); ?>
 
 						<?php
 						$visibility_class = '';
-						if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
+						if ( ! apply_filters( 'pixelgrade_display_entry_header', true, '404' ) ) {
 							$visibility_class = 'screen-reader-text';
 						}
 						?>
