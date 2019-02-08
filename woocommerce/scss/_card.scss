@@ -19,22 +19,27 @@
 }
 
 .c-card__add-to-cart {
-    position: absolute;
-    @include spacing(left, 1rem);
-    @include spacing(right, 1rem);
-    @include spacing(bottom, 1rem);
     opacity: 0;
     transition: all .3s $easeOutQuart;
 
-    .c-card:hover & {
+    .c-card:hover &,
+    .c-card.hover & {
         opacity: 1;
     }
 
-    .added_to_cart[class] {
-        display: none;
+    .add_to_cart_button:not(.loading):after {
+        content: "+";
+        padding-left: 0.5em;
     }
 
-    .add_to_cart_button {
-        display: block;
+    @include specific(4) {
+        .add_to_cart_button,
+        .added_to_cart {
+            display: block;
+            position: absolute;
+            @include spacing(left, 1rem);
+            @include spacing(right, 1rem);
+            @include spacing(bottom, 1rem);
+        }
     }
 }

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * The template for displaying blog page.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
@@ -18,6 +17,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

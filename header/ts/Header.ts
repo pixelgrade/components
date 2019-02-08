@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import * as imagesLoaded from 'imagesloaded';
 import 'jquery-hoverintent';
 import { BaseComponent } from '../../base/ts/models/DefaultComponent';
 import { Helper } from '../../base/ts/services/Helper';
@@ -38,7 +37,7 @@ export class Header extends BaseComponent {
       }
     });
 
-    imagesLoaded( $( '.c-navbar .c-logo' ), () => {
+    ( $( '.c-navbar .c-logo' ) as JQueryExtended ).imagesLoaded(() => {
 
       this.bindEvents();
       this.eventHandlers();

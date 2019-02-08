@@ -82,6 +82,15 @@ $btn-font: () !default;
             background: none;
         }
     }
+    &:hover,
+    &:active,
+    &:focus {
+        color: $btn-color;
+        background-color: $btn-hover-background;
+        opacity: 0.8;
+        text-decoration: none;
+        border: initial;
+    }
 }
 
 @mixin button-directional {

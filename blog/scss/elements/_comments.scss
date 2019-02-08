@@ -124,11 +124,11 @@
     }
 }
 
-.c-comments-toggle__label {
-  @include btn;
-  display: block;
-  background-color: $theme-text-color;
-}
+//.c-comments-toggle__label {
+//  @include btn;
+//  display: block;
+//  background-color: $theme-text-color;
+//}
 
 .comment__content {
   @include leading-map((

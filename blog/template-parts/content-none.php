@@ -30,7 +30,7 @@ $location = pixelgrade_get_location( '404' );
 
 <section class="no-results not-found">
 	<div class="page-content entry-content">
-		<h2 class="page-title h3"><?php esc_html_e( 'Nothing Found', '__components_txtd' ); ?></h2>
+		<h2 class="page-title"><?php esc_html_e( 'Nothing Found', '__components_txtd' ); ?></h2>
 
 		<?php
 		if ( is_home() && current_user_can( 'publish_posts' ) ) :
@@ -41,16 +41,12 @@ $location = pixelgrade_get_location( '404' );
 		<?php elseif ( is_search() ) : ?>
 
 			<p><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', '__components_txtd' ); ?></p>
+			<?php get_search_form(); ?>
 
-			<?php
-
-		else :
-		?>
+        <?php else : ?>
 
 			<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', '__components_txtd' ); ?></p>
-
-			<?php
-			get_search_form();
+			<?php get_search_form();
 
 		endif;
 		?>

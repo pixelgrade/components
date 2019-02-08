@@ -2,7 +2,7 @@
 /**
  * The template used for the Search Overlay
  *
- * @package Vasco
+ * @package Components
  * @since 1.0.0
  */
 

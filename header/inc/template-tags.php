@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.2.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -89,7 +88,7 @@ function pixelgrade_the_header( $location = '' ) {
  * @param array  $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
  *
- * @return false|void
+ * @return false|string
  */
 function pixelgrade_header_the_nav_menu( $args, $menu_location = '' ) {
 	$defaults = array(

@@ -56,7 +56,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		 * 'panel'          => $panel_id,
 		 * 'capability'     => 'edit_theme_options', // what capabilities the current logged in user needs to be able to see this section
 		 * 'theme_supports' => '', // if the theme needs to declare some theme-supports for this section to be shown
-		 * 'title'          => __( 'Title Section is required', '' ),
+		 * 'title'          => esc_html__( 'Title Section is required', '' ),
 		 * 'description'    => '',
 		 * 'type'           => 'default',
 		 * 'description_hidden' => false, // If the description should be hidden behind a (?) bubble
@@ -123,7 +123,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							table.shop_table td.product-name,
 							.c-mini-cart[class] .cart_list a:not(.remove), 
 							.c-mini-cart[class] .product_list_widget a:not(.remove),
-							.product .entry-summary .price[class]'
+							.product .entry-summary .price[class],
+							.woocommerce-grouped-product-list-item__price,
+							.woocommerce-grouped-product-list-item__label
+						'
 					),
 					'main_content_heading_4_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
@@ -146,7 +149,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					),
 					'main_content_body_text_color' => array(
 						'css' => array(
-							'xyz1' => array(
+							'woocommerce-checkout-order-background' => array(
 								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
 								'property' => 'background-color',
 							),
@@ -154,7 +157,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					),
 					'main_content_content_background_color' => array(
 						'css' => array(
-							'xyz1' => array(
+							'woocommerce-menu-cart-color' => array(
 								'selector' => '.cart-count',
 								'property' => 'color',
 							),
@@ -162,7 +165,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					),
 					'main_content_body_link_active_color' => array(
 						'css' => array(
-							'xyz1' => array(
+							'woocommerce-link-color' => array(
 								'property' => 'color',
 								'selector' => '
 									.woocommerce-categories a:hover,
@@ -173,11 +176,11 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 									.woocommerce p.stars a::before
 									'
 							),
-							'xyz2' => array(
+							'woocommerce-menu-cart-background-color' => array(
 								'property' => 'background-color',
 								'selector' => '.cart-count'
 							),
-							'xyz3' => array(
+							'woocommerce-radio-border-color' => array(
 								'selector' => 'input[type=radio]:checked',
 								'property' => 'border-color',
 							),
@@ -249,6 +252,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		$array[] = '.button[class][class][class][class][class]';
 		$array[] = '.product .cart .qty[class][class][class]';
 		$array[] = '#respond input#submit[id]';
+		$array[] = '.added_to_cart';
 		return $array;
 	}
 }

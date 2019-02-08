@@ -16,6 +16,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Footer
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

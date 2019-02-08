@@ -3,7 +3,7 @@
  * The template part used for displaying post content on archives
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
- * by putting it in the root `/template-parts/content.php` or in `/template-parts/blog/content.php`.
+ * by putting it in the root `/template-parts/content-product_cat.php` or in `/template-parts/woocommerce/content-product_cat.php`.
  *
  * @see pixelgrade_locate_component_template_part()
  *
@@ -16,6 +16,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Woocommerce
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

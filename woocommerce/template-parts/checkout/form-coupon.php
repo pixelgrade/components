@@ -1,21 +1,27 @@
 <?php
 /**
- * Checkout coupon form
+ * The template part used for displaying the checkout coupon form.
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/form-coupon.php.
+ * This template part can be overridden by copying it to a child theme or in the same theme
+ * by putting it in the root `/template-parts/checkout/form-coupon.php` or in `/template-parts/woocommerce/checkout/form-coupon.php`.
  *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
+ * @see pixelgrade_locate_component_template_part()
+ *
+ * HOWEVER, on occasion Pixelgrade will need to update template files and you
+ * will need to copy the new files to your child theme to
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.4.4
+ * @see        https://pixelgrade.com
+ * @author     Pixelgrade
+ * @package    Components/Woocommerce
+ * @version    1.0.0
  */
 
-defined( 'ABSPATH' ) || exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 	return;
@@ -23,7 +29,7 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 
 ?>
 <div class="woocommerce-form-coupon-toggle">
-	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', __( 'Have a coupon?', '__components_txtd' ) . ' <a href="#" class="showcoupon">' . __( 'Click here to enter your code', '__components_txtd' ) . '</a>' ), 'notice' ); ?>
+	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_coupon_message', esc_html__( 'Have a coupon?', '__components_txtd' ) . ' <a href="#" class="showcoupon">' . esc_html__( 'Click here to enter your code', '__components_txtd' ) . '</a>' ), 'notice' ); ?>
 </div>
 
 <div class="checkout_coupon woocommerce-form-coupon" method="post" style="display:none">

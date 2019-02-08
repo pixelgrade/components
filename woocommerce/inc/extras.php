@@ -191,6 +191,10 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 			),
 		),
         'checks' => array(
+        	array(
+        		'callback' => 'function_exists',
+		        'args' => array( 'is_cart' ),
+	        ),
             array(
                 'callback' => 'is_cart',
             ),
@@ -213,6 +217,10 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 			),
 		),
         'checks' => array(
+	        array(
+		        'callback' => 'function_exists',
+		        'args' => array( 'is_checkout' ),
+	        ),
             array(
                 'callback' => 'is_checkout',
             ),

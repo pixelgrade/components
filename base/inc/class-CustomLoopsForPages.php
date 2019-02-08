@@ -10,8 +10,9 @@
  * Attribution:
  * Started from this awesome answer, with our modifications: http://stackoverflow.com/a/34922062
  *
+ * @see         https://pixelgrade.com
+ * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.0.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -385,7 +386,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 						$loop_template_part_name = '';
 						if ( is_array( $this->loop_template_part ) ) {
 							if ( empty( $this->loop_template_part['slug'] ) ) {
-								_doing_it_wrong( __FUNCTION__, sprintf( __( 'You haven\'t provided a slug for the loop template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
+								_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the loop template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
 							} else {
 								$loop_template_part_slug = trim( $this->loop_template_part['slug'] );
 							}
@@ -399,13 +400,13 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 						$loop_template = pixelgrade_locate_component_template_part( $this->component_slug, $loop_template_part_slug, $loop_template_part_name );
 
 						if ( ! file_exists( $loop_template ) ) {
-							_doing_it_wrong( __FUNCTION__, sprintf( __( '%1$s does not exist. Check out the config of the %2$s custom page template.', '__components_txtd' ), '<code>' . $loop_template_part_slug . '-' . $loop_template_part_name . '</code>', '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
+							_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( '%1$s does not exist. Check out the config of the %2$s custom page template.', '__components_txtd' ), '<code>' . $loop_template_part_slug . '-' . $loop_template_part_name . '</code>', '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
 						} else {
 							$post_template_part_slug = '';
 							$post_template_part_name = '';
 							if ( is_array( $this->post_template_part ) ) {
 								if ( empty( $this->post_template_part['slug'] ) ) {
-									_doing_it_wrong( __FUNCTION__, sprintf( __( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
+									_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
 								} else {
 									$post_template_part_slug = trim( $this->post_template_part['slug'] );
 								}
@@ -461,7 +462,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							$post_template_part_name = '';
 							if ( is_array( $this->post_template_part ) ) {
 								if ( empty( $this->post_template_part['slug'] ) ) {
-									_doing_it_wrong( __FUNCTION__, sprintf( __( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
+									_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
 								} else {
 									$post_template_part_slug = trim( $this->post_template_part['slug'] );
 								}

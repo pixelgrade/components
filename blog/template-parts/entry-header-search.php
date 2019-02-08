@@ -25,8 +25,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<header class="entry-header">
-	<h2 class="entry-title  u-page-title-color  h2">
-		<?php printf( '<span class="archive-title__pre-title">' . esc_html__( 'Search Results for: %s', 'components_txtd' ), '</span><span>' . get_search_query() . '</span>' ); ?>
-	</h2>
-</header><!-- .entry-header -->
+<?php if ( have_posts() ): ?>
+    <header class="entry-header">
+        <h2 class="entry-title  u-page-title-color">
+            <?php printf( '<span class="archive-title__pre-title">' . esc_html__( 'Search Results for: %s', '__components_txtd' ), '</span><span>' . get_search_query() . '</span>' ); ?>
+        </h2>
+    </header><!-- .entry-header -->
+<?php endif; ?>

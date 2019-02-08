@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import * as imagesLoaded from 'imagesloaded';
 import 'jquery-hoverintent';
 import { BaseComponent } from '../../base/ts/models/DefaultComponent';
 import { ProgressBar } from '../../base/ts/components/ProgressBar';
@@ -39,7 +38,7 @@ export class StickyHeader extends BaseComponent {
   constructor() {
     super();
 
-    imagesLoaded( $( '.c-navbar .c-logo' ), () => {
+    ( $( '.c-navbar .c-logo' ) as JQueryExtended ).imagesLoaded( () => {
 
       this.bindEvents();
       this.eventHandlers();
@@ -237,7 +236,7 @@ export class StickyHeader extends BaseComponent {
 
     $( '.c-reading-bar__wrapper-social' ).find( '.share-end' ).remove();
 
-    const entryHeader = $( '.entry-header' );
+    const entryHeader = $( '.entry-header, .entry-summary' );
     const entryContent = $( '.single-main' ).find( '.entry-content' );
     const entryHeaderHeight = entryHeader.outerHeight() || 0;
     const entryContentHeight = entryContent.outerHeight() || 0;

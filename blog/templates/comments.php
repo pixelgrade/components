@@ -20,6 +20,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -40,7 +41,7 @@ if ( post_password_required() ) {
 	<div class="u-content-width">
 
 		<input type="checkbox" name="comments-toggle" id="comments-toggle" class="c-comments-toggle__checkbox" <?php pixelgrade_comments_toggle_checked_attribute(); ?> />
-		<label for="comments-toggle" class="c-comments-toggle__label">
+		<label for="comments-toggle" class="c-btn c-comments-toggle__label">
 			<span class="c-comments-toggle__icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Blog::COMPONENT_SLUG, 'svg/comments-toggle-icon' ); ?></span>
 			<span class="c-comments-toggle__text">
 			<?php

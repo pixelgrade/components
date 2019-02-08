@@ -5,7 +5,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -54,7 +53,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		 * 'panel'          => $panel_id,
 		 * 'capability'     => 'edit_theme_options', // what capabilities the current logged in user needs to be able to see this section
 		 * 'theme_supports' => '', // if the theme needs to declare some theme-supports for this section to be shown
-		 * 'title'          => __( 'Title Section is required', '' ),
+		 * 'title'          => esc_html__( 'Title Section is required', '' ),
 		 * 'description'    => '',
 		 * 'type'           => 'default',
 		 * 'description_hidden' => false, // If the description should be hidden behind a (?) bubble

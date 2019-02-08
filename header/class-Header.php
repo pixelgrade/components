@@ -53,19 +53,6 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 				),
 			),
 			'menu_locations' => array(
-				'primary-left'    => array(
-					'title'         => esc_html__( 'Header Left', '__components_txtd' ),
-					'default_zone'  => 'left',
-					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
-					'zone_callback' => false,
-					'order'         => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
-						'menu_id'         => 'menu-1',
-						'container'       => 'nav',
-						'container_class' => '',
-						'fallback_cb'     => false,
-					),
-				),
 				'header-branding' => array(
 					'default_zone'  => 'middle',
 					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
@@ -84,21 +71,48 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 						'container'       => 'nav',
 						'container_class' => '',
 						'fallback_cb'     => false,
+						'depth'           => 1,
 					),
 				),
 			),
 		);
 
-		// Add theme support for Jetpack Social Menu, if we are allowed to
-		if ( apply_filters( 'pixelgrade_header_use_jetpack_social_menu', true ) ) {
-			// Add it to the config
-			$this->config['menu_locations']['jetpack-social-menu'] = array(
-				'default_zone'  => 'right',
+		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+			$this->config['menu_locations']['primary-left' ] = array(
+				'title'         => esc_html__( 'Header Left', '__components_txtd' ),
+				'default_zone'  => 'left',
 				// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
 				'zone_callback' => false,
-				'order'         => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
-				'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				'order'         => 10,
+				// We will use this to establish the display order of nav menu locations, inside a certain zone
+				'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
+					'menu_id'         => 'menu-1',
+					'container'       => 'nav',
+					'container_class' => '',
+					'fallback_cb'     => false,
+				),
 			);
+
+			/**
+			 * Allow the primary menu to have the desired depth, only for the Pro version.
+			 */
+			$this->config['menu_locations']['primary-right']['nav_menu_args']['depth'] = 0;
+
+			// Add theme support for Jetpack Social Menu, if we are allowed to
+			if ( apply_filters( 'pixelgrade_header_use_jetpack_social_menu', true ) ) {
+
+				// Add it to the config
+				$this->config['menu_locations']['jetpack-social-menu'] = array(
+					'default_zone'  => 'right',
+					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
+					'zone_callback' => false,
+					'order'         => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				);
+
+				// Add support for the Jetpack Social Menu
+				add_theme_support( 'jetpack-social-menu' );
+			}
 		}
 
 		// Allow others to make changes to the config
@@ -146,11 +160,6 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 					)
 				)
 			);
-		}
-
-		if ( ! empty( $this->config['menu_locations']['jetpack-social-menu'] ) ) {
-			// Add support for the Jetpack Social Menu
-			add_theme_support( 'jetpack-social-menu' );
 		}
 	}
 
@@ -205,24 +214,6 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 		if ( true === apply_filters( 'pixelgrade_header_auto_output_header', true ) ) {
 			add_action( 'pixelgrade_header', 'pixelgrade_the_header', 10, 1 );
 		}
-	}
-
-	/**
-	 * Change the primary-right nav menu's zone depending on the other nav menus.
-	 *
-	 * @param string $default_zone
-	 * @param array  $menu_location_config
-	 * @param array  $menu_locations_config
-	 *
-	 * @return string
-	 */
-	public function primaryRightNavMenuZone( $default_zone, $menu_location_config, $menu_locations_config ) {
-		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
-		if ( ! has_nav_menu( 'primary-left' ) ) {
-			$default_zone = 'middle';
-		}
-
-		return $default_zone;
 	}
 
 	/**

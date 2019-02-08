@@ -3,7 +3,7 @@
  * The template part used for displaying the entry header.
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
- * by putting it in the root `/template-parts/entry-header.php` or in `/template-parts/blog/entry-header.php`.
+ * by putting it in the root `/template-parts/entry-header.php` or in `/template-parts/woocommerce/entry-header.php`.
  *
  * @see pixelgrade_locate_component_template_part()
  *
@@ -15,7 +15,7 @@
  *
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
- * @package    Components/Blog
+ * @package    Components/Woocommerce
  * @version    1.0.0
  */
 

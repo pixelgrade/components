@@ -1,23 +1,26 @@
 <?php
 /**
- * Single Product tabs
+ * The template part used for displaying the single product tabs.
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/single-product/tabs/tabs.php.
+ * This template part can be overridden by copying it to a child theme or in the same theme
+ * by putting it in the root `/template-parts/single-product/tabs/tabs.php` or in `/template-parts/woocommerce/single-product/tabs/tabs.php`.
  *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
+ * @see pixelgrade_locate_component_template_part()
+ *
+ * HOWEVER, on occasion Pixelgrade will need to update template files and you
+ * will need to copy the new files to your child theme to
  * maintain compatibility. We try to do this as little as possible, but it does
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	https://docs.woocommerce.com/document/template-structure/
- * @author  WooThemes
- * @package WooCommerce/Templates
- * @version 2.4.0
+ * @see        https://pixelgrade.com
+ * @author     Pixelgrade
+ * @package    Components/Woocommerce
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit; // Exit if accessed directly
 }
 
 /**
@@ -28,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 $tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
-if ( ! empty( $tabs ) ) : ?>
+if ( ! empty( $tabs ) ) { ?>
 
 	<div class="wc-tabs-wrapper">
 		<ul class="tabs wc-tabs" role="tablist">
@@ -45,4 +48,4 @@ if ( ! empty( $tabs ) ) : ?>
 		<?php endforeach; ?>
 	</div>
 
-<?php endif; ?>
+<?php }

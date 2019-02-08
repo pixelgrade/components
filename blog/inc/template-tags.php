@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Blog
- * @version     1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -43,6 +42,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
 		 */
 		$classes[] = 'c-gallery';
 		$classes[] = 'c-gallery--blog';
+		$classes[] = 'aspect-ratio-square';
 
 		/*
 		 * Options dependent classes
@@ -308,7 +308,7 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 		$navigation = '';
 
 		$previous = get_previous_post_link(
-			'<div class="nav-previous"><span class="nav-links__label  nav-links__label--previous">' . esc_html__( 'Previous article', '__components_txtd' ) . '</span><span class="nav-title  nav-title--previous">%link</span></div>',
+			'<div class="nav-previous"><span class="nav-links__label  nav-links__label--previous">' . esc_html__( 'Previous article', '__components_txtd' ) . '</span><span class="h3 nav-title  nav-title--previous">%link</span></div>',
 			$args['prev_text'],
 			$args['in_same_term'],
 			$args['excluded_terms'],
@@ -316,7 +316,7 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 		);
 
 		$next = get_next_post_link(
-			'<div class="nav-next"><span class="nav-links__label  nav-links__label--next">' . esc_html__( 'Next article', '__components_txtd' ) . '</span><span class="nav-title  nav-title--next">%link</span></div>',
+			'<div class="nav-next"><span class="nav-links__label  nav-links__label--next">' . esc_html__( 'Next article', '__components_txtd' ) . '</span><span class="h3 nav-title  nav-title--next">%link</span></div>',
 			$args['next_text'],
 			$args['in_same_term'],
 			$args['excluded_terms'],
@@ -332,11 +332,15 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 	}
 }
 
+add_action('pixelgrade_after_article', 'pixelgrade_get_the_post_navigation', 15 );
+
 /**
  * Display the HTML of the author info box
  */
 function pixelgrade_the_author_info_box() {
-	echo pixelgrade_get_the_author_info_box();
+	if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+		echo pixelgrade_get_the_author_info_box();
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_get_the_author_info_box' ) ) {
@@ -452,7 +456,7 @@ if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
 
 		$markup .= '<span class="c-author__links">' . PHP_EOL;
 
-		$markup .= '<a class="c-author__social-link  c-author__website-link" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( __( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All posts', '__components_txtd' ) . '</a>';
+		$markup .= '<a class="c-author__social-link  c-author__website-link" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All posts', '__components_txtd' ) . '</a>';
 
 		if ( is_array( $profile ) && ! empty( $profile['entry'][0]['urls'] ) ) {
 			foreach ( $profile['entry'][0]['urls'] as $link ) {
@@ -695,7 +699,7 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 									<time datetime="<?php comment_time( 'c' ); ?>">
 										<?php
 										/* translators: 1: comment date, 2: comment time */
-										printf( __( '%1$s at %2$s', '__components_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
+										printf( esc_html__( '%1$s at %2$s', '__components_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
 										?>
 									</time>
 								</a>

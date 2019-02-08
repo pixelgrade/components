@@ -49,3 +49,7 @@ $woocommerce-mobile-breakpoint: 768px;
         white-space: nowrap;
     }
 }
+
+.woocommerce-message {
+    @include spacing(margin-bottom, 40px);
+}

@@ -5,7 +5,7 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
  * This template part can be overridden by copying it to a child theme or in the same theme
- * by putting it in the root `/single.php` or in `/templates/blog/single.php`.
+ * by putting it in the root `/single-product.php` or in `/templates/woocommerce/single-product.php`.
  * @see pixelgrade_locate_component_template()
  *
  * HOWEVER, on occasion Pixelgrade will need to update template files and you
@@ -17,6 +17,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Woocommerce
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

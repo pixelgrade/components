@@ -27,12 +27,6 @@
         @include spacing( margin-top, 2rem );
     }
 
-    .woocommerce-Reviews-title,
-    .comment-reply-title {
-        display: block;
-        @include spacing( margin-bottom, 0.5rem );
-    }
-
     .woocommerce-noreviews {
         opacity: 0.5;
     }
@@ -41,9 +35,13 @@
         font: inherit;
         opacity: 0.5;
     }
+
+    .comment-reply-title {
+        margin-bottom: 0;
+    }
 }
 
-.comment-form > :not(:first-child) {
+.comment-form > * {
     @include spacing( padding-top, 30px );
 }
 

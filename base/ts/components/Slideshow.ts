@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import 'slick-carousel';
 import { Carousel, CarouselOptions } from './Carousel';
-import { TimelineMax, Quart } from 'gsap';
+import { TimelineLite, Power4 } from 'gsap';
 
 export class Slideshow extends Carousel {
 
@@ -41,22 +41,22 @@ export class Slideshow extends Carousel {
   }
 
   private transition( $current, $next, sign: number = 1 ) {
-    const timeline = new TimelineMax( {paused: true} );
+    const timeline = new TimelineLite( {paused: true} );
     const duration = this.slickOptions.speed / 1000;
     const slideWidth = $current.outerWidth();
     const move = 300;
 
-    timeline.fromTo( $next, duration, { x: sign * slideWidth }, { x: 0, ease: Quart.easeInOut }, 0 );
+    timeline.fromTo( $next, duration, { x: sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
     timeline.fromTo( $next.find( '.c-hero__background' ), duration,
-      { x: -sign * (slideWidth - move) }, { x: 0, ease: Quart.easeInOut }, 0 );
+      { x: -sign * (slideWidth - move) }, { x: 0, ease: Power4.easeInOut }, 0 );
     timeline.fromTo( $next.find( '.c-hero__content' ), duration,
-      { x: -sign * slideWidth }, { x: 0, ease: Quart.easeInOut }, 0 );
+      { x: -sign * slideWidth }, { x: 0, ease: Power4.easeInOut }, 0 );
 
-    timeline.fromTo( $current, duration, { x: 0 }, { x: -sign * slideWidth, ease: Quart.easeInOut }, 0 );
+    timeline.fromTo( $current, duration, { x: 0 }, { x: -sign * slideWidth, ease: Power4.easeInOut }, 0 );
     timeline.fromTo( $current.find( '.c-hero__background' ), duration,
-      { x: 0 }, { x: sign * (slideWidth - move), ease: Quart.easeInOut }, 0 );
+      { x: 0 }, { x: sign * (slideWidth - move), ease: Power4.easeInOut }, 0 );
     timeline.fromTo( $current.find( '.c-hero__content' ), duration,
-      { x: 0 }, { x: sign * slideWidth, ease: Quart.easeInOut }, 0 );
+      { x: 0 }, { x: sign * slideWidth, ease: Power4.easeInOut }, 0 );
 
     timeline.play();
   }
@@ -67,5 +67,4 @@ export class Slideshow extends Carousel {
     }
     return -1;
   }
-
 }

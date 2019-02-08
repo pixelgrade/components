@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -493,6 +492,23 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 	return $counter;
 }
 
+/**
+ * Get the relative theme path of a given absolute path. In case the given path is not absolute, it is returned as received.
+ *
+ * @param $path string An absolute path.
+ *
+ * @return string A path relative to the current theme directory, without ./ in front.
+ */
+function pixelgrade_get_theme_relative_path( $path ) {
+	if ( empty( $path ) ) {
+		return '';
+	}
+
+	$path = str_replace( trailingslashit( get_template_directory() ), '', $path );
+
+	return trailingslashit( $path );
+}
+
 /*
  * =================== Template related
  */
@@ -897,4 +913,24 @@ function pixelgrade_parse_content_tags( $content ) {
 
 	// Allow others to alter the content after we did our work
 	return apply_filters( 'pixelgrade_after_parse_content_tags', $content, $original_content );
+}
+
+/**
+ * Helper function used to check user access to various features
+ *
+ * @param string $feature
+ *
+ * @return bool
+ */
+function pixelgrade_user_has_access( $feature ) {
+	switch ( $feature ) {
+		case 'pro-features':
+			return apply_filters( 'pixelgrade_enable_pro_features', false );
+			break;
+		case 'woocommerce':
+			return apply_filters( 'pixelgrade_enable_woocommerce', false );
+			break;
+		default:
+			return false;
+	}
 }

@@ -37,19 +37,28 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 		$this->config = array(
 			'zones'          => array(
 				'top'    => array( // the zone's id
-					'order'         => 10, // We will use this to establish the display order of the zones
-					'classes'       => array(), // by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
-					'display_blank' => false, // determines if we output markup for an empty zone
+					'order'         => 10,
+					// We will use this to establish the display order of the zones
+					'classes'       => array(),
+					// by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'display_blank' => false,
+					// determines if we output markup for an empty zone
 				),
 				'middle' => array( // the zone's id
-					'order'         => 20, // We will use this to establish the display order of the zones
-					'classes'       => array(), // by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
-					'display_blank' => true, // determines if we output markup for an empty zone
+					'order'         => 20,
+					// We will use this to establish the display order of the zones
+					'classes'       => array(),
+					// by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'display_blank' => true,
+					// determines if we output markup for an empty zone
 				),
 				'bottom' => array( // the zone's id
-					'order'         => 30, // We will use this to establish the display order of the zones
-					'classes'       => array(), // by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
-					'display_blank' => true, // determines if we output markup for an empty zone
+					'order'         => 30,
+					// We will use this to establish the display order of the zones
+					'classes'       => array(),
+					// by default we will add the classes 'c-footer__zone' and 'c-footer__zone--%zone_id%' to each zone
+					'display_blank' => true,
+					// determines if we output markup for an empty zone
 				),
 			),
 			// The bogus items can sit in either sidebars or menu_locations.
@@ -59,12 +68,15 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 					'default_zone'    => 'middle',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback'   => false,
-					'order'           => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'container_class' => array( 'c-gallery', 'c-footer__gallery', 'o-grid', 'o-grid--4col-@lap' ), // classes to be added to the sidebar <aside> wrapper
+					'order'           => 10,
+					// We will use this to establish the display order of nav menu locations, inside a certain zone
+					'container_class' => array( 'c-gallery', 'c-footer__gallery', 'o-grid', 'o-grid--4col-@lap' ),
+					// classes to be added to the sidebar <aside> wrapper
 					'sidebar_args'    => array( // skip 'id' arg as we will force that
 						'name'          => esc_html__( 'Footer', '__components_txtd' ),
 						'description'   => esc_html__( 'Widgets displayed in the Footer Area of the website.', '__components_txtd' ),
-						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap', // in case you need some classes added to the sidebar - in the WP Admin only!!!
+						'class'         => 'c-gallery c-footer__gallery o-grid o-grid--4col-@lap',
+						// in case you need some classes added to the sidebar - in the WP Admin only!!!
 						'before_widget' => '<div id="%1$s" class="c-gallery__item  widget  widget--footer  c-footer__widget  %2$s"><div class="o-wrapper u-container-width">',
 						'after_widget'  => '</div></div>',
 						'before_title'  => '<h3 class="widget__title h3">',
@@ -77,46 +89,56 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 					'default_zone'  => 'bottom',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,
-					'order'         => 5, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
-				),
-				'footer'                  => array(
-					'title'         => esc_html__( 'Footer', '__components_txtd' ),
-					'default_zone'  => 'bottom',
-					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
-					'zone_callback' => false,
-					'order'         => 10, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
-						'menu_id'         => 'menu-footer',
-						'container'       => 'nav',
-						'container_class' => 'menu-footer-menu-container',
-						'depth'           => - 1, // by default we will flatten the menu hierarchy, if there is one
-						'fallback_cb'     => false,
-					),
+					'order'         => 5,
+					// We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus'         => true,
+					// this tells the world that this is just a placeholder, not a real nav menu location
 				),
 				'footer-copyright'        => array(
 					'default_zone'  => 'bottom',
 					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 					'zone_callback' => false,
-					'order'         => 20, // We will use this to establish the display order of nav menu locations, inside a certain zone
-					'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
+					'order'         => 20,
+					// We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus'         => true,
+					// this tells the world that this is just a placeholder, not a real nav menu location
 				),
 			),
 		);
 
-		// Add theme support for Jetpack Social Menu, if we are allowed to
-		if ( apply_filters( 'pixelgrade_footer_use_jetpack_social_menu', false ) ) {
-			// Add it to the config
-			$this->config['menu_locations']['jetpack-social-menu'] = array(
+		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+
+			$this->config['menu_locations']['footer'] = array(
+				'title'         => esc_html__( 'Footer', '__components_txtd' ),
 				'default_zone'  => 'bottom',
 				// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
 				'zone_callback' => false,
-				'order'         => 15, // We will use this to establish the display order of nav menu locations, inside a certain zone
-				'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				'order'         => 10,
+				// We will use this to establish the display order of nav menu locations, inside a certain zone
+				'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
+					'menu_id'         => 'menu-footer',
+					'container'       => 'nav',
+					'container_class' => 'menu-footer-menu-container',
+					'depth'           => - 1, // by default we will flatten the menu hierarchy, if there is one
+					'fallback_cb'     => false,
+				),
 			);
 
-			// Add support for it
-			add_theme_support( 'jetpack-social-menu' );
+			// Add theme support for Jetpack Social Menu, if we are allowed to
+			if ( apply_filters( 'pixelgrade_footer_use_jetpack_social_menu', false ) ) {
+
+				// Add it to the config
+				$this->config['menu_locations']['jetpack-social-menu'] = array(
+					'default_zone'  => 'bottom',
+					// This callback should always accept 3 parameters as documented in pixelgrade_footer_get_zones()
+					'zone_callback' => false,
+					'order'         => 15, // We will use this to establish the display order of nav menu locations, inside a certain zone
+					'bogus'         => true, // this tells the world that this is just a placeholder, not a real nav menu location
+				);
+
+				// Add support for it
+				add_theme_support( 'jetpack-social-menu' );
+			}
 		}
 
 		// Allow others to make changes to the config
@@ -127,6 +149,7 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
 			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+
 			return;
 		}
 
@@ -177,12 +200,15 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 		 * Hook-up to various places where we need to output things
 		 */
 
+		add_filter( 'pixelgrade_footer_initial_config', array( $this, 'functiamea' ) );
+
 		// Delay attaching the output hook, to allow others to short-circuit it based on query vars.
-		add_action( 'wp', array( $this, 'outputHookUp'), 10 );
+		add_action( 'wp', array( $this, 'outputHookUp' ), 10 );
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_footer_registered_hooks' );
 	}
+
 
 	/**
 	 * Attach the template tag that outputs the markup.

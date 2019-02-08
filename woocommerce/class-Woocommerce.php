@@ -34,11 +34,6 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 
 		parent::__construct( $version, $args );
 
-		add_theme_support( 'woocommerce' );
-		add_theme_support( 'wc-product-gallery-zoom' );
-		add_theme_support( 'wc-product-gallery-lightbox' );
-		add_theme_support( 'wc-product-gallery-slider' );
-
 		$this->assets_version = '1.0.0';
 	}
 
@@ -46,6 +41,13 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	 * Setup the woocommerce component config
 	 */
 	public function setupConfig() {
+
+		$this->config['theme_support'] = array(
+			'woocommerce',
+			'wc-product-gallery-zoom',
+			'wc-product-gallery-lightbox',
+			'wc-product-gallery-slider',
+		);
 
 		$this->config['templates'] = array(
 			'single-product' => array(
@@ -174,5 +176,12 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	public function enqueueScripts() {
 		wp_enqueue_script( 'pixelgrade-woocommerce-component-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/scripts.js' ), array( 'jquery' ), $this->assets_version );
 		wp_enqueue_style( 'pixelgrade-woocommerce-component-styles', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/style.css' ), array(), $this->assets_version );
+
+		$translation_array = array(
+			'adding_to_cart' => esc_html__( 'Adding...', '__components_txtd' ),
+			'added_to_cart' => esc_html__( 'Added!', '__components_txtd' ),
+		);
+
+		wp_localize_script( 'pixelgrade-woocommerce-component-scripts', 'pixelgradeWooCommerceStrings', $translation_array );
 	}
 }

@@ -69,6 +69,8 @@ $card-content-spacing: 1.5rem !default;
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100%;
+  height: 100%;
 
   display: block;
   @include leading-map($card-letter-font);

@@ -16,6 +16,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +35,7 @@ pixelgrade_get_header(); ?>
 
 						<?php
 						$visibility_class = '';
-						if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
+						if ( ! apply_filters( 'pixelgrade_display_entry_header', true, '404' ) ) {
 							$visibility_class = 'screen-reader-text';
 						}
 						?>
