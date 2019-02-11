@@ -366,7 +366,8 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'css'     => array(
 							array(
 								'property' => 'color',
-								'selector' => '.u-page-title-color',
+								'selector' => '.u-page-title-color,
+									.edit-post-visual-editor .editor-post-title__block',
 							),
 						),
 					),
