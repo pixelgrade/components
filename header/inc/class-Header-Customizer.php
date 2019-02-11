@@ -313,7 +313,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					'header_links_active_style'       => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Links Active Style', '__components_txtd' ),
-						'desc'    => esc_html__( '', '__components_txtd' ),
+						'desc'    => '',
 						'default' => null, // this should be set by the theme (previously active)
 						'choices' => array(
 							'active'    => esc_html__( 'Active', '__components_txtd' ),
@@ -342,7 +342,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					'header_site_title_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Site Title Font', '__components_txtd' ),
-						'desc'        => esc_html__( '', '__components_txtd' ),
+						'desc'        => '',
 						'selector'    => '.site-title',
 						'callback'    => 'typeline_font_cb',
 
@@ -379,7 +379,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					'header_navigation_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Navigation Text', '__components_txtd' ),
-						'desc'        => esc_html__( '', '__components_txtd' ),
+						'desc'        => '',
 						'selector'    => '.c-navbar',
 						'callback'    => 'typeline_font_cb',
 
