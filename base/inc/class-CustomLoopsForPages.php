@@ -220,12 +220,12 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 					// Also fix the globals regarding pagination.
 					global $paged;
 
-					$paged = 1;
+					$paged = 1; // @codingStandardsIgnoreLine
 					if ( get_query_var( 'paged' ) ) {
-						$paged = get_query_var( 'paged' );
+						$paged = get_query_var( 'paged' ); // @codingStandardsIgnoreLine
 					}
 					if ( get_query_var( 'page' ) ) {
-						$paged = get_query_var( 'page' );
+						$paged = get_query_var( 'page' ); // @codingStandardsIgnoreLine
 					}
 
 					// FILTERS:

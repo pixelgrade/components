@@ -666,7 +666,7 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 	 * @param int        $depth
 	 */
 	function pixelgrade_shape_comment( $comment, $args, $depth ) {
-		$GLOBALS['comment'] = $comment;
+		$GLOBALS['comment'] = $comment; // @codingStandardsIgnoreLine
 		switch ( $comment->comment_type ) :
 			case 'pingback':
 			case 'trackback':
@@ -712,7 +712,7 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 						</header><!-- .comment-meta -->
 
 						<div class="comment__content">
-							<?php comment_text(); ?>
+							<?php comment_text( $comment ); ?>
 						</div><!-- .comment-content -->
 
 						<?php
@@ -725,7 +725,8 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 									'before'    => '<div class="reply">',
 									'after'     => '</div>',
 								)
-							)
+							),
+							$comment
 						);
 						?>
 					</div>
@@ -857,7 +858,7 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 
 		$posted_on = sprintf(
 			/* translators: %s: The current post's posted date, in the post header */
-			esc_html_x( '%s', 'post date', '__components_txtd' ),
+			esc_html_x( '%s', 'post date', '__components_txtd' ), // @codingStandardsIgnoreLine
 			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
 		);
 
@@ -866,7 +867,7 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
 
-		echo '<span class="byline"> ' . $byline . '</span><span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo '<span class="byline"> ' . $byline . '</span><span class="posted-on">' . $posted_on . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
 
 	}
 }

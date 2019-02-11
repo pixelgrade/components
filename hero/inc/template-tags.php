@@ -1014,7 +1014,7 @@ function pixelgrade_hero_the_description( $content, $slide = null ) {
 
 		if ( ! empty( $new_post ) ) {
 			$original_post = $post;
-			$post          = $new_post;
+			$post          = $new_post; // @codingStandardsIgnoreLine
 			setup_postdata( $post );
 		}
 	}
@@ -1044,7 +1044,7 @@ function pixelgrade_hero_the_description( $content, $slide = null ) {
 
 	// If we had to modify the global post, we need to clean up and restore things to the way they were
 	if ( ! empty( $new_post ) ) {
-		$post = $original_post;
+		$post = $original_post; // @codingStandardsIgnoreLine
 		wp_reset_postdata();
 	}
 }
