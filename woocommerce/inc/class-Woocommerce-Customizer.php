@@ -248,11 +248,19 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		return $options;
 	}
 
+	/**
+	 * Change buttons selectors list.
+	 *
+	 * @param array $array
+	 *
+	 * @return array
+	 */
 	public function alterButtonsSelectors( $array = array() ) {
 		$array[] = '.button[class][class][class][class][class]';
 		$array[] = '.product .cart .qty[class][class][class]';
 		$array[] = '#respond input#submit[id]';
 		$array[] = '.added_to_cart';
+
 		return $array;
 	}
 }

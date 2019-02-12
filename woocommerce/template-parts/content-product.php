@@ -23,7 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+/** @var WP_Post $post */
+/** @var WC_Product $product */
 global $post, $product;
+
+if ( ! $product ) {
+	return;
+}
 
 // We first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'product' );
@@ -33,14 +39,8 @@ $secondary_meta_output   = '';
 
 $terms = get_the_terms( $post->ID, 'product_cat' );
 
-if ( $terms && ! is_wp_error( $terms ) ) :
-    if ( ! empty( $terms ) ) {
-        $primary_meta_output = $terms[0]->name;
-    }
-endif;
-
-if ( ! $product ) {
-    return;
+if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+	$primary_meta_output = esc_html( $terms[0]->name );
 }
 
 ?>
@@ -88,7 +88,7 @@ if ( ! $product ) {
                     do_action( 'pixelgrade_before_card_meta', $location );
 
                     if ( $primary_meta_output ) {
-                        echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>';
+                        echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>'; // WPCS: XSS OK.
                         // Add a separator if we also have secondary meta
                         if ( $secondary_meta_output ) {
                             echo '<div class="c-meta__separator js-card-meta-separator"></div>';
@@ -96,7 +96,7 @@ if ( ! $product ) {
                     }
 
                     if ( $secondary_meta_output ) {
-                        echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
+                        echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>'; // WPCS: XSS OK.
                     }
 
                     do_action( 'pixelgrade_after_card_meta', $location ); ?>

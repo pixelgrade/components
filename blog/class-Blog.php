@@ -1042,7 +1042,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 	 */
 	public function pingbackHeader() {
 		if ( is_singular() && pings_open() ) {
-			echo '<link rel="pingback" href="' . get_bloginfo( 'pingback_url', 'display' ) . '">';
+			echo '<link rel="pingback" href="' . esc_url( get_bloginfo( 'pingback_url', 'display' ) ) . '">';
 		}
 	}
 

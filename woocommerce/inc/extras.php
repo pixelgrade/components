@@ -13,6 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+/**
+ * Change or add blocks to the blog component.
+ */
 function pixelgrade_woocommerce_change_blog_component_config() {
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/main', array(
@@ -191,10 +194,6 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 			),
 		),
         'checks' => array(
-        	array(
-        		'callback' => 'function_exists',
-		        'args' => array( 'is_cart' ),
-	        ),
             array(
                 'callback' => 'is_cart',
             ),
@@ -217,10 +216,6 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 			),
 		),
         'checks' => array(
-	        array(
-		        'callback' => 'function_exists',
-		        'args' => array( 'is_checkout' ),
-	        ),
             array(
                 'callback' => 'is_checkout',
             ),
@@ -261,5 +256,4 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 		),
 	) );
 }
-
 add_action( 'pixelgrade_blog_after_register_blocks', 'pixelgrade_woocommerce_change_blog_component_config', 30 );

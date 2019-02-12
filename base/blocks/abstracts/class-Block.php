@@ -125,7 +125,7 @@ abstract class Pixelgrade_Block {
 
 		$this->manager         = $manager;
 		$this->id              = $id;
-		
+
 		self::$instance_count ++;
 		$this->instance_number = self::$instance_count;
 
@@ -610,7 +610,7 @@ abstract class Pixelgrade_Block {
 	 */
 	final public function printTemplate() {
 		?>
-		<script type="text/html" id="tmpl-block-<?php echo $this->type; ?>-content">
+		<script type="text/html" id="tmpl-block-<?php echo esc_attr( $this->type ); ?>-content">
 			<?php $this->contentTemplate(); ?>
 		</script>
 		<?php
