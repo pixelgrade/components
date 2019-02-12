@@ -102,7 +102,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'options'  => array(
 							'recent'   => esc_html__( 'Recent Posts', '__components_txtd' ),
 						),
-						'desc'     => esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of ' . wp_get_theme( get_template() )->get('Name') . '. C\'mon, aim for more, mate!', '__components_txtd' ),
+						'desc'     => sprintf( esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of %s. C\'mon, aim for more, mate!', '__components_txtd' ), wp_get_theme( get_template() )->get('Name') ),
 						'default'  => 'recent',
 						'section'  => 'content',
 						'priority' => 10,
@@ -260,7 +260,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					'secondary_meta'          => array(
 						'type'     => 'select',
 						'label'    => esc_html__( 'Secondary Meta:', '__components_txtd' ),
-						'desc'     => esc_html__( '👉 More display options (e.g. Show Excerpt, Show Read More) are available in the Pro version of ' . wp_get_theme( get_template() )->get('Name') . '. Don\'t let us stop you!', '__components_txtd' ),
+						'desc'     => sprintf( esc_html__( '👉 More display options (e.g. Show Excerpt, Show Read More) are available in the Pro version of %s. Don\'t let us stop you!', '__components_txtd' ), wp_get_theme( get_template() )->get('Name') ),
 						'options'  => array(
 							'none'     => esc_html__( 'None', '__components_txtd' ),
 							'date'     => esc_html__( 'Date', '__components_txtd' ),
