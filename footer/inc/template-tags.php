@@ -205,7 +205,7 @@ function pixelgrade_footer_get_back_to_top_link() {
  * Display the footer copyright.
  */
 function pixelgrade_footer_get_copyright_content() {
-	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/?utm_source=felt-lite-clients&utm_medium=footer&utm_campaign=felt-lite" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
+	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/themes/vasco-pro/?utm_source=vasco-lite-clients&utm_medium=about-page&utm_campaign=vasco-lite" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
 }
 
 /**
