@@ -722,7 +722,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		);
 
 		// Configure the sidebars (widget areas) that the blog component uses
-		$this->config['sidebars']['sidebar-1'] = array(
+
+		/**
+		 * Add Below Post and Sidebar sidebars in the Pro version of the theme.
+		 */
+		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+
+			$this->config['sidebars']['sidebar-1'] = array(
 				'sidebar_args' => array(
 					'name'          => esc_html__( 'Sidebar', '__components_txtd' ),
 					'id'            => 'sidebar-1',
@@ -735,12 +741,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'before_title'  => '<h2 class="widget__title h3"><span>',
 					'after_title'   => '</span></h2>',
 				),
-		);
-
-		/**
-		 * Add Below Post sidebar in the Pro version of the theme.
-		 */
-		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+			);
 
 			$this->config['sidebars']['sidebar-2'] = array(
 					'sidebar_args' => array(

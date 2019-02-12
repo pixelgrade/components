@@ -184,7 +184,9 @@ function pixelgrade_footer_get_nav_menu( $args, $menu_location = '' ) {
  * Display the footer back to top link
  */
 function pixelgrade_footer_the_back_to_top_link() {
-	echo pixelgrade_footer_get_back_to_top_link();
+	if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+		echo pixelgrade_footer_get_back_to_top_link();
+	}
 }
 
 /**
@@ -193,7 +195,7 @@ function pixelgrade_footer_the_back_to_top_link() {
 function pixelgrade_footer_get_back_to_top_link() {
 	$option = pixelgrade_option( 'footer_hide_back_to_top_link', false );
 	if ( empty( $option ) ) {
-		return '';
+		return '<a class="back-to-top" href="#">' . esc_html__( 'Back to Top', '__components_txtd' ) . '</a>';
 	}
 
 	return '';
