@@ -149,7 +149,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
 		$class_markup = '';
 
 		if ( ! empty( $type_class ) ) {
-			$class_markup = 'class="' . $type_class . '" ';
+			$class_markup = 'class="' . esc_attr( $type_class ) . '" ';
 		}
 		return $before . '<a ' . $class_markup . ' href="' . esc_url( get_term_link( $type, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" title="' . esc_attr( $type->name ) . '">' . $type->name . '</a>' . $after;
 

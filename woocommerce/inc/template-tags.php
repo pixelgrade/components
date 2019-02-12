@@ -43,7 +43,7 @@ if ( ! function_exists( 'woocommerce_display_categories' ) ) {
 			// display the shop link first if there is one
 			if ( ! empty( $all_link ) ) {
 				// also if the current_term doesn't have a term_id it means we are quering the shop and the "all categories" should be active
-				echo '<li><a href="' . $all_link . '" ' . ( ( ! isset( $current_term->term_id ) ) ? ' class="active"' : ' class="inactive"' ) . '>' . esc_html__( 'All Products', '__components_txtd' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( $all_link ) . '" ' . ( ( ! isset( $current_term->term_id ) ) ? ' class="active"' : ' class="inactive"' ) . '>' . esc_html__( 'All Products', '__components_txtd' ) . '</a></li>';
 			}
 
 			// display a link for each product category
@@ -54,7 +54,7 @@ if ( ! function_exists( 'woocommerce_display_categories' ) ) {
 					if ( ! empty( $current_term->name ) && $current_term->name === $term->name ) {
 						echo '<li><span class="active">' . $term->name . '</span></li>';
 					} else {
-						echo '<li><a href="' . $link . '">' . $term->name . '</a></li>';
+						echo '<li><a href="' . esc_url( $link ) . '">' . $term->name . '</a></li>';
 					}
 				}
 			}

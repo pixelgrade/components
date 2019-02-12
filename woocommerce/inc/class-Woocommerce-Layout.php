@@ -98,7 +98,8 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function outputAjaxAddToCartButton() {
-	    global $product;
+		/** @var WC_Product $product */
+		global $product;
 
 		if ( $product->is_type( 'simple' ) ) {
 			woocommerce_template_loop_add_to_cart( array(
@@ -141,13 +142,13 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function alterPaginationArgs( $args ) {
-		$args['prev_text'] = esc_html_x( '&laquo; Previous', 'previous set of posts', '__theme_txtd' );
-		$args['next_text'] = esc_html_x( 'Next &raquo;', 'next set of posts', '__theme_txtd' );
+		$args['prev_text'] = esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' );
+		$args['next_text'] = esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' );
 		return $args;
 	}
 
 	public function changeSaleFlashMarkup( $sale_flash, $post, $product ) {
-		return '<span class="c-btn  c-btn--sale-flash">' . esc_html__( 'Sale!', '__theme_txtd' ) . '</span>';
+		return '<span class="c-btn  c-btn--sale-flash">' . esc_html__( 'Sale!', '__components_txtd' ) . '</span>';
 	}
 
 	public function alterEntryHeaderClassList( $classes ) {
@@ -209,7 +210,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
                 <div class="c-mini-cart__overlay"></div>
                 <div class="c-mini-cart__flyout">
                     <div class="c-mini-cart__header">
-                        <h5 class="c-mini-cart__title"><?php echo esc_html__( 'Your cart', '__theme_txtd' ); ?></h5>
+                        <h5 class="c-mini-cart__title"><?php echo esc_html__( 'Your cart', '__components_txtd' ); ?></h5>
                         <div class="c-mini-cart__close"></div>
                     </div>
                     <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
@@ -245,7 +246,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 			$cart_count_span = '<div class="cart-count"><span>' . $cart_item_count . '</span></div>';
 		}
 
-		$cart_link = '<li class="menu-item menu-item--cart"><a href="' . get_permalink( wc_get_page_id( 'cart' ) ) . '">' . esc_html( 'My Cart', '__theme_txtd' ) . $cart_count_span . '</a></li>';
+		$cart_link = '<li class="menu-item menu-item--cart"><a href="' . esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ) . '">' . esc_html__( 'My Cart', '__components_txtd' ) . $cart_count_span . '</a></li>';
 
 		// Add the cart link to the end of the menu.
 		if ( $args->theme_location === 'primary-left' ) {
