@@ -102,7 +102,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'options'  => array(
 							'recent'   => esc_html__( 'Recent Posts', '__theme_txtd' ),
 						),
-						'desc'     => esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of Vasco. C\'mon, aim for more, mate!', '__theme_txtd' ),
+						'desc'     => esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of ' . wp_get_theme() . '. C\'mon, aim for more, mate!', '__theme_txtd' ),
 						'default'  => 'recent',
 						'section'  => 'content',
 						'priority' => 10,
@@ -190,7 +190,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					'secondary_meta'          => array(
 						'type'     => 'select',
 						'label'    => esc_html__( 'Secondary Meta:', '__theme_txtd' ),
-						'desc'     => esc_html__( '👉 More display options (e.g. Show Excerpt, Show Read More) are available in the Pro version of Vasco. Don\'t let us stop you!', '__theme_txtd' ),
+						'desc'     => esc_html__( '👉 More display options (e.g. Show Excerpt, Show Read More) are available in the Pro version of ' . wp_get_theme() . '. Don\'t let us stop you!', '__theme_txtd' ),
 						'options'  => array(
 
 							'none'     => esc_html__( 'None', '__theme_txtd' ),
