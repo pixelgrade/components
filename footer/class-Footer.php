@@ -200,8 +200,6 @@ class Pixelgrade_Footer extends Pixelgrade_Component {
 		 * Hook-up to various places where we need to output things
 		 */
 
-		add_filter( 'pixelgrade_footer_initial_config', array( $this, 'functiamea' ) );
-
 		// Delay attaching the output hook, to allow others to short-circuit it based on query vars.
 		add_action( 'wp', array( $this, 'outputHookUp' ), 10 );
 
