@@ -203,7 +203,10 @@ function pixelgrade_footer_get_back_to_top_link() {
  * Display the footer copyright.
  */
 function pixelgrade_footer_get_copyright_content() {
-	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="https://pixelgrade.com/?utm_source=felt-lite-clients&utm_medium=footer&utm_campaign=felt-lite" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
+	// Allow others to change this url.
+	$url = apply_filters( 'pixelgrade_footer_credits_url', 'https://pixelgrade.com/' );
+
+	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="' . $url . '" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
 }
 
 /**
