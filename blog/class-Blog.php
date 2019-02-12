@@ -744,9 +744,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 			$this->config['sidebars']['sidebar-2'] = array(
 					'sidebar_args' => array(
-						'name'          => esc_html__( 'Below Post', '__theme_txtd' ),
+						'name'          => esc_html__( 'Below Post', '__components_txtd' ),
 						'id'            => 'sidebar-2',
-						'description'   => esc_html__( 'Add widgets here.', '__theme_txtd' ),
+						'description'   => esc_html__( 'Add widgets here.', '__components_txtd' ),
 						'before_widget' => '<section id="%1$s" class="widget widget--content %2$s">',
 						'after_widget'  => '</section>',
 						'before_title'  => '<h2 class="widget__title h3"><span>',
