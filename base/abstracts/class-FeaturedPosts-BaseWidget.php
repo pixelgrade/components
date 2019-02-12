@@ -124,6 +124,59 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'section'           => 'content',
 						'priority'          => 20,
 					),
+					'source_tag' => array(
+						'disabled' => true,
+						'type'              => 'select',
+						'label'             => esc_html__( 'Tag:', '__components_txtd' ),
+						'callback'          => array( null, 'tagsDropdown' ),
+						'sanitize_callback' => array( null, 'sanitizeTag' ),
+						// We need to do custom sanitization for custom generated selects.
+						'default'           => 0,
+						'display_on'        => array(
+							'display' => true,
+							'on'      => array(
+								'field' => 'source',
+								'value' => 'tag',
+							),
+						),
+						'section'           => 'content',
+						'priority'          => 30,
+					),
+					'post_ids' => array(
+						'disabled' => true,
+						'type'       => 'text',
+						'label'      => esc_html__( 'Post IDs:', '__components_txtd' ),
+						'desc'       => esc_html__( 'Use Posts IDs, separated by commas, to show only a set of specific posts.', '__components_txtd' ),
+						'default'    => '',
+						'display_on' => array(
+							'display' => true,
+							'on'      => array(
+								'field' => 'source',
+								'value' => 'post_ids',
+							),
+						),
+						'section'    => 'content',
+						'priority'   => 40,
+					),
+					'orderby' => array(
+						'disabled' => true,
+						'type'       => 'select',
+						'label'      => esc_html__( 'Order by:', '__components_txtd' ),
+						'options'    => array(
+							'date'    => esc_html__( 'Date', '__components_txtd' ),
+							'popular' => esc_html__( 'Most Popular', '__components_txtd' ),
+						),
+						'default'    => 'date',
+						'display_on' => array(
+							'display' => false,
+							'on'      => array(
+								'field' => 'source',
+								'value' => 'post_ids',
+							),
+						),
+						'section'    => 'content',
+						'priority'   => 50,
+					),
 					'number'                  => array(
 						'type'              => 'number',
 						'label'             => esc_html__( 'Number of posts:', '__components_txtd' ),
@@ -176,6 +229,23 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					),
 
 					// Display Section.
+					'show_excerpt' => array(
+						'disabled' => true,
+						'type'     => 'checkbox',
+						'label'    => esc_html__( 'Show Excerpt', '__components_txtd' ),
+						'default'  => true,
+						'section'  => 'display',
+						'priority' => 10,
+					),
+
+					'show_readmore' => array(
+						'disabled' => true,
+						'type'     => 'checkbox',
+						'label'    => esc_html__( 'Show "Read More" Link', '__components_txtd' ),
+						'default'  => true,
+						'section'  => 'display',
+						'priority' => 20,
+					),
 					'primary_meta'            => array(
 						'type'     => 'select',
 						'label'    => esc_html__( 'Primary Meta:', '__components_txtd' ),
@@ -192,13 +262,27 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'label'    => esc_html__( 'Secondary Meta:', '__components_txtd' ),
 						'desc'     => esc_html__( '👉 More display options (e.g. Show Excerpt, Show Read More) are available in the Pro version of ' . wp_get_theme() . '. Don\'t let us stop you!', '__components_txtd' ),
 						'options'  => array(
-
 							'none'     => esc_html__( 'None', '__components_txtd' ),
 							'date'     => esc_html__( 'Date', '__components_txtd' ),
 						),
 						'default'  => 'none',
 						'section'  => 'display',
 						'priority' => 40,
+					),
+					'show_view_more' => array(
+						'disabled' => true,
+						'type'       => 'checkbox',
+						'label'      => esc_html__( 'Show View More Button', '__components_txtd' ),
+						'default'    => false,
+						'display_on' => array(
+							'display' => false,
+							'on'      => array(
+								'field' => 'source',
+								'value' => 'post_ids',
+							),
+						),
+						'section'    => 'display',
+						'priority'   => 50,
 					),
 					'view_more_label'         => array(
 						'type'       => 'text',
@@ -214,94 +298,6 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'section'    => 'display',
 						'priority'   => 60,
 					),
-
-					'source_tag' => array(
-                        'disabled' => true,
-						'type'              => 'select',
-						'label'             => esc_html__( 'Tag:', '__components_txtd' ),
-						'callback'          => array( null, 'tagsDropdown' ),
-						'sanitize_callback' => array( null, 'sanitizeTag' ),
-						// We need to do custom sanitization for custom generated selects.
-						'default'           => 0,
-						'display_on'        => array(
-							'display' => true,
-							'on'      => array(
-								'field' => 'source',
-								'value' => 'tag',
-							),
-						),
-						'section'           => 'content',
-						'priority'          => 30,
-					),
-                    'post_ids' => array(
-                        'disabled' => true,
-                        'type'       => 'text',
-                        'label'      => esc_html__( 'Post IDs:', '__components_txtd' ),
-                        'desc'       => esc_html__( 'Use Posts IDs, separated by commas, to show only a set of specific posts.', '__components_txtd' ),
-                        'default'    => '',
-                        'display_on' => array(
-                            'display' => true,
-                            'on'      => array(
-                                'field' => 'source',
-                                'value' => 'post_ids',
-                            ),
-                        ),
-                        'section'    => 'content',
-                        'priority'   => 40,
-                    ),
-                    'orderby' => array(
-                        'disabled' => true,
-                        'type'       => 'select',
-                        'label'      => esc_html__( 'Order by:', '__components_txtd' ),
-                        'options'    => array(
-                            'date'    => esc_html__( 'Date', '__components_txtd' ),
-                            'popular' => esc_html__( 'Most Popular', '__components_txtd' ),
-                        ),
-                        'default'    => 'date',
-                        'display_on' => array(
-                            'display' => false,
-                            'on'      => array(
-                                'field' => 'source',
-                                'value' => 'post_ids',
-                            ),
-                        ),
-                        'section'    => 'content',
-                        'priority'   => 50,
-                    ),
-
-                    'show_excerpt' => array(
-	                    'disabled' => true,
-	                    'type'     => 'checkbox',
-                        'label'    => esc_html__( 'Show Excerpt', '__components_txtd' ),
-                        'default'  => true,
-                        'section'  => 'display',
-                        'priority' => 10,
-                    ),
-
-                    'show_readmore' => array(
-	                    'disabled' => true,
-	                    'type'     => 'checkbox',
-                        'label'    => esc_html__( 'Show "Read More" Link', '__components_txtd' ),
-                        'default'  => true,
-                        'section'  => 'display',
-                        'priority' => 20,
-                    ),
-
-                    'show_view_more' => array(
-	                    'disabled' => true,
-	                    'type'       => 'checkbox',
-                        'label'      => esc_html__( 'Show View More Button', '__components_txtd' ),
-                        'default'    => false,
-                        'display_on' => array(
-                            'display' => false,
-                            'on'      => array(
-                                'field' => 'source',
-                                'value' => 'post_ids',
-                            ),
-                        ),
-                        'section'    => 'display',
-                        'priority'   => 50,
-                    ),
 				),
 				'posts'                  => array(
 					'classes'   => array( 'featured-posts-grid' ),
