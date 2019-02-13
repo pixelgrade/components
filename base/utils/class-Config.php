@@ -303,6 +303,9 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *  // Simple check - just the function name
 		 *  'is_404',
 		 *
+		 * Please note that the check will fail (return false) if the provided callback is not a callable,
+		 * either because the format is wrong or the function/method doesn't exist.
+		 *
 		 * @param array|string $check
 		 *
 		 * @return bool
@@ -321,22 +324,34 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			}
 
 			// First, we handle the shorthand version: just a function name.
-			if ( is_string( $check ) && is_callable( $check ) ) {
-				$response = call_user_func( $check );
-				if ( ! $response ) {
-					// Standardize the response.
-					return false;
-				}
-			} elseif ( is_array( $check ) && ! empty( $check['callback'] ) && is_callable( $check['callback'] ) ) {
-				if ( empty( $check['args'] ) ) {
-					$check['args'] = array();
-				}
-				$response = self::maybeEvaluateComparison( call_user_func_array( $check['callback'], $check['args'] ), $check );
-				// Standardize the response.
-				if ( ! $response ) {
-					return false;
+			if ( is_string( $check ) ) {
+				if ( is_callable( $check ) ) {
+					$response = call_user_func( $check );
+					if ( ! $response ) {
+						// Standardize the response.
+						return false;
+					}
 				} else {
-					return true;
+					// If the provided string is not callable (most probably due to the fact the function doesn't exist)
+					// we will fail the check.
+					return false;
+				}
+			} elseif ( is_array( $check ) && ! empty( $check['callback'] ) ) {
+				if ( is_callable( $check['callback'] ) ) {
+					if ( empty( $check['args'] ) ) {
+						$check['args'] = array();
+					}
+					$response = self::maybeEvaluateComparison( call_user_func_array( $check['callback'], $check['args'] ), $check );
+					// Standardize the response.
+					if ( ! $response ) {
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					// If the provided array is not callable (most probably due to the fact the method doesn't exist)
+					// we will fail the check.
+					return false;
 				}
 			}
 
@@ -362,6 +377,24 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *  ),
 		 *  // Simple check - just the function name
 		 *  'is_404',
+		 *
+		 * Please note that a check will fail (return false) if the provided callback is not a callable,
+		 * either because the format is wrong or the function/method doesn't exist. This is the most common scenario.
+		 * This way you avoid the need to pair checks with their "function_exists" counterpart.
+		 *
+		 * If you need a series of checks to pass even if the callable doesn't exist,
+		 * you will need to add a "function_exists" or "is_callable" check with the "NOT" compare and with the "OR" relation, like so:
+		 * array(
+		 *  'relation' => 'OR',
+		 *  array(
+		 *      'callback' => 'function_exists',
+		 *      'args' => array( 'is_checkout' ),
+		 *      'compare' => 'NOT',
+		 *  ),
+		 *  array(
+		 *      'callback' => 'is_checkout',
+		 *  ),
+		 * ),
 		 *
 		 * @param array|string $checks The checks config.
 		 * @param array        $data Optional. Extra data to use
