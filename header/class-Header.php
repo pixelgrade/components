@@ -207,6 +207,23 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 	}
 
 	/**
+	 * Change the primary-right nav menu's zone depending on the other nav menus.
+	 *
+	 * @param string $default_zone
+	 * @param array  $menu_location_config
+	 * @param array  $menu_locations_config
+	 *
+	 * @return string
+	 */
+	public function primaryRightNavMenuZone( $default_zone, $menu_location_config, $menu_locations_config ) {
+		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
+		if ( ! has_nav_menu( 'primary-left' ) ) {
+			$default_zone = 'middle';
+		}
+		return $default_zone;
+	}
+
+	/**
 	 * Attach the template tag that outputs the markup.
 	 */
 	public function outputHookUp() {
