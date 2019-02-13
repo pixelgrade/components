@@ -55,9 +55,14 @@ p {
 	@include spacing(margin-bottom, $wp-align-image-vertical-padding);
 	max-width: 100%;
 
-	&:not(.wp-block-gallery), img {
+	&, img {
 		display: block;
 	}
+}
+
+.alignnone,
+.aligncenter {
+    display: block;
 }
 
 .aligncenter {
