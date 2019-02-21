@@ -916,7 +916,7 @@ function pixelgrade_parse_content_tags( $content ) {
 }
 
 /**
- * Helper function used to check user access to various features
+ * Helper function used to check that the user has access to various features.
  *
  * @param string $feature
  *
@@ -931,6 +931,8 @@ function pixelgrade_user_has_access( $feature ) {
 			return apply_filters( 'pixelgrade_enable_woocommerce', false );
 			break;
 		default:
-			return false;
+			break;
 	}
+
+	return false;
 }

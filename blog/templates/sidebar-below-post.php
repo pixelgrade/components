@@ -17,7 +17,9 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Blog
+ * @version    1.0.0
  */
+
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly

@@ -22,6 +22,8 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 	 * Pixelgrade_Header constructor.
 	 *
 	 * @param string $version
+	 *
+	 * @throws Exception
 	 */
 	public function __construct( $version = '1.0.0' ) {
 		parent::__construct( $version );
