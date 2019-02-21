@@ -489,7 +489,7 @@
     .woocommerce form.cart .qty:hover, .woocommerce form.cart .qty:active, .woocommerce form.cart .qty:focus {
       color: #FFF;
       background-color: #000;
-      opacity: 0.8;
+      opacity: 1;
       text-decoration: none;
       border: initial; }
   .woocommerce form.cart .woocommerce-grouped-product-list-item__price {
