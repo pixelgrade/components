@@ -102,7 +102,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'options'  => array(
 							'recent'   => esc_html__( 'Recent Posts', '__components_txtd' ),
 						),
-						'desc'     => sprintf( esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of %s. C\'mon, aim for more, mate!', '__components_txtd' ), wp_get_theme( get_template() )->get('Name') ),
+						'desc'     => sprintf( esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of %s. C\'mon, aim for more, mate!', '__components_txtd' ), pixelgrade_get_original_theme_name() ),
 						'default'  => 'recent',
 						'section'  => 'content',
 						'priority' => 10,
