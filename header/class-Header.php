@@ -163,6 +163,11 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 				)
 			);
 		}
+
+		if ( ! empty( $this->config['menu_locations']['jetpack-social-menu'] ) ) {
+			// Add support for the Jetpack Social Menu
+			add_theme_support( 'jetpack-social-menu' );
+		}
 	}
 
 	/**

@@ -6,7 +6,6 @@ $branding-horizontal: false !default;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  flex-direction: column;
 
   @if $branding-horizontal {
 
