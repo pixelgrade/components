@@ -204,11 +204,64 @@ function pixelgrade_footer_get_back_to_top_link() {
 /**
  * Display the footer copyright.
  */
-function pixelgrade_footer_get_copyright_content() {
-	// Allow others to change this url.
-	$url = apply_filters( 'pixelgrade_footer_credits_url', 'https://pixelgrade.com/' );
+function pixelgrade_footer_the_copyright() {
 
-	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="' . $url . '" target="_blank">Pixelgrade</a>' ) . '</span>' . PHP_EOL;
+	$output = '';
+
+	if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+		$copyright_text = pixelgrade_footer_get_copyright_content();
+		if ( ! empty( $copyright_text ) ) {
+			$output .= '<div class="c-footer__copyright-text">' . PHP_EOL;
+
+			$output .= $copyright_text . PHP_EOL;
+
+			$hide_credits = pixelgrade_option( 'footer_hide_credits', false );
+			if ( empty( $hide_credits ) ) {
+				$output .= pixelgrade_get_footer_credits() . PHP_EOL;
+			}
+
+			$output .= '</div>' . PHP_EOL;
+		}
+	} else {
+		$output .= '<div class="c-footer__copyright-text">' . PHP_EOL;
+
+		$copyright_text = pixelgrade_parse_content_tags( esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ) );
+		if ( ! empty( $copyright_text ) ) {
+			$output .= $copyright_text . PHP_EOL;
+		}
+
+		$output .= pixelgrade_get_footer_credits() . PHP_EOL;
+
+		$output .= '</div>' . PHP_EOL;
+	}
+
+	echo apply_filters( 'pixelgrade_footer_the_copyright', $output );
+}
+/**
+ * Get the footer copyright content (HTML or simple text).
+ *
+ * It already has do_shortcode applied to it, so you don't have to.
+ *
+ * @return bool|string
+ */
+function pixelgrade_footer_get_copyright_content() {
+	$copyright_text = pixelgrade_option( 'copyright_text', esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ) );
+	if ( ! empty( $copyright_text ) ) {
+		// We need to parse any tags present.
+		$copyright_text = pixelgrade_parse_content_tags( $copyright_text );
+		// Finally process any shortcodes that might be in there.
+		return do_shortcode( $copyright_text );
+	}
+
+	return '';
+}
+
+function pixelgrade_get_footer_credits() {
+	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Made with love by %s.', '__components_txtd' ), '<a href="' . esc_url( pixelgrade_get_footer_credits_url() ) . '" target="_blank">Pixelgrade</a>' ) . '</span>';
+}
+
+function pixelgrade_get_footer_credits_url() {
+	return apply_filters( 'pixelgrade_footer_credits_url', 'https://pixelgrade.com/' );
 }
 
 /**
@@ -217,10 +270,10 @@ function pixelgrade_footer_get_copyright_content() {
  * @return bool
  */
 function pixelgrade_footer_is_valid_config() {
-	// Get the component's configuration
+	// Get the component's configuration.
 	$config = Pixelgrade_Footer()->getConfig();
 
-	// Test if we have no zones or no sidebars and menu locations to show, even bogus ones
+	// Test if we have no zones or no sidebars and menu locations to show, even bogus ones.
 	if ( empty( $config['zones'] ) || ( empty( $config['menu_locations'] ) && empty( $config['sidebars'] ) ) ) {
 		return false;
 	}
@@ -235,16 +288,16 @@ function pixelgrade_footer_is_valid_config() {
  * @return array
  */
 function pixelgrade_footer_get_zones() {
-	// Get the component's configuration
+	// Get the component's configuration.
 	$config = Pixelgrade_Footer()->getConfig();
 
-	// Initialize the zones array with the configuration - we will build on it
+	// Initialize the zones array with the configuration - we will build on it.
 	$zones = $config['zones'];
 
-	// Cycle through each zone and determine the sidebars or nav menu locations that will be shown - with input from others
+	// Cycle through each zone and determine the sidebars or nav menu locations that will be shown - with input from others.
 	foreach ( $zones as $zone_id => $zone_settings ) {
 		$zones[ $zone_id ]['sidebars'] = array();
-		// Cycle through each defined sidebar and determine if it is a part of the current zone
+		// Cycle through each defined sidebar and determine if it is a part of the current zone.
 		foreach ( $config['sidebars'] as $sidebar_id => $sidebar ) {
 			// A little sanity check
 			if ( empty( $sidebar['default_zone'] ) ) {
