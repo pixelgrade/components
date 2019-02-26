@@ -15,7 +15,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Footer
- * @version     1.4.2
+ * @version     1.4.2.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ if ( ! function_exists( 'Pixelgrade_Footer' ) ) :
 		if ( ! class_exists( 'Pixelgrade_Footer' ) ) {
 			pixelgrade_load_component_file( 'footer', 'class-Footer' );
 		}
-		return Pixelgrade_Footer::instance( '1.4.2' );
+		return Pixelgrade_Footer::instance( '1.4.2.1' );
 	}
 endif;
 
