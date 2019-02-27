@@ -401,7 +401,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 						$loop_template = pixelgrade_locate_component_template_part( $this->component_slug, $loop_template_part_slug, $loop_template_part_name );
 
 						if ( ! file_exists( $loop_template ) ) {
-							/* translators: 1: the template part 2: the page slug */
+							/* translators: 1: the template part, 2: the page slug */
 							_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( '%1$s does not exist. Check out the config of the %2$s custom page template.', '__components_txtd' ), '<code>' . $loop_template_part_slug . '-' . $loop_template_part_name . '</code>', '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
 						} else {
 							$post_template_part_slug = '';
