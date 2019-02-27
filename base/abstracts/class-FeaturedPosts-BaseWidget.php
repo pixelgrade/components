@@ -102,6 +102,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'options'  => array(
 							'recent'   => esc_html__( 'Recent Posts', '__components_txtd' ),
 						),
+						/* translators: %s: the theme name */
 						'desc'     => sprintf( esc_html__( '👉 More Posts Source options (e.g. Category, Tag, Selected Posts) are available in the Pro version of %s. C\'mon, aim for more, mate!', '__components_txtd' ), pixelgrade_get_original_theme_name() ),
 						'default'  => 'recent',
 						'section'  => 'content',
@@ -260,6 +261,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					'secondary_meta'          => array(
 						'type'     => 'select',
 						'label'    => esc_html__( 'Secondary Meta:', '__components_txtd' ),
+						/* translators: %s: the theme name */
 						'desc'     => sprintf( esc_html__( '👉 More display options (e.g. Show Excerpt, Show Read More) are available in the Pro version of %s. Don\'t let us stop you!', '__components_txtd' ), wp_get_theme( get_template() )->get('Name') ),
 						'options'  => array(
 							'none'     => esc_html__( 'None', '__components_txtd' ),
@@ -507,10 +509,10 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					 */
 					do_action( 'pixelgrade_widget_before_' . $this->id, $args, $instance );
 
-					echo $args['before_widget'];
+					echo $args['before_widget']; // @codingStandardsIgnoreLine
 
 					if ( ! empty( $title ) ) {
-						echo $args['before_title'] . $title . $args['after_title'];
+						echo $args['before_title'] . $title . $args['after_title']; // @codingStandardsIgnoreLine
 					}
 
 					/**
@@ -553,7 +555,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 							do_action( 'pixelgrade_featured_posts_widget_before_post' . $this->id, $post_index, $posts );
 
 							// We use include so the template parts gets access to all the variables defined above.
-							include $found_template;
+							include $found_template; // @codingStandardsIgnoreLine
 
 							/**
 							 * Fires after the widget post.
@@ -600,9 +602,11 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						}
 
 						if ( ! empty( $view_more_link ) && ! is_wp_error( $view_more_link ) ) {
+							// @codingStandardsIgnoreStart
 							echo '<div class="featured-posts__footer">' . PHP_EOL .
 							     '<a class="featured-posts__more" href="' . esc_url( $view_more_link ) . '">' . $view_more_label . '</a>' . PHP_EOL .
 							     '</div>';
+							// @codingStandardsIgnoreEnd
 						}
 					}
 					?>
@@ -620,7 +624,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					 */
 					do_action( 'pixelgrade_featured_posts_widget_end' . $this->id, $instance, $args );
 
-					echo $args['after_widget'];
+					echo $args['after_widget']; // @codingStandardsIgnoreLine
 
 					/**
 					 * Fires after the widget markup, including the closing </section>.
@@ -644,6 +648,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 				}
 			} else {
 				// Let the developers know that something is amiss.
+				/* translators: %s: the widget name */
 				_doing_it_wrong( __METHOD__, sprintf( 'Couldn\'t find a template part to use for displaying widget posts in the %s widget!', $this->name ), null );
 			}
 		}

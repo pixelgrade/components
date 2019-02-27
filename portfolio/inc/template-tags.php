@@ -80,6 +80,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 			if ( 0 === intval( $comments_number ) ) {
 				$comments = esc_html__( 'No Comments', '__components_txtd' );
 			} else {
+				/* translators: %d: the number of comments */
 				$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
 			}
 			$meta['comments'] = '<a href="' . esc_url( get_comments_link() ) . '">' . esc_html( $comments ) . '</a>';

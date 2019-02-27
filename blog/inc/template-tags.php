@@ -241,6 +241,7 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
 						if ( $comments_number == 0 ) {
 							$comments = esc_html__( 'No Comments', '__components_txtd' );
 						} else {
+							/* translators: %d: the number of comments */
 							$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
 						}
 						$meta['comments'] = '<a href="' . esc_url( get_comments_link() ) . '">' . esc_html( $comments ) . '</a>';
@@ -455,6 +456,7 @@ if ( ! function_exists( 'pixelgrade_get_author_bio_links' ) ) {
 
 		$markup .= '<span class="c-author__links">' . PHP_EOL;
 
+		/* translators: %s: the author name */
 		$markup .= '<a class="c-author__social-link  c-author__website-link" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All posts', '__components_txtd' ) . '</a>';
 
 		if ( is_array( $profile ) && ! empty( $profile['entry'][0]['urls'] ) ) {

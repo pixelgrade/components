@@ -225,6 +225,7 @@ function pixelgrade_footer_the_copyright() {
 	} else {
 		$output .= '<div class="c-footer__copyright-text">' . PHP_EOL;
 
+		/* translators: %year%: current year  %site-title%: the site title */
 		$copyright_text = pixelgrade_parse_content_tags( esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ) );
 		if ( ! empty( $copyright_text ) ) {
 			$output .= $copyright_text . PHP_EOL;
@@ -245,6 +246,7 @@ function pixelgrade_footer_the_copyright() {
  * @return bool|string
  */
 function pixelgrade_footer_get_copyright_content() {
+	/* translators: %year%: current year  %site-title%: the site title */
 	$copyright_text = pixelgrade_option( 'copyright_text', esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ) );
 	if ( ! empty( $copyright_text ) ) {
 		// We need to parse any tags present.
@@ -257,6 +259,7 @@ function pixelgrade_footer_get_copyright_content() {
 }
 
 function pixelgrade_get_footer_credits() {
+	/* translators: 1: the original theme name 2: Pixelgrade site link */
 	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Theme: %1$s by %2$s.', '__components_txtd' ), pixelgrade_get_original_theme_name(), '<a href="' . esc_url( pixelgrade_get_footer_credits_url() ) . '" target="_blank">Pixelgrade</a>' ) . '</span>';
 }
 
