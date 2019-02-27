@@ -1473,11 +1473,12 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 		 */
 		public function sidebarNotSupportedMessage( $args, $instance ) {
 
-			/* translators: %s: the widget name */
 			$html_message = '<div class="c-alert  c-alert--danger">
                     <h4 class="c-alert__title">'. esc_html__( '🤦 Widget Type Not Supported Here', '__components_txtd' ) . '</h4>
                     <div class="c-alert__body">
-                        <p>'.  sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__components_txtd' ), '<em>' . $args['widget_name'] . '</em>' ) .'</p>
+                        <p>' .
+			                /* translators: %s: the widget name */
+			                sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__components_txtd' ), '<em>' . $args['widget_name'] . '</em>' ) .'</p>
                     </div>
                 </div>';
 
