@@ -64,7 +64,7 @@
 			}
 		}
 
-		$( '.menu-item--cart' ).on( 'click', 'a', openMiniCart );
+		$( '.js-open-cart' ).on( 'click', openMiniCart );
 
 		// show mini cart when Cart menu item is clicked
 		function openMiniCart( event ) {

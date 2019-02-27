@@ -18,24 +18,28 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function pixelgrade_woocommerce_change_blog_component_config() {
 
+	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/default', array(
+		'extend' => 'blog/default',
+	) );
+
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/main', array(
 		'extend' => 'blog/main',
 	) );
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/layout', array(
-		'extend'   => 'blog/layout',
+		'extend' => 'blog/layout',
 	) );
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/container', array(
-		'extend'   => 'blog/container',
+		'extend' => 'blog/container',
 	) );
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/loop-none', array(
-		'extend'   => 'blog/loop-none',
+		'extend' => 'blog/loop-none',
 	) );
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/loop-pagination', array(
-		'extend'   => 'blog/loop-pagination',
+		'extend' => 'blog/loop-pagination',
 	) );
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/grid-item', array(
@@ -48,13 +52,13 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 		),
 	) );
 
-	Pixelgrade_BlocksManager()->registerBlock('woocommerce/entry-content', array(
+	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/entry-content', array(
 		'type'      => 'template_part',
 		'templates' => array(
 			array(
 				'component_slug' => 'woocommerce',
-				'slug' => 'entry-content',
-				'name' => 'product',
+				'slug'           => 'entry-content',
+				'name'           => 'product',
 			),
 		),
 	) );
@@ -122,29 +126,34 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 	) );
 
 	Pixelgrade_BlocksManager()->registerBlock( 'woocommerce/archive-product', array(
-		'extend' => 'woocommerce/container',
+		'extend' => 'woocommerce/default',
 		'blocks' => array(
-			'layout' => array(
-				'extend' => 'woocommerce/layout',
+			'container' => array(
+				'extend' => 'woocommerce/container',
 				'blocks' => array(
-					'main' => array(
-						'extend' => 'blog/main',
+					'layout' => array(
+						'extend' => 'woocommerce/layout',
 						'blocks' => array(
-							'woocommerce/entry-header-archive',
-							'content' => array(
+							'main' => array(
+								'extend' => 'blog/main',
 								'blocks' => array(
-									'woocommerce/loop-posts',
-									'woocommerce/loop-none'
-								),
-								'wrappers' => array(
-									array(
-										'classes' => 'woocommerce-product-archive'
+									'woocommerce/entry-header-archive',
+									'content' => array(
+										'blocks' => array(
+											'woocommerce/loop-posts',
+											'woocommerce/loop-none'
+										),
+										'wrappers' => array(
+											array(
+												'classes' => 'woocommerce-product-archive'
+											),
+										),
 									),
 								),
 							),
 						),
 					),
-				),
+		        ),
 			),
         ),
 		'checks' => array(

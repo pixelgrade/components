@@ -102,13 +102,34 @@ body {
   color: $body-text-color;
 }
 
-.h0 { @include leading-map($page-title-font) }
-.h1, h1 { @include leading-map($h1) }
-.h2, h2 { @include leading-map($h2) }
-.h3, h3 { @include leading-map($h3) }
-.h4, h4 { @include leading-map($h4) }
-.h5, h5 { @include leading-map($h5) }
-.h6, h6 { @include leading-map($h6) }
+.h0 {
+  @include leading-map($page-title-font);
+  color: $h1-color;
+}
+.h1, h1 {
+  @include leading-map($h1);
+  color: $h1-color;
+}
+.h2, h2 {
+  @include leading-map($h2);
+  color: $h2-color;
+}
+.h3, h3 {
+  @include leading-map($h3);
+  color: $h3-color;
+}
+.h4, h4 {
+  @include leading-map($h4);
+  color: $h4-color;
+}
+.h5, h5 {
+  @include leading-map($h5);
+  color: $h5-color;
+}
+.h6, h6 {
+  @include leading-map($h6);
+  color: $h6-color;
+}
 
 .blockquote { @include leading-map($blockquote-font) }
 

@@ -28,17 +28,13 @@ $woocommerce-mobile-breakpoint: 768px;
 
 .cart-count {
     display: inline-block;
-
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translate(0, -50%);
-
+    position: relative;
     width: 2em;
     height: 2em;
-
-    font-size: 0.75em;
     border-radius: 50%;
+    transform: scale(0.7);
+    margin-left: 0.2em;
+    margin-right: -0.5em;
 
     span {
         display: block;

@@ -95,7 +95,6 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		add_filter( 'customify_filter_fields', array( $this, 'addCustomifyOptions' ), 60, 1 );
 
 		add_filter( 'pixelgrade_customify_main_content_section_options', array( $this, 'alterContentOptions' ), 30, 2 );
-		add_filter( 'pixelgrade_header_customify_section_options', array( $this, 'alterHeaderOptions' ), 10, 2 );
 		add_filter( 'pixelgrade_button_selectors_array', array( $this, 'alterButtonsSelectors' ), 10, 2 );
 	}
 
@@ -125,7 +124,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.c-mini-cart[class] .product_list_widget a:not(.remove),
 							.product .entry-summary .price[class],
 							.woocommerce-grouped-product-list-item__price,
-							.woocommerce-grouped-product-list-item__label
+							.woocommerce-grouped-product-list-item__label,
+							.related.products h2,
+							.woocommerce-Reviews-title,
+							.woocommerce-Reviews .comment-reply-title
 						'
 					),
 					'main_content_heading_4_font' => array(
@@ -185,26 +187,6 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								'property' => 'border-color',
 							),
 						),
-					),
-				),
-			),
-		);
-
-		// Now we merge the modified config with the original one
-		// Thus overwriting what we have changed
-		$section_options = Pixelgrade_Config::merge( $section_options, $new_section_options );
-
-		return $section_options;
-
-	}
-
-	public function alterHeaderOptions( $section_options, $options ) {
-
-		$new_section_options = array(
-			'header_section' => array(
-				'options' => array(
-					'header_background' => array(
-
 					),
 				),
 			),
