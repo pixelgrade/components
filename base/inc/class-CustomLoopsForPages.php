@@ -404,6 +404,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							/* translators: 1: the template part, 2: the page slug */
 							_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( '%1$s does not exist. Check out the config of the %2$s custom page template.', '__components_txtd' ), '<code>' . $loop_template_part_slug . '-' . $loop_template_part_name . '</code>', '<code>' . $this->page_slug . '</code>' ), '1.2.6' );
 						} else {
+							// These will be available to the loop template part to do stuff like the_post() and so on.
 							$post_template_part_slug = '';
 							$post_template_part_name = '';
 							if ( is_array( $this->post_template_part ) ) {
@@ -422,7 +423,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							}
 
 							// Include the loop template part.
-							include $loop_template;
+							include $loop_template; // @codingStandardsIgnoreLine.
 						}
 					} else {
 

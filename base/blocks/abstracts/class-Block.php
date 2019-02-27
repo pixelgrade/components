@@ -157,7 +157,8 @@ abstract class Pixelgrade_Block {
 			if ( Pixelgrade_Wrapper::isInlineMarkup( $this->wrappers ) ) {
 				// If we have been given a fully qualified wrapper(s) opening markup, we expect to also receive the ending markup
 				if ( empty( $this->end_wrappers ) || ! Pixelgrade_Wrapper::isInlineMarkup( $this->end_wrappers ) ) {
-					_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s), but no valid ending provided (%s)!', htmlentities( $this->wrappers ), htmlentities( $this->end_wrappers ) ), null );
+					/* translators: 1: the start wrappers, 2: the end wrappers */
+					_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%1$s), but no valid ending provided (%2$s)!', htmlentities( $this->wrappers ), htmlentities( $this->end_wrappers ) ), null );
 				} else {
 					$new_wrappers[] = new Pixelgrade_Wrapper(
 						array(
@@ -215,6 +216,7 @@ abstract class Pixelgrade_Block {
 			// We will treat it as shorthand for just the tag
 			// But first we need to make sure that it is not accidentally inline opening markup
 			if ( Pixelgrade_Wrapper::isInlineMarkup( $wrapper ) ) {
+				/* translators: %s: the wrapper markup */
 				_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s) in an individual wrapper config! This is not possible since there is no way to provide the ending markup.', htmlentities( $wrapper ) ), null );
 				return false;
 			} else {
