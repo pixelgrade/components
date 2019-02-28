@@ -32,4 +32,4 @@ $classes = apply_filters( 'components_entry_header_classes', $classes );
 
 ?>
 
-<h2 class="<?php echo join( ' ', $classes ); ?>"><?php the_archive_title(); ?></h2>
+<h2 class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"><?php the_archive_title(); ?></h2>

@@ -297,7 +297,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 
 					<?php
 					foreach ( $this->config['gallery_spacing_options'] as $value => $caption ) {
-						echo '<option value="' . esc_attr( $value ) . '" ' . selected( $value, $default_gallery_spacing ) . '>' . esc_html( $caption ) . '</option>' . PHP_EOL;
+						echo '<option value="' . esc_attr( $value ) . '" ' . selected( $value, $default_gallery_spacing ) . '>' . esc_html( $caption ) . "</option>\n";
 					}
 					?>
 

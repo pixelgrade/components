@@ -52,9 +52,9 @@ if ( ! function_exists( 'woocommerce_display_categories' ) ) {
 				if ( ! is_wp_error( $link ) ) {
 
 					if ( ! empty( $current_term->name ) && $current_term->name === $term->name ) {
-						echo '<li><span class="active">' . $term->name . '</span></li>';
+						echo '<li><span class="active">' . esc_html( $term->name ) . '</span></li>';
 					} else {
-						echo '<li><a href="' . esc_url( $link ) . '">' . $term->name . '</a></li>';
+						echo '<li><a href="' . esc_url( $link ) . '">' . esc_html( $term->name ) . '</a></li>';
 					}
 				}
 			}

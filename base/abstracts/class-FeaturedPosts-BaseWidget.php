@@ -602,11 +602,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						}
 
 						if ( ! empty( $view_more_link ) && ! is_wp_error( $view_more_link ) ) {
-							// @codingStandardsIgnoreStart
-							echo '<div class="featured-posts__footer">' . PHP_EOL .
-							     '<a class="featured-posts__more" href="' . esc_url( $view_more_link ) . '">' . $view_more_label . '</a>' . PHP_EOL .
-							     '</div>';
-							// @codingStandardsIgnoreEnd
+							echo '<div class="featured-posts__footer"><a class="featured-posts__more" href="' . esc_url( $view_more_link ) . '">' . $view_more_label . '</a></div>'; // @codingStandardsIgnoreLine
 						}
 					}
 					?>
@@ -770,10 +766,10 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output .= '<p class="pixelgrade-featured-posts-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-featured-posts-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
 			$args         = array(
@@ -801,17 +797,17 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			$cat_dropdown = wp_dropdown_categories( $args );
 
 			if ( empty( $cat_dropdown ) ) {
-				$output .= '<br /><small>' . esc_html__( 'Please define some categories first.', '__components_txtd' ) . '</small>' . PHP_EOL;
+				$output .= '<br /><small>' . esc_html__( 'Please define some categories first.', '__components_txtd' ) . "</small>\n";
 			} else {
 				$output .= $cat_dropdown;
 			}
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return $output;
 		}
@@ -874,10 +870,10 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			}
 
 			// Lets generate the markup.
-			$output .= '<p class="pixelgrade-featured-posts-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-featured-posts-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
 			$args         = array(
@@ -902,17 +898,17 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 			$tag_dropdown = wp_dropdown_categories( $args );
 
 			if ( empty( $tag_dropdown ) ) {
-				$output .= '<br /><small>' . esc_html__( 'Please define some tags first.', '__components_txtd' ) . '</small>' . PHP_EOL;
+				$output .= '<br /><small>' . esc_html__( 'Please define some tags first.', '__components_txtd' ) . "</small>\n";
 			} else {
 				$output .= $tag_dropdown;
 			}
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return $output;
 		}

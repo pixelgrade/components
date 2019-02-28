@@ -216,7 +216,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
                     <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
                 </div>
             </div>
-            <?php echo ob_get_clean();
+            <?php echo ob_get_clean(); // WPCS: XSS OK.
         }
 	}
 
@@ -266,7 +266,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	    global $product;
 
 	    echo '<div class="woocommerce-product-category c-meta__primary">';
-	    echo wc_get_product_category_list( $product->get_id(), ' / ' );
+	    echo wc_get_product_category_list( $product->get_id(), ' / ' ); // WPCS: XSS OK.
 	    echo '</div>';
     }
 

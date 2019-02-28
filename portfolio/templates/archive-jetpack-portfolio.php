@@ -73,9 +73,9 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 							if ( ! is_tax( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) && ! is_post_type_archive( Jetpack_Portfolio::CUSTOM_POST_TYPE ) ) {
 								the_archive_title();
 							} elseif ( pixelgrade_get_page_for_projects() ) {
-								echo get_the_title( pixelgrade_get_page_for_projects() );
+								echo get_the_title( pixelgrade_get_page_for_projects() ); // WPCS: XSS OK.
 							} else {
-								echo apply_filters( 'pixelgrade_default_portfolio_archives_title', esc_html__( 'Projects', '__components_txtd' ), $location );
+								echo apply_filters( 'pixelgrade_default_portfolio_archives_title', esc_html__( 'Projects', '__components_txtd' ), $location ); // WPCS: XSS OK.
 							}
 							?>
 						</h1>

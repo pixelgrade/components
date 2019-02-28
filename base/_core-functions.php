@@ -577,7 +577,8 @@ if ( ! function_exists( 'pixelgrade_get_template_part' ) ) {
 		// Allow 3rd party plugins or themes to filter template file.
 		$located = apply_filters( 'pixelgrade_get_template_part', $located, $template_slug, $template_path, $args, $template_name, $default_path );
 
-		include( $located ); // @codingStandardsIgnoreLine
+		// @codingStandardsIgnoreLine
+		include( $located );
 	}
 }
 

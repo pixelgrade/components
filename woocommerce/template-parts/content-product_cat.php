@@ -13,6 +13,8 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
+ * @global string $category
+ *
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Woocommerce
@@ -42,7 +44,7 @@ if ( $thumbnail ) {
 
         <div class="c-card__aside c-card__thumbnail-background  has-post-thumbnail">
             <div class="c-card__frame">
-                <?php echo $thumbnail; ?>
+                <?php echo $thumbnail; // WPCS: XSS OK. ?>
             </div>
         </div>
 

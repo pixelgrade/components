@@ -203,7 +203,7 @@ class Pixelgrade_Wrapper {
 	 * @return string Wrapped content.
 	 */
 	final public function wrapContent( $content = '' ) {
-		return $this->getOpeningMarkup() . PHP_EOL . $content . PHP_EOL . $this->getClosingMarkup();
+		return $this->getOpeningMarkup() . "\n" . $content . "\n" . $this->getClosingMarkup();
 	}
 
 	/**
@@ -525,7 +525,7 @@ class Pixelgrade_Wrapper {
 			}
 
 			if ( ! is_array( $data ) || ! is_object( $data ) ) {
-				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null );
+				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null ); // @codingStandardsIgnoreLine
 
 				return false;
 			}

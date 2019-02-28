@@ -12,6 +12,9 @@
  *
  * (A little inspiration close at hand https://www.youtube.com/watch?v=7PCkvCPvDXk )
  *
+ * @codingStandardsIgnoreFile
+ * phpcs:ignoreFile
+ *
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base

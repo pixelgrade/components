@@ -2,6 +2,9 @@
 /**
  * Custom functions for our blocks logic.
  *
+ * @codingStandardsIgnoreFile
+ * phpcs:ignoreFile
+ *
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
@@ -50,17 +53,17 @@ require_once PIXELGRADE_BLOCKS_PATH . 'class-WrapperListUtil.php';
 
 function pixelgrade_render_block( $block ) {
 	if ( pixelgrade_is_block_debug() ) {
-		echo PHP_EOL . PHP_EOL . '<!-- ################################################## -->';
-		echo PHP_EOL . sprintf( '<!-- ### Starting requested render for block \'%s\' ### -->', $block );
-		echo PHP_EOL . '<!-- ################################################## -->' . PHP_EOL;
+		echo "\n\n<!-- ################################################## -->";
+		echo "\n" . sprintf( '<!-- ### Starting requested render for block \'%s\' ### -->', $block );
+		echo "\n<!-- ################################################## -->\n";
 	}
 
 	echo pixelgrade_get_rendered_block( $block );
 
 	if ( pixelgrade_is_block_debug() ) {
-		echo PHP_EOL . '<!-- ################################################## -->';
-		echo PHP_EOL . sprintf( '<!-- ### Ending requested render for block \'%s\' ### -->', $block );
-		echo PHP_EOL . '<!-- ################################################ -->' . PHP_EOL . PHP_EOL;
+		echo "\n<!-- ################################################## -->";
+		echo "\n" . sprintf( '<!-- ### Ending requested render for block \'%s\' ### -->', $block );
+		echo "\n<!-- ################################################## -->\n\n";
 	}
 }
 

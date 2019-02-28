@@ -642,7 +642,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 									_doing_it_wrong(
 										__METHOD__,
 										sprintf( 'You need to define a default value for the following Customizer option: %1$s > %2$s > %3$s.', esc_html( $section_key ), 'options', esc_html( $option_key ) ) .
-										( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : '' ), null
+										( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', esc_html( $filter_to_use ) ) : '' ), null
 									);
 								}
 

@@ -313,6 +313,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 	 * The class file needs to be loaded before the block type registration because it will do a class_exists check.
 	 */
 	public function registerDefaultBlockTypes() {
+		// @codingStandardsIgnoreStart
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-LayoutBlock.php';
 		$this->registerBlockType( 'layout', 'Pixelgrade_LayoutBlock' );
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-LoopBlock.php';
@@ -321,6 +322,7 @@ final class Pixelgrade_BlocksManager extends Pixelgrade_Singleton {
 		$this->registerBlockType( 'template_part', 'Pixelgrade_TemplatePartBlock' );
 		require_once PIXELGRADE_BLOCKS_PATH . 'class-CallbackBlock.php';
 		$this->registerBlockType( 'callback', 'Pixelgrade_CallbackBlock' );
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
