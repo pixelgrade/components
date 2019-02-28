@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 export class WindowService {
 
-  private static $window: JQuery = $( window );
+  private static $window: JQuery<Window> = $( window );
 
   public static onLoad(): Rx.Observable<UIEvent> {
     return Rx.DOM.fromEvent( this.getWindowEl(), 'load' );
@@ -17,7 +17,7 @@ export class WindowService {
     return Rx.DOM.scroll( this.getWindowEl() );
   }
 
-  public static getWindow(): JQuery {
+  public static getWindow(): JQuery<Window> {
     return WindowService.$window;
   }
 
@@ -33,7 +33,7 @@ export class WindowService {
     return WindowService.$window.height();
   }
 
-  public static getWindowEl(): Element {
+  public static getWindowEl(): Window {
     return WindowService.$window[ 0 ];
   }
 

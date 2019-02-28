@@ -11,7 +11,7 @@ const escKeyCode = 27;
 export class SearchOverlay extends BaseComponent {
 
   private $body: JQuery = $( 'body' );
-  private $document: JQuery = $( document );
+  private $document: JQuery<Document> = $( document );
   private $searchField: JQuery = $( '.c-search-overlay' ).find( '.search-field' );
   private keyupSub: Observable<Event>;
   private keyupSubscriptionActive: boolean = true;

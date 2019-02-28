@@ -14,7 +14,7 @@ export class StickyHeader extends BaseComponent {
 
   private ProgressBar: ProgressBar;
   private $body: JQuery = $( 'body' );
-  private $document: JQuery = $( document );
+  private $document: JQuery<Document> = $( document );
   private $mainMenu: JQuery = $( '.menu--primary' );
   private $mainMenuItems: JQueryExtended = this.$mainMenu.find( 'li' );
   private $readingBar: JQuery = $( '.js-reading-bar' );
@@ -96,7 +96,7 @@ export class StickyHeader extends BaseComponent {
     }
   }
 
-  private onMobileMenuExpand(e: JQuery.Event): void {
+  private onMobileMenuExpand(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 
@@ -120,7 +120,7 @@ export class StickyHeader extends BaseComponent {
     $button.parent().addClass( hoverClass );
   }
 
-  private onMenuToggleChange( e: JQuery.Event ): void {
+  private onMenuToggleChange( e: Event ): void {
     const isMenuOpen = $( e.currentTarget ).prop( 'checked' );
     this.$body.toggleClass( 'nav--is-open', isMenuOpen );
     if ( !isMenuOpen ) {
@@ -132,7 +132,7 @@ export class StickyHeader extends BaseComponent {
     }
   }
 
-  private toggleSubMenu(e: JQuery.Event, toggle: boolean) {
+  private toggleSubMenu(e: Event, toggle: boolean) {
     $( e.currentTarget ).toggleClass( 'hover', toggle );
   }
 
