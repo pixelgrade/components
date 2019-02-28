@@ -1,4 +1,4 @@
-import * as Rx from 'rx-dom';
+import { Observable, fromEvent } from 'rxjs';
 
 export interface ExtendedWindow extends Window {
   wp?: any;
@@ -7,10 +7,10 @@ export interface ExtendedWindow extends Window {
 
 export class GlobalService {
 
-  public static onCustomizerRender(): Rx.Observable<JQuery> {
+  public static onCustomizerRender(): Observable<JQuery> {
     const exWindow: ExtendedWindow = window;
 
-    return Rx.Observable.create( ( observer ) => {
+    return Observable.create( ( observer ) => {
       if ( exWindow.wp && exWindow.wp.customize && exWindow.wp.customize.selectiveRefresh ) {
         exWindow.wp.customize.selectiveRefresh.bind( 'partial-content-rendered', (placement) => {
           observer.onNext($(placement.container));
@@ -19,10 +19,10 @@ export class GlobalService {
     });
   }
 
-  public static onCustomizerChange(): Rx.Observable<JQuery> {
+  public static onCustomizerChange(): Observable<JQuery> {
     const exWindow: ExtendedWindow = window;
 
-    return Rx.Observable.create( ( observer ) => {
+    return Observable.create( ( observer ) => {
       if ( exWindow.wp && exWindow.wp.customize ) {
         exWindow.wp.customize.bind( 'change', ( setting ) => {
           observer.onNext( setting );
@@ -31,8 +31,8 @@ export class GlobalService {
     });
   }
 
-  public static onReady(): Rx.Observable<UIEvent> {
-    return Rx.DOM.ready();
+  public static onReady(): Observable<Event> {
+    return fromEvent( window.document, 'ready' );
   }
 
 }
