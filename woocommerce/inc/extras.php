@@ -265,4 +265,3 @@ function pixelgrade_woocommerce_change_blog_component_config() {
 		),
 	) );
 }
-add_action( 'pixelgrade_blog_after_register_blocks', 'pixelgrade_woocommerce_change_blog_component_config', 30 );

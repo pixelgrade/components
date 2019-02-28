@@ -162,11 +162,15 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 		// Enqueue the frontend assets
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 
-		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
-		do_action( 'pixelgrade_woocommerce_registered_hooks' );
+		// filter used to modify blocks registered by Blog component
+		add_action( 'pixelgrade_blog_after_register_blocks', 'pixelgrade_woocommerce_change_blog_component_config', 5 );
 
 		// add classes
 		add_filter( 'body_class', array( $this, 'bodyClasses' ) );
+
+		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
+		do_action( 'pixelgrade_woocommerce_registered_hooks' );
+
 	}
 
 	public function bodyClasses( $classes ) {
