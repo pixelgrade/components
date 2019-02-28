@@ -541,13 +541,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 										'extend' => 'blog/main',
 										'blocks' => array(
 											'blog/entry-header-page',
-											'blog/entry-thumbnail',
 											'blog/entry-content',
 											'blog/entry-footer',
 										),
 									),
 									'side' => array(
 										'extend' => 'blog/side',
+										'blocks' => array( 'blog/sidebar' ),
 									),
 								),
 							),

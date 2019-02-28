@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import * as Rx from 'rx-dom';
 import { BaseComponent } from '../models/DefaultComponent';
-import Observable = Rx.Observable;
+import { Observable, fromEvent } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 const activeClass = 'show-search-overlay';
 const openClass = '.js-search-trigger';
@@ -11,7 +11,7 @@ const escKeyCode = 27;
 export class SearchOverlay extends BaseComponent {
 
   private $body: JQuery = $( 'body' );
-  private $document: JQuery<Document> = $( document );
+  private $document: JQuery = $( document );
   private $searchField: JQuery = $( '.c-search-overlay' ).find( '.search-field' );
   private keyupSub: Observable<Event>;
   private keyupSubscriptionActive: boolean = true;
@@ -30,13 +30,13 @@ export class SearchOverlay extends BaseComponent {
     this.$document.on( 'click.SearchOverlay', openClass, this.open.bind( this ) );
     this.$document.on( 'click.SearchOverlay', closeClass, this.close.bind( this ) );
 
-    this.keyupSub = Rx.DOM.keyup(document.querySelector('body' ));
+    this.keyupSub = fromEvent( window.document.body, 'keyup' );
   }
 
   public createKeyupSubscription() {
     this.keyupSubscriptionActive = true;
     this.keyupSub
-        .takeWhile( () => this.keyupSubscriptionActive )
+        .pipe( takeWhile( () => this.keyupSubscriptionActive ) )
         .subscribe( this.closeOnEsc.bind( this ) );
   }
 
