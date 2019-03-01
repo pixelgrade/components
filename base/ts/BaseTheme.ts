@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { Helper } from './services/Helper';
 import { WindowService } from './services/window.service';
 import { GlobalService } from './services/global.service';
+import { take, debounceTime } from 'rxjs/operators';
 
 export interface JQueryExtended extends JQuery {
   imagesLoaded?( params: any );
@@ -15,7 +16,7 @@ export interface JQueryExtended extends JQuery {
 export class BaseTheme {
 
   public $body: JQuery = $( 'body' );
-  public $window: JQuery<Window> = $( window );
+  public $window: JQuery = $( window );
   public $html: JQuery = $( 'html' );
   public ev: JQuery<HTMLElement> = $();
   public frameRendered: boolean = false;
@@ -30,9 +31,9 @@ export class BaseTheme {
   }
 
   public bindEvents(): void {
-    GlobalService.onReady().take(1).subscribe(this.onReadyAction.bind(this));
-    WindowService.onLoad().take(1).subscribe(this.onLoadAction.bind(this));
-    WindowService.onResize().debounce(500).subscribe(this.onResizeAction.bind(this));
+    GlobalService.onReady().pipe(take(1)).subscribe(this.onReadyAction.bind(this));
+    WindowService.onLoad().pipe(take(1)).subscribe(this.onLoadAction.bind(this));
+    WindowService.onResize().pipe(debounceTime(500)).subscribe(this.onResizeAction.bind(this));
     WindowService.onScroll().subscribe(this.onScrollAction.bind(this));
 
     // Leave comments area visible by default and

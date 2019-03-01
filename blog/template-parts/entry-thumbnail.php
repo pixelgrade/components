@@ -68,4 +68,4 @@ $location = pixelgrade_get_location();
 	?>
 	<!-- pixelgrade_after_entry_thumbnail -->
 
-<?php } ?>
+<?php }

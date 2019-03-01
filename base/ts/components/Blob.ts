@@ -1,9 +1,9 @@
 import $ from 'jquery';
-import * as anime from 'animejs';
+import anime from 'animejs';
 import { BaseComponent } from '../models/DefaultComponent';
 
 export class Blob extends BaseComponent {
-  protected element: JQuery<SVGElement>;
+  protected element: JQuery;
   protected presetOffset: number;
 
   private radius = 10;
@@ -106,7 +106,7 @@ export class Blob extends BaseComponent {
     return points.join(' ');
   }
 
-  public getSvg(): JQuery<SVGElement> {
+  public getSvg(): JQuery {
     return this.element;
   }
 

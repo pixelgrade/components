@@ -600,9 +600,11 @@ if ( ! function_exists( 'pixelgrade_is_active_sidebar' ) ) {
 	 * @return bool true if the sidebar is in use, false otherwise.
 	 */
 	function pixelgrade_is_active_sidebar( $index ) {
+		global $wp_registered_sidebars;
+
 		$index             = ( is_int( $index ) ) ? "sidebar-$index" : sanitize_title( $index );
 		$sidebars_widgets  = wp_get_sidebars_widgets();
-		$is_active_sidebar = ! empty( $sidebars_widgets[ $index ] );
+		$is_active_sidebar = ! empty( $wp_registered_sidebars[ $index ] ) && ! empty( $sidebars_widgets[ $index ] );
 
 		// We have simply omitted to apply the "is_active_sidebar" filter.
 		return $is_active_sidebar;

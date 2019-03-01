@@ -5,6 +5,8 @@ import { ProgressBar } from '../../base/ts/components/ProgressBar';
 import { WindowService } from '../../base/ts/services/window.service';
 import { Helper } from '../../base/ts/services/Helper';
 
+import { takeWhile, map } from 'rxjs/operators';
+
 interface JQueryExtended extends JQuery {
   hoverIntent?( params: any ): void;
   imagesLoaded?( params: any );
@@ -14,7 +16,7 @@ export class StickyHeader extends BaseComponent {
 
   private ProgressBar: ProgressBar;
   private $body: JQuery = $( 'body' );
-  private $document: JQuery<Document> = $( document );
+  private $document: JQuery = $( document );
   private $mainMenu: JQuery = $( '.menu--primary' );
   private $mainMenuItems: JQueryExtended = this.$mainMenu.find( 'li' );
   private $readingBar: JQuery = $( '.js-reading-bar' );
@@ -69,15 +71,15 @@ export class StickyHeader extends BaseComponent {
 
     WindowService
       .onScroll()
-      .takeWhile( () => this.subscriptionActive )
-      .map(() => WindowService.getScrollY())
+      .pipe( takeWhile( () => this.subscriptionActive ) )
+      .pipe( map(() => WindowService.getScrollY()) )
       .subscribe( (scrollPosition) => {
         this.refresh( scrollPosition );
       } );
 
     WindowService
       .onResize()
-      .takeWhile( () => this.subscriptionActive )
+      .pipe( takeWhile( () => this.subscriptionActive ) )
       .subscribe( () => {
         this.updateOnResize();
       } );
