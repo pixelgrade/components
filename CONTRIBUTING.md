@@ -23,7 +23,7 @@ We try to follow the [WordPress Coding Standards](https://make.wordpress.org/cor
 
 ### Inline Documentation
 
-We follow the [WordPress Inline Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/). The [Reference section of the documentation](https://timber.github.io/docs/reference/) is automatically generated from the inline documentation of the Timber code base. That’s why we allow Markdown in the PHPDoc blocks.
+We follow the [WordPress Inline Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/). The [Reference section of the documentation](https://timber.github.io/docs/reference/) is automatically generated from the inline documentation of the Timber code base. That's why we allow Markdown in the PHPDoc blocks.
 
 ### Use PHP_CodeSniffer to detect coding standard violations
 
@@ -54,7 +54,7 @@ Please refer to <https://github.com/WordPress-Coding-Standards/WordPress-Coding-
 
 #### Whitelisting
 
-If it’s not possible to adapt to certain rules, code could be whitelisted. However, this should be used sparingly.
+If it's not possible to adapt to certain rules, code could be whitelisted. However, this should be used sparingly.
 
 - <https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Whitelisting-code-which-flags-errors>
 - <https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#ignoring-parts-of-a-file>

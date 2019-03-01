@@ -103,6 +103,9 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 		pixelgrade_load_component_file( self::COMPONENT_SLUG, 'inc/class-Woocommerce-Layout' );
 		Pixelgrade_Woocommerce_Layout::instance( $this );
 
+		// filter used to modify blocks registered by Blog component
+		pixelgrade_woocommerce_change_blog_component_config();
+
 		/**
 		 * Register our actions and filters
 		 */
@@ -159,11 +162,9 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	 * Register our actions and filters
 	 */
 	public function registerHooks() {
+
 		// Enqueue the frontend assets
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
-
-		// filter used to modify blocks registered by Blog component
-		add_action( 'pixelgrade_blog_after_register_blocks', 'pixelgrade_woocommerce_change_blog_component_config', 5 );
 
 		// add classes
 		add_filter( 'body_class', array( $this, 'bodyClasses' ) );
