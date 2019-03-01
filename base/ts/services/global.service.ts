@@ -32,7 +32,7 @@ export class GlobalService {
   }
 
   public static onReady(): Observable<Event> {
-    return fromEvent( window.document, 'ready' );
+    return fromEvent( document, 'DOMContentLoaded' );
   }
 
 }
