@@ -98,7 +98,7 @@ export class StickyHeader extends BaseComponent {
     }
   }
 
-  private onMobileMenuExpand(e: Event): void {
+  private onMobileMenuExpand(e: JQuery.Event): void {
     e.preventDefault();
     e.stopPropagation();
 
@@ -122,7 +122,7 @@ export class StickyHeader extends BaseComponent {
     $button.parent().addClass( hoverClass );
   }
 
-  private onMenuToggleChange( e: Event ): void {
+  private onMenuToggleChange( e: JQuery.Event ): void {
     const isMenuOpen = $( e.currentTarget ).prop( 'checked' );
     this.$body.toggleClass( 'nav--is-open', isMenuOpen );
     if ( !isMenuOpen ) {
@@ -134,7 +134,7 @@ export class StickyHeader extends BaseComponent {
     }
   }
 
-  private toggleSubMenu(e: Event, toggle: boolean) {
+  private toggleSubMenu(e: JQuery.Event, toggle: boolean) {
     $( e.currentTarget ).toggleClass( 'hover', toggle );
   }
 

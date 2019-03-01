@@ -134,11 +134,11 @@ export class Header extends BaseComponent {
     this.isMobileHeaderInitialised = true;
   }
 
-  private toggleSubMenu(e: Event, toggle: boolean) {
+  private toggleSubMenu(e: JQuery.Event, toggle: boolean) {
     $( e.currentTarget ).toggleClass( 'hover', toggle );
   }
 
-  private onMobileMenuExpand(e: Event): void {
+  private onMobileMenuExpand(e: JQuery.Event): void {
     e.preventDefault();
     e.stopPropagation();
 

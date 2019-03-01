@@ -18,7 +18,7 @@ export class BaseTheme {
   public $body: JQuery = $( 'body' );
   public $window: JQuery = $( window );
   public $html: JQuery = $( 'html' );
-  public ev: JQuery<HTMLElement> = $();
+  public ev: JQuery = $( {} );
   public frameRendered: boolean = false;
 
   public subscriptionActive: boolean = true;
