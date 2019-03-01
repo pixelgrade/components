@@ -15,7 +15,7 @@
 #### Usage Changes
 <!-- Are there are any usage changes that we need to know about? If so, list them here so that we can integrate it in the release notes and developers know what usage changes are associated to your PR.
 
-Alternatively, you’re very welcome to directly edit the readme.txt file with:
+Alternatively, you're very welcome to directly edit the readme.txt file with:
 - A quick summary, including your Github handle.
 - A list of changes for Theme Developers (under the "Changes for Theme Developers" label).
 - New usage instructions, possibly with a short code example.
