@@ -4,6 +4,8 @@ import { BaseComponent } from '../../base/ts/models/DefaultComponent';
 import { Helper } from '../../base/ts/services/Helper';
 import { WindowService } from '../../base/ts/services/window.service';
 
+import { takeWhile } from 'rxjs/operators';
+
 interface JQueryExtended extends JQuery {
   hoverIntent?( params: any ): void;
   imagesLoaded?( params: any );
@@ -63,7 +65,7 @@ export class Header extends BaseComponent {
 
     WindowService
       .onResize()
-      .takeWhile( () => this.subscriptionActive )
+      .pipe( takeWhile( () => this.subscriptionActive ) )
       .subscribe( () => {
         this.updateOnResize();
       } );

@@ -541,13 +541,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 										'extend' => 'blog/main',
 										'blocks' => array(
 											'blog/entry-header-page',
-											'blog/entry-thumbnail',
 											'blog/entry-content',
 											'blog/entry-footer',
 										),
 									),
 									'side' => array(
 										'extend' => 'blog/side',
+										'blocks' => array( 'blog/sidebar' ),
 									),
 								),
 							),
@@ -722,7 +722,13 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		);
 
 		// Configure the sidebars (widget areas) that the blog component uses
-		$this->config['sidebars']['sidebar-1'] = array(
+
+		/**
+		 * Add Below Post and Sidebar sidebars in the Pro version of the theme.
+		 */
+		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+
+			$this->config['sidebars']['sidebar-1'] = array(
 				'sidebar_args' => array(
 					'name'          => esc_html__( 'Sidebar', '__components_txtd' ),
 					'id'            => 'sidebar-1',
@@ -735,12 +741,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'before_title'  => '<h2 class="widget__title h3"><span>',
 					'after_title'   => '</span></h2>',
 				),
-		);
-
-		/**
-		 * Add Below Post sidebar in the Pro version of the theme.
-		 */
-		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
+			);
 
 			$this->config['sidebars']['sidebar-2'] = array(
 					'sidebar_args' => array(
@@ -791,7 +792,8 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
-			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+			/* translators: 1: the component slug  */
+			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
 
 			return;
 		}

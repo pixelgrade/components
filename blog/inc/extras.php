@@ -161,6 +161,7 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 	 * @return bool
 	 */
 	function pixelgrade_is_page_for_projects( $page_id = null ) {
+		/** @var WP_Query $wp_query */
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {

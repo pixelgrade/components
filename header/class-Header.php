@@ -22,6 +22,8 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 	 * Pixelgrade_Header constructor.
 	 *
 	 * @param string $version
+	 *
+	 * @throws Exception
 	 */
 	public function __construct( $version = '1.0.0' ) {
 		parent::__construct( $version );
@@ -122,7 +124,8 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
-			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+			/* translators: 1: the component slug  */
+			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
 			return;
 		}
 
@@ -160,6 +163,11 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 					)
 				)
 			);
+		}
+
+		if ( ! empty( $this->config['menu_locations']['jetpack-social-menu'] ) ) {
+			// Add support for the Jetpack Social Menu
+			add_theme_support( 'jetpack-social-menu' );
 		}
 	}
 
@@ -204,6 +212,23 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_header_registered_hooks' );
+	}
+
+	/**
+	 * Change the primary-right nav menu's zone depending on the other nav menus.
+	 *
+	 * @param string $default_zone
+	 * @param array  $menu_location_config
+	 * @param array  $menu_locations_config
+	 *
+	 * @return string
+	 */
+	public function primaryRightNavMenuZone( $default_zone, $menu_location_config, $menu_locations_config ) {
+		// if there is no left zone menu we will show the right menu in the middle zone, not the right zone
+		if ( ! has_nav_menu( 'primary-left' ) ) {
+			$default_zone = 'middle';
+		}
+		return $default_zone;
 	}
 
 	/**

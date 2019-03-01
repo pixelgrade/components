@@ -105,6 +105,7 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 
 			// Retrieve the cache list.
 			// If it doesn't exist, or it's empty prepare an array.
+			// @todo Shouldn't we get the parent theme with wp_get_theme( get_template() )?
 			$templates = wp_get_theme()->get_page_templates();
 			if ( empty( $templates ) ) {
 				$templates = array();

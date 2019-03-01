@@ -212,8 +212,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 				if ( $do_accordion ) {
 					// The accordion wrappers.
-					echo '<div class="accordion-container">' . PHP_EOL;
-					echo '<ul>' . PHP_EOL;
+					echo "<div class=\"accordion-container\">\n";
+					echo "<ul>\n";
 				}
 
 				foreach ( $sections as $section_id => $section ) {
@@ -226,22 +226,22 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 							$state_field_name = "widget-section-state[{$section_id}]";
 							$state_value      = $this->getSectionDefaultState( $section_id );
 							// In case this is a AJAX request (like when saving the widget) - keep the current state so we don't confuse the user.
-							if ( wp_doing_ajax() && isset( $_REQUEST['widget-section-state'][ $section_id ] ) && in_array( $_REQUEST['widget-section-state'][ $section_id ], array(
+							if ( wp_doing_ajax() && isset( $_REQUEST['widget-section-state'][ $section_id ] ) && in_array( sanitize_key( $_REQUEST['widget-section-state'][ $section_id ] ), array(
 									'open',
 									'closed'
 								) ) ) {
-								$state_value = $_REQUEST['widget-section-state'][ $section_id ];
+								$state_value = sanitize_key( $_REQUEST['widget-section-state'][ $section_id ] );
 							}
 
 							// We will use the state value as a class also!!!
-							echo '<li class="control-section accordion-section ' . esc_attr( $state_value ) . '">' . PHP_EOL;
+							echo '<li class="control-section accordion-section ' . esc_attr( $state_value ) . "\">\n";
 
 							// We add a hidden input field so we can keep the open/closed state of the section on save/update.
-							echo '<input class="_section-state" type="hidden" name="' . esc_attr( $state_field_name ) . '" value="' . esc_attr( $state_value ) . '"/>' . PHP_EOL;
+							echo '<input class="_section-state" type="hidden" name="' . esc_attr( $state_field_name ) . '" value="' . esc_attr( $state_value ) . "\"/>\n";
 
 							// Handle the section title and wrappers.
 							/* translators: Used for screen readers on widget sections. */
-							echo '<h3 class="accordion-section-title hndle">' . ( ! empty( $section['title'] ) ? $section['title'] : '' ) . '<span class="screen-reader-text">' . esc_html__( 'Press return or enter to open this section.', '__components_txtd' ) . '</span></h3>' . PHP_EOL;
+							echo '<h3 class="accordion-section-title hndle">' . esc_html( ! empty( $section['title'] ) ? $section['title'] : '' ) . '<span class="screen-reader-text">' . esc_html__( 'Press return or enter to open this section.', '__components_txtd' ) . "</span></h3>\n";
 
 							// The section fields wrapper.
 							echo '<div class="accordion-section-content">';
@@ -250,8 +250,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 						$this->displayFields( $section_fields, $instance );
 
 						if ( $do_accordion ) {
-							echo '</div><!-- .accordion-section-content -->' . PHP_EOL;
-							echo '</li>' . PHP_EOL;
+							echo "</div><!-- .accordion-section-content -->\n";
+							echo "</li>\n";
 						}
 					}
 				}
@@ -259,8 +259,8 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				// There is no point in making an accordion when there is only one section.
 				if ( $do_accordion ) {
 					// End the accordion wrappers.
-					echo '</ul>' . PHP_EOL;
-					echo '</div><!-- .accordion-container -->' . PHP_EOL;
+					echo "</ul>\n";
+					echo "</div><!-- .accordion-container -->\n";
 				}
 			} else {
 				// We have not sections so just display all the fields.
@@ -290,6 +290,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 				$method = "displayField_{$field_config['type']}";
 				if ( method_exists( $this, $method ) ) {
+					// @codingStandardsIgnoreStart
 					echo call_user_func_array(
 						array( $this, $method ), array(
 							$field_name,
@@ -297,6 +298,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 							$instance,
 						)
 					);
+					// @codingStandardsIgnoreEnd
 				}
 			}
 		}
@@ -366,20 +368,20 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// Lets generate the markup.
 			$output = '';
-			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
-			$output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="text" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
+			$output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="text" value="' . esc_attr( $value ) . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return apply_filters( 'pixelgrade_widget_form_text_field_markup', $output, $field_name, $field_config, $instance );
 		}
@@ -418,20 +420,20 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// Lets generate the markup.
 			$output = '';
-			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
-			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . $this->sanitize_textarea( $value, $field_name, $field_config ) . '</textarea>' . PHP_EOL;
+			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . $this->sanitize_textarea( $value, $field_name, $field_config ) . "</textarea>\n";
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return apply_filters( 'pixelgrade_widget_form_textarea_field_markup', $output, $field_name, $field_config, $instance );
 		}
@@ -481,20 +483,20 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// Lets generate the markup.
 			$output = '';
-			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
-			$output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
+			$output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return apply_filters( 'pixelgrade_widget_form_number_field_markup', $output, $field_name, $field_config, $instance );
 		}
@@ -543,21 +545,21 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// Lets generate the markup.
 			$output = '';
-			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
-			$output .= '<input class="widget-range" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="range" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
-			$output .= '<input class="range-value" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . '" />' . PHP_EOL;
+			$output .= '<input class="widget-range" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="range" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . "\" />\n";
+			$output .= '<input class="range-value" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return apply_filters( 'pixelgrade_widget_form_range_field_markup', $output, $field_name, $field_config, $instance );
 		}
@@ -591,20 +593,20 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// Lets generate the markup.
 			$output = '';
-			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
-			$output .= '<input class="checkbox" type="checkbox" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" value="1" ' . checked( $value, 1, false ) . '" />' . PHP_EOL;
+			$output .= '<input class="checkbox" type="checkbox" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" value="1" ' . checked( $value, 1, false ) . "\" />\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</p>' . PHP_EOL;
+			$output .= "</p>\n";
 
 			return apply_filters( 'pixelgrade_widget_form_checkbox_field_markup', $output, $field_name, $field_config, $instance );
 		}
@@ -648,10 +650,10 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				}
 
 				// Lets generate the markup.
-				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 				if ( ! empty( $label ) ) {
-					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 				}
 
 				if ( ! empty( $field_config['options'] ) ) {
@@ -672,19 +674,19 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 						$multiple = '[]';
 					}
 
-					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat">' . PHP_EOL;
+					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat">' . "\n";
 					foreach ( $options as $option_value => $option_name ) {
-						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . '</option>' . PHP_EOL;
+						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . "</option>\n";
 					}
-					$output .= '</select>' . PHP_EOL;
+					$output .= "</select>\n";
 				}
 
 				if ( ! empty( $desc ) ) {
-					$output .= '<br />' . PHP_EOL;
-					$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+					$output .= "<br />\n";
+					$output .= '<small>' . $desc . "</small>\n";
 				}
 
-				$output .= '</p>' . PHP_EOL;
+				$output .= "</p>\n";
 			}
 
 			return apply_filters( 'pixelgrade_widget_form_select_field_markup', $output, $field_name, $field_config, $instance );
@@ -729,10 +731,10 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				}
 
 				// Lets generate the markup.
-				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 				if ( ! empty( $label ) ) {
-					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 				}
 
 				if ( ! empty( $field_config['options'] ) ) {
@@ -753,19 +755,19 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 						$multiple = '[]';
 					}
 
-					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat js-select2" ' . ( $multiple === '' ? '' : 'multiple="multiple"' ) . ' style="width:100%;">' . PHP_EOL;
+					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat js-select2" ' . ( $multiple === '' ? '' : 'multiple="multiple"' ) . ' style="width:100%;">' . "\n";
 					foreach ( $options as $option_value => $option_name ) {
-						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . '</option>' . PHP_EOL;
+						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . "</option>\n";
 					}
-					$output .= '</select>' . PHP_EOL;
+					$output .= "</select>\n";
 				}
 
 				if ( ! empty( $desc ) ) {
-					$output .= '<br />' . PHP_EOL;
-					$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+					$output .= "<br />\n";
+					$output .= '<small>' . $desc . "</small>\n";
 				}
 
-				$output .= '</p>' . PHP_EOL;
+				$output .= "</p>\n";
 			}
 
 			return apply_filters( 'pixelgrade_widget_form_select_field_markup', $output, $field_name, $field_config, $instance );
@@ -810,26 +812,26 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				}
 
 				// Lets generate the markup.
-				$output .= '<div class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+				$output .= '<div class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 				if ( ! empty( $label ) ) {
-					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 				}
 
 				if ( ! empty( $field_config['options'] ) ) {
-					$output .= '<ul>' . PHP_EOL;
+					$output .= "<ul>\n";
 					foreach ( $field_config['options'] as $option_value => $option_name ) {
-						$output .= '<li><label><input id="' . esc_attr( $this->get_field_id( $field_name ) ) . '-' . esc_attr( $option_value ) . '" name="' . $this->get_field_name( $field_name ) . '" type="radio" value="' . esc_attr( $option_value ) . '" ' . checked( $option_value, $value, false ) . ' /> ' . $option_name . '</label></li>' . PHP_EOL;
+						$output .= '<li><label><input id="' . esc_attr( $this->get_field_id( $field_name ) ) . '-' . esc_attr( $option_value ) . '" name="' . $this->get_field_name( $field_name ) . '" type="radio" value="' . esc_attr( $option_value ) . '" ' . checked( $option_value, $value, false ) . ' /> ' . $option_name . "</label></li>\n";
 					}
-					$output .= '</ul>' . PHP_EOL;
+					$output .= "</ul>\n";
 				}
 
 				if ( ! empty( $desc ) ) {
-					$output .= '<br />' . PHP_EOL;
-					$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+					$output .= "<br />\n";
+					$output .= '<small>' . $desc . "</small>\n";
 				}
 
-				$output .= '</div>' . PHP_EOL;
+				$output .= "</div>\n";
 			}
 
 			return apply_filters( 'pixelgrade_widget_form_select_field_markup', $output, $field_name, $field_config, $instance );
@@ -876,16 +878,16 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			// Lets generate the markup.
 			$output = '';
-			$output .= '<div class="pixelgrade_image_field pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . '>' . PHP_EOL;
+			$output .= '<div class="pixelgrade_image_field pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . '</label>' . PHP_EOL;
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
 			}
 
 			// Output the image preview.
-			$output .= '<div class="pixelgrade_image_preview" id="' . $this->get_field_id( $field_name . '-preview' ) . '">' . PHP_EOL;
+			$output .= '<div class="pixelgrade_image_preview" id="' . $this->get_field_id( $field_name . '-preview' ) . "\">\n";
 			// The clear button.
-			$output .= '<span class="clear-image" onclick="widgetImageFields.clear( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" >' . $clear_label . '</span>' . PHP_EOL;
+			$output .= '<span class="clear-image" onclick="widgetImageFields.clear( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" >' . $clear_label . "</span>\n";
 
 			$imageurl = '';
 			if ( ! empty( $value ) ) {
@@ -906,24 +908,24 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			}
 
 			if ( $value > 0 ) {
-				$output .= wp_get_attachment_image( $value, 'large' ) . PHP_EOL;
+				$output .= wp_get_attachment_image( $value, 'large' ) . "\n";
 			}
 
-			$output .= '</div>' . PHP_EOL;
+			$output .= "</div>\n";
 			// End of image preview.
-			$output .= '<input type="submit" class="button" name="' . $this->get_field_name( $field_name . '-button' ) . '" id="' . esc_attr( $this->get_field_id( $field_name . '-button' ) ) . '" value="' . $button_label . '" onclick="widgetImageFields.uploader( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" />' . PHP_EOL;
+			$output .= '<input type="submit" class="button" name="' . $this->get_field_name( $field_name . '-button' ) . '" id="' . esc_attr( $this->get_field_id( $field_name . '-button' ) ) . '" value="' . $button_label . '" onclick="widgetImageFields.uploader( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" />' . "\n";
 
 			// This hidden field holds our field value (the attachment ID).
-			$output .= '<input type="hidden" id="' . $this->get_field_id( $field_name ) . '" name="' . $this->get_field_name( $field_name ) . '" value="' . $value . '" />' . PHP_EOL;
+			$output .= '<input type="hidden" id="' . $this->get_field_id( $field_name ) . '" name="' . $this->get_field_name( $field_name ) . '" value="' . $value . "\" />\n";
 
-			$output .= '<input type="hidden" id="' . $this->get_field_id( $field_name . '-imageurl' ) . '" name="' . $this->get_field_name( $field_name . '-imageurl' ) . '" value="' . $imageurl . '" />' . PHP_EOL;
+			$output .= '<input type="hidden" id="' . $this->get_field_id( $field_name . '-imageurl' ) . '" name="' . $this->get_field_name( $field_name . '-imageurl' ) . '" value="' . $imageurl . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
-				$output .= '<br />' . PHP_EOL;
-				$output .= '<small>' . $desc . '</small>' . PHP_EOL;
+				$output .= "<br />\n";
+				$output .= '<small>' . $desc . "</small>\n";
 			}
 
-			$output .= '</div>' . PHP_EOL;
+			$output .= "</div>\n";
 
 			return apply_filters( 'pixelgrade_widget_form_image_field_markup', $output, $field_name, $field_config, $instance );
 		}
@@ -1476,14 +1478,16 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$html_message = '<div class="c-alert  c-alert--danger">
                     <h4 class="c-alert__title">'. esc_html__( '🤦 Widget Type Not Supported Here', '__components_txtd' ) . '</h4>
                     <div class="c-alert__body">
-                        <p>'.  sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__components_txtd' ), '<em>' . $args['widget_name'] . '</em>' ) .'</p>
+                        <p>' .
+			                /* translators: %s: the widget name */
+			                sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__components_txtd' ), '<em>' . $args['widget_name'] . '</em>' ) .'</p>
                     </div>
                 </div>';
 
 			// Let others change this message depending on widget args and instance.
 			$html_message = apply_filters( 'pixelgrade_sidebar_not_supported_message', $html_message, $args, $instance );
 
-			echo $args['before_widget'] . $html_message . $args['after_widget'];
+			echo $args['before_widget'] . $html_message . $args['after_widget']; // @codingStandardsIgnoreLine
 
 		}
 

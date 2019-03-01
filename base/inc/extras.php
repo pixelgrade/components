@@ -25,15 +25,15 @@ if ( ! function_exists( 'pixelgrade_get_current_action' ) ) {
 		}
 
 		if ( isset( $_REQUEST['action'] ) && - 1 != $_REQUEST['action'] ) {
-			return wp_unslash( sanitize_text_field( $_REQUEST['action'] ) );
+			return sanitize_key( $_REQUEST['action'] );
 		}
 
 		if ( isset( $_REQUEST['action2'] ) && - 1 != $_REQUEST['action2'] ) {
-			return wp_unslash( sanitize_text_field( $_REQUEST['action2'] ) );
+			return sanitize_key( $_REQUEST['action2'] );
 		}
 
 		if ( isset( $_REQUEST['tgmpa-activate'] ) && - 1 != $_REQUEST['tgmpa-activate'] ) {
-			return wp_unslash( sanitize_text_field( $_REQUEST['tgmpa-activate'] ) );
+			return sanitize_key( $_REQUEST['tgmpa-activate'] );
 		}
 
 		return false;
@@ -455,6 +455,7 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 	// First we will load the files in the directory
 	foreach ( $iterator as $file_info ) {
 		if ( ! $file_info->isDir() && ! $file_info->isDot() && 'php' == strtolower( $file_info->getExtension() ) ) {
+			// @codingStandardsIgnoreStart
 			switch ( $method ) {
 				case 'require':
 					require $file_info->getPathname();
@@ -471,6 +472,7 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 				default:
 					break;
 			}
+			// @codingStandardsIgnoreEnd
 
 			$counter ++;
 		}
@@ -916,7 +918,7 @@ function pixelgrade_parse_content_tags( $content ) {
 }
 
 /**
- * Helper function used to check user access to various features
+ * Helper function used to check that the user has access to various features.
  *
  * @param string $feature
  *
@@ -931,6 +933,31 @@ function pixelgrade_user_has_access( $feature ) {
 			return apply_filters( 'pixelgrade_enable_woocommerce', false );
 			break;
 		default:
-			return false;
+			break;
 	}
+
+	return false;
+}
+
+/**
+ * Get the current theme original name from the WUpdates code.
+ *
+ * @return string
+ */
+function pixelgrade_get_original_theme_name() {
+	// Get the id of the current theme
+	$wupdates_ids = apply_filters( 'wupdates_gather_ids', array() );
+	$slug         = basename( get_template_directory() );
+	if ( ! empty( $wupdates_ids[ $slug ]['name'] ) ) {
+		return $wupdates_ids[ $slug ]['name'];
+	}
+
+	// If we couldn't get the WUpdates name, we will fallback to the theme header name entry.
+	$theme_header_name =  wp_get_theme( get_template() )->get('Name');
+	if ( ! empty( $theme_header_name ) ) {
+		return ucwords( str_replace( array( '-', '_' ), ' ', $theme_header_name ) ) ;
+	}
+
+	// The ultimate fallback is the template directory, uppercased.
+	return ucwords( str_replace( array( '-', '_' ), ' ', $slug ) );
 }

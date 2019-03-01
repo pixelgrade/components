@@ -78,6 +78,14 @@ class Pixelgrade_Components_Autoloader {
 		return true;
 	}
 
+	/**
+	 * Load a certain component.
+	 *
+	 * @param string $slug
+	 * @param string $path
+	 *
+	 * @return bool
+	 */
 	protected static function loadComponent( $slug, $path ) {
 		// Some cleanup and sanity check
 		$slug = untrailingslashit( trim( $slug ) );
@@ -92,7 +100,7 @@ class Pixelgrade_Components_Autoloader {
 			$file = trailingslashit( $directory ) . $slug . self::$file_ext;
 			if ( file_exists( $file ) ) {
 				// We will load the main component file and try to fire the instantiation function
-				require_once $file;
+				require_once $file; // @codingStandardsIgnoreLine
 
 				// Get the instantiation function name of the component
 				$function = self::getComponentMainClass( $slug );
@@ -114,19 +122,23 @@ class Pixelgrade_Components_Autoloader {
 						 */
 						do_action( "pixelgrade_after_{$slug}_instantiation" );
 					} else {
-						_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s instantiation function in %s.', $slug, $function, $file ), null );
+						/* translators: 1: the component slug, 2: the function name, 3: the file path */
+						_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %1$s component, but couldn\'t find the %2$s instantiation function in %3$s.', esc_html( $slug ), esc_html( $function ), esc_html( $file ) ), null );
 						return false;
 					}
 				} else {
-					_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t build the instantiation function.', $slug ), null );
+					/* translators: %s: the component slug */
+					_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t build the instantiation function.', esc_html( $slug ) ), null );
 					return false;
 				}
 			} else {
-				_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s file.', $slug, $file ), null );
+				/* translators: 1: the component slug, 2: the file path */
+				_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %1$s component, but couldn\'t find the %2$s file.', esc_html( $slug ), esc_html( $file ) ), null );
 				return false;
 			}
 		} else {
-			_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %s component, but couldn\'t find the %s directory.', $slug, $directory ), null );
+			/* translators: 1: the component slug, 2: the directory path */
+			_doing_it_wrong( __METHOD__, sprintf( 'Trying to autoload the %1$s component, but couldn\'t find the %2$s directory.', esc_html( $slug ), esc_html( $directory ) ), null );
 			return false;
 		}
 

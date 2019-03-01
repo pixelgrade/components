@@ -489,7 +489,7 @@
     .woocommerce form.cart .qty:hover, .woocommerce form.cart .qty:active, .woocommerce form.cart .qty:focus {
       color: #FFF;
       background-color: #000;
-      opacity: 0.8;
+      opacity: 1;
       text-decoration: none;
       border: initial; }
   .woocommerce form.cart .woocommerce-grouped-product-list-item__price {
@@ -1777,15 +1777,14 @@
 
 .cart-count {
   display: inline-block;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  position: relative;
   width: 2em;
   height: 2em;
-  font-size: 0.75em;
-  border-radius: 50%; }
+  border-radius: 50%;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  margin-left: 0.2em;
+  margin-right: -0.5em; }
   .cart-count span {
     display: block;
     position: absolute;

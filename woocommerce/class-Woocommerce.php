@@ -72,7 +72,8 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
-			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+			/* translators: 1: the component slug  */
+			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
 			return;
 		}
 
@@ -161,11 +162,15 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 		// Enqueue the frontend assets
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 
-		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
-		do_action( 'pixelgrade_woocommerce_registered_hooks' );
+		// filter used to modify blocks registered by Blog component
+		add_action( 'pixelgrade_blog_after_register_blocks', 'pixelgrade_woocommerce_change_blog_component_config', 5 );
 
 		// add classes
 		add_filter( 'body_class', array( $this, 'bodyClasses' ) );
+
+		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
+		do_action( 'pixelgrade_woocommerce_registered_hooks' );
+
 	}
 
 	public function bodyClasses( $classes ) {

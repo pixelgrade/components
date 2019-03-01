@@ -87,7 +87,7 @@ $btn-font: () !default;
     &:focus {
         color: $btn-color;
         background-color: $btn-hover-background;
-        opacity: 0.8;
+        opacity: 1;
         text-decoration: none;
         border: initial;
     }

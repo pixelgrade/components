@@ -464,7 +464,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 			$classes[] = 'site-title-hidden';
 		}
 
-		$header_position = pixelgrade_option( 'header_position' );
+		$header_position = pixelgrade_option( 'header_position', 'static' );
 		if ( 'sticky' === $header_position || empty( $header_position ) ) {
 			$classes[] = 'u-site-header-sticky';
 		}

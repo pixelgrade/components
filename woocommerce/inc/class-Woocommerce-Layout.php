@@ -47,7 +47,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		add_filter( 'woocommerce_product_loop_end', array( $this, 'alterLoopEnd' ), 30, 1 );
 		add_filter( 'woocommerce_comment_pagination_args', array( $this, 'alterPaginationArgs' ), 30, 1 );
 		add_filter( 'woocommerce_pagination_args', array( $this, 'alterPaginationArgs' ), 30, 1 );
-		add_filter( 'woocommerce_sale_flash', array( $this, 'changeSaleFlashMarkup' ), 3, 30 );
+		add_filter( 'woocommerce_sale_flash', array( $this, 'changeSaleFlashMarkup' ), 30, 3 );
 
 		// hide tabs content titles
 		add_filter( 'woocommerce_product_description_heading', '__return_false', 30 );
@@ -216,7 +216,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
                     <?php the_widget( 'WC_Widget_Cart', 'title=' ); ?>
                 </div>
             </div>
-            <?php echo ob_get_clean();
+            <?php echo ob_get_clean(); // WPCS: XSS OK.
         }
 	}
 
@@ -246,10 +246,11 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 			$cart_count_span = '<div class="cart-count"><span>' . $cart_item_count . '</span></div>';
 		}
 
-		$cart_link = '<li class="menu-item menu-item--cart"><a href="' . esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ) . '">' . esc_html__( 'My Cart', '__components_txtd' ) . $cart_count_span . '</a></li>';
+		$cart_link = apply_filters( 'pixelgrade_cart_menu_item_markup', '<li class="menu-item  menu-item--cart"><a class="js-open-cart" href="' . esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ) . '">' . esc_html__( 'My Cart', '__components_txtd' ) . $cart_count_span . '</a></li>' );
+		$cart_menu_item_location = apply_filters( 'pixelgrade_cart_menu_item_location', 'primary-left' );
 
 		// Add the cart link to the end of the menu.
-		if ( $args->theme_location === 'primary-left' ) {
+		if ( $args->theme_location === $cart_menu_item_location ) {
             $items = $items . $cart_link;
 		}
 
@@ -265,7 +266,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	    global $product;
 
 	    echo '<div class="woocommerce-product-category c-meta__primary">';
-	    echo wc_get_product_category_list( $product->get_id(), ' / ' );
+	    echo wc_get_product_category_list( $product->get_id(), ' / ' ); // WPCS: XSS OK.
 	    echo '</div>';
     }
 

@@ -80,7 +80,7 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	$headline = '';
 
 	if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init' ) ) {
-		require_once JETPACK__PLUGIN_DIR . '/sync/class.jetpack-sync-settings.php';
+		require_once JETPACK__PLUGIN_DIR . '/sync/class.jetpack-sync-settings.php'; // @codingStandardsIgnoreLine
 		if ( Jetpack_Sync_Settings::is_syncing() ) {
 			return false;
 		}
@@ -106,7 +106,7 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	 *
 	 * @param string $headline Related Posts heading.
 	 */
-	echo apply_filters( 'jetpack_relatedposts_filter_headline', $headline );
+	echo apply_filters( 'jetpack_relatedposts_filter_headline', $headline ); // @codingStandardsIgnoreLine
 
 	return true;
 }

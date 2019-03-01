@@ -15,7 +15,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Featured-Image
- * @version     1.2.0
+ * @version     1.2.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ if ( ! function_exists( 'Pixelgrade_FeaturedImage' ) ) :
 		if ( ! class_exists( 'Pixelgrade_FeaturedImage' ) ) {
 			pixelgrade_load_component_file( 'featured-image', 'class-FeaturedImage' );
 		}
-		return Pixelgrade_FeaturedImage::instance( '1.2.0' );
+		return Pixelgrade_FeaturedImage::instance( '1.2.1' );
 	}
 endif;
 

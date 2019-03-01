@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<?php if ( get_edit_post_link() ) : ?>
+<?php if ( get_edit_post_link() ) { ?>
 	<footer class="entry-footer  u-content-width">
 		<?php
 		edit_post_link(
@@ -39,10 +39,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		);
 		?>
 	</footer><!-- .entry-footer -->
-<?php endif; ?>
+<?php }
 
-<?php
 // If comments are open or we have at least one comment, load up the comment template.
-if ( comments_open() || get_comments_number() ) :
+if ( comments_open() || get_comments_number() ) {
 	pixelgrade_comments_template();
-endif; ?>
+}

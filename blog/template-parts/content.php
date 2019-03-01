@@ -80,7 +80,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						do_action( 'pixelgrade_before_card_meta', $location );
 
 						if ( $primary_meta_output ) {
-							echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>';
+							echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>'; // @codingStandardsIgnoreLine
 							// Add a separator if we also have secondary meta
 							if ( $secondary_meta_output ) {
 								echo '<div class="c-meta__separator js-card-meta-separator"></div>';
@@ -88,7 +88,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 						}
 
 						if ( $secondary_meta_output ) {
-							echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>';
+							echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>'; // @codingStandardsIgnoreLine
 						}
 
 						do_action( 'pixelgrade_after_card_meta', $location ); ?>
@@ -104,9 +104,12 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 				if ( pixelgrade_option( 'blog_items_excerpt_visibility', true ) || ! empty( $show_excerpt ) ) { ?>
 					<div class="c-card__excerpt">
-						<?php do_action( 'pixelgrade_before_excerpt', $location ); ?>
-						<?php the_excerpt(); ?>
-						<?php do_action( 'pixelgrade_after_excerpt', $location ); ?>
+						<?php
+						do_action( 'pixelgrade_before_excerpt', $location );
+
+						the_excerpt();
+
+						do_action( 'pixelgrade_after_excerpt', $location ); ?>
 					</div>
 				<?php } ?>
 
@@ -128,7 +131,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 		</div>
 
-	</article>
+	</article><!-- #post-<?php the_ID(); ?> -->
 
 <?php
 /**

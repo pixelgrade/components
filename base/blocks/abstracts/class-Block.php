@@ -157,7 +157,8 @@ abstract class Pixelgrade_Block {
 			if ( Pixelgrade_Wrapper::isInlineMarkup( $this->wrappers ) ) {
 				// If we have been given a fully qualified wrapper(s) opening markup, we expect to also receive the ending markup
 				if ( empty( $this->end_wrappers ) || ! Pixelgrade_Wrapper::isInlineMarkup( $this->end_wrappers ) ) {
-					_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s), but no valid ending provided (%s)!', htmlentities( $this->wrappers ), htmlentities( $this->end_wrappers ) ), null );
+					/* translators: 1: the start wrappers, 2: the end wrappers */
+					_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%1$s), but no valid ending provided (%2$s)!', htmlentities( $this->wrappers ), htmlentities( $this->end_wrappers ) ), null ); // @codingStandardsIgnoreLine
 				} else {
 					$new_wrappers[] = new Pixelgrade_Wrapper(
 						array(
@@ -215,7 +216,8 @@ abstract class Pixelgrade_Block {
 			// We will treat it as shorthand for just the tag
 			// But first we need to make sure that it is not accidentally inline opening markup
 			if ( Pixelgrade_Wrapper::isInlineMarkup( $wrapper ) ) {
-				_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s) in an individual wrapper config! This is not possible since there is no way to provide the ending markup.', htmlentities( $wrapper ) ), null );
+				/* translators: %s: the wrapper markup */
+				_doing_it_wrong( __METHOD__, sprintf( 'An inline opening wrapper markup has been given (%s) in an individual wrapper config! This is not possible since there is no way to provide the ending markup.', htmlentities( $wrapper ) ), null ); // @codingStandardsIgnoreLine
 				return false;
 			} else {
 				return new Pixelgrade_Wrapper(
@@ -276,7 +278,7 @@ abstract class Pixelgrade_Block {
 		ob_start();
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before maybeRender() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before maybeRender() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 
 		/**
@@ -324,7 +326,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_after_block_{$this->id}", $this, $blocks_trail );
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After maybeRender() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After maybeRender() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 
 		// Get the output buffer and end it
@@ -344,7 +346,7 @@ abstract class Pixelgrade_Block {
 		}
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before render() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before render() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 
 		/**
@@ -392,7 +394,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_after_render_block_{$this->id}", $this, $blocks_trail );
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After render() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After render() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 	}
 
@@ -455,7 +457,7 @@ abstract class Pixelgrade_Block {
 			$content = $wrapper->maybeWrapContent( $content );
 		}
 
-		echo $content;
+		echo $content; // @codingStandardsIgnoreLine
 	}
 
 	/**
@@ -470,7 +472,7 @@ abstract class Pixelgrade_Block {
 		ob_start();
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before maybeRenderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before maybeRenderContent() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 
 		/**
@@ -518,7 +520,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_after_block_{$this->id}_content", $this, $blocks_trail );
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After maybeRenderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After maybeRenderContent() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 
 		// Get the output buffer and end it
@@ -538,7 +540,7 @@ abstract class Pixelgrade_Block {
 		}
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before renderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### Before renderContent() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 
 		/**
@@ -586,7 +588,7 @@ abstract class Pixelgrade_Block {
 		do_action( "pixelgrade_after_render_block_{$this->id}_content", $this, $blocks_trail );
 
 		if ( pixelgrade_is_block_debug() ) {
-			echo PHP_EOL . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After renderContent() block \'%s\' ### -->', $this->id ) . PHP_EOL;
+			echo "\n" . str_repeat( "\t", count( $blocks_trail ) ) . sprintf( '<!-- ### After renderContent() block \'%s\' ### -->', $this->id ) . "\n"; // @codingStandardsIgnoreLine
 		}
 	}
 

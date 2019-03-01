@@ -26,12 +26,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <footer class="entry-footer  u-content-width">
-	<?php pixelgrade_the_post_navigation(); ?>
-	<?php pixelgrade_entry_footer(); ?>
+    <?php
+    pixelgrade_the_author_info_box();
+
+    pixelgrade_the_post_navigation();
+
+    pixelgrade_entry_footer(); ?>
 </footer><!-- .entry-footer -->
 
 <?php
 // If comments are open or we have at least one comment, load up the comment template.
-if ( comments_open() || get_comments_number() ) :
+if ( comments_open() || get_comments_number() ) {
 	pixelgrade_comments_template();
-endif;
+}
