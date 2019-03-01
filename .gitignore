@@ -12,3 +12,5 @@ wordpress
 *.map
 
 gulpconfig.json
+
+.gitrepo
