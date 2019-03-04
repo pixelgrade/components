@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Portfolio
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function pixelgrade_portfolio_class( $class = '', $location = '', $atts = array() ) {
 	// Separates classes with a single space, collates classes
-	echo 'class="' . join( ' ', pixelgrade_get_portfolio_class( $class, $location, $atts ) ) . '"';
+	echo 'class="' . join( ' ', pixelgrade_get_portfolio_class( $class, $location, $atts ) ) . '"'; // WPCS: XSS OK.
 }
 
 /**

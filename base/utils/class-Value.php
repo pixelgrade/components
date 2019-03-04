@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -214,7 +213,7 @@ if ( ! class_exists( 'Pixelgrade_Value' ) ) :
 				'replacement' => '',
 			);
 			// Leave underscores, otherwise the taxonomy tag cloud in the
-			// backend won’t work anymore.
+			// backend won't work anymore.
 			return preg_replace( $regex['pattern'], $regex['replacement'], $str );
 		}
 

@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.2.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for header element
-	echo 'class="' . join( ' ', pixelgrade_get_header_class( $class, $location, $post ) ) . '"';
+	echo 'class="' . join( ' ', pixelgrade_get_header_class( $class, $location, $post ) ) . '"'; // @codingStandardsIgnoreLine
 }
 
 /**
@@ -89,7 +88,7 @@ function pixelgrade_the_header( $location = '' ) {
  * @param array  $args An array with options for the wp_nav_menu() function.
  * @param string $menu_location Optional. The menu location id (slug) to process.
  *
- * @return false|void
+ * @return false|string
  */
 function pixelgrade_header_the_nav_menu( $args, $menu_location = '' ) {
 	$defaults = array(
@@ -358,5 +357,5 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
  * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
  */
 function pixelgrade_the_custom_logo_transparent( $blog_id = 0 ) {
-	echo pixelgrade_get_custom_logo_transparent( $blog_id );
+	echo pixelgrade_get_custom_logo_transparent( $blog_id ); // WPCS: XSS OK.
 }

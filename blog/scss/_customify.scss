@@ -104,34 +104,54 @@ body {
 
 .h0 {
   @include leading-map($page-title-font);
+<<<<<<< HEAD
   color: $page-title-color;
 }
 
+=======
+  color: $h1-color;
+}
+>>>>>>> refs/subrepo/components/fetch
 .h1, h1 {
   @include leading-map($h1);
   color: $h1-color;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/subrepo/components/fetch
 .h2, h2 {
   @include leading-map($h2);
   color: $h2-color;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/subrepo/components/fetch
 .h3, h3 {
   @include leading-map($h3);
   color: $h3-color;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/subrepo/components/fetch
 .h4, h4 {
   @include leading-map($h4);
   color: $h4-color;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/subrepo/components/fetch
 .h5, h5 {
   @include leading-map($h5);
   color: $h5-color;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/subrepo/components/fetch
 .h6, h6 {
   @include leading-map($h6);
   color: $h6-color;
@@ -154,7 +174,7 @@ $blog-sides-spacing: 70px !default;
 $blog-grid-valid-layouts: regular mosaic packed masonry !default;
 $blog-grid-layout: packed !default;
 $blog-grid-packed-ratio: 2.275 !default;
-$blog-grid-aspect-ratio: 3/4 !default;
+$blog-grid-aspect-ratio: 1 !default;
 $blog-grid-columns: 4 !default;
 $blog-grid-vertical-spacing: 150px !default;
 $blog-grid-horizontal-spacing: 40px !default;

@@ -6,6 +6,7 @@
  * A simple button object.
  */
 
+<<<<<<< HEAD
 // Predefine the variables below in order to alter and enable specific features.
 $btn-padding: 0.75em 1.75em !default;
 $btn-background: #222 !default;
@@ -211,6 +212,8 @@ $btn-font: () !default;
   }
 }
 
+=======
+>>>>>>> refs/subrepo/components/fetch
 .c-btn {
   @include btn;
 
@@ -236,24 +239,26 @@ $btn-font: () !default;
 }
 
 // Helper Classes for Humans & Nature
-// <a class="button">		        Regular Button 		            </a>
-// <a class="button arrow">	    Button with Arrow 	          </a>
+// <a class="button">		      Regular Button 		        </a>
+// <a class="button arrow">	      Button with Arrow 	        </a>
 // <a class="button default">	  Button with Default Styling 	</a>
 
 .button {
-  @include btn;
-  text-decoration: none;
+  @include specific(5) {
+    @include btn;
+    text-decoration: none;
 
-  &.default {
-    @include btn--default;
-  }
+    &.default {
+      @include btn--default;
+    }
 
-  &.full {
-    width: 100%;
-  }
+    &.full {
+      width: 100%;
+    }
 
-  &.arrow {
-    @include button-directional;
-    @include button-directional--right;
+    &.arrow {
+      @include button-directional;
+      @include button-directional--right;
+    }
   }
 }

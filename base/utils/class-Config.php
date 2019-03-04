@@ -8,7 +8,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -298,11 +297,14 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *      'args' => array(
 		 *          'jetpack-portfolio',
 		 *      ),
-		 *      'value' => some value
-		 *      'compare' => '>'
+		 *      'value' => some value,
+		 *      'compare' => '>', // see Pixelgrade_Config::maybeEvaluateComparison() for available operators
 		 *  ),
 		 *  // Simple check - just the function name
 		 *  'is_404',
+		 *
+		 * Please note that the check will fail (return false) if the provided callback is not a callable,
+		 * either because the format is wrong or the function/method doesn't exist.
 		 *
 		 * @param array|string $check
 		 *
@@ -322,27 +324,39 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			}
 
 			// First, we handle the shorthand version: just a function name.
-			if ( is_string( $check ) && is_callable( $check ) ) {
-				$response = call_user_func( $check );
-				if ( ! $response ) {
-					// Standardize the response.
-					return false;
-				}
-			} elseif ( is_array( $check ) && ! empty( $check['callback'] ) && is_callable( $check['callback'] ) ) {
-				if ( empty( $check['args'] ) ) {
-					$check['args'] = array();
-				}
-				$response = self::maybeEvaluateComparison( call_user_func_array( $check['callback'], $check['args'] ), $check );
-				// Standardize the response.
-				if ( ! $response ) {
-					return false;
+			if ( is_string( $check ) ) {
+				if ( is_callable( $check ) ) {
+					$response = call_user_func( $check );
 				} else {
-					return true;
+					// If the provided string is not callable (most probably due to the fact the function doesn't exist)
+					// we will fail the check.
+					$response = false;
 				}
+			} elseif ( is_array( $check ) && ! empty( $check['callback'] ) ) {
+				if ( is_callable( $check['callback'] ) ) {
+					if ( empty( $check['args'] ) ) {
+						$check['args'] = array();
+					}
+					$response = call_user_func_array( $check['callback'], $check['args'] );
+				} else {
+					// If the provided array is not callable (most probably due to the fact the method doesn't exist)
+					// we will fail the check.
+					$response = false;
+				}
+
+				// Evaluate any comparisons that may be part of the extended check format.
+				$response = self::maybeEvaluateComparison( $response, $check );
+			} else {
+				// On data that is not a valid check, we allow things to proceed.
+				$response = true;
 			}
 
-			// On data that is not a valid check, we allow things to proceed.
-			return true;
+			// Standardize the response.
+			if ( ! $response ) {
+				return false;
+			} else {
+				return true;
+			}
 		}
 
 		/**
@@ -358,11 +372,29 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 		 *      'args' => array(
 		 *          'jetpack-portfolio',
 		 *      ),
-		 *      'value' => some value
-		 *      'compare' => '>'
+		 *      'value' => some value,
+		 *      'compare' => '>', // see Pixelgrade_Config::maybeEvaluateComparison() for available operators
 		 *  ),
 		 *  // Simple check - just the function name
 		 *  'is_404',
+		 *
+		 * Please note that a check will fail (return false) if the provided callback is not a callable,
+		 * either because the format is wrong or the function/method doesn't exist. This is the most common scenario.
+		 * This way you avoid the need to pair checks with their "function_exists" counterpart.
+		 *
+		 * If you need a series of checks to pass even if the callable doesn't exist,
+		 * you will need to add a "function_exists" or "is_callable" check with the "NOT" compare and with the "OR" relation, like so:
+		 * array(
+		 *  'relation' => 'OR',
+		 *  array(
+		 *      'callback' => 'function_exists',
+		 *      'args' => array( 'is_checkout' ),
+		 *      'compare' => 'NOT',
+		 *  ),
+		 *  array(
+		 *      'callback' => 'is_checkout',
+		 *  ),
+		 * ),
 		 *
 		 * @param array|string $checks The checks config.
 		 * @param array        $data Optional. Extra data to use
@@ -449,7 +481,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 			}
 
 			// Initialize the comparison operator.
-			$operator = false;
+			$operator = strtoupper( $args['compare'] );
 			// Initialize the value to compare with.
 			$value = null;
 
@@ -465,11 +497,10 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 				'NOT',
 			);
 
-			$operator = strtoupper( $args['compare'] );
-
 			// On invalid operators, return the data to compare, but give an notice to developers.
 			if ( empty( $operator ) || ! in_array( $operator, $operators, true ) ) {
-				_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is invalid! Please check your comparison!', $operator ), null );
+				/* translators: %s: the comparison operator */
+				_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is invalid! Please check your comparison!', esc_html( $operator ) ), null );
 				return $data;
 			}
 
@@ -482,7 +513,8 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 
 			// We are now dealing with binary operators so we need to have a value.
 			if ( ! isset( $args['value'] ) ) {
-				_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is a binary one, but no \'value\' provided! Please check your comparison!', $operator ), null );
+				/* translators: %s: the comparison operator */
+				_doing_it_wrong( __METHOD__, sprintf( 'The %s compare operator you\'ve used is a binary one, but no \'value\' provided! Please check your comparison!', esc_html( $operator ) ), null );
 				return $data;
 			}
 
@@ -514,7 +546,8 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 					}
 
 					if ( ! is_array( $value ) ) {
-						_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', $operator ), null );
+						/* translators: %s: the comparison operator */
+						_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', esc_html( $operator ) ), null );
 
 						return $data;
 					}
@@ -528,7 +561,8 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 					}
 
 					if ( ! is_array( $value ) ) {
-						_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', $operator ), null );
+						/* translators: %s: the comparison operator */
+						_doing_it_wrong( __METHOD__, sprintf( 'You\'ve used the %s compare operator, but invalid list \'value\' provided! Please check your comparison!', esc_html( $operator ) ), null );
 
 						return $data;
 					}
@@ -565,10 +599,10 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 						// Check if the option has a type - it should have and it usually ends up without one with poorly configured arrays (like defining a default value for an option that doesn't exist).
 						if ( is_array( $option ) && ! array_key_exists( 'type', $option ) ) {
 							if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+								/* translators: 1: the section key, 2: "options", 3: the option key */
 								_doing_it_wrong(
 									__METHOD__,
-									sprintf( 'There is something wrong with the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
-									' The option has no TYPE defined! Maybe it doesn\'t even exist.', null
+									sprintf( 'There is something wrong with the following Customizer option: %1$s > %2$s > %3$s. The option has no TYPE defined! Maybe it doesn\'t even exist.', esc_html( $section_key ), 'options', esc_html( $option_key ) ), null
 								);
 							}
 
@@ -604,10 +638,11 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) :
 							// This means we should receive a value in the modified config.
 							if ( ! isset( $modified_config[ $section_key ]['options'][ $option_key ]['default'] ) ) {
 								if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+									/* translators: 1: the section key, 2: "options", 3: the option key */
 									_doing_it_wrong(
 										__METHOD__,
-										sprintf( 'You need to define a default value for the following Customizer option: %s > %s > %s.', $section_key, 'options', $option_key ) .
-										( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', $filter_to_use ) : '' ), null
+										sprintf( 'You need to define a default value for the following Customizer option: %1$s > %2$s > %3$s.', esc_html( $section_key ), 'options', esc_html( $option_key ) ) .
+										( ! empty( $filter_to_use ) ? ' ' . sprintf( 'Use this filter: %s', esc_html( $filter_to_use ) ) : '' ), null
 									);
 								}
 

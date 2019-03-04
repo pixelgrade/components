@@ -23,6 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$classes = array();
+$classes[] = 'h2';
+$classes[] = 'entry-title';
+$classes[] = 'u-page-title-color';
+
+$classes = apply_filters( 'components_entry_header_classes', $classes );
+
 ?>
 
-<h2 class="entry-title  u-page-title-color  h2"><?php the_archive_title(); ?></h2>
+<h2 class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"><?php the_archive_title(); ?></h2>

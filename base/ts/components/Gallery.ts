@@ -4,6 +4,8 @@ import { JQueryExtended } from '../BaseTheme';
 import { WindowService } from '../services/window.service';
 import { GlobalService } from '../services/global.service';
 
+import { takeWhile, debounceTime } from 'rxjs/operators';
+
 export class Gallery extends BaseComponent {
   protected element: JQueryExtended;
 
@@ -19,24 +21,24 @@ export class Gallery extends BaseComponent {
 
     WindowService
       .onResize()
-      .debounce(300 )
-      .takeWhile( () => this.subscriptionActive )
+      .pipe( debounceTime(300 ) )
+      .pipe( takeWhile( () => this.subscriptionActive ) )
       .subscribe( () => {
           this.layout();
       } );
 
     GlobalService
       .onCustomizerRender()
-      .debounce( 300 )
-      .takeWhile( () => this.subscriptionActive )
+      .pipe( debounceTime( 300 ) )
+      .pipe( takeWhile( () => this.subscriptionActive ) )
       .subscribe( () => {
           this.layout();
       } );
 
     GlobalService
       .onCustomizerChange()
-      .debounce( 300 )
-      .takeWhile( () => this.subscriptionActive )
+      .pipe( debounceTime( 300 ) )
+      .pipe( takeWhile( () => this.subscriptionActive ) )
       .subscribe( () => {
           this.layout();
       } );

@@ -46,7 +46,7 @@ add_action( 'after_setup_theme', 'components_force_setup_all_components', 10 );
 /**
  * Hook into the Customify's fields and settings and mock all the needed parts like field defaults.
  *
- * The config can turn to be complex so is best to visit:
+ * The config can turn out to be quite complex so is best to visit:
  * https://github.com/pixelgrade/customify
  *
  * @param array $options Contains the plugin's options array right before they are used, so edit with care
@@ -572,7 +572,7 @@ function mock_customify_footer_section( $section_options, $options ) {
 			'options' => array(
 				// [Section] Layout
 				'copyright_text'               => array(
-					'default' => esc_html__( '&copy; %year% %site-title%.', '__theme_txtd' ),
+					'default' => esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ),
 				),
 				'footer_top_spacing'     => array(
 					'default' => 80,

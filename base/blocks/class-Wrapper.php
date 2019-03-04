@@ -3,9 +3,8 @@
  * Wrapper class
  *
  * @see        https://pixelgrade.com
- * @author        Pixelgrade
+ * @author     Pixelgrade
  * @package    Components/Base
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -121,18 +120,18 @@ class Pixelgrade_Wrapper {
 	 *
 	 * Supplied `$args` override class property defaults.
 	 *
-	 * @param array $args {
-	 *     Optional. Arguments to override class property defaults.
+	 * @param array       $args                     {
+	 *                                              Optional. Arguments to override class property defaults.
 	 *
-	 *     @type string $tag Wrapper opening tag name (i.e. div or article).
-	 *     @type string $end_tag Wrapper closing tag if the provided $tag is a fully qualified HTML element opening tag (i.e. <div>).
-	 *     @type string $id ID to add to the wrapper.
-	 *     @type array|string $classes Classes to add to the wrapper.
-	 *     @type array|string $attributes Attributes to add to the wrapper.
-	 *     @type bool $display_on_empty_content Whether to display the wrapper if the content is empty.
-	 *     @type int $priority Order priority to display the wrapper. Default 10.
-	 *     @type array $checks The checks config to determine at render time if this wrapper should be displayed.
-	 *     @type array $master_callback A callback config that should return at render time the wrapper's attributes, overwriting the existing ones.
+	 * @type string       $tag                      Wrapper opening tag name (i.e. div or article).
+	 * @type string       $end_tag                  Wrapper closing tag if the provided $tag is a fully qualified HTML element opening tag (i.e. <div>).
+	 * @type string       $id                       ID to add to the wrapper.
+	 * @type array|string $classes                  Classes to add to the wrapper.
+	 * @type array|string $attributes               Attributes to add to the wrapper.
+	 * @type bool         $display_on_empty_content Whether to display the wrapper if the content is empty.
+	 * @type int          $priority                 Order priority to display the wrapper. Default 10.
+	 * @type array        $checks                   The checks config to determine at render time if this wrapper should be displayed.
+	 * @type array        $master_callback          A callback config that should return at render time the wrapper's attributes, overwriting the existing ones.
 	 * }
 	 */
 	public function __construct( $args = array() ) {
@@ -204,7 +203,7 @@ class Pixelgrade_Wrapper {
 	 * @return string Wrapped content.
 	 */
 	final public function wrapContent( $content = '' ) {
-		return $this->getOpeningMarkup() . PHP_EOL . $content . PHP_EOL . $this->getClosingMarkup();
+		return $this->getOpeningMarkup() . "\n" . $content . "\n" . $this->getClosingMarkup();
 	}
 
 	/**
@@ -526,7 +525,7 @@ class Pixelgrade_Wrapper {
 			}
 
 			if ( ! is_array( $data ) || ! is_object( $data ) ) {
-				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null );
+				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null ); // @codingStandardsIgnoreLine
 
 				return false;
 			}

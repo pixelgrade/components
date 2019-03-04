@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Blog
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,9 +45,10 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 
 		$output = '';
 
-		$output .= $selector . ' {' . PHP_EOL .
-				'padding-top: ' . $padding . ';' . PHP_EOL .
-				'}' . PHP_EOL;
+		$output .= $selector . ' {
+			padding-top: ' . $padding . ';
+		}
+		';
 
 		return $output;
 	}
@@ -98,7 +98,8 @@ function pixelgrade_aspect_ratio_cb( value, selector, property, unit ) {
 
         head.appendChild(style);
     }
-}" . PHP_EOL;
+}
+";
 
 		wp_add_inline_script( 'customify-previewer-scripts', $js );
 	}
@@ -154,45 +155,47 @@ function pixelgrade_blog_grid_vertical_spacing_cb( $value, $selector, $property,
 		$featured_at_small = 'calc(' . ( ( 200 * $ratio / $columns_at_small . '%' ) . ' - ' . ( $value_at_small * ( 2 * $ratio - 1 ) ) ) . 'px);';
 
 		$output .=
-			'.c-gallery--blog.c-gallery--packed,' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'margin-top: 0' .
-			'}' . PHP_EOL .
-			'@media only screen and (min-width: 35em) {' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'padding-top: ' . $normal_at_small . PHP_EOL .
-			'margin-bottom: ' . $value_at_small . 'px' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' . PHP_EOL .
-			'padding-top: ' . $featured_at_small . PHP_EOL .
-			'}' . PHP_EOL .
-			'}' . PHP_EOL .
-			'@media only screen and (min-width: 50em) {' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'padding-top: ' . $normal_at_lap . PHP_EOL .
-			'margin-bottom: ' . $value_at_lap . 'px' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' . PHP_EOL .
-			'padding-top: ' . $featured_at_lap . PHP_EOL .
-			'}' . PHP_EOL .
-			'}' . PHP_EOL .
-			'@media only screen and (min-width: 80em) {' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'padding-top: ' . $normal . PHP_EOL .
-			'margin-bottom: ' . $value . 'px' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--blog.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' . PHP_EOL .
-			'padding-top: ' . $featured . PHP_EOL .
-			'}' . PHP_EOL .
-			'}' . PHP_EOL;
+			'.c-gallery--blog.c-gallery--packed,
+			.c-gallery--blog.c-gallery--packed .c-gallery__item {
+			margin-top: 0
+			}
+			@media only screen and (min-width: 35em) {
+				.c-gallery--blog.c-gallery--packed .c-gallery__item {
+				padding-top: ' . $normal_at_small . '
+				margin-bottom: ' . $value_at_small . 'px
+				}
+				.c-gallery--blog.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
+				padding-top: ' . $featured_at_small . '
+				}
+			}
+			@media only screen and (min-width: 50em) {
+				.c-gallery--blog.c-gallery--packed .c-gallery__item {
+				padding-top: ' . $normal_at_lap . '
+				margin-bottom: ' . $value_at_lap . 'px
+				}
+				.c-gallery--blog.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
+				padding-top: ' . $featured_at_lap . '
+				}
+			}
+			@media only screen and (min-width: 80em) {
+				.c-gallery--blog.c-gallery--packed .c-gallery__item {
+				padding-top: ' . $normal . '
+				margin-bottom: ' . $value . 'px
+				}
+				.c-gallery--blog.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
+				padding-top: ' . $featured . '
+				}
+			}
+			';
 
 		$output .=
-			'.c-gallery--blog {' . PHP_EOL .
-			'margin-top: calc(-' . $value . 'px);' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--blog > * {' . PHP_EOL .
-			'margin-top: ' . $value . 'px;' . PHP_EOL .
-			'}' . PHP_EOL;
+			'.c-gallery--blog {
+			margin-top: calc(-' . $value . 'px);
+			}
+			.c-gallery--blog > * {
+			margin-top: ' . $value . 'px;
+			}
+			';
 
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
@@ -200,14 +203,15 @@ function pixelgrade_blog_grid_vertical_spacing_cb( $value, $selector, $property,
 			$new_value = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
-				'.c-gallery--blog {' . PHP_EOL .
-				'margin-top: calc(-' . $new_value . 'px);' . PHP_EOL .
-				'}' . PHP_EOL .
-				'.c-gallery--blog > * {' . PHP_EOL .
-				'margin-top: ' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'}' . PHP_EOL;
+				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {
+					.c-gallery--blog {
+					margin-top: calc(-' . $new_value . 'px);
+					}
+					.c-gallery--blog > * {
+					margin-top: ' . $new_value . 'px;
+					}
+				}
+				';
 		}
 	}
 
@@ -218,15 +222,16 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( $value, $selector, $propert
 	$output = '';
 
 	$output .=
-		'.c-gallery--blog {' . PHP_EOL .
-		'margin-left: -' . $value . 'px;' . PHP_EOL .
-		'}' . PHP_EOL .
-		'.c-gallery--blog > * {' . PHP_EOL .
-		'padding-left: ' . $value . 'px;' . PHP_EOL .
-		'}' . PHP_EOL .
-		'.c-gallery--blog.c-gallery--packed .c-card {' . PHP_EOL .
-		'left: ' . $value . 'px;' . PHP_EOL .
-		'}' . PHP_EOL;
+		'.c-gallery--blog {
+		margin-left: -' . $value . 'px;
+		}
+		.c-gallery--blog > * {
+		padding-left: ' . $value . 'px;
+		}
+		.c-gallery--blog.c-gallery--packed .c-card {
+		left: ' . $value . 'px;
+		}
+		';
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
@@ -241,17 +246,18 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( $value, $selector, $propert
 			$new_value = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
-				'.c-gallery--blog {' . PHP_EOL .
-				'margin-left: -' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'.c-gallery--blog > * {' . PHP_EOL .
-				'padding-left: ' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'.c-gallery--blog.c-gallery--packed .c-card {' . PHP_EOL .
-				'left: ' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'}' . PHP_EOL;
+				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {
+					.c-gallery--blog {
+					margin-left: -' . $new_value . 'px;
+					}
+					.c-gallery--blog > * {
+					padding-left: ' . $new_value . 'px;
+					}
+					.c-gallery--blog.c-gallery--packed .c-card {
+					left: ' . $new_value . 'px;
+					}
+				}
+				';
 		}
 	}
 
@@ -284,7 +290,8 @@ function getY( x ) {
 	} else {
 		return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
 	}
-}' . PHP_EOL;
+}
+';
 
 	}
 
@@ -293,7 +300,8 @@ function pixelgrade_blog_grid_vertical_spacing_cb( value, selector, property, un
 
 	var css = '',
 		style = document.getElementById('blog_grid_vertical_spacing_style_tag'),
-		head = document.head || document.getElementsByTagName('head')[0];" . PHP_EOL;
+		head = document.head || document.getElementsByTagName('head')[0];
+		";
 
 	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 
@@ -368,7 +376,8 @@ function pixelgrade_blog_grid_vertical_spacing_cb( value, selector, property, un
 			'margin-top: ' + newValue + 'px;' +
 			'}' +
 			'}';
-	}" . PHP_EOL;
+	}
+	";
 
 	}
 
@@ -388,7 +397,8 @@ function pixelgrade_blog_grid_vertical_spacing_cb( value, selector, property, un
 
 		head.appendChild(style);
 	}
-}" . PHP_EOL;
+}
+";
 
 	wp_add_inline_script( 'customify-previewer-scripts', $js );
 }
@@ -420,7 +430,8 @@ function getY( x ) {
 	} else {
 		return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
 	}
-}' . PHP_EOL;
+}
+';
 
 	}
 
@@ -439,7 +450,8 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( value, selector, property, 
 		'}' +
 		'.c-gallery--blog.c-gallery--packed .c-card {' +
 			'left: ' + value + 'px;' +
-		'}';" . PHP_EOL;
+		'}';
+		";
 
 	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 
@@ -459,7 +471,8 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( value, selector, property, 
 					'left: ' + newValue + 'px;' +
 				'}' +
 			'}';
-	}" . PHP_EOL;
+	}
+	";
 
 	}
 
@@ -479,7 +492,8 @@ function pixelgrade_blog_grid_horizontal_spacing_cb( value, selector, property, 
 
 		head.appendChild(style);
 	}
-}" . PHP_EOL;
+}
+";
 
 	wp_add_inline_script( 'customify-previewer-scripts', $js );
 }

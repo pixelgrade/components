@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Blog
- * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,7 +32,7 @@ function pixelgrade_add_cats_list( $content ) {
 		$categories_list = get_the_category_list( ' ' );
 
 		if ( ! empty( $categories_list ) && 'Uncategorized' !== $categories_list ) {
-			$cats_content .= '<div class="cats"><span class="cats__title">' . esc_html__( 'Categories', '__components_txtd' ) . sprintf( '</span>' . esc_html__( '%1$s', '__components_txtd' ), $categories_list ) . '</div>'; // WPCS: XSS OK.
+			$cats_content .= '<div class="cats"><span class="cats__title">' . esc_html__( 'Categories', '__components_txtd' ) . '</span>' . $categories_list . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
 		}
 	}
 
@@ -60,7 +59,7 @@ function pixelgrade_add_tags_list( $content ) {
 		$tags_list = get_the_tag_list();
 
 		if ( ! empty( $tags_list ) ) {
-			$tags_content .= '<div class="tags"><div class="tags__title">' . esc_html__( 'Tags', '__components_txtd' ) . sprintf( '</div>' . esc_html__( '%1$s', '__components_txtd' ) . '</div>', $tags_list ); // WPCS: XSS OK.
+			$tags_content .= '<div class="tags"><div class="tags__title">' . esc_html__( 'Tags', '__components_txtd' ) . '</div>' . $tags_list . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
 		}
 	}
 
@@ -162,6 +161,7 @@ if ( ! function_exists( 'pixelgrade_is_page_for_projects' ) ) {
 	 * @return bool
 	 */
 	function pixelgrade_is_page_for_projects( $page_id = null ) {
+		/** @var WP_Query $wp_query */
 		global $wp_query;
 
 		if ( ! isset( $wp_query ) ) {

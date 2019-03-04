@@ -134,7 +134,7 @@ $theme-background-color: #FFF !default;
   }
 
   @include below(lap) {
-    &[class] button {
+    &[class][class] button {
       font-size: 0;
       background: currentColor;
       border: 0;

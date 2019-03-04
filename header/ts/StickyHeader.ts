@@ -1,10 +1,11 @@
 import $ from 'jquery';
-import * as imagesLoaded from 'imagesloaded';
 import 'jquery-hoverintent';
 import { BaseComponent } from '../../base/ts/models/DefaultComponent';
 import { ProgressBar } from '../../base/ts/components/ProgressBar';
 import { WindowService } from '../../base/ts/services/window.service';
 import { Helper } from '../../base/ts/services/Helper';
+
+import { takeWhile, map } from 'rxjs/operators';
 
 interface JQueryExtended extends JQuery {
   hoverIntent?( params: any ): void;
@@ -39,7 +40,7 @@ export class StickyHeader extends BaseComponent {
   constructor() {
     super();
 
-    imagesLoaded( $( '.c-navbar .c-logo' ), () => {
+    ( $( '.c-navbar .c-logo' ) as JQueryExtended ).imagesLoaded( () => {
 
       this.bindEvents();
       this.eventHandlers();
@@ -70,15 +71,15 @@ export class StickyHeader extends BaseComponent {
 
     WindowService
       .onScroll()
-      .takeWhile( () => this.subscriptionActive )
-      .map(() => WindowService.getScrollY())
+      .pipe( takeWhile( () => this.subscriptionActive ) )
+      .pipe( map(() => WindowService.getScrollY()) )
       .subscribe( (scrollPosition) => {
         this.refresh( scrollPosition );
       } );
 
     WindowService
       .onResize()
-      .takeWhile( () => this.subscriptionActive )
+      .pipe( takeWhile( () => this.subscriptionActive ) )
       .subscribe( () => {
         this.updateOnResize();
       } );
@@ -237,7 +238,7 @@ export class StickyHeader extends BaseComponent {
 
     $( '.c-reading-bar__wrapper-social' ).find( '.share-end' ).remove();
 
-    const entryHeader = $( '.entry-header' );
+    const entryHeader = $( '.entry-header, .entry-summary' );
     const entryContent = $( '.single-main' ).find( '.entry-content' );
     const entryHeaderHeight = entryHeader.outerHeight() || 0;
     const entryContentHeight = entryContent.outerHeight() || 0;

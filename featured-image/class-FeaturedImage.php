@@ -7,7 +7,6 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Featured-Image
- * @version    1.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,7 +35,8 @@ class Pixelgrade_FeaturedImage extends Pixelgrade_Component {
 
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
-			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+			/* translators: 1: the component slug  */
+			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
 			return;
 		}
 

@@ -18,7 +18,7 @@ class TextTestListRenderer
 {
     public function render(TestSuite $suite): string
     {
-        $buffer = 'Available test(s):' . PHP_EOL;
+        $buffer = "Available test(s):\n";
 
         foreach (new \RecursiveIteratorIterator($suite->getIterator()) as $test) {
             if ($test instanceof TestCase) {

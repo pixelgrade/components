@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import * as Rx from 'rx-dom';
 import { BaseComponent } from '../models/DefaultComponent';
-import Observable = Rx.Observable;
+import { Observable, fromEvent } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 const activeClass = 'show-search-overlay';
 const openClass = '.js-search-trigger';
@@ -13,9 +13,7 @@ export class SearchOverlay extends BaseComponent {
   private $body: JQuery = $( 'body' );
   private $document: JQuery = $( document );
   private $searchField: JQuery = $( '.c-search-overlay' ).find( '.search-field' );
-  private closeSub: Observable<Event>;
   private keyupSub: Observable<Event>;
-  private subscriptionActive: boolean = true;
   private keyupSubscriptionActive: boolean = true;
 
   constructor() {
@@ -24,26 +22,21 @@ export class SearchOverlay extends BaseComponent {
   }
 
   public destroy() {
-    this.subscriptionActive = false;
     this.keyupSubscriptionActive = false;
     this.$document.off( 'click.SearchOverlay' );
   }
 
   public bindEvents() {
     this.$document.on( 'click.SearchOverlay', openClass, this.open.bind( this ) );
+    this.$document.on( 'click.SearchOverlay', closeClass, this.close.bind( this ) );
 
-    this.closeSub = Rx.DOM.click(document.querySelector(closeClass));
-    this.keyupSub = Rx.DOM.keyup(document.querySelector('body' ));
-
-    this.closeSub
-        .takeWhile( () => this.subscriptionActive )
-        .subscribe( this.close.bind( this ) );
+    this.keyupSub = fromEvent( window.document.body, 'keyup' );
   }
 
   public createKeyupSubscription() {
     this.keyupSubscriptionActive = true;
     this.keyupSub
-        .takeWhile( () => this.keyupSubscriptionActive )
+        .pipe( takeWhile( () => this.keyupSubscriptionActive ) )
         .subscribe( this.closeOnEsc.bind( this ) );
   }
 

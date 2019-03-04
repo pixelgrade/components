@@ -11,7 +11,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,7 +37,7 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 		 * Initialize by setting filters and administration functions.
 		 *
 		 * @param string $component The component slug
-		 * @param array  $templates
+		 * @param array $templates
 		 */
 		public function __construct( $component, $templates = array() ) {
 			$this->component = $component;
@@ -87,6 +86,7 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 		 */
 		public function addNewTemplateToDropdown( $posts_templates ) {
 			$posts_templates = array_merge( $posts_templates, $this->templates );
+
 			return $posts_templates;
 		}
 
@@ -105,6 +105,7 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 
 			// Retrieve the cache list.
 			// If it doesn't exist, or it's empty prepare an array.
+			// @todo Shouldn't we get the parent theme with wp_get_theme( get_template() )?
 			$templates = wp_get_theme()->get_page_templates();
 			if ( empty( $templates ) ) {
 				$templates = array();
@@ -125,11 +126,11 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 		}
 
 		/**
-		 * Checks if the template is assigned to the page.
+		 * Checks if the template assigned to the page exists and return its path.
 		 *
-		 * @param string $template
+		 * @param string $template The template path as determined by the core hierarchy. It is ignored.
 		 *
-		 * @return string
+		 * @return string The path to the actual page template we will use.
 		 */
 		public function viewTemplate( $template ) {
 
@@ -141,10 +142,10 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 				return $template;
 			}
 
-			$page_template = get_post_meta( $post->ID, '_wp_page_template', true );
+			$original_page_template = get_post_meta( $post->ID, '_wp_page_template', true );
 
 			// Return default template if we don't have a custom one defined.
-			if ( ! isset( $this->templates[ $page_template ] ) ) {
+			if ( ! isset( $this->templates[ $original_page_template ] ) ) {
 				return $template;
 			}
 
@@ -153,7 +154,7 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 			// by putting them in /page-templates/ or /page-templates/$component_slug/
 			// we need to cleanup this path.
 			// First remove the component slug from the front.
-			$page_template = trim( $page_template, '/' );
+			$page_template = trim( $original_page_template, '/' );
 			if ( 0 === strpos( $page_template, trailingslashit( $this->component ) ) ) {
 				$page_template = substr( $page_template, strlen( trailingslashit( $this->component ) ) );
 			}
@@ -162,9 +163,16 @@ if ( ! class_exists( 'Pixelgrade_PageTemplater' ) ) :
 				$page_template = substr( $page_template, strlen( trailingslashit( PIXELGRADE_COMPONENTS_PAGE_TEMPLATES_PATH ) ) );
 			}
 
-			// Locate the page template file to use.
+			// Locate the page template file to use, with our components locating function.
 			$our_template = pixelgrade_locate_component_page_template( $this->component, $page_template );
 
+			if ( ! empty( $our_template ) ) {
+				return $our_template;
+			}
+
+			// If we haven't managed to find the page template in our usual locations, as tested by pixelgrade_locate_component_page_template(),
+			// we will try to find it by treating it as a "full" relative path to the theme root.
+			$our_template = locate_template( array( $original_page_template ), false );
 			if ( ! empty( $our_template ) ) {
 				return $our_template;
 			}

@@ -150,6 +150,8 @@ table {
   th,
   td {
     @include spacing(padding, $typography-table-cell-padding);
+    max-width:100%;
+    white-space:nowrap;
   }
 
   caption {

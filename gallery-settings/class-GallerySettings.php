@@ -7,7 +7,6 @@
  * @see      https://pixelgrade.com
  * @author   Pixelgrade
  * @package  Components/Gallery
- * @version  1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -71,7 +70,8 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
-			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', $hook_slug ), null );
+			/* translators: 1: the component slug  */
+			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
 			return;
 		}
 
@@ -297,7 +297,7 @@ class Pixelgrade_GallerySettings extends Pixelgrade_Component {
 
 					<?php
 					foreach ( $this->config['gallery_spacing_options'] as $value => $caption ) {
-						echo '<option value="' . esc_attr( $value ) . '" ' . selected( $value, $default_gallery_spacing ) . '>' . esc_html( $caption ) . '</option>' . PHP_EOL;
+						echo '<option value="' . esc_attr( $value ) . '" ' . selected( $value, $default_gallery_spacing ) . '>' . esc_html( $caption ) . "</option>\n";
 					}
 					?>
 

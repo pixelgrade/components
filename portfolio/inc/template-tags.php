@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Portfolio
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -42,19 +41,19 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 				// if we are on a page then we only want the main category
 				$main_category = pixelgrade_portfolio_get_project_main_type_link();
 				if ( ! empty( $main_category ) ) {
-					$category .= '<span class="screen-reader-text">' . esc_html__( 'Main Type', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
-					$category .= '<li>' . $main_category . '</li>' . PHP_EOL;
-					$category .= '</ul>' . PHP_EOL;
+					$category .= '<span class="screen-reader-text">' . esc_html__( 'Main Type', '__components_txtd' ) . "</span><ul>\n";
+					$category .= '<li>' . $main_category . "</li>\n";
+					$category .= "</ul>\n";
 				}
 			} else {
 				// On archives we want to show all the categories, not just the main one
 				$categories = get_the_terms( get_the_ID(), Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE );
 				if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
-					$category .= '<span class="screen-reader-text">' . esc_html__( 'Types', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
+					$category .= '<span class="screen-reader-text">' . esc_html__( 'Types', '__components_txtd' ) . "</span><ul>\n";
 					foreach ( $categories as $this_category ) {
-						$category .= '<li><a href="' . esc_url( get_term_link( $this_category, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" rel="category">' . $this_category->name . '</a></li>' . PHP_EOL;
+						$category .= '<li><a href="' . esc_url( get_term_link( $this_category, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" rel="category">' . $this_category->name . "</a></li>\n";
 					};
-					$category .= '</ul>' . PHP_EOL;
+					$category .= "</ul>\n";
 				}
 			}
 			$meta['category'] = $category;
@@ -64,11 +63,11 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 			$post_tags = get_the_terms( get_the_ID(), Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG );
 			$tags      = '';
 			if ( ! is_wp_error( $post_tags ) && ! empty( $post_tags ) ) {
-				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', '__components_txtd' ) . '</span><ul>' . PHP_EOL;
+				$tags .= '<span class="screen-reader-text">' . esc_html__( 'Tags', '__components_txtd' ) . "</span><ul>\n";
 				foreach ( $post_tags as $post_tag ) {
-					$tags .= '<li><a href="' . esc_url( get_term_link( $post_tag, Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG ) ) . '" rel="tag">' . $post_tag->name . '</a></li>' . PHP_EOL;
+					$tags .= '<li><a href="' . esc_url( get_term_link( $post_tag, Jetpack_Portfolio::CUSTOM_TAXONOMY_TAG ) ) . '" rel="tag">' . $post_tag->name . "</a></li>\n";
 				};
-				$tags .= '</ul>' . PHP_EOL;
+				$tags .= "</ul>\n";
 			}
 			$meta['tags'] = $tags;
 		}
@@ -81,6 +80,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_meta' ) ) {
 			if ( 0 === intval( $comments_number ) ) {
 				$comments = esc_html__( 'No Comments', '__components_txtd' );
 			} else {
+				/* translators: %d: the number of comments */
 				$comments = sprintf( _n( '%d Comment', '%d Comments', $comments_number, '__components_txtd' ), $comments_number );
 			}
 			$meta['comments'] = '<a href="' . esc_url( get_comments_link() ) . '">' . esc_html( $comments ) . '</a>';
@@ -124,7 +124,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_the_older_projects_button' ) ) {
  * @param string $type_class Optional. A CSS class that the category will receive.
  */
 function pixelgrade_portfolio_the_main_project_type_link( $before = '', $after = '', $type_class = '' ) {
-	echo pixelgrade_portfolio_get_project_main_type_link( $before, $after, $type_class );
+	echo pixelgrade_portfolio_get_project_main_type_link( $before, $after, $type_class ); // WPCS: XSS OK.
 
 } // function
 
@@ -150,7 +150,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_get_project_main_type_link' ) ) {
 		$class_markup = '';
 
 		if ( ! empty( $type_class ) ) {
-			$class_markup = 'class="' . $type_class . '" ';
+			$class_markup = 'class="' . esc_attr( $type_class ) . '" ';
 		}
 		return $before . '<a ' . $class_markup . ' href="' . esc_url( get_term_link( $type, Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) . '" title="' . esc_attr( $type->name ) . '">' . $type->name . '</a>' . $after;
 

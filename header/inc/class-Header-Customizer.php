@@ -5,7 +5,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Header
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -54,7 +53,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 		 * 'panel'          => $panel_id,
 		 * 'capability'     => 'edit_theme_options', // what capabilities the current logged in user needs to be able to see this section
 		 * 'theme_supports' => '', // if the theme needs to declare some theme-supports for this section to be shown
-		 * 'title'          => __( 'Title Section is required', '' ),
+		 * 'title'          => esc_html__( 'Title Section is required', '' ),
 		 * 'description'    => '',
 		 * 'type'           => 'default',
 		 * 'description_hidden' => false, // If the description should be hidden behind a (?) bubble
@@ -314,7 +313,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					'header_links_active_style'       => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Links Active Style', '__components_txtd' ),
-						'desc'    => esc_html__( '', '__components_txtd' ),
+						'desc'    => '',
 						'default' => null, // this should be set by the theme (previously active)
 						'choices' => array(
 							'active'    => esc_html__( 'Active', '__components_txtd' ),
@@ -343,7 +342,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					'header_site_title_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Site Title Font', '__components_txtd' ),
-						'desc'        => esc_html__( '', '__components_txtd' ),
+						'desc'        => '',
 						'selector'    => '.site-title',
 						'callback'    => 'typeline_font_cb',
 
@@ -380,7 +379,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 					'header_navigation_font'          => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Navigation Text', '__components_txtd' ),
-						'desc'        => esc_html__( '', '__components_txtd' ),
+						'desc'        => '',
 						'selector'    => '.c-navbar',
 						'callback'    => 'typeline_font_cb',
 
@@ -465,7 +464,7 @@ class Pixelgrade_Header_Customizer extends Pixelgrade_Singleton {
 			$classes[] = 'site-title-hidden';
 		}
 
-		$header_position = pixelgrade_option( 'header_position' );
+		$header_position = pixelgrade_option( 'header_position', 'static' );
 		if ( 'sticky' === $header_position || empty( $header_position ) ) {
 			$classes[] = 'u-site-header-sticky';
 		}

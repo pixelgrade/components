@@ -14,7 +14,7 @@
  * @see        https://pixelgrade.com
  * @author     Pixelgrade
  * @package    Components/Header
- * @version    1.0.1
+ * @version    1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

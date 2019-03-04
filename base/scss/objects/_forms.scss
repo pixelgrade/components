@@ -105,7 +105,7 @@ $textarea-font: () !default;
 
   padding-right: 50px;
 
-  background: $input-background-color url('#{$arrow-caret-svg}') calc(100% - 17px) center no-repeat;
+  background: $input-background-color url('assets/images/arrow-caret.svg') calc(100% - 17px) center no-repeat;
   background-size: 9px 5px;
 
   -webkit-appearance: none;
@@ -113,7 +113,7 @@ $textarea-font: () !default;
 
 @mixin taxonomy-select {
   width: auto;
-  background: url('#{$select-arrow-svg}') 100% center no-repeat;
+  background: url('assets/images/select-arrow.svg') 100% center no-repeat;
   background-size: 8px 11px;
   padding: 0 10px 0 0;
   border: none;
@@ -178,7 +178,7 @@ input[type="checkbox"] {
 
   &:checked {
     border-color: $checkbox-color;
-    background: $checkbox-background-color url('#{$checkbox-svg}') center center no-repeat;
+    background: $checkbox-background-color url('assets/images/checkbox.svg') center center no-repeat;
     background-size: 100% 100%;
     outline: 0;
   }

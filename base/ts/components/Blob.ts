@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import * as anime from 'animejs';
+import anime from 'animejs';
 import { BaseComponent } from '../models/DefaultComponent';
 
 export class Blob extends BaseComponent {

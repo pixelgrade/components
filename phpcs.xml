@@ -26,7 +26,7 @@
         WordPress-Extra
         Best practices beyond core WordPress Coding Standards.
 
-        The WordPress-Core standard doesn’t have to be included here,
+        The WordPress-Core standard doesn't have to be included here,
         because WordPress-Extra already includes it.
     -->
     <rule ref="WordPress-Extra">

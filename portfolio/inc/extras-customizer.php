@@ -7,7 +7,6 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Portfolio
- * @version     1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -48,9 +47,10 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 
 		$output = '';
 
-		$output .= $selector . ' {' . PHP_EOL .
-				'padding-top: ' . $padding . ';' . PHP_EOL .
-				'}' . PHP_EOL;
+		$output .= $selector . ' {
+			padding-top: ' . $padding . ';
+		}
+		';
 
 		return $output;
 	}
@@ -100,7 +100,8 @@ function pixelgrade_aspect_ratio_cb( value, selector, property, unit ) {
 
         head.appendChild(style);
     }
-}" . PHP_EOL;
+}
+";
 
 		wp_add_inline_script( 'customify-previewer-scripts', $js );
 	}
@@ -156,45 +157,47 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 		$featured_at_small = 'calc(' . ( ( 200 * $ratio / $columns_at_small . '%' ) . ' - ' . ( $value_at_small * ( 2 * $ratio - 1 ) ) ) . 'px);';
 
 		$output .=
-			'.c-gallery--portfolio.c-gallery--packed,' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'margin-top: 0' .
-			'}' . PHP_EOL .
-			'@media only screen and (min-width: 35em) {' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'padding-top: ' . $normal_at_small . PHP_EOL .
-			'margin-bottom: ' . $value_at_small . 'px' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item.jetpack-portfolio-tag-featured {' . PHP_EOL .
-			'padding-top: ' . $featured_at_small . PHP_EOL .
-			'}' . PHP_EOL .
-			'}' . PHP_EOL .
-			'@media only screen and (min-width: 50em) {' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'padding-top: ' . $normal_at_lap . PHP_EOL .
-			'margin-bottom: ' . $value_at_lap . 'px' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item.jetpack-portfolio-tag-featured {' . PHP_EOL .
-			'padding-top: ' . $featured_at_lap . PHP_EOL .
-			'}' . PHP_EOL .
-			'}' . PHP_EOL .
-			'@media only screen and (min-width: 80em) {' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item {' . PHP_EOL .
-			'padding-top: ' . $normal . PHP_EOL .
-			'margin-bottom: ' . $value . 'px' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--portfolio.c-gallery--packed .c-gallery__item.jetpack-portfolio-tag-featured {' . PHP_EOL .
-			'padding-top: ' . $featured . PHP_EOL .
-			'}' . PHP_EOL .
-			'}' . PHP_EOL;
+'.c-gallery--portfolio.c-gallery--packed,
+.c-gallery--portfolio.c-gallery--packed .c-gallery__item {
+	margin-top: 0
+}
+@media only screen and (min-width: 35em) {
+	.c-gallery--portfolio.c-gallery--packed .c-gallery__item {
+		padding-top: ' . $normal_at_small . '
+		margin-bottom: ' . $value_at_small . 'px
+	}
+	.c-gallery--portfolio.c-gallery--packed .c-gallery__item.jetpack-portfolio-tag-featured {
+		padding-top: ' . $featured_at_small . '
+	}
+}
+@media only screen and (min-width: 50em) {
+	.c-gallery--portfolio.c-gallery--packed .c-gallery__item {
+		padding-top: ' . $normal_at_lap . '
+		margin-bottom: ' . $value_at_lap . 'px
+	}
+	.c-gallery--portfolio.c-gallery--packed .c-gallery__item.jetpack-portfolio-tag-featured {
+		padding-top: ' . $featured_at_lap . '
+	}
+}
+@media only screen and (min-width: 80em) {
+	.c-gallery--portfolio.c-gallery--packed .c-gallery__item {
+		padding-top: ' . $normal . '
+		margin-bottom: ' . $value . 'px
+	}
+	.c-gallery--portfolio.c-gallery--packed .c-gallery__item.jetpack-portfolio-tag-featured {
+		padding-top: ' . $featured . '
+	}
+}
+';
 
 		$output .=
-			'.c-gallery--portfolio {' . PHP_EOL .
-			'margin-top: calc(-' . $value . 'px);' . PHP_EOL .
-			'}' . PHP_EOL .
-			'.c-gallery--portfolio > * {' . PHP_EOL .
-			'margin-top: ' . $value . 'px;' . PHP_EOL .
-			'}' . PHP_EOL;
+'.c-gallery--portfolio {
+	margin-top: calc(-' . $value . 'px);
+}
+.c-gallery--portfolio > * {
+	margin-top: ' . $value . 'px;
+}
+';
 
 		$no_breakpoints = count( $breakpoints );
 		for ( $i = 0; $i < $no_breakpoints; $i ++ ) {
@@ -202,14 +205,15 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( $value, $selector, $prop
 			$new_value = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
-				'.c-gallery--portfolio {' . PHP_EOL .
-				'margin-top: calc(-' . $new_value . 'px);' . PHP_EOL .
-				'}' . PHP_EOL .
-				'.c-gallery--portfolio > * {' . PHP_EOL .
-				'margin-top: ' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'}' . PHP_EOL;
+				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {
+					.c-gallery--portfolio {
+						margin-top: calc(-' . $new_value . 'px);
+					}
+					.c-gallery--portfolio > * {
+						margin-top: ' . $new_value . 'px;
+					}
+				}
+				';
 		}
 	}
 
@@ -220,15 +224,16 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( $value, $selector, $pr
 	$output = '';
 
 	$output .=
-		'.c-gallery--portfolio {' . PHP_EOL .
-		'margin-left: -' . $value . 'px;' . PHP_EOL .
-		'}' . PHP_EOL .
-		'.c-gallery--portfolio > * {' . PHP_EOL .
-		'padding-left: ' . $value . 'px;' . PHP_EOL .
-		'}' . PHP_EOL .
-		'.c-gallery--portfolio.c-gallery--packed .c-card {' . PHP_EOL .
-		'left: ' . $value . 'px;' . PHP_EOL .
-		'}' . PHP_EOL;
+'.c-gallery--portfolio {
+	margin-left: -' . $value . 'px;
+}
+.c-gallery--portfolio > * {
+	padding-left: ' . $value . 'px;
+}
+.c-gallery--portfolio.c-gallery--packed .c-card {
+	left: ' . $value . 'px;
+}
+';
 
 	// Get the Typeline configuration for this theme
 	$typeline_config = typeline_get_theme_config();
@@ -243,17 +248,18 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( $value, $selector, $pr
 			$new_value = round( $value / $ratio );
 
 			$output .=
-				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {' . PHP_EOL .
-				'.c-gallery--portfolio {' . PHP_EOL .
-				'margin-left: -' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'.c-gallery--portfolio > * {' . PHP_EOL .
-				'padding-left: ' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'.c-gallery--portfolio.c-gallery--packed .c-card {' . PHP_EOL .
-				'left: ' . $new_value . 'px;' . PHP_EOL .
-				'}' . PHP_EOL .
-				'}' . PHP_EOL;
+			'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {
+				.c-gallery--portfolio {
+					margin-left: -' . $new_value . 'px;
+				}
+				.c-gallery--portfolio > * {
+					padding-left: ' . $new_value . 'px;
+				}
+				.c-gallery--portfolio.c-gallery--packed .c-card {
+					left: ' . $new_value . 'px;
+				}
+			}
+			';
 		}
 	}
 
@@ -286,7 +292,8 @@ function getY( x ) {
 	} else {
 		return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
 	}
-}' . PHP_EOL;
+}
+';
 
 	}
 
@@ -295,7 +302,8 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( value, selector, propert
 
 	var css = '',
 		style = document.getElementById('portfolio_grid_vertical_spacing_style_tag'),
-		head = document.head || document.getElementsByTagName('head')[0];" . PHP_EOL;
+		head = document.head || document.getElementsByTagName('head')[0];
+		";
 
 	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 
@@ -370,7 +378,8 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( value, selector, propert
 			'margin-top: ' + newValue + 'px;' +
 			'}' +
 			'}';
-	}" . PHP_EOL;
+	}
+	";
 
 	}
 
@@ -390,7 +399,8 @@ function pixelgrade_portfolio_grid_vertical_spacing_cb( value, selector, propert
 
 		head.appendChild(style);
 	}
-}" . PHP_EOL;
+}
+";
 
 	wp_add_inline_script( 'customify-previewer-scripts', $js );
 }
@@ -422,7 +432,8 @@ function getY( x ) {
 	} else {
 		return (points[1][1] + (points[2][1] - points[1][1]) * (x - points[1][0]) / (points[2][0] - points[1][0]));
 	}
-}' . PHP_EOL;
+}
+';
 
 	}
 
@@ -441,7 +452,8 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( value, selector, prope
 		'}' +
 		'.c-gallery--portfolio.c-gallery--packed .c-card {' +
 		'left: ' + value + 'px;' +
-		'}';" . PHP_EOL;
+		'}';
+		";
 
 	if ( ! empty( $typeline_config['spacings']['points'] ) && ! empty( $typeline_config['spacings']['breakpoints'] ) ) {
 
@@ -461,7 +473,8 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( value, selector, prope
 			'left: ' + newValue + 'px;' +
 			'}' +
 			'}';
-	}" . PHP_EOL;
+	}
+	";
 
 	}
 
@@ -481,7 +494,8 @@ function pixelgrade_portfolio_grid_horizontal_spacing_cb( value, selector, prope
 
 		head.appendChild(style);
 	}
-}" . PHP_EOL;
+}
+";
 
 	wp_add_inline_script( 'customify-previewer-scripts', $js );
 }

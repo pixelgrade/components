@@ -2,6 +2,8 @@ import $ from 'jquery';
 import { BaseComponent } from '../models/DefaultComponent';
 import { WindowService } from '../services/window.service';
 
+import { takeWhile } from 'rxjs/operators';
+
 export interface ProgressBarOptions {
   max?: number;
   offset?: number;
@@ -36,7 +38,7 @@ export class ProgressBar extends BaseComponent {
   public bindEvents() {
     WindowService
       .onScroll()
-      .takeWhile(() => this.subscriptionActive)
+      .pipe(takeWhile(() => this.subscriptionActive))
       .subscribe(() => {
         this.onScroll();
       });
