@@ -126,19 +126,11 @@ $sm-color-primary: #000 !default;
     }
 }
 
-<<<<<<< HEAD
 .c-comments-toggle__label {
   @include btn;
   display: block;
   background-color: $sm-dark-secondary;
 }
-=======
-//.c-comments-toggle__label {
-//  @include btn;
-//  display: block;
-//  background-color: $theme-text-color;
-//}
->>>>>>> refs/subrepo/components/fetch
 
 .comment__content {
   @include leading-map((
@@ -176,11 +168,7 @@ $sm-color-primary: #000 !default;
   color: inherit;
 
   .comment__author {
-<<<<<<< HEAD
-    color: $sm-color-secondary;
-=======
     color: $sm-color-primary;
->>>>>>> refs/subrepo/components/fetch
   }
 }
 
