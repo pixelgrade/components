@@ -272,8 +272,13 @@ if ( ! function_exists( 'pixelgrade_get_post_meta' ) ) {
  *
  * @param array $args Optional. See get_the_post_navigation() for available arguments.
  *                    Default empty array.
+ * @return void
  */
 function pixelgrade_the_post_navigation( $args = array() ) {
+    if ( true === apply_filters( 'pixelgrade_prevent_post_navigation', false ) ) {
+        return;
+    }
+
 	echo pixelgrade_get_the_post_navigation( $args ); // @codingStandardsIgnoreLine
 }
 
@@ -328,11 +333,9 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
 			$navigation = _navigation_markup( $previous . $next, 'post-navigation', $args['screen_reader_text'] );
 		}
 
-		return $navigation;
+		return apply_filters( 'pixelgrade_get_the_post_navigation', $navigation, $args );
 	}
 }
-
-add_action('pixelgrade_after_article', 'pixelgrade_get_the_post_navigation', 15 );
 
 /**
  * Display the HTML of the author info box
