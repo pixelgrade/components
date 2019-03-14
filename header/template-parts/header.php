@@ -49,7 +49,7 @@ do_action( 'pixelgrade_before_header', 'main' );
 
 				<?php
 				/**
-				 * pixelgrade_header_before_navbar hook.
+				 * pixelgrade_header_before_navbar_content hook.
 				 */
 				do_action( 'pixelgrade_header_before_navbar_content', 'header' );
 				?>
@@ -58,7 +58,7 @@ do_action( 'pixelgrade_before_header', 'main' );
 
 				<?php
 				/**
-				 * pixelgrade_header_before_navbar hook.
+				 * pixelgrade_header_after_navbar_content hook.
 				 */
 				do_action( 'pixelgrade_header_after_navbar_content', 'header' );
 				?>

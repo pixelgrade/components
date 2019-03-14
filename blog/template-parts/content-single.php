@@ -1,5 +1,7 @@
 <?php
 /**
+ * @todo The template seems it's not used anymore because we have transitioned to a block based approach. Please make a decision if this should not be deleted!!!!
+ *
  * Template part for displaying posts.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
