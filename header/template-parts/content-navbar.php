@@ -51,6 +51,9 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 		ob_start();
 		if ( ! empty( $menu_locations ) ) {
 			foreach ( $menu_locations as $menu_id => $menu_location ) {
+
+				do_action( 'pixelgrade_header_before_navbar_menu', $menu_id, $menu_location );
+
 				if ( ! empty( $menu_location['bogus'] ) ) {
 					// We have something special to show.
 					if ( 'header-branding' === $menu_id ) {
@@ -67,6 +70,8 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 
 					pixelgrade_header_the_nav_menu( $menu_location['nav_menu_args'], $menu_id );
 				}
+
+				do_action( 'pixelgrade_header_after_navbar_menu', $menu_id, $menu_location );
 			}
 		}
 		// Get the output buffer and end it

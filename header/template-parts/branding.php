@@ -26,6 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="c-branding">
 
+		<?php do_action( 'pixelgrade_header_before_brading_content', 'header' ); ?>
+
 		<?php if ( has_custom_logo() || pixelgrade_has_custom_logo_transparent() ) { ?>
 
 			<div class="c-logo">
@@ -44,6 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php } ?>
 
+		<?php do_action( 'pixelgrade_header_after_logo', 'header' ); ?>
+
 		<a class="c-logo__title" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php if ( is_front_page() || is_home() ) : ?>
 				<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
@@ -53,6 +57,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</a>
 
 		<p class="site-description site-description-text"><?php bloginfo( 'description' ); /* WPCS: xss ok. */ ?></p>
+
+		<?php do_action( 'pixelgrade_header_after_brading_content', 'header' ); ?>
 
 	</div><!-- .c-branding -->
 

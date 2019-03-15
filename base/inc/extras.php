@@ -45,16 +45,16 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 	/**
 	 * Get option from the database
 	 *
-	 * @param string $option The option name.
+	 * @param string $option_id The option name.
 	 * @param mixed  $default Optional. The default value to return when the option was not found or saved.
-	 * @param bool   $force_default Optional. When true, we will use the $default value provided for when the option was not saved at least once.
+	 * @param bool   $force_given_default Optional. When true, we will use the $default value provided for when the option was not saved at least once.
 	 *                            When false, we will let the option's default set value (in the Customify settings) kick in first, then our $default.
 	 *                            It basically, reverses the order of fallback, first the option's default, then our own.
 	 *                            This is ignored when $default is null.
 	 *
 	 * @return mixed
 	 */
-	function pixelgrade_option( $option, $default = null, $force_default = false ) {
+	function pixelgrade_option( $option_id, $default = null, $force_given_default = false ) {
 		/** @var PixCustomifyPlugin $pixcustomify_plugin */
 		global $pixcustomify_plugin;
 
@@ -62,7 +62,7 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 			// Customify is present so we should get the value via it
 			// We need to account for the case where a option has an 'active_callback' defined in it's config
 			$options_config = $pixcustomify_plugin->get_options_configs();
-			if ( ! empty( $options_config ) && ! empty( $options_config[ $option ] ) && ! empty( $options_config[ $option ]['active_callback'] ) ) {
+			if ( ! empty( $options_config ) && ! empty( $options_config[ $option_id ] ) && ! empty( $options_config[ $option_id ]['active_callback'] ) ) {
 				// This option has an active callback
 				// We need to "question" it
 				//
@@ -70,13 +70,13 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 				//
 				// Be extra careful when setting up the options to not end up in a circular logic
 				// due to callbacks that get an option and that option has a callback that gets the initial option - INFINITE LOOPS :(
-				if ( is_callable( $options_config[ $option ]['active_callback'] ) ) {
+				if ( is_callable( $options_config[ $option_id ]['active_callback'] ) ) {
 					// Now we call the function and if it returns false, this means that the control is not active
 					// Hence it's saved value doesn't matter
-					$active = call_user_func( $options_config[ $option ]['active_callback'] );
+					$active = call_user_func( $options_config[ $option_id ]['active_callback'] );
 					if ( empty( $active ) ) {
 						// If we need to force the default received; we respect that
-						if ( true === $force_default && null !== $default ) {
+						if ( true === $force_given_default && null !== $default ) {
 							return $default;
 						} else {
 							// Else we return false
@@ -89,51 +89,111 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 			}
 
 			// Now that the option is truly active, we need to see if we are not supposed to force over the option's default value
-			if ( $default !== null && false === $force_default ) {
+			if ( $default !== null && false === $force_given_default ) {
 				// We will not pass the received $default here so Customify will fallback on the option's default value, if set
-				$customify_value = $pixcustomify_plugin->get_option( $option );
+				$customify_value = $pixcustomify_plugin->get_option( $option_id );
 
 				// We only fallback on the $default if none was given from Customify
 				if ( null === $customify_value ) {
 					return $default;
 				}
 			} else {
-				$customify_value = $pixcustomify_plugin->get_option( $option, $default );
+				$customify_value = $pixcustomify_plugin->get_option( $option_id, $default );
 			}
 
 			return $customify_value;
-		} elseif ( false === $force_default ) {
-			// In case there is no Customify present and we were not supposed to force the default
-			// we want to know what the default value of the option should be according to the configuration
-			// For this we will fire the all-gathering-filter that Customify uses
-			$config = apply_filters( 'customify_filter_fields', array() );
+		}
 
-			// Next we will search for this option and see if it has a default value set ('default')
-			if ( ! empty( $config['sections'] ) && is_array( $config['sections'] ) ) {
-				foreach ( $config['sections'] as $section ) {
-					if ( ! empty( $section['options'] ) && is_array( $section['options'] ) ) {
-						foreach ( $section['options'] as $option_id => $option_config ) {
-							if ( $option_id == $option ) {
-								// We have found our option (the option ID should be unique)
-								// It's time to deal with it's default, if it has one
-								if ( isset( $option_config['default'] ) ) {
-									return $option_config['default'];
-								}
+		// We don't have Customify present so we need to retrieve the option value the hard way.
+		$option_value = null;
 
-								// If the targeted option doesn't have a default value
-								// there is no point in searching further because the option IDs should be unique
-								// Just return the $default
-								return $default;
+		// Fire the all-gathering-filter that Customify uses so we can get as much data about this option as possible.
+		$config = apply_filters( 'customify_filter_fields', array() );
+
+		if ( ! isset( $config['opt-name'] ) ) {
+			return $default;
+		}
+
+		$option_config = pixelgrade_get_option_customizer_config( $option_id, $config );
+
+		if ( ! empty( $option_config ) && isset( $option_config['setting_type'] ) && $option_config['setting_type'] === 'option' ) {
+			// We need to retrieve it from the wp_options table
+			// If we have been explicitly given a setting ID we will use that
+			if ( ! empty( $option_config['setting_id'] ) ) {
+				$setting_id = $option_config['setting_id'];
+			} else {
+				$setting_id = $config['opt-name'] . '[' . $option_id . ']';
+			}
+
+			$option_value = get_option( $setting_id, null );
+		} else {
+			$values = get_theme_mod( $config['opt-name'] );
+
+			if ( isset( $values[ $option_id ] ) ) {
+				$option_value = $values[ $option_id ];
+			}
+		}
+
+		if ( null === $option_value ) {
+			if ( false === $force_given_default && isset( $option_config['default'] ) ) {
+				return $option_config['default'];
+			} else {
+				return $default;
+			}
+		}
+
+		return $option_value;
+	}
+}
+
+/**
+ * Get the Customify configuration of a certain option.
+ *
+ * @param string $option_id
+ * @param array $config
+ *
+ * @return array|false The option config or false on failure.
+ */
+function pixelgrade_get_option_customizer_config( $option_id, $config = array() ) {
+	if ( empty( $config ) ) {
+		// Fire the all-gathering-filter that Customify uses so we can get as much data about this option as possible.
+		$config = apply_filters( 'customify_filter_fields', array() );
+	}
+
+	if ( empty( $config ) ) {
+		return false;
+	}
+
+	// We need to search for the option configured under the given id (the array key)
+	if ( isset ( $config['panels'] ) ) {
+		foreach ( $config['panels'] as $panel_id => $panel_settings ) {
+			if ( isset( $panel_settings['sections'] ) ) {
+				foreach ( $panel_settings['sections'] as $section_id => $section_settings ) {
+					if ( isset( $section_settings['options'] ) ) {
+						foreach ( $section_settings['options'] as $id => $option_config ) {
+							if ( $id === $option_id ) {
+								return $option_config;
 							}
 						}
 					}
 				}
 			}
 		}
-
-		// If all else failed, return the default (even if it's null)
-		return $default;
 	}
+
+	if ( isset ( $config['sections'] ) ) {
+		foreach ( $config['sections'] as $section_id => $section_settings ) {
+			if ( isset( $section_settings['options'] ) ) {
+				foreach ( $section_settings['options'] as $id => $option_config ) {
+					if ( $id === $option_id ) {
+						return $option_config;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 /**
