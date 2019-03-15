@@ -80,20 +80,22 @@ class Pixelgrade_Header extends Pixelgrade_Component {
 		);
 
 		if ( pixelgrade_user_has_access( 'pro-features' ) ) {
-			$this->config['menu_locations']['primary-left' ] = array(
-				'title'         => esc_html__( 'Header Left', '__components_txtd' ),
-				'default_zone'  => 'left',
-				// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
-				'zone_callback' => false,
-				'order'         => 10,
-				// We will use this to establish the display order of nav menu locations, inside a certain zone
-				'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
-					'menu_id'         => 'menu-1',
-					'container'       => 'nav',
-					'container_class' => '',
-					'fallback_cb'     => false,
+			$this->config['menu_locations'] = Pixelgrade_Array::insertBeforeKey( $this->config['menu_locations'], 'primary-right', array(
+				'primary-left' => array(
+					'title'         => esc_html__( 'Header Left', '__components_txtd' ),
+					'default_zone'  => 'left',
+					// This callback should always accept 3 parameters as documented in pixelgrade_header_get_zones()
+					'zone_callback' => false,
+					'order'         => 10,
+					// We will use this to establish the display order of nav menu locations, inside a certain zone
+					'nav_menu_args' => array( // skip 'theme_location' and 'echo' args as we will force those
+						'menu_id'         => 'menu-1',
+						'container'       => 'nav',
+						'container_class' => '',
+						'fallback_cb'     => false,
+					),
 				),
-			);
+			) );
 
 			/**
 			 * Allow the primary menu to have the desired depth, only for the Pro version.
