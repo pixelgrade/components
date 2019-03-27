@@ -31,15 +31,22 @@ body #infinite-handle span {
 	margin-bottom: 0 !important;
 }
 
+$infinite-footer-border-color: currentColor !default;
+$infinite-footer-background-color: #FFFFFF !default;
+$infinite-footer-text-color: #C1C1C1 !default;
+$infinite-footer-links-color: #000 !default;
+$infinite-footer-font-family: inherit !default;
+$infinite-footer-font-size: 14px !default;
+
 #infinite-footer {
 	z-index: 1000;
 
 	padding: 0 20px;
 
-	background-color: $color-white;
-	border-top: 1px solid $sm-dark-primary;
+	background-color: $infinite-footer-background-color;
+	border-top: 1px solid $infinite-footer-border-color;
 
-	font-family: $theme-body-font-family;
+	font-family: $infinite-footer-font-family;
 
 	.container {
 		padding: 5px 0;
@@ -51,13 +58,15 @@ body #infinite-handle span {
 
 	.blog-credits,
 	.blog-info a {
-		@include fontsize(14px);
+		@include fontsize($infinite-footer-font-size);
 	}
 
 	.blog-credits {
-		color: #c1c1c7;
+		color: $infinite-footer-text-color;
 
-		a { color: $sm-dark-secondary; }
+		a {
+			color: $infinite-footer-links-color;
+		}
 	}
 }
 
