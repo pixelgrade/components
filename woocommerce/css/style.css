@@ -1776,15 +1776,17 @@
   position: relative; }
 
 .cart-count {
-  display: inline-block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: block;
   width: 2em;
   height: 2em;
   border-radius: 50%;
-  -webkit-transform: scale(0.7);
-          transform: scale(0.7);
-  margin-left: 0.2em;
-  margin-right: -0.5em; }
+  -webkit-transform-origin: 100% 50%;
+          transform-origin: 100% 50%;
+  -webkit-transform: translate(0, -50%) scale(0.7);
+          transform: translate(0, -50%) scale(0.7); }
   .cart-count span {
     display: block;
     position: absolute;
