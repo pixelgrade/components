@@ -113,6 +113,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'selector' => $section_options['main_content']['options']['main_content_heading_2_font']['selector'] . ', 
 							[id="order_review_heading"],
 							.woocommerce-billing-fields > h3,
+							.woocommerce-additional-fields > h3,
 							.cart_totals .order-total .woocommerce-Price-amount,
 							.comment-reply-title
 						'
@@ -133,6 +134,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'main_content_heading_4_font' => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
 							.woocommerce-checkout form .form-row label,
+							.woocommerce-checkout-breadcrumbs,
 							.woocommerce-mini-cart__empty-message,
 							table.shop_table tr,
 							[id="ship-to-different-address"],
@@ -175,7 +177,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 									.woocommerce-categories .active,
 									.wc-tabs > .active a,
 									.star-rating,
-									.woocommerce p.stars a::before
+									.woocommerce p.stars a::before,
+									.woocommerce-checkout-breadcrumbs a
 									'
 							),
 							'woocommerce-menu-cart-background-color' => array(

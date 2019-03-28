@@ -1,5 +1,10 @@
 .woocommerce-checkout {
 
+    // contain order review background
+    #barba-wrapper {
+        overflow: hidden;
+    }
+
     .col2-set {
         .col-1,
         .col-2 {
@@ -124,6 +129,10 @@
         z-index: 20;
     }
 
+    .woocommerce-form-coupon-toggle {
+        overflow: hidden;
+    }
+
     .woocommerce-form-coupon {
         display: flex;
         flex-wrap: wrap;
@@ -146,6 +155,10 @@
 
         .form-row-first {
             flex-grow: 1;
+        }
+
+        + .woocommerce-billing-fields {
+            @include spacing(margin-top, 20px);
         }
     }
 
@@ -243,3 +256,73 @@
     }
 }
 
+.woocommerce-checkout-title[class] {
+    @include spacing(margin-bottom, 10px);
+}
+
+.woocommerce-checkout-breadcrumbs {
+    list-style: none;
+    padding-left: 0;
+
+    @include spacing(margin-bottom, 32px);
+
+    li {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
+    .u-underlined-links & a {
+        text-decoration: none;
+    }
+
+    li + li {
+        position: relative;
+        padding-left: 1.4em;
+
+        &:before {
+            content: "";
+
+            position: absolute;
+            top: 50%;
+            left: 0.2em;
+
+            display: block;
+            width: 0.4em;
+            height: 0.4em;
+
+            border: 1px solid transparent;
+            border-top-color: currentColor;
+            border-right-color: currentColor;
+
+            transform: translate(0.1em,0.1em) translate(0,-50%) rotate(45deg);
+            opacity: 0.5;
+        }
+    }
+}
+
+.woocommerce-billing-fields > h3,
+.woocommerce-additional-fields > h3 {
+    @include spacing(padding-bottom, 24px);
+    @include spacing(margin-bottom, 24px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[id="order_review_heading"] {
+    @include spacing(margin-bottom, 24px);
+}
+
+[id="customer_details"] .col-1 + .col-2 {
+    @include spacing(margin-top, 35px);
+}
+
+#ship-to-different-address {
+    @include spacing(margin-bottom, 24px);
+
+    input[type="checkbox"] {
+        margin-bottom: 0;
+    }
+}
+
+.woocommerce-shipping-fields {
+    @include spacing(margin-bottom, 35px);
+}
