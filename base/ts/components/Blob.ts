@@ -3,7 +3,7 @@ import anime from 'animejs';
 import { BaseComponent } from '../models/DefaultComponent';
 
 export class Blob extends BaseComponent {
-  protected element: JQuery;
+  protected element: JQuery<SVGSVGElement>;
   protected presetOffset: number;
 
   private radius = 10;
@@ -106,7 +106,7 @@ export class Blob extends BaseComponent {
     return points.join(' ');
   }
 
-  public getSvg(): JQuery {
+  public getSvg(): JQuery<SVGSVGElement> {
     return this.element;
   }
 
