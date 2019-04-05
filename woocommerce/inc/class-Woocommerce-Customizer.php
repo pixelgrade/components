@@ -151,10 +151,14 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.comment-form label
 						'
 					),
-					'main_content_body_text_color' => array(
+					'main_content_body_text_color'          => array(
 						'css' => array(
 							'woocommerce-checkout-order-background' => array(
 								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
+								'property' => 'background-color',
+							),
+							'woocommerce-notice-background' => array(
+								'selector' => '.woocommerce-store-notice[class]',
 								'property' => 'background-color',
 							),
 						),
@@ -163,6 +167,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'css' => array(
 							'woocommerce-menu-cart-color' => array(
 								'selector' => '.cart-count',
+								'property' => 'color',
+							),
+							'woocommerce-notice-text-color' => array(
+								'selector' => '.woocommerce-store-notice[class]',
 								'property' => 'color',
 							),
 						),
