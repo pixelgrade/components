@@ -949,21 +949,20 @@
     opacity: 0.5; }
   .woocommerce-Reviews .comment-reply-title {
     margin-bottom: 0; }
-
-.comment-form > * {
-  padding-top: 30px; }
-  @media only screen and (max-width: 1360px) {
-    .comment-form > * {
-      padding-top: 23.7037px; } }
-  @media only screen and (max-width: 1024px) {
-    .comment-form > * {
-      padding-top: 19.59184px; } }
-  @media only screen and (max-width: 768px) {
-    .comment-form > * {
-      padding-top: 16.69565px; } }
-  @media only screen and (max-width: 320px) {
-    .comment-form > * {
-      padding-top: 14.54545px; } }
+  .woocommerce-Reviews .comment-form > * {
+    padding-top: 30px; }
+    @media only screen and (max-width: 1360px) {
+      .woocommerce-Reviews .comment-form > * {
+        padding-top: 23.7037px; } }
+    @media only screen and (max-width: 1024px) {
+      .woocommerce-Reviews .comment-form > * {
+        padding-top: 19.59184px; } }
+    @media only screen and (max-width: 768px) {
+      .woocommerce-Reviews .comment-form > * {
+        padding-top: 16.69565px; } }
+    @media only screen and (max-width: 320px) {
+      .woocommerce-Reviews .comment-form > * {
+        padding-top: 14.54545px; } }
 
 .woocommerce #reviews #comments ol.commentlist li .comment_container {
   display: -webkit-box;

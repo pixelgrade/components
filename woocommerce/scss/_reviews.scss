@@ -39,10 +39,10 @@
     .comment-reply-title {
         margin-bottom: 0;
     }
-}
 
-.comment-form > * {
-    @include spacing( padding-top, 30px );
+    .comment-form > * {
+        @include spacing( padding-top, 30px );
+    }
 }
 
 .woocommerce #reviews #comments {
