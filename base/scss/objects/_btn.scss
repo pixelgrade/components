@@ -143,7 +143,7 @@ $btn-font: () !default;
 }
 
 @mixin button-directional--left {
-  @include spacing(padding-left, 100px);
+  @include spacing(padding-left, 120px);
 
   &:before {
     @include spacing(left, 35px);
@@ -177,7 +177,7 @@ $btn-font: () !default;
 }
 
 @mixin button-directional--right {
-  padding-right: 6.5em;
+  @include spacing(padding-right, 120px);
   text-align: left;
 
   &:before {
