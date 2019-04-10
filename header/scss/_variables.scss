@@ -1,0 +1,27 @@
+// HEADER
+// ========================================
+
+// Layout
+// ----------------------------------------
+$logo-height: 23px !default;
+$header-height: 100px !default;
+$header-links-spacing: 40px !default;
+// @todo $header-position
+// @todo $header-width
+$header-sides-spacing: 50px !default;
+
+// Colors
+// ----------------------------------------
+$header-links-color: #000 !default;
+$header-links-active-color: #000 !default;
+// @todo $header-links-active-style
+$header-background-color: #FFF !default;
+
+$header-sticky-links-color: $header-links-color !default;
+$header-sticky-links-active-color: $header-links-active-color !default;
+$header-sticky-background-color: $header-background-color !default;
+
+// Fonts
+// ----------------------------------------
+$logo-font: () !default;
+$header-font: () !default;

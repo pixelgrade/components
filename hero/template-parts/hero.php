@@ -50,32 +50,36 @@ if ( pixelgrade_hero_is_hero_needed( $location, $post_ID ) ) {
 
 	<div <?php pixelgrade_hero_class( '', $location, $post_ID ); ?>>
 
-		<div <?php pixelgrade_hero_slider_class( '', $location, $post_ID ); ?> <?php pixelgrade_hero_slider_attributes( '', $post_ID ); ?>>
+        <div class="c-hero__background-mask c-hero__layer">
 
-			<?php
-			// Get all the images/videos/featured project ids that we will use as slides (we also cover for when there are none)
-			$slides = pixelgrade_hero_get_slides_ids( $post_ID );
+            <div <?php pixelgrade_hero_slider_class( '', $location, $post_ID ); ?> <?php pixelgrade_hero_background_color_style( $post_ID ); ?> <?php pixelgrade_hero_slider_attributes( '', $post_ID ); ?>>
 
-			// Loop through each slide and display the appropriate markup
-			foreach ( $slides as $slide_index => $slide ) {
-				// Locate the appropriate template in line with the slide type
-				$slide_type = '';
-				if ( is_array( $slide ) && ! empty( $slide['type'] ) ) {
-					$slide_type = $slide['type'];
-				}
+                <?php
+                // Get all the images/videos/featured project ids that we will use as slides (we also cover for when there are none)
+                $slides = pixelgrade_hero_get_slides_ids( $post_ID );
 
-				$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide', $slide_type );
+                // Loop through each slide and display the appropriate markup
+                foreach ( $slides as $slide_index => $slide ) {
+                    // Locate the appropriate template in line with the slide type
+                    $slide_type = '';
+                    if ( is_array( $slide ) && ! empty( $slide['type'] ) ) {
+                        $slide_type = $slide['type'];
+                    }
 
-				if ( $template ) {
-					include $template; // @codingStandardsIgnoreLine
-				}
-				?>
+                    $template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide', $slide_type );
 
-			<?php } // foreach ?>
+                    if ( $template ) {
+                        include $template; // @codingStandardsIgnoreLine
+                    }
+                    ?>
 
-		</div><!-- .c-hero__slider -->
+                <?php } // foreach ?>
 
-	</div><!-- .c-hero -->
+            </div><!-- pixelgrade_hero_slider_class -->
+
+        </div><!-- c-hero__background-mask -->
+
+	</div><!-- pixelgrade_hero_class -->
 
 <?php
 } // if ( pixelgrade_hero_is_hero_needed() )

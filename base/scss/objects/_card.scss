@@ -14,10 +14,15 @@ $card-content-spacing: 1.5rem !default;
 .c-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 // Card Frame
 // ------------------------------------------------------------
+
+.c-card__aside {
+  position: relative;
+}
 
 .c-card__frame {
   position: relative;
@@ -53,6 +58,7 @@ $card-content-spacing: 1.5rem !default;
 .c-card__content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 
   .c-card__aside + & {
     @include spacing(margin-top, $card-gutter);
@@ -131,6 +137,23 @@ $card-content-spacing: 1.5rem !default;
   }
 }
 
+.c-card__term-list {
+  list-style: none;
+  padding-left: 0;
+
+  > li {
+    display: inline;
+  }
+
+  > li:not(:last-child):after {
+    content: ", ";
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
 // Card Meta
 // ------------------------------------------------------------
 
@@ -182,4 +205,8 @@ $card-content-spacing: 1.5rem !default;
   .sticky & {
     display: block;
   }
+}
+
+.c-card__footer {
+  margin-top: auto;
 }

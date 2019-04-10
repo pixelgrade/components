@@ -45,7 +45,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 ?>
 <!-- pixelgrade_before_loop_entry -->
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'u-content-bottom-spacing' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<?php
 	/**
@@ -95,8 +95,8 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					}
 					?>
 
-					<div class="u-content-bottom-spacing <?php echo esc_attr( $visibility_class ); ?>">
-						<div class="u-content-width">
+					<div class="u-content-bottom-spacing  <?php echo esc_attr( $visibility_class ); ?>">
+						<div class="<?php echo $content_width_class; ?>">
 
 							<?php
 							/**
@@ -122,7 +122,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 					<?php if ( get_the_content() ) : ?>
 
-						<div class="entry-content  u-content-width">
+						<div class="entry-content <?php echo $content_width_class; ?>">
 							<?php
 							the_content();
 

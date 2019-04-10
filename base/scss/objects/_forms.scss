@@ -197,7 +197,6 @@ input[type="radio"] {
 input[type="submit"],
 input[type="button"],
 button[type="submit"],
-button[type="button"],
 button[type="reset"] {
   @include btn;
 }
@@ -278,7 +277,6 @@ fieldset {
   input[type="submit"],
   input[type="button"],
   button[type="submit"],
-  button[type="button"],
   button[type="reset"] {
     flex-shrink: 0;
     margin-top: 0;

@@ -13,11 +13,15 @@
 		margin-bottom: $input-vertical-spacing * 2;
 	}
 
-  input[type="checkbox"] {
-    position: static;
-    margin-bottom: 0.25em;
-    vertical-align: middle;
-  }
+	p.form-submit {
+		margin-bottom: 0;
+	}
+
+	input[type="checkbox"] {
+		position: static;
+		margin-bottom: 0.25em;
+		vertical-align: middle;
+	}
 
 	label {
 		display: block;

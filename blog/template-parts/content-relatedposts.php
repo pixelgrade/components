@@ -67,52 +67,12 @@ if ( $query->have_posts() ) {
 		<div class="o-wrapper u-container-width">
 			<div id="related-posts-container" class="related-posts-container">
 				<?php pixelgrade_the_jetpack_related_posts_headline( esc_html__( 'Related Posts', '__components_txtd' ) ); ?>
-				<div class="c-gallery  c-gallery--blog  c-gallery--regular  o-grid  o-grid--3col-@desk  o-grid--3col-@lap  o-grid--col-@small">
+				<div <?php echo pixelgrade_blog_grid_class(); ?>>
 					<?php
 					/* Start the Loop */
 					while ( $query->have_posts() ) :
 						$query->the_post();
-						/*
-						 * Include the Post-Format-specific template for the content.
-						 * If you want to override this in a child theme, then include a file
-						 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-						 */
-
-						// Let's deal with the meta keys, if they are not already defined.. by higher powers
-						// We may have got the meta names from an include (like in custom widgets using this template part)
-						if ( ! isset( $primary_meta ) && ! isset( $secondary_meta ) ) {
-							$primary_meta   = pixelgrade_option( 'blog_items_primary_meta', 'category' );
-							$secondary_meta = pixelgrade_option( 'blog_items_secondary_meta', 'date' );
-						}
-
-						$primary_meta_output   = ( 'none' !== $primary_meta ) ? pixelgrade_get_post_meta( $primary_meta ) : false;
-						$secondary_meta_output = ( 'none' !== $secondary_meta ) ? pixelgrade_get_post_meta( $secondary_meta ) : false;
-					?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class('c-gallery__item'); ?>>
-							<div class="c-card  c-card--related">
-								<?php if ( has_post_thumbnail() ) : ?>
-								<div class="c-card__aside c-card__thumbnail-background">
-									<div class="c-card__frame">
-										<?php
-										if ( has_post_thumbnail() ) {
-											the_post_thumbnail( 'pixelgrade_card_image' );
-										}
-
-										echo '<span class="c-card__letter">' . esc_html( mb_substr( get_the_title(), 0, 1 ) ) . '</span>';
-										?>
-									</div>
-								</div><!-- .c-card__aside -->
-								<?php endif; ?>
-								<div class="c-card__content">
-									<h2 class="c-card__title"><span><?php the_title(); ?></span></h2>
-									<?php if ( ! has_post_thumbnail() ) : ?>
-										<div class="c-card__excerpt"><?php the_excerpt(); ?></div>
-									<?php endif; ?>
-								</div><!-- .c-card__content -->
-								<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
-							</div><!-- .c-card.c-card--related -->
-						</article><!-- #post-<?php the_ID(); ?> -->
-					<?php
+						pixelgrade_the_card( 'blog', $location );
 					endwhile;
 
 					wp_reset_postdata();

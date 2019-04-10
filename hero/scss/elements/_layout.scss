@@ -114,14 +114,8 @@
 	cursor: pointer;
 }
 
-.c-hero__background-mask {
-	overflow: hidden;
-}
-
-.c-hero__background-mask,
 .c-hero__background {
 	will-change: transform;
-	backface-visibility: hidden;
 }
 
 .c-hero__image,

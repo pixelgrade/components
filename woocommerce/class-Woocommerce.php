@@ -168,6 +168,7 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 
 		// add classes
 		add_filter( 'body_class', array( $this, 'bodyClasses' ) );
+		add_filter( 'pixelgrade_card_post_details', array( $this, 'addProductInfoToCardDetails' ) );
 
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_woocommerce_registered_hooks' );
@@ -187,5 +188,46 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 			'adding_to_cart' => esc_html__( 'Adding...', '__components_txtd' ),
 			'added_to_cart' => esc_html__( 'Added!', '__components_txtd' ),
 		) );
+	}
+
+	public function addProductInfoToCardDetails( $details ) {
+
+		if ( 'product' !== get_post_type() ) {
+			return $details;
+		}
+
+		// get price for product
+		ob_start();
+		woocommerce_template_loop_price();
+		$price = ob_get_clean();
+
+		// get first category and category list for product
+		$category = null;
+		$categories = get_the_terms( get_the_ID(), 'product_cat' );
+		$category_list = get_the_term_list( get_the_ID(), 'product_cat', '<ul class="c-card__term-list"><li>', '</li><li>', '</li></ul>' );
+
+		if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+			$category = esc_html( $categories[0]->name );
+			$details['category'] = $category;
+		}
+
+		// get first tag and tag list for product
+		$tag = null;
+		$tags = get_the_terms( get_the_ID(), 'product_tag' );
+		$tag_list = get_the_term_list( get_the_ID(), 'product_tag', '<ul class="c-card__term-list"><li>', '</li><li>', '</li></ul>' );
+
+		if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
+			$tag = esc_html( $tags[0]->name );
+			$details['tag'] = $tag;
+		}
+
+		$details['price'] = $price;
+		$details['tag_list'] = $tag_list;
+		$details['category_list'] = $category_list;
+
+		$details['description'] = get_the_content();
+		$details['short_description'] = get_the_excerpt();
+
+		return $details;
 	}
 }
