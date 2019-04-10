@@ -8,6 +8,16 @@
 		$body.on( 'added_to_cart', onAddedToCart );
 		$body.on( 'added_to_cart removed_from_cart', updateCartMenuItemCount );
 
+		function handleStoreNotice() {
+			var $notice = $( '.woocommerce-store-notice' );
+			$notice.prependTo( '.site-header' ).addClass( 'woocommerce-store-notice--visible' );
+			$notice.on( 'click', 'a', function() {
+				$( window ).trigger( 'resize' );
+			} )
+		}
+
+		handleStoreNotice();
+
 		// show mini cart when a product is added to cart
 		function onAddedToCart( event, fragments, cart_hash, $button ) {
 			var key = 'div.widget_shopping_cart_content';

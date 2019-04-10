@@ -4,7 +4,6 @@
 
 .c-logo__default,
 .c-logo__inverted {
-  will-change: opacity;
   transition: $transition--default;
   transition-property: opacity;
 }
