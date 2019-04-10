@@ -1,4 +1,5 @@
 $sm-color-primary: #000 !default;
+$comments-toggle-label-background: #000 !default;
 
 .comment {
   position: relative;
@@ -129,7 +130,7 @@ $sm-color-primary: #000 !default;
 .c-comments-toggle__label {
   @include btn;
   display: block;
-  background-color: $sm-dark-secondary;
+  background-color: $comments-toggle-label-background;
 }
 
 .comment__content {

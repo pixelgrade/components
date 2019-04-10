@@ -31,6 +31,9 @@ body #infinite-handle span {
 	margin-bottom: 0 !important;
 }
 
+$infinite-footer-text-color: #C1C1C1 !default;
+$infinite-footer-links-color: #000 !default;
+
 #infinite-footer {
 	z-index: 1000;
 
@@ -55,9 +58,9 @@ body #infinite-handle span {
 	}
 
 	.blog-credits {
-		color: #c1c1c7;
+		color: $infinite-footer-text-color;
 
-		a { color: $sm-dark-secondary; }
+		a { color: $infinite-footer-links-color; }
 	}
 }
 
