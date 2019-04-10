@@ -1025,3 +1025,148 @@ if ( ! function_exists( 'pixelgrade_get_original_theme_name' ) ) {
 		return ucwords( str_replace( array( '-', '_' ), ' ', $slug ) );
 	}
 }
+
+if ( ! function_exists( 'pixelgrade_get_post_details' ) ) {
+
+	function pixelgrade_get_post_details() {
+		$details = array();
+
+		$details['title'] = get_the_title();
+		$details['excerpt'] = get_the_excerpt();
+		$details['category'] = pixelgrade_get_post_meta( 'category' );
+		$details['tags'] = pixelgrade_get_post_meta( 'tags' );
+		$details['author'] = pixelgrade_get_post_meta( 'author' );
+		$details['date'] = pixelgrade_get_post_meta( 'date' );
+		$details['comments'] = pixelgrade_get_post_meta( 'comments' );
+		$details['read_more'] = '<a href="<?php the_permalink(); ?>" class="c-card__action">' . esc_html__( 'Read More', '__theme_txtd' ) . '</a>';
+		$details['none'] = null;
+
+		return apply_filters( 'pixelgrade_card_post_details', $details );
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_get_card_contents' ) ) {
+
+	function pixelgrade_get_card_contents( $component_slug = 'blog' ) {
+		$contents = array();
+		$details = pixelgrade_get_post_details();
+
+		$chunks = array(
+			'primary_meta',
+			'secondary_meta',
+			'heading',
+			'content',
+			'footer'
+		);
+
+		foreach ( $chunks as $chunk_name ) {
+			$source = pixelgrade_option( $component_slug . '_items_' . $chunk_name );
+
+			if( ! empty( $source ) ) {
+				$content                 = $details[ $source ];
+				$contents[ $chunk_name ] = $content;
+			}
+		}
+
+		$meta = '';
+
+		if ( ! empty( $contents['primary_meta'] ) ) {
+			$meta .= '<div class="c-meta__primary">' . $contents['primary_meta'] . '</div>'; // @codingStandardsIgnoreLine
+			// Add a separator if we also have secondary meta
+			if ( ! empty ( $contents['secondary_meta'] ) ) {
+				$meta .= '<div class="c-meta__separator js-card-meta-separator"></div>';
+			}
+		}
+
+		if ( ! empty ( $contents['secondary_meta'] ) ) {
+			$meta .= '<div class="c-meta__secondary">' . $contents['secondary_meta'] . '</div>'; // @codingStandardsIgnoreLine
+		}
+
+		$contents['meta'] = $meta;
+
+		return $contents;
+	}
+}
+
+
+if ( ! function_exists( 'pixelgrade_the_card' ) ) {
+
+	function pixelgrade_the_card( $component_slug = 'blog', $location = '' ) {
+
+		$card_details = pixelgrade_get_card_contents( $component_slug ); ?>
+
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+			<div class="c-card">
+
+				<?php do_action( 'pixelgrade_after_entry_start', $location ); ?>
+
+				<div class="c-card__aside c-card__thumbnail-background">
+
+					<?php do_action( 'pixelgrade_after_card_aside_start' ); ?>
+
+					<div class="c-card__frame">
+
+						<?php do_action( 'pixelgrade_after_card_frame_start' ); ?>
+
+						<?php the_post_thumbnail( 'pixelgrade_card_image' ); ?>
+
+						<?php do_action( 'pixelgrade_before_card_frame_end' ); ?>
+
+					</div>
+
+					<?php do_action( 'pixelgrade_before_card_aside_end' ); ?>
+
+				</div>
+
+				<div class="c-card__content">
+
+					<?php if ( ! empty( $card_details['meta'] ) ) { ?>
+						<div class="c-card__meta">
+							<div class="c-meta">
+								<?php
+								do_action( 'pixelgrade_before_card_meta', $location );
+								echo $card_details['meta'];
+								do_action( 'pixelgrade_after_card_meta', $location );
+								?>
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if ( pixelgrade_option( 'blog_items_title_visibility', true ) && ! empty ( $card_details['heading'] ) ) { ?>
+						<h2 class="c-card__title">
+							<span><?php echo $card_details['heading']; ?></span>
+						</h2>
+					<?php } ?>
+
+					<?php if ( ! empty( $card_details['content'] ) ) { ?>
+						<div class="c-card__excerpt">
+							<?php echo $card_details['content']; ?>
+						</div>
+					<?php } ?>
+
+					<?php if ( ! empty( $card_details['footer'] ) ) { ?>
+						<div class="c-card__footer">
+							<?php echo $card_details['footer']; ?>
+						</div>
+					<?php } ?>
+
+				</div>
+
+				<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
+
+				<?php do_action( 'pixelgrade_before_entry_end', $location ); ?>
+
+			</div>
+
+		</article>
+
+		<?php
+		/**
+		 * pixelgrade_after_loop_entry hook.
+		 *
+		 * @hooked nothing() - 10 (outputs nothing)
+		 */
+		do_action( 'pixelgrade_after_loop_entry', $location );
+	}
+}
