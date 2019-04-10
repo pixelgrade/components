@@ -41,11 +41,11 @@
     }
 }
 
-.comment-form > * {
-    @include spacing( padding-top, 30px );
-}
-
 .woocommerce #reviews #comments {
+
+    .comment-form > * {
+        @include spacing( padding-top, 30px );
+    }
 
     ol.commentlist {
 

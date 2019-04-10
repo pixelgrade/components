@@ -126,11 +126,11 @@ $sm-color-primary: #000 !default;
     }
 }
 
-.c-comments-toggle__label {
-  @include btn;
-  display: block;
-  background-color: $sm-dark-secondary;
-}
+//.c-comments-toggle__label {
+//  @include btn;
+//  display: block;
+//  background-color: $theme-text-color;
+//}
 
 .comment__content {
   @include leading-map((
@@ -168,7 +168,7 @@ $sm-color-primary: #000 !default;
   color: inherit;
 
   .comment__author {
-    color: $sm-color-primary;
+    color: $comment-author-color;
   }
 }
 

@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+define( 'DARK_PRIMARY', '#252525' );
+
 class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 
 	/**
@@ -61,7 +63,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		 * 'type'           => 'default',
 		 * 'description_hidden' => false, // If the description should be hidden behind a (?) bubble
 		 *
-		 *  @see WP_Customize_Section for more details about each of them.
+		 * @see WP_Customize_Section for more details about each of them.
 		 *
 		 * A few important notes regarding the capabilities that are at hand when configuring the 'options' (aka the fields):
 		 *
@@ -103,13 +105,13 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		$new_section_options = array(
 			'main_content' => array(
 				'options' => array(
-					'main_content_heading_1_font' => array(
+					'main_content_heading_1_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_1_font']['selector'] . ',
 							.woocommerce-checkout .order-total .woocommerce-Price-amount,
 							.cart_totals h2 
 						'
 					),
-					'main_content_heading_2_font' => array(
+					'main_content_heading_2_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_2_font']['selector'] . ', 
 							[id="order_review_heading"],
 							.woocommerce-billing-fields > h3,
@@ -117,7 +119,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.comment-reply-title
 						'
 					),
-					'main_content_heading_3_font' => array(
+					'main_content_heading_3_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_3_font']['selector'] . ',
 							table.shop_table td.product-name,
 							.c-mini-cart[class] .cart_list a:not(.remove), 
@@ -130,7 +132,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.woocommerce-Reviews .comment-reply-title
 						'
 					),
-					'main_content_heading_4_font' => array(
+					'main_content_heading_4_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
 							.woocommerce-checkout form .form-row label,
 							.woocommerce-mini-cart__empty-message,
@@ -149,10 +151,14 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.comment-form label
 						'
 					),
-					'main_content_body_text_color' => array(
+					'main_content_body_text_color'          => array(
 						'css' => array(
 							'woocommerce-checkout-order-background' => array(
 								'selector' => '.woocommerce-checkout .woocommerce-checkout:before',
+								'property' => 'background-color',
+							),
+							'woocommerce-notice-background' => array(
+								'selector' => '.woocommerce-store-notice[class]',
 								'property' => 'background-color',
 							),
 						),
@@ -163,11 +169,15 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								'selector' => '.cart-count',
 								'property' => 'color',
 							),
+							'woocommerce-notice-text-color' => array(
+								'selector' => '.woocommerce-store-notice[class]',
+								'property' => 'color',
+							),
 						),
 					),
-					'main_content_body_link_active_color' => array(
+					'main_content_body_link_active_color'   => array(
 						'css' => array(
-							'woocommerce-link-color' => array(
+							'woocommerce-link-color'                 => array(
 								'property' => 'color',
 								'selector' => '
 									.woocommerce-categories a:hover,
@@ -182,7 +192,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								'property' => 'background-color',
 								'selector' => '.cart-count'
 							),
-							'woocommerce-radio-border-color' => array(
+							'woocommerce-radio-border-color'         => array(
 								'selector' => 'input[type=radio]:checked',
 								'property' => 'border-color',
 							),
@@ -208,11 +218,50 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 	 * @return array
 	 */
 	public function addCustomifyOptions( $options ) {
+
+		$recommended_body_fonts = apply_filters(
+			'customify_theme_recommended_body_fonts',
+			array(
+				'Roboto',
+				'Playfair Display',
+				'Oswald',
+				'Lato',
+				'Open Sans',
+				'Exo',
+				'PT Sans',
+				'Ubuntu',
+				'Vollkorn',
+				'Lora',
+				'Arvo',
+				'Josefin Slab',
+				'Crete Round',
+				'Kreon',
+				'Bubblegum Sans',
+				'The Girl Next Door',
+				'Pacifico',
+				'Handlee',
+				'Satify',
+				'Pompiere',
+			)
+		);
+
+		$card_choices = array(
+			'none'          => esc_html__( 'None', '__components_txtd' ),
+			'tag'           => esc_html__( 'Tag', '__components_txtd' ),
+			'tag_list'      => esc_html__( 'Tag List', '__components_txtd' ),
+			'category'      => esc_html__( 'Category', '__components_txtd' ),
+			'category_list' => esc_html__( 'Category List', '__components_txtd' ),
+			'excerpt'       => esc_html__( 'Excerpt', '__components_txtd' ),
+			'read_more'     => esc_html__( 'Read More', '__components_txtd' ),
+			'price'         => esc_html__( 'Price', '__components_txtd' ),
+			'title'         => esc_html__( 'Title', '__components_txtd' ),
+		);
+
 		$woocommerce_section = array(
 			'woocommerce_section' => array(
 				'title'   => esc_html__( 'Woocommerce Grid Items', '__components_txtd' ),
 				'options' => array(
-					'woocommerce_grid_options_customizer_tabs' => array(
+					'woocommerce_grid_options_customizer_tabs'       => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 								<a href="#section-title-portfolio-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -220,9 +269,555 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								<a href="#section-title-portfolio-fonts">' . esc_html__( 'Fonts', '__components_txtd' ) . '</a>
 								</nav>',
 					),
+					// [Section] Layout
+					'woocommerce_grid_title_layout_section'          => array(
+						'type' => 'html',
+						'html' => '<span id="section-title-blog-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_grid_width'                         => array(
+						'type'        => 'range',
+						'label'       => esc_html__( 'WooCommerce Grid Max Width', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the max width of the blog area.', '__components_txtd' ),
+						'live'        => true,
+						'default'     => 1280,
+						'input_attrs' => array(
+							'min'          => 600,
+							'max'          => 2600,
+							'step'         => 10,
+							'data-preview' => true,
+						),
+						'css'         => array(
+							array(
+								'property' => 'max-width',
+								'selector' => '.u-blog-grid-width',
+								'unit'     => 'px',
+							),
+						),
+					),
+					'woocommerce_container_sides_spacing'            => array(
+						'type'        => 'range',
+						'label'       => esc_html__( 'Container Sides Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
+						'live'        => true,
+						'default'     => 60,
+						'input_attrs' => array(
+							'min'          => 0,
+							'max'          => 140,
+							'step'         => 10,
+							'data-preview' => true,
+						),
+						'css'         => array(
+							array(
+								'property'        => 'padding-left',
+								'selector'        => '.u-blog-sides-spacing',
+								'callback_filter' => 'typeline_spacing_cb',
+								'unit'            => 'px',
+							),
+							array(
+								'property'        => 'padding-right',
+								'selector'        => '.u-blog-sides-spacing',
+								'callback_filter' => 'typeline_spacing_cb',
+								'unit'            => 'px',
+							),
+						),
+					),
+
+					// [Sub Section] Items Grid
+					'woocommerce_grid_title_items_grid_section'      => array(
+						'type' => 'html',
+						'html' => '<span class="separator sub-section label large">' . esc_html__( 'Items Grid', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_grid_layout'                        => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Grid Layout', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose whether the items display in a fixed height regular grid, or in a packed style layout.', '__components_txtd' ),
+						'default' => 'regular',
+						'choices' => array(
+							'regular' => esc_html__( 'Regular Grid', '__components_txtd' ),
+							'masonry' => esc_html__( 'Masonry', '__components_txtd' ),
+							'mosaic'  => esc_html__( 'Mosaic', '__components_txtd' ),
+							'packed'  => esc_html__( 'Packed', '__components_txtd' ),
+						),
+					),
+					'woocommerce_items_aspect_ratio'                 => array(
+						'type'            => 'range',
+						'label'           => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
+						'desc'            => esc_html__( 'Change the images ratio from landscape to portrait.', '__components_txtd' ),
+						'live'            => true,
+						'default'         => 100,
+						'input_attrs'     => array(
+							'min'          => 0,
+							'max'          => 200,
+							'step'         => 10,
+							'data-preview' => true,
+						),
+						'css'             => array(
+							array(
+								'property'        => 'dummy',
+								'selector'        => '.c-gallery--woocommerce.c-gallery--regular .c-card__frame',
+								'callback_filter' => 'pixelgrade_aspect_ratio_cb',
+								'unit'            => '%',
+							),
+						),
+						'active_callback' => 'pixelgrade_woocommerce_items_aspect_ratio_control_show',
+					),
+					'woocommerce_items_per_row'                      => array(
+						'type'        => 'range',
+						'label'       => esc_html__( 'Items per Row', '__components_txtd' ),
+						'desc'        => esc_html__( 'Set the desktop-based number of columns you want and we automatically make it right for other screen sizes.', '__components_txtd' ),
+						'live'        => false,
+						'default'     => 3,
+						'input_attrs' => array(
+							'min'  => 1,
+							'max'  => 6,
+							'step' => 1,
+						),
+						'css'         => array(
+							array(
+								'property' => 'dummy',
+								'selector' => '.dummy',
+								'unit'     => 'px',
+							),
+						),
+					),
+					'woocommerce_items_vertical_spacing'             => array(
+						'type'        => 'range',
+						'label'       => esc_html__( 'Items Vertical Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
+						'live'        => true,
+						'default'     => 60,
+						'input_attrs' => array(
+							'min'          => 0,
+							'max'          => 300,
+							'step'         => 10,
+							'data-preview' => true,
+						),
+						'css'         => array(
+							array(
+								'property'        => '',
+								'selector'        => '.dummy',
+								'callback_filter' => 'pixelgrade_woocommerce_grid_vertical_spacing_cb',
+								'unit'            => 'px',
+							),
+						),
+					),
+					'woocommerce_items_horizontal_spacing'           => array(
+						'type'        => 'range',
+						'label'       => esc_html__( 'Items Horizontal Spacing', '__components_txtd' ),
+						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
+						'live'        => true,
+						'default'     => 60,
+						'input_attrs' => array(
+							'min'          => 0,
+							'max'          => 120,
+							'step'         => 10,
+							'data-preview' => true,
+						),
+						'css'         => array(
+							array(
+								'property'        => '',
+								'selector'        => '.dummy',
+								'callback_filter' => 'pixelgrade_woocommerce_grid_horizontal_spacing_cb',
+								'unit'            => 'px',
+							),
+						),
+					),
+
+					// [Sub Section] Items Title
+					'woocommerce_grid_title_items_title_section'     => array(
+						'type' => 'html',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Title', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_items_title_position'               => array(
+						'type'    => 'radio',
+						'label'   => esc_html__( 'Title Position', '__components_txtd' ),
+						'desc'    => esc_html__( 'Choose whether the items titles are placed nearby the thumbnail or show as an overlay cover on  mouse over.', '__components_txtd' ),
+						'default' => 'below',
+						'choices' => array(
+							'above'   => esc_html__( 'Above', '__components_txtd' ),
+							'below'   => esc_html__( 'Below', '__components_txtd' ),
+							'overlay' => esc_html__( 'Overlay', '__components_txtd' ),
+						),
+					),
+					'woocommerce_items_title_alignment_nearby'       => array(
+						'type'            => 'select',
+						'label'           => esc_html__( 'Title Alignment (Above/Below)', '__components_txtd' ),
+						'desc'            => esc_html__( 'Adjust the alignment of your title.', '__components_txtd' ),
+						'default'         => 'left',
+						'choices'         => array(
+							'left'   => esc_html__( '← Left', '__components_txtd' ),
+							'center' => esc_html__( '↔ Center', '__components_txtd' ),
+							'right'  => esc_html__( '→ Right', '__components_txtd' ),
+						),
+						'active_callback' => 'pixelgrade_woocommerce_items_title_alignment_nearby_control_show',
+					),
+					'woocommerce_items_title_alignment_overlay'      => array(
+						'type'            => 'select',
+						'label'           => esc_html__( 'Title Alignment (Overlay)', '__components_txtd' ),
+						'desc'            => esc_html__( 'Adjust the alignment of your hover title.', '__components_txtd' ),
+						'default'         => 'bottom-left',
+						// this should be set by the theme (previously middle-center)
+						'choices'         => array(
+							'top-left'   => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
+							'top-center' => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
+							'top-right'  => esc_html__( '↑ Top     → Right', '__components_txtd' ),
+
+							'middle-left'   => esc_html__( '↕ Middle     ← Left', '__components_txtd' ),
+							'middle-center' => esc_html__( '↕ Middle     ↔ Center', '__components_txtd' ),
+							'middle-right'  => esc_html__( '↕ Middle     → Right', '__components_txtd' ),
+
+							'bottom-left'   => esc_html__( '↓ bottom     ← Left', '__components_txtd' ),
+							'bottom-center' => esc_html__( '↓ bottom     ↔ Center', '__components_txtd' ),
+							'bottom-right'  => esc_html__( '↓ bottom     → Right', '__components_txtd' ),
+						),
+						'active_callback' => 'pixelgrade_woocommerce_items_title_alignment_overlay_control_show',
+					),
+
+					// Title Visiblity
+					// Title + Checkbox
+					'woocommerce_items_title_visibility_title'       => array(
+						'type' => 'html',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_items_title_visibility'             => array(
+						'type'    => 'checkbox',
+						'label'   => esc_html__( 'Show Title', '__components_txtd' ),
+						'default' => 1, // this should be set by the theme (previously 1)
+					),
+
+					// [Sub Section] Items Excerpt
+					'woocommerce_grid_title_items_excerpt_section'   => array(
+						'type' => 'html',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Excerpt', '__components_txtd' ) . '</span>',
+					),
+
+					// Excerpt Visiblity
+					// Title + Checkbox
+					'woocommerce_items_excerpt_visibility_title'     => array(
+						'type' => 'html',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_items_excerpt_visibility'           => array(
+						'type'    => 'checkbox',
+						'label'   => esc_html__( 'Show Excerpt Text', '__components_txtd' ),
+						'default' => 0, // this should be set by the theme (previously 1)
+					),
+
+					// [Sub Section] Items Meta
+					'woocommerce_grid_title_items_meta_section'      => array(
+						'type' => 'html',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Card Content', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_items_primary_meta'                 => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Primary Meta Section', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'none',
+						'choices' => $card_choices,
+					),
+					'woocommerce_items_secondary_meta'               => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Secondary Meta Section', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'none',
+						'choices' => $card_choices,
+					),
+					'woocommerce_items_heading'                      => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Heading Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'title', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'woocommerce_items_content'                      => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Content Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'tag_list', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'woocommerce_items_footer'                       => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Footer Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'price', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+
+					// [Section] COLORS
+					'woocommerce_grid_title_colors_section'          => array(
+						'type' => 'html',
+						'html' => '<span id="section-title-blog-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_item_title_color'                   => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => DARK_PRIMARY,
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--woocommerce .c-card__title',
+							),
+						),
+					),
+					'woocommerce_item_meta_primary_color'            => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Meta Primary Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => DARK_PRIMARY,
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--woocommerce .c-meta__primary',
+							),
+						),
+					),
+					'woocommerce_item_meta_secondary_color'          => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Meta Secondary Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => DARK_PRIMARY,
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--woocommerce .c-meta__secondary, .c-gallery--woocommerce .c-meta__separator',
+							),
+						),
+					),
+					'woocommerce_item_excerpt_color'                 => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Excerpt Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => DARK_PRIMARY,
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--woocommerce .c-card__excerpt',
+							),
+						),
+					),
+					'woocommerce_item_footer_color'                 => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Footer Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => DARK_PRIMARY,
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--woocommerce .c-card__footer',
+							),
+						),
+					),
+					'woocommerce_item_thumbnail_background'          => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Thumbnail Background', '__components_txtd' ),
+						'live'    => true,
+						'default' => DARK_PRIMARY,
+						'css'     => array(
+							array(
+								'property' => 'background-color',
+								'selector' => '.c-gallery--woocommerce .c-card__thumbnail-background',
+							),
+						),
+					),
+
+					// [Sub Section] Thumbnail Hover
+					'woocommerce_grid_title_thumbnail_hover_section' => array(
+						'type' => 'html',
+						'html' => '<span class="separator sub-section label">' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Customize the mouse over effect for your thumbnails.', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_item_thumbnail_hover_opacity'       => array(
+						'type'        => 'range',
+						'label'       => esc_html__( 'Thumbnail Background Opacity', '__components_txtd' ),
+						'desc'        => '',
+						'live'        => true,
+						'default'     => 1,
+						'input_attrs' => array(
+							'min'          => 0,
+							'max'          => 1,
+							'step'         => 0.1,
+							'data-preview' => true,
+						),
+						'css'         => array(
+							array(
+								'property' => 'opacity',
+								'selector' => '.c-gallery--woocommerce .c-card:hover .c-card__frame',
+								'unit'     => '',
+							),
+						),
+					),
+
+					// [Section] FONTS
+					'woocommerce_grid_title_fonts_section'           => array(
+						'type' => 'html',
+						'html' => '<span id="section-title-blog-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
+					),
+
+					'woocommerce_item_title_font' => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Item Title Font', '__components_txtd' ),
+						'desc'     => '',
+						'selector' => '.c-gallery--woocommerce .c-card__title, .c-gallery--woocommerce .c-card__letter',
+						'callback' => 'typeline_font_cb',
+
+						'default'     => array(
+							'font-family'    => 'Roboto',
+							'font-weight'    => 'regular',
+							'font-size'      => 24,
+							'line-height'    => 1.25,
+							'letter-spacing' => 0,
+							'text-transform' => 'none',
+						),
+
+						// List of recommended fonts defined by theme
+						'recommended' => $recommended_body_fonts,
+
+						// Sub Fields Configuration (optional)
+						'fields'      => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ),
+							// Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false,
+							// Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
+
+					'woocommerce_item_meta_font' => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Item Meta Font', '__components_txtd' ),
+						'desc'     => '',
+						'selector' => '.c-gallery--woocommerce .c-meta__primary, .c-gallery--woocommerce .c-meta__secondary',
+						'callback' => 'typeline_font_cb',
+
+						'default'     => array(
+							'font-family'    => 'Roboto',
+							'font-weight'    => 'regular',
+							'font-size'      => 15,
+							'line-height'    => 1.5,
+							'letter-spacing' => 0,
+							'text-transform' => 'none',
+						),
+
+						// List of recommended fonts defined by theme
+						'recommended' => $recommended_body_fonts,
+
+						// Sub Fields Configuration (optional)
+						'fields'      => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ),
+							// Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false,
+							// Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
+
+					'woocommerce_item_excerpt_font' => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Item Excerpt Font', '__components_txtd' ),
+						'desc'     => '',
+						'selector' => '.c-gallery--woocommerce .c-card__excerpt',
+						'callback' => 'typeline_font_cb',
+
+						'default' => array(
+							'font-family'    => 'Roboto',
+							'font-weight'    => 'regular',
+							'font-size'      => 16,
+							'line-height'    => 1.5,
+							'letter-spacing' => 0,
+							'text-transform' => 'none',
+						),
+
+						// Sub Fields Configuration (optional)
+						'fields'  => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
+
+					'woocommerce_item_footer_font' => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Item Footer Font', '__components_txtd' ),
+						'desc'     => '',
+						'selector' => '.c-gallery--woocommerce .c-card__footer',
+						'callback' => 'typeline_font_cb',
+
+						'default' => array(
+							'font-family'    => 'Roboto',
+							'font-weight'    => 'regular',
+							'font-size'      => 16,
+							'line-height'    => 1.5,
+							'letter-spacing' => 0,
+							'text-transform' => 'none',
+						),
+
+						// Sub Fields Configuration (optional)
+						'fields'  => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
 				),
 			),
 		);
+
+		// Allow others to make changes
+		$modified_config = apply_filters( 'pixelgrade_customify_woocommerce_grid_section_options', $woocommerce_section, $options );
+
+		// Validate the config
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfig( $modified_config, $woocommerce_section );
+		}
+
+		// Validate the default values
+		// When we have defined in the original config 'default' => null, this means the theme (or someone) must define the value via the filter above.
+		// We will trigger _doing_it_wrong() errors, but in production we will let it pass.
+		if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+			Pixelgrade_Config::validateCustomizerSectionConfigDefaults( $modified_config, $woocommerce_section, 'pixelgrade_customify_woocommerce_grid_section_options' );
+		}
+
+		// Assign the modified config
+		$woocommerce_section = $modified_config;
+
+		// Make sure we are in good working order
+		if ( empty( $options['sections'] ) ) {
+			$options['sections'] = array();
+		}
 
 		// append the portfolio grid section
 		$options['sections'] = $options['sections'] + $woocommerce_section;

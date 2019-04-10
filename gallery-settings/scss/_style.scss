@@ -47,22 +47,18 @@ $gallery-spacing: 3rem !default;
 
 .u-gallery-spacing--small {
   @include grid-spacing($gallery-gutter-small);
-  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-small);
 }
 
 .u-gallery-spacing--medium {
   @include grid-spacing($gallery-gutter-medium);
-  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-medium);
 }
 
 .u-gallery-spacing--large {
   @include grid-spacing($gallery-gutter-large);
-  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-large);
 }
 
 .u-gallery-spacing--xlarge {
   @include grid-spacing($gallery-gutter-xlarge);
-  @include spacing(margin-top, $gallery-spacing - $gallery-gutter-xlarge);
 }
 
 .gallery-item {

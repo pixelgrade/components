@@ -37,7 +37,7 @@ body #infinite-handle span {
 	padding: 0 20px;
 
 	background-color: $color-white;
-	border-top: 1px solid $sm-dark-primary;
+	border-top: 1px solid $theme-border-color;
 
 	font-family: $theme-body-font-family;
 
@@ -57,7 +57,7 @@ body #infinite-handle span {
 	.blog-credits {
 		color: #c1c1c7;
 
-		a { color: $sm-dark-secondary; }
+		a { color: $theme-text-color; }
 	}
 }
 

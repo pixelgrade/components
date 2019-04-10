@@ -53,7 +53,7 @@ if ( empty( $slide['type'] ) ) {
 
 <div class="c-hero__slide">
 
-	<div class="c-hero__background-mask  c-hero__layer">
+	<div class="c-hero__layer">
 
 		<?php
 		/**
