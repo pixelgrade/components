@@ -175,12 +175,14 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'type'     => 'callback',
 				'callback' => 'pixelgrade_the_posts_pagination',
 				'args'     => array(
-					'end_size'           => 1,
-					'mid_size'           => 2,
-					'type'               => 'list',
-					'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
-					'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
-					'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+                    'pagination_args' => array(
+                        'end_size'           => 1,
+                        'mid_size'           => 2,
+                        'type'               => 'list',
+                        'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+                        'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+                        'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+                    ),
 				),
 			),
 
@@ -526,36 +528,9 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 					'blog/related-posts',
 				),
 			),
-
-			'page' => array(
-				'extend' => 'blog/default',
-				'type'   => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
-				'blocks' => array(
-					'container' => array(
-						'extend' => 'blog/container',
-						'blocks' => array(
-							'layout' => array(
-								'extend' => 'blog/layout',
-								'blocks' => array(
-									'main' => array(
-										'extend' => 'blog/main',
-										'blocks' => array(
-											'blog/entry-header-page',
-											'blog/entry-content',
-											'blog/entry-footer',
-										),
-									),
-									'side' => array(
-										'extend' => 'blog/side',
-										'blocks' => array( 'blog/sidebar' ),
-									),
-								),
-							),
-						),
-					),
-				),
-			),
 		);
+
+		$this->registerPageBlock();
 
 		/*
 		 * For custom page templates, we can handle two formats:
@@ -793,13 +768,79 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		// Check/validate the modified config
 		if ( method_exists( $this, 'validate_config' ) && ! $this->validate_config( $modified_config ) ) {
 			/* translators: 1: the component slug  */
-			_doing_it_wrong( __METHOD__, sprintf( 'The component config  modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
+			_doing_it_wrong( __METHOD__, sprintf( 'The component config modified through the "pixelgrade_%1$s_initial_config" dynamic filter is invalid! Please check the modifications you are trying to do!', esc_html( $hook_slug ) ), null );
 
 			return;
 		}
 
 		// Change the component's config with the modified one
 		$this->config = $modified_config;
+	}
+
+	public function registerPageBlock() {
+
+		$location = array();
+		$location[] = 'page';
+
+		if ( is_front_page() ) {
+			$location[] = 'front-page';
+		}
+
+		$location = join( ' ', $location );
+
+		Pixelgrade_BlocksManager()->registerBlock('blog/content-page', array(
+			'extend' => 'blog/default',
+			'blocks' => array(
+				'before-loop' => array(
+					'type' => 'callback',
+					'callback' => 'do_action',
+					'args' => array( 'pixelgrade_before_loop', $location )
+				),
+				'layout' => array(
+					'extend' => 'blog/layout',
+					'blocks' => array(
+						'main' => array(
+							'extend' => 'blog/main',
+							'blocks' => array(
+								'blog/entry-header-page',
+								'blog/entry-thumbnail',
+								'content' => array(
+									'type'     => 'callback',
+									'callback' => 'pixelgrade_get_component_template_part',
+									'args'     => array( 'blog', 'content', 'page' ),
+								),
+								'blog/entry-footer',
+							),
+						),
+						'side' => array(
+							'extend' => 'blog/side',
+						),
+					),
+				),
+				'after-loop' => array(
+					'type' => 'callback',
+					'callback' => 'do_action',
+					'args' => array( 'pixelgrade_after_loop', $location )
+				),
+			),
+		) );
+
+		Pixelgrade_BlocksManager()->registerBlock('blog/page', array(
+			'type'   => 'loop', // We need this to be a loop so all who rely on "in_the_loop" have an easy life.
+			'blocks' => array(
+				'before-main-content' => array(
+					'type' => 'callback',
+					'callback' => 'do_action',
+					'args' => array( 'pixelgrade_before_main_content', $location )
+				),
+				'blog/content-page',
+				'after-main-content' => array(
+					'type' => 'callback',
+					'callback' => 'do_action',
+					'args' => array( 'pixelgrade_after_main_content', $location )
+				),
+			),
+		) );
 	}
 
 	/**
@@ -1015,6 +1056,10 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 		// And also make sure that we don't add it for every project in the portfolio shortcode
 		if ( is_page() && pixelgrade_in_location( 'full-width', $location ) && ! pixelgrade_in_location( 'portfolio shortcode', $location ) ) {
 			$classes[] = 'full-width';
+		}
+
+		if ( is_page() ) {
+			$classes[] = 'u-content-bottom-spacing';
 		}
 
 		return $classes;
