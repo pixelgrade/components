@@ -3,21 +3,22 @@ import anime from 'animejs';
 import { BaseComponent } from '../models/DefaultComponent';
 
 export class Blob extends BaseComponent {
-  protected element: JQuery;
+  protected element: JQuery<SVGSVGElement>;
   protected presetOffset: number;
 
   private radius = 10;
-  private sides;
-  private preset;
+  private preset = 245;
+  private mostSides = 100;
+  private sides = 13;
   private complexity = 0.84;
+  private smoothness = 1;
 
-  constructor(sides: number, complexity: number, preset: number, presetOffset: number = 0) {
+  constructor(preset: number, complexity: number, smoothness: number, presetOffset: number = 0) {
     super();
 
-    this.sides = sides;
-    this.complexity = complexity;
-    this.preset = preset + presetOffset;
-    this.presetOffset = presetOffset;
+    this.setPreset(preset + presetOffset);
+    this.setComplexity(complexity);
+    this.setSmoothness(smoothness);
 
     this.bindEvents();
     this.render();
@@ -25,22 +26,23 @@ export class Blob extends BaseComponent {
 
   public generateSvg() {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg' );
-    const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon' );
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path' );
 
     svg.setAttribute( 'viewBox', '0 0 ' + 2 * this.radius + ' ' + 2 * this.radius );
     svg.setAttribute( 'fill', 'currentColor' );
-    polygon.setAttribute( 'points', this.generatePoints( true ) );
-    svg.appendChild( polygon );
+    path.setAttribute( 'd', this.generatePoints() );
+    svg.appendChild( path );
 
     return svg;
   }
 
   public morph( morphDuration: number = 300 ) {
     anime({
+      d: this.generatePoints(),
+      easing: 'cubicBezier(.5, .05, .1, .3)',
       duration: morphDuration,
       offset: 0,
-      points: this.generatePoints( true ),
-      targets: this.element.find( 'polygon' ).get(0),
+      targets: this.element.find( 'path' ).get(0),
     });
   }
 
@@ -56,11 +58,7 @@ export class Blob extends BaseComponent {
 
   public getRatio(preset: number, i: number): number {
     const pow = Math.pow( preset, i );
-    return ( 4 + 6 * this.getMagicDigit( pow ) / 9 ) / 10;
-  }
-
-  public setPreset(preset: number) {
-    this.preset = preset + this.presetOffset;
+    return ( 1 + this.getMagicDigit( pow ) ) / 10;
   }
 
   public getMagicDigit( n ) {
@@ -77,16 +75,24 @@ export class Blob extends BaseComponent {
     return sum;
   }
 
+  public setPreset(preset: number) {
+    this.preset = preset;
+    this.sides = Math.min( Math.max( 3, Math.floor( Math.sqrt( preset ) ) ), this.mostSides );
+  }
+
   public setComplexity( complexity ) {
     this.complexity = complexity;
   }
 
-  public setSides( sides ) {
-    this.sides = sides;
+  public setSmoothness( smoothness ) {
+    this.smoothness = smoothness;
   }
 
-  public generatePoints( random: boolean = false ): string {
+  public generatePoints(): string {
     const points = [];
+    let path = '';
+    let firstPoint = '';
+    let curves = '';
 
     for (let i = 1; i <= this.sides; i++) {
       // generate a regular polygon
@@ -97,16 +103,60 @@ export class Blob extends BaseComponent {
       const defaultRatio = 0.7;
       const ratio = defaultRatio + ( this.getRatio(this.preset, i) - defaultRatio ) * this.complexity;
 
-      const x = this.radius * ( Math.cos( angle ) * ratio + 1 );
-      const y = this.radius * ( Math.sin( angle ) * ratio + 1 );
-
-      points.push( x + ',' + y );
+      points.push({
+        x: this.radius * ( Math.cos( angle ) * ratio + 1 ),
+        y: this.radius * ( Math.sin( angle ) * ratio + 1 )
+      });
     }
 
-    return points.join(' ');
+    for (let i = 0; i < points.length; i++) {
+      const nextIdx = (i + 1) % points.length;
+      const prevIdx = (i + points.length - 1) % points.length;
+      const nextPt = points[nextIdx];
+      const thisPt = points[i];
+      const prevPt = points[prevIdx];
+
+      const M1 = {
+        x: (prevPt.x + thisPt.x) / 2,
+        y: (prevPt.y + thisPt.y) / 2,
+      };
+
+      const M2 = {
+        x: (thisPt.x + nextPt.x) / 2,
+        y: (thisPt.y + nextPt.y) / 2,
+      };
+
+      const x1 = M1.x * (1 - this.smoothness) + thisPt.x * this.smoothness;
+      const y1 = M1.y * (1 - this.smoothness) + thisPt.y * this.smoothness;
+
+      const x2 = M2.x * (1 - this.smoothness) + thisPt.x * this.smoothness;
+      const y2 = M2.y * (1 - this.smoothness) + thisPt.y * this.smoothness;
+
+      if ( i === 0 ) {
+        firstPoint = M1.x + ' ' + M1.y;
+      }
+
+      curves += 'C' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2 + ' ' + M2.x + ' ' + M2.y;
+    }
+
+    // move to first point
+    path = 'M' + firstPoint;
+
+    // draw dummy lines to same point to keep a consistent number of points for the shape
+    for (let i = 0; i < this.mostSides - this.sides; i++) {
+      path += 'C' + firstPoint + ' ' + firstPoint + ' ' + firstPoint;
+    }
+
+    // add the curves to draw the actual path
+    path += curves;
+
+    // close the path
+    path += ' Z';
+
+    return path;
   }
 
-  public getSvg(): JQuery {
+  public getSvg(): JQuery<SVGSVGElement> {
     return this.element;
   }
 
