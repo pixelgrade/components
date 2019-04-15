@@ -8,15 +8,16 @@ export class Blob extends BaseComponent {
 
   private radius = 10;
   private preset = 245;
-  private mostSides = 100;
-  private sides = 13;
+  private mostSides = 20;
   private complexity = 0.84;
   private smoothness = 1;
 
   constructor(preset: number, complexity: number, smoothness: number, presetOffset: number = 0) {
     super();
 
-    this.setPreset(preset + presetOffset);
+    this.presetOffset = presetOffset;
+
+    this.setPreset(preset);
     this.setComplexity(complexity);
     this.setSmoothness(smoothness);
 
@@ -36,13 +37,20 @@ export class Blob extends BaseComponent {
     return svg;
   }
 
-  public morph( morphDuration: number = 300 ) {
+  public morph( options: object = {} ) {
+    const target = this.element.find( 'path' ).get(0);
+
+    const opts = $.extend({
+      complexity: this.complexity,
+      preset: this.preset,
+      smoothness: this.smoothness,
+    }, options);
+
     anime({
-      d: this.generatePoints(),
-      easing: 'cubicBezier(.5, .05, .1, .3)',
-      duration: morphDuration,
-      offset: 0,
-      targets: this.element.find( 'path' ).get(0),
+      d: this.generatePoints( opts ),
+      duration: 1000,
+      easing: 'easeOutQuad',
+      targets: target,
     });
   }
 
@@ -77,7 +85,10 @@ export class Blob extends BaseComponent {
 
   public setPreset(preset: number) {
     this.preset = preset;
-    this.sides = Math.min( Math.max( 3, Math.floor( Math.sqrt( preset ) ) ), this.mostSides );
+  }
+
+  public getSidesFromPreset( preset ) {
+    return Math.min( Math.max( 3, Math.floor( Math.sqrt( preset ) ) ), this.mostSides );
   }
 
   public setComplexity( complexity ) {
@@ -88,20 +99,29 @@ export class Blob extends BaseComponent {
     this.smoothness = smoothness;
   }
 
-  public generatePoints(): string {
+  public generatePoints(opts: object = {}): string {
     const points = [];
     let path = '';
     let firstPoint = '';
     let curves = '';
 
-    for (let i = 1; i <= this.sides; i++) {
+    const options = $.extend({
+      complexity: this.complexity,
+      preset: this.preset,
+      smoothness: this.smoothness,
+    }, opts);
+
+    const sides = this.getSidesFromPreset( options.preset );
+
+    for (let i = 1; i <= sides; i++) {
       // generate a regular polygon
       // we add pi/2 to the angle to have the tip of polygons with odd number of edges pointing upwards
-      const angle = 2 * Math.PI * i / this.sides - Math.PI / 2;
+      const angle = 2 * Math.PI * i / sides - Math.PI / 2;
 
       // default ratio is 0.7 because the random one varies between 0.4 and 1
       const defaultRatio = 0.7;
-      const ratio = defaultRatio + ( this.getRatio(this.preset, i) - defaultRatio ) * this.complexity;
+      const initialRatio = this.getRatio(options.preset + this.presetOffset, i);
+      const ratio = defaultRatio + ( initialRatio - defaultRatio ) * options.complexity;
 
       points.push({
         x: this.radius * ( Math.cos( angle ) * ratio + 1 ),
@@ -109,12 +129,15 @@ export class Blob extends BaseComponent {
       });
     }
 
+    let missingPoints = this.mostSides - sides;
+
     for (let i = 0; i < points.length; i++) {
       const nextIdx = (i + 1) % points.length;
       const prevIdx = (i + points.length - 1) % points.length;
       const nextPt = points[nextIdx];
       const thisPt = points[i];
       const prevPt = points[prevIdx];
+      const smoothness = Math.sqrt(options.smoothness);
 
       const M1 = {
         x: (prevPt.x + thisPt.x) / 2,
@@ -126,26 +149,29 @@ export class Blob extends BaseComponent {
         y: (thisPt.y + nextPt.y) / 2,
       };
 
-      const x1 = M1.x * (1 - this.smoothness) + thisPt.x * this.smoothness;
-      const y1 = M1.y * (1 - this.smoothness) + thisPt.y * this.smoothness;
+      const x1 = M1.x * (1 - smoothness) + thisPt.x * smoothness;
+      const y1 = M1.y * (1 - smoothness) + thisPt.y * smoothness;
 
-      const x2 = M2.x * (1 - this.smoothness) + thisPt.x * this.smoothness;
-      const y2 = M2.y * (1 - this.smoothness) + thisPt.y * this.smoothness;
+      const x2 = M2.x * (1 - smoothness) + thisPt.x * smoothness;
+      const y2 = M2.y * (1 - smoothness) + thisPt.y * smoothness;
 
       if ( i === 0 ) {
         firstPoint = M1.x + ' ' + M1.y;
       }
 
-      curves += 'C' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2 + ' ' + M2.x + ' ' + M2.y;
+      curves += ' C ' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2 + ' ' + M2.x + ' ' + M2.y;
+
+      const dummyPointsCount = Math.round(missingPoints / (points.length - i) );
+
+      for (let j = 0; j < dummyPointsCount; j++) {
+        curves += ' C ' + M2.x + ' ' + M2.y + ' ' + M2.x + ' ' + M2.y + ' ' + M2.x + ' ' + M2.y;
+      }
+
+      missingPoints -= dummyPointsCount;
     }
 
     // move to first point
-    path = 'M' + firstPoint;
-
-    // draw dummy lines to same point to keep a consistent number of points for the shape
-    for (let i = 0; i < this.mostSides - this.sides; i++) {
-      path += 'C' + firstPoint + ' ' + firstPoint + ' ' + firstPoint;
-    }
+    path = 'M ' + firstPoint;
 
     // add the curves to draw the actual path
     path += curves;

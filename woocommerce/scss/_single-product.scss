@@ -91,6 +91,7 @@
                 flex-wrap: wrap;
                 align-items: center;
                 border: 0;
+                background: none;
             }
 
             tr ~ tr {
@@ -230,6 +231,7 @@
 }
 
 #content .c-product-main {
+    @include spacing(margin-top, 6rem);
 
     @include specific(3) {
 

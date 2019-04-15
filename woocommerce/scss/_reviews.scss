@@ -95,6 +95,10 @@
         @include spacing( margin-left, 14px );
     }
 
+    .woocommerce #review_form #respond & p.stars {
+        margin-bottom: 0;
+    }
+
     label {
         padding-bottom: 0;
     }
@@ -116,7 +120,17 @@
 
 .woocommerce #review_form #respond {
 
-    p {
+    .comment-reply-title {
+        display: block;
+    }
+
+    p,
+    .comment-form-rating,
+    .comment-reply-title {
+        @include spacing(margin-bottom, 1rem);
+    }
+
+    p:last-child {
         margin-bottom: 0;
     }
 

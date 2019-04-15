@@ -102,7 +102,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductHeaderStart' ), 3 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductHeaderEnd' ), 11 );
 
-		add_action( 'pixelgrade_before_entry_end', array( $this, 'appendSaleFlashToCard' ) );
+		add_action( 'pixelgrade_before_card_frame_end', array( $this, 'appendSaleFlashToCard' ) );
 		add_action( 'pixelgrade_before_card_frame_end', array( $this, 'appendAddToCartToCardAside' ) );
 	}
 
