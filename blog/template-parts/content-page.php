@@ -27,9 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // we first need to know the bigger picture - the location this template part was loaded from
 $location = pixelgrade_get_location( 'page' );
 
-// Here get the content width class
+// Decide on the content width class depending on location.
 $content_width_class = 'u-content-width';
-
 if ( pixelgrade_in_location( 'full-width', $location ) ) {
 	$content_width_class = 'u-content-width--full';
 }

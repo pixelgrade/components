@@ -149,7 +149,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function alterLoopStart( $loop_start ) {
-		return '<div class="' . join( ' ', pixelgrade_get_woocommerce_grid_class() ) . '">';
+		return '<div class="' . join( ' ', pixelgrade_get_woocommerce_grid_class() ) . '">'; // WPCS: XSS OK.
 	}
 
 	public function alterLoopEnd( $loop_end ) {
