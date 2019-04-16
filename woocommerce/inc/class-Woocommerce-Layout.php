@@ -56,6 +56,9 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		// This theme doesn't have a traditional sidebar. We use BLOCKS to build stuff.
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 		remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+
+		add_action( 'woocommerce_checkout_billing', array( $this, 'outputCheckoutSiteIdentity' ), 1 );
+		add_action( 'woocommerce_checkout_billing', array( $this, 'outputCheckoutBreadcrumbs' ), 2 );
 		add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_coupon_form', 10 );
 
 		add_filter( 'body_class', array( $this, 'removeSidebarClass' ), 30 );
@@ -323,5 +326,18 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		}
 
 		woocommerce_show_product_loop_sale_flash();
+    }
+
+    public function outputCheckoutSiteIdentity() {
+	    echo '<h1 class="woocommerce-checkout-title"><span>'. get_bloginfo( 'name' ) .'</span></h1>';
+    }
+
+    public function outputCheckoutBreadcrumbs() {
+	    ob_start(); ?>
+        <ul class="woocommerce-checkout-breadcrumbs">
+            <li><a href="<?php echo wc_get_cart_url(); ?>"><?php _e( 'Cart', '__components_txtd' ); ?></a></li>
+            <li><?php _e( 'Checkout', '__components_txtd' ); ?></li>
+        </ul>
+	    <?php echo ob_get_clean();
     }
 }
