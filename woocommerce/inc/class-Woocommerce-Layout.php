@@ -329,7 +329,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
     }
 
     public function outputCheckoutSiteIdentity() {
-	    echo '<h1 class="woocommerce-checkout-title"><span>'. get_bloginfo( 'name' ) .'</span></h1>';
+	    echo '<h1 class="woocommerce-checkout-title"><a href="' . get_home_url() . '"><span>'. get_bloginfo( 'name' ) .'</span></a></h1>';
     }
 
     public function outputCheckoutBreadcrumbs() {

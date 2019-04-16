@@ -258,6 +258,14 @@
 
 .woocommerce-checkout-title[class] {
     @include spacing(margin-bottom, 10px);
+
+    a {
+        color: inherit;
+
+        .u-underlined-links & {
+            text-decoration: none;
+        }
+    }
 }
 
 .woocommerce-checkout-breadcrumbs {

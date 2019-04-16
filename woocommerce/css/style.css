@@ -975,7 +975,6 @@
     opacity: 0.5; }
   .woocommerce-Reviews .comment-reply-title {
     margin-bottom: 0; }
-<<<<<<< HEAD
   .woocommerce-Reviews .comment-form > * {
     padding-top: 30px; }
     @media only screen and (max-width: 1360px) {
@@ -990,23 +989,6 @@
     @media only screen and (max-width: 320px) {
       .woocommerce-Reviews .comment-form > * {
         padding-top: 14.54545px; } }
-=======
-
-.woocommerce #reviews #comments .comment-form > * {
-  padding-top: 30px; }
-  @media only screen and (max-width: 1360px) {
-    .woocommerce #reviews #comments .comment-form > * {
-      padding-top: 23.7037px; } }
-  @media only screen and (max-width: 1024px) {
-    .woocommerce #reviews #comments .comment-form > * {
-      padding-top: 19.59184px; } }
-  @media only screen and (max-width: 768px) {
-    .woocommerce #reviews #comments .comment-form > * {
-      padding-top: 16.69565px; } }
-  @media only screen and (max-width: 320px) {
-    .woocommerce #reviews #comments .comment-form > * {
-      padding-top: 14.54545px; } }
->>>>>>> refs/subrepo/components/fetch
 
 .woocommerce #reviews #comments ol.commentlist li .comment_container {
   display: -webkit-box;
@@ -1874,6 +1856,10 @@
   @media only screen and (max-width: 320px) {
     .woocommerce-checkout-title[class] {
       margin-bottom: 8.88889px; } }
+  .woocommerce-checkout-title[class] a {
+    color: inherit; }
+    .u-underlined-links .woocommerce-checkout-title[class] a {
+      text-decoration: none; }
 
 .woocommerce-checkout-breadcrumbs {
   list-style: none;
