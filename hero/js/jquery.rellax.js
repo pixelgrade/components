@@ -12,6 +12,7 @@
 		}
 
 		function Rellax( element, options ) {
+			this.el = element;
 			this.$el = $( element );
 			this.ready = false;
 			this.options = $.extend( $.fn.rellax.defaults, options );
@@ -60,11 +61,6 @@
 				this.height = this.$el.outerHeight();
 				this.width = this.$el.outerWidth();
 
-				if ( this.parent === undefined ) {
-					this.offset.top -= this.options.bleed;
-					this.height += 2 * this.options.bleed;
-				}
-
 				this.ready = true;
 			},
 			_scaleElement: function() {
@@ -72,28 +68,24 @@
 					parentWidth = this.$parent.outerWidth(),
 					scaleY = ( parentHeight + ( windowHeight - parentHeight ) * ( 1 - this.options.amount ) ) / this.height,
 					scaleX = parentWidth / this.width,
-					scale = Math.max(scaleX, scaleY);
+					scale = Math.max( scaleX, scaleY );
 
 				this.width = this.width * scale;
 				this.height = this.height * scale;
 
-				this.offset.top = ( parentHeight - this.height ) / 2;
-				this.offset.left = ( parentWidth - this.width ) / 2;
+				this.offset.top += ( parentHeight - this.height ) / 2;
+				this.offset.left += ( parentWidth - this.width ) / 2;
 			},
 			_prepareElement: function() {
-				if ( this.parent === undefined ) {
-					this.$el.addClass( 'rellax-element' );
+				if ( this.$el.is( this.options.container ) ) {
 					this.$el.css({
-						position: 'fixed',
-						top: this.offset.top,
-						left: this.offset.left,
-						width: this.width,
-						height: this.height
+						clip: 'rect(0,'+ this.width + 'px,' + this.height + 'px,0)',
 					});
 				} else {
+					this.$el.addClass( 'rellax-element' );
 					this._scaleElement();
 					this.$el.css({
-						position: 'absolute',
+						position: 'fixed',
 						top: this.offset.top,
 						left: this.offset.left,
 						width: this.width,
@@ -116,27 +108,18 @@
 
 				var progress = this._getProgress(),
 					height = this.parent !== undefined ? this.parent.height : this.height,
-					move = ( windowHeight + height ) * ( progress - 0.5 ) * this.options.amount,
+					move = ( windowHeight + height ) * ( 0.5 - progress ) * this.options.amount,
 					scale = 1 + ( this.options.scale - 1 ) * progress,
 					scaleTransform = scale >= 1 ? 'scale(' + scale + ')' : '';
 
-				if ( this.parent === undefined ) {
-					move *= -1;
-				}
-
 				if ( forced !== true && ( progress < 0 || progress > 1 ) ) {
-					this.$el.addClass( 'rellax-hidden' );
 					return;
 				}
 
-				this.$el.removeClass( 'rellax-hidden' );
-
 				this.$el.data( 'progress', progress );
 
-				if ( this.$el.is( this.options.container ) ) {
-					this.$el.css( 'transform', 'translate3d(0,' + ( - lastScrollY ) + 'px,0)' );
-				} else {
-					this.$el.css( 'transform', 'translate3d(0,' + move + 'px,0) ' + scaleTransform );
+				if ( ! this.$el.is( this.options.container ) ) {
+					this.el.style.transform = 'translate3d(0,' + ( - move - lastScrollY ) + 'px,0) ' + scaleTransform;
 				}
 			},
 			_getProgress: function() {

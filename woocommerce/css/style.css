@@ -209,6 +209,20 @@
       .c-card__add-to-cart[class][class][class][class] .added_to_cart {
         bottom: 10.58201px; } }
 
+.c-card__excerpt .price {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: -0.25em; }
+  .c-card__excerpt .price > * {
+    margin-left: 0.25em;
+    margin-right: 0.25em; }
+
+.c-card__footer a {
+  color: inherit; }
+
 .woocommerce nav.woocommerce-pagination ul {
   border: 0;
   margin: 0; }
@@ -634,9 +648,8 @@
   text-align: center; }
 
 .woocommerce[class] .product .price {
-  color: inherit; }
-  .woocommerce[class] .product .price del {
-    opacity: 1; }
+  color: inherit;
+  font-size: inherit; }
   .woocommerce[class] .product .price ins {
     font-weight: inherit;
     text-decoration: none; }
@@ -949,6 +962,7 @@
     opacity: 0.5; }
   .woocommerce-Reviews .comment-reply-title {
     margin-bottom: 0; }
+<<<<<<< HEAD
   .woocommerce-Reviews .comment-form > * {
     padding-top: 30px; }
     @media only screen and (max-width: 1360px) {
@@ -963,6 +977,23 @@
     @media only screen and (max-width: 320px) {
       .woocommerce-Reviews .comment-form > * {
         padding-top: 14.54545px; } }
+=======
+
+.woocommerce #reviews #comments .comment-form > * {
+  padding-top: 30px; }
+  @media only screen and (max-width: 1360px) {
+    .woocommerce #reviews #comments .comment-form > * {
+      padding-top: 23.7037px; } }
+  @media only screen and (max-width: 1024px) {
+    .woocommerce #reviews #comments .comment-form > * {
+      padding-top: 19.59184px; } }
+  @media only screen and (max-width: 768px) {
+    .woocommerce #reviews #comments .comment-form > * {
+      padding-top: 16.69565px; } }
+  @media only screen and (max-width: 320px) {
+    .woocommerce #reviews #comments .comment-form > * {
+      padding-top: 14.54545px; } }
+>>>>>>> refs/subrepo/components/fetch
 
 .woocommerce #reviews #comments ol.commentlist li .comment_container {
   display: -webkit-box;

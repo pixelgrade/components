@@ -272,7 +272,7 @@ $gridable-column-boxed: '.column-style--boxed' !default;
       }
 
       * {
-        height: 100%;
+        flex-grow: 1;
       }
 
       .gallery {

@@ -205,7 +205,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			'main_content' => array(
 				'title'   => esc_html__( 'Main Content', '__components_txtd' ),
 				'options' => array(
-					'main_content_options_customizer_tabs' => array(
+					'main_content_options_customizer_tabs'      => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 							<a href="#section-title-main-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -214,11 +214,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							</nav>',
 					),
 					// [Section] Layout
-					'main_content_title_layout_section'    => array(
+					'main_content_title_layout_section'         => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-main-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
-					'main_content_container_width'         => array(
+					'main_content_container_width'              => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Container Max Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the max width of your site content area.', '__components_txtd' ),
@@ -238,7 +238,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_container_sides_spacing' => array(
+					'main_content_container_sides_spacing'      => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Container Sides Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
@@ -271,7 +271,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_container_padding'       => array(
+					'main_content_container_padding'            => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Container Padding', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the top and bottom distance between the page content and header/footer.', '__components_txtd' ),
@@ -298,7 +298,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_content_width'           => array(
+					'main_content_content_width'                => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Content Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Decrease the width of your content to create an inset area for your text. The inset size will be the space between Site Container and Content.', '__components_txtd' ),
@@ -320,7 +320,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_border_width'            => array(
+					'main_content_border_width'                 => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Site Border Width', '__components_txtd' ),
 						'desc'        => '',
@@ -340,7 +340,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_border_color'            => array(
+					'main_content_border_color'                 => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Site Border Color', '__components_txtd' ),
 						'live'    => true,
@@ -354,11 +354,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] COLORS
-					'main_content_title_colors_section'    => array(
+					'main_content_title_colors_section'         => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-main-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'main_content_page_title_color'        => array(
+					'main_content_page_title_color'             => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Page Title Color', '__components_txtd' ),
 						'live'    => true,
@@ -370,7 +370,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_body_text_color'         => array(
+					'main_content_body_text_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Text Color', '__components_txtd' ),
 						'live'    => true,
@@ -382,7 +382,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_body_link_color'         => array(
+					'main_content_body_link_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Link Color', '__components_txtd' ),
 						'live'    => true,
@@ -394,7 +394,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_body_link_active_color'  => array(
+					'main_content_body_link_active_color'       => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Body Link Active Color', '__components_txtd' ),
 						'live'    => true,
@@ -406,7 +406,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_underlined_body_links'   => array(
+					'main_content_underlined_body_links'        => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Underlined Body Links', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
@@ -416,7 +416,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Headings Color', '__components_txtd' ) . '</span>',
 					),
-					'main_content_heading_1_color'         => array(
+					'main_content_heading_1_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 1', '__components_txtd' ),
 						'live'    => true,
@@ -428,7 +428,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_2_color'         => array(
+					'main_content_heading_2_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 2', '__components_txtd' ),
 						'live'    => true,
@@ -440,7 +440,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_3_color'         => array(
+					'main_content_heading_3_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 3', '__components_txtd' ),
 						'live'    => true,
@@ -452,7 +452,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_4_color'         => array(
+					'main_content_heading_4_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 4', '__components_txtd' ),
 						'live'    => true,
@@ -464,7 +464,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_5_color'         => array(
+					'main_content_heading_5_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 5', '__components_txtd' ),
 						'live'    => true,
@@ -476,7 +476,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'main_content_heading_6_color'         => array(
+					'main_content_heading_6_color'              => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Heading 6', '__components_txtd' ),
 						'live'    => true,
@@ -490,11 +490,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Backgrounds
-					'main_content_title_backgrounds_section' => array(
+					'main_content_title_backgrounds_section'    => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Backgrounds', '__components_txtd' ) . '</span>',
 					),
-					'main_content_content_background_color' => array(
+					'main_content_content_background_color'     => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Content Background Color', '__components_txtd' ),
 						'live'    => true,
@@ -508,12 +508,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] FONTS
-					'main_content_title_fonts_section'     => array(
+					'main_content_title_fonts_section'          => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-main-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'main_content_page_title_font'         => array(
+					'main_content_page_title_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Page Title Font', '__components_txtd' ),
 						'desc'        => '',
@@ -553,7 +553,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_body_text_font'          => array(
+					'main_content_body_text_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Body Text Font', '__components_txtd' ),
 						'desc'        => '',
@@ -593,7 +593,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_paragraph_text_font'     => array(
+					'main_content_paragraph_text_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Content Text Font', '__components_txtd' ),
 						'desc'        => '',
@@ -633,7 +633,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_quote_block_font'        => array(
+					'main_content_quote_block_font'             => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Quote Block Font', '__components_txtd' ),
 						'desc'        => '',
@@ -679,7 +679,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Headings Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'main_content_heading_1_font'          => array(
+					'main_content_heading_1_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 1', '__components_txtd' ),
 						'desc'        => '',
@@ -718,7 +718,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_2_font'          => array(
+					'main_content_heading_2_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 2', '__components_txtd' ),
 						'desc'        => '',
@@ -758,7 +758,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_3_font'          => array(
+					'main_content_heading_3_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 3', '__components_txtd' ),
 						'desc'        => '',
@@ -799,7 +799,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_4_font'          => array(
+					'main_content_heading_4_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 4', '__components_txtd' ),
 						'desc'        => '',
@@ -839,7 +839,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_5_font'          => array(
+					'main_content_heading_5_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 5', '__components_txtd' ),
 						'desc'        => '',
@@ -879,7 +879,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'main_content_heading_6_font'          => array(
+					'main_content_heading_6_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Heading 6', '__components_txtd' ),
 						'desc'        => '',
@@ -1167,12 +1167,24 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			)
 		);
 
+		$card_choices = array(
+			'none'      => esc_html__( 'None', '__components_txtd' ),
+			'category'  => esc_html__( 'Category', '__components_txtd' ),
+			'author'    => esc_html__( 'Author', '__components_txtd' ),
+			'date'      => esc_html__( 'Date', '__components_txtd' ),
+			'tags'      => esc_html__( 'Tags', '__components_txtd' ),
+			'comments'  => esc_html__( 'Comments', '__components_txtd' ),
+			'excerpt'   => esc_html__( 'Excerpt', '__components_txtd' ),
+			'read_more' => esc_html__( 'Read More', '__components_txtd' ),
+			'title'     => esc_html__( 'Title', '__components_txtd' ),
+		);
+
 		$blog_grid_section = array(
 			// Blog Grid
 			'blog_grid' => array(
 				'title'   => esc_html__( 'Blog Grid Items', '__components_txtd' ),
 				'options' => array(
-					'blog_grid_options_customizer_tabs'   => array(
+					'blog_grid_options_customizer_tabs'     => array(
 						'type' => 'html',
 						'html' => '<nav class="section-navigation  js-section-navigation">
 								<a href="#section-title-blog-layout">' . esc_html__( 'Layout', '__components_txtd' ) . '</a>
@@ -1182,11 +1194,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] Layout
-					'blog_grid_title_layout_section'      => array(
+					'blog_grid_title_layout_section'        => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-blog-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
-					'blog_grid_width'                     => array(
+					'blog_grid_width'                       => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Blog Grid Max Width', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the max width of the blog area.', '__components_txtd' ),
@@ -1206,7 +1218,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_container_sides_spacing'        => array(
+					'blog_container_sides_spacing'          => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Container Sides Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the space separating the site content and the sides of the browser.', '__components_txtd' ),
@@ -1235,11 +1247,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Items Grid
-					'blog_grid_title_items_grid_section'  => array(
+					'blog_grid_title_items_grid_section'    => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label large">' . esc_html__( 'Items Grid', '__components_txtd' ) . '</span>',
 					),
-					'blog_grid_layout'                    => array(
+					'blog_grid_layout'                      => array(
 						'type'    => 'radio',
 						'label'   => esc_html__( 'Grid Layout', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose whether the items display in a fixed height regular grid, or in a packed style layout.', '__components_txtd' ),
@@ -1251,7 +1263,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							'packed'  => esc_html__( 'Packed', '__components_txtd' ),
 						),
 					),
-					'blog_items_aspect_ratio'             => array(
+					'blog_items_aspect_ratio'               => array(
 						'type'            => 'range',
 						'label'           => esc_html__( 'Items Aspect Ratio', '__components_txtd' ),
 						'desc'            => esc_html__( 'Change the images ratio from landscape to portrait.', '__components_txtd' ),
@@ -1273,7 +1285,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 						'active_callback' => 'pixelgrade_blog_items_aspect_ratio_control_show',
 					),
-					'blog_items_per_row'                  => array(
+					'blog_items_per_row'                    => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items per Row', '__components_txtd' ),
 						'desc'        => esc_html__( 'Set the desktop-based number of columns you want and we automatically make it right for other screen sizes.', '__components_txtd' ),
@@ -1292,7 +1304,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_items_vertical_spacing'         => array(
+					'blog_items_vertical_spacing'           => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items Vertical Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
@@ -1313,7 +1325,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_items_horizontal_spacing'       => array(
+					'blog_items_horizontal_spacing'         => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Items Horizontal Spacing', '__components_txtd' ),
 						'desc'        => esc_html__( 'Adjust the spacing between individual items in your grid.', '__components_txtd' ),
@@ -1336,11 +1348,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Sub Section] Items Title
-					'blog_grid_title_items_title_section' => array(
+					'blog_grid_title_items_title_section'   => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Title', '__components_txtd' ) . '</span>',
 					),
-					'blog_items_title_position'           => array(
+					'blog_items_title_position'             => array(
 						'type'    => 'radio',
 						'label'   => esc_html__( 'Title Position', '__components_txtd' ),
 						'desc'    => esc_html__( 'Choose whether the items titles are placed nearby the thumbnail or show as an overlay cover on  mouse over.', '__components_txtd' ),
@@ -1351,7 +1363,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							'overlay' => esc_html__( 'Overlay', '__components_txtd' ),
 						),
 					),
-					'blog_items_title_alignment_nearby'   => array(
+					'blog_items_title_alignment_nearby'     => array(
 						'type'            => 'select',
 						'label'           => esc_html__( 'Title Alignment (Above/Below)', '__components_txtd' ),
 						'desc'            => esc_html__( 'Adjust the alignment of your title.', '__components_txtd' ),
@@ -1363,15 +1375,15 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 						'active_callback' => 'pixelgrade_blog_items_title_alignment_nearby_control_show',
 					),
-					'blog_items_title_alignment_overlay'  => array(
+					'blog_items_title_alignment_overlay'    => array(
 						'type'            => 'select',
 						'label'           => esc_html__( 'Title Alignment (Overlay)', '__components_txtd' ),
 						'desc'            => esc_html__( 'Adjust the alignment of your hover title.', '__components_txtd' ),
 						'default'         => null, // this should be set by the theme (previously middle-center)
 						'choices'         => array(
-							'top-left'      => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
-							'top-center'    => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
-							'top-right'     => esc_html__( '↑ Top     → Right', '__components_txtd' ),
+							'top-left'   => esc_html__( '↑ Top     ← Left', '__components_txtd' ),
+							'top-center' => esc_html__( '↑ Top     ↔ Center', '__components_txtd' ),
+							'top-right'  => esc_html__( '↑ Top     → Right', '__components_txtd' ),
 
 							'middle-left'   => esc_html__( '↕ Middle     ← Left', '__components_txtd' ),
 							'middle-center' => esc_html__( '↕ Middle     ↔ Center', '__components_txtd' ),
@@ -1386,11 +1398,11 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 					// Title Visiblity
 					// Title + Checkbox
-					'blog_items_title_visibility_title'   => array(
+					'blog_items_title_visibility_title'     => array(
 						'type' => 'html',
 						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
-					'blog_items_title_visibility'         => array(
+					'blog_items_title_visibility'           => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Title', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
@@ -1404,58 +1416,64 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 
 					// Excerpt Visiblity
 					// Title + Checkbox
-					'blog_items_excerpt_visibility_title' => array(
+					'blog_items_excerpt_visibility_title'   => array(
 						'type' => 'html',
 						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
 					),
-					'blog_items_excerpt_visibility'       => array(
+					'blog_items_excerpt_visibility'         => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Excerpt Text', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously 1)
 					),
 
 					// [Sub Section] Items Meta
-					'blog_grid_title_items_meta_section'  => array(
+					'blog_grid_title_items_meta_section'    => array(
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Meta', '__components_txtd' ) . '</span>',
 					),
 
-					'blog_items_primary_meta'             => array(
+					'blog_items_primary_meta'                 => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Primary Meta Section', '__components_txtd' ),
 						'desc'    => esc_html__( 'Set the meta info that display around the title. ', '__components_txtd' ),
 						'default' => null, // this should be set by the theme (previously category)
-						'choices' => array(
-							'none'     => esc_html__( 'None', '__components_txtd' ),
-							'category' => esc_html__( 'Category', '__components_txtd' ),
-							'author'   => esc_html__( 'Author', '__components_txtd' ),
-							'date'     => esc_html__( 'Date', '__components_txtd' ),
-							'tags'     => esc_html__( 'Tags', '__components_txtd' ),
-							'comments' => esc_html__( 'Comments', '__components_txtd' ),
-						),
+						'choices' => $card_choices,
 					),
-
-					'blog_items_secondary_meta'           => array(
+					'blog_items_secondary_meta'               => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Secondary Meta Section', '__components_txtd' ),
 						'desc'    => '',
 						'default' => null, // this should be set by the theme (previously date)
-						'choices' => array(
-							'none'     => esc_html__( 'None', '__components_txtd' ),
-							'category' => esc_html__( 'Category', '__components_txtd' ),
-							'author'   => esc_html__( 'Author', '__components_txtd' ),
-							'date'     => esc_html__( 'Date', '__components_txtd' ),
-							'tags'     => esc_html__( 'Tags', '__components_txtd' ),
-							'comments' => esc_html__( 'Comments', '__components_txtd' ),
-						),
+						'choices' => $card_choices,
+					),
+					'blog_items_heading'                      => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Heading Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => null, // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'blog_items_content'                      => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Content Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => null, // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'blog_items_footer'                       => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Footer Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => null, // this should be set by the theme (previously date)
+						'choices' => $card_choices,
 					),
 
 					// [Section] COLORS
-					'blog_grid_title_colors_section'      => array(
+					'blog_grid_title_colors_section'          => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-blog-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
-					'blog_item_title_color'               => array(
+					'blog_item_title_color'                   => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Item Title Color', '__components_txtd' ),
 						'live'    => true,
@@ -1467,7 +1485,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_meta_primary_color'        => array(
+					'blog_item_meta_primary_color'            => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Meta Primary Color', '__components_txtd' ),
 						'live'    => true,
@@ -1479,7 +1497,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_meta_secondary_color'      => array(
+					'blog_item_meta_secondary_color'          => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Meta Secondary Color', '__components_txtd' ),
 						'live'    => true,
@@ -1491,7 +1509,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_excerpt_color'             => array(
+					'blog_item_excerpt_color'                 => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Item Excerpt Color', '__components_txtd' ),
 						'live'    => true,
@@ -1503,7 +1521,19 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 							),
 						),
 					),
-					'blog_item_thumbnail_background'      => array(
+					'blog_item_footer_color'                  => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Footer Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => null, // this should be set by the theme (previously #252525)
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--blog .c-card__footer',
+							),
+						),
+					),
+					'blog_item_thumbnail_background'          => array(
 						'type'    => 'color',
 						'label'   => esc_html__( 'Thumbnail Background', '__components_txtd' ),
 						'live'    => true,
@@ -1521,7 +1551,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'type' => 'html',
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Thumbnail Hover', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Customize the mouse over effect for your thumbnails.', '__components_txtd' ) . '</span>',
 					),
-					'blog_item_thumbnail_hover_opacity'   => array(
+					'blog_item_thumbnail_hover_opacity'       => array(
 						'type'        => 'range',
 						'label'       => esc_html__( 'Thumbnail Background Opacity', '__components_txtd' ),
 						'desc'        => '',
@@ -1543,12 +1573,12 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					),
 
 					// [Section] FONTS
-					'blog_grid_title_fonts_section'       => array(
+					'blog_grid_title_fonts_section'           => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-blog-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
-					'blog_item_title_font'                => array(
+					'blog_item_title_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Item Title Font', '__components_txtd' ),
 						'desc'        => '',
@@ -1588,7 +1618,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_item_meta_font'                 => array(
+					'blog_item_meta_font' => array(
 						'type'        => 'font',
 						'label'       => esc_html__( 'Item Meta Font', '__components_txtd' ),
 						'desc'        => '',
@@ -1628,17 +1658,42 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_item_excerpt_font'              => array(
+					'blog_item_excerpt_font' => array(
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Excerpt Font', '__components_txtd' ),
 						'desc'     => '',
 						'selector' => '.c-gallery--blog .c-card__excerpt',
 						'callback' => 'typeline_font_cb',
 
-						'default'  => null,
+						'default' => null,
 
 						// Sub Fields Configuration (optional)
-						'fields'   => array(
+						'fields'  => array(
+							'font-size'       => array(                           // Set custom values for a range slider
+								'min'  => 8,
+								'max'  => 90,
+								'step' => 1,
+								'unit' => 'px',
+							),
+							'line-height'     => array( 0, 2, 0.1, '' ), // Short-hand version
+							'letter-spacing'  => array( - 1, 2, 0.01, 'em' ),
+							'text-align'      => false, // Disable sub-field (False by default)
+							'text-transform'  => true,
+							'text-decoration' => false,
+						),
+					),
+
+					'blog_item_excerpt_font' => array(
+						'type'     => 'font',
+						'label'    => esc_html__( 'Item Footer Font', '__components_txtd' ),
+						'desc'     => '',
+						'selector' => '.c-gallery--blog .c-card__footer',
+						'callback' => 'typeline_font_cb',
+
+						'default' => null,
+
+						// Sub Fields Configuration (optional)
+						'fields'  => array(
 							'font-size'       => array(                           // Set custom values for a range slider
 								'min'  => 8,
 								'max'  => 90,
@@ -1744,18 +1799,18 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 			$current_object = $wp_the_query->get_queried_object();
 
 			if ( ! empty( $current_object->post_type )
-				 && ( $post_type_object = get_post_type_object( $current_object->post_type ) )
-				 && current_user_can( 'edit_post', $current_object->ID )
-				 && $post_type_object->show_ui && $post_type_object->show_in_admin_bar ) {
+			     && ( $post_type_object = get_post_type_object( $current_object->post_type ) )
+			     && current_user_can( 'edit_post', $current_object->ID )
+			     && $post_type_object->show_ui && $post_type_object->show_in_admin_bar ) {
 
 				$attributes['data-curpostid'] = $current_object->ID;
 				if ( isset( $post_type_object->labels ) && isset( $post_type_object->labels->edit_item ) ) {
 					$attributes['data-curpostedit'] = $post_type_object->labels->edit_item;
 				}
 			} elseif ( ! empty( $current_object->taxonomy )
-					   && ( $tax = get_taxonomy( $current_object->taxonomy ) )
-					   && current_user_can( $tax->cap->edit_terms )
-					   && $tax->show_ui ) {
+			           && ( $tax = get_taxonomy( $current_object->taxonomy ) )
+			           && current_user_can( $tax->cap->edit_terms )
+			           && $tax->show_ui ) {
 				$attributes['data-curpostid']   = $current_object->term_id;
 				$attributes['data-curtaxonomy'] = $current_object->taxonomy;
 

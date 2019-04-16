@@ -1,0 +1,42 @@
+// MAIN CONTENT
+// ========================================
+
+// Layout
+// ----------------------------------------
+$content-container-width: 1300px !default;
+$content-sides-spacing: 70px !default;
+$content-vertical-spacing: 60px !default;
+$content-width: 720px !default;
+$content-border-width: 0 !default;
+$content-border-color: transparent !default;
+
+// Colors
+// ----------------------------------------
+$page-title-color: #000000 !default;
+$body-text-color: #000000 !default;
+// @todo $body-underlined-links
+$h1-color: #000000 !default;
+$h2-color: #000000 !default;
+$h3-color: #000000 !default;
+$h4-color: #000000 !default;
+$h5-color: #000000 !default;
+$h6-color: #000000 !default;
+$content-background-color: #FFFFFF !default;
+
+// Fonts
+// ----------------------------------------
+$body-font: () !default;
+$page-title-font: () !default;
+$blockquote-font: () !default;
+$cite-font: () !default;
+
+$h1: () !default;
+$h2: () !default;
+$h3: () !default;
+$h4: () !default;
+$h5: () !default;
+$h6: () !default;
+
+// Comments
+
+$comment-author-color: inherit !default;
