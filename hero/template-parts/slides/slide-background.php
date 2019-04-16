@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div <?php pixelgrade_hero_background_class(); ?> <?php pixelgrade_hero_background_color_style( $slide['source_post_id'] ); ?>>
+<div <?php pixelgrade_hero_background_class(); ?>>
 
 	<?php
 	/**

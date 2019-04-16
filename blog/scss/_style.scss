@@ -1,3 +1,5 @@
+@import "variables";
+
 @import "elements/author";
 @import "elements/comments";
 @import "elements/comments-form";
@@ -6,5 +8,4 @@
 @import "elements/post-navigation";
 @import "elements/entry-content";
 
-@import "gutenberg";
 @import "customify";

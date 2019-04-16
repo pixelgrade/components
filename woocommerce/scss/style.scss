@@ -95,10 +95,10 @@ $woocommerce-mobile-breakpoint: 768px;
     }
 
     &:before {
-        transform:  translate(-50%, -50%) rotate(45deg);
+        transform: translate(-50%, -50%) rotate(45deg);
     }
 
     &:after {
-        transform:  translate(-50%, -50%) rotate(-45deg);
+        transform: translate(-50%, -50%) rotate(-45deg);
     }
 }

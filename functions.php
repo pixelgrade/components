@@ -41,6 +41,7 @@ function components_force_setup_all_components() {
 	add_theme_support( 'pixelgrade-multipage-component' );
 	add_theme_support( 'pixelgrade-portfolio-component' );
 }
+
 add_action( 'after_setup_theme', 'components_force_setup_all_components', 10 );
 
 /**
@@ -93,8 +94,7 @@ function mock_customify_general_section( $section_options, $options ) {
 	$new_section_options = array(
 		// General
 		'general' => array(
-			'options' => array(
-			),
+			'options' => array(),
 		),
 	);
 
@@ -138,7 +138,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 				'main_content_border_color'             => array(
 					'default' => '#F7F6F5',
 				),
-
 				// [Section] COLORS
 				'main_content_page_title_color'         => array(
 					'default' => THEME_TEXT_COLOR,
@@ -155,7 +154,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 				'main_content_underlined_body_links'    => array(
 					'default' => 1,
 				),
-
 				// [Sub Section] Headings Color
 				'main_content_heading_1_color'          => array(
 					'default' => THEME_TEXT_COLOR,
@@ -175,12 +173,10 @@ function mock_customify_main_content_section( $section_options, $options ) {
 				'main_content_heading_6_color'          => array(
 					'default' => THEME_ACCENT_COLOR,
 				),
-
 				// [Sub Section] Backgrounds
 				'main_content_content_background_color' => array(
 					'default' => '#F5F6F1',
 				),
-
 				// [Section] FONTS
 				'main_content_page_title_font'          => array(
 					'default' => array(
@@ -191,7 +187,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_body_text_font' => array(
 					'default' => array(
 						'font-family'    => THEME_BODY_FONT,
@@ -202,7 +197,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_paragraph_text_font' => array(
 					'default' => array(
 						'font-family'    => THEME_BODY_FONT,
@@ -213,7 +207,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_quote_block_font' => array(
 					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT,
@@ -224,7 +217,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				// [Sub Section] Headings Fonts
 				'main_content_heading_1_font'   => array(
 					'default' => array(
@@ -236,7 +228,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_heading_2_font' => array(
 					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT,
@@ -247,7 +238,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_heading_3_font' => array(
 					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT,
@@ -258,7 +248,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_heading_4_font' => array(
 					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT_ALT,
@@ -269,9 +258,8 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-
 				'main_content_heading_5_font' => array(
-					'default'  => array(
+					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT_ALT,
 						'font-weight'    => '700',
 						'font-size'      => 14,
@@ -280,7 +268,6 @@ function mock_customify_main_content_section( $section_options, $options ) {
 						'text-transform' => 'uppercase',
 					),
 				),
-
 				'main_content_heading_6_font' => array(
 					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT_ALT,
@@ -316,10 +303,10 @@ function mock_customify_buttons_section( $section_options, $options ) {
 		// Main Content
 		'buttons' => array(
 			'options' => array(
-				'buttons_style' => array(
+				'buttons_style'      => array(
 					'default' => 'solid',
 				),
-				'buttons_shape' => array(
+				'buttons_shape'      => array(
 					'default' => 'rounded',
 				),
 				'buttons_color'      => array(
@@ -329,7 +316,7 @@ function mock_customify_buttons_section( $section_options, $options ) {
 					'default' => '#FFFFFF',
 				),
 				'buttons_font'       => array(
-					'default'  => array(
+					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT_ALT,
 						'font-weight'    => '500',
 						'font-size'      => 17,
@@ -411,7 +398,6 @@ function mock_customify_blog_grid_section( $section_options, $options ) {
 				'blog_items_secondary_meta'          => array(
 					'default' => 'date',
 				),
-
 				// [Section] COLORS
 				'blog_item_title_color'              => array(
 					'default' => '#333131',
@@ -425,17 +411,15 @@ function mock_customify_blog_grid_section( $section_options, $options ) {
 				'blog_item_thumbnail_background'     => array(
 					'default' => '#000000',
 				),
-				'blog_item_excerpt_color'              => array(
+				'blog_item_excerpt_color'            => array(
 					'default' => THEME_ACCENT_COLOR,
 				),
-
 				// [Sub Section] Thumbnail Hover
 				'blog_item_thumbnail_hover_opacity'  => array(
 					'default' => 1,
 				),
-
 				// [Section] FONTS
-				'blog_item_title_font'           => array(
+				'blog_item_title_font'               => array(
 					'default' => array(
 						'font-family'    => THEME_HEADINGS_FONT,
 						'font-weight'    => '700',
@@ -445,17 +429,17 @@ function mock_customify_blog_grid_section( $section_options, $options ) {
 						'text-transform' => 'none',
 					),
 				),
-				'blog_item_meta_font'            => array(
+				'blog_item_meta_font'                => array(
 					'default' => array(
-						'font-family'    => THEME_SITE_TITLE_FONT,
-						'font-weight'    => '400',
-						'font-size'      => 13,
-						'line-height'    => 1.1,
-						'letter-spacing' => 0.1,
+						'font-family'    => THEME_HEADINGS_FONT_ALT,
+						'font-weight'    => '700',
+						'font-size'      => 14,
+						'line-height'    => 1.25,
+						'letter-spacing' => 0.07,
 						'text-transform' => 'uppercase',
 					),
 				),
-				'blog_item_excerpt_font'         => array(
+				'blog_item_excerpt_font'             => array(
 					'default' => array(
 						'font-family'    => THEME_BODY_FONT,
 						'font-weight'    => '400',
@@ -508,7 +492,6 @@ function mock_customify_header_section( $section_options, $options ) {
 				'header_sides_spacing'            => array(
 					'default' => 42,
 				),
-
 				// [Section] COLORS
 				'header_navigation_links_color'   => array(
 					'default' => '#323232',
@@ -522,7 +505,6 @@ function mock_customify_header_section( $section_options, $options ) {
 				'header_background'               => array(
 					'default' => '#F5F6F1',
 				),
-
 				// [Section] FONTS
 				'header_site_title_font'          => array(
 					'default' => array(
@@ -574,10 +556,10 @@ function mock_customify_footer_section( $section_options, $options ) {
 				'copyright_text'               => array(
 					'default' => esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ),
 				),
-				'footer_top_spacing'     => array(
+				'footer_top_spacing'           => array(
 					'default' => 80,
 				),
-				'footer_bottom_spacing'  => array(
+				'footer_bottom_spacing'        => array(
 					'default' => 56,
 				),
 				'footer_hide_back_to_top_link' => array(
@@ -646,4 +628,5 @@ function mock_typeline_theme_config( $config ) {
 		),
 	);
 }
+
 add_filter( 'typeline_theme_config', 'mock_typeline_theme_config', 10, 1 );

@@ -128,9 +128,9 @@ $comments-toggle-label-background: #000 !default;
 }
 
 .c-comments-toggle__label {
-  @include btn;
-  display: block;
-  background-color: $comments-toggle-label-background;
+    @include btn;
+    display: block;
+    background-color: $comments-toggle-label-background;
 }
 
 .comment__content {
