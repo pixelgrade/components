@@ -39,13 +39,13 @@
     .comment-reply-title {
         margin-bottom: 0;
     }
-}
-
-.woocommerce #reviews #comments {
 
     .comment-form > * {
         @include spacing( padding-top, 30px );
     }
+}
+
+.woocommerce #reviews #comments {
 
     ol.commentlist {
 

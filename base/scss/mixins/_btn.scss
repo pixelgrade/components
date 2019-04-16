@@ -179,7 +179,8 @@ $btn-font: () !default;
 }
 
 @mixin button-directional--right {
-    padding-right: 6.5em;
+    // padding-right: 6.5em;
+    @include spacing(padding-right, 100px);
     text-align: left;
 
     &:before {

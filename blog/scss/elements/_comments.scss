@@ -1,4 +1,4 @@
-$sm-color-primary: #000 !default;
+$comments-author-color: #000 !default;
 $comments-toggle-label-background: #000 !default;
 
 .comment {
@@ -128,9 +128,9 @@ $comments-toggle-label-background: #000 !default;
 }
 
 .c-comments-toggle__label {
-  @include btn;
-  display: block;
-  background-color: $comments-toggle-label-background;
+    @include btn;
+    display: block;
+    background-color: $comments-toggle-label-background;
 }
 
 .comment__content {
@@ -169,7 +169,7 @@ $comments-toggle-label-background: #000 !default;
   color: inherit;
 
   .comment__author {
-    color: $comment-author-color;
+    color: $comments-author-color;
   }
 }
 

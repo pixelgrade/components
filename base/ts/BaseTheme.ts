@@ -16,9 +16,9 @@ export interface JQueryExtended extends JQuery {
 export class BaseTheme {
 
   public $body: JQuery = $( 'body' );
-  public $window: JQuery = $( window );
+  public $window: JQuery<Window> = $( window );
   public $html: JQuery = $( 'html' );
-  public ev: JQuery = $( {} );
+  public ev: JQuery<HTMLElement> = $();
   public frameRendered: boolean = false;
 
   public subscriptionActive: boolean = true;
