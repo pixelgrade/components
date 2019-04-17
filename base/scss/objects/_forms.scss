@@ -307,3 +307,8 @@ fieldset {
     transform: translate(50%, -50%);
   }
 }
+
+.select2-dropdown,
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border-color: $input-border-color;
+}

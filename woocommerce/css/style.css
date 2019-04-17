@@ -1651,14 +1651,13 @@
   .woocommerce-checkout table.shop_table tfoot,
   .woocommerce-checkout table.shop_table thead {
     border: 0; }
-  .woocommerce-checkout table.shop_table td, .woocommerce-checkout table.shop_table th {
-    padding-top: 24px;
-    padding-bottom: 24px; }
-    .woocommerce-checkout table.shop_table td:first-child, .woocommerce-checkout table.shop_table th:first-child {
-      padding-left: 0; }
-    .woocommerce-checkout table.shop_table td:last-child, .woocommerce-checkout table.shop_table th:last-child {
-      padding-right: 0;
-      text-align: right; }
+  .woocommerce-checkout table.shop_table[class] td, .woocommerce-checkout table.shop_table[class] th {
+    font-weight: inherit; }
+  .woocommerce-checkout table.shop_table td:first-child, .woocommerce-checkout table.shop_table th:first-child {
+    padding-left: 0; }
+  .woocommerce-checkout table.shop_table td:last-child, .woocommerce-checkout table.shop_table th:last-child {
+    padding-right: 0;
+    text-align: right; }
 
 .woocommerce-checkout #shipping_method[id] li {
   margin-bottom: 0; }

@@ -107,7 +107,6 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 				'options' => array(
 					'main_content_heading_1_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_1_font']['selector'] . ',
-							.woocommerce-checkout .order-total .woocommerce-Price-amount,
 							.cart_totals h2 
 						'
 					),
@@ -123,6 +122,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'main_content_heading_3_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_3_font']['selector'] . ',
 							table.shop_table td.product-name,
+							.woocommerce-checkout .order-total .woocommerce-Price-amount,
 							.c-mini-cart[class] .cart_list a:not(.remove), 
 							.c-mini-cart[class] .product_list_widget a:not(.remove),
 							.product .entry-summary .price[class],

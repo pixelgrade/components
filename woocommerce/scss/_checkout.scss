@@ -74,9 +74,13 @@
             border: 0;
         }
 
+        &[class] {
+            td, th {
+                font-weight: inherit;
+            }
+        }
+
         td, th {
-            padding-top: 24px;
-            padding-bottom: 24px;
 
             &:first-child {
                 padding-left: 0;
