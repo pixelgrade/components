@@ -15,19 +15,55 @@
       -ms-flex-align: center;
           align-items: center;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between; }
+      flex-wrap: wrap; }
   .woocommerce-product-archive > * {
     -webkit-box-flex: 1;
         -ms-flex: 1 0 100%;
             flex: 1 0 100%; }
   .woocommerce-product-archive > .woocommerce-result-count,
-  .woocommerce-product-archive > .woocommerce-ordering {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 auto;
-            flex: 0 0 auto; }
+  .woocommerce-product-archive > form[class] {
+    margin-bottom: 20px; }
+    @media only screen and (max-width: 1360px) {
+      .woocommerce-product-archive > .woocommerce-result-count,
+      .woocommerce-product-archive > form[class] {
+        margin-bottom: 16px; } }
+    @media only screen and (max-width: 1024px) {
+      .woocommerce-product-archive > .woocommerce-result-count,
+      .woocommerce-product-archive > form[class] {
+        margin-bottom: 13.33333px; } }
+    @media only screen and (max-width: 768px) {
+      .woocommerce-product-archive > .woocommerce-result-count,
+      .woocommerce-product-archive > form[class] {
+        margin-bottom: 11.42857px; } }
+    @media only screen and (max-width: 320px) {
+      .woocommerce-product-archive > .woocommerce-result-count,
+      .woocommerce-product-archive > form[class] {
+        margin-bottom: 10px; } }
+  .woocommerce-product-archive > .form-wppp-select {
+    margin-left: 0 !important;
+    float: none !important; }
+  @media only screen and (min-width: 62.5em) {
+    .woocommerce-product-archive > .woocommerce-result-count {
+      margin-right: auto; }
+    .woocommerce-product-archive > .woocommerce-result-count,
+    .woocommerce-product-archive > form[class] {
+      -webkit-box-flex: 0;
+          -ms-flex: 0 0 auto;
+              flex: 0 0 auto; }
+    .woocommerce-product-archive > form + form[class] {
+      margin-left: 20px; } }
+  @media only screen and (min-width: 62.5em) and (max-width: 1360px) {
+    .woocommerce-product-archive > form + form[class] {
+      margin-left: 16px; } }
+  @media only screen and (min-width: 62.5em) and (max-width: 1024px) {
+    .woocommerce-product-archive > form + form[class] {
+      margin-left: 13.33333px; } }
+  @media only screen and (min-width: 62.5em) and (max-width: 768px) {
+    .woocommerce-product-archive > form + form[class] {
+      margin-left: 11.42857px; } }
+  @media only screen and (min-width: 62.5em) and (max-width: 320px) {
+    .woocommerce-product-archive > form + form[class] {
+      margin-left: 10px; } }
 
 .woocommerce-categories {
   display: -webkit-box;

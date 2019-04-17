@@ -145,7 +145,6 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.c-mini-cart .woocommerce-mini-cart__total,
 							.wc_payment_method label,
 							.woocommerce-result-count,
-							.woocommerce-ordering select,
 							.woocommerce-categories,
 							.add_to_cart_inline del,
 							.add_to_cart_inline ins,
