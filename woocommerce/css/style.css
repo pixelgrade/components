@@ -972,6 +972,9 @@
   .shop_attributes[class][class][class] td p {
     padding: 12px; }
 
+.comment-form-subscriptions:empty {
+  display: none; }
+
 .woocommerce-Reviews {
   max-width: 600px;
   margin-left: auto;
@@ -1214,6 +1217,8 @@
   @media (max-width: 700px) {
     .admin-bar.demo-site .c-mini-cart {
       top: 146px; } }
+  .c-mini-cart .widgettitle {
+    display: none; }
   .c-mini-cart .widget_shopping_cart {
     position: relative; }
     .c-mini-cart .widget_shopping_cart:before {
@@ -2116,3 +2121,6 @@
   .woocommerce-store-notice__dismiss-link:after {
     -webkit-transform: translate(-50%, -50%) rotate(-45deg);
             transform: translate(-50%, -50%) rotate(-45deg); }
+
+.c-product-main .product_title span {
+  font-size: 1.33em; }
