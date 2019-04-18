@@ -455,3 +455,7 @@
         }
     }
 }
+
+.comment-form-subscriptions:empty {
+    display: none;
+}

@@ -660,7 +660,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Title Font', '__components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-gallery--woocommerce .c-card__title, .c-gallery--woocommerce .c-card__letter',
+						'selector' => '
+							.c-gallery--woocommerce .c-card__title, 
+							.c-gallery--woocommerce .c-card__letter,
+							.c-product-main .product_title',
 						'callback' => 'typeline_font_cb',
 
 						'default'     => array(

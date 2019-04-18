@@ -9,6 +9,10 @@
 
     @include wp-offset(top, 0);
 
+    .widgettitle {
+        display: none;
+    }
+
     .widget_shopping_cart {
         position: relative;
 
