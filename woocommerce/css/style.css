@@ -970,7 +970,7 @@
     line-height: inherit;
     text-align: right; }
   .shop_attributes[class][class][class] td p {
-    padding: 12px; }
+    padding: 0; }
 
 .comment-form-subscriptions:empty {
   display: none; }
