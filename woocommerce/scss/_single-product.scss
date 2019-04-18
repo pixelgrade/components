@@ -240,19 +240,18 @@
         }
 
         @include above( $woocommerce-mobile-breakpoint ) {
-            position: relative;
             display: flex;
 
             > .woocommerce-product-gallery {
                 float: none;
                 width: auto;
-                flex-basis: 55%;
+                flex: 1 1 55%;
             }
 
             > .entry-summary {
                 float: none;
                 width: auto;
-                flex-basis: 35%;
+                flex: 0 0 35%;
                 @include spacing(margin-left, 6rem);
             }
 

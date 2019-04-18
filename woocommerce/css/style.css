@@ -729,20 +729,21 @@
         margin-top: 47.85047px; } }
   @media only screen and (min-width: 768px) {
     #content .c-product-main[class][class][class] {
-      position: relative;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex; }
       #content .c-product-main[class][class][class] > .woocommerce-product-gallery {
         float: none;
         width: auto;
-        -ms-flex-preferred-size: 55%;
-            flex-basis: 55%; }
+        -webkit-box-flex: 1;
+            -ms-flex: 1 1 55%;
+                flex: 1 1 55%; }
       #content .c-product-main[class][class][class] > .entry-summary {
         float: none;
         width: auto;
-        -ms-flex-preferred-size: 35%;
-            flex-basis: 35%;
+        -webkit-box-flex: 0;
+            -ms-flex: 0 0 35%;
+                flex: 0 0 35%;
         margin-left: 96px; } }
     @media only screen and (min-width: 768px) and (max-width: 1360px) {
       #content .c-product-main[class][class][class] > .entry-summary {
