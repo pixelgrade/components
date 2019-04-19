@@ -107,6 +107,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 
 		add_action( 'pixelgrade_before_card_frame_end', array( $this, 'appendSaleFlashToCard' ) );
 		add_action( 'pixelgrade_before_card_frame_end', array( $this, 'appendAddToCartToCardAside' ) );
+		add_filter( 'woocommerce_output_related_products_args', array( $this, 'limitRelatedPostsCount' ), 20 );
 	}
 
 	public function outputAjaxAddToCartButton() {
@@ -241,7 +242,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function removeHeaderFromCheckout( $allow ) {
-		if ( is_checkout() ) {
+		if ( is_checkout() && ! is_order_received_page() ) {
 			$allow = false;
 		}
 
@@ -249,7 +250,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function removeFooterFromCheckout( $allow ) {
-		if ( is_checkout() ) {
+		if ( is_checkout() && ! is_order_received_page() ) {
 			$allow = false;
 		}
 
@@ -288,9 +289,10 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	public function singleProductCategory() {
 		global $product;
 
-		echo '<div class="woocommerce-product-category c-meta__primary">';
-		echo wc_get_product_category_list( $product->get_id(), ' / ' ); // WPCS: XSS OK.
-		echo '</div>';
+		echo '<ul class="woocommerce-product-category c-meta__primary">';
+		echo '<li><a href="'. get_permalink( wc_get_page_id( 'shop' ) ) . '">' . __( 'Shop', '__theme_txtd' ) . '</a></li>';
+		echo wc_get_product_category_list( $product->get_id(), '</li><li>', '<li>', '</li>' ); // WPCS: XSS OK.
+		echo '</ul>';
 	}
 
 	public function singleProductHeaderStart() {
@@ -340,4 +342,10 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
         </ul>
 	    <?php echo ob_get_clean();
     }
+
+	function limitRelatedPostsCount( $args ) {
+		$args['posts_per_page'] = 3;
+		$args['columns'] = 3;
+		return $args;
+	}
 }

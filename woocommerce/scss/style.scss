@@ -103,6 +103,14 @@ $woocommerce-mobile-breakpoint: 768px;
     }
 }
 
-.c-product-main .product_title span {
-    font-size: 1.33em;
+.c-product-main {
+
+    .product_title span {
+        font-size: 1.33em;
+    }
+
+    .woocommerce-product-category,
+    .product_title {
+        margin-bottom: 0;
+    }
 }
