@@ -1,0 +1,209 @@
+@import "../../base/scss/defaults";
+
+@import "../../../variations/vasco/scss/settings";
+
+@import "../../base/scss/tools/all";
+@import "../../base/scss/mixins/all";
+
+@import "../../base/scss/objects/gallery";
+
+// WOOCOMMERCE GRID
+// ========================================
+
+// Layout
+// ----------------------------------------
+
+$woocommerce-grid-width: 1280px !default;
+$woocommerce-sides-spacing: 60px !default;
+
+// Items Grid
+$woocommerce-grid-valid-layouts: regular mosaic packed masonry !default;
+$woocommerce-grid-layout: regular !default;
+$woocommerce-grid-packed-ratio: 2.275 !default;
+$woocommerce-grid-aspect-ratio: 1 !default;
+$woocommerce-grid-columns: 3 !default;
+$woocommerce-grid-vertical-spacing: 60px !default;
+$woocommerce-grid-horizontal-spacing: 60px !default;
+
+// Title
+$woocommerce-content-position: below !default;
+$woocommerce-title-visibility: true !default;
+
+// Excerpt
+$woocommerce-excerpt-visibility: true !default;
+
+// Colors
+// ----------------------------------------
+
+$woocommerce-card-title-color: #252525 !default;
+$woocommerce-primary-meta-color: #252525 !default;
+$woocommerce-secondary-meta-color: #252525 !default;
+$woocommerce-thumbnail-background: #252525 !default;
+$woocommerce-card-excerpt-color: #252525 !default;
+$woocommerce-card-footer-color: #252525 !default;
+
+// Thumbnail hover
+$woocommerce-thumbnail-background-opacity: 1 !default;
+
+// Fonts
+// ----------------------------------------
+$woocommerce-card-title-font: () !default;
+$woocommerce-card-excerpt-font: () !default;
+$woocommerce-card-footer-font: () !default;
+$woocommerce-card-meta-primary-font: () !default;
+$woocommerce-card-meta-secondary-font: () !default;
+
+// ========================================
+
+
+.u-woocommerce-grid-width {
+    max-width: $woocommerce-grid-width;
+}
+
+.u-woocommerce-sides-spacing {
+    @include spacing(padding-left, $woocommerce-sides-spacing);
+    @include spacing(padding-right, $woocommerce-sides-spacing);
+}
+
+@if (null == index( $woocommerce-grid-valid-layouts, $woocommerce-grid-layout )) {
+    @warn "$woocommerce-grid-layout should be one of: #{$woocommerce-grid-valid-layouts}";
+    $woocommerce-grid-layout: regular;
+}
+
+.c-gallery--woocommerce {
+    @include spacing(margin-top, -$woocommerce-grid-vertical-spacing);
+    @include spacing(margin-left, -$woocommerce-grid-horizontal-spacing);
+
+    > * {
+        @include spacing(margin-top, $woocommerce-grid-vertical-spacing);
+        @include spacing(padding-left, $woocommerce-grid-horizontal-spacing);
+    }
+
+    .c-card__title {
+        @include leading-map($woocommerce-card-title-font);
+
+        @if ($woocommerce-card-title-color) {
+            color: $woocommerce-card-title-color;
+        }
+    }
+
+    .c-meta__primary {
+        @include leading-map($woocommerce-card-meta-primary-font);
+
+        @if ($woocommerce-primary-meta-color) {
+            color: $woocommerce-primary-meta-color;
+        }
+    }
+
+    .c-meta__secondary {
+        @include leading-map($woocommerce-card-meta-secondary-font);
+
+        @if ($woocommerce-primary-meta-color) {
+            color: $woocommerce-secondary-meta-color;
+        }
+    }
+
+    .c-meta__separator {
+
+        @if ($woocommerce-primary-meta-color) {
+            color: $woocommerce-secondary-meta-color;
+        }
+    }
+
+    .c-card__excerpt {
+        @include leading-map($woocommerce-card-excerpt-font);
+
+        color: $woocommerce-card-excerpt-color;
+    }
+
+    .c-card__footer {
+        @include leading-map($woocommerce-card-footer-font);
+
+        color: $woocommerce-card-footer-color;
+    }
+
+    .c-card__thumbnail-background {
+        background-color: $woocommerce-thumbnail-background;
+    }
+}
+
+.no-customify .c-gallery--woocommerce {
+    $woocommerce-grid-columns-at-lap: if($woocommerce-grid-columns >= 5, $woocommerce-grid-columns - 1, $woocommerce-grid-columns);
+    $woocommerce-grid-columns-at-small: if($woocommerce-grid-columns-at-lap >= 4, $woocommerce-grid-columns-at-lap - 1, $woocommerce-grid-columns-at-lap);
+
+    @if ($woocommerce-title-visibility != true) {
+        .c-card__title {
+            display: none;
+        }
+    }
+
+    @if ($woocommerce-excerpt-visibility != true) {
+        .c-card__excerpt {
+            display: none;
+        }
+    }
+
+    @if ($woocommerce-content-position == above) {
+        @include gallery-title-above;
+    }
+
+    @if ($woocommerce-content-position == overlay) {
+        @include gallery-title-overlay;
+    }
+
+    @if (packed == $woocommerce-grid-layout) {
+        $typeline-points: map-get(map-get($typeline-config, spacings), points);
+
+        $normal: calc(#{percentage($woocommerce-grid-packed-ratio / $woocommerce-grid-columns)} - #{$woocommerce-grid-vertical-spacing * $woocommerce-grid-packed-ratio});
+        $featured: calc(#{percentage(2 * $woocommerce-grid-packed-ratio / $woocommerce-grid-columns)} - #{$woocommerce-grid-vertical-spacing * (2 * $woocommerce-grid-packed-ratio - 1)});
+
+        $factor-at-lap: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $woocommerce-grid-vertical-spacing ) - 1 ) * 1 / 3 + 1;
+        $value-at-lap: round($woocommerce-grid-vertical-spacing / $factor-at-lap);
+        $normal-at-lap: calc(#{percentage($woocommerce-grid-packed-ratio / $woocommerce-grid-columns-at-lap)} - #{$value-at-lap * $woocommerce-grid-packed-ratio});
+        $featured-at-lap: calc(#{percentage(2 * $woocommerce-grid-packed-ratio / $woocommerce-grid-columns-at-lap)} - #{$value-at-lap * (2 * $woocommerce-grid-packed-ratio - 1)});
+
+        $factor-at-small: ( getY( nth($typeline-points, 1), nth($typeline-points, 2), nth($typeline-points, 3), $woocommerce-grid-vertical-spacing ) - 1 ) * 2 / 3 + 1;
+        $value-at-small: round($woocommerce-grid-vertical-spacing / $factor-at-small);
+        $normal-at-small: calc(#{percentage($woocommerce-grid-packed-ratio / $woocommerce-grid-columns-at-small)} - #{$value-at-small * $woocommerce-grid-packed-ratio});
+        $featured-at-small: calc(#{percentage(2 * $woocommerce-grid-packed-ratio / $woocommerce-grid-columns-at-small)} - #{$value-at-small * (2 * $woocommerce-grid-packed-ratio - 1)});
+
+        @include gallery-cropped;
+        @include gallery-packed;
+
+        .c-gallery__item {
+
+            @include above(small) {
+                padding-top: $normal-at-small;
+            }
+
+            @include above(lap) {
+                padding-top: $normal-at-lap;
+            }
+
+            @include above(desk) {
+                padding-top: $normal;
+            }
+        }
+
+        .c-card {
+            @include spacing(left, $woocommerce-grid-horizontal-spacing);
+        }
+    }
+
+    @if (regular == $woocommerce-grid-layout) {
+        @include gallery-cropped;
+
+        .c-card__frame {
+            padding-top: percentage(1/$woocommerce-grid-aspect-ratio);
+        }
+    }
+
+    @if (mosaic == $woocommerce-grid-layout) {
+        @include gallery-cropped;
+        @include gallery-mosaic;
+
+        .c-card__frame {
+            padding-top: percentage(1/$woocommerce-grid-aspect-ratio);
+        }
+    }
+}

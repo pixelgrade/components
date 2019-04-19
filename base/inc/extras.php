@@ -1051,16 +1051,31 @@ if ( ! function_exists( 'pixelgrade_get_card_contents' ) ) {
 		$contents = array();
 		$details = pixelgrade_get_post_details();
 
-		$chunks = array(
-			'primary_meta',
-			'secondary_meta',
-			'heading',
-			'content',
-			'footer'
-		);
+		$chunks = apply_filters( 'pixelgrade_card_post_details_defaults', array(
+			'primary_meta' => array(
+                'blog' => 'category',
+                'woocommerce' => 'category',
+            ),
+			'secondary_meta' => array(
+                'blog' => 'date',
+                'woocommerce' => 'none',
+            ),
+			'heading' => array(
+                'blog' => 'title',
+                'woocommerce' => 'title',
+            ),
+			'content' => array(
+                'blog' => 'excerpt',
+                'woocommerce' => 'price',
+            ),
+			'footer' => array(
+                'blog' => 'read_more',
+                'woocommerce' => 'none',
+            )
+		));
 
-		foreach ( $chunks as $chunk_name ) {
-			$source = pixelgrade_option( $component_slug . '_items_' . $chunk_name );
+		foreach ( $chunks as $chunk_name => $defaults ) {
+			$source = pixelgrade_option( $component_slug . '_items_' . $chunk_name, $defaults[$component_slug] );
 
 			if( ! empty( $source ) ) {
 				$content                 = $details[ $source ];
