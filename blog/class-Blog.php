@@ -1024,7 +1024,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			$classes[] = 'is-customizer-preview';
 		}
 
-		if ( class_exists( 'PixCustomifyPlugin' ) ) {
+		if ( class_exists( 'PixCustomifyPlugin' ) && pixelgrade_user_has_access( 'pro-features' ) ) {
 			$classes[] = 'customify';
 		} else {
 			$classes[] = 'no-customify';
