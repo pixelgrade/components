@@ -76,24 +76,24 @@ $jetpack-sharing-font: (
 
     @include leading-map($jetpack-sharing-font);
     color: $jetpack-sharing-button-color !important;
+
     &:after {
       position: absolute;
+      top: 0;
+      left: 0;
+
       width: 100%;
       height: 100%;
       content: '';
       border: 1px solid currentColor;
       opacity: .1;
     }
+
     &:hover {
       &:after {
         opacity: .3;
       }
     }
-
-  }
-
-  .sd-button > span {
-    // font: inherit;
   }
 
   // Variations

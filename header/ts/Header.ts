@@ -14,7 +14,7 @@ interface JQueryExtended extends JQuery {
 export class Header extends BaseComponent {
 
   private $body: JQuery = $( 'body' );
-  private $document: JQuery = $( document );
+  private $document: JQuery<Document> = $( document );
   private $mainMenu: JQuery = $( '.menu--primary' );
   private $mainMenuItems: JQueryExtended = this.$mainMenu.find( 'li' );
   private $menuToggle: JQuery = $( '#menu-toggle' );
@@ -134,11 +134,11 @@ export class Header extends BaseComponent {
     this.isMobileHeaderInitialised = true;
   }
 
-  private toggleSubMenu(e: JQuery.Event, toggle: boolean) {
+  private toggleSubMenu(e: Event, toggle: boolean) {
     $( e.currentTarget ).toggleClass( 'hover', toggle );
   }
 
-  private onMobileMenuExpand(e: JQuery.Event): void {
+  private onMobileMenuExpand(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 

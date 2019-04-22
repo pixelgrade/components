@@ -231,7 +231,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 
 					// Display Section.
 					'show_excerpt' => array(
-						'disabled' => true,
+						'disabled' => false,
 						'type'     => 'checkbox',
 						'label'    => esc_html__( 'Show Excerpt', '__components_txtd' ),
 						'default'  => true,
@@ -240,7 +240,7 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 					),
 
 					'show_readmore' => array(
-						'disabled' => true,
+						'disabled' => false,
 						'type'     => 'checkbox',
 						'label'    => esc_html__( 'Show "Read More" Link', '__components_txtd' ),
 						'default'  => true,

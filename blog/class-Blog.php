@@ -175,14 +175,14 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 				'type'     => 'callback',
 				'callback' => 'pixelgrade_the_posts_pagination',
 				'args'     => array(
-                    'pagination_args' => array(
-                        'end_size'           => 1,
-                        'mid_size'           => 2,
-                        'type'               => 'list',
-                        'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
-                        'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
-                        'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
-                    ),
+					'pagination_args' => array(
+					    'end_size'           => 1,
+					    'mid_size'           => 2,
+					    'type'               => 'list',
+					    'prev_text'          => esc_html_x( '&laquo; Previous', 'previous set of posts', '__components_txtd' ),
+					    'next_text'          => esc_html_x( 'Next &raquo;', 'next set of posts', '__components_txtd' ),
+					    'screen_reader_text' => esc_html__( 'Posts navigation', '__components_txtd' ),
+					),
 				),
 			),
 
@@ -779,14 +779,10 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 	public function registerPageBlock() {
 
-		$location = array();
-		$location[] = 'page';
-
+		$location = array( 'page' );
 		if ( is_front_page() ) {
 			$location[] = 'front-page';
 		}
-
-		$location = join( ' ', $location );
 
 		Pixelgrade_BlocksManager()->registerBlock('blog/content-page', array(
 			'extend' => 'blog/default',
@@ -1028,7 +1024,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			$classes[] = 'is-customizer-preview';
 		}
 
-		if ( class_exists( 'PixCustomifyPlugin' ) ) {
+		if ( class_exists( 'PixCustomifyPlugin' ) && pixelgrade_user_has_access( 'pro-features' ) ) {
 			$classes[] = 'customify';
 		} else {
 			$classes[] = 'no-customify';

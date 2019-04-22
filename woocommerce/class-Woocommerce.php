@@ -190,6 +190,11 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 		) );
 	}
 
+	/**
+	 * @param array $details
+	 *
+	 * @return array
+	 */
 	public function addProductInfoToCardDetails( $details ) {
 
 		if ( 'product' !== get_post_type() ) {

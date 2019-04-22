@@ -8,15 +8,37 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-between;
 
     > * {
         flex: 1 0 100%;
     }
 
     > .woocommerce-result-count,
-    > .woocommerce-ordering {
-        flex: 0 0 auto;
+    > form[class] {
+        @include spacing(margin-bottom, 20px);
+    }
+
+    > .form-wppp-select {
+        margin-left: 0 !important;
+        float: none !important;
+    }
+
+    @include above(62.5em) {
+
+        > .woocommerce-result-count {
+            margin-right: auto;
+        }
+
+        // form.woocommerce-ordering
+        // and form.form-wppp-select from WooCommerce Products Per Page plugin
+        > .woocommerce-result-count,
+        > form[class] {
+            flex: 0 0 auto;
+        }
+
+        > form + form[class] {
+            @include spacing(margin-left, 20px);
+        }
     }
 }
 

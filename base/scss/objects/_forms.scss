@@ -283,3 +283,32 @@ fieldset {
   }
 }
 
+.select2-container--default .select2-selection--single {
+  border: $input-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  height: auto;
+
+  .select2-selection__rendered {
+    @include spacing(padding, $input-padding);
+    @include leading-map($input-font);
+    color: $input-color;
+  }
+
+  .select2-selection__placeholder {
+    $temp-map: map-merge((line-height: 1.5), $input-font);
+
+    display: block;
+    min-height: map-get($temp-map, line-height) * 1em;
+  }
+
+  .select2-selection__arrow {
+    top: 50%;
+    right: nth($input-padding, 2);
+    transform: translate(50%, -50%);
+  }
+}
+
+.select2-dropdown,
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border-color: $input-border-color;
+}

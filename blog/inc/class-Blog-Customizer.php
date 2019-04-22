@@ -1683,7 +1683,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						),
 					),
 
-					'blog_item_excerpt_font' => array(
+					'blog_item_footer_font' => array(
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Footer Font', '__components_txtd' ),
 						'desc'     => '',

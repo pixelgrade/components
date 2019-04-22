@@ -1,3 +1,12 @@
+$header-sticky-background-color: #000 !default;
+$header-links-color: #FFF !default;
+$header-links-active-color: #FFF !default;
+$header-sticky-links-color: #FFF !default;
+$header-sticky-links-active-color: #FFF !default;
+$header-font: () !default;
+$header-links-spacing: 1em !default;
+$header-sides-spacing: 1em !default;
+
 .site-logo img,
 .custom-logo-link img {
   max-height: $logo-height;

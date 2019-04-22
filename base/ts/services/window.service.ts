@@ -4,7 +4,7 @@ import { Observable, fromEvent } from 'rxjs';
 
 export class WindowService {
 
-  private static $window: JQuery = $( window );
+  private static $window: JQuery<Window> = $( window );
 
   public static onLoad(): Observable<Event> {
     return fromEvent( window, 'load' );
@@ -18,7 +18,7 @@ export class WindowService {
     return fromEvent( window, 'scroll');
   }
 
-  public static getWindow(): JQuery {
+  public static getWindow(): JQuery<Window> {
     return WindowService.$window;
   }
 
@@ -34,8 +34,8 @@ export class WindowService {
     return WindowService.$window.height();
   }
 
-  public static getWindowEl(): Element {
-    return WindowService.$window[ 0 ];
+  public static getWindowEl(): Window {
+    return WindowService.$window[0];
   }
 
   public static getOrientation(): string {

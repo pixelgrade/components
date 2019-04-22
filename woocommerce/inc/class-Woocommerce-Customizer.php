@@ -107,7 +107,6 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 				'options' => array(
 					'main_content_heading_1_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_1_font']['selector'] . ',
-							.woocommerce-checkout .order-total .woocommerce-Price-amount,
 							.cart_totals h2 
 						'
 					),
@@ -115,6 +114,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'selector' => $section_options['main_content']['options']['main_content_heading_2_font']['selector'] . ', 
 							[id="order_review_heading"],
 							.woocommerce-billing-fields > h3,
+							.woocommerce-additional-fields > h3,
 							.cart_totals .order-total .woocommerce-Price-amount,
 							.comment-reply-title
 						'
@@ -122,6 +122,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'main_content_heading_3_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_3_font']['selector'] . ',
 							table.shop_table td.product-name,
+							.woocommerce-checkout .order-total .woocommerce-Price-amount,
 							.c-mini-cart[class] .cart_list a:not(.remove), 
 							.c-mini-cart[class] .product_list_widget a:not(.remove),
 							.product .entry-summary .price[class],
@@ -135,6 +136,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'main_content_heading_4_font'           => array(
 						'selector' => $section_options['main_content']['options']['main_content_heading_4_font']['selector'] . ',
 							.woocommerce-checkout form .form-row label,
+							.woocommerce-checkout-breadcrumbs,
 							.woocommerce-mini-cart__empty-message,
 							table.shop_table tr,
 							[id="ship-to-different-address"],
@@ -143,7 +145,6 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.c-mini-cart .woocommerce-mini-cart__total,
 							.wc_payment_method label,
 							.woocommerce-result-count,
-							.woocommerce-ordering select,
 							.woocommerce-categories,
 							.add_to_cart_inline del,
 							.add_to_cart_inline ins,
@@ -185,7 +186,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 									.woocommerce-categories .active,
 									.wc-tabs > .active a,
 									.star-rating,
-									.woocommerce p.stars a::before
+									.woocommerce p.stars a::before,
+									.woocommerce-checkout-breadcrumbs a
 									'
 							),
 							'woocommerce-menu-cart-background-color' => array(
@@ -272,7 +274,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					// [Section] Layout
 					'woocommerce_grid_title_layout_section'          => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-blog-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-woocommerce-layout" class="separator section label large">&#x1f4d0; ' . esc_html__( 'Layout', '__components_txtd' ) . '</span>',
 					),
 					'woocommerce_grid_width'                         => array(
 						'type'        => 'range',
@@ -289,7 +291,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property' => 'max-width',
-								'selector' => '.u-blog-grid-width',
+								'selector' => '.u-woocommerce-grid-width',
 								'unit'     => 'px',
 							),
 						),
@@ -309,13 +311,13 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property'        => 'padding-left',
-								'selector'        => '.u-blog-sides-spacing',
+								'selector'        => '.u-woocommerce-sides-spacing',
 								'callback_filter' => 'typeline_spacing_cb',
 								'unit'            => 'px',
 							),
 							array(
 								'property'        => 'padding-right',
-								'selector'        => '.u-blog-sides-spacing',
+								'selector'        => '.u-woocommerce-sides-spacing',
 								'callback_filter' => 'typeline_spacing_cb',
 								'unit'            => 'px',
 							),
@@ -500,7 +502,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'woocommerce_items_excerpt_visibility'           => array(
 						'type'    => 'checkbox',
 						'label'   => esc_html__( 'Show Excerpt Text', '__components_txtd' ),
-						'default' => 0, // this should be set by the theme (previously 1)
+						'default' => 1, // this should be set by the theme (previously 1)
 					),
 
 					// [Sub Section] Items Meta
@@ -547,7 +549,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					// [Section] COLORS
 					'woocommerce_grid_title_colors_section'          => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-blog-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-woocommerce-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
 					),
 					'woocommerce_item_title_color'                   => array(
 						'type'    => 'color',
@@ -651,14 +653,17 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					// [Section] FONTS
 					'woocommerce_grid_title_fonts_section'           => array(
 						'type' => 'html',
-						'html' => '<span id="section-title-blog-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
+						'html' => '<span id="section-title-woocommerce-fonts" class="separator section label large">&#x1f4dd;  ' . esc_html__( 'Fonts', '__components_txtd' ) . '</span>',
 					),
 
 					'woocommerce_item_title_font' => array(
 						'type'     => 'font',
 						'label'    => esc_html__( 'Item Title Font', '__components_txtd' ),
 						'desc'     => '',
-						'selector' => '.c-gallery--woocommerce .c-card__title, .c-gallery--woocommerce .c-card__letter',
+						'selector' => '
+							.c-gallery--woocommerce .c-card__title, 
+							.c-gallery--woocommerce .c-card__letter,
+							.c-product-main .product_title',
 						'callback' => 'typeline_font_cb',
 
 						'default'     => array(

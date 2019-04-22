@@ -56,6 +56,9 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		// This theme doesn't have a traditional sidebar. We use BLOCKS to build stuff.
 		remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 		remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
+
+		add_action( 'woocommerce_checkout_billing', array( $this, 'outputCheckoutSiteIdentity' ), 1 );
+		add_action( 'woocommerce_checkout_billing', array( $this, 'outputCheckoutBreadcrumbs' ), 2 );
 		add_action( 'woocommerce_checkout_billing', 'woocommerce_checkout_coupon_form', 10 );
 
 		add_filter( 'body_class', array( $this, 'removeSidebarClass' ), 30 );
@@ -102,8 +105,9 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductHeaderStart' ), 3 );
 		add_action( 'woocommerce_single_product_summary', array( $this, 'singleProductHeaderEnd' ), 11 );
 
-		add_action( 'pixelgrade_before_entry_end', array( $this, 'appendSaleFlashToCard' ) );
+		add_action( 'pixelgrade_before_card_frame_end', array( $this, 'appendSaleFlashToCard' ) );
 		add_action( 'pixelgrade_before_card_frame_end', array( $this, 'appendAddToCartToCardAside' ) );
+		add_filter( 'woocommerce_output_related_products_args', array( $this, 'limitRelatedPostsCount' ), 20 );
 	}
 
 	public function outputAjaxAddToCartButton() {
@@ -149,7 +153,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function alterLoopStart( $loop_start ) {
-		return '<div class="' . join( ' ', pixelgrade_get_woocommerce_grid_class() ) . '">';
+		return '<div class="' . join( ' ', pixelgrade_get_woocommerce_grid_class() ) . '">'; // WPCS: XSS OK.
 	}
 
 	public function alterLoopEnd( $loop_end ) {
@@ -238,7 +242,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function removeHeaderFromCheckout( $allow ) {
-		if ( is_checkout() ) {
+		if ( is_checkout() && ! is_order_received_page() ) {
 			$allow = false;
 		}
 
@@ -246,7 +250,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	}
 
 	public function removeFooterFromCheckout( $allow ) {
-		if ( is_checkout() ) {
+		if ( is_checkout() && ! is_order_received_page() ) {
 			$allow = false;
 		}
 
@@ -285,9 +289,10 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 	public function singleProductCategory() {
 		global $product;
 
-		echo '<div class="woocommerce-product-category c-meta__primary">';
-		echo wc_get_product_category_list( $product->get_id(), ' / ' ); // WPCS: XSS OK.
-		echo '</div>';
+		echo '<ul class="woocommerce-product-category c-meta__primary">';
+		echo '<li><a href="'. get_permalink( wc_get_page_id( 'shop' ) ) . '">' . __( 'Shop', '__theme_txtd' ) . '</a></li>';
+		echo wc_get_product_category_list( $product->get_id(), '</li><li>', '<li>', '</li>' ); // WPCS: XSS OK.
+		echo '</ul>';
 	}
 
 	public function singleProductHeaderStart() {
@@ -324,4 +329,23 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 
 		woocommerce_show_product_loop_sale_flash();
     }
+
+    public function outputCheckoutSiteIdentity() {
+	    echo '<h1 class="woocommerce-checkout-title"><a href="' . get_home_url() . '"><span>'. get_bloginfo( 'name' ) .'</span></a></h1>';
+    }
+
+    public function outputCheckoutBreadcrumbs() {
+	    ob_start(); ?>
+        <ul class="woocommerce-checkout-breadcrumbs">
+            <li><a href="<?php echo wc_get_cart_url(); ?>"><?php _e( 'Cart', '__components_txtd' ); ?></a></li>
+            <li><?php _e( 'Checkout', '__components_txtd' ); ?></li>
+        </ul>
+	    <?php echo ob_get_clean();
+    }
+
+	function limitRelatedPostsCount( $args ) {
+		$args['posts_per_page'] = 3;
+		$args['columns'] = 3;
+		return $args;
+	}
 }

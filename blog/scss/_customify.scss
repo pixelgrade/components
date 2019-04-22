@@ -72,32 +72,32 @@ body {
     color: $page-title-color;
 }
 
-h1 {
+.h1, h1 {
     @include leading-map($h1);
     color: $h1-color;
 }
 
-h2 {
+.h2, h2 {
     @include leading-map($h2);
     color: $h2-color;
 }
 
-h3 {
+.h3, h3 {
     @include leading-map($h3);
     color: $h3-color;
 }
 
-h4 {
+.h4, h4 {
     @include leading-map($h4);
     color: $h4-color;
 }
 
-h5 {
+.h5, h5 {
     @include leading-map($h5);
     color: $h5-color;
 }
 
-h6 {
+.h6, h6 {
     @include leading-map($h6);
     color: $h6-color;
 }
@@ -175,6 +175,8 @@ $blog-card-title-color: #000000 !default;
 $blog-primary-meta-color: #3B3B3B !default;
 $blog-secondary-meta-color: #828282 !default;
 $blog-thumbnail-background: #EEEEEE !default;
+$blog-card-excerpt-color: #000000 !default;
+$blog-card-footer-color: #000000 !default;
 
 // Thumbnail hover
 $blog-thumbnail-background-opacity: 0.5 !default;
@@ -183,6 +185,7 @@ $blog-thumbnail-background-opacity: 0.5 !default;
 // ----------------------------------------
 $blog-card-title-font: () !default;
 $blog-card-excerpt-font: () !default;
+$blog-card-footer-font: () !default;
 $blog-card-meta-primary-font: () !default;
 $blog-card-meta-secondary-font: () !default;
 
@@ -221,10 +224,6 @@ $blog-card-meta-secondary-font: () !default;
     }
 }
 
-.c-card__excerpt {
-    @include leading-map($blog-card-excerpt-font);
-}
-
 .c-meta__primary {
     @include leading-map($blog-card-meta-primary-font);
 
@@ -246,6 +245,18 @@ $blog-card-meta-secondary-font: () !default;
     @if ($blog-primary-meta-color) {
         color: $blog-secondary-meta-color;
     }
+}
+
+.c-card__excerpt {
+    @include leading-map($blog-card-excerpt-font);
+
+    color: $blog-card-excerpt-color;
+}
+
+.c-card__footer {
+    @include leading-map($blog-card-footer-font);
+
+    color: $blog-card-footer-color;
 }
 
 .c-card__thumbnail-background {

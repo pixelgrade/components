@@ -91,6 +91,7 @@
                 flex-wrap: wrap;
                 align-items: center;
                 border: 0;
+                background: none;
             }
 
             tr ~ tr {
@@ -221,15 +222,14 @@
 
 // content layout adjustments
 .c-product-main,
-.wc-tabs-wrapper,
-.related.products,
-.upsells.products {
+.wc-tabs-wrapper {
     max-width: 1056px;
     margin-left: auto;
     margin-right: auto;
 }
 
 #content .c-product-main {
+    @include spacing(margin-top, 6rem);
 
     @include specific(3) {
 
@@ -238,19 +238,18 @@
         }
 
         @include above( $woocommerce-mobile-breakpoint ) {
-            position: relative;
             display: flex;
 
             > .woocommerce-product-gallery {
                 float: none;
                 width: auto;
-                flex-basis: 55%;
+                flex: 1 1 55%;
             }
 
             > .entry-summary {
                 float: none;
                 width: auto;
-                flex-basis: 35%;
+                flex: 0 0 35%;
                 @include spacing(margin-left, 6rem);
             }
 
@@ -449,7 +448,11 @@
         }
 
         td p {
-            padding: 12px;
+            padding: 0;
         }
     }
+}
+
+.comment-form-subscriptions:empty {
+    display: none;
 }
