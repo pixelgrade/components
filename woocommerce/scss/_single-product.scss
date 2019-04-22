@@ -229,6 +229,7 @@
 }
 
 #content .c-product-main {
+    position: relative;
     @include spacing(margin-top, 6rem);
 
     @include specific(3) {
@@ -455,4 +456,14 @@
 
 .comment-form-subscriptions:empty {
     display: none;
+}
+
+.woocommerce-product-category {
+    display: flex;
+
+    li + li:before {
+        content: "/";
+        padding-left: 0.3em;
+        padding-right: 0.3em;
+    }
 }
