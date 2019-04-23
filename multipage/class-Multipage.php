@@ -113,10 +113,12 @@ class Pixelgrade_Multipage extends Pixelgrade_Component {
 	public function enqueueScripts() {
 		// Register the frontend styles and scripts specific to multipages
 		wp_register_script( 'pixelgrade_multipage-scripts', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'js/jquery.bully.js' ), array( 'jquery' ), $this->assets_version, true );
+		wp_register_style( 'pixelgrade_multipage-styles', pixelgrade_get_theme_file_uri( trailingslashit( PIXELGRADE_COMPONENTS_PATH ) . trailingslashit( self::COMPONENT_SLUG ) . 'css/style.css' ) );
 
 		// See if we need to enqueue something for multipages
 		if ( is_page() && pixelgrade_multipage_has_children() ) {
 			wp_enqueue_script( 'pixelgrade_multipage-scripts' );
+			wp_enqueue_style( 'pixelgrade_multipage-styles' );
 		}
 	}
 
