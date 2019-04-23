@@ -1,3 +1,6 @@
+@import "../../base/scss/mixins/all";
+@import "../../base/scss/tools/all";
+
 [class*="c-bully"],
 [class*="c-bully"]:before,
 [class*="c-bully"]:after {
@@ -12,6 +15,7 @@
     transform: translate(0, -50%);
     z-index: 9000;
     color: #000;
+    @include spacing(margin-right, 30px);
 }
 
 .c-bully--inversed {
