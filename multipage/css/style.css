@@ -1,3 +1,11 @@
+/**
+ * 1. Allow us to style box model properties.
+ * 2. Line different sized buttons up a little nicer.
+ * 3. Make buttons inherit font styles (often necessary when styling `input`s as
+ *    buttons).
+ * 4. Reset/normalize some styles.
+ * 5. Force all button-styled elements to appear clickable.
+ */
 [class*="c-bully"],
 [class*="c-bully"]:before,
 [class*="c-bully"]:after {
@@ -12,7 +20,20 @@
   -webkit-transform: translate(0, -50%);
           transform: translate(0, -50%);
   z-index: 9000;
-  color: #000; }
+  color: #000;
+  margin-right: 30px; }
+  @media only screen and (max-width: 1360px) {
+    .c-bully {
+      margin-right: 23.7037px; } }
+  @media only screen and (max-width: 1024px) {
+    .c-bully {
+      margin-right: 19.59184px; } }
+  @media only screen and (max-width: 768px) {
+    .c-bully {
+      margin-right: 16.69565px; } }
+  @media only screen and (max-width: 320px) {
+    .c-bully {
+      margin-right: 14.54545px; } }
 
 .c-bully--inversed {
   color: #FFF; }
