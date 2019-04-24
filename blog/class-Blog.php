@@ -779,7 +779,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 	public function registerPageBlock() {
 
-		$location = array( 'page' );
+		$location = pixelgrade_get_location( 'page' );
 		if ( is_front_page() ) {
 			$location[] = 'front-page';
 		}
