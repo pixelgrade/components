@@ -44,6 +44,17 @@
     }
 }
 
+.c-card__term-list {
+    @include specific(2) {
+        margin: 0;
+
+        &:before,
+        &:after {
+            content: none;
+        }
+    }
+}
+
 .c-card__excerpt .price {
     display: flex;
     flex-wrap: wrap;

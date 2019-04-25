@@ -245,6 +245,11 @@
       .c-card__add-to-cart[class][class][class][class] .added_to_cart {
         bottom: 10.58201px; } }
 
+.c-card__term-list[class][class] {
+  margin: 0; }
+  .c-card__term-list[class][class]:before, .c-card__term-list[class][class]:after {
+    content: none; }
+
 .c-card__excerpt .price {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -672,8 +677,21 @@
       .woocommerce-product-gallery[class][class][class] .flex-control-thumbs {
         margin-top: -10.58201px; } }
     .woocommerce-product-gallery[class][class][class] .flex-control-thumbs > * {
+      max-width: 116px;
       padding-left: 16px;
       padding-top: 16px; }
+      @media only screen and (max-width: 1360px) {
+        .woocommerce-product-gallery[class][class][class] .flex-control-thumbs > * {
+          max-width: 82.85714px; } }
+      @media only screen and (max-width: 1024px) {
+        .woocommerce-product-gallery[class][class][class] .flex-control-thumbs > * {
+          max-width: 64.44444px; } }
+      @media only screen and (max-width: 768px) {
+        .woocommerce-product-gallery[class][class][class] .flex-control-thumbs > * {
+          max-width: 52.72727px; } }
+      @media only screen and (max-width: 320px) {
+        .woocommerce-product-gallery[class][class][class] .flex-control-thumbs > * {
+          max-width: 44.61538px; } }
       @media only screen and (max-width: 1360px) {
         .woocommerce-product-gallery[class][class][class] .flex-control-thumbs > * {
           padding-left: 14.1844px; } }
@@ -911,6 +929,20 @@
     text-align: right; }
   .woocommerce form.cart .added_to_cart {
     display: none; }
+  .woocommerce form.cart .variations[class][class] {
+    margin-bottom: 30px; }
+    @media only screen and (max-width: 1360px) {
+      .woocommerce form.cart .variations[class][class] {
+        margin-bottom: 23.7037px; } }
+    @media only screen and (max-width: 1024px) {
+      .woocommerce form.cart .variations[class][class] {
+        margin-bottom: 19.59184px; } }
+    @media only screen and (max-width: 768px) {
+      .woocommerce form.cart .variations[class][class] {
+        margin-bottom: 16.69565px; } }
+    @media only screen and (max-width: 320px) {
+      .woocommerce form.cart .variations[class][class] {
+        margin-bottom: 14.54545px; } }
 
 .woocommerce-product-details__short-description {
   margin-bottom: 20px; }
