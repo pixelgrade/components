@@ -210,10 +210,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			'loop-none'       => array(
 				'type'      => 'template_part',
 				'templates' => array(
-					array(
+					'content-none' => array(
 						'component_slug' => self::COMPONENT_SLUG,
 						'slug'           => 'content',
 						'name'           => 'none',
+						'lookup_parts_root' => true,
 					),
 				),
 				'checks'    => array(
