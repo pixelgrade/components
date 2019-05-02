@@ -22,6 +22,7 @@ $burger-transition-function:    ease-in-out                                    !
     margin-bottom: to-fixed($burger-translateY);
 
     font-size: $burger-width;
+    transition: color $burger-transition-duration $burger-transition-function;
 }
 
 .c-burger__slice {
