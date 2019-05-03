@@ -1,7 +1,7 @@
 # components
 WordPress theme logic components - theme development with brains.
 
-By [Vlad Olaru](https://github.com/vladolaru) ([@vladpotter](https://twitter.com/vladpotter)), [Razvan Onofrei](https://github.com/razwan) ([@razvanonofrei](https://twitter.com/razvanonofrei)), [Victor Panaite](https://github.com/victor-panaite) ([@victorpanaite](https://twitter.com/victorpanaite)) and [Pixelgrade](https://twitter.com/pixelgrade)
+By [Vlad Olaru](https://github.com/vladolaru) ([@vladpotter](https://twitter.com/vladpotter)), [Razvan Onofrei](https://github.com/razwan) ([@razvanonofrei](https://twitter.com/razvanonofrei)), and [Pixelgrade](https://twitter.com/pixelgrade)
 
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pixelgrade/components/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pixelgrade/components/?branch=master)
