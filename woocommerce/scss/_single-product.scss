@@ -474,3 +474,7 @@
         padding-right: 0.3em;
     }
 }
+
+.comment-form-subscriptions:empty {
+    display: none;
+}
