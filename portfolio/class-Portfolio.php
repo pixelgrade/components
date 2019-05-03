@@ -508,7 +508,7 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 				'echo'              => 1,
 				'show_option_none'  => esc_html__( '&mdash; Select &mdash;', '__components_txtd' ),
 				'option_none_value' => '0',
-				'selected'          => get_option( 'page_for_projects' ), // @codingStandardsIgnoreLine.
+				'selected'          => get_option( 'page_for_projects' ), // phpcs:ignore
 			)
 		);
 		echo '<p class="description">' . esc_html__( 'Choose what page should act as the portfolio archive page.', '__components_txtd' ) . '</p>';

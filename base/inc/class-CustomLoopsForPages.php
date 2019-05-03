@@ -220,12 +220,12 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 					// Also fix the globals regarding pagination.
 					global $paged;
 
-					$paged = 1; // @codingStandardsIgnoreLine
+					$paged = 1; // phpcs:ignore
 					if ( get_query_var( 'paged' ) ) {
-						$paged = get_query_var( 'paged' ); // @codingStandardsIgnoreLine
+						$paged = get_query_var( 'paged' ); // phpcs:ignore
 					}
 					if ( get_query_var( 'page' ) ) {
-						$paged = get_query_var( 'page' ); // @codingStandardsIgnoreLine
+						$paged = get_query_var( 'page' ); // phpcs:ignore
 					}
 
 					// FILTERS:
@@ -387,7 +387,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 						if ( is_array( $this->loop_template_part ) ) {
 							if ( empty( $this->loop_template_part['slug'] ) ) {
 								/* translators: %s: the page slug */
-								_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the loop template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), null ); // @codingStandardsIgnoreLine
+								_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the loop template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), null ); // phpcs:ignore
 							} else {
 								$loop_template_part_slug = trim( $this->loop_template_part['slug'] );
 							}
@@ -402,15 +402,15 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 
 						if ( ! file_exists( $loop_template ) ) {
 							/* translators: 1: the template part, 2: the page slug */
-							_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( '%1$s does not exist. Check out the config of the %2$s custom page template.', '__components_txtd' ), '<code>' . $loop_template_part_slug . '-' . $loop_template_part_name . '</code>', '<code>' . $this->page_slug . '</code>' ), null ); // @codingStandardsIgnoreLine
+							_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( '%1$s does not exist. Check out the config of the %2$s custom page template.', '__components_txtd' ), '<code>' . $loop_template_part_slug . '-' . $loop_template_part_name . '</code>', '<code>' . $this->page_slug . '</code>' ), null ); // phpcs:ignore
 						} else {
-							// These will be available to the loop template part to do stuff like the_post() and so on.
+							// These will be available in the scope of the loop template part to do stuff like the_post() and so on.
 							$post_template_part_slug = '';
 							$post_template_part_name = '';
 							if ( is_array( $this->post_template_part ) ) {
 								if ( empty( $this->post_template_part['slug'] ) ) {
 									/* translators: %s: the page slug */
-									_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), null ); // @codingStandardsIgnoreLine
+									_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), null ); // phpcs:ignore
 								} else {
 									$post_template_part_slug = trim( $this->post_template_part['slug'] );
 								}
@@ -423,7 +423,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							}
 
 							// Include the loop template part.
-							include $loop_template; // @codingStandardsIgnoreLine.
+							include $loop_template; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
 						}
 					} else {
 
@@ -467,7 +467,7 @@ if ( ! class_exists( 'Pixelgrade_CustomLoopsForPages' ) ) :
 							if ( is_array( $this->post_template_part ) ) {
 								if ( empty( $this->post_template_part['slug'] ) ) {
 									/* translators: %s: the page slug */
-									_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), null ); // @codingStandardsIgnoreLine
+									_doing_it_wrong( __FUNCTION__, sprintf( esc_html__( 'You haven\'t provided a slug for the post template part for the %s page template custom loop.', '__components_txtd' ), '<code>' . $this->page_slug . '</code>' ), null ); // phpcs:ignore
 								} else {
 									$post_template_part_slug = trim( $this->post_template_part['slug'] );
 								}

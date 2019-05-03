@@ -89,7 +89,7 @@ if ( ! pixelgrade_header_is_valid_config() ) {
 		?>
 
 		<div <?php pixelgrade_css_class( $zone['classes'], array( 'header', 'navbar', 'zone', $zone_id ) ); ?>>
-			<?php echo $output; // WPCS: XSS OK. ?>
+			<?php echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div><!-- .c-navbar__zone -->
 
 	<?php } ?>

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function pixelgrade_header_class( $class = '', $location = '', $post = null ) {
 	// Separates classes with a single space, collates classes for header element
-	echo 'class="' . join( ' ', pixelgrade_get_header_class( $class, $location, $post ) ) . '"'; // @codingStandardsIgnoreLine
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_header_class( $class, $location, $post ) ) ) . '"';
 }
 
 /**
@@ -357,5 +357,5 @@ function pixelgrade_get_custom_logo_transparent( $blog_id = 0 ) {
  * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
  */
 function pixelgrade_the_custom_logo_transparent( $blog_id = 0 ) {
-	echo pixelgrade_get_custom_logo_transparent( $blog_id ); // WPCS: XSS OK.
+	echo pixelgrade_get_custom_logo_transparent( $blog_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

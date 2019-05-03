@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function pixelgrade_blog_grid_class( $class = '', $location = '' ) {
 	// Separates classes with a single space, collates classes
-	echo 'class="' . join( ' ', pixelgrade_get_blog_grid_class( $class, $location ) ) . '"'; // @codingStandardsIgnoreLine
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_blog_grid_class( $class, $location ) ) ) . '"';
 }
 
 if ( ! function_exists( 'pixelgrade_get_blog_grid_class' ) ) {
@@ -145,7 +145,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_alignment_class' ) ) {
 }
 
 function pixelgrade_blog_grid_item_class( $class = '', $location = '' ) {
-	echo 'class="' . join( ' ', pixelgrade_get_blog_grid_item_class( $class, $location ) ) . '"'; // @codingStandardsIgnoreLine
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_blog_grid_item_class( $class, $location ) ) ) . '"';
 }
 
 if ( ! function_exists( 'pixelgrade_get_blog_grid_item_class' ) ) {
@@ -279,7 +279,7 @@ function pixelgrade_the_post_navigation( $args = array() ) {
         return;
     }
 
-	echo pixelgrade_get_the_post_navigation( $args ); // @codingStandardsIgnoreLine
+	echo pixelgrade_get_the_post_navigation( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
@@ -342,7 +342,7 @@ if ( ! function_exists( 'pixelgrade_get_the_post_navigation' ) ) {
  */
 function pixelgrade_the_author_info_box() {
 	if ( pixelgrade_user_has_access( 'pro-features' ) ) {
-		echo pixelgrade_get_the_author_info_box(); // @codingStandardsIgnoreLine
+		echo pixelgrade_get_the_author_info_box(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
@@ -567,7 +567,7 @@ function pixelgrade_get_main_category( $post_ID = null ) {
  * @param string $category_class Optional. A CSS class that the category will receive.
  */
 function pixelgrade_the_main_category_link( $before = '', $after = '', $category_class = '' ) {
-	echo pixelgrade_get_main_category_link( $before, $after, $category_class ); // @codingStandardsIgnoreLine
+	echo pixelgrade_get_main_category_link( $before, $after, $category_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 } // function
 
@@ -670,7 +670,7 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 	 * @param int        $depth
 	 */
 	function pixelgrade_shape_comment( $comment, $args, $depth ) {
-		$GLOBALS['comment'] = $comment; // @codingStandardsIgnoreLine
+		$GLOBALS['comment'] = $comment; // phpcs:ignore
 		switch ( $comment->comment_type ) :
 			case 'pingback':
 			case 'trackback':
@@ -691,16 +691,16 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 							<div class="comment__author vcard">
 								<?php
 								/* translators: %s: comment author link */
-								printf( wp_kses( __( '%s <span class="says">says:</span>', '__components_txtd' ), wp_kses_allowed_html() ), sprintf( '<b class="fn">%s</b>', get_comment_author_link( $comment ) ) );
+								printf( wp_kses_post( __( '%s <span class="says">says:</span>', '__components_txtd' ) ), sprintf( '<b class="fn">%s</b>', get_comment_author_link( $comment ) ) );
 								?>
 							</div><!-- .comment-author -->
 
 							<div class="comment__metadata">
 								<a href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>">
-									<time datetime="<?php comment_time( 'c' ); ?>">
+									<time datetime="<?php esc_attr( get_comment_time( 'c' ) ); ?>">
 										<?php
 										/* translators: 1: comment date, 2: comment time */
-										printf( esc_html__( '%1$s at %2$s', '__components_txtd' ), get_comment_date( '', $comment ), get_comment_time() );
+										printf( esc_html__( '%1$s at %2$s', '__components_txtd' ), esc_html( get_comment_date( '', $comment ) ), esc_html( get_comment_time() ) );
 										?>
 									</time>
 								</a>
@@ -755,7 +755,7 @@ if ( ! function_exists( 'pixelgrade_the_post_custom_css' ) ) {
 			}
 
 			// Allow others to modify this
-			echo apply_filters( 'pixelgrade_the_post_custom_css', $output, get_the_ID(), $location ); // @codingStandardsIgnoreLine
+			echo apply_filters( 'pixelgrade_the_post_custom_css', $output, get_the_ID(), $location ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }
@@ -809,7 +809,7 @@ if ( ! function_exists( 'pixelgrade_the_posts_pagination' ) ) {
 	 *                    Default empty array.
 	 */
 	function pixelgrade_the_posts_pagination( $args = array() ) {
-		echo pixelgrade_get_the_posts_pagination( $args ); // @codingStandardsIgnoreLine
+		echo pixelgrade_get_the_posts_pagination( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
@@ -857,18 +857,13 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 			esc_html( get_the_modified_date() )
 		);
 
-		$posted_on = sprintf(
-			/* translators: %s: The current post's posted date, in the post header */
-			esc_html_x( '%s', 'post date', '__components_txtd' ), // @codingStandardsIgnoreLine
-			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
+		printf( '<span class="byline"> <span class="by">%1$s</span> <span class="author vcard"><a class="url fn n" href="%2$s">%3$s</a></span></span><span class="posted-on"><a href="%4$s" rel="bookmark">%5$s</a></span>',
+			esc_html_x( 'by', 'post author', '__components_txtd' ),
+			esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+			esc_html( get_the_author() ),
+			esc_url( get_permalink() ),
+			wp_kses( $time_string, array( 'time' => array( 'class' => true, 'datetime' => true, ) ) )
 		);
-
-		$byline = sprintf(
-			'<span class="by">' . esc_html_x( 'by', 'post author', '__components_txtd' ) . '</span> %s',
-			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
-		);
-
-		echo '<span class="byline"> ' . $byline . '</span><span class="posted-on">' . $posted_on . '</span>'; // @codingStandardsIgnoreLine
 
 	}
 }
@@ -876,9 +871,11 @@ if ( ! function_exists( 'pixelgrade_posted_on' ) ) {
 if ( ! function_exists( 'pixelgrade_comments_toggle_checked_attribute' ) ) {
 	/**
 	 * Print the comment show/hide control's checked HTML attribute.
+	 *
+	 * @param string $element The HTML element name to which the attribute belongs.
 	 */
-	function pixelgrade_comments_toggle_checked_attribute() {
-		echo pixelgrade_get_comments_toggle_checked_attribute(); // @codingStandardsIgnoreLine
+	function pixelgrade_comments_toggle_checked_attribute( $element = 'input' ) {
+		echo wp_kses_one_attr( pixelgrade_get_comments_toggle_checked_attribute(), $element ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 

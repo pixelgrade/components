@@ -95,7 +95,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					?>
 
 					<div class="u-content-bottom-spacing  <?php echo esc_attr( $visibility_class ); ?>">
-						<div class="<?php echo $content_width_class; ?>">
+						<div class="<?php echo esc_attr( $content_width_class ); ?>">
 
 							<?php
 							/**
@@ -121,7 +121,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 					<?php if ( get_the_content() ) : ?>
 
-						<div class="entry-content <?php echo $content_width_class; ?>">
+						<div class="entry-content <?php echo esc_attr( $content_width_class ); ?>">
 							<?php
 							the_content();
 

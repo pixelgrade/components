@@ -15,7 +15,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Woocommerce
- * @version     1.0.1
+ * @version     1.0.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ if ( ! function_exists( 'Pixelgrade_Woocommerce' ) ) :
 		if ( ! class_exists( 'Pixelgrade_Woocommerce' ) ) {
 			pixelgrade_load_component_file( 'woocommerce', 'class-Woocommerce' );
 		}
-		return Pixelgrade_Woocommerce::instance( '1.0.1' );
+		return Pixelgrade_Woocommerce::instance( '1.0.2' );
 	}
 endif;
 

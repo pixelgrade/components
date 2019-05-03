@@ -86,7 +86,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 
 					<?php
 					if ( $primary_meta_output ) {
-						echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>'; // WPCS: XSS OK.
+						echo '<div class="c-meta__primary">' . $primary_meta_output . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 						if ( $secondary_meta_output ) {
 							echo '<div class="c-card__separator"></div>';
@@ -94,7 +94,7 @@ do_action( 'pixelgrade_before_loop_entry', $location );
 					}
 
 					if ( $secondary_meta_output ) {
-						echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>'; // WPCS: XSS OK.
+						echo '<div class="c-meta__secondary">' . $secondary_meta_output . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					?>
 
