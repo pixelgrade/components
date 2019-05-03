@@ -425,6 +425,10 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			}
 		}
 
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return false;
+		}
+
 		// Get the current screen
 		$screen = get_current_screen();
 

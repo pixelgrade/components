@@ -63,11 +63,6 @@ $gridable-column-boxed: '.column-style--boxed' !default;
 
 #{$gridable-row-wrapper} {
   position: relative;
-  @include spacing(margin-bottom, $gridable-column-gutter);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 #{$gridable-row} {
@@ -76,6 +71,7 @@ $gridable-column-boxed: '.column-style--boxed' !default;
   flex-flow: row wrap;
   justify-content: space-between;
   @include spacing(margin-left, -$gridable-column-gutter);
+  @include spacing(margin-top, -$gridable-column-gutter);
 
   // Overwrite Gridable defaults
   padding-left: 0;
@@ -126,17 +122,55 @@ $gridable-column-boxed: '.column-style--boxed' !default;
   }
 }
 
+// alter gallery display on mobile devices
+@mixin stretch-column-gallery-items-count($i) {
+  // cache initial selector
+  $this: &;
+  // select first item in a container with $i children
+  &:first-child:nth-last-child(#{$i}) {
+    // add all siblings to initial selector
+    &, & ~ #{$this} {
+      // select only items that are in a stretched column
+      #{$gridable-column-stretch} & {
+        @content;
+      }
+    }
+  }
+}
+
+@include below(lap) {
+
+  .gallery-item {
+
+    #{$gridable-column-stretch} & {
+      flex-basis: percentage(1/3);
+    }
+
+    #{$gridable-column-stretch} &:first-child:last-child {
+      flex-basis: 100%;
+    }
+
+    @include stretch-column-gallery-items-count(2) {
+      flex-basis: 50%;
+    }
+
+    @include stretch-column-gallery-items-count(3) {
+      flex-basis: percentage(1/3);
+    }
+
+    @include stretch-column-gallery-items-count(4) {
+      flex-basis: 50%;
+    }
+  }
+}
+
 /**
  * Grid Columns / Row Items
  */
 
 #{$gridable-column-wrapper} {
-  @include spacing(padding-bottom, $gridable-column-gutter);
+  @include spacing(margin-top, $gridable-column-gutter);
   @include spacing(padding-left, $gridable-column-gutter);
-
-  @include above(lap) {
-    padding-bottom: 0;
-  }
 }
 
 #{$gridable-column} {
@@ -251,7 +285,6 @@ $gridable-column-boxed: '.column-style--boxed' !default;
 
 // Stretched Row Option
 #{$gridable-row-stretch} {
-  @include above(lap) {
     #{$gridable-row} {
       align-items: stretch;
     }
@@ -267,6 +300,7 @@ $gridable-column-boxed: '.column-style--boxed' !default;
     }
 
     #{$gridable-column-wrapper} {
+
       &.hide-images img {
         display: none;
       }
@@ -277,8 +311,7 @@ $gridable-column-boxed: '.column-style--boxed' !default;
 
       .gallery {
         align-items: stretch;
-        height: calc(100% + 4rem);
-        width: calc(100% + 3rem);
+        height: 100%;
       }
 
       .gallery-item {
@@ -292,17 +325,19 @@ $gridable-column-boxed: '.column-style--boxed' !default;
 
         img {
           position: absolute;
-          width: 100%;
-          height: 100%;
         }
+      }
+
+      figure {
+        height: 100%;
       }
 
       img {
         object-fit: cover;
         width: 100%;
+        height: 100%;
       }
     }
-  }
 }
 
 /* Gridable UI Adjustments
@@ -369,23 +404,6 @@ $gridable-column-boxed: '.column-style--boxed' !default;
         color: black;
         background: rgba(white, .5);
       }
-    }
-  }
-}
-
-// @todo styles for gridable I found in Julia's _shame.scss - is this needed here?
-.gridable {
-  &:not(:last-child) {
-    @include spacing(padding-bottom, 2.5rem);
-  }
-}
-
-.gridable--col {
-  & + & {
-    @include spacing(padding-top, 2.5rem);
-
-    @include above(lap) {
-      padding-top: 0;
     }
   }
 }

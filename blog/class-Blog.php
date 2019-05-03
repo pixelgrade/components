@@ -210,10 +210,11 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 			'loop-none'       => array(
 				'type'      => 'template_part',
 				'templates' => array(
-					array(
+					'content-none' => array(
 						'component_slug' => self::COMPONENT_SLUG,
 						'slug'           => 'content',
 						'name'           => 'none',
+						'lookup_parts_root' => true,
 					),
 				),
 				'checks'    => array(
@@ -779,7 +780,7 @@ class Pixelgrade_Blog extends Pixelgrade_Component {
 
 	public function registerPageBlock() {
 
-		$location = array( 'page' );
+		$location = pixelgrade_get_location( 'page' );
 		if ( is_front_page() ) {
 			$location[] = 'front-page';
 		}

@@ -1045,7 +1045,7 @@ function pixelgrade_hero_the_description( $content, $slide = null ) {
 	// If we had to modify the global post, we need to clean up and restore things to the way they were
 	if ( ! empty( $new_post ) ) {
 		$post = $original_post; // @codingStandardsIgnoreLine
-		wp_reset_postdata();
+		setup_postdata($post);
 	}
 }
 

@@ -15,6 +15,7 @@
             @include spacing(margin-top, -1rem);
 
             > * {
+                @include spacing(max-width, 116px);
                 @include spacing(padding-left, 1rem);
                 @include spacing(padding-top, 1rem);
             }
@@ -143,6 +144,12 @@
     .added_to_cart {
         display: none;
     }
+
+    .variations {
+        @include specific(2) {
+            @include spacing(margin-bottom, 30px);
+        }
+    }
 }
 
 .woocommerce-product-details__short-description {
@@ -229,6 +236,7 @@
 }
 
 #content .c-product-main {
+    position: relative;
     @include spacing(margin-top, 6rem);
 
     @include specific(3) {
@@ -450,6 +458,20 @@
         td p {
             padding: 0;
         }
+    }
+}
+
+.comment-form-subscriptions:empty {
+    display: none;
+}
+
+.woocommerce-product-category {
+    display: flex;
+
+    li + li:before {
+        content: "/";
+        padding-left: 0.3em;
+        padding-right: 0.3em;
     }
 }
 
