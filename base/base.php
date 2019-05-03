@@ -18,7 +18,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Base
- * @version     1.3.0
+ * @version     1.4.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -73,7 +73,7 @@ if ( ! function_exists( 'Pixelgrade_Base' ) ) :
 		if ( ! class_exists( 'Pixelgrade_Base' ) ) {
 			pixelgrade_load_component_file( 'base', 'class-Base' );
 		}
-		return Pixelgrade_Base::instance( '1.3.0' );
+		return Pixelgrade_Base::instance( '1.4.0' );
 	}
 endif;
 

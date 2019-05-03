@@ -15,7 +15,7 @@
  * @see         https://pixelgrade.com
  * @author      Pixelgrade
  * @package     Components/Hero
- * @version     1.2.4
+ * @version     1.2.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ if ( ! function_exists( 'Pixelgrade_Hero' ) ) :
 		if ( ! class_exists( 'Pixelgrade_Hero' ) ) {
 			pixelgrade_load_component_file( 'hero', 'class-Hero' );
 		}
-		return Pixelgrade_Hero::instance( '1.2.4' );
+		return Pixelgrade_Hero::instance( '1.2.5' );
 	}
 endif;
 
