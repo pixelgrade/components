@@ -356,7 +356,7 @@ class Pixelgrade_Wrapper {
 
 		// Glue the attributes
 		if ( ! empty( $classes ) ) {
-			return 'class="' . join( ' ', $classes ) . '"';
+			return 'class="' . esc_attr( join( ' ', $classes ) ) . '"';
 		}
 
 		return '';
@@ -525,7 +525,7 @@ class Pixelgrade_Wrapper {
 			}
 
 			if ( ! is_array( $data ) || ! is_object( $data ) ) {
-				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null ); // @codingStandardsIgnoreLine
+				_doing_it_wrong( __METHOD__, 'The wrapper\'s master callback didn\'t return a valid array of wrapper attributes! The master callback used: ' . print_r( $this->master_callback['callback'], true ), null ); // phpcs:ignore
 
 				return false;
 			}

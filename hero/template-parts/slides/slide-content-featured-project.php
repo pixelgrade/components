@@ -44,23 +44,23 @@ $link_project_label = trim( get_post_meta( $post_ID, '_hero_featured_projects_vi
 
 	<div class="c-hero__content">
 		<p class="c-hero__category">
-		<?php
-		// We need to handle gracefully the case when Jetpack_Portfolio is missing
-		$taxonomy = 'jetpack-portfolio-type';
-		if ( class_exists( 'Jetpack_Portfolio' ) && defined( 'Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE' ) ) {
-			$taxonomy = Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE;
-		}
-		the_terms( $slide['post_id'], $taxonomy );
-		?>
+			<?php
+			// We need to handle gracefully the case when Jetpack_Portfolio is missing
+			$current_taxonomy = 'jetpack-portfolio-type';
+			if ( class_exists( 'Jetpack_Portfolio' ) && defined( 'Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE' ) ) {
+				$current_taxonomy = Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE;
+			}
+			the_terms( $slide['post_id'], $current_taxonomy );
+			?>
 		</p>
 		<a class="c-hero__link" href="<?php the_permalink( $slide['post_id'] ); ?>">
 			<div class="c-hero__title-mask">
-				<h1 class="c-hero__title h0"><?php echo get_the_title( $slide['post_id'] ); ?></h1>
+				<h1 class="c-hero__title h0"><?php echo wp_kses( get_the_title( $slide['post_id'] ), wp_kses_allowed_html() ); ?></h1>
 			</div>
 			<?php if ( ! empty( $link_project_label ) ) { ?>
 			<div class="c-hero__action">
 				<span class="link--arrow  light">
-					<?php echo wp_kses( $link_project_label, wp_kses_allowed_html() ); // WPCS: XSS OK. ?>
+					<?php echo wp_kses( $link_project_label, wp_kses_allowed_html() ); ?>
 				</span>
 			</div>
 		</a>

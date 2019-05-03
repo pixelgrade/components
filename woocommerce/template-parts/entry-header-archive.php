@@ -26,11 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <header class="woocommerce-header">
 
-	<?php if ( apply_filters( 'woocommerce_show_page_title', true ) && ! empty( woocommerce_page_title( false ) ) ) : ?>
-		<h1 class="woocommerce-products-header__title entry-title"><?php woocommerce_page_title(); ?></h1>
-	<?php endif; ?>
-
 	<?php
+	$archive_page_title = woocommerce_page_title( false );
+	if ( ! empty( $archive_page_title ) && apply_filters( 'woocommerce_show_page_title', true ) ) { ?>
+		<h1 class="woocommerce-products-header__title entry-title"><?php echo wp_kses( $archive_page_title, wp_kses_allowed_html() ); ?></h1>
+	<?php }
+
 	/**
 	 * Hook: woocommerce_archive_description.
 	 *

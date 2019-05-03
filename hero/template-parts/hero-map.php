@@ -29,36 +29,36 @@ $location = pixelgrade_set_location( 'map' );
 // So we check first
 if ( is_home() ) {
 	// Find the id of the page for posts
-	$post_id = get_option( 'page_for_posts' );
+	$current_post_id = get_option( 'page_for_posts' );
 }
 
 // We might be on a page set as a page for projects and the $post will be the first project in the loop
 // So we check first
 if ( pixelgrade_is_page_for_projects() ) {
 	// find the id of the page for projects
-	$post_ID = get_option( 'page_for_projects' );
+	$current_post_id = get_option( 'page_for_projects' );
 }
 
 // Get the global post if we have none so far
-if ( empty( $post_id ) ) {
-	$post_id = get_the_ID();
+if ( empty( $current_post_id ) ) {
+	$current_post_id = get_the_ID();
 }
 
-if ( pixelgrade_hero_is_hero_needed( $location, $post_id ) ) : ?>
+if ( pixelgrade_hero_is_hero_needed( $location, $current_post_id ) ) : ?>
 
-	<div <?php pixelgrade_hero_class( '', $location, $post_id ); ?>>
+	<div <?php pixelgrade_hero_class( '', $location, $current_post_id ); ?>>
 
         <div class="c-hero__background-mask  c-hero__layer">
-            <div class="c-hero__background  c-hero__layer" <?php pixelgrade_hero_background_color_style( $post_id ); ?>>
+            <div class="c-hero__background  c-hero__layer" <?php pixelgrade_hero_background_color_style( $current_post_id ); ?>>
 
                 <?php
                 // first lets get to know this page a little better
                 // get the Google Maps URL
-                $map_url = get_post_meta( $post_id, '_hero_map_url', true );
+                $map_url = get_post_meta( $current_post_id, '_hero_map_url', true );
 
                 // get the custom styling and marker/pin content
-                $map_custom_style   = get_post_meta( $post_id, '_hero_map_custom_style', true );
-                $map_marker_content = get_post_meta( $post_id, '_hero_map_marker_content', true );
+                $map_custom_style   = get_post_meta( $current_post_id, '_hero_map_custom_style', true );
+                $map_marker_content = get_post_meta( $current_post_id, '_hero_map_marker_content', true );
                 ?>
 
                 <div class="c-hero__map  c-hero__layer"

@@ -185,7 +185,7 @@ function pixelgrade_footer_get_nav_menu( $args, $menu_location = '' ) {
  */
 function pixelgrade_footer_the_back_to_top_link() {
 	if ( pixelgrade_user_has_access( 'pro-features' ) ) {
-		echo pixelgrade_footer_get_back_to_top_link(); // WPCS: XSS OK.
+		echo pixelgrade_footer_get_back_to_top_link(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
@@ -236,7 +236,7 @@ function pixelgrade_footer_the_copyright() {
 		$output .= "</div>\n";
 	}
 
-	echo apply_filters( 'pixelgrade_footer_the_copyright', $output ); // WPCS: XSS OK.
+	echo apply_filters( 'pixelgrade_footer_the_copyright', $output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 /**
  * Get the footer copyright content (HTML or simple text).
