@@ -124,7 +124,7 @@ if ( ! function_exists( 'pixelgrade_portfolio_the_older_projects_button' ) ) {
  * @param string $type_class Optional. A CSS class that the category will receive.
  */
 function pixelgrade_portfolio_the_main_project_type_link( $before = '', $after = '', $type_class = '' ) {
-	echo pixelgrade_portfolio_get_project_main_type_link( $before, $after, $type_class ); // WPCS: XSS OK.
+	echo pixelgrade_portfolio_get_project_main_type_link( $before, $after, $type_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 } // function
 

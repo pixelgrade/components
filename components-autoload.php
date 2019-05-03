@@ -100,7 +100,7 @@ class Pixelgrade_Components_Autoloader {
 			$file = trailingslashit( $directory ) . $slug . self::$file_ext;
 			if ( file_exists( $file ) ) {
 				// We will load the main component file and try to fire the instantiation function
-				require_once $file; // @codingStandardsIgnoreLine
+				require_once $file; // phpcs:ignore
 
 				// Get the instantiation function name of the component
 				$function = self::getComponentMainClass( $slug );

@@ -65,7 +65,7 @@ if ( empty( $slide['type'] ) ) {
 		$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide-background', $slide['type'] );
 
 		if ( $template ) {
-			include $template; // @codingStandardsIgnoreLine
+			include $template; // phpcs:ignore
 		}
 
 		/**
@@ -84,7 +84,7 @@ if ( empty( $slide['type'] ) ) {
 			$template = pixelgrade_locate_component_template_part( Pixelgrade_Hero::COMPONENT_SLUG, 'slides/slide-content', $slide['type'] );
 
 			if ( $template ) {
-				include $template; // @codingStandardsIgnoreLine
+				include $template; // phpcs:ignore
 			}
 		}
 

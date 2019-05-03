@@ -44,7 +44,7 @@ if ( $thumbnail ) {
 
         <div class="c-card__aside c-card__thumbnail-background  has-post-thumbnail">
             <div class="c-card__frame">
-                <?php echo $thumbnail; // WPCS: XSS OK. ?>
+                <?php echo $thumbnail; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             </div>
         </div>
 

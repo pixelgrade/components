@@ -1487,7 +1487,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			// Let others change this message depending on widget args and instance.
 			$html_message = apply_filters( 'pixelgrade_sidebar_not_supported_message', $html_message, $args, $instance );
 
-			echo $args['before_widget'] . $html_message . $args['after_widget']; // @codingStandardsIgnoreLine
+			echo $args['before_widget'] . $html_message . $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		}
 

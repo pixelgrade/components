@@ -63,45 +63,45 @@ $zones = pixelgrade_footer_get_zones();
 		$is_empty = true;
 
 		// Check the menu locations for emptiness.
-		foreach ( $menu_locations as $id => $settings ) {
-			if ( ! empty( $settings['bogus'] ) ) {
+		foreach ( $menu_locations as $menu_location_id => $menu_location_settings ) {
+			if ( ! empty( $menu_location_settings['bogus'] ) ) {
 				// We have something special to show - bogus things.
 				// Better check if they output anything.
 				$output = '';
-				if ( 'footer-back-to-top-link' === $id ) {
+				if ( 'footer-back-to-top-link' === $menu_location_id ) {
 					$output = pixelgrade_footer_get_back_to_top_link();
-				} elseif ( 'footer-copyright' === $id ) {
+				} elseif ( 'footer-copyright' === $menu_location_id ) {
 					$output = pixelgrade_footer_get_copyright_content();
-				} elseif ( 'jetpack-social-menu' === $id && has_nav_menu( 'jetpack-social-menu' ) ) {
+				} elseif ( 'jetpack-social-menu' === $menu_location_id && has_nav_menu( 'jetpack-social-menu' ) ) {
 					$is_empty = false;
 				}
 
 				if ( ! empty( $output ) ) {
 					$is_empty = false;
 				}
-			} elseif ( has_nav_menu( $id ) ) {
+			} elseif ( has_nav_menu( $menu_location_id ) ) {
 				$is_empty = false;
 			}
 		}
 
 		// Check the sidebars for emptiness.
-		foreach ( $sidebars as $id => $settings ) {
-			if ( ! empty( $settings['bogus'] ) ) {
+		foreach ( $sidebars as $sidebar_id => $sidebar_settings ) {
+			if ( ! empty( $sidebar_settings['bogus'] ) ) {
 				// We have something special to show - bogus things.
 				// Better check if they output anything.
 				$output = '';
-				if ( 'footer-back-to-top-link' === $id ) {
+				if ( 'footer-back-to-top-link' === $sidebar_id ) {
 					$output = pixelgrade_footer_get_back_to_top_link();
-				} elseif ( 'footer-copyright' === $id ) {
+				} elseif ( 'footer-copyright' === $sidebar_id ) {
 					$output = pixelgrade_footer_get_copyright_content();
-				} elseif ( 'jetpack-social-menu' === $id && has_nav_menu( 'jetpack-social-menu' ) ) {
+				} elseif ( 'jetpack-social-menu' === $sidebar_id && has_nav_menu( 'jetpack-social-menu' ) ) {
 					$is_empty = false;
 				}
 
 				if ( ! empty( $output ) ) {
 					$is_empty = false;
 				}
-			} elseif ( is_active_sidebar( $id ) ) {
+			} elseif ( is_active_sidebar( $sidebar_id ) ) {
 				$is_empty = false;
 			}
 		}
