@@ -149,7 +149,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.add_to_cart_inline del,
 							.add_to_cart_inline ins,
 							.variations .label,
-							.comment-form label
+							.woocommerce-Reviews .comment-form label
 						'
 					),
 					'main_content_body_text_color'          => array(

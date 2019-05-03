@@ -1422,20 +1422,6 @@
     opacity: 0.5; }
   .woocommerce-Reviews .comment-reply-title {
     margin-bottom: 0; }
-  .woocommerce-Reviews .comment-form > * {
-    padding-top: 30px; }
-    @media only screen and (max-width: 1360px) {
-      .woocommerce-Reviews .comment-form > * {
-        padding-top: 23.7037px; } }
-    @media only screen and (max-width: 1024px) {
-      .woocommerce-Reviews .comment-form > * {
-        padding-top: 19.59184px; } }
-    @media only screen and (max-width: 768px) {
-      .woocommerce-Reviews .comment-form > * {
-        padding-top: 16.69565px; } }
-    @media only screen and (max-width: 320px) {
-      .woocommerce-Reviews .comment-form > * {
-        padding-top: 14.54545px; } }
 
 .woocommerce #reviews #comments ol.commentlist li .comment_container {
   display: -webkit-box;
@@ -1530,6 +1516,21 @@
       width: 1.2em; }
       .comment-form-rating .stars span > a:before {
         left: 0.2em; }
+
+.woocommerce-Reviews .woocommerce-Reviews-title {
+  margin-bottom: 16px; }
+  @media only screen and (max-width: 1360px) {
+    .woocommerce-Reviews .woocommerce-Reviews-title {
+      margin-bottom: 14.1844px; } }
+  @media only screen and (max-width: 1024px) {
+    .woocommerce-Reviews .woocommerce-Reviews-title {
+      margin-bottom: 12.73885px; } }
+  @media only screen and (max-width: 768px) {
+    .woocommerce-Reviews .woocommerce-Reviews-title {
+      margin-bottom: 11.56069px; } }
+  @media only screen and (max-width: 320px) {
+    .woocommerce-Reviews .woocommerce-Reviews-title {
+      margin-bottom: 10.58201px; } }
 
 .woocommerce #review_form #respond .comment-reply-title {
   display: block; }
