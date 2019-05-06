@@ -170,6 +170,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								'selector' => '.cart-count',
 								'property' => 'color',
 							),
+							'woocommerce-menu-cart-bg-color' => array(
+								'selector' => '.c-mini-cart__flyout',
+								'property' => 'background-color',
+							),
 							'woocommerce-notice-text-color' => array(
 								'selector' => '.woocommerce-store-notice[class]',
 								'property' => 'color',
