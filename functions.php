@@ -554,6 +554,7 @@ function mock_customify_footer_section( $section_options, $options ) {
 			'options' => array(
 				// [Section] Layout
 				'copyright_text'               => array(
+					/* translators: %year%: the current year, %site-title%: the site title text. */
 					'default' => esc_html__( '&copy; %year% %site-title%.', '__components_txtd' ),
 				),
 				'footer_top_spacing'           => array(

@@ -29,7 +29,7 @@ if ( ! function_exists( 'is_woo_archive' ) ) {
  */
 function pixelgrade_woocommerce_grid_class( $class = '', $location = '' ) {
 	// Separates classes with a single space, collates classes
-	echo 'class="' . join( ' ', pixelgrade_get_woocommerce_grid_class( $class, $location ) ) . '"'; // @codingStandardsIgnoreLine
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_woocommerce_grid_class( $class, $location ) ) ) . '"';
 }
 
 if ( ! function_exists( 'pixelgrade_get_woocommerce_grid_class' ) ) {
@@ -153,7 +153,7 @@ if ( ! function_exists( 'pixelgrade_get_woocommerce_grid_alignment_class' ) ) {
 }
 
 function pixelgrade_woocommerce_grid_item_class( $class = '', $location = '' ) {
-	echo 'class="' . join( ' ', pixelgrade_get_woocommerce_grid_item_class( $class, $location ) ) . '"'; // @codingStandardsIgnoreLine
+	echo 'class="' . esc_attr( join( ' ', pixelgrade_get_woocommerce_grid_item_class( $class, $location ) ) ) . '"';
 }
 
 if ( ! function_exists( 'pixelgrade_get_woocommerce_grid_item_class' ) ) {

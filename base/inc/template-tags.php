@@ -44,7 +44,7 @@ function pixelgrade_element_attributes( $attributes = array(), $location = '' ) 
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes ); // @codingStandardsIgnoreLine
+		echo join( ' ', $full_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
@@ -114,7 +114,7 @@ function pixelgrade_body_attributes( $attributes = array() ) {
 
 	// Display the attributes
 	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes ); // @codingStandardsIgnoreLine
+		echo join( ' ', $full_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 } // function
 
@@ -380,7 +380,7 @@ if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
 }
 
 function pixelgrade_the_taxonomy_dropdown( $taxonomy, $current_term = null ) {
-	echo pixelgrade_get_the_taxonomy_dropdown( $taxonomy, $current_term ); // @codingStandardsIgnoreLine
+	echo pixelgrade_get_the_taxonomy_dropdown( $taxonomy, $current_term ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 if ( ! function_exists( 'pixelgrade_get_the_taxonomy_dropdown' ) ) {
