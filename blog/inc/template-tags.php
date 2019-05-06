@@ -83,7 +83,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_layout_class' ) ) {
 	 */
 	function pixelgrade_get_blog_grid_layout_class( $location = '' ) {
 		$grid_layout         = pixelgrade_option( 'blog_grid_layout', 'regular' );
-		$grid_layout_classes = array( 'c-gallery--' . $grid_layout );
+		$grid_layout_classes = array( 'c-gallery--' . sanitize_html_class( $grid_layout ) );
 
 		// For certain kind of layouts, we need to add extra classes
 		if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ) ) ) {
@@ -113,9 +113,9 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_column_class' ) ) {
 
 		$column_classes   = array();
 		$column_classes[] = 'o-grid';
-		$column_classes[] = 'o-grid--' . $columns_at_desk . 'col-@desk';
-		$column_classes[] = 'o-grid--' . $columns_at_lap . 'col-@lap';
-		$column_classes[] = 'o-grid--' . $columns_at_small . 'col-@small';
+		$column_classes[] = 'o-grid--' . sanitize_html_class( $columns_at_desk ) . 'col-@desk';
+		$column_classes[] = 'o-grid--' . sanitize_html_class( $columns_at_lap ) . 'col-@lap';
+		$column_classes[] = 'o-grid--' . sanitize_html_class( $columns_at_small ) . 'col-@small';
 
 		return $column_classes;
 	}
@@ -132,12 +132,12 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_alignment_class' ) ) {
 	function pixelgrade_get_blog_grid_alignment_class( $location = '' ) {
 		// Title position
 		$title_position = pixelgrade_option( 'blog_items_title_position', 'regular' );
-		$title_classes  = array( 'c-gallery--title-' . $title_position );
+		$title_classes  = array( 'c-gallery--title-' . sanitize_html_class( $title_position ) );
 
 		if ( $title_position == 'overlay' ) {
-			$title_classes[] = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_overlay', 'bottom-left' );
+			$title_classes[] = 'c-gallery--title-' . sanitize_html_class( pixelgrade_option( 'blog_items_title_alignment_overlay', 'bottom-left' ) );
 		} else {
-			$title_classes[] = 'c-gallery--title-' . pixelgrade_option( 'blog_items_title_alignment_nearby', 'left' );
+			$title_classes[] = 'c-gallery--title-' . sanitize_html_class( pixelgrade_option( 'blog_items_title_alignment_nearby', 'left' ) );
 		}
 
 		return $title_classes;
@@ -155,7 +155,7 @@ if ( ! function_exists( 'pixelgrade_get_blog_grid_item_class' ) ) {
 		$classes[] = 'c-gallery__item';
 
 		if ( has_post_thumbnail() ) {
-			$classes[] = 'c-gallery__item--' . pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' );
+			$classes[] = 'c-gallery__item--' . sanitize_html_class( pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id(), 'landscape' ) );
 		} else {
 			$classes[] = 'c-gallery__item--no-image';
 		}
@@ -413,7 +413,7 @@ if ( ! function_exists( 'pixelgrade_get_the_author_info_box' ) ) {
 		$author_details .= '<div class="c-author__details">';
 
 		if ( ! empty( $display_name ) ) {
-			$author_details .= '<span class="c-author__name h3">' . $display_name . '</span>';
+			$author_details .= '<span class="c-author__name h3">' . esc_html( $display_name ) . '</span>';
 		}
 
 		// The author bio

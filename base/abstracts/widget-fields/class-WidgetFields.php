@@ -371,14 +371,14 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 			}
 
 			$output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="text" value="' . esc_attr( $value ) . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
 				$output .= "<br />\n";
-				$output .= '<small>' . $desc . "</small>\n";
+				$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 			}
 
 			$output .= "</p>\n";
@@ -423,14 +423,14 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 			}
 
 			$output .= '<textarea class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" rows="' . esc_attr( $rows ) . '" >' . $this->sanitize_textarea( $value, $field_name, $field_config ) . "</textarea>\n";
 
 			if ( ! empty( $desc ) ) {
 				$output .= "<br />\n";
-				$output .= '<small>' . $desc . "</small>\n";
+				$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 			}
 
 			$output .= "</p>\n";
@@ -486,14 +486,14 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 			}
 
 			$output .= '<input class="widefat" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="number" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
 				$output .= "<br />\n";
-				$output .= '<small>' . $desc . "</small>\n";
+				$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 			}
 
 			$output .= "</p>\n";
@@ -548,7 +548,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 			}
 
 			$output .= '<input class="widget-range" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" type="range" step="' . esc_attr( $step ) . '" min="' . esc_attr( $min ) . '" max="' . esc_attr( $max ) . '" value="' . esc_attr( $value ) . "\" />\n";
@@ -556,7 +556,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			if ( ! empty( $desc ) ) {
 				$output .= "<br />\n";
-				$output .= '<small>' . $desc . "</small>\n";
+				$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 			}
 
 			$output .= "</p>\n";
@@ -598,12 +598,12 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<input class="checkbox" type="checkbox" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" value="1" ' . checked( $value, 1, false ) . "\" />\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+				$output .= '<label for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 			}
 
 			if ( ! empty( $desc ) ) {
 				$output .= "<br />\n";
-				$output .= '<small>' . $desc . "</small>\n";
+				$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 			}
 
 			$output .= "</p>\n";
@@ -653,7 +653,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 				if ( ! empty( $label ) ) {
-					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 				}
 
 				if ( ! empty( $field_config['options'] ) ) {
@@ -676,14 +676,14 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat">' . "\n";
 					foreach ( $options as $option_value => $option_name ) {
-						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . "</option>\n";
+						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . esc_html( $option_name ) . "</option>\n";
 					}
 					$output .= "</select>\n";
 				}
 
 				if ( ! empty( $desc ) ) {
 					$output .= "<br />\n";
-					$output .= '<small>' . $desc . "</small>\n";
+					$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 				}
 
 				$output .= "</p>\n";
@@ -734,7 +734,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$output .= '<p class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 				if ( ! empty( $label ) ) {
-					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 				}
 
 				if ( ! empty( $field_config['options'] ) ) {
@@ -757,14 +757,14 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 					$output .= '<select name="' . esc_attr( $this->get_field_name( $field_name . $multiple ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" class="widefat js-select2" ' . ( $multiple === '' ? '' : 'multiple="multiple"' ) . ' style="width:100%;">' . "\n";
 					foreach ( $options as $option_value => $option_name ) {
-						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . $option_name . "</option>\n";
+						$output .= '<option value="' . esc_attr( $option_value ) . '" ' . $this->selected( $value, $option_value, false ) . '>' . esc_html( $option_name ) . "</option>\n";
 					}
 					$output .= "</select>\n";
 				}
 
 				if ( ! empty( $desc ) ) {
 					$output .= "<br />\n";
-					$output .= '<small>' . $desc . "</small>\n";
+					$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 				}
 
 				$output .= "</p>\n";
@@ -815,20 +815,20 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 				$output .= '<div class="pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 				if ( ! empty( $label ) ) {
-					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+					$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 				}
 
 				if ( ! empty( $field_config['options'] ) ) {
 					$output .= "<ul>\n";
 					foreach ( $field_config['options'] as $option_value => $option_name ) {
-						$output .= '<li><label><input id="' . esc_attr( $this->get_field_id( $field_name ) ) . '-' . esc_attr( $option_value ) . '" name="' . $this->get_field_name( $field_name ) . '" type="radio" value="' . esc_attr( $option_value ) . '" ' . checked( $option_value, $value, false ) . ' /> ' . $option_name . "</label></li>\n";
+						$output .= '<li><label><input id="' . esc_attr( $this->get_field_id( $field_name ) ) . '-' . esc_attr( $option_value ) . '" name="' . $this->get_field_name( $field_name ) . '" type="radio" value="' . esc_attr( $option_value ) . '" ' . checked( $option_value, $value, false ) . ' /> ' . esc_html( $option_name ) . "</label></li>\n";
 					}
 					$output .= "</ul>\n";
 				}
 
 				if ( ! empty( $desc ) ) {
 					$output .= "<br />\n";
-					$output .= '<small>' . $desc . "</small>\n";
+					$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 				}
 
 				$output .= "</div>\n";
@@ -881,13 +881,13 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 			$output .= '<div class="pixelgrade_image_field pixelgrade-widget-' . esc_attr( $field_name ) . $this->displayOnClass( $field_name, $field_config ) . '" style="' . ( empty( $field_config['hidden'] ) ? '' : 'display: none;' ) . '" ' . $this->displayOnAttributes( $field_name, $field_config ) . ">\n";
 
 			if ( ! empty( $label ) ) {
-				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . $label . "</label>\n";
+				$output .= '<label class="customize-control-title" for="' . esc_attr( $this->get_field_id( $field_name ) ) . '">' . wp_kses_post( $label ) . "</label>\n";
 			}
 
 			// Output the image preview.
 			$output .= '<div class="pixelgrade_image_preview" id="' . $this->get_field_id( $field_name . '-preview' ) . "\">\n";
 			// The clear button.
-			$output .= '<span class="clear-image" onclick="widgetImageFields.clear( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" >' . $clear_label . "</span>\n";
+			$output .= '<span class="clear-image" onclick="widgetImageFields.clear( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" >' . esc_html( $clear_label ) . "</span>\n";
 
 			$imageurl = '';
 			if ( ! empty( $value ) ) {
@@ -913,16 +913,16 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 			$output .= "</div>\n";
 			// End of image preview.
-			$output .= '<input type="submit" class="button" name="' . $this->get_field_name( $field_name . '-button' ) . '" id="' . esc_attr( $this->get_field_id( $field_name . '-button' ) ) . '" value="' . $button_label . '" onclick="widgetImageFields.uploader( \'' . $this->id . '\', \'' . $id_prefix . '\' ); return false;" />' . "\n";
+			$output .= '<input type="submit" class="button" name="' . esc_attr( $this->get_field_name( $field_name . '-button' ) ) . '" id="' . esc_attr( $this->get_field_id( $field_name . '-button' ) ) . '" value="' . esc_attr( $button_label ) . '" onclick="widgetImageFields.uploader( \'' . esc_attr( $this->id ) . '\', \'' . esc_attr( $id_prefix ) . '\' ); return false;" />' . "\n";
 
 			// This hidden field holds our field value (the attachment ID).
-			$output .= '<input type="hidden" id="' . $this->get_field_id( $field_name ) . '" name="' . $this->get_field_name( $field_name ) . '" value="' . $value . "\" />\n";
+			$output .= '<input type="hidden" id="' . esc_attr( $this->get_field_id( $field_name ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name ) ) . '" value="' . esc_attr( $value ) . "\" />\n";
 
-			$output .= '<input type="hidden" id="' . $this->get_field_id( $field_name . '-imageurl' ) . '" name="' . $this->get_field_name( $field_name . '-imageurl' ) . '" value="' . $imageurl . "\" />\n";
+			$output .= '<input type="hidden" id="' . esc_attr( $this->get_field_id( $field_name . '-imageurl' ) ) . '" name="' . esc_attr( $this->get_field_name( $field_name . '-imageurl' ) ) . '" value="' . esc_attr( $imageurl ) . "\" />\n";
 
 			if ( ! empty( $desc ) ) {
 				$output .= "<br />\n";
-				$output .= '<small>' . $desc . "</small>\n";
+				$output .= '<small>' . wp_kses_post( $desc ) . "</small>\n";
 			}
 
 			$output .= "</div>\n";
@@ -972,12 +972,12 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
 
 					$on = $display_on['on'];
 
-					$requires .= ' data-when_key="' . $this->get_field_name( $on['field'] ) . '"';
+					$requires .= ' data-when_key="' . esc_attr( $this->get_field_name( $on['field'] ) ) . '"';
 
 					if ( is_array( $on['value'] ) ) {
-						$requires .= ' data-has_value=\'' . json_encode( $on['value'] ) . '\'';
+						$requires .= ' data-has_value=\'' . esc_attr( json_encode( $on['value'] ) ) . '\'';
 					} else {
-						$requires .= ' data-has_value="' . $on['value'] . '"';
+						$requires .= ' data-has_value="' . esc_attr( $on['value'] ) . '"';
 					}
 				}
 			}
@@ -1480,7 +1480,7 @@ if ( ! class_exists( 'Pixelgrade_WidgetFields' ) ) :
                     <div class="c-alert__body">
                         <p>' .
 			                /* translators: %s: the widget name */
-			                sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__components_txtd' ), '<em>' . $args['widget_name'] . '</em>' ) .'</p>
+			                sprintf( esc_html__( 'Oops! The %s is not supported in this area, but don\'t panic . You can try to move it to another section or just replace it . ', '__components_txtd' ), '<em>' . esc_html( $args['widget_name'] ) . '</em>' ) .'</p>
                     </div>
                 </div>';
 

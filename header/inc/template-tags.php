@@ -209,7 +209,7 @@ function pixelgrade_header_get_zones() {
 			$zones[ $zone_id ]['classes'] = array();
 		}
 
-		$default_classes              = array( 'c-navbar__zone', 'c-navbar__zone--' . $zone_id );
+		$default_classes              = array( 'c-navbar__zone', 'c-navbar__zone--' . sanitize_html_class( $zone_id ) );
 		$zones[ $zone_id ]['classes'] = array_merge( $default_classes, $zone_settings['classes'] );
 	}
 

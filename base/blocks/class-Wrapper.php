@@ -456,9 +456,9 @@ class Pixelgrade_Wrapper {
 
 					// If we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
 					if ( empty( $value ) ) {
-						$full_attributes[] = $name;
+						$full_attributes[] = esc_attr( $name );
 					} else {
-						$full_attributes[] = $name . '="' . esc_attr( $value ) . '"';
+						$full_attributes[] = esc_attr( $name ) . '="' . esc_attr( $value ) . '"';
 					}
 				}
 			}
