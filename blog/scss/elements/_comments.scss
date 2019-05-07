@@ -2,87 +2,86 @@ $comments-author-color: #000 !default;
 $comments-toggle-label-background: #000 !default;
 
 .comment {
-  position: relative;
+    position: relative;
 
-  & + & {
-    @include spacing(margin-top, 2rem);
-  }
+    .edit-link {
+        position: absolute;
+        top: 0;
+        right: 0;
 
-  .edit-link {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    opacity: 0;
-    transition: all .5s ease;
-  }
-
-  .children {
-    @include spacing(margin-left, 3rem);
-    @include spacing(margin-top, 2rem);
+        opacity: 0;
+        transition: all .5s ease;
+    }
 
     .children {
-      margin-left: 0;
-    }
+        @include spacing(margin-left, 3rem);
+        @include spacing(margin-top, 2rem);
 
-    @include below(lap) {
-      margin-left: 20px;
+        .children {
+            margin-left: 0;
+        }
+
+        @include below(lap) {
+            margin-left: 20px;
+        }
     }
-  }
 }
 
 .comment-list {
-  @include spacing(margin, 4rem 0);
+    @include spacing(margin, 4rem 0);
 
-  &, ul, ol {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+    &, ul, ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
+    > li + li {
+        @include spacing(margin-top, 2rem);
+    }
 }
 
 .comment-list,
 .comment-respond {
-  @include spacing(margin-top, 3rem);
+    @include spacing(margin-top, 3rem);
 }
 
 .comment-list + .comment-respond {
-  @include spacing(margin-top, 4rem);
+    @include spacing(margin-top, 4rem);
 }
 
 .comment__wrapper {
-  display: flex;
-  align-items: flex-start;
+    display: flex;
+    align-items: flex-start;
 
-  &:hover {
-      .edit-link {
-        opacity: 1;
-      }
-  }
+    &:hover {
+        .edit-link {
+            opacity: 1;
+        }
+    }
 }
 
 .comment__body {
 
-  > * + * {
-    @include spacing(padding-top, 0.5rem);
-  }
+    > * + * {
+        @include spacing(padding-top, 0.5rem);
+    }
 }
 
 .comment__avatar {
-  margin-right: 20px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  overflow: hidden;
+    margin-right: 20px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
 
-  .avatar {
-    display: block;
-    margin: 0;
-  }
+    .avatar {
+        display: block;
+        margin: 0;
+    }
 
-  @include below(lap) {
-    max-width: 32px;
-  }
+    @include below(lap) {
+        max-width: 32px;
+    }
 }
 
 // Should be in Customizer under H6 field
@@ -91,29 +90,29 @@ $comments-toggle-label-background: #000 !default;
 .edit-link,
 .reply,
 .logged-in-as {
-  a {
-    @include leading-map($h6);
-    opacity: 0.6;
+    a {
+        @include leading-map($h6);
+        opacity: 0.6;
 
-    .u-underlined-links & {
-      text-decoration: none;
+        .u-underlined-links & {
+            text-decoration: none;
+        }
     }
-  }
 }
 
 .comment__metadata {
-  display: inline-block;
-  margin-left: 5px;
+    display: inline-block;
+    margin-left: 5px;
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 }
 
 .reply a {
-  @include spacing(margin-bottom, 1rem);
-  display: block;
+    @include spacing(margin-bottom, 1rem);
+    display: block;
 }
 
 
@@ -123,7 +122,7 @@ $comments-toggle-label-background: #000 !default;
     transition: all .2s ease;
 
     &:hover {
-      opacity: 0.8;
+        opacity: 0.8;
     }
 }
 
@@ -134,21 +133,21 @@ $comments-toggle-label-background: #000 !default;
 }
 
 .comment__content {
-  @include leading-map((
-    font-size: 15px,
-    line-height: (25/15)
-  ));
+    @include leading-map((
+        font-size: 15px,
+        line-height: (25/15)
+    ));
 }
 
 .comment-reply-title[class] {
-  @include spacing(margin-bottom, 0.5rem);
+    @include spacing(margin-bottom, 0.5rem);
 }
 
 .comment-reply-title {
-  small {
-    font: inherit;
+    small {
+        font: inherit;
 
-  }
+    }
 }
 
 .pingback,
@@ -156,37 +155,37 @@ $comments-toggle-label-background: #000 !default;
 }
 
 .comment__author {
-  @include leading-map(map-merge($h4, (
-    spacing-bottom: false
-  )));
+    @include leading-map(map-merge($h4, (
+        spacing-bottom: false
+    )));
 
-  .u-underlined-links & a {
-    text-decoration: none;
-  }
+    .u-underlined-links & a {
+        text-decoration: none;
+    }
 }
 
 .bypostauthor {
-  color: inherit;
+    color: inherit;
 
-  .comment__author {
-    color: $comments-author-color;
-  }
+    .comment__author {
+        color: $comments-author-color;
+    }
 }
 
 .says {
-  display: none;
+    display: none;
 }
 
 
 @include below(lap) {
-  .c-author {
-    text-align: center;
-  }
+    .c-author {
+        text-align: center;
+    }
 
-  .c-author__avatar {
-    margin-left: auto;
-    margin-right: auto;
-  }
+    .c-author__avatar {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 
