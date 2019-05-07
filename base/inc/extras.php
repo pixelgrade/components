@@ -1200,6 +1200,7 @@ if ( ! function_exists( 'pixelgrade_the_card' ) ) {
 				</div>
 
 				<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
+                <div class="c-card__badge"></div>
 
 				<?php do_action( 'pixelgrade_before_entry_end', $location ); ?>
 
