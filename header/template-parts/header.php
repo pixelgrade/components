@@ -41,11 +41,40 @@ do_action( 'pixelgrade_before_header', 'main' );
 			?>
 
 			<div class="c-navbar  c-navbar--dropdown  u-header-height">
+
+                <?php
+                $header_zones = pixelgrade_header_get_zones();
+                $header_active_menus = array();
+
+                // Cycle through each zone and display the nav menus or other "bogus" things.
+                foreach ( $header_zones as $zone_id => $zone ) {
+                    // Get the menu_locations in the current zone.
+                    $menu_locations = pixelgrade_header_get_zone_nav_menu_locations( $zone_id, $zone );
+
+                    foreach ( $menu_locations as $menu_id => $menu_location ) {
+                        if ( empty( $menu_location['bogus'] ) ) {
+                            $menu = wp_nav_menu(
+                                array (
+                                    'theme_location' => $menu_id,
+                                    'echo' => false,
+                                    'fallback_cb' => '__return_false'
+                                )
+                            );
+
+                            if ( false !== $menu ) {
+                                $header_active_menus[] = $menu_id;
+                            }
+                        }
+                    }
+                }
+
+                if ( apply_filters( 'pixelgrade_show_hamburger_icon', ! empty( $header_active_menus ) )  ) { ?>
 				<input class="c-navbar__checkbox" id="menu-toggle" type="checkbox">
 				<label class="c-navbar__label u-header-sides-spacing" for="menu-toggle">
 					<span class="c-navbar__label-icon"><?php pixelgrade_get_component_template_part( Pixelgrade_Header::COMPONENT_SLUG, 'burger' ); ?></span>
 					<span class="c-navbar__label-text screen-reader-text"><?php esc_html_e( 'Menu', '__components_txtd' ); ?></span>
 				</label><!-- .c-navbar__label -->
+                <?php } ?>
 
 				<?php
 				/**
