@@ -872,10 +872,13 @@ if ( ! function_exists( 'pixelgrade_comments_toggle_checked_attribute' ) ) {
 	/**
 	 * Print the comment show/hide control's checked HTML attribute.
 	 *
-	 * @param string $element The HTML element name to which the attribute belongs.
+	 * We only accept two outcomes: either output 'checked="checked"' or nothing.
 	 */
-	function pixelgrade_comments_toggle_checked_attribute( $element = 'input' ) {
-		echo wp_kses_one_attr( pixelgrade_get_comments_toggle_checked_attribute(), $element ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	function pixelgrade_comments_toggle_checked_attribute() {
+		// If the outcome is not falsy, output the attribute.
+		if ( pixelgrade_get_comments_toggle_checked_attribute() ) {
+			echo 'checked="checked"';
+		}
 	}
 }
 
