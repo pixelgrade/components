@@ -924,8 +924,7 @@
       color: #FFF;
       background-color: #000;
       opacity: 1;
-      text-decoration: none;
-      border: initial; }
+      text-decoration: none; }
   .woocommerce form.cart .woocommerce-grouped-product-list-item__price {
     text-align: right; }
   .woocommerce form.cart .added_to_cart {
