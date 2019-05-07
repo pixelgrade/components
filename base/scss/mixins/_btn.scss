@@ -80,8 +80,10 @@ $btn-font: () !default;
         &:active,
         &:focus {
             background: none;
+            color: inherit;
         }
     }
+
     &:hover,
     &:active,
     &:focus {
