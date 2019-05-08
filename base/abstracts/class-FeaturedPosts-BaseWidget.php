@@ -129,8 +129,8 @@ if ( ! class_exists( 'Pixelgrade_FeaturedPosts_BaseWidget' ) ) :
 						'disabled' => true,
 						'type'              => 'select',
 						'label'             => esc_html__( 'Tag:', '__components_txtd' ),
-						'callback'          => array( null, 'tagsDropdown' ),
-						'sanitize_callback' => array( null, 'sanitizeTag' ),
+						'callback'          => array( $this, 'tagsDropdown' ),
+						'sanitize_callback' => array( $this, 'sanitizeTag' ),
 						// We need to do custom sanitization for custom generated selects.
 						'default'           => 0,
 						'display_on'        => array(
