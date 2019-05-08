@@ -48,7 +48,7 @@ $location = pixelgrade_get_location();
 			?>
 			<!-- pixelgrade_before_entry_thumbnail_content -->
 
-			<?php the_post_thumbnail( 'pixelgrade_single_' . pixelgrade_get_post_thumbnail_aspect_ratio_class() ); ?>
+			<?php the_post_thumbnail( 'pixelgrade_single_' . esc_attr( pixelgrade_get_post_thumbnail_aspect_ratio_class() ) ); ?>
 
 			<?php
 			/**

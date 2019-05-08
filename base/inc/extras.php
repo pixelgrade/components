@@ -1068,7 +1068,7 @@ if ( ! function_exists( 'pixelgrade_get_post_details' ) ) {
 		$details['author']    = pixelgrade_get_post_meta( 'author' );
 		$details['date']      = pixelgrade_get_post_meta( 'date' );
 		$details['comments']  = pixelgrade_get_post_meta( 'comments' );
-		$details['read_more'] = '<a href="<?php the_permalink(); ?>" class="c-card__action">' . esc_html__( 'Read More', '__components_txtd' ) . '</a>';
+		$details['read_more'] = '<a href="' . esc_url( get_the_permalink() ) . '" class="c-card__action">' . esc_html__( 'Read More', '__components_txtd' ) . '</a>';
 		$details['none']      = null;
 
 		return apply_filters( 'pixelgrade_card_post_details', $details );
@@ -1200,6 +1200,7 @@ if ( ! function_exists( 'pixelgrade_the_card' ) ) {
 				</div>
 
 				<a class="c-card__link" href="<?php the_permalink(); ?>"></a>
+                <div class="c-card__badge"></div>
 
 				<?php do_action( 'pixelgrade_before_entry_end', $location ); ?>
 

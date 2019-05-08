@@ -41,7 +41,7 @@ function pixelgrade_get_portfolio_class( $class = '', $location = '', $atts = ar
 	$classes[] = 'c-gallery c-gallery--portfolio';
 	// layout
 	$grid_layout = pixelgrade_option( 'portfolio_grid_layout', 'regular' );
-	$classes[]   = 'c-gallery--' . $grid_layout;
+	$classes[]   = 'c-gallery--' . sanitize_html_class( $grid_layout );
 
 	if ( in_array( $grid_layout, array( 'packed', 'regular', 'mosaic' ), true ) ) {
 		$classes[] = 'c-gallery--cropped';
@@ -59,18 +59,18 @@ function pixelgrade_get_portfolio_class( $class = '', $location = '', $atts = ar
 	}
 	$columns_at_lap   = $columns_at_desk >= 5 ? $columns_at_desk - 1 : $columns_at_desk;
 	$columns_at_small = $columns_at_lap >= 4 ? $columns_at_lap - 1 : $columns_at_lap;
-	$classes[]        = 'o-grid--' . $columns_at_desk . 'col-@desk';
-	$classes[]        = 'o-grid--' . $columns_at_lap . 'col-@lap';
-	$classes[]        = 'o-grid--' . $columns_at_small . 'col-@small';
+	$classes[]        = 'o-grid--' . sanitize_html_class( $columns_at_desk ) . 'col-@desk';
+	$classes[]        = 'o-grid--' . sanitize_html_class( $columns_at_lap ) . 'col-@lap';
+	$classes[]        = 'o-grid--' . sanitize_html_class( $columns_at_small ) . 'col-@small';
 
 	// title position
 	$title_position = pixelgrade_option( 'portfolio_items_title_position', 'regular' );
-	$classes[]      = 'c-gallery--title-' . $title_position;
+	$classes[]      = 'c-gallery--title-' . sanitize_html_class( $title_position );
 
 	if ( 'overlay' === $title_position ) {
-		$classes[] = 'c-gallery--title-' . pixelgrade_option( 'portfolio_items_title_alignment_overlay', 'bottom-left' );
+		$classes[] = 'c-gallery--title-' . sanitize_html_class( pixelgrade_option( 'portfolio_items_title_alignment_overlay', 'bottom-left' ) );
 	} else {
-		$classes[] = 'c-gallery--title-' . pixelgrade_option( 'portfolio_items_title_alignment_nearby', 'left' );
+		$classes[] = 'c-gallery--title-' . sanitize_html_class( pixelgrade_option( 'portfolio_items_title_alignment_nearby', 'left' ) );
 	}
 
 	if ( ! empty( $class ) ) {

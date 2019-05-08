@@ -20,32 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param string|array $location Optional. The place (template) where the attributes are displayed. This is a hint for filters.
  */
 function pixelgrade_element_attributes( $attributes = array(), $location = '' ) {
-	// Get the attributes
-	$attributes = pixelgrade_get_element_attributes( $attributes, $location );
-
-	// Generate a string attributes array, like array( 'rel="test"', 'href="boom"' )
-	$full_attributes = array();
-	foreach ( $attributes as $name => $value ) {
-		// We really don't want numeric keys as attributes names
-		if ( ! empty( $name ) && ! is_numeric( $name ) ) {
-			// If we get an array as value we will add them comma separated
-			if ( ! empty( $value ) && is_array( $value ) ) {
-				$value = join( ', ', $value );
-			}
-
-			// If we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
-			if ( empty( $value ) ) {
-				$full_attributes[] = $name;
-			} else {
-				$full_attributes[] = $name . '="' . esc_attr( $value ) . '"';
-			}
-		}
-	}
-
-	// Display the attributes
-	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
+	echo pixelgrade_generate_attributes_output( pixelgrade_get_element_attributes( $attributes, $location ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -74,7 +49,41 @@ function pixelgrade_get_element_attributes( $attributes = array(), $location = '
 	 * @param string|array $location The place (template) where the attributes are needed.
 	 */
 	return apply_filters( 'pixelgrade_get_element_attributes', $final_attributes, $attributes, $location );
-} // function
+}
+
+/**
+ * Concatenate attributes names and values, with escaping, into one string ready for output.
+ *
+ * @param array $attributes
+ *
+ * @return string The concatenated attributes string or empty string.
+ */
+function pixelgrade_generate_attributes_output( $attributes = array() ) {
+	// Generate a string attributes array, like array( 'rel="test"', 'href="boom"' )
+	$full_attributes = array();
+	foreach ( $attributes as $name => $value ) {
+		// We really don't want numeric keys as attributes names
+		if ( ! empty( $name ) && ! is_numeric( $name ) ) {
+			// If we get an array as value we will add them comma separated
+			if ( ! empty( $value ) && is_array( $value ) ) {
+				$value = join( ', ', $value );
+			}
+
+			// If we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
+			if ( empty( $value ) ) {
+				$full_attributes[] = esc_attr( $name );
+			} else {
+				$full_attributes[] = esc_attr( $name ) . '="' . esc_attr( $value ) . '"';
+			}
+		}
+	}
+
+	if ( ! empty( $full_attributes ) ) {
+		return join( ' ', $full_attributes );
+	}
+
+	return '';
+}
 
 /**
  * Display the attributes for the body element.
@@ -93,30 +102,8 @@ function pixelgrade_body_attributes( $attributes = array() ) {
 	 */
 	$body_attributes = apply_filters( 'pixelgrade_body_attributes', $body_attributes, $attributes );
 
-	// Generate a string attributes array, like array( 'rel="test"', 'href="boom"' )
-	$full_attributes = array();
-	foreach ( $body_attributes as $name => $value ) {
-		// We really don't want numeric keys as attributes names
-		if ( ! empty( $name ) && ! is_numeric( $name ) ) {
-			// if we get an array as value we will add them comma separated
-			if ( ! empty( $value ) && is_array( $value ) ) {
-				$value = join( ', ', $value );
-			}
-
-			// if we receive an empty array entry (but with a key) we will treat it like an attribute without value (i.e. itemprop)
-			if ( empty( $value ) ) {
-				$full_attributes[] = $name;
-			} else {
-				$full_attributes[] = $name . '="' . esc_attr( $value ) . '"';
-			}
-		}
-	}
-
-	// Display the attributes
-	if ( ! empty( $full_attributes ) ) {
-		echo join( ' ', $full_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-} // function
+	echo pixelgrade_generate_attributes_output( $body_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}
 
 /**
  * Display the classes for a element.
@@ -181,7 +168,7 @@ function pixelgrade_get_css_class( $class = '', $location = '', $prefix = '', $s
 	$classes = apply_filters( 'pixelgrade_css_class', $classes, $class, $location, $prefix, $suffix );
 
 	return array_unique( $classes );
-} // function
+}
 
 if ( ! function_exists( 'pixelgrade_show_thumbnail' ) ) {
 	/**
@@ -204,7 +191,7 @@ if ( ! function_exists( 'pixelgrade_show_thumbnail' ) ) {
 		}
 
 		return apply_filters( 'pixelgrade_show_thumbnail', $show, $post_id );
-	} // function
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_has_portrait_thumbnail' ) ) {
@@ -230,7 +217,7 @@ if ( ! function_exists( 'pixelgrade_has_portrait_thumbnail' ) ) {
 		}
 
 		return false;
-	} // function
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_has_landscape_thumbnail' ) ) {
@@ -256,7 +243,7 @@ if ( ! function_exists( 'pixelgrade_has_landscape_thumbnail' ) ) {
 		}
 
 		return false;
-	} // function
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_has_no_thumbnail' ) ) {
@@ -282,7 +269,7 @@ if ( ! function_exists( 'pixelgrade_has_no_thumbnail' ) ) {
 		}
 
 		return true;
-	} // function
+	}
 
 }
 
@@ -301,7 +288,7 @@ if ( ! function_exists( 'pixelgrade_get_post_thumbnail_aspect_ratio_class' ) ) {
 		}
 
 		return pixelgrade_get_image_aspect_ratio_type( get_post_thumbnail_id( $post_id ), 'none' );
-	} // function
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_get_image_aspect_ratio_type' ) ) {
@@ -353,7 +340,7 @@ if ( ! function_exists( 'pixelgrade_get_image_aspect_ratio_type' ) ) {
 		}
 
 		return apply_filters( 'pixelgrade_image_aspect_ratio_type', $type, $image );
-	} // function
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
@@ -376,7 +363,7 @@ if ( ! function_exists( 'pixelgrade_display_featured_images' ) ) {
 		}
 
 		return true;
-	} // function
+	}
 }
 
 function pixelgrade_the_taxonomy_dropdown( $taxonomy, $current_term = null ) {
@@ -439,7 +426,7 @@ if ( ! function_exists( 'pixelgrade_get_the_taxonomy_dropdown' ) ) {
 
 		// Allow others to have a go at it
 		return apply_filters( 'pixelgrade_get_the_taxonomy_dropdown', $output, $taxonomy, $selected );
-	} // function
+	}
 }
 
 if ( ! function_exists( 'pixelgrade_get_rendered_content' ) ) :

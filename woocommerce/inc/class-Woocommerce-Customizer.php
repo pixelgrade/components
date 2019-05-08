@@ -149,7 +149,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.add_to_cart_inline del,
 							.add_to_cart_inline ins,
 							.variations .label,
-							.comment-form label
+							.woocommerce-Reviews .comment-form label
 						'
 					),
 					'main_content_body_text_color'          => array(
@@ -169,6 +169,10 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							'woocommerce-menu-cart-color' => array(
 								'selector' => '.cart-count',
 								'property' => 'color',
+							),
+							'woocommerce-menu-cart-bg-color' => array(
+								'selector' => '.c-mini-cart__flyout',
+								'property' => 'background-color',
 							),
 							'woocommerce-notice-text-color' => array(
 								'selector' => '.woocommerce-store-notice[class]',

@@ -1,6 +1,9 @@
 $toolbar-width: 100px !default;
 $header-mobile-height: 100px !default;
 
+$search-trigger-color: #FFFFFF !default;
+$search-trigger-background-color: #000000 !default;
+
 .c-search-overlay {
     padding: 24px;
 
@@ -109,7 +112,7 @@ body.show-search-overlay {
     grid-row: 1 / span 1;
 
     z-index: 200;
-    color: $theme-accent-light-color;
+    color: $search-trigger-color;
 
     svg {
         display: block;
@@ -129,8 +132,8 @@ body.show-search-overlay {
         grid-column: 2 / span 1;
         grid-row: 1 / span 1;
 
-        background: $theme-border-color;
-        color: $theme-accent-light-color;
+        background: $search-trigger-background-color;
+        color: $search-trigger-color;
 
         .c-noto--header & {
             display: none;
