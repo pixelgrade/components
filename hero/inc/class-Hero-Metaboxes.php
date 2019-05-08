@@ -157,6 +157,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			'hero_area_content__page'    => array(
 				'id'                     => 'hero_area_content__page',
 				'title'                  => '&#x1f535; ' . esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
+	                            // @todo We should do something about using markup in an attribute.
 								. ' <span class="tooltip" title="<' . 'title>'
 								. esc_html__( 'Hero Area &#187; Content', '__components_txtd' )
 								. '</title><p>'
@@ -576,7 +577,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 				'external'         => esc_html__( 'External URL', '__components_txtd' ),
 			);
 
-			$select_html = '<select name="attachments[' . $post->ID . '][link_media_to]" id="attachments[' . $post->ID . '][link_media_to]">';
+			$select_html = '<select name="attachments[' . esc_attr( $post->ID ) . '][link_media_to]" id="attachments[' . esc_attr( $post->ID ) . '][link_media_to]">';
 
 			foreach ( $select_options as $key => $option ) {
 
@@ -586,7 +587,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 					$selected = 'selected="selected"';
 				}
 
-				$select_html .= '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
+				$select_html .= '<option value="' . esc_attr( $key ) . '" ' . $selected . '>' . esc_html( $option ) . '</option>';
 			}
 
 			$select_html .= '</select>';
@@ -629,7 +630,7 @@ class Pixelgrade_Hero_Metaboxes extends Pixelgrade_Singleton {
 			$form_fields['video_autoplay'] = array(
 				'label' => esc_html__( 'Video Autoplay', '__components_txtd' ),
 				'input' => 'html',
-				'html'  => '<input' . $checked . ' type="checkbox" name="attachments[' . $post->ID . '][video_autoplay]" id="attachments[' . $post->ID . '][video_autoplay]" /><label for="attachments[' . $post->ID . '][video_autoplay]">' . esc_html__( 'Enable Video Autoplay?', '__components_txtd' ) . '</label>',
+				'html'  => '<input' . $checked . ' type="checkbox" name="attachments[' . esc_attr( $post->ID ) . '][video_autoplay]" id="attachments[' . esc_attr( $post->ID ) . '][video_autoplay]" /><label for="attachments[' . esc_attr( $post->ID ) . '][video_autoplay]">' . esc_html__( 'Enable Video Autoplay?', '__components_txtd' ) . '</label>',
 			);
 		}
 

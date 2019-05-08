@@ -266,7 +266,7 @@ class Pixelgrade_Woocommerce_Layout extends Pixelgrade_Singleton {
 		$cart_count_span = '';
 
 		if ( $cart_item_count ) {
-			$cart_count_span = '<div class="cart-count"><span>' . $cart_item_count . '</span></div>';
+			$cart_count_span = '<div class="cart-count"><span>' . esc_html( $cart_item_count ) . '</span></div>';
 		}
 
 		$cart_link               = apply_filters( 'pixelgrade_cart_menu_item_markup', '<li class="menu-item  menu-item--cart"><a class="js-open-cart" href="' . esc_url( get_permalink( wc_get_page_id( 'cart' ) ) ) . '">' . esc_html__( 'My Cart', '__components_txtd' ) . $cart_count_span . '</a></li>' );

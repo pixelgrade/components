@@ -56,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 		</a>
 
-		<p class="site-description site-description-text"><?php bloginfo( 'description' ); /* WPCS: xss ok. */ ?></p>
+		<p class="site-description site-description-text"><?php bloginfo( 'description' ); ?></p>
 
 		<?php do_action( 'pixelgrade_header_after_brading_content', 'header' ); ?>
 

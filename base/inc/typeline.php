@@ -89,10 +89,7 @@ function typeline_get_y( $x, $points ) {
  */
 function typeline_negative_value_cb( $value, $selector, $property, $unit ) {
 
-	$output = $selector . ' {
-		' . $property . ': ' . ( - 1 * $value ) . $unit . ';
-		}
-		';
+	$output = $selector . ' { ' . $property . ': ' . ( - 1 * $value ) . $unit . '; }';
 
 	return $output;
 }

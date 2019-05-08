@@ -1765,10 +1765,10 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 		}
 
 		$buttons_style = pixelgrade_option( 'buttons_style', true );
-		$classes[]     = 'u-buttons-' . $buttons_style;
+		$classes[]     = 'u-buttons-' . sanitize_html_class( $buttons_style );
 
 		$buttons_shape = pixelgrade_option( 'buttons_shape', true );
-		$classes[]     = 'u-buttons-' . $buttons_shape;
+		$classes[]     = 'u-buttons-' . sanitize_html_class( $buttons_shape );
 
 		return $classes;
 	}
