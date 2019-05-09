@@ -576,7 +576,9 @@ function pixelgrade_get_theme_relative_path( $path ) {
 		return '';
 	}
 
-	$path = str_replace( trailingslashit( get_template_directory() ), '', $path );
+	$path = wp_normalize_path( $path );
+
+	$path = str_replace( wp_normalize_path( get_template_directory() ), '', $path );
 
 	return trailingslashit( $path );
 }
