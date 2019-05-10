@@ -11,6 +11,7 @@
 @import "utility/misc";
 
 @import "plugins/gridable";
+@import "typography";
 
 $content-class: '.entry-content' !default;
 
@@ -41,3 +42,4 @@ a {
 //@import "elements/carousel";
 @import "elements/slider-arrows";
 @import "elements/edit-link";
+@import "elements/wp-align";
