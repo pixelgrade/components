@@ -55,13 +55,10 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 	 * @return mixed
 	 */
 	function pixelgrade_option( $option_id, $default = null, $force_given_default = false ) {
-		/** @var PixCustomifyPlugin $pixcustomify_plugin */
-		global $pixcustomify_plugin;
-
-		if ( $pixcustomify_plugin !== null ) {
+		if ( function_exists( 'PixCustomifyPlugin' ) ) {
 			// Customify is present so we should get the value via it
 			// We need to account for the case where a option has an 'active_callback' defined in it's config
-			$options_config = $pixcustomify_plugin->get_options_configs();
+			$options_config = PixCustomifyPlugin()->get_options_configs();
 			if ( ! empty( $options_config ) && ! empty( $options_config[ $option_id ] ) && ! empty( $options_config[ $option_id ]['active_callback'] ) ) {
 				// This option has an active callback
 				// We need to "question" it
@@ -91,14 +88,14 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 			// Now that the option is truly active, we need to see if we are not supposed to force over the option's default value
 			if ( $default !== null && false === $force_given_default ) {
 				// We will not pass the received $default here so Customify will fallback on the option's default value, if set
-				$customify_value = $pixcustomify_plugin->get_option( $option_id );
+				$customify_value = PixCustomifyPlugin()->get_option( $option_id );
 
 				// We only fallback on the $default if none was given from Customify
 				if ( null === $customify_value ) {
 					return $default;
 				}
 			} else {
-				$customify_value = $pixcustomify_plugin->get_option( $option_id, $default );
+				$customify_value = PixCustomifyPlugin()->get_option( $option_id, $default );
 			}
 
 			return $customify_value;
