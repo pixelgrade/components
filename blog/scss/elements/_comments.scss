@@ -28,12 +28,13 @@ $comments-toggle-label-background: #000 !default;
 }
 
 .comment-list {
-    @include spacing(margin, 4rem 0);
 
-    &, ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .children {
         list-style: none;
-        padding: 0;
-        margin: 0;
     }
 
     > li + li {

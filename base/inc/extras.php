@@ -55,56 +55,55 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 	 * @return mixed
 	 */
 	function pixelgrade_option( $option_id, $default = null, $force_given_default = false ) {
-		/** @var PixCustomifyPlugin $pixcustomify_plugin */
-		global $pixcustomify_plugin;
-
-		if ( $pixcustomify_plugin !== null ) {
+		if ( function_exists( 'PixCustomifyPlugin' ) ) {
 			// Customify is present so we should get the value via it
 			// We need to account for the case where a option has an 'active_callback' defined in it's config
-			$options_config = $pixcustomify_plugin->get_options_configs();
-			if ( ! empty( $options_config ) && ! empty( $options_config[ $option_id ] ) && ! empty( $options_config[ $option_id ]['active_callback'] ) ) {
-				// This option has an active callback
-				// We need to "question" it
-				//
-				// IMPORTANT NOTICE:
-				//
-				// Be extra careful when setting up the options to not end up in a circular logic
-				// due to callbacks that get an option and that option has a callback that gets the initial option - INFINITE LOOPS :(
-				if ( is_callable( $options_config[ $option_id ]['active_callback'] ) ) {
-					// Now we call the function and if it returns false, this means that the control is not active
-					// Hence it's saved value doesn't matter
-					$active = call_user_func( $options_config[ $option_id ]['active_callback'] );
-					if ( empty( $active ) ) {
-						// If we need to force the default received; we respect that
-						if ( true === $force_given_default && null !== $default ) {
-							return $default;
-						} else {
-							// Else we return false
-							// because we treat the case when the active callback returns false as if the option would be non-existent
-							// We do not return the default configured value in this case
-							return false;
+			$options_config = PixCustomifyPlugin()->get_options_configs();
+			if ( ! empty( $options_config ) && ! empty( $options_config[ $option_id ] ) ) {
+				if ( ! empty( $options_config[ $option_id ]['active_callback'] ) ) {
+					// This option has an active callback
+					// We need to "question" it
+					//
+					// IMPORTANT NOTICE:
+					//
+					// Be extra careful when setting up the options to not end up in a circular logic
+					// due to callbacks that get an option and that option has a callback that gets the initial option - INFINITE LOOPS :(
+					if ( is_callable( $options_config[ $option_id ]['active_callback'] ) ) {
+						// Now we call the function and if it returns false, this means that the control is not active
+						// Hence it's saved value doesn't matter
+						$active = call_user_func( $options_config[ $option_id ]['active_callback'] );
+						if ( empty( $active ) ) {
+							// If we need to force the default received; we respect that
+							if ( true === $force_given_default && null !== $default ) {
+								return $default;
+							} else {
+								// Else we return false
+								// because we treat the case when the active callback returns false as if the option would be non-existent
+								// We do not return the default configured value in this case
+								return false;
+							}
 						}
 					}
 				}
-			}
 
-			// Now that the option is truly active, we need to see if we are not supposed to force over the option's default value
-			if ( $default !== null && false === $force_given_default ) {
-				// We will not pass the received $default here so Customify will fallback on the option's default value, if set
-				$customify_value = $pixcustomify_plugin->get_option( $option_id );
+				// Now that the option is truly active, we need to see if we are not supposed to force over the option's default value
+				if ( $default !== null && false === $force_given_default ) {
+					// We will not pass the received $default here so Customify will fallback on the option's default value, if set
+					$customify_value = PixCustomifyPlugin()->get_option( $option_id );
 
-				// We only fallback on the $default if none was given from Customify
-				if ( null === $customify_value ) {
-					return $default;
+					// We only fallback on the $default if none was given from Customify
+					if ( null === $customify_value ) {
+						return $default;
+					}
+				} else {
+					$customify_value = PixCustomifyPlugin()->get_option( $option_id, $default );
 				}
-			} else {
-				$customify_value = $pixcustomify_plugin->get_option( $option_id, $default );
-			}
 
-			return $customify_value;
+				return $customify_value;
+			}
 		}
 
-		// We don't have Customify present so we need to retrieve the option value the hard way.
+		// We don't have Customify present, or Customify doesn't "know" about this option ID, so we need to retrieve the option value the hard way.
 		$option_value = null;
 
 		// Fire the all-gathering-filter that Customify uses so we can get as much data about this option as possible.
@@ -115,8 +114,7 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 		}
 
 		$option_config = pixelgrade_get_option_customizer_config( $option_id, $config );
-
-		if ( ! empty( $option_config ) && isset( $option_config['setting_type'] ) && $option_config['setting_type'] === 'option' ) {
+		if ( ! empty( $option_config ) && isset( $option_config['setting_type'] ) && 'option' === $option_config['setting_type'] ) {
 			// We need to retrieve it from the wp_options table
 			// If we have been explicitly given a setting ID we will use that
 			if ( ! empty( $option_config['setting_id'] ) ) {
@@ -134,15 +132,15 @@ if ( ! function_exists( 'pixelgrade_option' ) ) {
 			}
 		}
 
-		if ( null === $option_value ) {
-			if ( false === $force_given_default && isset( $option_config['default'] ) ) {
-				return $option_config['default'];
-			} else {
-				return $default;
-			}
+		if ( null !== $option_value ) {
+			return $option_value;
 		}
 
-		return $option_value;
+		if ( false === $force_given_default && isset( $option_config['default'] ) ) {
+			return $option_config['default'];
+		}
+
+		return $default;
 	}
 }
 
@@ -576,7 +574,9 @@ function pixelgrade_get_theme_relative_path( $path ) {
 		return '';
 	}
 
-	$path = str_replace( trailingslashit( get_template_directory() ), '', $path );
+	$path = wp_normalize_path( $path );
+
+	$path = str_replace( wp_normalize_path( get_template_directory() ), '', $path );
 
 	return trailingslashit( $path );
 }
