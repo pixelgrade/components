@@ -510,11 +510,13 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 	// If we have a relative path, make it absolute.
 	if ( strpos( $path, get_template_directory() ) !== 0 ) {
 		// Delete any / at the beginning.
-		$path = ltrim( $path, '/' );
+		$path = ltrim( $path, '/\\' );
 
 		// Add the current theme path
 		$path = trailingslashit( get_template_directory() ) . $path;
 	}
+
+	$path = wp_normalize_path( $path );
 
 	// Start the counter
 	$counter = 0;

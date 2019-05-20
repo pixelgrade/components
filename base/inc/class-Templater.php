@@ -130,7 +130,7 @@ if ( ! class_exists( 'Pixelgrade_Templater' ) ) :
 				foreach ( $types as $type ) {
 					// We will use a helper class to store the type so we don't have to have individual function hooks
 					// for each possible value of $type.
-					// But this forces us to use a function, not a class method as the callback (in would complicate things too much).
+					// But this forces us to use a function, not a class method as the callback (it would complicate things too much).
 					// So we need to pass the info regarding the configured templates and component slug to the function hook also.
 					add_filter(
 						"{$type}_template_hierarchy",

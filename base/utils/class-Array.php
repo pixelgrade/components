@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'Pixelgrade_Array' ) ) :
+if ( ! class_exists( 'Pixelgrade_Array' ) ) {
 
 	class Pixelgrade_Array {
 		/**
@@ -31,6 +31,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 			if ( ! is_array( $insert ) ) {
 				$insert = array( $insert );
 			}
+
 			return array_merge( array_slice( $array, 0, $pos ), $insert, array_slice( $array, $pos ) );
 		}
 
@@ -51,6 +52,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 			if ( ! is_array( $insert ) ) {
 				$insert = array( $insert );
 			}
+
 			return array_merge( array_slice( $array, 0, $pos ), $insert, array_slice( $array, $pos ) );
 		}
 
@@ -62,7 +64,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * you can search for the key of the subarray containing the 'two' key with the 'value2', that is 1
 		 *
 		 * @param array  $array The array in which to search.
-		 * @param string $key The key to search for.
+		 * @param string $key   The key to search for.
 		 * @param mixed  $value The value to search for.
 		 *
 		 * @return mixed|false
@@ -97,6 +99,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 					return $key;
 				}
 			}
+
 			return false;
 		}
 
@@ -211,6 +214,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 			}
 			$value = $array[ $key ];
 			unset( $array[ $key ] );
+
 			return $value;
 		}
 
@@ -227,6 +231,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 			if ( false === $key ) {
 				return false;
 			}
+
 			return self::detach( $array, $key );
 		}
 
@@ -239,8 +244,8 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 * Notice: It doesn't keep the assoc array keys for the moved items. It is best not to be used on associative arrays.
 		 *
 		 * @param array $array
-		 * @param int $old_index
-		 * @param int $new_index
+		 * @param int   $old_index
+		 * @param int   $new_index
 		 *
 		 * @return array|false The reordered array.
 		 */
@@ -285,6 +290,7 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		 *
 		 * @param array $array1
 		 * @param array $array2
+		 *
 		 * @return array
 		 * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
 		 * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
@@ -331,4 +337,4 @@ if ( ! class_exists( 'Pixelgrade_Array' ) ) :
 		}
 	}
 
-endif;
+}
