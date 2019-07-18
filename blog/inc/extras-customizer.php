@@ -18,14 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * THESE CALLBACKS ARE USED WIDELY - KEEP THEM
  * ==================================== */
 
-if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
+if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) {
 	/**
 	 * Returns the custom CSS rules for the aspect ratio depending on the Customizer settings.
 	 *
-	 * @param mixed  $value The value of the option.
+	 * @param mixed  $value    The value of the option.
 	 * @param string $selector The CSS selector for this option.
 	 * @param string $property The CSS property of the option.
-	 * @param string $unit The CSS unit used by this option.
+	 * @param string $unit     The CSS unit used by this option.
 	 *
 	 * @return string
 	 */
@@ -52,9 +52,9 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) :
 
 		return $output;
 	}
-endif;
+}
 
-if ( ! function_exists( 'pixelgrade_aspect_ratio_cb_customizer_preview' ) ) :
+if ( ! function_exists( 'pixelgrade_aspect_ratio_cb_customizer_preview' ) ) {
 	/**
 	 * Outputs the inline JS code used in the Customizer for the aspect ratio live preview.
 	 */
@@ -103,7 +103,7 @@ function pixelgrade_aspect_ratio_cb( value, selector, property, unit ) {
 
 		wp_add_inline_script( 'customify-previewer-scripts', $js );
 	}
-endif;
+}
 add_action( 'customize_preview_init', 'pixelgrade_aspect_ratio_cb_customizer_preview', 20 );
 
 /*

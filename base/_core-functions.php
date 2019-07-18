@@ -180,6 +180,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_file' ) ) {
 
 		// Make sure we have no double slashing.
 		if ( ! empty( $template ) ) {
+			$template = wp_normalize_path( $template );
 			$template = str_replace( '//', '/', $template );
 		}
 
@@ -329,6 +330,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_template' ) ) {
 
 		// Make sure we have no double slashing.
 		if ( ! empty( $template ) ) {
+			$template = wp_normalize_path( $template );
 			$template = str_replace( '//', '/', $template );
 		}
 
@@ -418,6 +420,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_page_template' ) ) {
 
 		// Make sure we have no double slashing.
 		if ( ! empty( $page_template ) ) {
+			$page_template = wp_normalize_path( $page_template );
 			$page_template = str_replace( '//', '/', $page_template );
 		}
 
@@ -540,6 +543,7 @@ if ( ! function_exists( 'pixelgrade_locate_component_template_part' ) ) {
 
 		// Make sure we have no double slashing.
 		if ( ! empty( $template ) ) {
+			$template = wp_normalize_path( $template );
 			$template = str_replace( '//', '/', $template );
 		}
 
@@ -577,8 +581,9 @@ if ( ! function_exists( 'pixelgrade_get_template_part' ) ) {
 		// Allow 3rd party plugins or themes to filter template file.
 		$located = apply_filters( 'pixelgrade_get_template_part', $located, $template_slug, $template_path, $args, $template_name, $default_path );
 
-		// phpcs:ignore
-		include( $located );
+		$located = wp_normalize_path( $located );
+
+		include( $located ); // phpcs:ignore
 	}
 }
 
@@ -718,6 +723,7 @@ if ( ! function_exists( 'pixelgrade_locate_template_part' ) ) {
 
 		// Make sure we have no double slashing.
 		if ( ! empty( $template ) ) {
+			$template = wp_normalize_path( $template );
 			$template = str_replace( '//', '/', $template );
 		}
 
@@ -741,6 +747,8 @@ function pixelgrade_make_relative_path( $path ) {
 	if ( empty( $path ) ) {
 		return '';
 	}
+
+	$path = wp_normalize_path( $path );
 
 	$stylesheet_path = trailingslashit( get_stylesheet_directory_uri() );
 	$template_path   = trailingslashit( get_template_directory() );

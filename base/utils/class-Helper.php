@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'Pixelgrade_Helper' ) ) :
+if ( ! class_exists( 'Pixelgrade_Helper' ) ) {
 
 	class Pixelgrade_Helper {
 
@@ -26,20 +26,22 @@ if ( ! class_exists( 'Pixelgrade_Helper' ) ) :
 			$time = microtime();
 			$time = explode( ' ', $time );
 			$time = $time[1] + $time[0];
+
 			return $time;
 		}
 
 		/**
 		 * For stopping time and getting the data
 		 *
+		 * @param int $start
+		 *
+		 * @return string
 		 * @example
 		 * ```php
 		 * $start = Pixelgrade_Helper::start_timer();
 		 * // do some stuff that takes awhile
 		 * echo Pixelgrade_Helper::stop_timer( $start );
 		 * ```
-		 * @param int $start
-		 * @return string
 		 */
 		public static function stop_timer( $start ) {
 			$time       = microtime();
@@ -47,6 +49,7 @@ if ( ! class_exists( 'Pixelgrade_Helper' ) ) :
 			$time       = $time[1] + $time[0];
 			$finish     = $time;
 			$total_time = round( ( $finish - $start ), 4 );
+
 			return $total_time . ' seconds.';
 		}
 
@@ -59,6 +62,7 @@ if ( ! class_exists( 'Pixelgrade_Helper' ) ) :
 		 *
 		 * @param callback $function
 		 * @param array    $args
+		 *
 		 * @return mixed
 		 */
 		public static function ob_function( $function, $args = array( null ) ) {
@@ -77,8 +81,9 @@ if ( ! class_exists( 'Pixelgrade_Helper' ) ) :
 					return $data;
 				}
 			}
+
 			return $response;
 		}
 	}
 
-endif;
+}
