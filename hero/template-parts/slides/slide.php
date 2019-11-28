@@ -9,7 +9,7 @@
  *
  * @global int $slide_index The current slide index.
  * @global array $slide The current slide.
- * @global int $post_ID The global current post ID, most likely the page ID.
+ * @global int $current_post_id The global current post ID, most likely the page ID.
  * @global array $slides All the slides.
  *
  * This template can be overridden by copying it to a child theme or in the same theme
@@ -42,7 +42,7 @@ if ( empty( $slide ) ) {
 
 // Make sure we have a source post ID
 if ( empty( $slide['source_post_id'] ) ) {
-	$slide['source_post_id'] = $post_ID;
+	$slide['source_post_id'] = $current_post_id;
 }
 
 // Make sure we have a slide type

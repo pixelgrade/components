@@ -34,7 +34,13 @@ if ( ! function_exists( 'Pixelgrade_Woocommerce' ) ) :
 		if ( ! class_exists( 'Pixelgrade_Woocommerce' ) ) {
 			pixelgrade_load_component_file( 'woocommerce', 'class-Woocommerce' );
 		}
-		return Pixelgrade_Woocommerce::instance( '1.0.2' );
+		return Pixelgrade_Woocommerce::instance( '1.0.2', array(
+			'init' => array(
+				'priorities' => array(
+					'registerBlocks' => 10
+				)
+			)
+		) );
 	}
 endif;
 

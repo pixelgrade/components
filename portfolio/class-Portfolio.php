@@ -131,13 +131,13 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 							'name' => array( $this, 'exclude_featured_projects' ),
 						),
 					),
-					// Optional - The 'fake_loop_action' determines on what action do you want the fake loop to attach to
-					// That will be the place that the posts loop will be displayed
-					// Defaults to 'pixelgrade_after_loop' with 10 priority
-					'fake_loop_action'   => array(
-						'function' => 'pixelgrade_after_loop',
-						'priority' => 9,
-					),
+//					// Optional - The 'fake_loop_action' determines on what action do you want the fake loop to attach to
+//					// That will be the place that the posts loop will be displayed
+//					// Defaults to 'pixelgrade_after_loop' with 10 priority
+//					'fake_loop_action'   => array(
+//						'function' => 'pixelgrade_after_loop',
+//						'priority' => 9,
+//					),
 					// What hooks do you want to attach to the actions in and near the loop
 					// These are the available hooks:
 					// 'before_loop'
@@ -412,6 +412,9 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 		add_filter( 'post_type_archive_link', array( $this, 'handlePageForProjectsPermalink' ), 10, 2 );
 		add_filter( 'document_title_parts', array( $this, 'handlePageForProjectsHeadTitle' ), 10, 2 );
 
+		//
+		add_filter( 'pixelgrade_card_post_details', array( $this, 'addProjectInfoToCardDetails' ) );
+
 		// Others might want to know about this and get a chance to do their own work (like messing with our's :) )
 		do_action( 'pixelgrade_portfolio_registered_hooks' );
 	}
@@ -607,5 +610,37 @@ class Pixelgrade_Portfolio extends Pixelgrade_Component {
 		}
 
 		return $title_parts;
+	}
+
+	public function addProjectInfoToCardDetails( $details ) {
+
+		if ( 'jetpack-portfolio' !== get_post_type() ) {
+			return $details;
+		}
+
+		// get first category and category list for product
+		$project_type = null;
+		$project_types = get_the_terms( get_the_ID(), 'jetpack-portfolio-type' );
+		$project_type_list = get_the_term_list( get_the_ID(), 'jetpack-portfolio-type', '<ul class="c-card__term-list"><li>', '</li><li>', '</li></ul>' );
+
+		if ( ! empty( $project_types ) && ! is_wp_error( $project_types ) ) {
+			$project_type = esc_html( $project_types[0]->name );
+			$details['jetpack-portfolio-type'] = $project_type;
+		}
+
+		// get first tag and tag list for product
+		$project_tag = null;
+		$project_tags = get_the_terms( get_the_ID(), 'jetpack-portfolio-tag' );
+		$project_tag_list = get_the_term_list( get_the_ID(), 'jetpack-portfolio-tag', '<ul class="c-card__term-list"><li>', '</li><li>', '</li></ul>' );
+
+		if ( ! empty( $project_tags ) && ! is_wp_error( $project_tags ) ) {
+			$project_tag = esc_html( $project_tags[0]->name );
+			$details['jetpack-portfolio-tag'] = $project_tag;
+		}
+
+		$details['jetpack-portfolio-type-list'] = $project_type_list;
+		$details['jetpack-portfolio-tag-list'] = $project_tag_list;
+
+		return $details;
 	}
 }

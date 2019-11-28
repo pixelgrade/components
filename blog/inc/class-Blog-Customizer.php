@@ -885,7 +885,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 						'desc'        => '',
 						'selector'    => 'h6, .h6,
 											.comment-reply-title a, .comment__metadata a, 
-											.edit-link a, .logged-in-as a, .reply a',
+											.edit-link a, .logged-in-as a, .reply a, .tags__title',
 						'callback'    => 'typeline_font_cb',
 
 						// This should be set by the theme
@@ -1400,7 +1400,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'blog_items_title_visibility_title'     => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the title.', '__components_txtd' ) . '</span>',
 					),
 					'blog_items_title_visibility'           => array(
 						'type'    => 'checkbox',
@@ -1418,7 +1418,7 @@ class Pixelgrade_Blog_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'blog_items_excerpt_visibility_title'   => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the excerpt.', '__components_txtd' ) . '</span>',
 					),
 					'blog_items_excerpt_visibility'         => array(
 						'type'    => 'checkbox',

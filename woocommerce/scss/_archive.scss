@@ -80,3 +80,9 @@
     background: none;
     color: inherit;
 }
+
+.c-gallery--woocommerce {
+    .c-card__letter {
+        display: none;
+    }
+}

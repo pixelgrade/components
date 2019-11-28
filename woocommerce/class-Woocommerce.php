@@ -65,6 +65,232 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 			),
 		);
 
+		$this->config['blocks'] = array(
+			'default' => array(
+				'extend' => 'blog/default',
+				'wrappers' => array(
+					'sides-spacing' => array( 'classes' => 'u-woocommerce-sides-spacing' ),
+					'wrapper'       => array( 'classes' => 'o-wrapper u-woocommerce-grid-width' ),
+				),
+			),
+			'main' => array(
+				'extend' => 'blog/main',
+			),
+			'layout' => array(
+				'extend' => 'blog/layout',
+			),
+			'container' => array(
+				'extend' => 'blog/container',
+			),
+			'loop-none' => array(
+				'extend' => 'blog/loop-none',
+			),
+			'loop-pagination' => array(
+				'extend' => 'blog/loop-pagination',
+			),
+			'grid-item' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => 'woocommerce',
+						'slug'           => 'content-product'
+					),
+				),
+			),
+			'entry-content' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => 'woocommerce',
+						'slug'           => 'entry-content',
+						'name'           => 'product',
+					),
+				),
+			),
+			'loop-posts' => array(
+				'blocks' => array(
+
+					'before-loop' => array(
+						'type' => 'callback',
+						'callback' => 'do_action',
+						'args' => array( 'woocommerce_before_shop_loop' ),
+					),
+					'loop-start' => array(
+						'type' => 'callback',
+						'callback' => 'woocommerce_product_loop_start',
+					),
+
+					'posts' => array(
+						'type' => 'loop',
+						'blocks' => array(
+							'woocommerce/grid-item'
+						),
+					),
+
+					'loop-end' => array(
+						'type' => 'callback',
+						'callback' => 'woocommerce_product_loop_end',
+					),
+					'after-loop' => array(
+						'type' => 'callback',
+						'callback' => 'do_action',
+						'args' => array( 'woocommerce_after_shop_loop' ),
+					),
+					'woocommerce/loop-pagination',
+				),
+				'checks' => array(
+					array(
+						'callback' => 'have_posts',
+						'args'     => array(),
+					),
+				),
+			),
+			'entry-header-archive' => array(
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => 'woocommerce',
+						'slug' => 'entry-header',
+						'name' => 'archive',
+					),
+				),
+			),
+			'entry-header-cart' => array(
+				'extend' => 'blog/entry-header',
+				'type'      => 'template_part',
+				'templates' => array(
+					array(
+						'component_slug' => 'woocommerce',
+						'slug' => 'entry-header',
+						'name' => 'cart',
+					),
+				),
+			),
+			'archive-product' => array(
+				'extend' => 'woocommerce/default',
+				'blocks' => array(
+					'container' => array(
+						'extend' => 'woocommerce/container',
+						'blocks' => array(
+							'layout' => array(
+								'extend' => 'woocommerce/layout',
+								'blocks' => array(
+									'main' => array(
+										'extend' => 'blog/main',
+										'blocks' => array(
+											'woocommerce/entry-header-archive',
+											'content' => array(
+												'blocks' => array(
+													'woocommerce/loop-posts',
+													'woocommerce/loop-none'
+												),
+												'wrappers' => array(
+													array(
+														'classes' => 'woocommerce-product-archive'
+													),
+												),
+											),
+										),
+									),
+								),
+							),
+						),
+					),
+				),
+				'checks' => array(
+					array(
+						'callback' => 'is_woo_archive',
+					),
+				),
+			),
+			'page' => array(
+				'extend' => 'blog/page',
+				'checks' => array(
+					array(
+						'callback' => 'is_cart',
+						'compare' => 'NOT'
+					),
+					array(
+						'callback' => 'is_checkout',
+						'compare' => 'NOT'
+					),
+					array(
+						'callback' => 'is_woo_archive',
+						'compare' => 'NOT'
+					),
+					array(
+						'callback' => 'is_singular',
+						'args' => array( 'product' ),
+						'compare' => 'NOT'
+					),
+				),
+			),
+			'cart' => array(
+				'extend' => 'woocommerce/container',
+				'blocks' => array(
+					'layout' => array(
+						'extend' => 'woocommerce/layout',
+						'blocks' => array(
+							'main' => array(
+								'extend' => 'blog/main',
+								'blocks' => array(
+									'woocommerce/entry-header-cart',
+									'woocommerce/entry-content',
+								),
+							),
+						),
+					),
+				),
+				'checks' => array(
+					array(
+						'callback' => 'is_cart',
+					),
+				),
+			),
+			'checkout' => array(
+				'extend' => 'woocommerce/container',
+				'blocks' => array(
+					'layout' => array(
+						'extend' => 'woocommerce/layout',
+						'blocks' => array(
+							'main' => array(
+								'extend' => 'blog/main',
+								'blocks' => array(
+									'woocommerce/entry-content',
+								),
+							),
+						),
+					),
+				),
+				'checks' => array(
+					array(
+						'callback' => 'is_checkout',
+					),
+				),
+			),
+			'single-product' => array(
+				'extend' => 'woocommerce/container',
+				'type' => 'loop',
+				'blocks' => array(
+					'layout' => array(
+						'extend' => 'woocommerce/layout',
+						'blocks' => array(
+							'main' => array(
+								'extend' => 'woocommerce/main',
+								'blocks' => array(
+									'content' => array(
+										'type'     => 'callback',
+										'callback' => 'wc_get_template_part',
+										'args' => array( 'content', 'single-product' ),
+									),
+								),
+							),
+						),
+					),
+				),
+			)
+		);
+
 		// Allow others to make changes to the config
 		// Make the hooks dynamic and standard
 		$hook_slug       = self::prepareStringForHooks( self::COMPONENT_SLUG );
@@ -197,7 +423,7 @@ class Pixelgrade_Woocommerce extends Pixelgrade_Component {
 	 */
 	public function addProductInfoToCardDetails( $details ) {
 
-		if ( 'product' !== get_post_type() ) {
+		if ( 'product' !== get_post_type() && 'product_variation' !== get_post_type() ) {
 			return $details;
 		}
 

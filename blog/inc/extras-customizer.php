@@ -22,10 +22,10 @@ if ( ! function_exists( 'pixelgrade_aspect_ratio_cb' ) ) {
 	/**
 	 * Returns the custom CSS rules for the aspect ratio depending on the Customizer settings.
 	 *
-	 * @param mixed  $value    The value of the option.
+	 * @param mixed  $value The value of the option.
 	 * @param string $selector The CSS selector for this option.
 	 * @param string $property The CSS property of the option.
-	 * @param string $unit     The CSS unit used by this option.
+	 * @param string $unit The CSS unit used by this option.
 	 *
 	 * @return string
 	 */

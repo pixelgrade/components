@@ -85,6 +85,11 @@
                 }
             }
         }
+
+        td {
+            word-wrap: break-word;
+            white-space: normal;
+        }
     }
 
     &[class] #shipping_method li {
@@ -129,6 +134,10 @@
     @include spacing( margin-top, 120px );
 }
 
+.woocommerce-cart-form__contents {
+    table-layout: auto;
+}
+
 .woocommerce-cart .actions .coupon {
 
     @include specific(2) {
@@ -162,4 +171,14 @@
         text-align: left;
         margin-bottom: 20px;
     }
+}
+
+.woocommerce table.shop_table tbody th,
+.woocommerce table.shop_table tfoot td,
+.woocommerce table.shop_table tfoot th {
+    font-weight: 400;
+}
+
+.woocommerce table.shop_table th{
+    font-weight: 500;
 }

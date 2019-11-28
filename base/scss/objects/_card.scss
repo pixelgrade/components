@@ -55,10 +55,14 @@ $card-content-spacing: 1.5rem !default;
 // Card Content
 // ------------------------------------------------------------
 
+
 .c-card__content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+
+  @supports (display: grid) {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
 
   .c-card__aside + & {
     @include spacing(margin-top, $card-gutter);

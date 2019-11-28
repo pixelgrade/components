@@ -8,6 +8,13 @@ $content-width--full-width: none !default;
 .u-container-sides-spacing {
     @include spacing(padding-left, $content-sides-spacing);
     @include spacing(padding-right, $content-sides-spacing);
+
+    .u-container-sides-spacing {
+        @include below(lap) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
 }
 
 .mce-content-body {

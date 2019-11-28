@@ -670,7 +670,6 @@ if ( ! function_exists( 'pixelgrade_shape_comment' ) ) {
 	 * @param int        $depth
 	 */
 	function pixelgrade_shape_comment( $comment, $args, $depth ) {
-		$GLOBALS['comment'] = $comment; // phpcs:ignore
 		switch ( $comment->comment_type ) :
 			case 'pingback':
 			case 'trackback':

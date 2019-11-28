@@ -41,7 +41,7 @@ function pixelgrade_woocommerce_grid_vertical_spacing_cb( $value, $selector, $pr
 		$points      = $typeline_config['spacings']['points'];
 		$breakpoints = $typeline_config['spacings']['breakpoints'];
 
-		$ratio = 1.275;
+		$ratio = 2.275;
 
 		// from 80em
 		$columns  = pixelgrade_option( 'woocommerce_items_per_row', 3 );
@@ -63,44 +63,44 @@ function pixelgrade_woocommerce_grid_vertical_spacing_cb( $value, $selector, $pr
 		$featured_at_small = 'calc(' . ( ( 200 * $ratio / $columns_at_small . '%' ) . ' - ' . ( $value_at_small * ( 2 * $ratio - 1 ) ) ) . 'px);';
 
 		$output .=
-			'.c-gallery--gallery.c-gallery--packed,
-			.c-gallery--gallery.c-gallery--packed .c-gallery__item {
+			'.c-gallery--woocommerce.c-gallery--packed,
+			.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {
 			margin-top: 0
 			}
 			@media only screen and (min-width: 35em) {
-				.c-gallery--gallery.c-gallery--packed .c-gallery__item {
+				.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {
 				padding-top: ' . $normal_at_small . '
 				margin-bottom: ' . $value_at_small . 'px
 				}
-				.c-gallery--gallery.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
+				.c-gallery--woocommerce.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
 				padding-top: ' . $featured_at_small . '
 				}
 			}
 			@media only screen and (min-width: 50em) {
-				.c-gallery--gallery.c-gallery--packed .c-gallery__item {
+				.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {
 				padding-top: ' . $normal_at_lap . '
 				margin-bottom: ' . $value_at_lap . 'px
 				}
-				.c-gallery--gallery.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
+				.c-gallery--woocommerce.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
 				padding-top: ' . $featured_at_lap . '
 				}
 			}
 			@media only screen and (min-width: 80em) {
-				.c-gallery--gallery.c-gallery--packed .c-gallery__item {
+				.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {
 				padding-top: ' . $normal . '
 				margin-bottom: ' . $value . 'px
 				}
-				.c-gallery--gallery.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
+				.c-gallery--woocommerce.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {
 				padding-top: ' . $featured . '
 				}
 			}
 			';
 
 		$output .=
-			'.c-gallery--gallery {
+			'.c-gallery--woocommerce {
 			margin-top: calc(-' . $value . 'px);
 			}
-			.c-gallery--gallery > * {
+			.c-gallery--woocommerce > * {
 			margin-top: ' . $value . 'px;
 			}
 			';
@@ -112,10 +112,10 @@ function pixelgrade_woocommerce_grid_vertical_spacing_cb( $value, $selector, $pr
 
 			$output .=
 				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {
-					.c-gallery--gallery {
+					.c-gallery--woocommerce {
 					margin-top: calc(-' . $new_value . 'px);
 					}
-					.c-gallery--gallery > * {
+					.c-gallery--woocommerce > * {
 					margin-top: ' . $new_value . 'px;
 					}
 				}
@@ -130,13 +130,13 @@ function pixelgrade_woocommerce_grid_horizontal_spacing_cb( $value, $selector, $
 	$output = '';
 
 	$output .=
-		'.c-gallery--gallery {
+		'.c-gallery--woocommerce {
 		margin-left: -' . $value . 'px;
 		}
-		.c-gallery--gallery > * {
+		.c-gallery--woocommerce > * {
 		padding-left: ' . $value . 'px;
 		}
-		.c-gallery--gallery.c-gallery--packed .c-card {
+		.c-gallery--woocommerce.c-gallery--packed .c-card {
 		left: ' . $value . 'px;
 		}
 		';
@@ -155,13 +155,13 @@ function pixelgrade_woocommerce_grid_horizontal_spacing_cb( $value, $selector, $
 
 			$output .=
 				'@media only screen and (max-width: ' . $breakpoints[ $i ] . ') {
-					.c-gallery--gallery {
+					.c-gallery--woocommerce {
 					margin-left: -' . $new_value . 'px;
 					}
-					.c-gallery--gallery > * {
+					.c-gallery--woocommerce > * {
 					padding-left: ' . $new_value . 'px;
 					}
-					.c-gallery--gallery.c-gallery--packed .c-card {
+					.c-gallery--woocommerce.c-gallery--packed .c-card {
 					left: ' . $new_value . 'px;
 					}
 				}
@@ -233,42 +233,42 @@ function pixelgrade_woocommerce_grid_vertical_spacing_cb( value, selector, prope
 		featured_at_small = 'calc(' + ( (200 * ratio / columns_at_small + '%') + ' - ' + ( value_at_small * (2 * ratio - 1) ) ) + 'px);';
 
 	css +=
-		'.c-gallery--gallery.c-gallery--packed,' +
-		'.c-gallery--gallery.c-gallery--packed .c-gallery__item {' +
+		'.c-gallery--woocommerce.c-gallery--packed,' +
+		'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {' +
 			'margin-top: 0' +
 		'}' +
 		'@media only screen and (min-width: 35em) {' +
-			'.c-gallery--gallery.c-gallery--packed .c-gallery__item {' +
+			'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {' +
 				'padding-top: ' + normal_at_small +
-				'margin-bottom: ' + value_at_small +
+				'margin-bottom: ' + value_at_small + 'px' +
 			'}' +
-			'.c-gallery--gallery.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' +
+			'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' +
 				'padding-top: ' + featured_at_small +
 			'}' +
 		'}' +
 		'@media only screen and (min-width: 50em) {' +
-			'.c-gallery--gallery.c-gallery--packed .c-gallery__item {' +
+			'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {' +
 				'padding-top: ' + normal_at_lap +
-				'margin-bottom: ' + value_at_lap +
+				'margin-bottom: ' + value_at_lap + 'px' +
 			'}' +
-			'.c-gallery--gallery.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' +
+			'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' +
 				'padding-top: ' + featured_at_lap +
 			'}' +
 		'}' +
 		'@media only screen and (min-width: 80em) {' +
-			'.c-gallery--gallery.c-gallery--packed .c-gallery__item {' +
+			'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item {' +
 				'padding-top: ' + normal +
-				'margin-bottom: ' + value +
+				'margin-bottom: ' + value + 'px' +
 			'}' +
-			'.c-gallery--gallery.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' +
+			'.c-gallery--woocommerce.c-gallery--packed .c-gallery__item.jetpack-blog-tag-featured {' +
 				'padding-top: ' + featured +
 			'}' +
 		'}';
 
-	css += '.c-gallery--gallery {' +
+	css += '.c-gallery--woocommerce {' +
 		'margin-top: calc(-' + value + 'px);' +
 		'}' +
-		'.c-gallery--gallery > * {' +
+		'.c-gallery--woocommerce > * {' +
 		'margin-top: ' + value + 'px;' +
 		'}';
 		
@@ -277,10 +277,10 @@ function pixelgrade_woocommerce_grid_vertical_spacing_cb( value, selector, prope
 			newValue = Math.round(value / newRatio);
 
 		css += '@media only screen and (max-width: ' + breakpoints[i] + 'px) {' +
-			'.c-gallery--gallery {' +
+			'.c-gallery--woocommerce {' +
 			'margin-top: calc(-' + value + 'px);' +
 			'}' +
-			'.c-gallery--gallery > * {' +
+			'.c-gallery--woocommerce > * {' +
 			'margin-top: ' + newValue + 'px;' +
 			'}' +
 			'}';
@@ -351,13 +351,13 @@ function pixelgrade_woocommerce_grid_horizontal_spacing_cb( value, selector, pro
 		style = document.getElementById('woocommerce_grid_horizontal_spacing_style_tag'),
 		head = document.head || document.getElementsByTagName('head')[0];
 
-	css += '.c-gallery--gallery {' +
+	css += '.c-gallery--woocommerce {' +
 			'margin-left: -' + value + 'px;' +
 		'}' +
-		'.c-gallery--gallery > * {' +
+		'.c-gallery--woocommerce > * {' +
 			'padding-left: ' + value + 'px;' +
 		'}' +
-		'.c-gallery--gallery.c-gallery--packed .c-card {' +
+		'.c-gallery--woocommerce.c-gallery--packed .c-card {' +
 			'left: ' + value + 'px;' +
 		'}';
 		";
@@ -370,13 +370,13 @@ function pixelgrade_woocommerce_grid_horizontal_spacing_cb( value, selector, pro
 			newValue = Math.round(value / newRatio);
 
 		css += '@media only screen and (max-width: ' + breakpoints[i] + 'px) {' +
-				'.c-gallery--gallery {' +
+				'.c-gallery--woocommerce {' +
 					'margin-left: -' + value + 'px;' +
 				'}' +
-				'.c-gallery--gallery > * {' +
+				'.c-gallery--woocommerce > * {' +
 					'padding-left: ' + newValue + 'px;' +
 				'}' +
-				'.c-gallery--gallery.c-gallery--packed .c-card {' +
+				'.c-gallery--woocommerce.c-gallery--packed .c-card {' +
 					'left: ' + newValue + 'px;' +
 				'}' +
 			'}';

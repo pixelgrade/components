@@ -494,10 +494,8 @@ function pixelgrade_get_parent_theme_file_uri( $file = '' ) {
  * @return false|int False on failure, otherwise the number of files loaded.
  */
 function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) {
-	$path = wp_normalize_path( $path );
-
 	// If the $path starts with the absolute path to the WP install or the template directory, not good
-	if ( strpos( $path, wp_normalize_path( ABSPATH ) ) === 0 && strpos( $path, wp_normalize_path( get_template_directory() ) ) !== 0 ) {
+	if ( strpos( $path, ABSPATH ) === 0 && strpos( $path, get_template_directory() ) !== 0 ) {
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Please provide only paths in the theme for autoloading.', '__components_txtd' ), null );
 
 		return false;
@@ -510,7 +508,7 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 	}
 
 	// If we have a relative path, make it absolute.
-	if ( strpos( $path, wp_normalize_path( get_template_directory() ) ) !== 0 ) {
+	if ( strpos( $path, get_template_directory() ) !== 0 ) {
 		// Delete any / at the beginning.
 		$path = ltrim( $path, '/\\' );
 
@@ -520,16 +518,10 @@ function pixelgrade_autoload_dir( $path, $depth = 0, $method = 'require_once' ) 
 
 	$path = wp_normalize_path( $path );
 
-	try {
-		$iterator = new DirectoryIterator( $path );
-	} catch ( Exception $exception ) {
-		// Just bail.
-		return false;
-	}
-
 	// Start the counter
 	$counter = 0;
 
+	$iterator = new DirectoryIterator( $path );
 	// First we will load the files in the directory
 	foreach ( $iterator as $file_info ) {
 		if ( ! $file_info->isDir() && ! $file_info->isDot() && 'php' == strtolower( $file_info->getExtension() ) ) {
@@ -1095,22 +1087,27 @@ if ( ! function_exists( 'pixelgrade_get_card_contents' ) ) {
 			'primary_meta'   => array(
 				'blog'        => 'category',
 				'woocommerce' => 'category',
+                'portfolio'   => 'none',
 			),
 			'secondary_meta' => array(
 				'blog'        => 'date',
 				'woocommerce' => 'none',
+                'portfolio'   => 'none',
 			),
 			'heading'        => array(
 				'blog'        => 'title',
 				'woocommerce' => 'title',
+                'portfolio'   => 'title',
 			),
 			'content'        => array(
 				'blog'        => 'excerpt',
 				'woocommerce' => 'price',
+                'portfolio'   => 'none',
 			),
 			'footer'         => array(
 				'blog'        => 'read_more',
 				'woocommerce' => 'none',
+                'portfolio'   => 'none',
 			),
 		) );
 
@@ -1227,3 +1224,14 @@ if ( ! function_exists( 'pixelgrade_the_card' ) ) {
 		do_action( 'pixelgrade_after_loop_entry', $location );
 	}
 }
+
+function fargo_portfolio_hero_the_taxonomy_dropdown( $content ) {
+	if ( class_exists( 'Jetpack_Portfolio' ) && pixelgrade_is_page_for_projects() ) { ?>
+		<div class="category-dropdown has-inputs-inverted">
+			<?php pixelgrade_the_taxonomy_dropdown( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ); ?>
+		</div><!-- .category-dropdown -->
+		<?php
+	}
+}
+
+add_action( 'pixelgrade_hero_after_the_description', 'fargo_portfolio_hero_the_taxonomy_dropdown', 20, 1 );

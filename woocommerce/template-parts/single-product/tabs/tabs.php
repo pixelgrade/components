@@ -43,7 +43,7 @@ if ( ! empty( $product_tabs ) ) { ?>
 		</ul>
 		<?php foreach ( $product_tabs as $tab_key => $product_tab ) : ?>
 			<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--<?php echo esc_attr( $tab_key ); ?> panel entry-content wc-tab" id="tab-<?php echo esc_attr( $tab_key ); ?>" role="tabpanel" aria-labelledby="tab-title-<?php echo esc_attr( $tab_key ); ?>">
-				<?php if ( isset( $product_tab['callback'] ) ) { call_user_func( $product_tab['callback'], $key, $product_tab ); } ?>
+				<?php if ( isset( $product_tab['callback'] ) ) { call_user_func( $product_tab['callback'], $tab_key, $product_tab ); } ?>
 			</div>
 		<?php endforeach; ?>
 	</div>

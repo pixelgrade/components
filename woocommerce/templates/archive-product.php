@@ -24,6 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+// Let the template parts know about our location
+$location = pixelgrade_set_location( 'product');
+
 pixelgrade_get_header();
 
 pixelgrade_render_block( 'woocommerce/archive-product' );

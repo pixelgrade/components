@@ -48,8 +48,8 @@ do_action( 'pixelgrade_before_header', 'main' );
 
                 // Cycle through each zone and display the nav menus or other "bogus" things.
                 foreach ( $header_zones as $zone_id => $zone ) {
-                    // Get the menu_locations in the current zone.
-                    $menu_locations = pixelgrade_header_get_zone_nav_menu_locations( $zone_id, $zone );
+	                // Get the menu_locations in the current zone.
+	                $menu_locations = pixelgrade_header_get_zone_nav_menu_locations( $zone_id, $zone );
 
 	                if ( ! empty( $menu_locations ) ) {
 

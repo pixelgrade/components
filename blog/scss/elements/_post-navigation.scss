@@ -42,9 +42,47 @@ $post-navigation-spacing: 4rem !default;
 			@include spacing(margin-left, $post-navigation-spacing);
 
 			position: relative;
-			flex: 1 1 18em;
+			flex: 1 1 10em;
 			width: 10em;
 		}
+
+    > :not(:first-child) {
+      @include spacing(margin-top, $post-navigation-spacing);
+
+      @include above(lap) {
+        margin-top: 0;
+      }
+    }
+
+    @include below(lap) {
+
+      > * {
+        flex: 1 1 100%;
+      }
+
+      .nav-previous,
+      .nav-next {
+        text-align: center;
+      }
+
+      .nav-title,
+      .nav-links__label {
+        transform: none !important;
+      }
+
+      .nav-links__label:before,
+      .nav-links__label:after {
+        content: none;
+      }
+
+      .nav-links__label--next {
+        padding-right: 0;
+      }
+
+      .nav-links__label--previous {
+        padding-left: 0;
+      }
+    }
 
 		a:after {
 			content: "";
@@ -61,8 +99,15 @@ $post-navigation-spacing: 4rem !default;
 		}
 	}
 
+	.nav-links__label[class] {
+		font-weight: 500;
+		font-size: 14px;
+	}
+
 	.nav-title {
 		display: block;
+
+		font-weight: 300;
 
 		// Why do we need to truncate the titles? (George cc Alexandra)
 		// word-break: break-word;

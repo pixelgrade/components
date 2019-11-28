@@ -22,7 +22,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) {
 		 * Search a component's config and determine if it registers a certain page template identified by it's slug.
 		 *
 		 * @param string $page_template The page template (slug) we are looking for.
-		 * @param array  $config        The full component config.
+		 * @param array  $config The full component config.
 		 *
 		 * @return bool
 		 */
@@ -53,7 +53,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) {
 		 * If we fail to grab a value that is not null, false, '', or array(), we will fallback on the next entry.
 		 * So the order matters. We will stop at the first valid value, top to bottom.
 		 *
-		 * @param mixed $config  The value config.
+		 * @param mixed $config The value config.
 		 * @param int   $post_id Optional. Post ID.
 		 *
 		 * @return mixed|false The determined value or false on failure.
@@ -186,7 +186,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) {
 		 *  'function_exists' => array( 'some_function', 'another_function' ),
 		 *
 		 * @param array $dependencies The dependencies config array or a config that has dependencies (on the first level).
-		 * @param array $data         Optional. Extra data to use.
+		 * @param array $data Optional. Extra data to use.
 		 *
 		 * @return bool Returns true in case all dependencies are met, false otherwise. If there are no dependencies or the format is invalid, it returns true.
 		 */
@@ -397,7 +397,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) {
 		 * ),
 		 *
 		 * @param array|string $checks The checks config.
-		 * @param array        $data   Optional. Extra data to use
+		 * @param array        $data Optional. Extra data to use
 		 *
 		 * @return bool Returns true in case all dependencies are met, false otherwise. If there are no dependencies or the format is invalid, it returns true.
 		 */
@@ -622,7 +622,7 @@ if ( ! class_exists( 'Pixelgrade_Config' ) ) {
 		 *
 		 * @param array  $modified_config The modified/filtered config.
 		 * @param array  $original_config The original component config.
-		 * @param string $filter_to_use   Optional. The filter that one should use for fixing things.
+		 * @param string $filter_to_use Optional. The filter that one should use for fixing things.
 		 *
 		 * @return bool
 		 */

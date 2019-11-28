@@ -47,15 +47,13 @@ do_action( 'pixelgrade_before_loop', $location );
 	</div><!-- #posts-container -->
 	<?php pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'posts-navigation' ); ?>
 
-<?php else : ?>
-	<?php pixelgrade_get_component_template_part( Pixelgrade_Base::COMPONENT_SLUG, 'content', 'none' ); ?>
-<?php endif; ?>
+<?php else :
+	pixelgrade_get_component_template_part( Pixelgrade_Base::COMPONENT_SLUG, 'content', 'none' );
+endif;
 
-<?php
 /**
  * pixelgrade_after_loop hook.
  *
  * @hooked nothing - 10 (outputs nothing)
  */
 do_action( 'pixelgrade_after_loop', $location );
-?>

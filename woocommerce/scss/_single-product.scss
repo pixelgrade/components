@@ -126,6 +126,11 @@
             .woocommerce-grouped-product-list-item__price {
                 margin-left: auto;
             }
+
+        }
+
+        .variations label {
+            font-weight: 500;
         }
     }
 
@@ -477,4 +482,38 @@
 
 .comment-form-subscriptions:empty {
     display: none;
+}
+
+.o-grid--variable {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    & > * {
+        grid-column: span 4;
+    }
+
+    article:nth-last-child(4):first-child ~ *,
+    article:nth-last-child(4) {
+        grid-column: span 6;
+
+        @include above($woocommerce-mobile-breakpoint) {
+            grid-column: span 3;
+        }
+    }
+}
+
+// Make sure PhotoSwipe overlay
+// is displayed over theme header
+
+.pswp {
+    z-index: 9999;
+}
+
+.single-product {
+    .woocommerce-message {
+        .button {
+            order: 2;
+            margin-left: auto !important;
+        }
+    }
 }

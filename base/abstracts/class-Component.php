@@ -719,6 +719,11 @@ abstract class Pixelgrade_Component extends Pixelgrade_Singleton {
 				}
 			}
 			// Hookup the fake loop.
+			// But first make sure that it is not hooked twice since this would result in an infinite loop
+			// (at the end of the first loop, the second one would check for has_posts() and rewind the loop).
+			if ( $previous_priority = has_action( $fake_loop_action, 'pixelgrade_do_fake_loop' ) ) {
+				remove_action( $fake_loop_action, 'pixelgrade_do_fake_loop', $previous_priority );
+			}
 			add_action( $fake_loop_action, 'pixelgrade_do_fake_loop', $fake_loop_priority );
 
 			// Now for other defined hooks, if any.

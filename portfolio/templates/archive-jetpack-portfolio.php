@@ -49,54 +49,11 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 			<!-- pixelgrade_after_entry_article_start -->
 
 			<?php
-			$visibility_class = '';
-			if ( ! apply_filters( 'pixelgrade_display_entry_header', true, $location ) ) {
-				$visibility_class = 'screen-reader-text';
-			}
+			/*
+			 * Load the portfolio loop
+			 */
+			pixelgrade_get_component_template_part( Pixelgrade_Portfolio::COMPONENT_SLUG, 'entry-header-archive' );
 			?>
-
-			<div class="u-portfolio-sides-spacing  <?php echo esc_attr( $visibility_class ); ?>">
-				<div class="o-wrapper  u-portfolio-grid-width">
-
-					<?php
-					/**
-					 * pixelgrade_before_entry_title hook.
-					 */
-					do_action( 'pixelgrade_before_entry_title', $location );
-					?>
-					<!-- pixelgrade_before_entry_title -->
-
-					<header class="entry-header  c-page-header">
-						<h1 class="entry-title">
-							<?php
-							// We only want to show the page_for_projects title or default title on the type and main archive pages
-							if ( ! is_tax( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) && ! is_post_type_archive( Jetpack_Portfolio::CUSTOM_POST_TYPE ) ) {
-								the_archive_title();
-							} elseif ( pixelgrade_get_page_for_projects() ) {
-								echo get_the_title( pixelgrade_get_page_for_projects() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							} else {
-								echo apply_filters( 'pixelgrade_default_portfolio_archives_title', esc_html__( 'Projects', '__components_txtd' ), $location ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							}
-							?>
-						</h1>
-
-						<?php
-						if ( is_post_type_archive( Jetpack_Portfolio::CUSTOM_POST_TYPE ) || is_tax( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ) ) {
-							pixelgrade_the_taxonomy_dropdown( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE );
-							the_archive_description( '<div class="entry-description">', '</div>' );
-						}
-						?>
-					</header><!-- .entry-header.c-page-header -->
-
-					<?php
-					/**
-					 * pixelgrade_after_entry_title hook.
-					 */
-					do_action( 'pixelgrade_after_entry_title', $location );
-					?>
-
-				</div><!-- .o-wrapper .u-portfolio-grid-width -->
-			</div><!-- .u-portfolio-sides-spacing -->
 
 			<div class="u-portfolio-sides-spacing  u-content-bottom-spacing">
 				<div class="o-wrapper  u-portfolio-grid-width">

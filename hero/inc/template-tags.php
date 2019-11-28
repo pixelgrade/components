@@ -222,7 +222,7 @@ function pixelgrade_hero_get_slider_attributes( $attribute = array(), $post = nu
 /**
  * Display the inline style based on the current post's hero background color setting
  *
- * @param int|WP_Post $post    Optional. Post ID or WP_Post object. Defaults to current post.
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object. Defaults to current post.
  *
  * @return bool
  */

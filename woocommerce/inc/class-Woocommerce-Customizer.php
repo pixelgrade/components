@@ -129,6 +129,8 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.woocommerce-grouped-product-list-item__price,
 							.woocommerce-grouped-product-list-item__label,
 							.related.products h2,
+							.upsells h2,
+							.cross-sells h2,
 							.woocommerce-Reviews-title,
 							.woocommerce-Reviews .comment-reply-title
 						'
@@ -148,8 +150,12 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 							.woocommerce-categories,
 							.add_to_cart_inline del,
 							.add_to_cart_inline ins,
-							.variations .label,
 							.woocommerce-Reviews .comment-form label
+						'
+					),
+					'main_content_heading_6_font'           => array(
+						'selector' => $section_options['main_content']['options']['main_content_heading_6_font']['selector'] . ',
+							.variations .label
 						'
 					),
 					'main_content_body_text_color'          => array(
@@ -159,7 +165,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 								'property' => 'background-color',
 							),
 							'woocommerce-notice-background' => array(
-								'selector' => '.woocommerce-store-notice[class]',
+								'selector' => '.woocommerce-store-notice[class], span.page-numbers.current',
 								'property' => 'background-color',
 							),
 						),
@@ -483,7 +489,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'woocommerce_items_title_visibility_title'       => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the title.', '__components_txtd' ) . '</span>',
 					),
 					'woocommerce_items_title_visibility'             => array(
 						'type'    => 'checkbox',
@@ -501,7 +507,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'woocommerce_items_excerpt_visibility_title'     => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the excerpt.', '__components_txtd' ) . '</span>',
 					),
 					'woocommerce_items_excerpt_visibility'           => array(
 						'type'    => 'checkbox',
@@ -554,6 +560,20 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 					'woocommerce_grid_title_colors_section'          => array(
 						'type' => 'html',
 						'html' => '<span id="section-title-woocommerce-colors" class="separator section label large">&#x1f3a8; ' . esc_html__( 'Colors', '__components_txtd' ) . '</span>',
+					),
+					'woocommerce_background_color'              => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Background Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => null,
+						'css'     => array(
+							array(
+								'property' => 'background-color',
+								'selector' => ' .woocommerce-page .u-content-background, 
+												.woocommerce-page .u-header-background:not(.c-navbar__content), 
+												.woocommerce-page .u-footer-background',
+							),
+						),
 					),
 					'woocommerce_item_title_color'                   => array(
 						'type'    => 'color',
@@ -648,7 +668,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 						'css'         => array(
 							array(
 								'property' => 'opacity',
-								'selector' => '.c-gallery--woocommerce .c-card:hover .c-card__frame',
+								'selector' => '.c-gallery--woocommerce .c-card:hover .c-card__frame img',
 								'unit'     => '',
 							),
 						),
@@ -846,6 +866,7 @@ class Pixelgrade_Woocommerce_Customizer extends Pixelgrade_Singleton {
 		$array[] = '.product .cart .qty[class][class][class]';
 		$array[] = '#respond input#submit[id]';
 		$array[] = '.added_to_cart';
+		$array[] = 'span.page-numbers.current';
 
 		return $array;
 	}

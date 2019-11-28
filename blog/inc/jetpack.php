@@ -80,9 +80,16 @@ function pixelgrade_the_jetpack_related_posts_headline( $default = null ) {
 	$headline = '';
 
 	if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init' ) ) {
-		require_once JETPACK__PLUGIN_DIR . '/sync/class.jetpack-sync-settings.php'; // phpcs:ignore
+		// Starting with version 7.8, Jetpack completely refactored things and it now uses autoloading with namespaces.
+		if ( defined( 'JETPACK__VERSION' ) && version_compare( JETPACK__VERSION, '7.8', '>=' ) ) {
+			if ( Automattic\Jetpack\Sync\Settings::is_syncing() ) {
+				return false;
+			}
+		} elseif ( file_exists( trailingslashit( JETPACK__PLUGIN_DIR ) . 'sync/class.jetpack-sync-settings.php' ) ) {
+			require_once trailingslashit( JETPACK__PLUGIN_DIR ) . 'sync/class.jetpack-sync-settings.php'; // phpcs:ignore
 		if ( Jetpack_Sync_Settings::is_syncing() ) {
 			return false;
+		}
 		}
 
 		$related_options = Jetpack_RelatedPosts::init()->get_options();

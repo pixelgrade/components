@@ -570,6 +570,8 @@ if ( ! function_exists( 'pixelgrade_do_fake_loop' ) ) {
 			 * @see Pixelgrade_Custom_Loops_For_Pages
 			 */
 		endwhile;
+
+		wp_reset_query();
 	}
 }
 
@@ -595,5 +597,187 @@ if ( ! function_exists( 'pixelgrade_is_active_sidebar' ) ) {
 
 		// We have simply omitted to apply the "is_active_sidebar" filter.
 		return $is_active_sidebar;
+	}
+}
+
+if ( ! function_exists( 'pixelgrade_get_boundary_post' ) ) {
+	/**
+	 * Retrieves the boundary post in the same post type as the current post
+	 *
+	 * Boundary being either the first or last post by publish date within the constraints specified
+	 * by $in_same_term or $excluded_terms.
+	 *
+	 * NOTICE: This is a enhanced version of the CORE get_boundary_post() function!
+	 * - we have fixed it to remain in the same post type as does get_adjacent_post()!
+	 *
+	 * @param bool $in_same_term Optional. Whether returned post should be in a same taxonomy term.
+	 *                                     Default false.
+	 * @param array|string $excluded_terms Optional. Array or comma-separated list of excluded term IDs.
+	 *                                     Default empty.
+	 * @param bool $start Optional. Whether to retrieve first or last post. Default true
+	 * @param string $taxonomy Optional. Taxonomy, if $in_same_term is true. Default 'category'.
+	 *
+	 * @return null|string|WP_Post Post object if successful. Null if global $post is not set. Empty string if no
+	 *                             corresponding post exists.
+	 */
+	function pixelgrade_get_boundary_post( $in_same_term = false, $excluded_terms = '', $start = true, $taxonomy = 'category' ) {
+		global $wpdb;
+
+		$post = get_post();
+		if ( ! $post || ! is_single() || is_attachment() || ! taxonomy_exists( $taxonomy ) ) {
+			return null;
+		}
+
+		$join = '';
+		$where = '';
+		$location = $start ? 'first' : 'last';
+
+		if ( $in_same_term || ! empty( $excluded_terms ) ) {
+			if ( ! empty( $excluded_terms ) && ! is_array( $excluded_terms ) ) {
+				// back-compat, $excluded_terms used to be $excluded_terms with IDs separated by " and "
+				if ( false !== strpos( $excluded_terms, ' and ' ) ) {
+					_deprecated_argument( __FUNCTION__, '3.3.0', sprintf( __( 'Use commas instead of %s to separate excluded terms.', 'components_txtd' ), "'and'" ) );
+					$excluded_terms = explode( ' and ', $excluded_terms );
+				} else {
+					$excluded_terms = explode( ',', $excluded_terms );
+				}
+
+				$excluded_terms = array_map( 'intval', $excluded_terms );
+			}
+
+			if ( $in_same_term ) {
+				$join .= " INNER JOIN $wpdb->term_relationships AS tr ON p.ID = tr.object_id INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
+				$where .= $wpdb->prepare( "AND tt.taxonomy = %s", $taxonomy );
+
+				if ( ! is_object_in_taxonomy( $post->post_type, $taxonomy ) )
+					return '';
+				$term_array = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
+
+				// Remove any exclusions from the term array to include.
+				$term_array = array_diff( $term_array, (array) $excluded_terms );
+				$term_array = array_map( 'intval', $term_array );
+
+				if ( ! $term_array || is_wp_error( $term_array ) )
+					return '';
+
+				$where .= " AND tt.term_id IN (" . implode( ',', $term_array ) . ")";
+			}
+
+			/**
+			 * Filters the IDs of terms excluded from adjacent post queries.
+			 *
+			 * The dynamic portion of the hook name, `$adjacent`, refers to the type
+			 * of adjacency, 'next' or 'previous'.
+			 *
+			 * @since 4.4.0
+			 *
+			 * @param string $excluded_terms Array of excluded term IDs.
+			 */
+			$excluded_terms = apply_filters( "get_{$location}_post_excluded_terms", $excluded_terms );
+
+			if ( ! empty( $excluded_terms ) ) {
+				$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
+			}
+		}
+
+		// 'post_status' clause depends on the current user.
+		if ( is_user_logged_in() ) {
+			$user_id = get_current_user_id();
+
+			$post_type_object = get_post_type_object( $post->post_type );
+			if ( empty( $post_type_object ) ) {
+				$post_type_cap    = $post->post_type;
+				$read_private_cap = 'read_private_' . $post_type_cap . 's';
+			} else {
+				$read_private_cap = $post_type_object->cap->read_private_posts;
+			}
+
+			/*
+			 * Results should include private posts belonging to the current user, or private posts where the
+			 * current user has the 'read_private_posts' cap.
+			 */
+			$private_states = get_post_stati( array( 'private' => true ) );
+			$where .= " AND ( p.post_status = 'publish'";
+			foreach ( (array) $private_states as $state ) {
+				if ( current_user_can( $read_private_cap ) ) {
+					$where .= $wpdb->prepare( " OR p.post_status = %s", $state );
+				} else {
+					$where .= $wpdb->prepare( " OR (p.post_author = %d AND p.post_status = %s)", $user_id, $state );
+				}
+			}
+			$where .= " )";
+		} else {
+			$where .= " AND p.post_status = 'publish'";
+		}
+
+		$order = $start ? 'ASC' : 'DESC';
+
+		/**
+		 * Filters the JOIN clause in the SQL for an adjacent post query.
+		 *
+		 * The dynamic portion of the hook name, `$adjacent`, refers to the type
+		 * of adjacency, 'next' or 'previous'.
+		 *
+		 * @since 2.5.0
+		 * @since 4.4.0 Added the `$taxonomy` and `$post` parameters.
+		 *
+		 * @param string  $join           The JOIN clause in the SQL.
+		 * @param bool    $in_same_term   Whether post should be in a same taxonomy term.
+		 * @param array   $excluded_terms Array of excluded term IDs.
+		 * @param string  $taxonomy       Taxonomy. Used to identify the term used when `$in_same_term` is true.
+		 * @param WP_Post $post           WP_Post object.
+		 */
+		$join = apply_filters( "get_{$location}_post_join", $join, $in_same_term, $excluded_terms, $taxonomy, $post );
+
+		/**
+		 * Filters the WHERE clause in the SQL for an adjacent post query.
+		 *
+		 * The dynamic portion of the hook name, `$adjacent`, refers to the type
+		 * of adjacency, 'next' or 'previous'.
+		 *
+		 * @since 2.5.0
+		 * @since 4.4.0 Added the `$taxonomy` and `$post` parameters.
+		 *
+		 * @param string $where          The `WHERE` clause in the SQL.
+		 * @param bool   $in_same_term   Whether post should be in a same taxonomy term.
+		 * @param array  $excluded_terms Array of excluded term IDs.
+		 * @param string $taxonomy       Taxonomy. Used to identify the term used when `$in_same_term` is true.
+		 * @param WP_Post $post           WP_Post object.
+		 */
+		$where = apply_filters( "get_{$location}_post_where", $wpdb->prepare( "WHERE p.post_type = %s $where", $post->post_type ), $in_same_term, $excluded_terms, $taxonomy, $post );
+
+		/**
+		 * Filters the ORDER BY clause in the SQL for an adjacent post query.
+		 *
+		 * The dynamic portion of the hook name, `$adjacent`, refers to the type
+		 * of adjacency, 'next' or 'previous'.
+		 *
+		 * @since 2.5.0
+		 * @since 4.4.0 Added the `$post` parameter.
+		 *
+		 * @param string $order_by The `ORDER BY` clause in the SQL.
+		 * @param WP_Post $post    WP_Post object.
+		 */
+		$sort  = apply_filters( "get_{$location}_post_sort", "ORDER BY p.post_date $order LIMIT 1", $post );
+
+		$query = "SELECT p.ID FROM $wpdb->posts AS p $join $where $sort";
+		$query_key = 'boundary_post_' . md5( $query );
+		$result = wp_cache_get( $query_key, 'counts' );
+		if ( false !== $result ) {
+			if ( $result )
+				$result = get_post( $result );
+			return $result;
+		}
+
+		$result = $wpdb->get_var( $query );
+		if ( null === $result )
+			$result = '';
+
+		wp_cache_set( $query_key, $result, 'counts' );
+
+		if ( $result )
+			$result = get_post( $result );
+
+		return $result;
 	}
 }

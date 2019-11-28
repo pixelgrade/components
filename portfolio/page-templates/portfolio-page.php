@@ -67,10 +67,11 @@ do_action( 'pixelgrade_before_primary_wrapper', $location );
 			/**
 			 * pixelgrade_after_loop hook.
 			 *
-			 * @hooked pixelgrade_do_fake_loop() - 9 (outputs the projects loop) - @see Pixelgrade_Component::setupPageTemplatesCustomLoopQuery()
 			 * @hooked Pixelgrade_Multipage::theSubpages() - 10 (outputs the subpages)
 			 */
 			do_action( 'pixelgrade_after_loop', $location );
+
+			do_action( 'pixelgrade_do_fake_loop', $location );
 			?>
 
 		</main><!-- #main -->

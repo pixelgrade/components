@@ -95,45 +95,6 @@ function typeline_negative_value_cb( $value, $selector, $property, $unit ) {
 }
 
 /**
- * Inline enqueues the JS code used in the Customizer for negative value live preview.
- */
-function typeline_negative_value_cb_customizer_preview() {
-
-	$js = "
-function typeline_negative_value_cb( value, selector, property, unit ) {
-
-    var css = '',
-        style = document.getElementById('typeline_negative_value_style_tag'),
-        head = document.head || document.getElementsByTagName('head')[0];
-
-    css += selector + ' {' +
-        property + ': ' + (-1 * value) + unit + ';' +
-        '}';
-
-    if ( style !== null ) {
-        style.innerHTML = css;
-    } else {
-        style = document.createElement('style');
-        style.setAttribute('id', 'typeline_negative_value_style_tag');
-
-        style.type = 'text/css';
-        if ( style.styleSheet ) {
-            style.styleSheet.cssText = css;
-        } else {
-            style.appendChild(document.createTextNode(css));
-        }
-
-        head.appendChild(style);
-    }
-}
-";
-
-	wp_add_inline_script( 'customify-previewer-scripts', $js );
-
-}
-add_action( 'customize_preview_init', 'typeline_negative_value_cb_customizer_preview', 20 );
-
-/**
  * Returns the custom CSS rules for the spacing depending on the Customizer settings.
  *
  * @param mixed  $value The value of the option.
@@ -214,7 +175,9 @@ function getY( x ) {
 	$js .= "
 function typeline_spacing_cb( value, selector, property, unit ) {
     var css = '',
-        style = document.getElementById('typeline_range_style_tag'),
+        encoded = btoa( selector ),
+        style_id = 'typeline_range_style_tag_' + encoded,
+        style = document.getElementById( style_id ),
         head = document.head || document.getElementsByTagName('head')[0];
 
     css += selector + ' {' +
@@ -240,10 +203,10 @@ function typeline_spacing_cb( value, selector, property, unit ) {
 
 	$js .= "
     if ( style !== null ) {
-	        style.innerHTML = css;
+	    style.innerHTML = css;
     } else {
-        style = document.createElement('style');
-        style.setAttribute('id', 'typeline_range_style_tag');
+        style = document.createElement( 'style' );
+        style.setAttribute( 'id', style_id );
 
         style.type = 'text/css';
         if ( style.styleSheet ) {
@@ -339,7 +302,9 @@ function getY( x ) {
 function typeline_negative_spacing_cb( value, selector, property, unit ) {
 
 	var css = '',
-		style = document.getElementById('typeline_range_negative_style_tag'),
+		encoded = btoa( selector ),
+		style_id = 'typeline_range_negative_style_tag_' + encoded,
+		style = document.getElementById( style_id ),
 		head = document.head || document.getElementsByTagName('head')[0];
 
 	css += selector + ' {' +

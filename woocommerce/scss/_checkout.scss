@@ -107,7 +107,7 @@
         }
 
         &[class] {
-            td, th {
+            td, th, .product-quantity {
                 font-weight: inherit;
             }
         }
@@ -403,6 +403,12 @@ ul.order_details[class] {
     > .woocommerce-checkout-breadcrumbs {
         order: -1;
     }
+}
+
+.woocommerce-checkout[class] .order-total .woocommerce-Price-amount,
+.woocommerce ul#shipping_method .amount,
+.woocommerce-checkout[class] .cart-subtotal .woocommerce-Price-amount {
+    font-weight: 500;
 }
 
 .u-header-height-padding-top .woocommerce-checkout:not(.woocommerce-order-received) {

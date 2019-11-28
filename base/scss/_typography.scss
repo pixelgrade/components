@@ -3,6 +3,9 @@ $typography-spacing: 2rem !default;
 $body-link-color: #3B3B3B !default;
 $body-link-active-color: #DFA671 !default;
 
+$blockquote-font: () !default;
+$cite-font: () !default;
+
 $h1-color: #333 !default;
 $h2-color: #333 !default;
 $h3-color: #333 !default;
@@ -199,5 +202,6 @@ strong {
 em,
 i,
 small {
-	font-style: italic;
+  font-style: italic;
 }
+

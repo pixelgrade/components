@@ -129,6 +129,23 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 			)
 		);
 
+		$card_choices = array(
+			'none'      => esc_html__( 'None', '__components_txtd' ),
+			'category'  => esc_html__( 'Category', '__components_txtd' ),
+			'author'    => esc_html__( 'Author', '__components_txtd' ),
+			'date'      => esc_html__( 'Date', '__components_txtd' ),
+			'tags'      => esc_html__( 'Tags', '__components_txtd' ),
+			'comments'  => esc_html__( 'Comments', '__components_txtd' ),
+			'excerpt'   => esc_html__( 'Excerpt', '__components_txtd' ),
+			'read_more' => esc_html__( 'Read More', '__components_txtd' ),
+			'title'     => esc_html__( 'Title', '__components_txtd' ),
+
+			'jetpack-portfolio-type'      => esc_html__( 'Project Type', '__components_txtd' ),
+			'jetpack-portfolio-type-list' => esc_html__( 'Project Type List', '__components_txtd' ),
+			'jetpack-portfolio-tag'       => esc_html__( 'Project Tag', '__components_txtd' ),
+			'jetpack-portfolio-tag-list'  => esc_html__( 'Project Tag List', '__components_txtd' ),
+		);
+
 		$portfolio_grid_section = array(
 			// Portfolio Grid
 			'portfolio_grid' => array(
@@ -350,7 +367,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'portfolio_items_title_visibility_title' => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Title Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the title.', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_items_title_visibility'    => array(
 						'type'    => 'checkbox',
@@ -368,7 +385,7 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 					// Title + Checkbox
 					'portfolio_items_excerpt_visibility_title' => array(
 						'type' => 'html',
-						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the summary.', '__components_txtd' ) . '</span>',
+						'html' => '<span class="customize-control-title">' . esc_html__( 'Excerpt Visibility', '__components_txtd' ) . '</span><span class="description customize-control-description">' . esc_html__( 'Select whether to show or hide the excerpt.', '__components_txtd' ) . '</span>',
 					),
 					'portfolio_items_excerpt_visibility'  => array(
 						'type'    => 'checkbox',
@@ -382,34 +399,40 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 						'html' => '<span class="separator sub-section label">' . esc_html__( 'Items Meta', '__components_txtd' ) . '</span>',
 					),
 
-					'portfolio_items_primary_meta'        => array(
+					'portfolio_items_primary_meta'                 => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Primary Meta Section', '__components_txtd' ),
 						'desc'    => esc_html__( 'Set the meta info that display around the title. ', '__components_txtd' ),
-						'default' => null, // this should be set by the theme (previously none)
-						'choices' => array(
-							'none'     => esc_html__( 'None', '__components_txtd' ),
-							'category' => esc_html__( 'Category', '__components_txtd' ),
-							'author'   => esc_html__( 'Author', '__components_txtd' ),
-							'date'     => esc_html__( 'Date', '__components_txtd' ),
-							'tags'     => esc_html__( 'Tags', '__components_txtd' ),
-							'comments' => esc_html__( 'Comments', '__components_txtd' ),
-						),
+						'default' => 'none', // this should be set by the theme (previously category)
+						'choices' => $card_choices,
 					),
-
-					'portfolio_items_secondary_meta'      => array(
+					'portfolio_items_secondary_meta'               => array(
 						'type'    => 'select',
 						'label'   => esc_html__( 'Secondary Meta Section', '__components_txtd' ),
 						'desc'    => '',
-						'default' => null, // this should be set by the theme (previously category)
-						'choices' => array(
-							'none'     => esc_html__( 'None', '__components_txtd' ),
-							'category' => esc_html__( 'Category', '__components_txtd' ),
-							'author'   => esc_html__( 'Author', '__components_txtd' ),
-							'date'     => esc_html__( 'Date', '__components_txtd' ),
-							'tags'     => esc_html__( 'Tags', '__components_txtd' ),
-							'comments' => esc_html__( 'Comments', '__components_txtd' ),
-						),
+						'default' => 'none', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'portfolio_items_heading'                      => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Heading Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'title', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'portfolio_items_content'                      => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Content Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'none', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
+					),
+					'portfolio_items_footer'                       => array(
+						'type'    => 'select',
+						'label'   => esc_html__( 'Card Footer Source', '__components_txtd' ),
+						'desc'    => '',
+						'default' => 'none', // this should be set by the theme (previously date)
+						'choices' => $card_choices,
 					),
 
 					// [Section] COLORS
@@ -438,6 +461,30 @@ class Pixelgrade_Portfolio_Customizer extends Pixelgrade_Singleton {
 							array(
 								'property' => 'color',
 								'selector' => '.c-gallery--portfolio .c-meta__primary',
+							),
+						),
+					),
+					'portfolio_item_excerpt_color'                 => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Excerpt Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => null, // this should be set by the theme (previously #252525)
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--portfolio .c-card__excerpt',
+							),
+						),
+					),
+					'portfolio_item_footer_color'                  => array(
+						'type'    => 'color',
+						'label'   => esc_html__( 'Item Footer Color', '__components_txtd' ),
+						'live'    => true,
+						'default' => null, // this should be set by the theme (previously #252525)
+						'css'     => array(
+							array(
+								'property' => 'color',
+								'selector' => '.c-gallery--portfolio .c-card__footer',
 							),
 						),
 					),

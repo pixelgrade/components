@@ -260,7 +260,7 @@ function pixelgrade_footer_get_copyright_content() {
 
 function pixelgrade_get_footer_credits() {
 	/* translators: 1: the original theme name 2: Pixelgrade site link */
-	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Theme: %1$s by %2$s.', '__components_txtd' ), esc_html( pixelgrade_get_original_theme_name() ), '<a href="' . esc_url( pixelgrade_get_footer_credits_url() ) . '" target="_blank">Pixelgrade</a>' ) . '</span>';
+	return '<span class="c-footer__credits">' . sprintf( esc_html__( 'Theme: %1$s by %2$s.', '__components_txtd' ), esc_html( pixelgrade_get_original_theme_name() ), '<a href="' . esc_url( pixelgrade_get_footer_credits_url() ) . '" target="_blank" title="' . esc_html__( 'The Pixelgrade Website', '__theme_txtd' ) . '" rel="nofollow">Pixelgrade</a>' ) . '</span>';
 }
 
 function pixelgrade_get_footer_credits_url() {

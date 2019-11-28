@@ -1,6 +1,8 @@
 @import "../../base/scss/tools/all";
 @import "../../base/scss/mixins/all";
 
+@import "fonts";
+
 $woocommerce-mobile-breakpoint: 768px;
 
 @import "archive";
@@ -13,6 +15,8 @@ $woocommerce-mobile-breakpoint: 768px;
 
 @import "sale-flash";
 @import "mini-cart";
+
+@import "notifications";
 
 @import "cart";
 @import "checkout";
@@ -113,5 +117,15 @@ $woocommerce-mobile-breakpoint: 768px;
     .woocommerce-product-category,
     .product_title {
         margin-bottom: 0;
+    }
+
+    .woocommerce-product-category {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .add_to_cart_button:not(.loading):not(.added):after {
+        content: "+";
+        padding-left: 0.5em;
     }
 }

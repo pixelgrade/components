@@ -9,7 +9,6 @@
  *
  * @global int $slide_index The current slide index.
  * @global array $slide The current slide.
- * @global int $post_ID The global current post ID, most likely the page ID.
  * @global $location
  *
  * This template can be overridden by copying it to a child theme or in the same theme

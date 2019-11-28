@@ -4,7 +4,6 @@
  *
  * @global int $slide_index The current slide index.
  * @global array $slide The current slide.
- * @global int $post_ID The global current post ID, most likely the page ID.
  * @global $location
  *
  * This template can be overridden by copying it to a child theme or in the same theme
@@ -27,10 +26,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Get the hero content alignment
-$alignment = pixelgrade_hero_get_content_alignment( $post_ID );
+$alignment = pixelgrade_hero_get_content_alignment( $slide['source_post_id'] );
 
 // Get the custom text for the view project button
-$link_project_label = trim( get_post_meta( $post_ID, '_hero_featured_projects_view_more_label', true ) );
+$link_project_label = trim( get_post_meta( $slide['source_post_id'], '_hero_featured_projects_view_more_label', true ) );
 ?>
 
 <div <?php pixelgrade_hero_wrapper_class( $alignment ); ?>>
@@ -39,7 +38,7 @@ $link_project_label = trim( get_post_meta( $post_ID, '_hero_featured_projects_vi
 	/**
 	 * pixelgrade_hero_before_content hook.
 	 */
-	do_action( 'pixelgrade_hero_before_content', $location, $slide, $slide_index, $post_ID );
+	do_action( 'pixelgrade_hero_before_content', $location, $slide, $slide_index, $slide['source_post_id'] );
 	?>
 
 	<div class="c-hero__content">
@@ -58,20 +57,20 @@ $link_project_label = trim( get_post_meta( $post_ID, '_hero_featured_projects_vi
 				<h1 class="c-hero__title h0"><?php echo wp_kses( get_the_title( $slide['post_id'] ), wp_kses_allowed_html() ); ?></h1>
 			</div>
 			<?php if ( ! empty( $link_project_label ) ) { ?>
-			<div class="c-hero__action">
-				<span class="link--arrow  light">
-					<?php echo wp_kses( $link_project_label, wp_kses_allowed_html() ); ?>
-				</span>
-			</div>
+                <div class="c-hero__action">
+                    <span class="link--arrow  light">
+                        <?php echo wp_kses( $link_project_label, wp_kses_allowed_html() ); ?>
+                    </span>
+                </div>
+		    <?php } ?>
 		</a>
-		<?php } ?>
 	</div><!-- .c-hero__content -->
 
 	<?php
 	/**
 	 * pixelgrade_hero_after_content hook.
 	 */
-	do_action( 'pixelgrade_hero_after_content', $location, $slide, $slide_index, $post_ID );
+	do_action( 'pixelgrade_hero_after_content', $location, $slide, $slide_index, $slide['source_post_id'] );
 	?>
 
 </div><!-- .c-hero__wrapper -->
