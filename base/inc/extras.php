@@ -1224,14 +1224,3 @@ if ( ! function_exists( 'pixelgrade_the_card' ) ) {
 		do_action( 'pixelgrade_after_loop_entry', $location );
 	}
 }
-
-function fargo_portfolio_hero_the_taxonomy_dropdown( $content ) {
-	if ( class_exists( 'Jetpack_Portfolio' ) && pixelgrade_is_page_for_projects() ) { ?>
-		<div class="category-dropdown has-inputs-inverted">
-			<?php pixelgrade_the_taxonomy_dropdown( Jetpack_Portfolio::CUSTOM_TAXONOMY_TYPE ); ?>
-		</div><!-- .category-dropdown -->
-		<?php
-	}
-}
-
-add_action( 'pixelgrade_hero_after_the_description', 'fargo_portfolio_hero_the_taxonomy_dropdown', 20, 1 );
