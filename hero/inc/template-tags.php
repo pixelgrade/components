@@ -602,6 +602,8 @@ function pixelgrade_hero_get_slides_ids( $post = null ) {
 						'source_post_id' => $post->ID,
 						'source_meta'    => '_hero_background_gallery',
 					);
+				} else {
+					unset( $attachment_ids[ $key ] );
 				}
 			}
 
@@ -623,6 +625,8 @@ function pixelgrade_hero_get_slides_ids( $post = null ) {
 						'source_post_id' => $post->ID,
 						'source_meta'    => '_hero_background_videos',
 					);
+				} else {
+					unset( $videos_ids[ $key ] );
 				}
 			}
 
